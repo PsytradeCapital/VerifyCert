@@ -7,28 +7,29 @@
     "@types/node": "^16.18.39",
     "@types/react": "^18.2.17",
     "@types/react-dom": "^18.2.7",
+    "ethers": "^6.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
-    "ethers": "^6.7.1",
-    "react-hot-toast": "^2.4.1"
+    "verify-cert": "file:..",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "tailwindcss": "^3.3.3",
+    "@types/jest": "^27.5.2",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.27",
-    "@types/jest": "^27.5.2"
+    "tailwindcss": "^3.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --run",
+    "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

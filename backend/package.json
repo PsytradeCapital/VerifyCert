@@ -10,22 +10,28 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "helmet": "^7.0.0",
     "dotenv": "^16.3.1",
     "ethers": "^6.7.1",
-    "qrcode": "^1.5.3",
-    "nodemailer": "^6.9.4",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.8.1",
+    "helmet": "^7.0.0",
     "joi": "^17.9.2",
-    "express-rate-limit": "^6.8.1"
+    "nodemailer": "^6.9.4",
+    "qrcode": "^1.5.3",
+    "verify-cert": "file:.."
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
     "jest": "^29.6.2",
+    "nodemon": "^3.0.1",
     "supertest": "^6.3.3"
   },
-  "keywords": ["blockchain", "certificates", "verification", "nft"],
+  "keywords": [
+    "blockchain",
+    "certificates",
+    "verification",
+    "nft"
+  ],
   "author": "VerifyCert Team",
   "license": "MIT"
 }

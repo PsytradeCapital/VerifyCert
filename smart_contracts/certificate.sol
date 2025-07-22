@@ -129,13 +129,4 @@ contract Certificate is ERC721, Ownable {
     function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
         revert TransferNotAllowed();
     }
-    
-    // Override approval functions to prevent misleading approvals since transfers are not allowed
-    function approve(address, uint256) public pure override {
-        revert TransferNotAllowed();
-    }
-    
-    function setApprovalForAll(address, bool) public pure override {
-        revert TransferNotAllowed();
-    }
 }

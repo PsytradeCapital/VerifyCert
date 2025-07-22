@@ -32,6 +32,9 @@ const schemas = {
     recipientName: Joi.string().min(1).max(255).required(),
     courseName: Joi.string().min(1).max(255).required(),
     institutionName: Joi.string().min(1).max(255).required(),
+    metadataURI: Joi.string().uri().optional().allow(''),
+    recipientEmail: Joi.string().email().optional(),
+    issuerEmail: Joi.string().email().optional(),
     issueDate: Joi.date().iso().optional().default(() => new Date())
   })
 };

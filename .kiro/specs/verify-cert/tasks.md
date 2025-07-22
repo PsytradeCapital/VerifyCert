@@ -139,7 +139,11 @@
   - _Requirements: 1.3, 7.1, 7.5_
 
 
-- [ ] 3.4 Implement certificate retrieval and verification endpoints
+- [x] 3.4 Implement certificate retrieval and verification endpoints
+
+
+
+
 
 
   - Create GET /api/v1/certificates/:tokenId route
@@ -147,12 +151,18 @@
   - Add GET /api/v1/certificates/issuer/:address route for dashboard
   - Write unit tests for all retrieval endpoints
   - _Requirements: 3.4, 4.1, 7.2_
+-
 
-- [ ] 4. Add utility services to backend
+- [-] 4. Add utility services to backend
 
 
 
-- [ ] 4.1 Implement QR code generation service
+
+
+- [x] 4.1 Implement QR code generation service
+
+
+
 
   - Create QRCodeService class for generating certificate QR codes
   - Add QR code image storage (local or IPFS)
@@ -161,7 +171,16 @@
   - _Requirements: 1.4, 7.3_
 
 
-- [ ] 4.2 Create notification and email service
+- [x] 4.2 Create notification and email service
+
+
+
+
+
+
+
+
+
 
   - Implement NotificationService for email delivery
   - Add email templates for certificate delivery
@@ -170,9 +189,19 @@
   - _Requirements: 1.5, 2.1_
 
 
-- [ ] 5. Build core frontend components
+- [-] 5. Build core frontend components
 
-- [ ] 5.1 Create wallet connection component
+
+
+
+
+
+
+
+- [x] 5.1 Create wallet connection component
+
+
+
 
 
   - Implement WalletConnect component with MetaMask integration
@@ -181,7 +210,9 @@
   - Write unit tests for wallet connection
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 5.2 Build certificate display component
+- [x] 5.2 Build certificate display component
+
+
 
 
   - Create CertificateCard component for displaying certificate data
@@ -191,7 +222,12 @@
   - Write unit tests for certificate display
   - _Requirements: 2.2, 2.3, 8.1, 8.3_
 
-- [ ] 5.3 Create certificate form component
+- [x] 5.3 Create certificate form component
+
+
+
+
+
 
 
   - Implement CertificateForm for certificate issuance
@@ -204,7 +240,18 @@
 - [ ] 6. Implement main application pages
 
 
+
+
+
+
+
+
 - [ ] 6.1 Build issuer dashboard page
+
+
+
+
+
 
 
   - Create IssuerDashboard component with certificate form
@@ -212,19 +259,30 @@
   - Implement certificate statistics display
   - Add wallet connection integration
   - Write unit tests for dashboard functionality
+
+
   - _Requirements: 1.1, 4.1, 4.2, 4.4_
 
 - [ ] 6.2 Create certificate viewer page
 
 
+
+
+
+
+
+
   - Implement CertificateViewer page for individual certificates
   - Add certificate data fetching from blockchain
   - Integrate certificate display component
-  - Add sharing and download functionality
+  - Add sharing and download func
+tionality
   - Write unit tests for viewer page
-  - _Requirements: 2.2, 2.3, 2.4_
+  --_Requirements: 2.2, 2.3, 2.4_
+
 
 - [ ] 6.3 Build public verification page
+
 
 
   - Create VerificationPage for public certificate verification

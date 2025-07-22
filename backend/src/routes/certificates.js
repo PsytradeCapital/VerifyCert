@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const CertificateService = require('../services/CertificateService');
+const QRCodeService = require('../services/QRCodeService');
+const NotificationService = require('../services/NotificationService');
 const { validate, schemas } = require('../middleware/validation');
 const { verifyWalletSignature, requireAuthorizedIssuer } = require('../middleware/auth');
 
-// Initialize certificate service
+// Initialize services
 const certificateService = new CertificateService();
+const qrCodeService = new QRCodeService();
+const notificationService = new NotificationService();
 
 /**
  * POST /api/v1/certificates/mint
@@ -16,7 +20,7 @@ router.post('/mint',
   validate(schemas.certificateData),
   async (req, res, next) => {
     try {
-      const { recipientAddress, recipientName, courseName, institutionName, metadataURI } = req.body;
+      const { recipientAddress, recipientName, courseName, institutionName, metadataURI, recipientEmail, issuerEmail } = req.body;
       const issuerAddress = req.walletAddress;
 
       // Check if the issuer is authorized
@@ -43,9 +47,68 @@ router.post('/mint',
       // Mint the certificate
       const result = await certificateService.mintCertificate(certificateData);
 
-      // Generate verification URL
-      const verificationURL = `${req.protocol}://${req.get('host')}/api/v1/certificates/verify/${result.tokenId}`;
-      
+      // Prepare complete certificate data for notifications
+      const completeCertificateData = {
+        ...certificateData,
+        issuer: issuerAddress,
+        tokenId: result.tokenId,
+        issueDate: Math.floor(Date.now() / 1000), // Current timestamp in seconds
+        transactionHash: result.transactionHash
+      };
+
+      // Generate verification URLs
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:3000';
+      const verificationURL = `${frontendURL}/verify/${result.tokenId}`;
+      const certificateURL = `${frontendURL}/certificate/${result.tokenId}`;
+
+      // Generate QR code for certificate verification
+      let qrData = null;
+      try {
+        qrData = await qrCodeService.generateQRCode(verificationURL, result.tokenId);
+      } catch (qrError) {
+        console.warn('QR code generation failed:', qrError);
+        // Continue without QR code - not critical for certificate minting
+      }
+
+      // Send notifications (async, don't block response)
+      const notificationPromises = [];
+
+      // Send certificate to recipient if email provided
+      if (recipientEmail) {
+        notificationPromises.push(
+          notificationService.sendCertificateDelivery(completeCertificateData, recipientEmail, qrData)
+            .then(result => ({ type: 'recipient', result }))
+            .catch(error => ({ type: 'recipient', error }))
+        );
+      }
+
+      // Send confirmation to issuer if email provided
+      if (issuerEmail) {
+        notificationPromises.push(
+          notificationService.sendIssuerNotification(completeCertificateData, issuerEmail)
+            .then(result => ({ type: 'issuer', result }))
+            .catch(error => ({ type: 'issuer', error }))
+        );
+      }
+
+      // Process notifications in background
+      if (notificationPromises.length > 0) {
+        Promise.allSettled(notificationPromises)
+          .then(results => {
+            results.forEach(({ value }) => {
+              if (value.error) {
+                console.error(`${value.type} notification failed:`, value.error);
+              } else {
+                console.log(`${value.type} notification sent successfully:`, value.result.data?.messageId);
+              }
+            });
+          })
+          .catch(error => {
+            console.error('Notification processing error:', error);
+          });
+      }
+
+      // Return successful response
       res.status(201).json({
         success: true,
         data: {
@@ -54,10 +117,12 @@ router.post('/mint',
           blockNumber: result.blockNumber,
           gasUsed: result.gasUsed,
           verificationURL,
-          certificate: {
-            ...certificateData,
-            issuer: issuerAddress,
-            tokenId: result.tokenId
+          certificateURL,
+          qrCodeURL: qrData?.qrImageURL || null,
+          certificate: completeCertificateData,
+          notifications: {
+            recipientEmail: recipientEmail ? 'queued' : 'not_requested',
+            issuerEmail: issuerEmail ? 'queued' : 'not_requested'
           }
         },
         message: 'Certificate minted successfully'

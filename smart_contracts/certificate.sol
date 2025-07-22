@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 /**
  * @title Certificate
  * @dev Non-transferable NFT contract for digital certificates
+ * @notice This contract creates soulbound tokens that cannot be transferred
  */
 contract Certificate is ERC721, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -42,6 +43,7 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
     error CertificateAlreadyRevoked();
     error TransferNotAllowed();
     error EmptyString();
+    error InvalidTokenId();
     
     modifier onlyAuthorizedIssuer() {
         if (!authorizedIssuers[msg.sender] && msg.sender != owner()) {
@@ -53,6 +55,13 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
     modifier validString(string memory str) {
         if (bytes(str).length == 0) {
             revert EmptyString();
+        }
+        _;
+    }
+    
+    modifier tokenExists(uint256 tokenId) {
+        if (!_exists(tokenId)) {
+            revert CertificateNotFound();
         }
         _;
     }
@@ -116,10 +125,7 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
      * @param tokenId The certificate token ID
      * @return Certificate data struct
      */
-    function getCertificate(uint256 tokenId) external view returns (CertificateData memory) {
-        if (!_exists(tokenId)) {
-            revert CertificateNotFound();
-        }
+    function getCertificate(uint256 tokenId) external view tokenExists(tokenId) returns (CertificateData memory) {
         return certificates[tokenId];
     }
     
@@ -139,11 +145,7 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
      * @dev Revoke a certificate (only by issuer or owner)
      * @param tokenId The certificate token ID to revoke
      */
-    function revokeCertificate(uint256 tokenId) external nonReentrant {
-        if (!_exists(tokenId)) {
-            revert CertificateNotFound();
-        }
-        
+    function revokeCertificate(uint256 tokenId) external nonReentrant tokenExists(tokenId) {
         CertificateData storage cert = certificates[tokenId];
         if (msg.sender != cert.issuer && msg.sender != owner()) {
             revert UnauthorizedIssuer();
@@ -162,6 +164,7 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
      * @param issuer Address to authorize
      */
     function authorizeIssuer(address issuer) external onlyOwner {
+        require(issuer != address(0), "Invalid issuer address");
         authorizedIssuers[issuer] = true;
         emit IssuerAuthorized(issuer);
     }
@@ -201,7 +204,16 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
         return _tokenIds.current();
     }
     
-    // Override transfer functions to make NFTs non-transferable
+    /**
+     * @dev Check if a token exists
+     * @param tokenId Token ID to check
+     * @return True if token exists
+     */
+    function exists(uint256 tokenId) external view returns (bool) {
+        return _exists(tokenId);
+    }
+    
+    // Override transfer functions to make NFTs non-transferable (soulbound)
     function transferFrom(address, address, uint256) public pure override {
         revert TransferNotAllowed();
     }
@@ -228,5 +240,14 @@ contract Certificate is ERC721, Ownable, ReentrancyGuard {
     
     function isApprovedForAll(address, address) public pure override returns (bool) {
         return false;
+    }
+    
+    /**
+     * @dev Override tokenURI to return metadata URI from certificate data
+     * @param tokenId Token ID
+     * @return URI string
+     */
+    function tokenURI(uint256 tokenId) public view override tokenExists(tokenId) returns (string memory) {
+        return certificates[tokenId].metadataURI;
     }
 }

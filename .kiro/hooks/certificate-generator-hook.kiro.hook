@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Certificate Generator",
+  "description": "Generates smart contract, frontend components, and backend routes for certificate minting and verification functionality",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Generate the following files for a certificate system:\n- smart_contracts/certificate.sol (Solidity smart contract for certificate NFTs)\n- frontend/components/CertificateCard.jsx (React component to display certificates)\n- backend/routes/mintCertificate.js (API route to mint new certificates)\n- frontend/pages/verify.jsx (React page for certificate verification)\n- backend/routes/verifyCertificate.js (API route to verify certificate authenticity)"
+  }
+}

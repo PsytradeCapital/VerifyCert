@@ -1,0 +1,14 @@
+.App {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}

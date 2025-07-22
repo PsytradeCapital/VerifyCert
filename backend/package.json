@@ -1,0 +1,31 @@
+{
+  "name": "verify-cert-backend",
+  "version": "1.0.0",
+  "description": "Backend API for VerifyCert blockchain certificate verification system",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.7.1",
+    "qrcode": "^1.5.3",
+    "nodemailer": "^6.9.4",
+    "joi": "^17.9.2",
+    "express-rate-limit": "^6.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.6.2",
+    "supertest": "^6.3.3"
+  },
+  "keywords": ["blockchain", "certificates", "verification", "nft"],
+  "author": "VerifyCert Team",
+  "license": "MIT"
+}

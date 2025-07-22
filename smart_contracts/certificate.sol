@@ -3,9 +3,14 @@ pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Certificate is ERC721, Ownable {
+/**
+ * @title Certificate
+ * @dev Non-transferable NFT contract for digital certificates
+ */
+contract Certificate is ERC721, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
     
     Counters.Counter private _tokenIds;
@@ -23,6 +28,8 @@ contract Certificate is ERC721, Ownable {
     
     mapping(uint256 => CertificateData) public certificates;
     mapping(address => bool) public authorizedIssuers;
+    mapping(address => uint256[]) private _issuerCertificates;
+    mapping(address => uint256[]) private _recipientCertificates;
     
     event CertificateMinted(uint256 indexed tokenId, address indexed issuer, address indexed recipient);
     event CertificateRevoked(uint256 indexed tokenId);
@@ -34,6 +41,7 @@ contract Certificate is ERC721, Ownable {
     error CertificateNotFound();
     error CertificateAlreadyRevoked();
     error TransferNotAllowed();
+    error EmptyString();
     
     modifier onlyAuthorizedIssuer() {
         if (!authorizedIssuers[msg.sender] && msg.sender != owner()) {
@@ -42,15 +50,39 @@ contract Certificate is ERC721, Ownable {
         _;
     }
     
-    constructor() ERC721("VerifyCert", "VCERT") {}
+    modifier validString(string memory str) {
+        if (bytes(str).length == 0) {
+            revert EmptyString();
+        }
+        _;
+    }
     
+    constructor() ERC721("VerifyCert", "VCERT") {
+        // Owner is automatically authorized
+        authorizedIssuers[msg.sender] = true;
+    }
+    
+    /**
+     * @dev Mint a new certificate NFT
+     * @param recipient Address of the certificate recipient
+     * @param recipientName Name of the recipient
+     * @param courseName Name of the course/achievement
+     * @param institutionName Name of the issuing institution
+     * @param metadataURI URI for certificate metadata
+     * @return tokenId The ID of the newly minted certificate
+     */
     function mintCertificate(
         address recipient,
         string memory recipientName,
         string memory courseName,
         string memory institutionName,
         string memory metadataURI
-    ) external onlyAuthorizedIssuer returns (uint256) {
+    ) external onlyAuthorizedIssuer nonReentrant 
+      validString(recipientName)
+      validString(courseName)
+      validString(institutionName)
+      returns (uint256) {
+        
         if (recipient == address(0)) {
             revert InvalidRecipient();
         }
@@ -71,10 +103,19 @@ contract Certificate is ERC721, Ownable {
             isValid: true
         });
         
+        // Track certificates by issuer and recipient
+        _issuerCertificates[msg.sender].push(newTokenId);
+        _recipientCertificates[recipient].push(newTokenId);
+        
         emit CertificateMinted(newTokenId, msg.sender, recipient);
         return newTokenId;
     }
     
+    /**
+     * @dev Get certificate data by token ID
+     * @param tokenId The certificate token ID
+     * @return Certificate data struct
+     */
     function getCertificate(uint256 tokenId) external view returns (CertificateData memory) {
         if (!_exists(tokenId)) {
             revert CertificateNotFound();
@@ -82,6 +123,11 @@ contract Certificate is ERC721, Ownable {
         return certificates[tokenId];
     }
     
+    /**
+     * @dev Verify if a certificate is valid
+     * @param tokenId The certificate token ID
+     * @return True if certificate exists and is valid
+     */
     function verifyCertificate(uint256 tokenId) external view returns (bool) {
         if (!_exists(tokenId)) {
             return false;
@@ -89,7 +135,11 @@ contract Certificate is ERC721, Ownable {
         return certificates[tokenId].isValid;
     }
     
-    function revokeCertificate(uint256 tokenId) external {
+    /**
+     * @dev Revoke a certificate (only by issuer or owner)
+     * @param tokenId The certificate token ID to revoke
+     */
+    function revokeCertificate(uint256 tokenId) external nonReentrant {
         if (!_exists(tokenId)) {
             revert CertificateNotFound();
         }
@@ -107,14 +157,48 @@ contract Certificate is ERC721, Ownable {
         emit CertificateRevoked(tokenId);
     }
     
+    /**
+     * @dev Authorize an address to issue certificates
+     * @param issuer Address to authorize
+     */
     function authorizeIssuer(address issuer) external onlyOwner {
         authorizedIssuers[issuer] = true;
         emit IssuerAuthorized(issuer);
     }
     
+    /**
+     * @dev Revoke issuer authorization
+     * @param issuer Address to revoke authorization from
+     */
     function revokeIssuer(address issuer) external onlyOwner {
         authorizedIssuers[issuer] = false;
         emit IssuerRevoked(issuer);
+    }
+    
+    /**
+     * @dev Get certificates issued by a specific address
+     * @param issuer The issuer address
+     * @return Array of token IDs issued by the address
+     */
+    function getCertificatesByIssuer(address issuer) external view returns (uint256[] memory) {
+        return _issuerCertificates[issuer];
+    }
+    
+    /**
+     * @dev Get certificates owned by a specific address
+     * @param recipient The recipient address
+     * @return Array of token IDs owned by the address
+     */
+    function getCertificatesByRecipient(address recipient) external view returns (uint256[] memory) {
+        return _recipientCertificates[recipient];
+    }
+    
+    /**
+     * @dev Get total number of certificates minted
+     * @return Total certificate count
+     */
+    function totalSupply() external view returns (uint256) {
+        return _tokenIds.current();
     }
     
     // Override transfer functions to make NFTs non-transferable
@@ -128,5 +212,21 @@ contract Certificate is ERC721, Ownable {
     
     function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
         revert TransferNotAllowed();
+    }
+    
+    function approve(address, uint256) public pure override {
+        revert TransferNotAllowed();
+    }
+    
+    function setApprovalForAll(address, bool) public pure override {
+        revert TransferNotAllowed();
+    }
+    
+    function getApproved(uint256) public pure override returns (address) {
+        return address(0);
+    }
+    
+    function isApprovedForAll(address, address) public pure override returns (bool) {
+        return false;
     }
 }

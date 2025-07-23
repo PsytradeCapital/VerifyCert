@@ -1,0 +1,25 @@
+{
+  "networks": {
+    "mumbai": {
+      "name": "Polygon Mumbai Testnet",
+      "chainId": 80001,
+      "rpcUrl": "https://rpc-mumbai.maticvigil.com",
+      "blockExplorer": "https://mumbai.polygonscan.com",
+      "nativeCurrency": {
+        "name": "MATIC",
+        "symbol": "MATIC",
+        "decimals": 18
+      },
+      "faucet": "https://faucet.polygon.technology/"
+    }
+  },
+  "deployment": {
+    "gasLimit": 3000000,
+    "gasPrice": "auto",
+    "confirmations": 5
+  },
+  "verification": {
+    "enabled": true,
+    "apiKey": "POLYGONSCAN_API_KEY"
+  }
+}

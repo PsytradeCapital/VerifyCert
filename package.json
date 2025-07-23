@@ -5,18 +5,32 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
+    "test:integration": "hardhat test test/integration/*.test.js",
+    "test:e2e": "cd frontend && npm run e2e",
+    "test:e2e:open": "cd frontend && npm run e2e:open",
+    "test:all": "npm run test && npm run test:integration && cd backend && npm test && cd ../frontend && npm test && npm run e2e",
+    "test:ci": "npm run test && npm run test:integration && cd backend && npm test && cd ../frontend && npm test && npm run cypress:run",
+    "pre-deploy": "hardhat run scripts/pre-deploy-check.js --network mumbai",
     "deploy": "hardhat run scripts/deploy.js --network mumbai",
-    "verify": "hardhat verify --network mumbai",
+    "verify": "hardhat run scripts/verify.js --network mumbai",
+    "deployment-status": "hardhat run scripts/deployment-status.js --network mumbai",
+    "deploy:production": "node scripts/deploy-production.js",
+    "verify-deployment": "node scripts/verify-deployment.js",
     "node": "hardhat node",
     "backend:dev": "cd backend && npm run dev",
     "backend:install": "cd backend && npm install",
     "frontend:dev": "cd frontend && npm start",
     "frontend:install": "cd frontend && npm install",
-    "install:all": "npm install && npm run backend:install && npm run frontend:install"
+    "install:all": "npm install && npm run backend:install && npm run frontend:install",
+    "dev:all": "concurrently \"npm run node\" \"npm run backend:dev\" \"npm run frontend:dev\""
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
-    "hardhat": "^2.17.1"
+    "hardhat": "^2.17.1",
+    "supertest": "^6.3.3",
+    "jsdom": "^22.1.0",
+    "node-fetch": "^2.6.12",
+    "concurrently": "^8.2.0"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.3"

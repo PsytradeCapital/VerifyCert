@@ -7,7 +7,14 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build": "echo 'No build step required for Node.js backend'",
+    "deploy:docker": "docker build -t verify-cert-backend .",
+    "deploy:pm2": "pm2 start ecosystem.config.js --env production",
+    "deploy:pm2:dev": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop verify-cert-backend",
+    "restart": "pm2 restart verify-cert-backend",
+    "logs": "pm2 logs verify-cert-backend"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -24,7 +31,8 @@
   "devDependencies": {
     "jest": "^29.6.2",
     "nodemon": "^3.0.1",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "pm2": "^5.3.0"
   },
   "keywords": [
     "blockchain",

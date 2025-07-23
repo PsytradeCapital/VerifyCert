@@ -1,10 +1,12 @@
 const express = require('express');
 const CertificateService = require('../services/CertificateService');
+const QRCodeService = require('../services/QRCodeService');
 const { validate, schemas } = require('../middleware/validation');
 const router = express.Router();
 
-// Initialize certificate service
+// Initialize services
 const certificateService = new CertificateService();
+const qrCodeService = new QRCodeService();
 
 /**
  * POST /verify/:tokenId
@@ -276,6 +278,9 @@ router.get('/certificate/:tokenId/status',
       // Get network information
       const networkInfo = await certificateService.getNetworkInfo();
 
+      // Get QR code URLs
+      const qrCodeUrls = qrCodeService.getQRCodeURLs(tokenId);
+
       res.json({
         success: true,
         data: {
@@ -294,7 +299,8 @@ router.get('/certificate/:tokenId/status',
           },
           verification: {
             verificationUrl: `${req.protocol}://${req.get('host')}/verify/${tokenId}`,
-            qrCodeUrl: `${req.protocol}://${req.get('host')}/api/v1/qr-code/${tokenId}`
+            qrCodeUrl: qrCodeUrls.verificationQR,
+            sharingQRUrl: qrCodeUrls.sharingQR
           }
         }
       });
@@ -319,6 +325,65 @@ router.get('/certificate/:tokenId/status',
         });
       }
       
+      next(error);
+    }
+  }
+);
+
+/**
+ * GET /qr-code/:tokenId
+ * Generate and return QR code for certificate verification
+ */
+router.get('/qr-code/:tokenId',
+  validate({ tokenId: schemas.tokenId }, 'params'),
+  async (req, res, next) => {
+    try {
+      const { tokenId } = req.params;
+      const { type = 'verification' } = req.query;
+      
+      console.log(`Generating QR code for certificate ${tokenId}, type: ${type}`);
+
+      // Check if certificate exists first
+      const certificate = await certificateService.getCertificate(tokenId);
+      if (!certificate) {
+        return res.status(404).json({
+          success: false,
+          error: {
+            code: 'CERTIFICATE_NOT_FOUND',
+            message: 'Certificate not found'
+          }
+        });
+      }
+
+      let qrResult;
+      if (type === 'sharing') {
+        qrResult = await qrCodeService.generateSharingQR(tokenId, {
+          recipientName: certificate.recipientName,
+          courseName: certificate.courseName,
+          institutionName: certificate.institutionName
+        });
+      } else {
+        qrResult = await qrCodeService.generateCertificateQR(tokenId);
+      }
+
+      if (!qrResult.success) {
+        return res.status(500).json({
+          success: false,
+          error: {
+            code: 'QR_GENERATION_FAILED',
+            message: 'Failed to generate QR code',
+            details: qrResult.error.details
+          }
+        });
+      }
+
+      res.json({
+        success: true,
+        data: qrResult.data
+      });
+
+    } catch (error) {
+      console.error('QR code generation error:', error);
       next(error);
     }
   }

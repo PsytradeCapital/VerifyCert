@@ -1,0 +1,68 @@
+{
+  "version": 2,
+  "name": "verify-cert-frontend",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://api.verifycert.com",
+    "REACT_APP_CONTRACT_ADDRESS": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d4d4",
+    "REACT_APP_POLYGON_MUMBAI_RPC_URL": "https://rpc-mumbai.maticvigil.com",
+    "REACT_APP_CHAIN_ID": "80001",
+    "REACT_APP_NETWORK_NAME": "mumbai"
+  },
+  "build": {
+    "env": {
+      "REACT_APP_API_URL": "https://api.verifycert.com",
+      "REACT_APP_CONTRACT_ADDRESS": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d4d4",
+      "REACT_APP_POLYGON_MUMBAI_RPC_URL": "https://rpc-mumbai.maticvigil.com",
+      "REACT_APP_CHAIN_ID": "80001",
+      "REACT_APP_NETWORK_NAME": "mumbai"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://rpc-mumbai.maticvigil.com https://mumbai.polygonscan.com wss://rpc-mumbai.maticvigil.com https://api.verifycert.com;"
+        }
+      ]
+    }
+  ]
+}

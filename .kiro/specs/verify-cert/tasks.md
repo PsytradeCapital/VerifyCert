@@ -335,12 +335,17 @@ tionality
 
 
 
+
+
+
   - Create VerificationPage for public certificate verification
   - Implement blockchain data fetching without wallet requirement
   - Add authenticity confirmation display
   - Handle invalid certificate scenarios
   - Write unit tests for verification page
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+-
+
 
 - [ ] 7. Add application routing and navigation
 
@@ -357,6 +362,8 @@ tionality
 
 
 
+-
+
 
 - [ ] 7.1 Set up React Router configuration
 
@@ -366,9 +373,11 @@ tionality
 
 
   - Configure React Router with all application routes
-  - Add navigation components and menu structure
+  - Add navigation components and menu st
+ructure
   - Implement route protection for issuer-only pages
-  - Add 404 error handling
+  --Add 404 error handling
+
   - _Requirements: 8.2_
 
 - [ ] 7.2 Implement responsive navigation

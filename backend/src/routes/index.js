@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Import route modules
 const certificatesRouter = require('./certificates');
+const verifyRouter = require('../../routes/verifyCertificate');
 // const issuersRouter = require('./issuers');
 // const utilityRouter = require('./utility');
 
@@ -14,6 +15,7 @@ router.get('/', (req, res) => {
     version: '1.0.0',
     endpoints: {
       certificates: '/api/v1/certificates',
+      verify: '/api/v1/certificates/verify',
       issuers: '/api/v1/issuers',
       utility: '/api/v1/utility'
     }
@@ -22,6 +24,7 @@ router.get('/', (req, res) => {
 
 // Route modules
 router.use('/certificates', certificatesRouter);
+router.use('/certificates', verifyRouter);
 // router.use('/issuers', issuersRouter);
 // router.use('/utility', utilityRouter);
 

@@ -338,6 +338,17 @@ tionality
 
 
 
+
+
+
+
+
+
+
+
+
+
+
   - Create VerificationPage for public certificate verification
   - Implement blockchain data fetching without wallet requirement
   - Add authenticity confirmation display

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
-import getBlockchainService, { CertificateData, VerificationResult } from '../services/blockchainService';
+import getBlockchainService, { VerificationResult } from '../services/blockchainService';
 
 interface VerificationPageState {
   certificate: Certificate | null;
@@ -39,9 +39,9 @@ export default function VerificationPage() {
         isLoading: false,
       }));
     }
-  }, [tokenId]);
+  }, [tokenId, verifyCertificate]);
 
-  const verifyCertificate = async () => {
+  const verifyCertificate = useCallback(async () => {
     if (!tokenId) return;
 
     setState(prev => ({ ...prev, isLoading: true, error: null }));
@@ -105,7 +105,7 @@ export default function VerificationPage() {
       
       toast.error(errorMessage);
     }
-  };
+  }, [tokenId]);
 
   const handleRetry = () => {
     verifyCertificate();

@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
 
@@ -29,7 +28,7 @@ export default function CertificateViewer() {
   });
 
   // Fetch certificate data from blockchain
-  const fetchCertificate = async () => {
+  const fetchCertificate = useCallback(async () => {
     if (!tokenId) {
       setState(prev => ({
         ...prev,
@@ -66,7 +65,7 @@ export default function CertificateViewer() {
         isLoading: false,
       }));
     }
-  };
+  }, [tokenId]);
 
   // Verify certificate on blockchain
   const verifyCertificate = async () => {
@@ -278,14 +277,14 @@ export default function CertificateViewer() {
   // Load certificate on mount
   useEffect(() => {
     fetchCertificate();
-  }, [tokenId]);
+  }, [fetchCertificate]);
 
   // Auto-verify certificate when loaded
   useEffect(() => {
     if (state.certificate && !state.verificationResult && !state.isVerifying) {
       verifyCertificate();
     }
-  }, [state.certificate]);
+  }, [state.certificate, state.verificationResult, state.isVerifying]);
 
   if (state.isLoading) {
     return (

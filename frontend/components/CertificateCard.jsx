@@ -1,24 +1,15 @@
 import React from 'react';
-import { Calendar, User, GraduationCap, Building, CheckCircle, XCircle, Download, Share2 } from 'lucide-react';
+import { Calendar, User, GraduationCap, Building, Shield, AlertTriangle, ExternalLink } from 'lucide-react';
 
 const CertificateCard = ({ 
   certificate, 
-  showActions = true, 
-  className = "",
-  onDownload,
-  onShare 
+  tokenId, 
+  onVerify, 
+  onRevoke, 
+  showActions = false, 
+  canRevoke = false,
+  showBlockchainInfo = false 
 }) => {
-  if (!certificate) {
-    return (
-      <div className={`bg-white rounded-lg shadow-md p-6 border border-gray-200 ${className}`}>
-        <div className="text-center text-gray-500">
-          <XCircle className="w-12 h-12 mx-auto mb-4 text-red-500" />
-          <p>Certificate not found</p>
-        </div>
-      </div>
-    );
-  }
-
   const formatDate = (timestamp) => {
     return new Date(timestamp * 1000).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -27,151 +18,106 @@ const CertificateCard = ({
     });
   };
 
-  const handleDownload = () => {
-    if (onDownload) {
-      onDownload(certificate);
-    } else {
-      // Default download behavior - open in new tab
-      window.open(`/api/v1/certificates/${certificate.tokenId}/download`, '_blank');
+  const handleVerify = () => {
+    if (onVerify) {
+      onVerify(tokenId);
     }
   };
 
-  const handleShare = () => {
-    if (onShare) {
-      onShare(certificate);
-    } else {
-      // Default share behavior - copy verification URL
-      navigator.clipboard.writeText(certificate.verificationURL);
+  const handleRevoke = () => {
+    if (onRevoke && window.confirm('Are you sure you want to revoke this certificate?')) {
+      onRevoke(tokenId);
     }
+  };
+
+  const getStatusBadge = () => {
+    if (certificate.isRevoked) {
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <AlertTriangle className="w-3 h-3 mr-1" />
+          Revoked
+        </span>
+      );
+    }
+    return (
+      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+        <Shield className="w-3 h-3 mr-1" />
+        Valid
+      </span>
+    );
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg border-2 ${
-      certificate.isValid ? 'border-green-200' : 'border-red-200'
-    } ${className}`}>
-      {/* Header with validity status */}
-      <div className={`px-6 py-4 rounded-t-lg ${
-        certificate.isValid ? 'bg-green-50' : 'bg-red-50'
-      }`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            {certificate.isValid ? (
-              <CheckCircle className="w-6 h-6 text-green-600" />
-            ) : (
-              <XCircle className="w-6 h-6 text-red-600" />
-            )}
-            <span className={`font-semibold ${
-              certificate.isValid ? 'text-green-800' : 'text-red-800'
-            }`}>
-              {certificate.isValid ? 'Valid Certificate' : 'Invalid Certificate'}
-            </span>
-          </div>
-          <span className="text-sm text-gray-600">
-            ID: {certificate.tokenId}
+    <div className={`bg-white rounded-lg shadow-md border-l-4 ${
+      certificate.isRevoked ? 'border-red-500' : 'border-green-500'
+    } p-6 hover:shadow-lg transition-shadow duration-200`}>
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {certificate.courseName}
+          </h3>
+          {getStatusBadge()}
+        </div>
+        <div className="text-sm text-gray-500">
+          #{tokenId}
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center text-gray-700">
+          <User className="w-4 h-4 mr-2 text-gray-500" />
+          <span className="font-medium">Recipient:</span>
+          <span className="ml-2">{certificate.recipientName}</span>
+        </div>
+
+        <div className="flex items-center text-gray-700">
+          <Building className="w-4 h-4 mr-2 text-gray-500" />
+          <span className="font-medium">Institution:</span>
+          <span className="ml-2">{certificate.institutionName}</span>
+        </div>
+
+        <div className="flex items-center text-gray-700">
+          <Calendar className="w-4 h-4 mr-2 text-gray-500" />
+          <span className="font-medium">Issued:</span>
+          <span className="ml-2">{formatDate(certificate.issueDate)}</span>
+        </div>
+
+        <div className="flex items-center text-gray-700">
+          <GraduationCap className="w-4 h-4 mr-2 text-gray-500" />
+          <span className="font-medium">Issuer:</span>
+          <span className="ml-2 font-mono text-sm">
+            {certificate.issuer.slice(0, 6)}...{certificate.issuer.slice(-4)}
           </span>
         </div>
       </div>
 
-      {/* Certificate Content */}
-      <div className="p-6">
-        {/* Institution Name */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            {certificate.institutionName}
-          </h2>
-          <p className="text-lg text-gray-600">Certificate of Completion</p>
-        </div>
-
-        {/* Certificate Details */}
-        <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <User className="w-5 h-5 text-blue-600" />
-            <div>
-              <p className="text-sm text-gray-600">Recipient</p>
-              <p className="font-semibold text-gray-900">{certificate.recipientName}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <GraduationCap className="w-5 h-5 text-blue-600" />
-            <div>
-              <p className="text-sm text-gray-600">Course</p>
-              <p className="font-semibold text-gray-900">{certificate.courseName}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <Calendar className="w-5 h-5 text-blue-600" />
-            <div>
-              <p className="text-sm text-gray-600">Issue Date</p>
-              <p className="font-semibold text-gray-900">
-                {formatDate(certificate.issueDate)}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <Building className="w-5 h-5 text-blue-600" />
-            <div>
-              <p className="text-sm text-gray-600">Issuer Address</p>
-              <p className="font-mono text-sm text-gray-700 break-all">
-                {certificate.issuer}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* QR Code Section */}
-        {certificate.qrCodeURL && (
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 mb-2">Verification QR Code</p>
-            <div className="inline-block p-4 bg-white border border-gray-200 rounded-lg">
-              <img 
-                src={certificate.qrCodeURL} 
-                alt="Certificate QR Code"
-                className="w-32 h-32 mx-auto"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Verification URL */}
-        <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 mb-1">Verification URL</p>
-          <p className="text-sm font-mono text-blue-600 break-all">
-            {certificate.verificationURL}
-          </p>
-        </div>
-
-        {/* Action Buttons */}
-        {showActions && (
-          <div className="mt-6 flex space-x-3">
+      {showActions && (
+        <div className="mt-6 flex space-x-3">
+          <button
+            onClick={handleVerify}
+            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200 text-sm font-medium"
+          >
+            Verify Certificate
+          </button>
+          
+          {canRevoke && !certificate.isRevoked && (
             <button
-              onClick={handleDownload}
-              className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              onClick={handleRevoke}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-200 text-sm font-medium"
             >
-              <Download className="w-4 h-4" />
-              <span>Download</span>
+              Revoke
             </button>
-            <button
-              onClick={handleShare}
-              className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              <Share2 className="w-4 h-4" />
-              <span>Share</span>
-            </button>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
-      {/* Footer with blockchain info */}
-      <div className="px-6 py-3 bg-gray-50 rounded-b-lg border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
-          Verified on Polygon Mumbai • Blockchain Certificate • Non-transferable NFT
-        </p>
+      <div className="mt-4 pt-4 border-t border-gray-200">
+        <div className="flex justify-between items-center text-xs text-gray-500">
+          <span>Certificate ID: {tokenId}</span>
+          <span className="font-mono">
+            Blockchain Verified
+          </span>
+        </div>
       </div>
     </div>
   );

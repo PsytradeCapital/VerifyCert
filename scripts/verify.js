@@ -10,6 +10,7 @@ async function main() {
   if (!process.env.POLYGONSCAN_API_KEY || process.env.POLYGONSCAN_API_KEY === 'your_polygonscan_api_key') {
     console.error("❌ POLYGONSCAN_API_KEY not set in .env file");
     console.log("Get your API key from: https://polygonscan.com/apis");
+    console.log("Note: The same API key works for both Mumbai and Amoy testnets");
     process.exit(1);
   }
 
@@ -57,8 +58,11 @@ async function main() {
       console.log("⚠️  Could not update deployment info file");
     }
     
+    // Display appropriate block explorer link based on network
     if (network.name === 'mumbai') {
       console.log(`\n🔍 View verified contract: https://mumbai.polygonscan.com/address/${contractAddress}#code`);
+    } else if (network.name === 'amoy') {
+      console.log(`\n🔍 View verified contract: https://amoy.polygonscan.com/address/${contractAddress}#code`);
     }
     
   } catch (error) {

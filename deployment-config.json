@@ -11,6 +11,18 @@
         "decimals": 18
       },
       "faucet": "https://faucet.polygon.technology/"
+    },
+    "amoy": {
+      "name": "Polygon Amoy Testnet",
+      "chainId": 80002,
+      "rpcUrl": "https://rpc-amoy.polygon.technology/",
+      "blockExplorer": "https://amoy.polygonscan.com",
+      "nativeCurrency": {
+        "name": "MATIC",
+        "symbol": "MATIC",
+        "decimals": 18
+      },
+      "faucet": "https://faucet.polygon.technology/"
     }
   },
   "deployment": {

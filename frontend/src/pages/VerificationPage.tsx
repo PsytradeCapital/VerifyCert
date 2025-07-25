@@ -2,19 +2,18 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
-
-interface VerificationResult {
-  isValid: boolean;
-  onChain: boolean;
-  message: string;
-  verificationTimestamp?: number;
-}
+import getBlockchainService, { CertificateData, VerificationResult } from '../services/blockchainService';
 
 interface VerificationPageState {
   certificate: Certificate | null;
   isLoading: boolean;
   error: string | null;
   verificationResult: VerificationResult | null;
+  networkInfo: {
+    name: string;
+    chainId: number;
+    isCorrectNetwork: boolean;
+  } | null;
 }
 
 export default function VerificationPage() {
@@ -26,6 +25,7 @@ export default function VerificationPage() {
     isLoading: true,
     error: null,
     verificationResult: null,
+    networkInfo: null,
   });
 
   // Verify certificate on mount
@@ -47,62 +47,48 @@ export default function VerificationPage() {
     setState(prev => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      // First, get the certificate data
-      const certResponse = await fetch(`/api/v1/certificates/${tokenId}`);
-      const certData = await certResponse.json();
-
-      if (!certResponse.ok) {
-        throw new Error(certData.error?.message || 'Certificate not found');
+      // Get blockchain service instance
+      const blockchainService = getBlockchainService();
+      
+      // Check if blockchain service is configured
+      if (!blockchainService.isConfigured()) {
+        throw new Error('Blockchain service not properly configured');
       }
 
-      if (!certData.success || !certData.data.certificate) {
-        throw new Error('Certificate not found');
-      }
-
-      const certificate = certData.data.certificate;
-
-      // Then verify it on the blockchain
-      const verifyResponse = await fetch(`/api/v1/certificates/verify/${tokenId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const verifyData = await verifyResponse.json();
-
-      if (!verifyResponse.ok) {
-        // Even if verification fails, we can still show the certificate
-        console.warn('Verification failed:', verifyData.error?.message);
-        setState(prev => ({
-          ...prev,
-          certificate,
-          verificationResult: {
-            isValid: false,
-            onChain: false,
-            message: verifyData.error?.message || 'Verification failed',
-          },
-          isLoading: false,
-        }));
-        return;
-      }
-
-      const verificationResult: VerificationResult = {
-        isValid: verifyData.data.verification?.isValid || false,
-        onChain: verifyData.data.verification?.onChain || false,
-        message: verifyData.data.verification?.message || 'Verification completed',
-        verificationTimestamp: Date.now(),
+      // Get certificate data directly from blockchain
+      const certificate = await blockchainService.getCertificate(tokenId);
+      
+      // Transform CertificateData to Certificate interface for compatibility
+      const certificateForDisplay: Certificate = {
+        tokenId: certificate.tokenId,
+        issuer: certificate.issuer,
+        recipient: certificate.recipient,
+        recipientName: certificate.recipientName,
+        courseName: certificate.courseName,
+        institutionName: certificate.institutionName,
+        issueDate: certificate.issueDate,
+        metadataURI: certificate.metadataURI,
+        isValid: certificate.isValid,
+        verificationURL: certificate.verificationURL,
+        qrCodeURL: certificate.qrCodeURL
       };
+
+      // Verify certificate authenticity on blockchain
+      const verificationResult = await blockchainService.verifyCertificate(tokenId);
+
+      // Get network information
+      const networkInfo = await blockchainService.getNetworkInfo();
 
       setState(prev => ({
         ...prev,
-        certificate,
+        certificate: certificateForDisplay,
         verificationResult,
+        networkInfo,
         isLoading: false,
       }));
 
       if (verificationResult.isValid) {
-        toast.success('Certificate verified successfully!');
+        toast.success('Certificate verified successfully on blockchain!');
       } else {
         toast.error('Certificate verification failed');
       }
@@ -340,6 +326,24 @@ export default function VerificationPage() {
                 <div>
                   <dt className="text-sm font-medium text-gray-500">Institution</dt>
                   <dd className="mt-1 text-sm text-gray-900">{state.certificate.institutionName}</dd>
+                </div>
+                {state.networkInfo && (
+                  <div>
+                    <dt className="text-sm font-medium text-gray-500">Network</dt>
+                    <dd className="mt-1">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        state.networkInfo.isCorrectNetwork 
+                          ? 'bg-blue-100 text-blue-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {state.networkInfo.name} (Chain ID: {state.networkInfo.chainId})
+                      </span>
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt className="text-sm font-medium text-gray-500">Verification Method</dt>
+                  <dd className="mt-1 text-sm text-gray-900">Direct Blockchain Query</dd>
                 </div>
               </div>
             </div>

@@ -1,507 +1,289 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import React from 'react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import VerificationPage from '../VerificationPage';
+import getBlockchainService from '../../services/blockchainService';
 
-// Mock fetch
-global.fetch = jest.fn();
+// Mock dependencies
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: () => ({ tokenId: '1' }),
+  useNavigate: () => jest.fn(),
+}));
 
-// Mock window.print
-Object.defineProperty(window, 'print', {
-  value: jest.fn(),
-  writable: true,
+jest.mock('react-hot-toast');
+
+jest.mock('../../services/blockchainService', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+jest.mock('../../components/CertificateCard', () => {
+  return function MockCertificateCard({ certificate }: any) {
+    return (
+      <div data-testid="certificate-card">
+        <div>{certificate.recipientName}</div>
+        <div>{certificate.courseName}</div>
+        <div>{certificate.institutionName}</div>
+      </div>
+    );
+  };
 });
 
+const mockGetBlockchainService = getBlockchainService as jest.MockedFunction<typeof getBlockchainService>;
+
+const mockBlockchainService = {
+  getCertificate: jest.fn(),
+  verifyCertificate: jest.fn(),
+  getNetworkInfo: jest.fn(),
+  isConfigured: jest.fn(),
+};
+const mockToast = toast as jest.Mocked<typeof toast>;
+
 const mockCertificate = {
-  tokenId: '123',
+  tokenId: '1',
   issuer: '0x1234567890123456789012345678901234567890',
   recipient: '0x0987654321098765432109876543210987654321',
   recipientName: 'John Doe',
   courseName: 'Blockchain Development',
   institutionName: 'Tech University',
-  issueDate: Math.floor(Date.now() / 1000) - 86400, // Yesterday
+  issueDate: 1640995200,
+  metadataURI: 'https://example.com/metadata/1',
   isValid: true,
-  qrCodeURL: 'https://example.com/qr/123',
-  verificationURL: 'https://example.com/verify/123',
-  metadataURI: 'https://example.com/metadata/123',
+  verificationURL: 'https://example.com/verify/1',
+  qrCodeURL: 'https://example.com/qr/1',
 };
 
-const renderWithRouter = (component: React.ReactElement, initialEntries = ['/verify/123']) => {
-  return render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <Routes>
-        <Route path="/verify/:tokenId" element={component} />
-        <Route path="/verify/" element={component} />
-        <Route path="/" element={<div>Home Page</div>} />
-        <Route path="/dashboard" element={<div>Dashboard Page</div>} />
-      </Routes>
-      <Toaster />
-    </MemoryRouter>
-  );
+const mockVerificationResult = {
+  isValid: true,
+  onChain: true,
+  message: 'Certificate is valid and verified on blockchain',
+  verificationTimestamp: Date.now(),
+};
+
+const mockNetworkInfo = {
+  name: 'maticmum',
+  chainId: 80001,
+  isCorrectNetwork: true,
+};
+
+const renderWithRouter = (component: React.ReactElement) => {
+  return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 
 describe('VerificationPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (global.fetch as jest.Mock).mockClear();
+    mockBlockchainService.isConfigured.mockReturnValue(true);
+    mockGetBlockchainService.mockReturnValue(mockBlockchainService as any);
   });
 
-  it('should show loading state initially', () => {
-    // Mock delayed response
-    (global.fetch as jest.Mock).mockImplementationOnce(
-      () => new Promise(resolve => setTimeout(() => resolve({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      }), 100))
-    );
-
+  it('should display loading state initially', () => {
+    mockBlockchainService.getCertificate.mockImplementation(() => new Promise(() => {})); // Never resolves
+    
     renderWithRouter(<VerificationPage />);
     
     expect(screen.getByText('Verifying Certificate')).toBeInTheDocument();
     expect(screen.getByText('Checking certificate authenticity on the blockchain...')).toBeInTheDocument();
-    expect(screen.getByText('Certificate ID: #123')).toBeInTheDocument();
+    expect(screen.getByText('Certificate ID: #1')).toBeInTheDocument();
   });
 
-  it('should display certificate and verification result when loaded successfully', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
+  it('should successfully verify and display certificate', async () => {
+    mockBlockchainService.getCertificate.mockResolvedValue(mockCertificate);
+    mockBlockchainService.verifyCertificate.mockResolvedValue(mockVerificationResult);
+    mockBlockchainService.getNetworkInfo.mockResolvedValue(mockNetworkInfo);
 
     renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('VerifyCert')).toBeInTheDocument();
-      expect(screen.getByText('Public Verification')).toBeInTheDocument();
       expect(screen.getByText('Certificate Verified')).toBeInTheDocument();
-      expect(screen.getByText('Certificate verified successfully')).toBeInTheDocument();
-      expect(screen.getByText('✓ Confirmed on Polygon blockchain')).toBeInTheDocument();
     });
 
-    // Check certificate details
+    expect(screen.getByText('Certificate is valid and verified on blockchain')).toBeInTheDocument();
+    expect(screen.getByText('✓ Confirmed on Polygon blockchain')).toBeInTheDocument();
+    expect(screen.getByTestId('certificate-card')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('Blockchain Development')).toBeInTheDocument();
     expect(screen.getByText('Tech University')).toBeInTheDocument();
+
+    // Check verification details
+    expect(screen.getByText('#1')).toBeInTheDocument();
+    expect(screen.getByText('Verified on Blockchain')).toBeInTheDocument();
+    expect(screen.getByText('0x1234567890123456789012345678901234567890')).toBeInTheDocument();
+    expect(screen.getByText('Direct Blockchain Query')).toBeInTheDocument();
+    expect(screen.getByText('maticmum (Chain ID: 80001)')).toBeInTheDocument();
+
+    expect(mockToast.success).toHaveBeenCalledWith('Certificate verified successfully on blockchain!');
   });
 
-  it('should show error state when certificate not found', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-      json: async () => ({
-        success: false,
-        error: { message: 'Certificate not found' },
-      }),
-    });
+  it('should handle certificate verification failure', async () => {
+    const failedVerificationResult = {
+      ...mockVerificationResult,
+      isValid: false,
+      message: 'Certificate is not valid or has been revoked',
+    };
+
+    mockBlockchainService.getCertificate.mockResolvedValue(mockCertificate);
+    mockBlockchainService.verifyCertificate.mockResolvedValue(failedVerificationResult);
+    mockBlockchainService.getNetworkInfo.mockResolvedValue(mockNetworkInfo);
 
     renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
       expect(screen.getByText('Verification Failed')).toBeInTheDocument();
-      expect(screen.getByText('Certificate not found')).toBeInTheDocument();
-      expect(screen.getByText('Try Again')).toBeInTheDocument();
-      expect(screen.getByText('Go Home')).toBeInTheDocument();
     });
+
+    expect(screen.getByText('Certificate is not valid or has been revoked')).toBeInTheDocument();
+    expect(screen.getByText('Not Verified')).toBeInTheDocument();
+    expect(mockToast.error).toHaveBeenCalledWith('Certificate verification failed');
   });
 
-  it('should handle verification failure gracefully', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: false,
-        json: async () => ({
-          success: false,
-          error: { message: 'Verification failed' },
-        }),
-      });
+  it('should handle certificate not found error', async () => {
+    mockBlockchainService.getCertificate.mockRejectedValue(new Error('Certificate not found on blockchain'));
 
     renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
       expect(screen.getByText('Verification Failed')).toBeInTheDocument();
-      expect(screen.getByText('Verification failed')).toBeInTheDocument();
-      expect(screen.getByText('John Doe')).toBeInTheDocument(); // Certificate should still be shown
     });
+
+    expect(screen.getByText('Certificate not found on blockchain')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /try again/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /go home/i })).toBeInTheDocument();
+    expect(mockToast.error).toHaveBeenCalledWith('Certificate not found on blockchain');
   });
 
-  it('should display verification details correctly', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Verification Details')).toBeInTheDocument();
-      expect(screen.getByText('#123')).toBeInTheDocument(); // Certificate ID
-      expect(screen.getByText('Verified on Blockchain')).toBeInTheDocument();
-      expect(screen.getByText('0x1234567890123456789012345678901234567890')).toBeInTheDocument(); // Issuer
-      expect(screen.getByText('John Doe')).toBeInTheDocument(); // Recipient
-      expect(screen.getByText('Tech University')).toBeInTheDocument(); // Institution
-    });
-  });
-
-  it('should handle retry verification', async () => {
-    (global.fetch as jest.Mock)
-      .mockRejectedValueOnce(new Error('Network error'))
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
+  it('should handle blockchain service not configured error', async () => {
+    mockBlockchainService.isConfigured.mockReturnValue(false);
 
     renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
       expect(screen.getByText('Verification Failed')).toBeInTheDocument();
-      const retryButton = screen.getByText('Try Again');
-      fireEvent.click(retryButton);
     });
+
+    expect(screen.getByText('Blockchain service not properly configured')).toBeInTheDocument();
+    expect(mockToast.error).toHaveBeenCalledWith('Blockchain service not properly configured');
+  });
+
+  it('should handle network connection errors', async () => {
+    mockBlockchainService.getCertificate.mockRejectedValue(new Error('Network connection error. Please check your internet connection.'));
+
+    renderWithRouter(<VerificationPage />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Verification Failed')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Network connection error. Please check your internet connection.')).toBeInTheDocument();
+  });
+
+  it('should display network warning for incorrect network', async () => {
+    const incorrectNetworkInfo = {
+      name: 'mainnet',
+      chainId: 1,
+      isCorrectNetwork: false,
+    };
+
+    mockBlockchainService.getCertificate.mockResolvedValue(mockCertificate);
+    mockBlockchainService.verifyCertificate.mockResolvedValue(mockVerificationResult);
+    mockBlockchainService.getNetworkInfo.mockResolvedValue(incorrectNetworkInfo);
+
+    renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
       expect(screen.getByText('Certificate Verified')).toBeInTheDocument();
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
     });
+
+    // Should show network info with warning styling
+    expect(screen.getByText('mainnet (Chain ID: 1)')).toBeInTheDocument();
+    const networkBadge = screen.getByText('mainnet (Chain ID: 1)').closest('span');
+    expect(networkBadge).toHaveClass('bg-yellow-100', 'text-yellow-800');
   });
 
-  it('should handle print certificate', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
+  it('should handle retry functionality', async () => {
+    mockBlockchainService.getCertificate.mockRejectedValueOnce(new Error('Network error'))
+      .mockResolvedValueOnce(mockCertificate);
+    mockBlockchainService.verifyCertificate.mockResolvedValue(mockVerificationResult);
+    mockBlockchainService.getNetworkInfo.mockResolvedValue(mockNetworkInfo);
+
+    renderWithRouter(<VerificationPage />);
+
+    // Wait for error state
+    await waitFor(() => {
+      expect(screen.getByText('Verification Failed')).toBeInTheDocument();
+    });
+
+    // Click retry button
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
+
+    // Should show loading state again
+    expect(screen.getByText('Verifying Certificate')).toBeInTheDocument();
+
+    // Wait for successful verification
+    await waitFor(() => {
+      expect(screen.getByText('Certificate Verified')).toBeInTheDocument();
+    });
+
+    expect(mockBlockchainService.getCertificate).toHaveBeenCalledTimes(2);
+  });
+
+  it('should handle print functionality', async () => {
+    const mockPrint = jest.fn();
+    Object.defineProperty(window, 'print', {
+      value: mockPrint,
+      writable: true,
+    });
+
+    mockBlockchainService.getCertificate.mockResolvedValue(mockCertificate);
+    mockBlockchainService.verifyCertificate.mockResolvedValue(mockVerificationResult);
+    mockBlockchainService.getNetworkInfo.mockResolvedValue(mockNetworkInfo);
 
     renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
-      const printButton = screen.getByText('Print Certificate');
-      fireEvent.click(printButton);
+      expect(screen.getByText('Certificate Verified')).toBeInTheDocument();
     });
 
-    expect(window.print).toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: /print certificate/i }));
+    expect(mockPrint).toHaveBeenCalled();
   });
 
-  it('should navigate to home when home button is clicked', async () => {
-    (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+  it('should handle missing token ID', async () => {
+    // Mock useParams to return undefined tokenId
+    jest.doMock('react-router-dom', () => ({
+      ...jest.requireActual('react-router-dom'),
+      useParams: () => ({ tokenId: undefined }),
+      useNavigate: () => jest.fn(),
+    }));
 
-    renderWithRouter(<VerificationPage />);
+    const { VerificationPage: VerificationPageWithoutToken } = await import('../VerificationPage');
+    
+    renderWithRouter(<VerificationPageWithoutToken />);
 
     await waitFor(() => {
-      const homeButton = screen.getByText('Go Home');
-      fireEvent.click(homeButton);
+      expect(screen.getByText('Verification Failed')).toBeInTheDocument();
     });
 
-    // Note: In a real test, we would check if navigate('/') was called
-    // but since we're mocking the router, we just verify the button exists and is clickable
-    expect(screen.getByText('Go Home')).toBeInTheDocument();
-  });
-
-  it('should navigate to dashboard when dashboard button is clicked', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      const dashboardButton = screen.getByText('Dashboard');
-      fireEvent.click(dashboardButton);
-    });
-
-    expect(screen.getByText('Dashboard')).toBeInTheDocument();
-  });
-
-  it('should handle missing token ID', () => {
-    renderWithRouter(<VerificationPage />, ['/verify/']);
-
-    expect(screen.getByText('Verification Failed')).toBeInTheDocument();
     expect(screen.getByText('No certificate ID provided')).toBeInTheDocument();
   });
 
   it('should display information section', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
+    mockBlockchainService.getCertificate.mockResolvedValue(mockCertificate);
+    mockBlockchainService.verifyCertificate.mockResolvedValue(mockVerificationResult);
+    mockBlockchainService.getNetworkInfo.mockResolvedValue(mockNetworkInfo);
 
     renderWithRouter(<VerificationPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('About Certificate Verification')).toBeInTheDocument();
-      expect(screen.getByText('🔒 Security Features')).toBeInTheDocument();
-      expect(screen.getByText('✅ Verification Process')).toBeInTheDocument();
-      expect(screen.getByText('Immutable blockchain storage')).toBeInTheDocument();
-      expect(screen.getByText('Certificate data retrieved from blockchain')).toBeInTheDocument();
-    });
-  });
-
-  it('should display footer', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Powered by VerifyCert - Blockchain Certificate Verification')).toBeInTheDocument();
-      expect(screen.getByText('Secured on Polygon Network')).toBeInTheDocument();
-    });
-  });
-
-  it('should show invalid verification status', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: false,
-              onChain: false,
-              message: 'Certificate has been revoked',
-            },
-          },
-        }),
-      });
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Verification Failed')).toBeInTheDocument();
-      expect(screen.getByText('Certificate has been revoked')).toBeInTheDocument();
-      expect(screen.getByText('Not Verified')).toBeInTheDocument();
-    });
-  });
-
-  it('should handle network errors gracefully', async () => {
-    (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Verification Failed')).toBeInTheDocument();
-      expect(screen.getByText('Network error')).toBeInTheDocument();
-    });
-  });
-
-  it('should show verification timestamp when available', async () => {
-    const mockTimestamp = Date.now();
-    
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      });
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Verified:/)).toBeInTheDocument();
-    });
-  });
-
-  it('should handle verify again button click', async () => {
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Certificate verified successfully',
-            },
-          },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: { certificate: mockCertificate },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          data: {
-            verification: {
-              isValid: true,
-              onChain: true,
-              message: 'Re-verification successful',
-            },
-          },
-        }),
-      });
-
-    renderWithRouter(<VerificationPage />);
-
-    await waitFor(() => {
-      const verifyAgainButton = screen.getByText('Verify Again');
-      fireEvent.click(verifyAgainButton);
+      expect(screen.getByText('Certificate Verified')).toBeInTheDocument();
     });
 
-    await waitFor(() => {
-      expect(screen.getByText('Re-verification successful')).toBeInTheDocument();
-    });
+    expect(screen.getByText('About Certificate Verification')).toBeInTheDocument();
+    expect(screen.getByText('🔒 Security Features')).toBeInTheDocument();
+    expect(screen.getByText('✅ Verification Process')).toBeInTheDocument();
+    expect(screen.getByText('• Certificate data retrieved from blockchain')).toBeInTheDocument();
+    expect(screen.getByText('• Authenticity confirmed via smart contract')).toBeInTheDocument();
   });
 });

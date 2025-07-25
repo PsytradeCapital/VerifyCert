@@ -1,392 +1,327 @@
 const express = require('express');
-const CertificateService = require('../services/CertificateService');
-const QRCodeService = require('../services/QRCodeService');
-const { validate, schemas } = require('../middleware/validation');
+const { ethers } = require('ethers');
+const Joi = require('joi');
+
 const router = express.Router();
 
-// Initialize services
-const certificateService = new CertificateService();
-const qrCodeService = new QRCodeService();
+// Load contract ABI and configuration
+const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractAddress = process.env.CONTRACT_ADDRESS;
+const rpcUrl = process.env.POLYGON_MUMBAI_RPC_URL;
+
+// Initialize blockchain connection (read-only)
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+// Validation schemas
+const tokenIdSchema = Joi.object({
+  tokenId: Joi.string().pattern(/^\d+$/).required()
+});
+
+const verifyRequestSchema = Joi.object({
+  tokenId: Joi.string().pattern(/^\d+$/).required(),
+  expectedRecipient: Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/).optional(),
+  expectedIssuer: Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/).optional()
+});
 
 /**
- * POST /verify/:tokenId
- * Verify certificate authenticity and return certificate data
+ * GET /api/v1/certificates/:tokenId
+ * Get certificate data from blockchain
  */
-router.post('/verify/:tokenId',
-  validate({ tokenId: schemas.tokenId }, 'params'),
-  async (req, res, next) => {
-    try {
-      const { tokenId } = req.params;
-      
-      console.log('Verifying certificate:', tokenId);
-
-      // Get certificate data and verify authenticity in parallel
-      const [certificate, isValid] = await Promise.all([
-        certificateService.getCertificate(tokenId).catch(() => null),
-        certificateService.verifyCertificate(tokenId)
-      ]);
-
-      // If certificate doesn't exist or is invalid
-      if (!certificate || !isValid) {
-        return res.status(404).json({
-          success: false,
-          data: {
-            isValid: false,
-            verificationTimestamp: new Date().toISOString(),
-            blockchainVerified: false
-          },
-          error: {
-            code: 'CERTIFICATE_INVALID',
-            message: 'Certificate not found or invalid'
-          }
-        });
-      }
-
-      // Certificate is valid and exists
-      res.json({
-        success: true,
-        data: {
-          isValid: true,
-          certificate,
-          verificationTimestamp: new Date().toISOString(),
-          blockchainVerified: true,
-          verificationDetails: {
-            tokenId: certificate.tokenId,
-            issuer: certificate.issuer,
-            recipient: certificate.recipient,
-            issueDate: certificate.issueDate,
-            isRevoked: !certificate.isValid
-          }
-        },
-        message: 'Certificate is valid and authentic'
-      });
-
-    } catch (error) {
-      console.error('Certificate verification error:', error);
-      
-      // Handle specific error types
-      if (error.code === 'CERTIFICATE_NOT_FOUND') {
-        return res.status(404).json({
-          success: false,
-          data: {
-            isValid: false,
-            verificationTimestamp: new Date().toISOString(),
-            blockchainVerified: false
-          },
-          error: {
-            code: 'CERTIFICATE_NOT_FOUND',
-            message: 'Certificate not found'
-          }
-        });
-      }
-
-      if (error.code === 'BLOCKCHAIN_ERROR') {
-        return res.status(503).json({
-          success: false,
-          data: {
-            isValid: false,
-            verificationTimestamp: new Date().toISOString(),
-            blockchainVerified: false
-          },
-          error: {
-            code: 'BLOCKCHAIN_ERROR',
-            message: 'Failed to verify certificate on blockchain',
-            details: error.reason || error.message
-          }
-        });
-      }
-
-      // Generic verification failure
-      res.status(500).json({
+router.get('/:tokenId', async (req, res) => {
+  try {
+    // Validate token ID
+    const { error, value } = tokenIdSchema.validate(req.params);
+    if (error) {
+      return res.status(400).json({
         success: false,
-        data: {
-          isValid: false,
-          verificationTimestamp: new Date().toISOString(),
-          blockchainVerified: false
-        },
-        error: {
-          code: 'VERIFICATION_FAILED',
-          message: 'Unable to verify certificate authenticity',
-          details: error.message
-        }
+        error: 'Invalid token ID',
+        details: error.details.map(detail => detail.message)
       });
     }
-  }
-);
 
-/**
- * GET /verify/:tokenId
- * Get certificate verification status (alternative endpoint for GET requests)
- */
-router.get('/verify/:tokenId',
-  validate({ tokenId: schemas.tokenId }, 'params'),
-  async (req, res, next) => {
+    const { tokenId } = value;
+
+    // Check if certificate exists and get data
+    let certificateData;
     try {
-      const { tokenId } = req.params;
-      
-      console.log('Getting certificate verification status:', tokenId);
-
-      // Get certificate data and verify authenticity
-      const [certificate, isValid] = await Promise.all([
-        certificateService.getCertificate(tokenId).catch(() => null),
-        certificateService.verifyCertificate(tokenId)
-      ]);
-
-      if (!certificate) {
+      certificateData = await contract.getCertificate(tokenId);
+    } catch (contractError) {
+      if (contractError.message.includes('CertificateNotFound') || 
+          contractError.message.includes('execution reverted')) {
         return res.status(404).json({
           success: false,
-          error: {
-            code: 'CERTIFICATE_NOT_FOUND',
-            message: 'Certificate not found'
-          }
+          error: 'Certificate not found',
+          message: `No certificate found with ID ${tokenId}`
         });
       }
-
-      // Return certificate data with verification status
-      res.json({
-        success: true,
-        data: {
-          certificate,
-          verification: {
-            isValid,
-            blockchainVerified: true,
-            verificationTimestamp: new Date().toISOString()
-          }
-        }
-      });
-
-    } catch (error) {
-      console.error('Get certificate verification error:', error);
-      next(error);
+      throw contractError;
     }
+
+    // Check if token actually exists (additional verification)
+    let ownerAddress;
+    try {
+      ownerAddress = await contract.ownerOf(tokenId);
+    } catch (ownerError) {
+      return res.status(404).json({
+        success: false,
+        error: 'Certificate not found',
+        message: `Certificate ${tokenId} does not exist on blockchain`
+      });
+    }
+
+    // Format response
+    const certificate = {
+      tokenId,
+      issuer: certificateData.issuer,
+      recipient: certificateData.recipient,
+      recipientName: certificateData.recipientName,
+      courseName: certificateData.courseName,
+      institutionName: certificateData.institutionName,
+      issueDate: Number(certificateData.issueDate),
+      metadataURI: certificateData.metadataURI,
+      isValid: certificateData.isValid,
+      owner: ownerAddress,
+      verificationURL: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${tokenId}`,
+      qrCodeURL: `/api/v1/qr-code/${tokenId}`
+    };
+
+    res.json({
+      success: true,
+      data: certificate,
+      message: 'Certificate retrieved successfully'
+    });
+
+  } catch (error) {
+    console.error('Certificate retrieval error:', error);
+
+    if (error.code === 'NETWORK_ERROR') {
+      return res.status(503).json({
+        success: false,
+        error: 'Network error',
+        message: 'Unable to connect to blockchain network'
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+      message: 'Failed to retrieve certificate',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
-);
+});
 
 /**
- * POST /batch-verify
- * Verify multiple certificates in batch
+ * POST /api/v1/certificates/verify/:tokenId
+ * Verify certificate authenticity with optional additional checks
  */
-router.post('/batch-verify',
-  async (req, res, next) => {
-    try {
-      const { tokenIds } = req.body;
-
-      // Validate input
-      if (!Array.isArray(tokenIds) || tokenIds.length === 0) {
-        return res.status(400).json({
-          success: false,
-          error: {
-            code: 'VALIDATION_ERROR',
-            message: 'Token IDs array is required and must not be empty'
-          }
-        });
-      }
-
-      if (tokenIds.length > 50) {
-        return res.status(400).json({
-          success: false,
-          error: {
-            code: 'VALIDATION_ERROR',
-            message: 'Maximum 50 certificates can be verified in a single batch'
-          }
-        });
-      }
-
-      console.log(`Batch verifying ${tokenIds.length} certificates`);
-
-      const results = [];
-
-      // Process each certificate
-      for (const tokenId of tokenIds) {
-        try {
-          // Validate token ID format
-          const { error } = schemas.tokenId.validate(tokenId);
-          if (error) {
-            results.push({
-              tokenId,
-              success: false,
-              error: 'Invalid token ID format'
-            });
-            continue;
-          }
-
-          // Verify certificate
-          const [certificate, isValid] = await Promise.all([
-            certificateService.getCertificate(tokenId).catch(() => null),
-            certificateService.verifyCertificate(tokenId)
-          ]);
-
-          results.push({
-            tokenId,
-            success: true,
-            isValid: isValid && certificate !== null,
-            certificate: certificate || null,
-            verificationTimestamp: new Date().toISOString()
-          });
-
-        } catch (error) {
-          console.error(`Failed to verify certificate ${tokenId}:`, error);
-          results.push({
-            tokenId,
-            success: false,
-            error: error.message
-          });
-        }
-      }
-
-      const successfulVerifications = results.filter(r => r.success).length;
-      const validCertificates = results.filter(r => r.success && r.isValid).length;
-
-      res.json({
-        success: true,
-        data: {
-          totalRequested: tokenIds.length,
-          successful: successfulVerifications,
-          valid: validCertificates,
-          invalid: successfulVerifications - validCertificates,
-          failed: tokenIds.length - successfulVerifications,
-          results
-        },
-        message: `Batch verification completed: ${validCertificates} valid, ${successfulVerifications - validCertificates} invalid, ${tokenIds.length - successfulVerifications} failed`
+router.post('/verify/:tokenId', async (req, res) => {
+  try {
+    // Validate request
+    const tokenIdValidation = tokenIdSchema.validate(req.params);
+    if (tokenIdValidation.error) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid token ID',
+        details: tokenIdValidation.error.details.map(detail => detail.message)
       });
-
-    } catch (error) {
-      console.error('Batch verification error:', error);
-      next(error);
     }
-  }
-);
 
-/**
- * GET /certificate/:tokenId/status
- * Get detailed certificate status including blockchain information
- */
-router.get('/certificate/:tokenId/status',
-  validate({ tokenId: schemas.tokenId }, 'params'),
-  async (req, res, next) => {
+    const bodyValidation = verifyRequestSchema.validate({ 
+      tokenId: req.params.tokenId, 
+      ...req.body 
+    });
+    if (bodyValidation.error) {
+      return res.status(400).json({
+        success: false,
+        error: 'Validation error',
+        details: bodyValidation.error.details.map(detail => detail.message)
+      });
+    }
+
+    const { tokenId, expectedRecipient, expectedIssuer } = bodyValidation.value;
+
+    // Perform blockchain verification
+    let isValid = false;
+    let onChain = false;
+    let message = '';
+    let certificateData = null;
+
     try {
-      const { tokenId } = req.params;
-      
-      console.log('Getting detailed certificate status:', tokenId);
+      // Check if certificate exists and is valid
+      isValid = await contract.verifyCertificate(tokenId);
+      onChain = true;
 
-      // Get certificate data
-      const certificate = await certificateService.getCertificate(tokenId);
-      
-      // Verify certificate
-      const isValid = await certificateService.verifyCertificate(tokenId);
-      
-      // Get network information
-      const networkInfo = await certificateService.getNetworkInfo();
+      // Get certificate data for additional verification
+      certificateData = await contract.getCertificate(tokenId);
 
-      // Get QR code URLs
-      const qrCodeUrls = qrCodeService.getQRCodeURLs(tokenId);
+      // Verify owner exists
+      const owner = await contract.ownerOf(tokenId);
+      const ownerExists = owner && owner !== ethers.ZeroAddress;
 
-      res.json({
+      // Determine final validity
+      const finalValidity = isValid && certificateData.isValid && ownerExists;
+
+      // Additional verification checks
+      let additionalChecks = [];
+      
+      if (expectedRecipient && certificateData.recipient.toLowerCase() !== expectedRecipient.toLowerCase()) {
+        additionalChecks.push('Recipient address mismatch');
+        finalValidity = false;
+      }
+
+      if (expectedIssuer && certificateData.issuer.toLowerCase() !== expectedIssuer.toLowerCase()) {
+        additionalChecks.push('Issuer address mismatch');
+        finalValidity = false;
+      }
+
+      // Set verification message
+      if (finalValidity) {
+        message = 'Certificate is valid and verified on blockchain';
+      } else if (!certificateData.isValid) {
+        message = 'Certificate has been revoked';
+      } else if (!ownerExists) {
+        message = 'Certificate owner verification failed';
+      } else if (additionalChecks.length > 0) {
+        message = `Verification failed: ${additionalChecks.join(', ')}`;
+      } else {
+        message = 'Certificate verification failed';
+      }
+
+      const response = {
         success: true,
         data: {
-          certificate,
-          status: {
-            exists: true,
-            isValid,
-            isRevoked: !certificate.isValid,
-            verificationTimestamp: new Date().toISOString()
+          tokenId,
+          isValid: finalValidity,
+          onChain: true,
+          message,
+          verificationTimestamp: Date.now(),
+          certificate: {
+            tokenId,
+            issuer: certificateData.issuer,
+            recipient: certificateData.recipient,
+            recipientName: certificateData.recipientName,
+            courseName: certificateData.courseName,
+            institutionName: certificateData.institutionName,
+            issueDate: Number(certificateData.issueDate),
+            metadataURI: certificateData.metadataURI,
+            isValid: certificateData.isValid,
+            owner
           },
-          blockchain: {
-            network: networkInfo.name,
-            chainId: networkInfo.chainId,
-            contractAddress: networkInfo.contractAddress,
-            blockNumber: networkInfo.blockNumber
-          },
-          verification: {
-            verificationUrl: `${req.protocol}://${req.get('host')}/verify/${tokenId}`,
-            qrCodeUrl: qrCodeUrls.verificationQR,
-            sharingQRUrl: qrCodeUrls.sharingQR
-          }
+          additionalChecks: additionalChecks.length > 0 ? additionalChecks : undefined
         }
-      });
+      };
 
-    } catch (error) {
-      console.error('Get certificate status error:', error);
-      
-      if (error.code === 'CERTIFICATE_NOT_FOUND') {
-        return res.status(404).json({
-          success: false,
+      res.json(response);
+
+    } catch (contractError) {
+      // Certificate not found or other contract error
+      if (contractError.message.includes('CertificateNotFound') || 
+          contractError.message.includes('execution reverted')) {
+        
+        res.json({
+          success: true,
           data: {
-            status: {
-              exists: false,
-              isValid: false,
-              verificationTimestamp: new Date().toISOString()
-            }
-          },
-          error: {
-            code: 'CERTIFICATE_NOT_FOUND',
-            message: 'Certificate not found'
+            tokenId,
+            isValid: false,
+            onChain: false,
+            message: 'Certificate not found on blockchain',
+            verificationTimestamp: Date.now()
           }
-        });
-      }
-      
-      next(error);
-    }
-  }
-);
-
-/**
- * GET /qr-code/:tokenId
- * Generate and return QR code for certificate verification
- */
-router.get('/qr-code/:tokenId',
-  validate({ tokenId: schemas.tokenId }, 'params'),
-  async (req, res, next) => {
-    try {
-      const { tokenId } = req.params;
-      const { type = 'verification' } = req.query;
-      
-      console.log(`Generating QR code for certificate ${tokenId}, type: ${type}`);
-
-      // Check if certificate exists first
-      const certificate = await certificateService.getCertificate(tokenId);
-      if (!certificate) {
-        return res.status(404).json({
-          success: false,
-          error: {
-            code: 'CERTIFICATE_NOT_FOUND',
-            message: 'Certificate not found'
-          }
-        });
-      }
-
-      let qrResult;
-      if (type === 'sharing') {
-        qrResult = await qrCodeService.generateSharingQR(tokenId, {
-          recipientName: certificate.recipientName,
-          courseName: certificate.courseName,
-          institutionName: certificate.institutionName
         });
       } else {
-        qrResult = await qrCodeService.generateCertificateQR(tokenId);
+        throw contractError;
       }
-
-      if (!qrResult.success) {
-        return res.status(500).json({
-          success: false,
-          error: {
-            code: 'QR_GENERATION_FAILED',
-            message: 'Failed to generate QR code',
-            details: qrResult.error.details
-          }
-        });
-      }
-
-      res.json({
-        success: true,
-        data: qrResult.data
-      });
-
-    } catch (error) {
-      console.error('QR code generation error:', error);
-      next(error);
     }
+
+  } catch (error) {
+    console.error('Certificate verification error:', error);
+
+    if (error.code === 'NETWORK_ERROR') {
+      return res.status(503).json({
+        success: false,
+        error: 'Network error',
+        message: 'Unable to connect to blockchain network'
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+      message: 'Failed to verify certificate',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
-);
+});
+
+/**
+ * GET /api/v1/certificates/issuer/:address
+ * Get all certificates issued by a specific address
+ */
+router.get('/issuer/:address', async (req, res) => {
+  try {
+    const { address } = req.params;
+
+    // Validate Ethereum address
+    if (!ethers.isAddress(address)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid Ethereum address'
+      });
+    }
+
+    // Get certificates by issuer
+    const tokenIds = await contract.getCertificatesByIssuer(address);
+    
+    // Fetch detailed data for each certificate
+    const certificates = await Promise.all(
+      tokenIds.map(async (tokenId) => {
+        try {
+          const certData = await contract.getCertificate(tokenId.toString());
+          return {
+            tokenId: tokenId.toString(),
+            issuer: certData.issuer,
+            recipient: certData.recipient,
+            recipientName: certData.recipientName,
+            courseName: certData.courseName,
+            institutionName: certData.institutionName,
+            issueDate: Number(certData.issueDate),
+            metadataURI: certData.metadataURI,
+            isValid: certData.isValid,
+            verificationURL: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${tokenId}`,
+            qrCodeURL: `/api/v1/qr-code/${tokenId}`
+          };
+        } catch (certError) {
+          console.error(`Error fetching certificate ${tokenId}:`, certError);
+          return null;
+        }
+      })
+    );
+
+    // Filter out any failed certificate fetches
+    const validCertificates = certificates.filter(cert => cert !== null);
+
+    res.json({
+      success: true,
+      data: {
+        issuer: address,
+        totalCertificates: validCertificates.length,
+        certificates: validCertificates
+      },
+      message: `Found ${validCertificates.length} certificates for issuer`
+    });
+
+  } catch (error) {
+    console.error('Issuer certificates retrieval error:', error);
+
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+      message: 'Failed to retrieve issuer certificates',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
 
 module.exports = router;

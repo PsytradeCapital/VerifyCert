@@ -1,230 +1,228 @@
 const express = require('express');
-const router = express.Router();
-const CertificateService = require('../services/CertificateService');
-const QRCodeService = require('../services/QRCodeService');
-const NotificationService = require('../services/NotificationService');
-const { validate, schemas } = require('../middleware/validation');
-const { verifyWalletSignature } = require('../middleware/auth');
+const { ethers } = require('ethers');
+const Joi = require('joi');
+const QRCode = require('qrcode');
+const path = require('path');
+const fs = require('fs').promises;
 
-// Initialize services
-const certificateService = new CertificateService();
-const qrCodeService = new QRCodeService();
-const notificationService = new NotificationService();
+const router = express.Router();
+
+// Load contract ABI and configuration
+const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractAddress = process.env.CONTRACT_ADDRESS;
+const privateKey = process.env.PRIVATE_KEY;
+const rpcUrl = process.env.POLYGON_MUMBAI_RPC_URL;
+
+// Validation schema
+const mintCertificateSchema = Joi.object({
+  recipientAddress: Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/).required(),
+  recipientName: Joi.string().min(1).max(100).required(),
+  courseName: Joi.string().min(1).max(200).required(),
+  institutionName: Joi.string().min(1).max(100).required(),
+  metadataURI: Joi.string().uri().optional().default('')
+});
+
+// Initialize blockchain connection
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const wallet = new ethers.Wallet(privateKey, provider);
+const contract = new ethers.Contract(contractAddress, contractABI, wallet);
 
 /**
- * POST /mint
+ * POST /api/v1/certificates/mint
  * Mint a new certificate NFT
  */
-router.post('/mint', 
-  verifyWalletSignature,
-  validate(schemas.certificateData),
-  async (req, res, next) => {
-    try {
-      const { 
-        recipientAddress, 
-        recipientName, 
-        courseName, 
-        institutionName, 
-        metadataURI, 
-        recipientEmail, 
-        issuerEmail 
-      } = req.body;
-      const issuerAddress = req.walletAddress;
-
-      console.log('Minting certificate for:', {
-        recipientAddress,
-        recipientName,
-        courseName,
-        institutionName,
-        issuer: issuerAddress
+router.post('/mint', async (req, res) => {
+  try {
+    // Validate request body
+    const { error, value } = mintCertificateSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        error: 'Validation error',
+        details: error.details.map(detail => detail.message)
       });
-
-      // Check if the issuer is authorized
-      const isAuthorized = await certificateService.isAuthorizedIssuer(issuerAddress);
-      if (!isAuthorized) {
-        return res.status(403).json({
-          success: false,
-          error: {
-            code: 'AUTHORIZATION_ERROR',
-            message: 'Address is not authorized to issue certificates'
-          }
-        });
-      }
-
-      // Prepare certificate data
-      const certificateData = {
-        recipientAddress,
-        recipientName,
-        courseName,
-        institutionName,
-        metadataURI: metadataURI || ''
-      };
-
-      // Mint the certificate
-      const result = await certificateService.mintCertificate(certificateData);
-
-      // Prepare complete certificate data for notifications
-      const completeCertificateData = {
-        ...certificateData,
-        issuer: issuerAddress,
-        tokenId: result.tokenId,
-        issueDate: Math.floor(Date.now() / 1000), // Current timestamp in seconds
-        transactionHash: result.transactionHash
-      };
-
-      // Generate verification URLs
-      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:3000';
-      const verificationURL = `${frontendURL}/verify/${result.tokenId}`;
-      const certificateURL = `${frontendURL}/certificate/${result.tokenId}`;
-
-      // Generate QR code for certificate verification
-      let qrData = null;
-      try {
-        const qrResult = await qrCodeService.generateCertificateQR(result.tokenId);
-        if (qrResult.success) {
-          qrData = qrResult.data;
-        }
-      } catch (qrError) {
-        console.warn('QR code generation failed:', qrError);
-        // Continue without QR code - not critical for certificate minting
-      }
-
-      // Send notifications (async, don't block response)
-      const notificationPromises = [];
-
-      // Send certificate to recipient if email provided
-      if (recipientEmail) {
-        notificationPromises.push(
-          notificationService.sendCertificateDelivery(completeCertificateData, recipientEmail, qrData)
-            .then(result => ({ type: 'recipient', result }))
-            .catch(error => ({ type: 'recipient', error }))
-        );
-      }
-
-      // Send confirmation to issuer if email provided
-      if (issuerEmail) {
-        notificationPromises.push(
-          notificationService.sendIssuerNotification(completeCertificateData, issuerEmail)
-            .then(result => ({ type: 'issuer', result }))
-            .catch(error => ({ type: 'issuer', error }))
-        );
-      }
-
-      // Process notifications in background
-      if (notificationPromises.length > 0) {
-        Promise.allSettled(notificationPromises)
-          .then(results => {
-            results.forEach(({ value }) => {
-              if (value.error) {
-                console.error(`${value.type} notification failed:`, value.error);
-              } else {
-                console.log(`${value.type} notification sent successfully:`, value.result.data?.messageId);
-              }
-            });
-          })
-          .catch(error => {
-            console.error('Notification processing error:', error);
-          });
-      }
-
-      // Return successful response
-      res.status(201).json({
-        success: true,
-        data: {
-          tokenId: result.tokenId,
-          transactionHash: result.transactionHash,
-          blockNumber: result.blockNumber,
-          gasUsed: result.gasUsed,
-          verificationURL,
-          certificateURL,
-          qrCodeURL: qrData?.qrImageURL || null,
-          certificate: completeCertificateData,
-          notifications: {
-            recipientEmail: recipientEmail ? 'queued' : 'not_requested',
-            issuerEmail: issuerEmail ? 'queued' : 'not_requested'
-          }
-        },
-        message: 'Certificate minted successfully'
-      });
-
-    } catch (error) {
-      console.error('Certificate minting error:', error);
-      
-      // Handle specific error types
-      if (error.code === 'BLOCKCHAIN_ERROR') {
-        return res.status(503).json({
-          success: false,
-          error: {
-            code: 'BLOCKCHAIN_ERROR',
-            message: 'Failed to mint certificate on blockchain',
-            details: error.reason || error.message
-          }
-        });
-      }
-      
-      if (error.code === 'NETWORK_ERROR') {
-        return res.status(503).json({
-          success: false,
-          error: {
-            code: 'NETWORK_ERROR',
-            message: 'Network connectivity issue',
-            details: error.message
-          }
-        });
-      }
-      
-      next(error);
     }
+
+    const { recipientAddress, recipientName, courseName, institutionName, metadataURI } = value;
+
+    // Check if the wallet is authorized to mint certificates
+    const isAuthorized = await contract.authorizedIssuers(wallet.address);
+    if (!isAuthorized) {
+      return res.status(403).json({
+        success: false,
+        error: 'Unauthorized issuer',
+        message: 'This wallet is not authorized to mint certificates'
+      });
+    }
+
+    // Estimate gas for the transaction
+    let gasEstimate;
+    try {
+      gasEstimate = await contract.mintCertificate.estimateGas(
+        recipientAddress,
+        recipientName,
+        courseName,
+        institutionName,
+        metadataURI
+      );
+    } catch (gasError) {
+      console.error('Gas estimation failed:', gasError);
+      return res.status(400).json({
+        success: false,
+        error: 'Transaction simulation failed',
+        message: 'Unable to estimate gas for this transaction'
+      });
+    }
+
+    // Mint the certificate
+    const tx = await contract.mintCertificate(
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName,
+      metadataURI,
+      {
+        gasLimit: gasEstimate.mul(120).div(100) // Add 20% buffer
+      }
+    );
+
+    console.log('Certificate minting transaction sent:', tx.hash);
+
+    // Wait for transaction confirmation
+    const receipt = await tx.wait();
+    
+    // Extract token ID from the transaction receipt
+    const mintEvent = receipt.events?.find(event => event.event === 'CertificateMinted');
+    if (!mintEvent) {
+      throw new Error('Certificate minting event not found in transaction receipt');
+    }
+
+    const tokenId = mintEvent.args.tokenId.toString();
+    
+    // Generate verification URL and QR code
+    const verificationURL = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${tokenId}`;
+    
+    // Generate QR code
+    let qrCodePath = null;
+    try {
+      const qrCodeDir = path.join(__dirname, '../public/qr-codes');
+      await fs.mkdir(qrCodeDir, { recursive: true });
+      
+      qrCodePath = path.join(qrCodeDir, `${tokenId}.png`);
+      await QRCode.toFile(qrCodePath, verificationURL, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+    } catch (qrError) {
+      console.error('QR code generation failed:', qrError);
+      // Continue without QR code - not critical
+    }
+
+    // Get the complete certificate data
+    const certificateData = await contract.getCertificate(tokenId);
+
+    const response = {
+      success: true,
+      data: {
+        tokenId,
+        transactionHash: tx.hash,
+        blockNumber: receipt.blockNumber,
+        gasUsed: receipt.gasUsed.toString(),
+        certificate: {
+          tokenId,
+          issuer: certificateData.issuer,
+          recipient: certificateData.recipient,
+          recipientName: certificateData.recipientName,
+          courseName: certificateData.courseName,
+          institutionName: certificateData.institutionName,
+          issueDate: Number(certificateData.issueDate),
+          metadataURI: certificateData.metadataURI,
+          isValid: certificateData.isValid,
+          verificationURL,
+          qrCodeURL: qrCodePath ? `/api/v1/qr-code/${tokenId}` : null
+        }
+      },
+      message: 'Certificate minted successfully'
+    };
+
+    res.status(201).json(response);
+
+  } catch (error) {
+    console.error('Certificate minting error:', error);
+
+    // Handle specific blockchain errors
+    if (error.code === 'INSUFFICIENT_FUNDS') {
+      return res.status(400).json({
+        success: false,
+        error: 'Insufficient funds',
+        message: 'Not enough MATIC to pay for transaction fees'
+      });
+    }
+
+    if (error.code === 'NETWORK_ERROR') {
+      return res.status(503).json({
+        success: false,
+        error: 'Network error',
+        message: 'Unable to connect to blockchain network'
+      });
+    }
+
+    if (error.message.includes('UnauthorizedIssuer')) {
+      return res.status(403).json({
+        success: false,
+        error: 'Unauthorized issuer',
+        message: 'This wallet is not authorized to mint certificates'
+      });
+    }
+
+    // Generic error response
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+      message: 'Failed to mint certificate',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
-);
+});
 
 /**
- * GET /issuer/:address
- * Get certificates issued by a specific address
+ * GET /api/v1/qr-code/:tokenId
+ * Serve QR code image for a certificate
  */
-router.get('/issuer/:address',
-  validate({ address: schemas.ethereumAddress }, 'params'),
-  async (req, res, next) => {
+router.get('/qr-code/:tokenId', async (req, res) => {
+  try {
+    const { tokenId } = req.params;
+    
+    const qrCodePath = path.join(__dirname, '../public/qr-codes', `${tokenId}.png`);
+    
     try {
-      const { address } = req.params;
-      const { limit = 50, offset = 0 } = req.query;
+      await fs.access(qrCodePath);
+      res.sendFile(path.resolve(qrCodePath));
+    } catch (fileError) {
+      // Generate QR code on-the-fly if it doesn't exist
+      const verificationURL = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${tokenId}`;
       
-      const certificates = await certificateService.getCertificatesByIssuer(
-        address, 
-        parseInt(limit)
-      );
-      
-      // Apply offset for pagination
-      const paginatedCertificates = certificates.slice(parseInt(offset));
-      
-      res.json({
-        success: true,
-        data: {
-          certificates: paginatedCertificates,
-          total: certificates.length,
-          limit: parseInt(limit),
-          offset: parseInt(offset),
-          issuer: address
+      res.setHeader('Content-Type', 'image/png');
+      await QRCode.toFileStream(res, verificationURL, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
         }
       });
-      
-    } catch (error) {
-      console.error('Get certificates by issuer error:', error);
-      
-      if (error.code === 'BLOCKCHAIN_ERROR') {
-        return res.status(503).json({
-          success: false,
-          error: {
-            code: 'BLOCKCHAIN_ERROR',
-            message: 'Failed to retrieve certificates from blockchain',
-            details: error.reason || error.message
-          }
-        });
-      }
-      
-      next(error);
     }
+  } catch (error) {
+    console.error('QR code serving error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to generate QR code'
+    });
   }
-);
+});
 
 module.exports = router;

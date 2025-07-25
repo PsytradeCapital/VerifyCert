@@ -324,7 +324,10 @@ tionality
   --_Requirements: 2.2, 2.3, 2.4_
 
 
-- [ ] 6.3 Build public verification page
+- [x] 6.3 Build public verification page
+
+
+
 
 
 

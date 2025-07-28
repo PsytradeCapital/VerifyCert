@@ -1,25 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  Menu, 
-  X, 
-  ChevronLeft, 
-  ChevronRight, 
-  User, 
-  Settings, 
-  LogOut,
-  Bell,
-  Search
-} from 'lucide-react';
+import React from 'react';
+import { Search, Menu, X, Bell, User } from 'lucide-react';
+import { Button } from '../Button/Button';
 
 export interface UserMenuProps {
-  walletAddress?: string | null;
-  isWalletConnected?: boolean;
-  onWalletConnect?: () => void;
-  onWalletDisconnect?: () => void;
-  onProfileClick?: () => void;
-  onSettingsClick?: () => void;
-  notifications?: number;
+  user?: {
+    name: string;
+    email: string;
+    avatar?: string;
+  };
+  onSignOut?: () => void;
+  onProfile?: () => void;
 }
 
 export interface HeaderProps {
@@ -33,140 +23,13 @@ export interface HeaderProps {
   showSearch?: boolean;
   onSearchClick?: () => void;
   userMenu?: UserMenuProps;
-  className?: string;
   children?: React.ReactNode;
+  className?: string;
 }
-
-const UserMenu: React.FC<UserMenuProps> = ({
-  walletAddress,
-  isWalletConnected = false,
-  onWalletConnect,
-  onWalletDisconnect,
-  onProfileClick,
-  onSettingsClick,
-  notifications = 0
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  if (!isWalletConnected || !walletAddress) {
-    return (
-      <button
-        onClick={onWalletConnect}
-        className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors font-medium text-sm"
-      >
-        Connect Wallet
-      </button>
-    );
-  }
-
-  return (
-    <div className="relative" ref={menuRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-      >
-        <div className="h-8 w-8 bg-primary-100 rounded-full flex items-center justify-center">
-          <span className="text-primary-700 text-sm font-medium">
-            {walletAddress.slice(0, 2).toUpperCase()}
-          </span>
-        </div>
-        <span className="hidden sm:block text-sm text-neutral-700 max-w-24 truncate">
-          {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
-        </span>
-        {notifications > 0 && (
-          <div className="absolute -top-1 -right-1 h-5 w-5 bg-error-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-medium">
-              {notifications > 9 ? '9+' : notifications}
-            </span>
-          </div>
-        )}
-      </button>
-
-      {/* Dropdown Menu */}
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-neutral-200 py-1 z-dropdown">
-          {/* User Info */}
-          <div className="px-4 py-3 border-b border-neutral-100">
-            <p className="text-sm font-medium text-neutral-900">Connected Wallet</p>
-            <p className="text-xs text-neutral-500 font-mono">
-              {walletAddress}
-            </p>
-          </div>
-
-          {/* Menu Items */}
-          <div className="py-1">
-            <button
-              onClick={() => {
-                onProfileClick?.();
-                setIsOpen(false);
-              }}
-              className="flex items-center w-full px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-            >
-              <User className="h-4 w-4 mr-3" />
-              Profile
-            </button>
-            
-            <button
-              onClick={() => {
-                onSettingsClick?.();
-                setIsOpen(false);
-              }}
-              className="flex items-center w-full px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-            >
-              <Settings className="h-4 w-4 mr-3" />
-              Settings
-            </button>
-
-            {notifications > 0 && (
-              <button
-                className="flex items-center w-full px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-              >
-                <Bell className="h-4 w-4 mr-3" />
-                Notifications
-                <span className="ml-auto bg-error-100 text-error-700 text-xs px-2 py-0.5 rounded-full">
-                  {notifications}
-                </span>
-              </button>
-            )}
-          </div>
-
-          {/* Disconnect */}
-          <div className="border-t border-neutral-100 py-1">
-            <button
-              onClick={() => {
-                onWalletDisconnect?.();
-                setIsOpen(false);
-              }}
-              className="flex items-center w-full px-4 py-2 text-sm text-error-600 hover:bg-error-50 transition-colors"
-            >
-              <LogOut className="h-4 w-4 mr-3" />
-              Disconnect Wallet
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
 
 const Header: React.FC<HeaderProps> = ({
   title = 'VerifyCert',
-  showSidebarToggle = true,
+  showSidebarToggle = false,
   sidebarCollapsed = false,
   isMobile = false,
   mobileMenuOpen = false,
@@ -175,99 +38,135 @@ const Header: React.FC<HeaderProps> = ({
   showSearch = false,
   onSearchClick,
   userMenu,
-  className = '',
-  children
+  children,
+  className = ''
 }) => {
   return (
-    <header className={`sticky top-0 z-sticky bg-white border-b border-neutral-200 shadow-sm ${className}`}>
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Left side - Logo, menu toggle, and branding */}
-          <div className="flex items-center">
-            {/* Mobile menu toggle */}
-            {showSidebarToggle && isMobile && (
-              <button
-                onClick={onMobileMenuToggle}
-                className="p-2 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 mr-3"
-                aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
-            )}
+    <header className={`
+      sticky top-0 z-40 bg-white border-b border-neutral-200 shadow-sm
+      ${className}
+    `}>
+      <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+        {/* Left Section */}
+        <div className="flex items-center space-x-4">
+          {/* Mobile Menu Toggle */}
+          {isMobile && showSidebarToggle && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onMobileMenuToggle}
+              className="lg:hidden"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </Button>
+          )}
 
-            {/* Desktop sidebar toggle */}
-            {showSidebarToggle && !isMobile && (
-              <button
-                onClick={onSidebarToggle}
-                className="hidden lg:flex p-2 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 mr-3 transition-colors"
-                aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              >
-                {sidebarCollapsed ? (
-                  <ChevronRight className="h-5 w-5" />
-                ) : (
-                  <ChevronLeft className="h-5 w-5" />
-                )}
-              </button>
-            )}
+          {/* Desktop Sidebar Toggle */}
+          {!isMobile && showSidebarToggle && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onSidebarToggle}
+              className="hidden lg:flex"
+              aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          )}
 
-            {/* Logo and branding */}
-            <Link to="/" className="flex items-center group">
-              <div className="h-8 w-8 bg-primary-600 rounded-lg flex items-center justify-center group-hover:bg-primary-700 transition-colors">
-                <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <span className="ml-2 text-xl font-bold text-neutral-900 group-hover:text-primary-700 transition-colors">
-                {title}
-              </span>
-            </Link>
+          {/* Logo/Title */}
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">V</span>
+            </div>
+            <h1 className="text-xl font-semibold text-neutral-900 hidden sm:block">
+              {title}
+            </h1>
           </div>
+        </div>
 
-          {/* Center - Search (optional) */}
+        {/* Center Section */}
+        <div className="flex-1 max-w-lg mx-8 hidden md:block">
           {showSearch && (
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
+            <div className="relative">
               <button
                 onClick={onSearchClick}
-                className="w-full flex items-center px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-500 hover:bg-neutral-100 hover:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
+                className="w-full flex items-center space-x-3 px-4 py-2 text-left text-neutral-500 bg-neutral-50 hover:bg-neutral-100 rounded-lg transition-colors"
               >
-                <Search className="h-4 w-4 mr-3" />
+                <Search className="h-5 w-5" />
                 <span className="text-sm">Search certificates...</span>
               </button>
             </div>
           )}
+          {children}
+        </div>
 
-          {/* Right side - Actions and user menu */}
-          <div className="flex items-center space-x-4">
-            {/* Search button for mobile */}
-            {showSearch && (
-              <button
-                onClick={onSearchClick}
-                className="md:hidden p-2 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
-                aria-label="Search"
-              >
-                <Search className="h-5 w-5" />
-              </button>
-            )}
-
-            {/* Primary CTA */}
-            <Link
-              to="/verify"
-              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors font-medium text-sm"
+        {/* Right Section */}
+        <div className="flex items-center space-x-3">
+          {/* Mobile Search */}
+          {showSearch && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onSearchClick}
+              className="md:hidden"
+              aria-label="Search"
             >
-              Verify Now
-            </Link>
-            
-            {/* User Menu */}
-            {userMenu && <UserMenu {...userMenu} />}
+              <Search className="h-5 w-5" />
+            </Button>
+          )}
 
-            {/* Additional content */}
-            {children}
-          </div>
+          {/* Notifications */}
+          <Button
+            variant="secondary"
+            size="sm"
+            className="relative"
+            aria-label="Notifications"
+          >
+            <Bell className="h-5 w-5" />
+            {/* Notification badge */}
+            <span className="absolute -top-1 -right-1 h-3 w-3 bg-error-500 rounded-full"></span>
+          </Button>
+
+          {/* User Menu */}
+          {userMenu ? (
+            <div className="relative">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="flex items-center space-x-2"
+                onClick={userMenu.onProfile}
+              >
+                {userMenu.user?.avatar ? (
+                  <img
+                    src={userMenu.user.avatar}
+                    alt={userMenu.user.name}
+                    className="w-6 h-6 rounded-full"
+                  />
+                ) : (
+                  <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center">
+                    <User className="h-4 w-4 text-primary-600" />
+                  </div>
+                )}
+                <span className="hidden sm:block text-sm font-medium">
+                  {userMenu.user?.name || 'User'}
+                </span>
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="secondary"
+              size="sm"
+              aria-label="User menu"
+            >
+              <User className="h-5 w-5" />
+            </Button>
+          )}
         </div>
       </div>
     </header>

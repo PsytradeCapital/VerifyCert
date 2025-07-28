@@ -35,14 +35,7 @@ const CertificateCard = ({
   const [copySuccess, setCopySuccess] = useState(false);
 
   if (!certificate) {
-    return (
-      <Card variant="outlined" padding="lg" className={`text-center ${className}`}>
-        <div className="text-neutral-500">
-          <Shield className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <p>No certificate data available</p>
-        </div>
-      </Card>
-    );
+    return null;
   }
 
   // Format dates
@@ -56,7 +49,7 @@ const CertificateCard = ({
     });
   };
 
-  // Get verification status
+  // Get verification status display
   const getVerificationStatus = () => {
     if (certificate.isRevoked) {
       return {
@@ -107,8 +100,8 @@ const CertificateCard = ({
 
   const verificationStatus = getVerificationStatus();
 
-  // Handle copy certificate hash
-  const handleCopyHash = async () => {
+  // Copy certificate hash to clipboard
+  const copyHash = async () => {
     try {
       await navigator.clipboard.writeText(certificate.certificateHash);
       setCopySuccess(true);
@@ -118,30 +111,64 @@ const CertificateCard = ({
     }
   };
 
-  // Handle share certificate
-  const handleShare = async () => {
-    const shareData = {
-      title: `Certificate: ${certificate.courseName}`,
-      text: `${certificate.recipientName} has completed ${certificate.courseName} from ${certificate.institutionName}`,
-      url: `${window.location.origin}/verify/${certificate.certificateHash}`
-    };
-
+  // Copy verification URL to clipboard
+  const copyVerificationUrl = async () => {
+    const url = `${window.location.origin}/verify/${certificate.certificateHash}`;
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        // Fallback to copying URL
-        await navigator.clipboard.writeText(shareData.url);
-        setCopySuccess(true);
-        setTimeout(() => setCopySuccess(false), 2000);
-      }
+      await navigator.clipboard.writeText(url);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
-      console.error('Failed to share:', err);
+      console.error('Failed to copy URL:', err);
     }
+  };
 
-    if (onShare) {
-      onShare(certificate);
+  // Handle share action
+  const handleShare = async () => {
+    const url = `${window.location.origin}/verify/${certificate.certificateHash}`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Certificate: ${certificate.courseName}`,
+          text: `Verify this certificate for ${certificate.recipientName}`,
+          url: url
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      // Fallback to copying URL
+      copyVerificationUrl();
     }
+    
+    onShare?.(certificate);
+  };
+
+  // Handle download action
+  const handleDownload = () => {
+    // In a real implementation, this would generate a PDF or image
+    const certificateData = {
+      recipientName: certificate.recipientName,
+      courseName: certificate.courseName,
+      institutionName: certificate.institutionName,
+      issueDate: formatDate(certificate.issueDate),
+      verificationUrl: `${window.location.origin}/verify/${certificate.certificateHash}`
+    };
+    
+    const dataStr = JSON.stringify(certificateData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `certificate-${certificate.tokenId}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    onDownload?.(certificate);
   };
 
   return (
@@ -152,124 +179,113 @@ const CertificateCard = ({
       className={className}
     >
       <Card 
-        variant={variant} 
-        padding="none" 
-        className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
+        variant={variant}
+        padding="none"
+        className="overflow-hidden hover:shadow-lg transition-all duration-300"
       >
-        {/* Certificate Header */}
-        <div className="relative bg-gradient-to-br from-primary-600 to-primary-800 text-white p-6">
-          {/* Verification Status Badge */}
-          {showVerificationStatus && (
-            <div className="absolute top-4 right-4">
-              <Tooltip content={verificationStatus.description}>
-                <Badge 
-                  variant={verificationStatus.status === 'valid' ? 'success' : 
-                           verificationStatus.status === 'expired' ? 'warning' : 'error'}
-                  className="flex items-center gap-1"
-                >
-                  <verificationStatus.icon className="w-3 h-3" />
-                  {verificationStatus.label}
-                </Badge>
-              </Tooltip>
-            </div>
-          )}
-
-          {/* Certificate Icon */}
-          <div className="flex items-center mb-4">
-            <div className="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">Digital Certificate</h3>
-              <p className="text-primary-100 text-sm">
-                Token ID: #{certificate.tokenId}
-              </p>
+        {/* Header with verification status */}
+        {showVerificationStatus && (
+          <div className={`
+            px-6 py-4 border-b
+            ${verificationStatus.bgColor} ${verificationStatus.borderColor}
+          `}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <verificationStatus.icon className={`w-6 h-6 ${verificationStatus.color}`} />
+                <div>
+                  <h3 className={`font-semibold ${verificationStatus.color}`}>
+                    {verificationStatus.label}
+                  </h3>
+                  <p className="text-sm text-neutral-600">
+                    {verificationStatus.description}
+                  </p>
+                </div>
+              </div>
+              <Badge 
+                variant={verificationStatus.status === 'valid' ? 'success' : 
+                        verificationStatus.status === 'expired' ? 'warning' : 'error'}
+                size="sm"
+              >
+                {verificationStatus.label}
+              </Badge>
             </div>
           </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-5 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-5 rounded-full translate-y-12 -translate-x-12"></div>
-        </div>
+        )}
 
         {/* Certificate Content */}
         <div className="p-6">
-          {/* Recipient Information */}
-          <div className="mb-6">
-            <div className="flex items-center mb-2">
-              <User className="w-5 h-5 text-neutral-500 mr-2" />
-              <span className="text-sm font-medium text-neutral-600">Recipient</span>
-            </div>
-            <h2 className="text-2xl font-bold text-neutral-900 mb-1">
-              {certificate.recipientName}
-            </h2>
-            <p className="text-neutral-600 text-sm font-mono">
-              {certificate.recipientAddress}
-            </p>
-          </div>
-
-          {/* Course Information */}
-          <div className="mb-6">
-            <div className="flex items-center mb-2">
-              <GraduationCap className="w-5 h-5 text-neutral-500 mr-2" />
-              <span className="text-sm font-medium text-neutral-600">Course</span>
-            </div>
-            <h3 className="text-xl font-semibold text-neutral-900 mb-1">
-              {certificate.courseName}
-            </h3>
-          </div>
-
-          {/* Institution Information */}
-          <div className="mb-6">
-            <div className="flex items-center mb-2">
-              <Building className="w-5 h-5 text-neutral-500 mr-2" />
-              <span className="text-sm font-medium text-neutral-600">Institution</span>
-            </div>
-            <p className="text-lg font-medium text-neutral-800">
-              {certificate.institutionName}
-            </p>
-          </div>
-
-          {/* Date Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div className="flex items-center mb-2">
-                <Calendar className="w-4 h-4 text-neutral-500 mr-2" />
-                <span className="text-sm font-medium text-neutral-600">Issue Date</span>
-              </div>
-              <p className="text-neutral-800">
-                {formatDate(certificate.issueDate)}
-              </p>
+          {/* Main Certificate Info */}
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <GraduationCap className="w-8 h-8 text-primary-600" />
             </div>
             
-            <div>
-              <div className="flex items-center mb-2">
-                <Clock className="w-4 h-4 text-neutral-500 mr-2" />
-                <span className="text-sm font-medium text-neutral-600">Expiry Date</span>
+            <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+              Certificate of Completion
+            </h2>
+            
+            <div className="space-y-2">
+              <div className="flex items-center justify-center space-x-2 text-lg">
+                <User className="w-5 h-5 text-neutral-500" />
+                <span className="font-semibold text-neutral-900">
+                  {certificate.recipientName}
+                </span>
               </div>
-              <p className="text-neutral-800">
-                {formatDate(certificate.expiryDate)}
-              </p>
+              
+              <div className="flex items-center justify-center space-x-2 text-neutral-600">
+                <GraduationCap className="w-4 h-4" />
+                <span>{certificate.courseName}</span>
+              </div>
+              
+              <div className="flex items-center justify-center space-x-2 text-neutral-600">
+                <Building className="w-4 h-4" />
+                <span>{certificate.institutionName}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Certificate Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
+              <Calendar className="w-5 h-5 text-neutral-500" />
+              <div>
+                <p className="text-sm font-medium text-neutral-700">Issue Date</p>
+                <p className="text-sm text-neutral-600">
+                  {formatDate(certificate.issueDate)}
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
+              <Clock className="w-5 h-5 text-neutral-500" />
+              <div>
+                <p className="text-sm font-medium text-neutral-700">Expiry Date</p>
+                <p className="text-sm text-neutral-600">
+                  {formatDate(certificate.expiryDate)}
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Expandable Details */}
-          <div className="border-t border-neutral-200 pt-4">
+          <div className="border-t pt-4">
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="flex items-center justify-between w-full text-left text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
+              className="flex items-center justify-between w-full text-left p-2 hover:bg-neutral-50 rounded-lg transition-colors"
             >
-              <span>Certificate Details</span>
+              <span className="font-medium text-neutral-700">
+                Certificate Details
+              </span>
               <motion.div
                 animate={{ rotate: isExpanded ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </motion.div>
             </button>
-
+            
             <motion.div
               initial={false}
               animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
@@ -277,51 +293,54 @@ const CertificateCard = ({
               className="overflow-hidden"
             >
               <div className="pt-4 space-y-3">
-                <div>
-                  <span className="text-sm font-medium text-neutral-600">Issuer Address:</span>
-                  <p className="text-sm font-mono text-neutral-800 break-all">
-                    {certificate.issuer}
-                  </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-neutral-700">Token ID:</span>
+                  <span className="text-sm text-neutral-600">#{certificate.tokenId}</span>
                 </div>
                 
-                <div>
-                  <span className="text-sm font-medium text-neutral-600">Certificate Hash:</span>
-                  <div className="flex items-center gap-2 mt-1">
-                    <p className="text-sm font-mono text-neutral-800 break-all flex-1">
+                <div className="flex justify-between items-start">
+                  <span className="text-sm font-medium text-neutral-700">Issuer:</span>
+                  <span className="text-sm text-neutral-600 font-mono text-right max-w-48 truncate">
+                    {certificate.issuer}
+                  </span>
+                </div>
+                
+                <div className="flex justify-between items-start">
+                  <span className="text-sm font-medium text-neutral-700">Recipient:</span>
+                  <span className="text-sm text-neutral-600 font-mono text-right max-w-48 truncate">
+                    {certificate.recipientAddress}
+                  </span>
+                </div>
+                
+                <div className="flex justify-between items-start">
+                  <span className="text-sm font-medium text-neutral-700">Hash:</span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-neutral-600 font-mono max-w-32 truncate">
                       {certificate.certificateHash}
-                    </p>
+                    </span>
                     <Tooltip content={copySuccess ? 'Copied!' : 'Copy hash'}>
                       <button
-                        onClick={handleCopyHash}
-                        className="p-1 text-neutral-500 hover:text-neutral-700 transition-colors"
+                        onClick={copyHash}
+                        className="p-1 hover:bg-neutral-100 rounded transition-colors"
                       >
-                        <Copy className="w-4 h-4" />
+                        <Copy className="w-4 h-4 text-neutral-500" />
                       </button>
                     </Tooltip>
                   </div>
                 </div>
-
-                {/* Blockchain Information */}
-                <div className="bg-neutral-50 rounded-lg p-3">
-                  <div className="flex items-center mb-2">
-                    <Shield className="w-4 h-4 text-primary-600 mr-2" />
-                    <span className="text-sm font-medium text-neutral-700">Blockchain Verification</span>
-                  </div>
-                  <p className="text-xs text-neutral-600">
-                    This certificate is secured on the Polygon blockchain and cannot be tampered with or forged.
-                  </p>
-                </div>
               </div>
             </motion.div>
           </div>
+        </div>
 
-          {/* Actions */}
-          {showActions && (
-            <div className="flex flex-wrap gap-3 mt-6 pt-4 border-t border-neutral-200">
+        {/* Actions */}
+        {showActions && (
+          <div className="px-6 py-4 bg-neutral-50 border-t">
+            <div className="flex flex-wrap gap-3 justify-center">
               <Button
                 variant="primary"
                 size="sm"
-                onClick={() => onVerify && onVerify(certificate)}
+                onClick={() => onVerify?.(certificate)}
                 icon={<Shield className="w-4 h-4" />}
               >
                 Verify
@@ -339,14 +358,14 @@ const CertificateCard = ({
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => onDownload && onDownload(certificate)}
+                onClick={handleDownload}
                 icon={<Download className="w-4 h-4" />}
               >
                 Download
               </Button>
               
               <Button
-                variant="tertiary"
+                variant="secondary"
                 size="sm"
                 onClick={() => window.open(`/verify/${certificate.certificateHash}`, '_blank')}
                 icon={<ExternalLink className="w-4 h-4" />}
@@ -354,14 +373,14 @@ const CertificateCard = ({
                 View Details
               </Button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
-        {/* Certificate Footer */}
-        <div className="bg-neutral-50 px-6 py-3 border-t border-neutral-200">
-          <div className="flex items-center justify-between text-xs text-neutral-500">
-            <span>Powered by VerifyCert</span>
-            <span>Secured on Polygon</span>
+        {/* Blockchain Verification Footer */}
+        <div className="px-6 py-3 bg-gradient-to-r from-primary-50 to-accent-50 border-t">
+          <div className="flex items-center justify-center space-x-2 text-sm text-neutral-600">
+            <Shield className="w-4 h-4 text-primary-500" />
+            <span>Secured by blockchain technology</span>
           </div>
         </div>
       </Card>

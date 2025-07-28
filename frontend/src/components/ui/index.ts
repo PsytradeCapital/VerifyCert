@@ -7,7 +7,7 @@
 export { default as AppLayout } from './Layout/AppLayout';
 export { default as Header } from './Layout/Header';
 export { default as Container } from './Layout/Container';
-export { default as Grid } from './Layout/Grid';
+export { default as Grid, GridItem } from './Layout/Grid';
 
 // Navigation Components
 export { default as SideNavigation } from './Navigation/SideNavigation';
@@ -36,7 +36,7 @@ export { default as SkeletonLoader } from './Animation/SkeletonLoader';
 export type { AppLayoutProps } from './Layout/AppLayout';
 export type { HeaderProps, UserMenuProps } from './Layout/Header';
 export type { ContainerProps } from './Layout/Container';
-export type { GridProps } from './Layout/Grid';
+export type { GridProps, GridItemProps } from './Layout/Grid';
 export type { NavigationItem, SideNavigationProps } from './Navigation/SideNavigation';
 export type { BottomNavItem, BottomNavigationProps } from './Navigation/BottomNavigation';
 export type { BreadcrumbItem, BreadcrumbsProps } from './Navigation/Breadcrumbs';

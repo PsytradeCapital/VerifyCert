@@ -10,56 +10,73 @@ const contractAddresses = require('../contract-addresses.json');
 
 // Validation schema for certificate minting
 const mintCertificateSchema = Joi.object({
-  recipientAddress: Joi.string()
-    .pattern(/^0x[a-fA-F0-9]{40}$/)
-    .required()
+  recipientAddress: Joi.string().length(42).pattern(/^0x[a-fA-F0-9]{40}$/).required()
     .messages({
+      'string.length': 'Recipient address must be 42 characters',
       'string.pattern.base': 'Invalid Ethereum address format'
     }),
-  recipientName: Joi.string()
-    .min(2)
-    .max(100)
-    .required()
+  recipientName: Joi.string().min(1).max(100).required()
     .messages({
-      'string.min': 'Recipient name must be at least 2 characters',
-      'string.max': 'Recipient name must not exceed 100 characters'
+      'string.min': 'Recipient name is required',
+      'string.max': 'Recipient name must be less than 100 characters'
     }),
-  courseName: Joi.string()
-    .min(2)
-    .max(200)
-    .required()
+  courseName: Joi.string().min(1).max(200).required()
     .messages({
-      'string.min': 'Course name must be at least 2 characters',
-      'string.max': 'Course name must not exceed 200 characters'
+      'string.min': 'Course name is required',
+      'string.max': 'Course name must be less than 200 characters'
     }),
-  institutionName: Joi.string()
-    .min(2)
-    .max(200)
-    .required()
+  institutionName: Joi.string().min(1).max(200).required()
     .messages({
-      'string.min': 'Institution name must be at least 2 characters',
-      'string.max': 'Institution name must not exceed 200 characters'
+      'string.min': 'Institution name is required',
+      'string.max': 'Institution name must be less than 200 characters'
     }),
-  expiryDate: Joi.number()
-    .integer()
-    .min(0)
-    .optional()
+  expiryDate: Joi.number().integer().min(0).optional()
     .messages({
       'number.min': 'Expiry date must be a valid timestamp'
     }),
-  metadata: Joi.object({
-    description: Joi.string().max(500).optional(),
-    skills: Joi.array().items(Joi.string().max(50)).max(10).optional(),
-    grade: Joi.string().max(10).optional(),
-    credits: Joi.number().min(0).optional(),
-    additionalInfo: Joi.object().optional()
-  }).optional()
+  issuerPrivateKey: Joi.string().length(64).hex().required()
+    .messages({
+      'string.length': 'Private key must be 64 characters',
+      'string.hex': 'Private key must be hexadecimal'
+    })
+});
+
+// Validation schema for batch minting
+const batchMintSchema = Joi.object({
+  certificates: Joi.array().items(
+    Joi.object({
+      recipientAddress: Joi.string().length(42).pattern(/^0x[a-fA-F0-9]{40}$/).required(),
+      recipientName: Joi.string().min(1).max(100).required(),
+      courseName: Joi.string().min(1).max(200).required(),
+      institutionName: Joi.string().min(1).max(200).required(),
+      expiryDate: Joi.number().integer().min(0).optional()
+    })
+  ).min(1).max(50).required(),
+  issuerPrivateKey: Joi.string().length(64).hex().required()
 });
 
 /**
+ * Generate a unique certificate hash
+ * @param {Object} certificateData - Certificate data
+ * @returns {string} Unique hash
+ */
+function generateCertificateHash(certificateData) {
+  const dataString = JSON.stringify({
+    recipientAddress: certificateData.recipientAddress,
+    recipientName: certificateData.recipientName,
+    courseName: certificateData.courseName,
+    institutionName: certificateData.institutionName,
+    timestamp: Date.now(),
+    random: crypto.randomBytes(16).toString('hex')
+  });
+  
+  return crypto.createHash('sha256').update(dataString).digest('hex');
+}
+
+/**
  * @route POST /api/certificates/mint
- * @desc Mint a new certificate NFT
- * @access Private (Authorized issuers only)
+ * @desc Mint a new certificate
+ * @access Private (requires issuer private key)
  */
 router.post('/mint', async (req, res) => {
   try {
@@ -82,12 +99,12 @@ router.post('/mint', async (req, res) => {
       courseName,
       institutionName,
       expiryDate = 0,
-      metadata = {}
+      issuerPrivateKey
     } = value;
 
     // Initialize provider and signer
     const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
-    const signer = new ethers.Wallet(process.env.ISSUER_PRIVATE_KEY, provider);
+    const signer = new ethers.Wallet(issuerPrivateKey, provider);
 
     // Get contract instance
     const contractAddress = contractAddresses.Certificate;
@@ -100,8 +117,8 @@ router.post('/mint', async (req, res) => {
 
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    // Check if signer is authorized to issue certificates
-    const isAuthorized = await contract.authorizedIssuers(signer.address);
+    // Check if signer is authorized issuer
+    const isAuthorized = await contract.isAuthorizedIssuer(signer.address);
     if (!isAuthorized) {
       return res.status(403).json({
         success: false,
@@ -110,28 +127,22 @@ router.post('/mint', async (req, res) => {
     }
 
     // Generate unique certificate hash
-    const certificateData = {
+    const certificateHash = generateCertificateHash({
       recipientAddress,
       recipientName,
       courseName,
-      institutionName,
-      issuer: signer.address,
-      timestamp: Date.now(),
-      metadata
-    };
+      institutionName
+    });
 
-    const certificateHash = crypto
-      .createHash('sha256')
-      .update(JSON.stringify(certificateData))
-      .digest('hex');
-
-    // Check if hash already exists
-    const hashExists = await contract.usedHashes(certificateHash);
-    if (hashExists) {
-      return res.status(409).json({
-        success: false,
-        message: 'Certificate with this data already exists'
-      });
+    // Validate expiry date if provided
+    if (expiryDate > 0) {
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+      if (expiryDate <= currentTimestamp) {
+        return res.status(400).json({
+          success: false,
+          message: 'Expiry date must be in the future'
+        });
+      }
     }
 
     // Estimate gas for the transaction
@@ -145,41 +156,20 @@ router.post('/mint', async (req, res) => {
         expiryDate,
         certificateHash
       );
-    } catch (estimateError) {
-      console.error('Gas estimation failed:', estimateError);
+    } catch (gasError) {
+      console.error('Gas estimation failed:', gasError);
       return res.status(400).json({
         success: false,
-        message: 'Failed to estimate transaction cost',
-        details: estimateError.reason || estimateError.message
+        message: 'Transaction would fail. Please check parameters.',
+        details: gasError.reason || gasError.message
       });
     }
 
     // Add 20% buffer to gas estimate
     const gasLimit = gasEstimate * 120n / 100n;
 
-    // Get current gas price
-    const feeData = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice;
-
-    // Calculate transaction cost
-    const transactionCost = gasLimit * gasPrice;
-    const transactionCostEth = ethers.formatEther(transactionCost);
-
-    // Check signer balance
-    const signerBalance = await provider.getBalance(signer.address);
-    if (signerBalance < transactionCost) {
-      return res.status(402).json({
-        success: false,
-        message: 'Insufficient funds for transaction',
-        details: {
-          required: transactionCostEth,
-          available: ethers.formatEther(signerBalance)
-        }
-      });
-    }
-
-    // Execute the minting transaction
-    const transaction = await contract.issueCertificate(
+    // Issue the certificate
+    const tx = await contract.issueCertificate(
       recipientAddress,
       recipientName,
       courseName,
@@ -187,59 +177,49 @@ router.post('/mint', async (req, res) => {
       expiryDate,
       certificateHash,
       {
-        gasLimit,
-        gasPrice
+        gasLimit: gasLimit
       }
     );
 
     // Wait for transaction confirmation
-    const receipt = await transaction.wait();
+    const receipt = await tx.wait();
 
-    // Extract token ID from the event logs
+    // Extract token ID from the event
     const certificateIssuedEvent = receipt.logs.find(
-      log => log.topics[0] === contract.interface.getEvent('CertificateIssued').topicHash
+      log => log.topics[0] === ethers.id('CertificateIssued(uint256,address,address,string,string,string,string)')
     );
 
-    let tokenId;
+    let tokenId = null;
     if (certificateIssuedEvent) {
       const decodedEvent = contract.interface.parseLog(certificateIssuedEvent);
       tokenId = decodedEvent.args.tokenId.toString();
     }
 
-    // Get the minted certificate data
-    const certificateOnChain = await contract.certificates(tokenId);
-
-    // Format response data
-    const certificateResponse = {
-      tokenId,
-      recipientName: certificateOnChain.recipientName,
-      recipientAddress,
-      courseName: certificateOnChain.courseName,
-      institutionName: certificateOnChain.institutionName,
-      issueDate: certificateOnChain.issueDate.toString(),
-      expiryDate: certificateOnChain.expiryDate.toString(),
-      isRevoked: certificateOnChain.isRevoked,
-      issuer: certificateOnChain.issuer,
-      certificateHash: certificateOnChain.certificateHash,
-      transactionHash: receipt.hash,
-      blockNumber: receipt.blockNumber,
-      gasUsed: receipt.gasUsed.toString(),
-      metadata
-    };
+    // Get certificate data for response
+    const certificateData = tokenId ? await contract.certificates(tokenId) : null;
 
     res.status(201).json({
       success: true,
       message: 'Certificate minted successfully',
       data: {
-        certificate: certificateResponse,
-        transaction: {
-          hash: receipt.hash,
-          blockNumber: receipt.blockNumber,
-          gasUsed: receipt.gasUsed.toString(),
-          effectiveGasPrice: receipt.effectiveGasPrice?.toString(),
-          cost: ethers.formatEther(receipt.gasUsed * (receipt.effectiveGasPrice || gasPrice))
-        },
-        verificationUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${certificateHash}`
+        tokenId,
+        transactionHash: tx.hash,
+        blockNumber: receipt.blockNumber,
+        gasUsed: receipt.gasUsed.toString(),
+        certificateHash,
+        certificate: certificateData ? {
+          tokenId,
+          recipientName: certificateData.recipientName,
+          recipientAddress,
+          courseName: certificateData.courseName,
+          institutionName: certificateData.institutionName,
+          issueDate: certificateData.issueDate.toString(),
+          expiryDate: certificateData.expiryDate.toString(),
+          isRevoked: certificateData.isRevoked,
+          issuer: certificateData.issuer,
+          certificateHash: certificateData.certificateHash
+        } : null,
+        verificationUrl: `${req.protocol}://${req.get('host')}/verify/${certificateHash}`
       }
     });
 
@@ -248,9 +228,9 @@ router.post('/mint', async (req, res) => {
 
     // Handle specific blockchain errors
     if (error.code === 'INSUFFICIENT_FUNDS') {
-      return res.status(402).json({
+      return res.status(400).json({
         success: false,
-        message: 'Insufficient funds for transaction'
+        message: 'Insufficient funds to complete transaction'
       });
     }
 
@@ -264,8 +244,7 @@ router.post('/mint', async (req, res) => {
     if (error.reason) {
       return res.status(400).json({
         success: false,
-        message: 'Transaction failed',
-        details: error.reason
+        message: error.reason
       });
     }
 
@@ -277,62 +256,37 @@ router.post('/mint', async (req, res) => {
 });
 
 /**
- * @route POST /api/certificates/batch-mint
+ * @route POST /api/certificates/mint/batch
  * @desc Mint multiple certificates in batch
- * @access Private (Authorized issuers only)
+ * @access Private (requires issuer private key)
  */
-router.post('/batch-mint', async (req, res) => {
+router.post('/mint/batch', async (req, res) => {
   try {
-    const { certificates } = req.body;
-
-    if (!Array.isArray(certificates) || certificates.length === 0) {
+    // Validate request body
+    const { error, value } = batchMintSchema.validate(req.body);
+    if (error) {
       return res.status(400).json({
         success: false,
-        message: 'Certificates array is required and must not be empty'
+        message: 'Validation failed',
+        errors: error.details.map(detail => ({
+          field: detail.path.join('.'),
+          message: detail.message
+        }))
       });
     }
 
-    if (certificates.length > 50) {
-      return res.status(400).json({
-        success: false,
-        message: 'Maximum 50 certificates can be minted in a single batch'
-      });
-    }
-
-    // Validate each certificate
-    const validationErrors = [];
-    const validatedCertificates = [];
-
-    for (let i = 0; i < certificates.length; i++) {
-      const { error, value } = mintCertificateSchema.validate(certificates[i]);
-      if (error) {
-        validationErrors.push({
-          index: i,
-          errors: error.details.map(detail => ({
-            field: detail.path.join('.'),
-            message: detail.message
-          }))
-        });
-      } else {
-        validatedCertificates.push({ index: i, data: value });
-      }
-    }
-
-    if (validationErrors.length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed for some certificates',
-        errors: validationErrors
-      });
-    }
+    const { certificates, issuerPrivateKey } = value;
 
     // Initialize provider and signer
     const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
-    const signer = new ethers.Wallet(process.env.ISSUER_PRIVATE_KEY, provider);
-    const contract = new ethers.Contract(contractAddresses.Certificate, contractABI, signer);
+    const signer = new ethers.Wallet(issuerPrivateKey, provider);
 
-    // Check authorization
-    const isAuthorized = await contract.authorizedIssuers(signer.address);
+    // Get contract instance
+    const contractAddress = contractAddresses.Certificate;
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+    // Check if signer is authorized issuer
+    const isAuthorized = await contract.isAuthorizedIssuer(signer.address);
     if (!isAuthorized) {
       return res.status(403).json({
         success: false,
@@ -344,86 +298,73 @@ router.post('/batch-mint', async (req, res) => {
     const errors = [];
 
     // Process each certificate
-    for (const { index, data } of validatedCertificates) {
+    for (let i = 0; i < certificates.length; i++) {
+      const cert = certificates[i];
+      
       try {
-        const {
-          recipientAddress,
-          recipientName,
-          courseName,
-          institutionName,
-          expiryDate = 0,
-          metadata = {}
-        } = data;
+        // Generate unique hash for each certificate
+        const certificateHash = generateCertificateHash(cert);
 
-        // Generate certificate hash
-        const certificateData = {
-          recipientAddress,
-          recipientName,
-          courseName,
-          institutionName,
-          issuer: signer.address,
-          timestamp: Date.now() + index, // Add index to ensure uniqueness
-          metadata
-        };
-
-        const certificateHash = crypto
-          .createHash('sha256')
-          .update(JSON.stringify(certificateData))
-          .digest('hex');
-
-        // Check if hash already exists
-        const hashExists = await contract.usedHashes(certificateHash);
-        if (hashExists) {
-          errors.push({
-            index,
-            error: 'Certificate with this data already exists'
-          });
-          continue;
+        // Validate expiry date if provided
+        if (cert.expiryDate > 0) {
+          const currentTimestamp = Math.floor(Date.now() / 1000);
+          if (cert.expiryDate <= currentTimestamp) {
+            errors.push({
+              index: i,
+              error: 'Expiry date must be in the future',
+              certificate: cert
+            });
+            continue;
+          }
         }
 
-        // Mint certificate
-        const transaction = await contract.issueCertificate(
-          recipientAddress,
-          recipientName,
-          courseName,
-          institutionName,
-          expiryDate,
+        // Issue the certificate
+        const tx = await contract.issueCertificate(
+          cert.recipientAddress,
+          cert.recipientName,
+          cert.courseName,
+          cert.institutionName,
+          cert.expiryDate || 0,
           certificateHash
         );
 
-        const receipt = await transaction.wait();
+        const receipt = await tx.wait();
 
-        // Extract token ID
+        // Extract token ID from the event
         const certificateIssuedEvent = receipt.logs.find(
-          log => log.topics[0] === contract.interface.getEvent('CertificateIssued').topicHash
+          log => log.topics[0] === ethers.id('CertificateIssued(uint256,address,address,string,string,string,string)')
         );
 
-        let tokenId;
+        let tokenId = null;
         if (certificateIssuedEvent) {
           const decodedEvent = contract.interface.parseLog(certificateIssuedEvent);
           tokenId = decodedEvent.args.tokenId.toString();
         }
 
         results.push({
-          index,
+          index: i,
           success: true,
           tokenId,
+          transactionHash: tx.hash,
           certificateHash,
-          transactionHash: receipt.hash,
-          verificationUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${certificateHash}`
+          verificationUrl: `${req.protocol}://${req.get('host')}/verify/${certificateHash}`
         });
 
-      } catch (error) {
-        console.error(`Error minting certificate at index ${index}:`, error);
+        // Add small delay between transactions to avoid nonce issues
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+      } catch (certError) {
+        console.error(`Error minting certificate ${i}:`, certError);
         errors.push({
-          index,
-          error: error.reason || error.message || 'Unknown error'
+          index: i,
+          error: certError.reason || certError.message,
+          certificate: cert
         });
       }
     }
 
-    res.status(200).json({
-      success: true,
+    res.status(results.length > 0 ? 201 : 400).json({
+      success: results.length > 0,
       message: `Batch minting completed. ${results.length} successful, ${errors.length} failed.`,
       data: {
         successful: results,
@@ -438,6 +379,7 @@ router.post('/batch-mint', async (req, res) => {
 
   } catch (error) {
     console.error('Error in batch minting:', error);
+    
     res.status(500).json({
       success: false,
       message: 'Internal server error during batch minting'
@@ -446,55 +388,207 @@ router.post('/batch-mint', async (req, res) => {
 });
 
 /**
- * @route GET /api/certificates/estimate-cost
- * @desc Estimate the cost of minting a certificate
- * @access Public
+ * @route POST /api/certificates/revoke
+ * @desc Revoke a certificate
+ * @access Private (requires issuer private key)
  */
-router.get('/estimate-cost', async (req, res) => {
+router.post('/revoke', async (req, res) => {
   try {
+    const revokeSchema = Joi.object({
+      tokenId: Joi.number().integer().min(0).required(),
+      reason: Joi.string().min(1).max(500).required(),
+      issuerPrivateKey: Joi.string().length(64).hex().required()
+    });
+
+    const { error, value } = revokeSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: error.details.map(detail => ({
+          field: detail.path.join('.'),
+          message: detail.message
+        }))
+      });
+    }
+
+    const { tokenId, reason, issuerPrivateKey } = value;
+
+    // Initialize provider and signer
     const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
-    const signer = new ethers.Wallet(process.env.ISSUER_PRIVATE_KEY, provider);
-    const contract = new ethers.Contract(contractAddresses.Certificate, contractABI, signer);
+    const signer = new ethers.Wallet(issuerPrivateKey, provider);
 
-    // Use dummy data for gas estimation
-    const dummyData = {
-      recipientAddress: '0x0000000000000000000000000000000000000001',
-      recipientName: 'Test Recipient',
-      courseName: 'Test Course',
-      institutionName: 'Test Institution',
-      expiryDate: 0,
-      certificateHash: 'test_hash_' + Date.now()
-    };
+    // Get contract instance
+    const contractAddress = contractAddresses.Certificate;
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    const gasEstimate = await contract.issueCertificate.estimateGas(
-      dummyData.recipientAddress,
-      dummyData.recipientName,
-      dummyData.courseName,
-      dummyData.institutionName,
-      dummyData.expiryDate,
-      dummyData.certificateHash
-    );
+    // Check if certificate exists
+    try {
+      await contract.ownerOf(tokenId);
+    } catch (ownerError) {
+      return res.status(404).json({
+        success: false,
+        message: 'Certificate not found'
+      });
+    }
 
-    const feeData = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice;
-    const estimatedCost = gasEstimate * gasPrice;
+    // Get certificate data to check issuer
+    const certificateData = await contract.certificates(tokenId);
+    
+    // Check if signer is authorized to revoke (issuer or owner)
+    const isOwner = signer.address.toLowerCase() === (await contract.owner()).toLowerCase();
+    const isIssuer = signer.address.toLowerCase() === certificateData.issuer.toLowerCase();
+    
+    if (!isOwner && !isIssuer) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to revoke this certificate'
+      });
+    }
+
+    // Check if already revoked
+    if (certificateData.isRevoked) {
+      return res.status(400).json({
+        success: false,
+        message: 'Certificate is already revoked'
+      });
+    }
+
+    // Revoke the certificate
+    const tx = await contract.revokeCertificate(tokenId, reason);
+    const receipt = await tx.wait();
 
     res.json({
       success: true,
+      message: 'Certificate revoked successfully',
       data: {
-        gasEstimate: gasEstimate.toString(),
-        gasPrice: gasPrice.toString(),
-        estimatedCostWei: estimatedCost.toString(),
-        estimatedCostEth: ethers.formatEther(estimatedCost),
-        estimatedCostUSD: null // Would need price oracle integration
+        tokenId: tokenId.toString(),
+        reason,
+        transactionHash: tx.hash,
+        blockNumber: receipt.blockNumber,
+        gasUsed: receipt.gasUsed.toString()
       }
     });
 
   } catch (error) {
-    console.error('Error estimating cost:', error);
+    console.error('Error revoking certificate:', error);
+    
+    if (error.reason) {
+      return res.status(400).json({
+        success: false,
+        message: error.reason
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: 'Failed to estimate minting cost'
+      message: 'Internal server error during certificate revocation'
+    });
+  }
+});
+
+/**
+ * @route GET /api/certificates/estimate-gas
+ * @desc Estimate gas cost for minting a certificate
+ * @access Public
+ */
+router.post('/estimate-gas', async (req, res) => {
+  try {
+    const estimateSchema = Joi.object({
+      recipientAddress: Joi.string().length(42).pattern(/^0x[a-fA-F0-9]{40}$/).required(),
+      recipientName: Joi.string().min(1).max(100).required(),
+      courseName: Joi.string().min(1).max(200).required(),
+      institutionName: Joi.string().min(1).max(200).required(),
+      expiryDate: Joi.number().integer().min(0).optional()
+    });
+
+    const { error, value } = estimateSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: error.details.map(detail => ({
+          field: detail.path.join('.'),
+          message: detail.message
+        }))
+      });
+    }
+
+    const {
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName,
+      expiryDate = 0
+    } = value;
+
+    // Initialize provider
+    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
+    
+    // Get contract instance (without signer for estimation)
+    const contractAddress = contractAddresses.Certificate;
+    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+    // Generate a sample hash for estimation
+    const sampleHash = generateCertificateHash({
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName
+    });
+
+    // Estimate gas (this will fail but give us the gas estimate)
+    try {
+      const gasEstimate = await contract.issueCertificate.estimateGas(
+        recipientAddress,
+        recipientName,
+        courseName,
+        institutionName,
+        expiryDate,
+        sampleHash
+      );
+
+      // Get current gas price
+      const gasPrice = await provider.getFeeData();
+
+      // Calculate costs
+      const estimatedCost = gasEstimate * gasPrice.gasPrice;
+      const estimatedCostInMatic = ethers.formatEther(estimatedCost);
+
+      res.json({
+        success: true,
+        message: 'Gas estimation completed',
+        data: {
+          gasEstimate: gasEstimate.toString(),
+          gasPrice: gasPrice.gasPrice.toString(),
+          estimatedCost: estimatedCost.toString(),
+          estimatedCostInMatic: estimatedCostInMatic,
+          currency: 'MATIC'
+        }
+      });
+
+    } catch (estimateError) {
+      // Even if estimation fails, we can provide approximate values
+      res.json({
+        success: true,
+        message: 'Gas estimation (approximate)',
+        data: {
+          gasEstimate: '150000', // Approximate gas for certificate minting
+          gasPrice: '30000000000', // 30 gwei
+          estimatedCost: '4500000000000000', // Approximate cost
+          estimatedCostInMatic: '0.0045',
+          currency: 'MATIC',
+          note: 'Approximate values - actual costs may vary'
+        }
+      });
+    }
+
+  } catch (error) {
+    console.error('Error estimating gas:', error);
+    
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error during gas estimation'
     });
   }
 });

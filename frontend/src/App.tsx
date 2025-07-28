@@ -20,6 +20,7 @@ import IssuerDashboard from './pages/IssuerDashboard';
 import CertificateViewer from './pages/CertificateViewer';
 import VerificationPage from './pages/VerificationPage';
 import Verify from './pages/Verify';
+import LayoutDemo from './pages/LayoutDemo';
 import NotFound from './pages/NotFound';
 
 import './App.css';
@@ -111,6 +112,15 @@ function App() {
                     <BlockchainErrorBoundary onError={handleGlobalError}>
                       <VerificationPage />
                     </BlockchainErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/layout-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <LayoutDemo />
+                    </ErrorBoundary>
                   } 
                 />
                 

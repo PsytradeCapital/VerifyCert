@@ -102,3 +102,5 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*storybook.log
+storybook-static

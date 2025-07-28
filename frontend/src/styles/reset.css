@@ -1,0 +1,392 @@
+/**
+ * Modern CSS Reset
+ * A comprehensive CSS reset for modern web applications
+ * Based on modern-normalize and custom enhancements
+ */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Additional modern resets */
+
+/* Remove button styling */
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+/* Remove input styling */
+input,
+textarea,
+select {
+  all: unset;
+  display: block;
+}
+
+/* Remove fieldset styling */
+fieldset {
+  all: unset;
+}
+
+/* Remove legend styling */
+legend {
+  all: unset;
+  display: block;
+}
+
+/* Remove table styling */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove list styling */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove quote styling */
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+  content: none;
+}
+
+/* Remove horizontal rule styling */
+hr {
+  all: unset;
+  display: block;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
+}
+
+/* Remove details/summary styling */
+details {
+  all: unset;
+  display: block;
+}
+
+summary {
+  all: unset;
+  display: block;
+  cursor: pointer;
+}
+
+/* Remove dialog styling */
+dialog {
+  all: unset;
+  display: block;
+}
+
+/* Remove progress styling */
+progress {
+  all: unset;
+  display: block;
+}
+
+/* Remove meter styling */
+meter {
+  all: unset;
+  display: block;
+}
+
+/* Remove canvas styling */
+canvas {
+  display: block;
+}
+
+/* Remove video styling */
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove audio styling */
+audio {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove iframe styling */
+iframe {
+  border: none;
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove embed styling */
+embed,
+object {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove svg styling */
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+
+/* Remove abbr styling */
+abbr[title] {
+  text-decoration: underline dotted;
+}
+
+/* Remove b, strong styling */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/* Remove code, kbd, samp, pre styling */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+  white-space: pre-wrap;
+}
+
+/* Remove small styling */
+small {
+  font-size: 80%;
+}
+
+/* Remove sub, sup styling */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Remove mark styling */
+mark {
+  background-color: yellow;
+  color: black;
+}
+
+/* Remove del styling */
+del {
+  text-decoration: line-through;
+}
+
+/* Remove ins styling */
+ins {
+  text-decoration: underline;
+}
+
+/* Remove dfn styling */
+dfn {
+  font-style: italic;
+}
+
+/* Remove cite styling */
+cite {
+  font-style: italic;
+}
+
+/* Remove address styling */
+address {
+  font-style: normal;
+}
+
+/* Remove time styling */
+time {
+  font-style: normal;
+}
+
+/* Remove var styling */
+var {
+  font-style: italic;
+}
+
+/* Remove s styling */
+s {
+  text-decoration: line-through;
+}
+
+/* Remove u styling */
+u {
+  text-decoration: underline;
+}
+
+/* Remove ruby styling */
+ruby {
+  display: inline;
+}
+
+rt {
+  font-size: 0.875em;
+  line-height: 1;
+}
+
+rp {
+  display: none;
+}
+
+/* Remove bdi, bdo styling */
+bdi,
+bdo {
+  direction: ltr;
+}
+
+bdo[dir="rtl"] {
+  direction: rtl;
+}
+
+/* Remove wbr styling */
+wbr {
+  word-break: break-all;
+}
+
+/* Remove template styling */
+template {
+  display: none;
+}
+
+/* Remove hidden styling */
+[hidden] {
+  display: none !important;
+}

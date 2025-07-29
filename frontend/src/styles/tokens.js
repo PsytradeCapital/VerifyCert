@@ -232,11 +232,13 @@ const designTokens = {
   },
   
   breakpoints: {
-    sm: '640px',
-    md: '768px',
-    lg: '1024px',
-    xl: '1280px',
-    '2xl': '1536px'
+    xs: '475px',    // Extra small devices (large phones)
+    sm: '640px',    // Small devices (tablets)
+    md: '768px',    // Medium devices (small laptops)
+    lg: '1024px',   // Large devices (desktops)
+    xl: '1280px',   // Extra large devices (large desktops)
+    '2xl': '1536px', // 2X large devices (larger desktops)
+    '3xl': '1920px'  // 3X large devices (ultra-wide screens)
   },
   
   zIndex: {
@@ -254,6 +256,46 @@ const designTokens = {
     modal: '1050',
     popover: '1060',
     tooltip: '1070'
+  },
+
+  // Mobile-specific design tokens
+  mobile: {
+    // Touch target sizes (minimum 44px for accessibility)
+    touchTarget: {
+      xs: '2.5rem',   // 40px
+      sm: '2.75rem',  // 44px (recommended minimum)
+      md: '3rem',     // 48px
+      lg: '3.5rem',   // 56px
+      xl: '4rem'      // 64px
+    },
+    
+    // Safe area insets for modern mobile devices
+    safeArea: {
+      top: 'env(safe-area-inset-top)',
+      right: 'env(safe-area-inset-right)',
+      bottom: 'env(safe-area-inset-bottom)',
+      left: 'env(safe-area-inset-left)'
+    },
+    
+    // Mobile-optimized spacing
+    spacing: {
+      xs: '0.5rem',   // 8px
+      sm: '0.75rem',  // 12px
+      md: '1rem',     // 16px
+      lg: '1.5rem',   // 24px
+      xl: '2rem'      // 32px
+    },
+    
+    // Mobile typography scale
+    typography: {
+      xs: ['0.75rem', { lineHeight: '1.125rem' }],  // 12px/18px
+      sm: ['0.875rem', { lineHeight: '1.375rem' }], // 14px/22px
+      base: ['1rem', { lineHeight: '1.5rem' }],     // 16px/24px
+      lg: ['1.125rem', { lineHeight: '1.625rem' }], // 18px/26px
+      xl: ['1.25rem', { lineHeight: '1.75rem' }],   // 20px/28px
+      '2xl': ['1.5rem', { lineHeight: '2rem' }],    // 24px/32px
+      '3xl': ['1.875rem', { lineHeight: '2.25rem' }] // 30px/36px
+    }
   }
 };
 

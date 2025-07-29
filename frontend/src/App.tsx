@@ -4,6 +4,9 @@ import { Toaster } from 'react-hot-toast';
 import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
 
+// Context
+import { NavigationProvider } from './contexts/NavigationContext';
+
 // Components
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -21,6 +24,9 @@ import CertificateViewer from './pages/CertificateViewer';
 import VerificationPage from './pages/VerificationPage';
 import Verify from './pages/Verify';
 import LayoutDemo from './pages/LayoutDemo';
+import BreadcrumbsDemo from './pages/BreadcrumbsDemo';
+import NavigationDemo from './pages/NavigationDemo';
+import NavigationStateDemo from './pages/NavigationStateDemo';
 import NotFound from './pages/NotFound';
 
 import './App.css';
@@ -69,7 +75,8 @@ function App() {
   return (
     <ErrorBoundary onError={handleGlobalError}>
       <Router>
-        <div className="App min-h-screen bg-gray-50">
+        <NavigationProvider isWalletConnected={walletState.isConnected}>
+          <div className="App min-h-screen bg-gray-50">
           {/* Navigation */}
           <BlockchainErrorBoundary onError={handleGlobalError}>
             <Navigation
@@ -120,6 +127,33 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LayoutDemo />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/breadcrumbs-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <BreadcrumbsDemo />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/navigation-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <NavigationDemo />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/navigation-state-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <NavigationStateDemo />
                     </ErrorBoundary>
                   } 
                 />
@@ -186,7 +220,8 @@ function App() {
               },
             }}
           />
-        </div>
+          </div>
+        </NavigationProvider>
       </Router>
     </ErrorBoundary>
   );

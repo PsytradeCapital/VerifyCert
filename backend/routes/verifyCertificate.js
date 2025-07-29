@@ -93,6 +93,7 @@ router.get('/verify/:hash', async (req, res) => {
       isRevoked: certificateData.isRevoked,
       issuer: certificateData.issuer,
       certificateHash: certificateData.certificateHash,
+      metadataURI: certificateData.metadataURI,
       isValid,
       isExpired
     };
@@ -104,7 +105,7 @@ router.get('/verify/:hash', async (req, res) => {
         exists: true,
         isValid,
         isExpired,
-        isRevoked,
+        isRevoked: isRevoked,
         certificate
       }
     });

@@ -64,10 +64,25 @@ module.exports = {
       ...designTokens.zIndex,
     },
     extend: {
-      // Additional customizations beyond design tokens
+      // Enhanced responsive breakpoints
       screens: {
         'xs': '475px',
-        '3xl': '1600px',
+        '3xl': '1920px',
+        // Custom breakpoints for specific use cases
+        'mobile': { 'max': '767px' },
+        'tablet': { 'min': '768px', 'max': '1023px' },
+        'desktop': { 'min': '1024px' },
+        'touch': { 'max': '1023px' }, // Devices that are likely touch-enabled
+        'hover': { 'raw': '(hover: hover)' }, // Devices that support hover
+        'no-hover': { 'raw': '(hover: none)' }, // Touch-only devices
+        'portrait': { 'raw': '(orientation: portrait)' },
+        'landscape': { 'raw': '(orientation: landscape)' },
+        'print': { 'raw': 'print' },
+        'dark': { 'raw': '(prefers-color-scheme: dark)' },
+        'light': { 'raw': '(prefers-color-scheme: light)' },
+        'motion': { 'raw': '(prefers-reduced-motion: no-preference)' },
+        'no-motion': { 'raw': '(prefers-reduced-motion: reduce)' },
+        'high-contrast': { 'raw': '(prefers-contrast: high)' },
       },
       maxWidth: {
         '8xl': '88rem',
@@ -274,7 +289,7 @@ module.exports = {
           'background-size': '200% 100%',
           animation: 'skeleton 1.5s ease-in-out infinite',
         },
-        // Safe area utilities for mobile
+        // Enhanced safe area utilities for mobile
         '.safe-top': {
           'padding-top': 'env(safe-area-inset-top)',
         },
@@ -286,6 +301,134 @@ module.exports = {
         },
         '.safe-right': {
           'padding-right': 'env(safe-area-inset-right)',
+        },
+        '.safe-area': {
+          'padding-top': 'env(safe-area-inset-top)',
+          'padding-right': 'env(safe-area-inset-right)',
+          'padding-bottom': 'env(safe-area-inset-bottom)',
+          'padding-left': 'env(safe-area-inset-left)',
+        },
+        '.safe-area-x': {
+          'padding-left': 'env(safe-area-inset-left)',
+          'padding-right': 'env(safe-area-inset-right)',
+        },
+        '.safe-area-y': {
+          'padding-top': 'env(safe-area-inset-top)',
+          'padding-bottom': 'env(safe-area-inset-bottom)',
+        },
+        // Mobile-first touch targets
+        '.touch-target': {
+          'min-height': '44px',
+          'min-width': '44px',
+          'display': 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+        '.touch-target-sm': {
+          'min-height': '40px',
+          'min-width': '40px',
+          'display': 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+        '.touch-target-lg': {
+          'min-height': '48px',
+          'min-width': '48px',
+          'display': 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+        '.touch-target-xl': {
+          'min-height': '56px',
+          'min-width': '56px',
+          'display': 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+        },
+        // Mobile-optimized spacing
+        '.mobile-padding': {
+          'padding': '1rem',
+          '@media (min-width: 640px)': {
+            'padding': '1.5rem',
+          },
+          '@media (min-width: 1024px)': {
+            'padding': '2rem',
+          },
+        },
+        '.mobile-padding-x': {
+          'padding-left': '1rem',
+          'padding-right': '1rem',
+          '@media (min-width: 640px)': {
+            'padding-left': '1.5rem',
+            'padding-right': '1.5rem',
+          },
+          '@media (min-width: 1024px)': {
+            'padding-left': '2rem',
+            'padding-right': '2rem',
+          },
+        },
+        '.mobile-padding-y': {
+          'padding-top': '1rem',
+          'padding-bottom': '1rem',
+          '@media (min-width: 640px)': {
+            'padding-top': '1.5rem',
+            'padding-bottom': '1.5rem',
+          },
+          '@media (min-width: 1024px)': {
+            'padding-top': '2rem',
+            'padding-bottom': '2rem',
+          },
+        },
+        // Mobile-optimized text sizes
+        '.text-mobile-xs': {
+          'font-size': '0.75rem',
+          'line-height': '1.125rem',
+        },
+        '.text-mobile-sm': {
+          'font-size': '0.875rem',
+          'line-height': '1.375rem',
+        },
+        '.text-mobile-base': {
+          'font-size': '1rem',
+          'line-height': '1.5rem',
+        },
+        '.text-mobile-lg': {
+          'font-size': '1.125rem',
+          'line-height': '1.625rem',
+        },
+        '.text-mobile-xl': {
+          'font-size': '1.25rem',
+          'line-height': '1.75rem',
+        },
+        // Responsive visibility utilities
+        '.mobile-only': {
+          '@media (min-width: 768px)': {
+            'display': 'none',
+          },
+        },
+        '.tablet-only': {
+          'display': 'none',
+          '@media (min-width: 768px) and (max-width: 1023px)': {
+            'display': 'block',
+          },
+        },
+        '.desktop-only': {
+          'display': 'none',
+          '@media (min-width: 1024px)': {
+            'display': 'block',
+          },
+        },
+        '.touch-only': {
+          'display': 'none',
+          '@media (max-width: 1023px)': {
+            'display': 'block',
+          },
+        },
+        '.hover-only': {
+          'display': 'none',
+          '@media (hover: hover)': {
+            'display': 'block',
+          },
         },
         // Interaction states
         '.interactive': {

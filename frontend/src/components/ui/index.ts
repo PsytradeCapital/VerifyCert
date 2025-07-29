@@ -9,10 +9,26 @@ export { default as Header } from './Layout/Header';
 export { default as Container } from './Layout/Container';
 export { default as Grid, GridItem } from './Layout/Grid';
 
+// Responsive Utilities
+export {
+  MobileOnly,
+  TabletOnly,
+  DesktopOnly,
+  TouchOnly,
+  HoverOnly,
+  ResponsiveShow,
+  SafeArea,
+  TouchTarget,
+  MobilePadding,
+  ResponsiveGrid,
+  ResponsiveText
+} from './Layout/ResponsiveUtility';
+
 // Navigation Components
 export { default as SideNavigation } from './Navigation/SideNavigation';
 export { default as BottomNavigation } from './Navigation/BottomNavigation';
-export { default as Breadcrumbs } from './Navigation/Breadcrumbs';
+export { default as Breadcrumbs, AutoBreadcrumbs } from './Navigation/Breadcrumbs';
+export { default as FloatingActionButton } from './Navigation/FloatingActionButton';
 
 // Form Components
 export { default as Button } from './Button/Button';
@@ -37,8 +53,9 @@ export type { AppLayoutProps } from './Layout/AppLayout';
 export type { HeaderProps, UserMenuProps } from './Layout/Header';
 export type { ContainerProps } from './Layout/Container';
 export type { GridProps, GridItemProps } from './Layout/Grid';
-export type { NavigationItem, SideNavigationProps } from './Navigation/SideNavigation';
+export type { SideNavigationProps } from './Navigation/SideNavigation';
 export type { BottomNavItem, BottomNavigationProps } from './Navigation/BottomNavigation';
+export type { FloatingActionButtonProps } from './Navigation/FloatingActionButton';
 export type { BreadcrumbItem, BreadcrumbsProps } from './Navigation/Breadcrumbs';
 export type { ButtonProps } from './Button/Button';
 export type { InputProps } from './Input/Input';
@@ -52,3 +69,12 @@ export type { TooltipProps } from './Tooltip/Tooltip';
 export type { PageTransitionProps } from './Animation/PageTransition';
 export type { LoadingSpinnerProps } from './Animation/LoadingSpinner';
 export type { SkeletonLoaderProps } from './Animation/SkeletonLoader';
+export type {
+  ResponsiveUtilityProps,
+  ResponsiveShowProps,
+  SafeAreaProps,
+  TouchTargetProps,
+  MobilePaddingProps,
+  ResponsiveGridProps,
+  ResponsiveTextProps
+} from './Layout/ResponsiveUtility';

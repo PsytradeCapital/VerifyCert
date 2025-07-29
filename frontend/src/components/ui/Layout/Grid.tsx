@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../../../styles/utils';
 
-export interface GridProps {
+export interface GridProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   cols?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
   colsSm?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
@@ -36,7 +36,8 @@ const Grid: React.FC<GridProps> = ({
   placeItems,
   placeContent,
   className = '',
-  as: Component = 'div'
+  as: Component = 'div',
+  ...rest
 }) => {
   // Column classes for different breakpoints
   const getColsClass = (columns: number, prefix = '') => {
@@ -54,35 +55,35 @@ const Grid: React.FC<GridProps> = ({
     return colsMap[columns] || `${prefixStr}grid-cols-1`;
   };
 
-  // Gap classes
+  // Enhanced gap classes with mobile-first responsive approach
   const gapClasses = {
     none: 'gap-0',
-    xs: 'gap-1',
-    sm: 'gap-2',
-    md: 'gap-4',
-    lg: 'gap-6',
-    xl: 'gap-8',
-    '2xl': 'gap-12'
+    xs: 'gap-1 xs:gap-1.5',
+    sm: 'gap-2 xs:gap-3',
+    md: 'gap-3 xs:gap-4 sm:gap-5',
+    lg: 'gap-4 xs:gap-5 sm:gap-6 lg:gap-8',
+    xl: 'gap-6 xs:gap-7 sm:gap-8 lg:gap-10',
+    '2xl': 'gap-8 xs:gap-10 sm:gap-12 lg:gap-16'
   };
 
   const gapXClasses = {
     none: 'gap-x-0',
-    xs: 'gap-x-1',
-    sm: 'gap-x-2',
-    md: 'gap-x-4',
-    lg: 'gap-x-6',
-    xl: 'gap-x-8',
-    '2xl': 'gap-x-12'
+    xs: 'gap-x-1 xs:gap-x-1.5',
+    sm: 'gap-x-2 xs:gap-x-3',
+    md: 'gap-x-3 xs:gap-x-4 sm:gap-x-5',
+    lg: 'gap-x-4 xs:gap-x-5 sm:gap-x-6 lg:gap-x-8',
+    xl: 'gap-x-6 xs:gap-x-7 sm:gap-x-8 lg:gap-x-10',
+    '2xl': 'gap-x-8 xs:gap-x-10 sm:gap-x-12 lg:gap-x-16'
   };
 
   const gapYClasses = {
     none: 'gap-y-0',
-    xs: 'gap-y-1',
-    sm: 'gap-y-2',
-    md: 'gap-y-4',
-    lg: 'gap-y-6',
-    xl: 'gap-y-8',
-    '2xl': 'gap-y-12'
+    xs: 'gap-y-1 xs:gap-y-1.5',
+    sm: 'gap-y-2 xs:gap-y-3',
+    md: 'gap-y-3 xs:gap-y-4 sm:gap-y-5',
+    lg: 'gap-y-4 xs:gap-y-5 sm:gap-y-6 lg:gap-y-8',
+    xl: 'gap-y-6 xs:gap-y-7 sm:gap-y-8 lg:gap-y-10',
+    '2xl': 'gap-y-8 xs:gap-y-10 sm:gap-y-12 lg:gap-y-16'
   };
 
   // Row classes
@@ -163,14 +164,14 @@ const Grid: React.FC<GridProps> = ({
   );
 
   return (
-    <Component className={combinedClasses}>
+    <Component className={combinedClasses} {...rest}>
       {children}
     </Component>
   );
 };
 
 // Grid Item component for more control over individual grid items
-export interface GridItemProps {
+export interface GridItemProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   colSpan?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
   colSpanSm?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
@@ -203,7 +204,8 @@ export const GridItem: React.FC<GridItemProps> = ({
   justifySelf,
   alignSelf,
   className = '',
-  as: Component = 'div'
+  as: Component = 'div',
+  ...rest
 }) => {
   // Column span classes
   const getColSpanClass = (span: GridItemProps['colSpan'], prefix = '') => {
@@ -285,7 +287,7 @@ export const GridItem: React.FC<GridItemProps> = ({
   );
 
   return (
-    <Component className={combinedClasses}>
+    <Component className={combinedClasses} {...rest}>
       {children}
     </Component>
   );

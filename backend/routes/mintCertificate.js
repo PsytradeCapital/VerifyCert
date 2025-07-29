@@ -2,6 +2,7 @@ const express = require('express');
 const { ethers } = require('ethers');
 const Joi = require('joi');
 const crypto = require('crypto');
+const QRCode = require('qrcode');
 const router = express.Router();
 
 // Import contract ABI and address
@@ -15,24 +16,28 @@ const mintCertificateSchema = Joi.object({
       'string.length': 'Recipient address must be 42 characters',
       'string.pattern.base': 'Invalid Ethereum address format'
     }),
-  recipientName: Joi.string().min(1).max(100).required()
+  recipientName: Joi.string().min(2).max(100).required()
     .messages({
-      'string.min': 'Recipient name is required',
-      'string.max': 'Recipient name must be less than 100 characters'
+      'string.min': 'Recipient name must be at least 2 characters',
+      'string.max': 'Recipient name cannot exceed 100 characters'
     }),
-  courseName: Joi.string().min(1).max(200).required()
+  courseName: Joi.string().min(2).max(200).required()
     .messages({
-      'string.min': 'Course name is required',
-      'string.max': 'Course name must be less than 200 characters'
+      'string.min': 'Course name must be at least 2 characters',
+      'string.max': 'Course name cannot exceed 200 characters'
     }),
-  institutionName: Joi.string().min(1).max(200).required()
+  institutionName: Joi.string().min(2).max(200).required()
     .messages({
-      'string.min': 'Institution name is required',
-      'string.max': 'Institution name must be less than 200 characters'
+      'string.min': 'Institution name must be at least 2 characters',
+      'string.max': 'Institution name cannot exceed 200 characters'
     }),
   expiryDate: Joi.number().integer().min(0).optional()
     .messages({
       'number.min': 'Expiry date must be a valid timestamp'
+    }),
+  metadataURI: Joi.string().uri().optional().allow('')
+    .messages({
+      'string.uri': 'Metadata URI must be a valid URL'
     }),
   issuerPrivateKey: Joi.string().length(64).hex().required()
     .messages({
@@ -46,19 +51,24 @@ const batchMintSchema = Joi.object({
   certificates: Joi.array().items(
     Joi.object({
       recipientAddress: Joi.string().length(42).pattern(/^0x[a-fA-F0-9]{40}$/).required(),
-      recipientName: Joi.string().min(1).max(100).required(),
-      courseName: Joi.string().min(1).max(200).required(),
-      institutionName: Joi.string().min(1).max(200).required(),
-      expiryDate: Joi.number().integer().min(0).optional()
+      recipientName: Joi.string().min(2).max(100).required(),
+      courseName: Joi.string().min(2).max(200).required(),
+      institutionName: Joi.string().min(2).max(200).required(),
+      expiryDate: Joi.number().integer().min(0).optional(),
+      metadataURI: Joi.string().uri().optional().allow('')
     })
-  ).min(1).max(50).required(),
+  ).min(1).max(50).required()
+    .messages({
+      'array.min': 'At least one certificate is required',
+      'array.max': 'Cannot mint more than 50 certificates at once'
+    }),
   issuerPrivateKey: Joi.string().length(64).hex().required()
 });
 
 /**
  * Generate a unique certificate hash
  * @param {Object} certificateData - Certificate data
- * @returns {string} Unique hash
+ * @returns {string} - Unique hash
  */
 function generateCertificateHash(certificateData) {
   const dataString = JSON.stringify({
@@ -71,6 +81,47 @@ function generateCertificateHash(certificateData) {
   });
   
   return crypto.createHash('sha256').update(dataString).digest('hex');
+}
+
+/**
+ * Create metadata URI for certificate
+ * @param {Object} certificateData - Certificate data
+ * @param {string} certificateHash - Certificate hash
+ * @returns {string} - Metadata URI
+ */
+function createMetadataURI(certificateData, certificateHash) {
+  if (certificateData.metadataURI) {
+    return certificateData.metadataURI;
+  }
+  
+  // Create a basic metadata object
+  const metadata = {
+    name: `Certificate: ${certificateData.courseName}`,
+    description: `Certificate of completion for ${certificateData.courseName} issued to ${certificateData.recipientName} by ${certificateData.institutionName}`,
+    image: `${process.env.BASE_URL || 'http://localhost:3001'}/api/certificates/image/${certificateHash}`,
+    attributes: [
+      {
+        trait_type: "Recipient",
+        value: certificateData.recipientName
+      },
+      {
+        trait_type: "Course",
+        value: certificateData.courseName
+      },
+      {
+        trait_type: "Institution",
+        value: certificateData.institutionName
+      },
+      {
+        trait_type: "Certificate Hash",
+        value: certificateHash
+      }
+    ]
+  };
+  
+  // In production, store this metadata on IPFS or a permanent storage
+  // For now, return a placeholder URI
+  return `${process.env.BASE_URL || 'http://localhost:3001'}/api/certificates/metadata/${certificateHash}`;
 }
 
 /**
@@ -118,15 +169,15 @@ router.post('/mint', async (req, res) => {
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
     // Check if signer is authorized issuer
-    const isAuthorized = await contract.isAuthorizedIssuer(signer.address);
+    const isAuthorized = await contract.authorizedIssuers(signer.address);
     if (!isAuthorized) {
       return res.status(403).json({
         success: false,
-        message: 'Not authorized to issue certificates'
+        message: 'Address not authorized to issue certificates'
       });
     }
 
-    // Generate unique certificate hash
+    // Generate certificate hash
     const certificateHash = generateCertificateHash({
       recipientAddress,
       recipientName,
@@ -134,57 +185,67 @@ router.post('/mint', async (req, res) => {
       institutionName
     });
 
+    // Check if hash already exists
+    const hashExists = await contract.usedHashes(certificateHash);
+    if (hashExists) {
+      return res.status(409).json({
+        success: false,
+        message: 'Certificate with this data already exists'
+      });
+    }
+
+    // Create metadata URI
+    const metadataURI = createMetadataURI({
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName,
+      metadataURI: value.metadataURI
+    }, certificateHash);
+
     // Validate expiry date if provided
+    let expiryTimestamp = expiryDate;
     if (expiryDate > 0) {
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-      if (expiryDate <= currentTimestamp) {
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (expiryDate <= currentTime) {
         return res.status(400).json({
           success: false,
           message: 'Expiry date must be in the future'
         });
       }
+      expiryTimestamp = expiryDate;
     }
 
-    // Estimate gas for the transaction
-    let gasEstimate;
-    try {
-      gasEstimate = await contract.issueCertificate.estimateGas(
-        recipientAddress,
-        recipientName,
-        courseName,
-        institutionName,
-        expiryDate,
-        certificateHash
-      );
-    } catch (gasError) {
-      console.error('Gas estimation failed:', gasError);
-      return res.status(400).json({
-        success: false,
-        message: 'Transaction would fail. Please check parameters.',
-        details: gasError.reason || gasError.message
-      });
-    }
+    // Estimate gas
+    const gasEstimate = await contract.issueCertificate.estimateGas(
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName,
+      expiryTimestamp,
+      certificateHash,
+      metadataURI
+    );
 
     // Add 20% buffer to gas estimate
-    const gasLimit = gasEstimate * 120n / 100n;
+    const gasLimit = Math.floor(Number(gasEstimate) * 1.2);
 
-    // Issue the certificate
+    // Issue certificate
     const tx = await contract.issueCertificate(
       recipientAddress,
       recipientName,
       courseName,
       institutionName,
-      expiryDate,
+      expiryTimestamp,
       certificateHash,
-      {
-        gasLimit: gasLimit
-      }
+      metadataURI,
+      { gasLimit }
     );
 
     // Wait for transaction confirmation
     const receipt = await tx.wait();
 
-    // Extract token ID from the event
+    // Extract token ID from events
     const certificateIssuedEvent = receipt.logs.find(
       log => log.topics[0] === ethers.id('CertificateIssued(uint256,address,address,string,string,string,string)')
     );
@@ -195,31 +256,42 @@ router.post('/mint', async (req, res) => {
       tokenId = decodedEvent.args.tokenId.toString();
     }
 
-    // Get certificate data for response
-    const certificateData = tokenId ? await contract.certificates(tokenId) : null;
+    // Generate QR code for verification
+    const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${certificateHash}`;
+    const qrCodeDataUrl = await QRCode.toDataURL(verificationUrl, {
+      width: 256,
+      margin: 2,
+      color: {
+        dark: '#1f2937',
+        light: '#ffffff'
+      }
+    });
 
+    // Return success response
     res.status(201).json({
       success: true,
       message: 'Certificate minted successfully',
       data: {
         tokenId,
+        certificateHash,
         transactionHash: tx.hash,
         blockNumber: receipt.blockNumber,
         gasUsed: receipt.gasUsed.toString(),
-        certificateHash,
-        certificate: certificateData ? {
+        certificate: {
           tokenId,
-          recipientName: certificateData.recipientName,
+          recipientName,
           recipientAddress,
-          courseName: certificateData.courseName,
-          institutionName: certificateData.institutionName,
-          issueDate: certificateData.issueDate.toString(),
-          expiryDate: certificateData.expiryDate.toString(),
-          isRevoked: certificateData.isRevoked,
-          issuer: certificateData.issuer,
-          certificateHash: certificateData.certificateHash
-        } : null,
-        verificationUrl: `${req.protocol}://${req.get('host')}/verify/${certificateHash}`
+          courseName,
+          institutionName,
+          issueDate: Math.floor(Date.now() / 1000).toString(),
+          expiryDate: expiryTimestamp.toString(),
+          isRevoked: false,
+          issuer: signer.address,
+          certificateHash,
+          metadataURI,
+          verificationUrl,
+          qrCode: qrCodeDataUrl
+        }
       }
     });
 
@@ -286,11 +358,11 @@ router.post('/mint/batch', async (req, res) => {
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
     // Check if signer is authorized issuer
-    const isAuthorized = await contract.isAuthorizedIssuer(signer.address);
+    const isAuthorized = await contract.authorizedIssuers(signer.address);
     if (!isAuthorized) {
       return res.status(403).json({
         success: false,
-        message: 'Not authorized to issue certificates'
+        message: 'Address not authorized to issue certificates'
       });
     }
 
@@ -302,35 +374,51 @@ router.post('/mint/batch', async (req, res) => {
       const cert = certificates[i];
       
       try {
-        // Generate unique hash for each certificate
+        // Generate certificate hash
         const certificateHash = generateCertificateHash(cert);
 
-        // Validate expiry date if provided
-        if (cert.expiryDate > 0) {
-          const currentTimestamp = Math.floor(Date.now() / 1000);
-          if (cert.expiryDate <= currentTimestamp) {
+        // Check if hash already exists
+        const hashExists = await contract.usedHashes(certificateHash);
+        if (hashExists) {
+          errors.push({
+            index: i,
+            certificate: cert,
+            error: 'Certificate with this data already exists'
+          });
+          continue;
+        }
+
+        // Create metadata URI
+        const metadataURI = createMetadataURI(cert, certificateHash);
+
+        // Validate expiry date
+        let expiryTimestamp = cert.expiryDate || 0;
+        if (expiryTimestamp > 0) {
+          const currentTime = Math.floor(Date.now() / 1000);
+          if (expiryTimestamp <= currentTime) {
             errors.push({
               index: i,
-              error: 'Expiry date must be in the future',
-              certificate: cert
+              certificate: cert,
+              error: 'Expiry date must be in the future'
             });
             continue;
           }
         }
 
-        // Issue the certificate
+        // Issue certificate
         const tx = await contract.issueCertificate(
           cert.recipientAddress,
           cert.recipientName,
           cert.courseName,
           cert.institutionName,
-          cert.expiryDate || 0,
-          certificateHash
+          expiryTimestamp,
+          certificateHash,
+          metadataURI
         );
 
         const receipt = await tx.wait();
 
-        // Extract token ID from the event
+        // Extract token ID from events
         const certificateIssuedEvent = receipt.logs.find(
           log => log.topics[0] === ethers.id('CertificateIssued(uint256,address,address,string,string,string,string)')
         );
@@ -341,13 +429,18 @@ router.post('/mint/batch', async (req, res) => {
           tokenId = decodedEvent.args.tokenId.toString();
         }
 
+        // Generate QR code
+        const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${certificateHash}`;
+        const qrCodeDataUrl = await QRCode.toDataURL(verificationUrl);
+
         results.push({
           index: i,
           success: true,
           tokenId,
-          transactionHash: tx.hash,
           certificateHash,
-          verificationUrl: `${req.protocol}://${req.get('host')}/verify/${certificateHash}`
+          transactionHash: tx.hash,
+          verificationUrl,
+          qrCode: qrCodeDataUrl
         });
 
         // Add small delay between transactions to avoid nonce issues
@@ -357,14 +450,14 @@ router.post('/mint/batch', async (req, res) => {
         console.error(`Error minting certificate ${i}:`, certError);
         errors.push({
           index: i,
-          error: certError.reason || certError.message,
-          certificate: cert
+          certificate: cert,
+          error: certError.reason || certError.message || 'Unknown error'
         });
       }
     }
 
-    res.status(results.length > 0 ? 201 : 400).json({
-      success: results.length > 0,
+    res.status(200).json({
+      success: true,
       message: `Batch minting completed. ${results.length} successful, ${errors.length} failed.`,
       data: {
         successful: results,
@@ -388,121 +481,13 @@ router.post('/mint/batch', async (req, res) => {
 });
 
 /**
- * @route POST /api/certificates/revoke
- * @desc Revoke a certificate
- * @access Private (requires issuer private key)
- */
-router.post('/revoke', async (req, res) => {
-  try {
-    const revokeSchema = Joi.object({
-      tokenId: Joi.number().integer().min(0).required(),
-      reason: Joi.string().min(1).max(500).required(),
-      issuerPrivateKey: Joi.string().length(64).hex().required()
-    });
-
-    const { error, value } = revokeSchema.validate(req.body);
-    if (error) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed',
-        errors: error.details.map(detail => ({
-          field: detail.path.join('.'),
-          message: detail.message
-        }))
-      });
-    }
-
-    const { tokenId, reason, issuerPrivateKey } = value;
-
-    // Initialize provider and signer
-    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
-    const signer = new ethers.Wallet(issuerPrivateKey, provider);
-
-    // Get contract instance
-    const contractAddress = contractAddresses.Certificate;
-    const contract = new ethers.Contract(contractAddress, contractABI, signer);
-
-    // Check if certificate exists
-    try {
-      await contract.ownerOf(tokenId);
-    } catch (ownerError) {
-      return res.status(404).json({
-        success: false,
-        message: 'Certificate not found'
-      });
-    }
-
-    // Get certificate data to check issuer
-    const certificateData = await contract.certificates(tokenId);
-    
-    // Check if signer is authorized to revoke (issuer or owner)
-    const isOwner = signer.address.toLowerCase() === (await contract.owner()).toLowerCase();
-    const isIssuer = signer.address.toLowerCase() === certificateData.issuer.toLowerCase();
-    
-    if (!isOwner && !isIssuer) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to revoke this certificate'
-      });
-    }
-
-    // Check if already revoked
-    if (certificateData.isRevoked) {
-      return res.status(400).json({
-        success: false,
-        message: 'Certificate is already revoked'
-      });
-    }
-
-    // Revoke the certificate
-    const tx = await contract.revokeCertificate(tokenId, reason);
-    const receipt = await tx.wait();
-
-    res.json({
-      success: true,
-      message: 'Certificate revoked successfully',
-      data: {
-        tokenId: tokenId.toString(),
-        reason,
-        transactionHash: tx.hash,
-        blockNumber: receipt.blockNumber,
-        gasUsed: receipt.gasUsed.toString()
-      }
-    });
-
-  } catch (error) {
-    console.error('Error revoking certificate:', error);
-    
-    if (error.reason) {
-      return res.status(400).json({
-        success: false,
-        message: error.reason
-      });
-    }
-
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error during certificate revocation'
-    });
-  }
-});
-
-/**
  * @route GET /api/certificates/estimate-gas
  * @desc Estimate gas cost for minting a certificate
  * @access Public
  */
 router.post('/estimate-gas', async (req, res) => {
   try {
-    const estimateSchema = Joi.object({
-      recipientAddress: Joi.string().length(42).pattern(/^0x[a-fA-F0-9]{40}$/).required(),
-      recipientName: Joi.string().min(1).max(100).required(),
-      courseName: Joi.string().min(1).max(200).required(),
-      institutionName: Joi.string().min(1).max(200).required(),
-      expiryDate: Joi.number().integer().min(0).optional()
-    });
-
-    const { error, value } = estimateSchema.validate(req.body);
+    const { error, value } = mintCertificateSchema.validate(req.body);
     if (error) {
       return res.status(400).json({
         success: false,
@@ -519,76 +504,141 @@ router.post('/estimate-gas', async (req, res) => {
       recipientName,
       courseName,
       institutionName,
-      expiryDate = 0
+      expiryDate = 0,
+      issuerPrivateKey
     } = value;
 
-    // Initialize provider
+    // Initialize provider and signer
     const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
-    
-    // Get contract instance (without signer for estimation)
-    const contractAddress = contractAddresses.Certificate;
-    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+    const signer = new ethers.Wallet(issuerPrivateKey, provider);
 
-    // Generate a sample hash for estimation
-    const sampleHash = generateCertificateHash({
+    // Get contract instance
+    const contractAddress = contractAddresses.Certificate;
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+    // Generate certificate hash
+    const certificateHash = generateCertificateHash({
       recipientAddress,
       recipientName,
       courseName,
       institutionName
     });
 
-    // Estimate gas (this will fail but give us the gas estimate)
-    try {
-      const gasEstimate = await contract.issueCertificate.estimateGas(
-        recipientAddress,
-        recipientName,
-        courseName,
-        institutionName,
-        expiryDate,
-        sampleHash
-      );
+    // Create metadata URI
+    const metadataURI = createMetadataURI({
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName
+    }, certificateHash);
 
-      // Get current gas price
-      const gasPrice = await provider.getFeeData();
+    // Estimate gas
+    const gasEstimate = await contract.issueCertificate.estimateGas(
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName,
+      expiryDate,
+      certificateHash,
+      metadataURI
+    );
 
-      // Calculate costs
-      const estimatedCost = gasEstimate * gasPrice.gasPrice;
-      const estimatedCostInMatic = ethers.formatEther(estimatedCost);
+    // Get current gas price
+    const gasPrice = await provider.getFeeData();
 
-      res.json({
-        success: true,
-        message: 'Gas estimation completed',
-        data: {
-          gasEstimate: gasEstimate.toString(),
-          gasPrice: gasPrice.gasPrice.toString(),
-          estimatedCost: estimatedCost.toString(),
-          estimatedCostInMatic: estimatedCostInMatic,
-          currency: 'MATIC'
-        }
-      });
+    // Calculate costs
+    const estimatedCost = gasEstimate * gasPrice.gasPrice;
+    const estimatedCostEth = ethers.formatEther(estimatedCost);
 
-    } catch (estimateError) {
-      // Even if estimation fails, we can provide approximate values
-      res.json({
-        success: true,
-        message: 'Gas estimation (approximate)',
-        data: {
-          gasEstimate: '150000', // Approximate gas for certificate minting
-          gasPrice: '30000000000', // 30 gwei
-          estimatedCost: '4500000000000000', // Approximate cost
-          estimatedCostInMatic: '0.0045',
-          currency: 'MATIC',
-          note: 'Approximate values - actual costs may vary'
-        }
-      });
-    }
+    res.json({
+      success: true,
+      message: 'Gas estimation completed',
+      data: {
+        gasEstimate: gasEstimate.toString(),
+        gasPrice: gasPrice.gasPrice.toString(),
+        estimatedCost: estimatedCost.toString(),
+        estimatedCostEth,
+        estimatedCostUSD: null // Would need price oracle integration
+      }
+    });
 
   } catch (error) {
     console.error('Error estimating gas:', error);
     
     res.status(500).json({
       success: false,
-      message: 'Internal server error during gas estimation'
+      message: 'Error estimating gas cost'
+    });
+  }
+});
+
+/**
+ * @route GET /api/certificates/metadata/:hash
+ * @desc Get certificate metadata by hash
+ * @access Public
+ */
+router.get('/metadata/:hash', async (req, res) => {
+  try {
+    const { hash } = req.params;
+
+    // Initialize provider
+    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
+    
+    // Get contract instance
+    const contractAddress = contractAddresses.Certificate;
+    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+    // Check if certificate exists
+    const hashExists = await contract.usedHashes(hash);
+    if (!hashExists) {
+      return res.status(404).json({
+        success: false,
+        message: 'Certificate not found'
+      });
+    }
+
+    // Get token ID and certificate data
+    const tokenId = await contract.hashToTokenId(hash);
+    const certificateData = await contract.certificates(tokenId);
+
+    // Create metadata response
+    const metadata = {
+      name: `Certificate: ${certificateData.courseName}`,
+      description: `Certificate of completion for ${certificateData.courseName} issued to ${certificateData.recipientName} by ${certificateData.institutionName}`,
+      image: `${process.env.BASE_URL || 'http://localhost:3001'}/api/certificates/image/${hash}`,
+      external_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${hash}`,
+      attributes: [
+        {
+          trait_type: "Recipient",
+          value: certificateData.recipientName
+        },
+        {
+          trait_type: "Course",
+          value: certificateData.courseName
+        },
+        {
+          trait_type: "Institution",
+          value: certificateData.institutionName
+        },
+        {
+          trait_type: "Issue Date",
+          value: new Date(Number(certificateData.issueDate) * 1000).toISOString()
+        },
+        {
+          trait_type: "Certificate Hash",
+          value: hash
+        }
+      ]
+    };
+
+    res.json(metadata);
+
+  } catch (error) {
+    console.error('Error getting metadata:', error);
+    
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving certificate metadata'
     });
   }
 });

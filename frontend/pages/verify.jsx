@@ -8,13 +8,11 @@ import {
   CheckCircle, 
   XCircle, 
   AlertTriangle,
-  Loader2,
   Camera,
   FileText,
   Shield,
   ExternalLink,
-  Copy,
-  Download
+  Copy
 } from 'lucide-react';
 import CertificateCard from '../components/CertificateCard';
 import { 
@@ -24,13 +22,12 @@ import {
   Alert, 
   FileUpload, 
   LoadingSpinner, 
-  PageTransition 
+  PageTransition
 } from '../src/components/ui';
-
 
 /**
  * Certificate Verification Page
- * Allows users to verify certificates by hash, QR code, or file upload
+ * Enhanced UI for verifying certificates by hash, QR code, or file upload
  */
 const VerifyPage = () => {
   const { hash } = useParams();
@@ -42,11 +39,9 @@ const VerifyPage = () => {
   const [verificationResult, setVerificationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [qrScanner, setQrScanner] = useState(null);
   const [showQrScanner, setShowQrScanner] = useState(false);
   
   // Refs
-  const fileInputRef = useRef(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -61,11 +56,12 @@ const VerifyPage = () => {
   // Cleanup QR scanner on unmount
   useEffect(() => {
     return () => {
-      if (qrScanner) {
-        qrScanner.stop();
+      if (videoRef.current && videoRef.current.srcObject) {
+        const tracks = videoRef.current.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
       }
     };
-  }, [qrScanner]);
+  }, []);
 
   /**
    * Handle certificate verification
@@ -106,10 +102,10 @@ const VerifyPage = () => {
   /**
    * Handle file upload for QR code scanning
    */
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
+  const handleFileUpload = async (files) => {
+    if (!files || files.length === 0) return;
+    
+    const file = files[0];
     if (!file.type.startsWith('image/')) {
       setError('Please upload an image file');
       return;
@@ -217,7 +213,7 @@ const VerifyPage = () => {
   const getVerificationDisplay = () => {
     if (!verificationResult) return null;
 
-    const { exists, isValid, isExpired, isRevoked, certificate } = verificationResult;
+    const { exists, isValid, isExpired, isRevoked } = verificationResult;
 
     if (!exists) {
       return {
@@ -328,216 +324,217 @@ const VerifyPage = () => {
                     variant={verificationMethod === id ? 'primary' : 'secondary'}
                     onClick={() => setVerificationMethod(id)}
                     icon={<Icon className="w-5 h-5" />}
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-3 interactive"
                   >
                     {label}
                   </Button>
                 ))}
               </div>
 
-          {/* Hash Input Method */}
-          {verificationMethod === 'hash' && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="space-y-4"
-            >
-              <div>
-                <div className="flex gap-3">
-                  <Input
-                    label="Certificate Hash"
-                    value={certificateHash}
-                    onChange={(e) => setCertificateHash(e.target.value)}
-                    placeholder="Enter certificate hash..."
-                    className="flex-1"
-                  />
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex items-end"
-                  >
-                    <Button
-                      onClick={() => handleVerification()}
-                      disabled={isLoading || !certificateHash.trim()}
-                      loading={isLoading}
-                      icon={isLoading ? <LoadingSpinner size="sm" /> : <Search className="w-5 h-5" />}
-                      className="px-6 py-3"
+              {/* Hash Input Method */}
+              {verificationMethod === 'hash' && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-4"
+                >
+                  <div className="flex gap-3">
+                    <Input
+                      label="Certificate Hash"
+                      value={certificateHash}
+                      onChange={(e) => setCertificateHash(e.target.value)}
+                      placeholder="Enter certificate hash..."
+                      className="flex-1"
+                    />
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-end"
                     >
-                      Verify
-                    </Button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* QR Upload Method */}
-          {verificationMethod === 'qr' && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="space-y-4"
-            >
-              <FileUpload
-                onFileSelect={(files) => {
-                  if (files.length > 0) {
-                    const event = { target: { files } };
-                    handleFileUpload(event);
-                  }
-                }}
-                accept="image/*"
-                label="Upload QR Code Image"
-                helperText="Select an image file containing a QR code"
-                maxSize={5 * 1024 * 1024} // 5MB
-              />
-            </motion.div>
-          )}
-
-          {/* Camera Scanning Method */}
-          {verificationMethod === 'camera' && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="space-y-4"
-            >
-              {!showQrScanner ? (
-                <div className="text-center">
-                  <motion.button
-                    onClick={startQrScanning}
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Camera className="w-6 h-6" />
-                    Start Camera Scanning
-                  </motion.button>
-                </div>
-              ) : (
-                <div className="relative">
-                  <video
-                    ref={videoRef}
-                    className="w-full max-w-md mx-auto rounded-lg"
-                    autoPlay
-                    playsInline
-                  />
-                  <div className="absolute inset-0 border-2 border-primary-400 rounded-lg pointer-events-none">
-                    <div className="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-primary-400"></div>
-                    <div className="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-primary-400"></div>
-                    <div className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-primary-400"></div>
-                    <div className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-primary-400"></div>
+                      <Button
+                        onClick={() => handleVerification()}
+                        disabled={isLoading || !certificateHash.trim()}
+                        loading={isLoading}
+                        icon={isLoading ? <LoadingSpinner size="sm" /> : <Search className="w-5 h-5" />}
+                        className="px-6 py-3"
+                      >
+                        Verify
+                      </Button>
+                    </motion.div>
                   </div>
-                  <button
-                    onClick={stopQrScanning}
-                    className="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors"
-                  >
-                    <XCircle className="w-5 h-5" />
-                  </button>
-                </div>
+                </motion.div>
               )}
-            </motion.div>
-          )}
+
+              {/* QR Upload Method */}
+              {verificationMethod === 'qr' && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-4"
+                >
+                  <FileUpload
+                    onFileSelect={handleFileUpload}
+                    accept="image/*"
+                    label="Upload QR Code Image"
+                    helperText="Select an image file containing a QR code"
+                    maxSize={5 * 1024 * 1024} // 5MB
+                  />
+                </motion.div>
+              )}
+
+              {/* Camera Scanning Method */}
+              {verificationMethod === 'camera' && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-4"
+                >
+                  {!showQrScanner ? (
+                    <div className="text-center">
+                      <Button
+                        onClick={startQrScanning}
+                        variant="primary"
+                        size="lg"
+                        icon={<Camera className="w-6 h-6" />}
+                        className="px-8 py-4"
+                      >
+                        Start Camera Scanning
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <video
+                        ref={videoRef}
+                        className="w-full max-w-md mx-auto rounded-lg"
+                        autoPlay
+                        playsInline
+                      />
+                      <div className="absolute inset-0 border-2 border-primary-400 rounded-lg pointer-events-none">
+                        <div className="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-primary-400"></div>
+                        <div className="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-primary-400"></div>
+                        <div className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-primary-400"></div>
+                        <div className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-primary-400"></div>
+                      </div>
+                      <Button
+                        onClick={stopQrScanning}
+                        variant="danger"
+                        size="sm"
+                        icon={<XCircle className="w-5 h-5" />}
+                        className="absolute top-4 right-4"
+                      >
+                        Stop
+                      </Button>
+                    </div>
+                  )}
+                </motion.div>
+              )}
             </Card>
           </motion.div>
 
           {/* Error Display */}
-        <AnimatePresence>
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="mb-8"
-            >
-              <Alert
-                variant="error"
-                title="Verification Error"
-                dismissible
-                onDismiss={() => setError(null)}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="mb-8"
               >
-                {error}
-              </Alert>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <Alert
+                  variant="error"
+                  title="Verification Error"
+                  dismissible
+                  onDismiss={() => setError(null)}
+                >
+                  {error}
+                </Alert>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {/* Loading State */}
-        <AnimatePresence>
-          {isLoading && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="bg-white rounded-xl shadow-lg p-8 mb-8 text-center"
-            >
-              <Loader2 className="w-12 h-12 text-primary-600 animate-spin mx-auto mb-4" />
-              <p className="text-lg font-medium text-neutral-700">
-                Verifying certificate...
-              </p>
-              <p className="text-neutral-500">
-                Please wait while we check the blockchain
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Verification Result */}
-        <AnimatePresence>
-          {verificationDisplay && !isLoading && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="space-y-8"
-            >
-              {/* Status Display */}
-              <div className={`
-                ${verificationDisplay.bgColor} ${verificationDisplay.borderColor}
-                border rounded-xl p-8 text-center
-              `}>
-                <verificationDisplay.icon className={`w-16 h-16 ${verificationDisplay.color} mx-auto mb-4`} />
-                <h3 className={`text-2xl font-bold ${verificationDisplay.color} mb-2`}>
-                  {verificationDisplay.title}
-                </h3>
-                <p className="text-lg text-neutral-600">
-                  {verificationDisplay.message}
-                </p>
-                
-                {certificateHash && (
-                  <div className="mt-6 flex items-center justify-center gap-4">
-                    <button
-                      onClick={copyVerificationUrl}
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-700 hover:bg-white rounded-lg transition-colors"
-                    >
-                      <Copy className="w-4 h-4" />
-                      Copy Verification URL
-                    </button>
-                    <a
-                      href={`/verify/${certificateHash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-700 hover:bg-white rounded-lg transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Open in New Tab
-                    </a>
+          {/* Loading State */}
+          <AnimatePresence>
+            {isLoading && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="mb-8"
+              >
+                <Card variant="elevated" padding="lg" className="text-center">
+                  <div className="animate-pulse-slow">
+                    <LoadingSpinner size="xl" className="mx-auto mb-4" />
                   </div>
-                )}
-              </div>
+                  <p className="text-lg font-medium text-neutral-700">
+                    Verifying certificate...
+                  </p>
+                  <p className="text-neutral-500">
+                    Please wait while we check the blockchain
+                  </p>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-              {/* Certificate Details */}
-              {verificationResult?.certificate && (
-                <CertificateCard
-                  certificate={verificationResult.certificate}
-                  variant="elevated"
-                  showActions={true}
-                />
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* Verification Result */}
+          <AnimatePresence>
+            {verificationDisplay && !isLoading && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="space-y-8"
+              >
+                {/* Status Display */}
+                <div className={`
+                  ${verificationDisplay.bgColor} ${verificationDisplay.borderColor}
+                  border rounded-xl p-8 text-center
+                `}>
+                  <verificationDisplay.icon className={`w-16 h-16 ${verificationDisplay.color} mx-auto mb-4`} />
+                  <h3 className={`text-2xl font-bold ${verificationDisplay.color} mb-2`}>
+                    {verificationDisplay.title}
+                  </h3>
+                  <p className="text-lg text-neutral-600">
+                    {verificationDisplay.message}
+                  </p>
+                  
+                  {certificateHash && (
+                    <div className="mt-6 flex items-center justify-center gap-4">
+                      <button
+                        onClick={copyVerificationUrl}
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-700 hover:bg-white rounded-lg transition-colors"
+                      >
+                        <Copy className="w-4 h-4" />
+                        Copy Verification URL
+                      </button>
+                      <a
+                        href={`/verify/${certificateHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-700 hover:bg-white rounded-lg transition-colors"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        Open in New Tab
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                {/* Certificate Details */}
+                {verificationResult?.certificate && (
+                  <CertificateCard
+                    certificate={verificationResult.certificate}
+                    variant="premium"
+                    showActions={true}
+                    showQRCode={true}
+                  />
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Hidden canvas for image processing */}
           <canvas ref={canvasRef} className="hidden" />

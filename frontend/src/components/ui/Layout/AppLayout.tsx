@@ -34,27 +34,42 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Handle responsive behavior
+  // Handle responsive behavior with improved breakpoint detection
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 1024; // lg breakpoint
+      const tablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+      
       setIsMobile(mobile);
-      if (mobile) {
-        setSidebarCollapsed(false);
+      
+      // Auto-close mobile menu when switching to desktop
+      if (!mobile && mobileMenuOpen) {
         setMobileMenuOpen(false);
+      }
+      
+      // Auto-expand sidebar on desktop if it was collapsed due to mobile
+      if (!mobile && !tablet) {
+        // Only auto-expand if we're coming from mobile, not if user manually collapsed
+        const wasManuallyCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+        if (!wasManuallyCollapsed) {
+          setSidebarCollapsed(false);
+        }
       }
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [mobileMenuOpen]);
 
   const toggleSidebar = () => {
     if (isMobile) {
       setMobileMenuOpen(!mobileMenuOpen);
     } else {
-      setSidebarCollapsed(!sidebarCollapsed);
+      const newCollapsed = !sidebarCollapsed;
+      setSidebarCollapsed(newCollapsed);
+      // Remember user preference for desktop
+      localStorage.setItem('sidebar-collapsed', newCollapsed.toString());
     }
   };
 
@@ -63,7 +78,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   };
 
   return (
-    <div className={`min-h-screen bg-neutral-50 ${className}`}>
+    <div className={`min-h-screen bg-neutral-50 safe-area-y ${className}`}>
       {/* Header */}
       <Header
         title={title}
@@ -87,15 +102,16 @@ const AppLayout: React.FC<AppLayoutProps> = ({
             {/* Mobile overlay */}
             {isMobile && mobileMenuOpen && (
               <div 
-                className="fixed inset-0 z-40 bg-neutral-900 bg-opacity-50 lg:hidden"
+                className="fixed inset-0 z-40 bg-neutral-900 bg-opacity-50 lg:hidden touch-none"
                 onClick={closeMobileMenu}
+                onTouchStart={(e) => e.preventDefault()}
               />
             )}
             
             {/* Sidebar */}
             <aside className={`
               ${isMobile 
-                ? `fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out ${
+                ? `fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out safe-area-x ${
                     mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
                   }`
                 : 'flex flex-shrink-0'
@@ -113,7 +129,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                   {isMobile && (
                     <button
                       onClick={closeMobileMenu}
-                      className="p-1 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
+                      className="touch-target p-1 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                      aria-label="Close navigation menu"
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -140,8 +157,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({
         {/* Main content */}
         <main className="flex-1 relative overflow-hidden">
           <div className={`
-            h-full py-6 px-4 sm:px-6 lg:px-8
-            ${showBottomNav ? 'pb-20' : ''}
+            h-full mobile-padding-y mobile-padding-x
+            ${showBottomNav ? 'pb-20 sm:pb-24' : ''}
           `}>
             {children}
           </div>

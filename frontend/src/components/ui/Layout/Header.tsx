@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search, Menu, X, Bell, User } from 'lucide-react';
-import { Button } from '../Button/Button';
+import Button from '../Button/Button';
 
 export interface UserMenuProps {
   user?: {
@@ -43,10 +43,10 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className={`
-      sticky top-0 z-40 bg-white border-b border-neutral-200 shadow-sm
+      sticky top-0 z-40 bg-white border-b border-neutral-200 shadow-sm safe-top safe-area-x
       ${className}
     `}>
-      <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-between h-16 mobile-padding-x">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
           {/* Mobile Menu Toggle */}
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({
               variant="secondary"
               size="sm"
               onClick={onMobileMenuToggle}
-              className="lg:hidden"
+              className="lg:hidden touch-target"
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               {mobileMenuOpen ? (
@@ -114,7 +114,7 @@ const Header: React.FC<HeaderProps> = ({
               variant="secondary"
               size="sm"
               onClick={onSearchClick}
-              className="md:hidden"
+              className="md:hidden touch-target"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
@@ -125,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({
           <Button
             variant="secondary"
             size="sm"
-            className="relative"
+            className="relative touch-target"
             aria-label="Notifications"
           >
             <Bell className="h-5 w-5" />
@@ -139,7 +139,7 @@ const Header: React.FC<HeaderProps> = ({
               <Button
                 variant="secondary"
                 size="sm"
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 touch-target"
                 onClick={userMenu.onProfile}
               >
                 {userMenu.user?.avatar ? (
@@ -162,6 +162,7 @@ const Header: React.FC<HeaderProps> = ({
             <Button
               variant="secondary"
               size="sm"
+              className="touch-target"
               aria-label="User menu"
             >
               <User className="h-5 w-5" />

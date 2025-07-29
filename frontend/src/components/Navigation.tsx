@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import WalletConnect from './WalletConnect';
+import { useNavigation } from '../contexts/NavigationContext';
+import { useActiveIndicator } from '../hooks/useActiveIndicator';
 
 interface NavigationProps {
   walletAddress?: string | null;
@@ -16,9 +18,10 @@ export default function Navigation({
   onWalletDisconnect,
 }: NavigationProps) {
   const location = useLocation();
+  const navigation = useNavigation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navigation = [
+  const navigationItems = [
     { name: 'Home', href: '/', public: true },
     { name: 'Dashboard', href: '/dashboard', public: false },
     { name: 'Verify Certificate', href: '/verify', public: true },
@@ -29,6 +32,12 @@ export default function Navigation({
       return location.pathname === '/';
     }
     return location.pathname.startsWith(path);
+  };
+
+  // Use navigation context for active state
+  const isActiveFromContext = (path: string) => {
+    const matchingItem = navigation.state.navigationItems.find(item => item.href === path);
+    return matchingItem ? navigation.state.activeItems.has(matchingItem.id) : false;
   };
 
   const handleWalletConnect = (address: string, provider: any) => {
@@ -58,22 +67,32 @@ export default function Navigation({
             
             {/* Desktop navigation */}
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {navigation.map((item) => {
+              {navigationItems.map((item) => {
                 // Show all public routes, and private routes only if wallet is connected
                 const shouldShow = item.public || isWalletConnected;
                 
                 if (!shouldShow) return null;
 
+                const isActive = isActivePath(item.href) || isActiveFromContext(item.href);
+                const matchingItem = navigation.state.navigationItems.find(navItem => navItem.href === item.href);
+                const indicatorStyles = useActiveIndicator(matchingItem?.id || item.name, isActive);
+
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                      isActivePath(item.href)
-                        ? 'border-blue-500 text-gray-900'
-                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigation.actions.navigateTo(item.href);
+                    }}
+                    className={`${indicatorStyles.containerClasses} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? `border-blue-500 text-gray-900 bg-blue-50/50 ${indicatorStyles.itemClasses}`
+                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50'
+                    } ${indicatorStyles.transitionClasses}`}
                   >
+                    {/* Active indicator */}
+                    {isActive && <div className={indicatorStyles.indicatorClasses} />}
                     {item.name}
                   </Link>
                 );
@@ -119,23 +138,33 @@ export default function Navigation({
       {isMobileMenuOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
-            {navigation.map((item) => {
+            {navigationItems.map((item) => {
               // Show all public routes, and private routes only if wallet is connected
               const shouldShow = item.public || isWalletConnected;
               
               if (!shouldShow) return null;
 
+              const isActive = isActivePath(item.href) || isActiveFromContext(item.href);
+              const matchingItem = navigation.state.navigationItems.find(navItem => navItem.href === item.href);
+              const indicatorStyles = useActiveIndicator(matchingItem?.id || item.name, isActive);
+
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
-                    isActivePath(item.href)
-                      ? 'bg-blue-50 border-blue-500 text-blue-700'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigation.actions.navigateTo(item.href);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`${indicatorStyles.containerClasses} block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-all duration-200 ${
+                    isActive
+                      ? `bg-blue-50 border-blue-500 text-blue-700 ${indicatorStyles.itemClasses}`
                       : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
-                  }`}
+                  } ${indicatorStyles.transitionClasses}`}
                 >
+                  {/* Active indicator */}
+                  {isActive && <div className={indicatorStyles.indicatorClasses} />}
                   {item.name}
                 </Link>
               );

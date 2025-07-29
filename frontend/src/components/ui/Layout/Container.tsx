@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../../../styles/utils';
 
-export interface ContainerProps {
+export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
   padding?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -22,7 +22,8 @@ const Container: React.FC<ContainerProps> = ({
   center = true,
   fluid = false,
   className = '',
-  as: Component = 'div'
+  as: Component = 'div',
+  ...rest
 }) => {
   // Size classes with responsive breakpoints
   const sizeClasses = {
@@ -35,32 +36,32 @@ const Container: React.FC<ContainerProps> = ({
     full: 'max-w-full'
   };
 
-  // Responsive padding classes
+  // Enhanced responsive padding classes with better mobile-first approach
   const paddingClasses = {
     none: '',
-    xs: 'px-2 sm:px-3',
-    sm: 'px-3 sm:px-4 md:px-6',
-    md: 'px-4 sm:px-6 lg:px-8',
-    lg: 'px-6 sm:px-8 lg:px-12',
-    xl: 'px-8 sm:px-12 lg:px-16'
+    xs: 'px-3 xs:px-4 sm:px-5',
+    sm: 'px-4 xs:px-5 sm:px-6 md:px-8',
+    md: 'px-4 xs:px-6 sm:px-8 lg:px-12',
+    lg: 'px-6 xs:px-8 sm:px-12 lg:px-16',
+    xl: 'px-8 xs:px-12 sm:px-16 lg:px-20'
   };
 
   const paddingYClasses = {
     none: '',
-    xs: 'py-2',
-    sm: 'py-3 sm:py-4',
-    md: 'py-4 sm:py-6 lg:py-8',
-    lg: 'py-6 sm:py-8 lg:py-12',
-    xl: 'py-8 sm:py-12 lg:py-16'
+    xs: 'py-3 xs:py-4',
+    sm: 'py-4 xs:py-5 sm:py-6',
+    md: 'py-6 xs:py-8 sm:py-10 lg:py-12',
+    lg: 'py-8 xs:py-10 sm:py-12 lg:py-16',
+    xl: 'py-10 xs:py-12 sm:py-16 lg:py-20'
   };
 
   const paddingXClasses = {
     none: '',
-    xs: 'px-2 sm:px-3',
-    sm: 'px-3 sm:px-4 md:px-6',
-    md: 'px-4 sm:px-6 lg:px-8',
-    lg: 'px-6 sm:px-8 lg:px-12',
-    xl: 'px-8 sm:px-12 lg:px-16'
+    xs: 'px-3 xs:px-4 sm:px-5',
+    sm: 'px-4 xs:px-5 sm:px-6 md:px-8',
+    md: 'px-4 xs:px-6 sm:px-8 lg:px-12',
+    lg: 'px-6 xs:px-8 sm:px-12 lg:px-16',
+    xl: 'px-8 xs:px-12 sm:px-16 lg:px-20'
   };
 
   // Build classes
@@ -88,7 +89,7 @@ const Container: React.FC<ContainerProps> = ({
   );
 
   return (
-    <Component className={combinedClasses}>
+    <Component className={combinedClasses} {...rest}>
       {children}
     </Component>
   );

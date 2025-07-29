@@ -3,7 +3,16 @@
  * Helper functions for working with design tokens in TypeScript/JavaScript
  */
 
+import React from 'react';
 import { designTokens } from './tokens';
+
+/**
+ * Utility function for combining class names
+ * Similar to clsx but simplified for our needs
+ */
+export function cn(...classes: (string | undefined | null | false)[]): string {
+  return classes.filter(Boolean).join(' ');
+}
 
 // Type definitions for better TypeScript support
 export type ColorScale = typeof designTokens.colors.primary;
@@ -109,14 +118,42 @@ export function createStyles<T extends Record<string, any>>(styles: T): T {
 }
 
 /**
- * Responsive breakpoint utilities
+ * Enhanced responsive breakpoint utilities
  */
 export const breakpoints = {
+  xs: `@media (min-width: ${designTokens.breakpoints.xs})`,
   sm: `@media (min-width: ${designTokens.breakpoints.sm})`,
   md: `@media (min-width: ${designTokens.breakpoints.md})`,
   lg: `@media (min-width: ${designTokens.breakpoints.lg})`,
   xl: `@media (min-width: ${designTokens.breakpoints.xl})`,
   '2xl': `@media (min-width: ${designTokens.breakpoints['2xl']})`,
+  '3xl': `@media (min-width: ${designTokens.breakpoints['3xl']})`,
+  
+  // Max-width breakpoints for mobile-first approach
+  'max-xs': `@media (max-width: calc(${designTokens.breakpoints.xs} - 1px))`,
+  'max-sm': `@media (max-width: calc(${designTokens.breakpoints.sm} - 1px))`,
+  'max-md': `@media (max-width: calc(${designTokens.breakpoints.md} - 1px))`,
+  'max-lg': `@media (max-width: calc(${designTokens.breakpoints.lg} - 1px))`,
+  'max-xl': `@media (max-width: calc(${designTokens.breakpoints.xl} - 1px))`,
+  'max-2xl': `@media (max-width: calc(${designTokens.breakpoints['2xl']} - 1px))`,
+  
+  // Range breakpoints
+  'mobile': '@media (max-width: 767px)',
+  'tablet': '@media (min-width: 768px) and (max-width: 1023px)',
+  'desktop': '@media (min-width: 1024px)',
+  'touch': '@media (max-width: 1023px)',
+  
+  // Feature-based breakpoints
+  'hover': '@media (hover: hover)',
+  'no-hover': '@media (hover: none)',
+  'portrait': '@media (orientation: portrait)',
+  'landscape': '@media (orientation: landscape)',
+  'motion': '@media (prefers-reduced-motion: no-preference)',
+  'no-motion': '@media (prefers-reduced-motion: reduce)',
+  'dark': '@media (prefers-color-scheme: dark)',
+  'light': '@media (prefers-color-scheme: light)',
+  'high-contrast': '@media (prefers-contrast: high)',
+  'print': '@media print',
 };
 
 /**
@@ -367,6 +404,228 @@ export function createSizes<T extends Record<string, any>>(
   return (size: string = defaultSize): T => {
     return sizes[size] || sizes[defaultSize];
   };
+}
+
+/**
+ * Mobile-specific utilities
+ */
+
+/**
+ * Check if the current device is likely a mobile device
+ * @returns Boolean indicating if device is mobile
+ */
+export function isMobileDevice(): boolean {
+  return window.innerWidth < 768;
+}
+
+/**
+ * Check if the current device is likely a tablet
+ * @returns Boolean indicating if device is tablet
+ */
+export function isTabletDevice(): boolean {
+  return window.innerWidth >= 768 && window.innerWidth < 1024;
+}
+
+/**
+ * Check if the current device is likely a desktop
+ * @returns Boolean indicating if device is desktop
+ */
+export function isDesktopDevice(): boolean {
+  return window.innerWidth >= 1024;
+}
+
+/**
+ * Check if the current device supports touch
+ * @returns Boolean indicating if device supports touch
+ */
+export function isTouchDevice(): boolean {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+/**
+ * Check if the current device supports hover
+ * @returns Boolean indicating if device supports hover
+ */
+export function isHoverDevice(): boolean {
+  return window.matchMedia('(hover: hover)').matches;
+}
+
+/**
+ * Get the current viewport size category
+ * @returns Viewport size category
+ */
+export function getViewportSize(): 'mobile' | 'tablet' | 'desktop' {
+  const width = window.innerWidth;
+  if (width < 768) return 'mobile';
+  if (width < 1024) return 'tablet';
+  return 'desktop';
+}
+
+/**
+ * Create responsive class names based on viewport
+ * @param mobileClass - Class for mobile devices
+ * @param tabletClass - Class for tablet devices (optional)
+ * @param desktopClass - Class for desktop devices
+ * @returns Responsive class string
+ */
+export function createResponsiveClass(
+  mobileClass: string,
+  desktopClass: string,
+  tabletClass?: string
+): string {
+  const classes = [mobileClass];
+  
+  if (tabletClass) {
+    classes.push(`md:${tabletClass}`);
+    classes.push(`lg:${desktopClass}`);
+  } else {
+    classes.push(`md:${desktopClass}`);
+  }
+  
+  return classes.join(' ');
+}
+
+/**
+ * Create mobile-first responsive spacing
+ * @param mobile - Mobile spacing value
+ * @param desktop - Desktop spacing value
+ * @param tablet - Optional tablet spacing value
+ * @returns Responsive spacing classes
+ */
+export function createResponsiveSpacing(
+  mobile: string,
+  desktop: string,
+  tablet?: string
+): string {
+  return createResponsiveClass(mobile, desktop, tablet);
+}
+
+/**
+ * Create mobile-first responsive text sizes
+ * @param mobile - Mobile text size
+ * @param desktop - Desktop text size
+ * @param tablet - Optional tablet text size
+ * @returns Responsive text size classes
+ */
+export function createResponsiveText(
+  mobile: string,
+  desktop: string,
+  tablet?: string
+): string {
+  return createResponsiveClass(`text-${mobile}`, `text-${desktop}`, tablet ? `text-${tablet}` : undefined);
+}
+
+/**
+ * Create touch-friendly button classes
+ * @param size - Touch target size ('sm' | 'md' | 'lg' | 'xl')
+ * @returns Touch-friendly class names
+ */
+export function createTouchTarget(size: 'sm' | 'md' | 'lg' | 'xl' = 'md'): string {
+  const sizeClasses = {
+    sm: 'min-h-10 min-w-10', // 40px
+    md: 'min-h-11 min-w-11', // 44px
+    lg: 'min-h-12 min-w-12', // 48px
+    xl: 'min-h-14 min-w-14'  // 56px
+  };
+  
+  return cn('flex items-center justify-center', sizeClasses[size]);
+}
+
+/**
+ * Create safe area padding classes
+ * @param sides - Which sides to apply safe area padding ('all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right')
+ * @returns Safe area padding classes
+ */
+export function createSafeAreaPadding(
+  sides: 'all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right' = 'all'
+): string {
+  const sideClasses = {
+    all: 'safe-area',
+    x: 'safe-area-x',
+    y: 'safe-area-y',
+    top: 'safe-top',
+    bottom: 'safe-bottom',
+    left: 'safe-left',
+    right: 'safe-right'
+  };
+  
+  return sideClasses[sides];
+}
+
+/**
+ * Create mobile-optimized grid classes
+ * @param mobileCols - Number of columns on mobile
+ * @param desktopCols - Number of columns on desktop
+ * @param tabletCols - Optional number of columns on tablet
+ * @returns Responsive grid classes
+ */
+export function createResponsiveGrid(
+  mobileCols: number,
+  desktopCols: number,
+  tabletCols?: number
+): string {
+  const mobileClass = `grid-cols-${mobileCols}`;
+  const desktopClass = `grid-cols-${desktopCols}`;
+  const tabletClass = tabletCols ? `grid-cols-${tabletCols}` : undefined;
+  
+  return createResponsiveClass(mobileClass, desktopClass, tabletClass);
+}
+
+/**
+ * Viewport change listener utility
+ */
+export class ViewportListener {
+  private listeners: Array<(size: 'mobile' | 'tablet' | 'desktop') => void> = [];
+  private currentSize: 'mobile' | 'tablet' | 'desktop';
+  
+  constructor() {
+    this.currentSize = getViewportSize();
+    this.handleResize = this.handleResize.bind(this);
+    window.addEventListener('resize', this.handleResize);
+  }
+  
+  private handleResize() {
+    const newSize = getViewportSize();
+    if (newSize !== this.currentSize) {
+      this.currentSize = newSize;
+      this.listeners.forEach(listener => listener(newSize));
+    }
+  }
+  
+  public addListener(callback: (size: 'mobile' | 'tablet' | 'desktop') => void) {
+    this.listeners.push(callback);
+    // Call immediately with current size
+    callback(this.currentSize);
+  }
+  
+  public removeListener(callback: (size: 'mobile' | 'tablet' | 'desktop') => void) {
+    this.listeners = this.listeners.filter(listener => listener !== callback);
+  }
+  
+  public destroy() {
+    window.removeEventListener('resize', this.handleResize);
+    this.listeners = [];
+  }
+  
+  public getCurrentSize(): 'mobile' | 'tablet' | 'desktop' {
+    return this.currentSize;
+  }
+}
+
+/**
+ * React hook for viewport size (if using React)
+ */
+export function useViewportSize() {
+  const [viewportSize, setViewportSize] = React.useState<'mobile' | 'tablet' | 'desktop'>(getViewportSize());
+  
+  React.useEffect(() => {
+    const listener = new ViewportListener();
+    listener.addListener(setViewportSize);
+    
+    return () => listener.destroy();
+  }, []);
+  
+  return viewportSize;
 }
 
 /**

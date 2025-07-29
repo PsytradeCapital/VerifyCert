@@ -1,32 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
-export interface NavigationItem {
-  id: string;
-  label: string;
-  icon?: React.ReactNode;
-  href: string;
-  active?: boolean;
-  children?: NavigationItem[];
-  badge?: string | number;
-  disabled?: boolean;
-}
+import { Link, useLocation } from 'react-router-dom';
+import { useNavigation } from '../../../contexts/NavigationContext';
+import { useActiveIndicator } from '../../../hooks/useActiveIndicator';
+import type { NavigationItem } from '../../../contexts/NavigationContext';
 
 export interface SideNavigationProps {
-  items: NavigationItem[];
+  items?: NavigationItem[];
   collapsed?: boolean;
   onToggle?: () => void;
   className?: string;
   showTooltips?: boolean;
+  useContext?: boolean;
 }
 
 const SideNavigation: React.FC<SideNavigationProps> = ({
-  items,
-  collapsed = false,
+  items: propItems,
+  collapsed: propCollapsed,
   onToggle,
   className = '',
-  showTooltips = true
+  showTooltips = true,
+  useContext = true
 }) => {
+  const location = useLocation();
+  const navigationContext = useContext ? useNavigation() : null;
+  
+  // Use context state if available, otherwise fall back to props
+  const items = useContext && navigationContext 
+    ? navigationContext.state.navigationItems 
+    : propItems || [];
+  const collapsed = useContext && navigationContext 
+    ? navigationContext.state.sidebarCollapsed 
+    : propCollapsed || false;
+  const activeItems = useContext && navigationContext 
+    ? navigationContext.state.activeItems 
+    : new Set<string>();
+
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
@@ -36,6 +44,14 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
       setExpandedItems(new Set());
     }
   }, [collapsed]);
+
+  // Helper function to determine if an item is active
+  const isItemActive = (itemPath: string, currentPath: string): boolean => {
+    if (itemPath === '/') {
+      return currentPath === '/';
+    }
+    return currentPath.startsWith(itemPath);
+  };
 
   const toggleExpanded = (itemId: string) => {
     if (collapsed) return; // Don't allow expansion when collapsed
@@ -53,9 +69,13 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
     const hasChildren = item.children && item.children.length > 0;
     const isExpanded = expandedItems.has(item.id);
     const isHovered = hoveredItem === item.id;
+    const isActive = activeItems.has(item.id) || isItemActive(item.href, location.pathname);
+    
+    // Get active indicator styles
+    const indicatorStyles = useActiveIndicator(item.id, isActive);
 
     return (
-      <div key={item.id} className="relative">
+      <div key={item.id} className={`relative ${indicatorStyles.containerClasses}`}>
         {/* Tooltip for collapsed state */}
         {collapsed && showTooltips && isHovered && (
           <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 z-50">
@@ -66,6 +86,9 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
           </div>
         )}
 
+        {/* Active indicator */}
+        {isActive && <div className={indicatorStyles.indicatorClasses} />}
+        
         <div
           className={`
             group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ease-in-out
@@ -73,23 +96,27 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
               ? 'opacity-50 cursor-not-allowed' 
               : 'cursor-pointer'
             }
-            ${item.active 
-              ? 'bg-primary-100 text-primary-900 shadow-sm' 
+            ${isActive 
+              ? `bg-primary-100 text-primary-900 shadow-sm ${indicatorStyles.itemClasses}` 
               : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 hover:shadow-sm'
             }
             ${level > 0 ? 'ml-4 text-xs bg-neutral-25' : ''}
             ${collapsed ? 'justify-center px-2' : ''}
-            ${hasChildren && !collapsed ? 'hover:bg-neutral-100' : ''}
+            hover:bg-neutral-100
+            ${indicatorStyles.transitionClasses}
           `}
           onClick={(e) => {
             if (item.disabled) return;
-            
-            if (hasChildren && !collapsed) {
-              e.preventDefault();
+            e.preventDefault();
+            if (hasChildren) {
               toggleExpanded(item.id);
-            } else if (!hasChildren) {
-              // Navigate to the link
-              window.location.href = item.href;
+            } else {
+              // Use navigation context if available
+              if (navigationContext) {
+                navigationContext.actions.navigateTo(item.href);
+              } else {
+                window.location.href = item.href;
+              }
             }
           }}
           onMouseEnter={() => setHoveredItem(item.id)}
@@ -104,7 +131,7 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
             <span className={`
               flex-shrink-0 h-5 w-5 transition-all duration-200
               ${collapsed ? '' : 'mr-3'}
-              ${item.active ? 'text-primary-600' : 'text-neutral-500 group-hover:text-neutral-700'}
+              ${isActive ? 'text-primary-600' : 'text-neutral-500 group-hover:text-neutral-700'}
             `}>
               {item.icon}
             </span>

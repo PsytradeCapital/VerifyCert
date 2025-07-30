@@ -133,6 +133,26 @@ module.exports = {
         'shake': 'shake 0.5s ease-in-out',
         'float': 'float 3s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        
+        // Validation animations
+        'error-shake': 'errorShake 0.5s ease-in-out',
+        'error-pulse': 'errorPulse 0.6s ease-in-out',
+        'slide-in-error': 'slideInError 0.3s ease-out',
+        'error-glow': 'errorGlow 1s ease-in-out infinite',
+        'success-bounce': 'successBounce 0.6s ease-out',
+        'fade-in-success': 'fadeInSuccess 0.4s ease-out',
+        'slide-in-success': 'slideInSuccess 0.3s ease-out',
+        'success-glow': 'successGlow 1s ease-in-out infinite',
+        'warning-wiggle': 'warningWiggle 0.5s ease-in-out',
+        'fade-in-warning': 'fadeInWarning 0.3s ease-out',
+        'slide-in-warning': 'slideInWarning 0.3s ease-out',
+        'warning-glow': 'warningGlow 1s ease-in-out infinite',
+        'icon-pop-in': 'iconPopIn 0.4s ease-out',
+        'icon-slide-in': 'iconSlideIn 0.3s ease-out',
+        'label-float-up': 'labelFloatUp 0.2s ease-out forwards',
+        'label-float-down': 'labelFloatDown 0.2s ease-out forwards',
+        'progress-fill': 'progressFill 0.5s ease-out forwards',
+        'focus-ripple': 'focusRipple 0.6s ease-out',
       },
       keyframes: {
         fadeIn: {
@@ -178,6 +198,93 @@ module.exports = {
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' }
+        },
+        skeleton: {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' }
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 5px currentColor' },
+          '100%': { boxShadow: '0 0 20px currentColor, 0 0 30px currentColor' }
+        },
+        // Validation keyframes
+        errorShake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-2px)' },
+          '20%, 40%, 60%, 80%': { transform: 'translateX(2px)' }
+        },
+        errorPulse: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.1)', opacity: '0.8' }
+        },
+        slideInError: {
+          '0%': { transform: 'translateY(-10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        errorGlow: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(239, 68, 68, 0)' },
+          '50%': { boxShadow: '0 0 0 3px rgba(239, 68, 68, 0.1)' }
+        },
+        successBounce: {
+          '0%, 20%, 53%, 80%, 100%': { transform: 'scale(1)' },
+          '40%, 43%': { transform: 'scale(1.1)' },
+          '70%': { transform: 'scale(1.05)' },
+          '90%': { transform: 'scale(1.02)' }
+        },
+        fadeInSuccess: {
+          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        slideInSuccess: {
+          '0%': { transform: 'translateX(-10px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' }
+        },
+        successGlow: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(34, 197, 94, 0)' },
+          '50%': { boxShadow: '0 0 0 3px rgba(34, 197, 94, 0.1)' }
+        },
+        warningWiggle: {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '25%': { transform: 'rotate(-1deg)' },
+          '75%': { transform: 'rotate(1deg)' }
+        },
+        fadeInWarning: {
+          '0%': { transform: 'translateY(5px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        slideInWarning: {
+          '0%': { transform: 'translateX(10px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' }
+        },
+        warningGlow: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(245, 158, 11, 0)' },
+          '50%': { boxShadow: '0 0 0 3px rgba(245, 158, 11, 0.1)' }
+        },
+        iconPopIn: {
+          '0%': { transform: 'scale(0) rotate(180deg)', opacity: '0' },
+          '50%': { transform: 'scale(1.2) rotate(90deg)', opacity: '0.8' },
+          '100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' }
+        },
+        iconSlideIn: {
+          '0%': { transform: 'translateX(20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' }
+        },
+        labelFloatUp: {
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '0.7' },
+          '100%': { transform: 'translateY(-1.5rem) scale(0.85)', opacity: '1' }
+        },
+        labelFloatDown: {
+          '0%': { transform: 'translateY(-1.5rem) scale(0.85)', opacity: '1' },
+          '100%': { transform: 'translateY(0) scale(1)', opacity: '0.7' }
+        },
+        progressFill: {
+          '0%': { width: '0%' },
+          '100%': { width: 'var(--progress-width, 100%)' }
+        },
+        focusRipple: {
+          '0%': { transform: 'scale(0)', opacity: '0.5' },
+          '100%': { transform: 'scale(1)', opacity: '0' }
           '50%': { transform: 'translateY(-10px)' }
         },
         skeleton: {

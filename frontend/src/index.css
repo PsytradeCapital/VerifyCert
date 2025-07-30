@@ -3,3 +3,6 @@
 
 /* Import navigation transition styles */
 @import './styles/navigation-transitions.css';
+
+/* Import validation animation styles */
+@import './styles/validation-animations.css';

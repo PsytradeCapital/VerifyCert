@@ -80,34 +80,31 @@ describe('FileUpload', () => {
   });
 
   it('handles file input change', async () => {
-    const user = userEvent.setup();
     render(<FileUpload onFileSelect={mockOnFileSelect} />);
     
     const file = createMockFile('test.txt', 1024, 'text/plain');
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, file);
+    await userEvent.upload(input, file);
     
     expect(mockOnFileSelect).toHaveBeenCalledWith([file]);
   });
 
   it('handles multiple file selection', async () => {
-    const user = userEvent.setup();
     render(<FileUpload onFileSelect={mockOnFileSelect} multiple />);
     
     const files = [
       createMockFile('test1.txt', 1024, 'text/plain'),
       createMockFile('test2.txt', 2048, 'text/plain')
     ];
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, files);
+    await userEvent.upload(input, files);
     
     expect(mockOnFileSelect).toHaveBeenCalledWith(files);
   });
 
   it('validates file size', async () => {
-    const user = userEvent.setup();
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
     
     render(
@@ -118,9 +115,9 @@ describe('FileUpload', () => {
     );
     
     const file = createMockFile('large-file.txt', 2048, 'text/plain'); // 2KB file
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, file);
+    await userEvent.upload(input, file);
     
     expect(consoleSpy).toHaveBeenCalledWith(
       'File validation errors:', 
@@ -134,7 +131,7 @@ describe('FileUpload', () => {
   it('handles drag and drop', async () => {
     render(<FileUpload onFileSelect={mockOnFileSelect} />);
     
-    const dropZone = screen.getByRole('button');
+    const dropZone = document.querySelector('.cursor-pointer') as HTMLElement;
     const file = createMockFile('dropped-file.txt', 1024, 'text/plain');
     
     // Simulate drag over
@@ -157,7 +154,7 @@ describe('FileUpload', () => {
   it('shows drag over state', () => {
     render(<FileUpload onFileSelect={mockOnFileSelect} />);
     
-    const dropZone = screen.getByRole('button');
+    const dropZone = document.querySelector('.cursor-pointer') as HTMLElement;
     
     fireEvent.dragOver(dropZone);
     
@@ -167,7 +164,7 @@ describe('FileUpload', () => {
   it('removes drag over state on drag leave', () => {
     render(<FileUpload onFileSelect={mockOnFileSelect} />);
     
-    const dropZone = screen.getByRole('button');
+    const dropZone = document.querySelector('.cursor-pointer') as HTMLElement;
     
     fireEvent.dragOver(dropZone);
     fireEvent.dragLeave(dropZone);
@@ -176,31 +173,29 @@ describe('FileUpload', () => {
   });
 
   it('displays selected files', async () => {
-    const user = userEvent.setup();
     render(<FileUpload onFileSelect={mockOnFileSelect} />);
     
     const file = createMockFile('test-file.txt', 1024, 'text/plain');
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, file);
+    await userEvent.upload(input, file);
     
     expect(screen.getByText('test-file.txt')).toBeInTheDocument();
     expect(screen.getByText('(1 KB)')).toBeInTheDocument();
   });
 
   it('removes selected files', async () => {
-    const user = userEvent.setup();
     render(<FileUpload onFileSelect={mockOnFileSelect} />);
     
     const file = createMockFile('test-file.txt', 1024, 'text/plain');
-    const input = screen.getByRole('button').querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
-    await user.upload(input, file);
+    await userEvent.upload(input, file);
     
     expect(screen.getByText('test-file.txt')).toBeInTheDocument();
     
-    const removeButton = screen.getByRole('button', { name: '' }); // Remove button
-    await user.click(removeButton);
+    const removeButton = document.querySelector('.text-red-500') as HTMLElement; // Remove button
+    await userEvent.click(removeButton);
     
     expect(screen.queryByText('test-file.txt')).not.toBeInTheDocument();
     expect(mockOnFileSelect).toHaveBeenLastCalledWith([]);
@@ -209,8 +204,8 @@ describe('FileUpload', () => {
   it('is disabled when disabled prop is true', () => {
     render(<FileUpload onFileSelect={mockOnFileSelect} disabled />);
     
-    const dropZone = screen.getByRole('button');
-    const input = dropZone.querySelector('input[type="file"]') as HTMLInputElement;
+    const dropZone = document.querySelector('.cursor-not-allowed') as HTMLElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     
     expect(dropZone).toHaveClass('bg-gray-50', 'cursor-not-allowed');
     expect(input).toBeDisabled();
@@ -219,7 +214,7 @@ describe('FileUpload', () => {
   it('does not handle drag events when disabled', () => {
     render(<FileUpload onFileSelect={mockOnFileSelect} disabled />);
     
-    const dropZone = screen.getByRole('button');
+    const dropZone = document.querySelector('.cursor-not-allowed') as HTMLElement;
     const file = createMockFile('test-file.txt', 1024, 'text/plain');
     
     fireEvent.dragOver(dropZone, {

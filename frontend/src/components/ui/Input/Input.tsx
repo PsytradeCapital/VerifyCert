@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useValidationAnimation, useValidationMessageAnimation, useValidationIconAnimation } from '../../../hooks/useValidationAnimation';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -10,6 +11,12 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   iconPosition?: 'left' | 'right';
   showValidationIcon?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  enableValidationAnimation?: boolean;
+  animationConfig?: {
+    duration?: number;
+    easing?: string;
+    enableSequence?: boolean;
+  };
 }
 
 const Input: React.FC<InputProps> = ({
@@ -24,18 +31,52 @@ const Input: React.FC<InputProps> = ({
   size = 'md',
   className = '',
   id,
+  enableValidationAnimation = true,
+  animationConfig,
   ...props
 }) => {
   const [focused, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(!!props.value || !!props.defaultValue);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = id || `input-${Math.random().toString(36).substring(2, 11)}`;
+
+  // Determine validation state (error prop overrides validationState)
+  const currentValidationState = error ? 'error' : validationState;
+
+  // Validation animation hooks
+  const {
+    fieldRef,
+    messageRef,
+    iconRef,
+    triggerSequence,
+    isAnimating
+  } = useValidationAnimation(currentValidationState, {
+    animateOnChange: enableValidationAnimation,
+    animationConfig,
+    enableSequence: animationConfig?.enableSequence ?? true
+  });
+
+  const { displayMessage, isVisible: isMessageVisible, animationClass: messageAnimationClass } = 
+    useValidationMessageAnimation(error || helperText, currentValidationState);
+
+  const { 
+    currentState: iconValidationState, 
+    animationClass: iconAnimationClass, 
+    shouldShowIcon 
+  } = useValidationIconAnimation(currentValidationState, showValidationIcon);
 
   // Update hasValue when props.value changes (controlled component)
   useEffect(() => {
     setHasValue(!!props.value);
   }, [props.value]);
+
+  // Connect input ref to field animation ref
+  useEffect(() => {
+    if (inputRef.current && fieldRef.current !== inputRef.current) {
+      (fieldRef as any).current = inputRef.current;
+    }
+  }, [fieldRef]);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
@@ -52,33 +93,36 @@ const Input: React.FC<InputProps> = ({
     props.onChange?.(e);
   };
 
-  // Determine validation state (error prop overrides validationState)
-  const currentValidationState = error ? 'error' : validationState;
-
-  // Validation icons
+  // Validation icons with animation
   const ValidationIcon = () => {
-    if (!showValidationIcon || currentValidationState === 'default') return null;
+    if (!shouldShowIcon) return null;
     
-    const iconClasses = "h-5 w-5 transition-colors duration-200";
+    const iconClasses = `h-5 w-5 transition-all duration-300 ${iconAnimationClass}`;
     
-    switch (currentValidationState) {
+    switch (iconValidationState) {
       case 'success':
         return (
-          <svg className={`${iconClasses} text-success-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+          <div ref={iconRef as React.RefObject<HTMLDivElement>} className="flex items-center">
+            <svg className={`${iconClasses} text-success-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
         );
       case 'error':
         return (
-          <svg className={`${iconClasses} text-error-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <div ref={iconRef as React.RefObject<HTMLDivElement>} className="flex items-center">
+            <svg className={`${iconClasses} text-error-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
         );
       case 'warning':
         return (
-          <svg className={`${iconClasses} text-warning-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
+          <div ref={iconRef as React.RefObject<HTMLDivElement>} className="flex items-center">
+            <svg className={`${iconClasses} text-warning-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
         );
       default:
         return null;
@@ -112,14 +156,15 @@ const Input: React.FC<InputProps> = ({
 
   const currentSize = sizeConfig[size];
 
-  // Base input classes with enhanced styling
+  // Base input classes with enhanced styling and animation support
   const baseInputClasses = `
-    block w-full rounded-lg border transition-all duration-300 ease-in-out
+    block w-full rounded-lg border transition-validation validation-field
     focus:outline-none focus:ring-2 focus:border-transparent
     disabled:bg-neutral-50 disabled:text-neutral-500 disabled:cursor-not-allowed
     disabled:border-neutral-200 disabled:shadow-none
     placeholder:text-neutral-400 placeholder:transition-colors
     ${currentSize.input}
+    ${isAnimating ? 'pointer-events-none' : ''}
   `;
 
   // Validation state styling
@@ -206,25 +251,26 @@ const Input: React.FC<InputProps> = ({
           <ValidationIcon />
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mt-2 flex items-start">
-            <svg className="h-4 w-4 text-error-500 mt-0.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-sm text-error-600 font-medium">{error}</p>
+        {/* Animated Validation Message */}
+        {displayMessage && isMessageVisible && (
+          <div 
+            ref={messageRef as React.RefObject<HTMLDivElement>}
+            className={`mt-2 flex items-start ${messageAnimationClass}`}
+          >
+            {error && (
+              <svg className="h-4 w-4 text-error-500 mt-0.5 mr-1 flex-shrink-0 animate-icon-pop-in" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+            <p className={`text-sm font-medium transition-colors duration-300 ${
+              error ? 'text-error-600' :
+              currentValidationState === 'success' ? 'text-success-600' :
+              currentValidationState === 'warning' ? 'text-warning-600' :
+              'text-neutral-500'
+            }`}>
+              {displayMessage}
+            </p>
           </div>
-        )}
-        
-        {/* Helper Text */}
-        {helperText && !error && (
-          <p className={`mt-2 text-sm transition-colors duration-200 ${
-            currentValidationState === 'success' ? 'text-success-600' :
-            currentValidationState === 'warning' ? 'text-warning-600' :
-            'text-neutral-500'
-          }`}>
-            {helperText}
-          </p>
         )}
       </div>
     );
@@ -274,25 +320,26 @@ const Input: React.FC<InputProps> = ({
         </div>
       </div>
 
-      {/* Error Message */}
-      {error && (
-        <div className="mt-2 flex items-start">
-          <svg className="h-4 w-4 text-error-500 mt-0.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p className="text-sm text-error-600 font-medium">{error}</p>
+      {/* Animated Validation Message */}
+      {displayMessage && isMessageVisible && (
+        <div 
+          ref={messageRef as React.RefObject<HTMLDivElement>}
+          className={`mt-2 flex items-start ${messageAnimationClass}`}
+        >
+          {error && (
+            <svg className="h-4 w-4 text-error-500 mt-0.5 mr-1 flex-shrink-0 animate-icon-pop-in" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          )}
+          <p className={`text-sm font-medium transition-colors duration-300 ${
+            error ? 'text-error-600' :
+            currentValidationState === 'success' ? 'text-success-600' :
+            currentValidationState === 'warning' ? 'text-warning-600' :
+            'text-neutral-500'
+          }`}>
+            {displayMessage}
+          </p>
         </div>
-      )}
-      
-      {/* Helper Text */}
-      {helperText && !error && (
-        <p className={`mt-2 text-sm transition-colors duration-200 ${
-          currentValidationState === 'success' ? 'text-success-600' :
-          currentValidationState === 'warning' ? 'text-warning-600' :
-          'text-neutral-500'
-        }`}>
-          {helperText}
-        </p>
       )}
     </div>
   );

@@ -73,6 +73,11 @@ const InputDemo: React.FC = () => {
             validationState={emailValidation.state}
             error={emailValidation.state === 'error' ? emailValidation.message : undefined}
             helperText={emailValidation.state !== 'error' ? emailValidation.message : undefined}
+            enableValidationAnimation={true}
+            animationConfig={{
+              duration: 300,
+              enableSequence: true
+            }}
           />
           <Input
             label="Password"
@@ -86,6 +91,11 @@ const InputDemo: React.FC = () => {
             validationState={passwordValidation.state}
             error={passwordValidation.state === 'error' ? passwordValidation.message : undefined}
             helperText={passwordValidation.state !== 'error' ? passwordValidation.message : undefined}
+            enableValidationAnimation={true}
+            animationConfig={{
+              duration: 300,
+              enableSequence: true
+            }}
           />
           <Input
             label="Confirm Password"
@@ -99,19 +109,25 @@ const InputDemo: React.FC = () => {
             validationState={confirmPasswordValidation.state}
             error={confirmPasswordValidation.state === 'error' ? confirmPasswordValidation.message : undefined}
             helperText={confirmPasswordValidation.state !== 'error' ? confirmPasswordValidation.message : undefined}
+            enableValidationAnimation={true}
+            animationConfig={{
+              duration: 300,
+              enableSequence: true
+            }}
           />
         </div>
       </div>
 
       {/* Validation States Demo */}
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-xl font-semibold text-neutral-900 mb-6">Validation States</h2>
+        <h2 className="text-xl font-semibold text-neutral-900 mb-6">Validation States with Animations</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Default State"
             placeholder="Enter text..."
             variant="floating"
             helperText="This is helper text"
+            enableValidationAnimation={true}
           />
           <Input
             label="Success State"
@@ -121,6 +137,7 @@ const InputDemo: React.FC = () => {
             helperText="Great! This looks good."
             value="valid@example.com"
             readOnly
+            enableValidationAnimation={true}
           />
           <Input
             label="Warning State"
@@ -130,6 +147,7 @@ const InputDemo: React.FC = () => {
             helperText="This might need attention"
             value="warning@example"
             readOnly
+            enableValidationAnimation={true}
           />
           <Input
             label="Error State"
@@ -138,7 +156,66 @@ const InputDemo: React.FC = () => {
             error="This field is required"
             value=""
             readOnly
+            enableValidationAnimation={true}
           />
+        </div>
+      </div>
+
+      {/* Animation Showcase */}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-xl font-semibold text-neutral-900 mb-6">Validation Animation Showcase</h2>
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-neutral-800">Error Animations</h3>
+              <Input
+                label="Shake Animation"
+                placeholder="Type something invalid..."
+                variant="floating"
+                error="Invalid input - watch the shake!"
+                enableValidationAnimation={true}
+                animationConfig={{ enableSequence: true }}
+              />
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-neutral-800">Success Animations</h3>
+              <Input
+                label="Bounce Animation"
+                placeholder="Valid input..."
+                variant="floating"
+                validationState="success"
+                helperText="Success with bounce effect!"
+                value="success@example.com"
+                readOnly
+                enableValidationAnimation={true}
+                animationConfig={{ enableSequence: true }}
+              />
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-neutral-800">Warning Animations</h3>
+              <Input
+                label="Wiggle Animation"
+                placeholder="Needs attention..."
+                variant="floating"
+                validationState="warning"
+                helperText="Warning with wiggle effect!"
+                value="warning@incomplete"
+                readOnly
+                enableValidationAnimation={true}
+                animationConfig={{ enableSequence: true }}
+              />
+            </div>
+          </div>
+          
+          <div className="bg-neutral-50 rounded-lg p-4">
+            <p className="text-sm text-neutral-600">
+              <strong>Animation Features:</strong> Smooth transitions, staggered sequences, 
+              icon pop-ins, message slide-ins, and field shake/bounce effects. 
+              All animations respect user's reduced motion preferences.
+            </p>
+          </div>
         </div>
       </div>
 

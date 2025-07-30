@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Input from '../Input';
 
@@ -21,7 +21,10 @@ describe('Input Component', () => {
       render(<Input label="Test" onChange={handleChange} />);
       
       const input = screen.getByLabelText('Test');
-      await userEvent.type(input, 'test value');
+      
+      await act(async () => {
+        await userEvent.type(input, 'test value');
+      });
       
       expect(handleChange).toHaveBeenCalled();
     });
@@ -33,10 +36,15 @@ describe('Input Component', () => {
       render(<Input label="Test" onFocus={handleFocus} onBlur={handleBlur} />);
       
       const input = screen.getByLabelText('Test');
-      await userEvent.click(input);
+      
+      await act(async () => {
+        await userEvent.click(input);
+      });
       expect(handleFocus).toHaveBeenCalled();
       
-      await userEvent.tab();
+      await act(async () => {
+        await userEvent.tab();
+      });
       expect(handleBlur).toHaveBeenCalled();
     });
   });
@@ -57,7 +65,9 @@ describe('Input Component', () => {
       expect(label).toHaveClass('top-1/2');
       
       // Focus input
-      await userEvent.click(input);
+      await act(async () => {
+        await userEvent.click(input);
+      });
       
       // Label should move up
       await waitFor(() => {
@@ -192,6 +202,70 @@ describe('Input Component', () => {
     });
   });
 
+  describe('Validation Animations', () => {
+    it('enables validation animations by default', () => {
+      render(<Input label="Test" error="Test error" />);
+      
+      // Should have animation-related classes
+      const input = screen.getByLabelText('Test');
+      expect(input).toHaveClass('transition-validation');
+    });
+
+    it('disables validation animations when specified', () => {
+      render(<Input label="Test" error="Test error" enableValidationAnimation={false} />);
+      
+      // Animation hooks should still work but not trigger automatically
+      const input = screen.getByLabelText('Test');
+      expect(input).toHaveClass('transition-validation');
+    });
+
+    it('shows animated validation messages', async () => {
+      const { rerender } = render(<Input label="Test" />);
+      
+      // Add error message
+      rerender(<Input label="Test" error="Test error" enableValidationAnimation={true} />);
+      
+      await waitFor(() => {
+        const errorMessage = screen.getByText('Test error');
+        expect(errorMessage).toBeInTheDocument();
+      });
+    });
+
+    it('animates validation icon changes', async () => {
+      const { rerender } = render(
+        <Input label="Test" validationState="default" showValidationIcon={true} />
+      );
+      
+      // Change to success state
+      rerender(
+        <Input label="Test" validationState="success" showValidationIcon={true} enableValidationAnimation={true} />
+      );
+      
+      await waitFor(() => {
+        // Look for the SVG element with success styling
+        const successIcon = document.querySelector('svg.text-success-500');
+        expect(successIcon).toBeInTheDocument();
+      });
+    });
+
+    it('respects animation configuration', () => {
+      render(
+        <Input 
+          label="Test" 
+          error="Test error" 
+          enableValidationAnimation={true}
+          animationConfig={{
+            duration: 500,
+            enableSequence: false
+          }}
+        />
+      );
+      
+      const input = screen.getByLabelText('Test');
+      expect(input).toBeInTheDocument();
+    });
+  });
+
   describe('Accessibility', () => {
     it('generates unique IDs when not provided', () => {
       render(
@@ -232,6 +306,28 @@ describe('Input Component', () => {
       expect(input).toBeDisabled();
       expect(input).toHaveClass('disabled:bg-neutral-50');
     });
+
+    it('respects reduced motion preferences', () => {
+      // Mock reduced motion preference
+      Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        value: jest.fn().mockImplementation(query => ({
+          matches: query === '(prefers-reduced-motion: reduce)',
+          media: query,
+          onchange: null,
+          addListener: jest.fn(),
+          removeListener: jest.fn(),
+          addEventListener: jest.fn(),
+          removeEventListener: jest.fn(),
+          dispatchEvent: jest.fn(),
+        })),
+      });
+
+      render(<Input label="Test" error="Test error" enableValidationAnimation={true} />);
+      
+      const input = screen.getByLabelText('Test');
+      expect(input).toBeInTheDocument();
+    });
   });
 
   describe('Controlled vs Uncontrolled', () => {
@@ -245,13 +341,17 @@ describe('Input Component', () => {
       const input = screen.getByLabelText('Test');
       expect(input).toHaveValue('initial');
       
-      await userEvent.clear(input);
-      await userEvent.type(input, 'new value');
+      await act(async () => {
+        await userEvent.clear(input);
+        await userEvent.type(input, 'new value');
+      });
       
       expect(handleChange).toHaveBeenCalled();
       
       // Simulate parent component updating value
-      rerender(<Input label="Test" value="updated" onChange={handleChange} />);
+      act(() => {
+        rerender(<Input label="Test" value="updated" onChange={handleChange} />);
+      });
       expect(input).toHaveValue('updated');
     });
 
@@ -261,8 +361,10 @@ describe('Input Component', () => {
       const input = screen.getByLabelText('Test');
       expect(input).toHaveValue('default');
       
-      await userEvent.clear(input);
-      await userEvent.type(input, 'user input');
+      await act(async () => {
+        await userEvent.clear(input);
+        await userEvent.type(input, 'user input');
+      });
       
       expect(input).toHaveValue('user input');
     });

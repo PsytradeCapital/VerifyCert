@@ -49,6 +49,7 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
                 value={state.activeIndicators.indicatorStyle}
                 onChange={(e) => actions.setActiveIndicatorStyle(e.target.value as any)}
                 className="w-full text-xs border border-neutral-300 rounded px-2 py-1"
+                aria-label="Style"
               >
                 <option value="line">Line</option>
                 <option value="dot">Dot</option>
@@ -63,6 +64,7 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
                 value={state.activeIndicators.indicatorPosition}
                 onChange={(e) => actions.setActiveIndicatorPosition(e.target.value as any)}
                 className="w-full text-xs border border-neutral-300 rounded px-2 py-1"
+                aria-label="Position"
               >
                 <option value="left">Left</option>
                 <option value="right">Right</option>
@@ -91,9 +93,47 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
             </label>
           </div>
 
-          <div className="text-xs text-neutral-500">
-            Status: {state.isTransitioning ? 'Transitioning' : 'Idle'}
-            {state.transitionDirection !== 'none' && ` (${state.transitionDirection})`}
+          <div className="space-y-1">
+            <div className="text-xs text-neutral-500">
+              Status: {state.isTransitioning ? 'Transitioning' : 'Idle'}
+              {state.transitionDirection !== 'none' && ` (${state.transitionDirection})`}
+            </div>
+            
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="block text-xs text-neutral-600 mb-1">Duration (ms)</label>
+                <input
+                  type="range"
+                  min="100"
+                  max="1000"
+                  step="50"
+                  value={state.transitionDuration}
+                  onChange={(e) => actions.setTransitionDuration(Number(e.target.value))}
+                  className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer"
+                />
+                <div className="text-xs text-neutral-500 text-center">{state.transitionDuration}ms</div>
+              </div>
+              
+              <div>
+                <label className="block text-xs text-neutral-600 mb-1">Easing</label>
+                <select
+                  value={state.transitionEasing}
+                  onChange={(e) => actions.setTransitionEasing(e.target.value as any)}
+                  className="w-full text-xs border border-neutral-300 rounded px-2 py-1"
+                >
+                  <option value="ease-in-out">Ease In Out</option>
+                  <option value="ease-in">Ease In</option>
+                  <option value="ease-out">Ease Out</option>
+                  <option value="linear">Linear</option>
+                </select>
+              </div>
+            </div>
+            
+            {state.pendingNavigation && (
+              <div className="text-xs text-blue-600">
+                Pending: {state.pendingNavigation}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -133,6 +173,31 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
         </div>
         <div className="text-xs text-neutral-500">
           Active Items: {Array.from(state.activeItems).join(', ') || 'None'}
+        </div>
+        <div className="text-xs text-neutral-500">
+          Sidebar: {state.sidebarCollapsed ? 'Collapsed' : 'Expanded'}
+        </div>
+        <div className="text-xs text-neutral-500">
+          Mobile Menu: {state.mobileMenuOpen ? 'Open' : 'Closed'}
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="space-y-2 pt-2 border-t border-neutral-200">
+        <h4 className="text-xs font-medium text-neutral-700">Quick Actions</h4>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => actions.toggleSidebar()}
+            className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+          >
+            Toggle Sidebar
+          </button>
+          <button
+            onClick={() => actions.toggleMobileMenu()}
+            className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+          >
+            Toggle Mobile
+          </button>
         </div>
       </div>
     </div>

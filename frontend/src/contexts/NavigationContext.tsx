@@ -43,6 +43,9 @@ export interface NavigationState {
   // Navigation transitions
   isTransitioning: boolean;
   transitionDirection: 'forward' | 'backward' | 'none';
+  transitionDuration: number;
+  transitionEasing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
+  pendingNavigation: string | null;
 }
 
 export interface NavigationActions {
@@ -59,6 +62,9 @@ export interface NavigationActions {
   
   // Item management
   setActiveItem: (itemId: string) => void;
+  setActiveItems: (itemIds: string[]) => void;
+  addActiveItem: (itemId: string) => void;
+  removeActiveItem: (itemId: string) => void;
   updateNavigationItems: (items: NavigationItem[]) => void;
   updateItemBadge: (itemId: string, badge?: string | number) => void;
   
@@ -69,8 +75,10 @@ export interface NavigationActions {
   setAnimateTransitions: (animate: boolean) => void;
   
   // Transition management
-  startTransition: (direction: 'forward' | 'backward') => void;
+  startTransition: (direction: 'forward' | 'backward', duration?: number) => void;
   endTransition: () => void;
+  setTransitionDuration: (duration: number) => void;
+  setTransitionEasing: (easing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear') => void;
 }
 
 export interface NavigationContextType {
@@ -148,7 +156,10 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
       animateTransitions: true
     },
     isTransitioning: false,
-    transitionDirection: 'none'
+    transitionDirection: 'none',
+    transitionDuration: 300,
+    transitionEasing: 'ease-in-out',
+    pendingNavigation: null
   });
 
   // Update active items based on current location
@@ -178,12 +189,22 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         }
       });
 
-      setState(prev => ({
-        ...prev,
-        currentPath: location.pathname,
-        currentRoute: location.pathname,
-        activeItems: newActiveItems
-      }));
+      // Only update state if active items have actually changed
+      setState(prev => {
+        const activeItemsChanged = 
+          prev.activeItems.size !== newActiveItems.size ||
+          !Array.from(newActiveItems).every(item => prev.activeItems.has(item));
+
+        if (activeItemsChanged || prev.currentPath !== location.pathname) {
+          return {
+            ...prev,
+            currentPath: location.pathname,
+            currentRoute: location.pathname,
+            activeItems: newActiveItems
+          };
+        }
+        return prev;
+      });
     };
 
     updateActiveItems();
@@ -200,8 +221,14 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
   // Navigation actions
   const actions: NavigationActions = {
     navigateTo: (path: string) => {
+      // Don't navigate if already on the same path or if currently transitioning
+      if (location.pathname === path || state.isTransitioning) {
+        return;
+      }
+
       // Check if animations are enabled
       const shouldAnimate = state.activeIndicators.animateTransitions;
+      const transitionDuration = state.transitionDuration;
       
       // Start transition if animations are enabled
       if (shouldAnimate) {
@@ -213,16 +240,39 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
           return {
             ...prev,
             isTransitioning: true,
-            transitionDirection: direction
+            transitionDirection: direction,
+            pendingNavigation: path
           };
         });
-      }
 
-      // Navigate after a brief delay to allow transition to start
-      setTimeout(() => {
+        // Navigate after transition starts
+        setTimeout(() => {
+          navigate(path);
+        }, transitionDuration * 0.3); // Start navigation 30% through transition
+
+        // Complete transition after full duration
+        setTimeout(() => {
+          setState(prev => {
+            const newHistory = [...prev.navigationHistory];
+            if (newHistory[newHistory.length - 1] !== path) {
+              newHistory.push(path);
+            }
+            
+            return {
+              ...prev,
+              navigationHistory: newHistory,
+              canGoBack: newHistory.length > 1,
+              canGoForward: false,
+              isTransitioning: false,
+              transitionDirection: 'none',
+              pendingNavigation: null
+            };
+          });
+        }, transitionDuration);
+      } else {
+        // Immediate navigation without animation
         navigate(path);
         
-        // Update navigation history
         setState(prev => {
           const newHistory = [...prev.navigationHistory];
           if (newHistory[newHistory.length - 1] !== path) {
@@ -233,12 +283,10 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
             ...prev,
             navigationHistory: newHistory,
             canGoBack: newHistory.length > 1,
-            canGoForward: false, // Reset forward history when navigating to new page
-            isTransitioning: false,
-            transitionDirection: 'none'
+            canGoForward: false
           };
         });
-      }, shouldAnimate ? 50 : 0);
+      }
     },
 
     goBack: () => {
@@ -299,6 +347,31 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         ...prev,
         activeItems: new Set([itemId])
       }));
+    },
+
+    setActiveItems: (itemIds: string[]) => {
+      setState(prev => ({
+        ...prev,
+        activeItems: new Set(itemIds)
+      }));
+    },
+
+    addActiveItem: (itemId: string) => {
+      setState(prev => ({
+        ...prev,
+        activeItems: new Set([...prev.activeItems, itemId])
+      }));
+    },
+
+    removeActiveItem: (itemId: string) => {
+      setState(prev => {
+        const newActiveItems = new Set(prev.activeItems);
+        newActiveItems.delete(itemId);
+        return {
+          ...prev,
+          activeItems: newActiveItems
+        };
+      });
     },
 
     updateNavigationItems: (items: NavigationItem[]) => {
@@ -366,11 +439,12 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
     },
 
     // Transition management
-    startTransition: (direction: 'forward' | 'backward') => {
+    startTransition: (direction: 'forward' | 'backward', duration?: number) => {
       setState(prev => ({
         ...prev,
         isTransitioning: true,
-        transitionDirection: direction
+        transitionDirection: direction,
+        transitionDuration: duration || prev.transitionDuration
       }));
     },
 
@@ -378,7 +452,22 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
       setState(prev => ({
         ...prev,
         isTransitioning: false,
-        transitionDirection: 'none'
+        transitionDirection: 'none',
+        pendingNavigation: null
+      }));
+    },
+
+    setTransitionDuration: (duration: number) => {
+      setState(prev => ({
+        ...prev,
+        transitionDuration: Math.max(100, Math.min(1000, duration)) // Clamp between 100ms and 1s
+      }));
+    },
+
+    setTransitionEasing: (easing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear') => {
+      setState(prev => ({
+        ...prev,
+        transitionEasing: easing
       }));
     }
   };

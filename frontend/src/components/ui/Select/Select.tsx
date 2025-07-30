@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { designTokens } from '../../../styles/tokens';
 
 export interface SelectOption {
   value: string;
   label: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
+  description?: string;
 }
 
 export interface SelectProps {
@@ -16,7 +19,12 @@ export interface SelectProps {
   helperText?: string;
   disabled?: boolean;
   searchable?: boolean;
+  clearable?: boolean;
+  loading?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'outlined' | 'filled';
   className?: string;
+  'data-testid'?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -29,7 +37,12 @@ const Select: React.FC<SelectProps> = ({
   helperText,
   disabled = false,
   searchable = false,
-  className = ''
+  clearable = false,
+  loading = false,
+  size = 'md',
+  variant = 'default',
+  className = '',
+  'data-testid': testId
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -40,7 +53,8 @@ const Select: React.FC<SelectProps> = ({
   
   const filteredOptions = searchable
     ? options.filter(option => 
-        option.label.toLowerCase().includes(searchTerm.toLowerCase())
+        option.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        option.description?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : options;
 
@@ -71,12 +85,53 @@ const Select: React.FC<SelectProps> = ({
     setSearchTerm('');
   };
 
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onChange?.('');
+    setSearchTerm('');
+  };
+
   const selectId = `select-${Math.random().toString(36).substr(2, 9)}`;
 
+  // Size-based styles
+  const sizeStyles = {
+    sm: {
+      button: 'px-2 py-1 text-sm',
+      dropdown: 'text-sm',
+      input: 'px-2 py-1 text-sm'
+    },
+    md: {
+      button: 'px-3 py-2 text-base',
+      dropdown: 'text-base',
+      input: 'px-3 py-1 text-base'
+    },
+    lg: {
+      button: 'px-4 py-3 text-lg',
+      dropdown: 'text-lg',
+      input: 'px-4 py-2 text-lg'
+    }
+  };
+
+  // Variant-based styles
+  const variantStyles = {
+    default: {
+      button: 'bg-white border border-neutral-300 hover:border-neutral-400',
+      focus: 'focus:ring-2 focus:ring-primary-500 focus:border-transparent'
+    },
+    outlined: {
+      button: 'bg-transparent border-2 border-neutral-300 hover:border-primary-400',
+      focus: 'focus:ring-2 focus:ring-primary-500 focus:border-primary-500'
+    },
+    filled: {
+      button: 'bg-neutral-50 border border-transparent hover:bg-neutral-100',
+      focus: 'focus:ring-2 focus:ring-primary-500 focus:bg-white focus:border-primary-500'
+    }
+  };
+
   return (
-    <div className={className}>
+    <div className={className} data-testid={testId}>
       {label && (
-        <label htmlFor={selectId} className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={selectId} className="block text-sm font-medium text-neutral-700 mb-1">
           {label}
         </label>
       )}
@@ -86,60 +141,119 @@ const Select: React.FC<SelectProps> = ({
           id={selectId}
           type="button"
           className={`
-            relative w-full bg-white border rounded-lg pl-3 pr-10 py-2 text-left cursor-default
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            transition-colors duration-200
+            relative w-full rounded-lg text-left cursor-default
+            focus:outline-none transition-all duration-200
+            ${sizeStyles[size].button}
+            ${variantStyles[variant].button}
+            ${variantStyles[variant].focus}
             ${error 
-              ? 'border-red-300 text-red-900' 
-              : 'border-gray-300 text-gray-900'
+              ? 'border-error-300 text-error-900 focus:ring-error-500 focus:border-error-500' 
+              : 'text-neutral-900'
             }
             ${disabled 
-              ? 'bg-gray-50 text-gray-500 cursor-not-allowed' 
-              : 'hover:border-gray-400'
+              ? 'bg-neutral-50 text-neutral-500 cursor-not-allowed opacity-60' 
+              : ''
             }
+            ${loading ? 'cursor-wait' : ''}
           `}
           onClick={handleToggle}
-          disabled={disabled}
+          disabled={disabled || loading}
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
         >
-          <span className="block truncate">
-            {selectedOption ? selectedOption.label : placeholder}
-          </span>
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <svg
-              className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${
-                isOpen ? 'transform rotate-180' : ''
-              }`}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center min-w-0 flex-1">
+              {selectedOption?.icon && (
+                <span className="mr-2 flex-shrink-0">{selectedOption.icon}</span>
+              )}
+              <span className="block truncate">
+                {selectedOption ? selectedOption.label : placeholder}
+              </span>
+            </div>
+            
+            <div className="flex items-center ml-2">
+              {clearable && selectedOption && !disabled && !loading && (
+                <span
+                  onClick={handleClear}
+                  className="mr-1 p-1 rounded-full hover:bg-neutral-100 transition-colors duration-150 cursor-pointer"
+                  aria-label="Clear selection"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleClear(e);
+                    }
+                  }}
+                >
+                  <svg className="h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </span>
+              )}
+              
+              {loading ? (
+                <svg className="animate-spin h-5 w-5 text-neutral-400" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <svg
+                  className={`h-5 w-5 text-neutral-400 transition-transform duration-200 ${
+                    isOpen ? 'transform rotate-180' : ''
+                  }`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              )}
+            </div>
+          </div>
         </button>
 
         {isOpen && (
-          <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
+          <div 
+            className="absolute z-dropdown mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 ring-1 ring-neutral-200 overflow-auto focus:outline-none"
+            style={{ zIndex: designTokens.zIndex.dropdown }}
+            role="listbox"
+          >
             {searchable && (
-              <div className="px-2 py-2">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  className="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Search options..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+              <div className="px-2 py-2 border-b border-neutral-100">
+                <div className="relative">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    className={`
+                      w-full border border-neutral-300 rounded-md 
+                      focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+                      transition-colors duration-200
+                      ${sizeStyles[size].input}
+                    `}
+                    placeholder="Search options..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <svg 
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400"
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
               </div>
             )}
             
             {filteredOptions.length === 0 ? (
-              <div className="px-3 py-2 text-gray-500 text-sm">
-                No options found
+              <div className={`px-3 py-2 text-neutral-500 ${sizeStyles[size].dropdown}`}>
+                {searchTerm ? 'No options found' : 'No options available'}
               </div>
             ) : (
               filteredOptions.map((option) => (
@@ -147,17 +261,35 @@ const Select: React.FC<SelectProps> = ({
                   key={option.value}
                   type="button"
                   className={`
-                    w-full text-left px-3 py-2 text-sm transition-colors duration-150
+                    w-full text-left px-3 py-2 transition-colors duration-150 flex items-center
+                    ${sizeStyles[size].dropdown}
                     ${option.disabled
-                      ? 'text-gray-400 cursor-not-allowed'
-                      : 'text-gray-900 hover:bg-blue-50 hover:text-blue-900 cursor-pointer'
+                      ? 'text-neutral-400 cursor-not-allowed'
+                      : 'text-neutral-900 hover:bg-primary-50 hover:text-primary-900 cursor-pointer'
                     }
-                    ${option.value === value ? 'bg-blue-100 text-blue-900' : ''}
+                    ${option.value === value ? 'bg-primary-100 text-primary-900' : ''}
                   `}
                   onClick={() => !option.disabled && handleOptionSelect(option.value)}
                   disabled={option.disabled}
+                  role="option"
+                  aria-selected={option.value === value}
                 >
-                  {option.label}
+                  {option.icon && (
+                    <span className="mr-2 flex-shrink-0">{option.icon}</span>
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate">{option.label}</div>
+                    {option.description && (
+                      <div className="text-xs text-neutral-500 truncate mt-0.5">
+                        {option.description}
+                      </div>
+                    )}
+                  </div>
+                  {option.value === value && (
+                    <svg className="ml-2 h-4 w-4 text-primary-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  )}
                 </button>
               ))
             )}
@@ -166,11 +298,16 @@ const Select: React.FC<SelectProps> = ({
       </div>
 
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm text-error-600 flex items-center">
+          <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          {error}
+        </p>
       )}
       
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-500">{helperText}</p>
+        <p className="mt-1 text-sm text-neutral-500">{helperText}</p>
       )}
     </div>
   );

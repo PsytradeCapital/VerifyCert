@@ -33,7 +33,7 @@ export { default as FloatingActionButton } from './Navigation/FloatingActionButt
 // Form Components
 export { default as Button } from './Button/Button';
 export { default as Input } from './Input/Input';
-export { default as Select } from './Select/Select';
+export { Select, Dropdown, MultiSelect } from './Select';
 export { default as FileUpload } from './FileUpload/FileUpload';
 
 // Content Components
@@ -59,7 +59,7 @@ export type { FloatingActionButtonProps } from './Navigation/FloatingActionButto
 export type { BreadcrumbItem, BreadcrumbsProps } from './Navigation/Breadcrumbs';
 export type { ButtonProps } from './Button/Button';
 export type { InputProps } from './Input/Input';
-export type { SelectOption, SelectProps } from './Select/Select';
+export type { SelectOption, SelectProps, DropdownItem, DropdownProps, MultiSelectProps } from './Select';
 export type { FileUploadProps } from './FileUpload/FileUpload';
 export type { CardProps } from './Card/Card';
 export type { ModalProps } from './Modal/Modal';

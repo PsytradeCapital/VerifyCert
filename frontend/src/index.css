@@ -1,2 +1,5 @@
 /* Import comprehensive global styles with design token integration */
 @import './styles/globals.css';
+
+/* Import navigation transition styles */
+@import './styles/navigation-transitions.css';

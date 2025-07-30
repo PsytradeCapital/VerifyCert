@@ -1,166 +1,190 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-
-export interface NavigationTransition {
-  isTransitioning: boolean;
-  transitionDirection: 'forward' | 'backward' | 'none';
-  previousPath: string | null;
-  currentPath: string;
-}
+import { useEffect, useCallback, useRef } from 'react';
+import { useNavigation } from '../contexts/NavigationContext';
 
 export interface NavigationTransitionOptions {
-  transitionDuration?: number;
-  enableTransitions?: boolean;
+  enablePreloading?: boolean;
+  enableStaggeredAnimations?: boolean;
+  customDuration?: number;
+  customEasing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
 }
 
-export const useNavigationTransitions = (
-  options: NavigationTransitionOptions = {}
-) => {
+export interface NavigationTransitionState {
+  isTransitioning: boolean;
+  transitionDirection: 'forward' | 'backward' | 'none';
+  transitionProgress: number;
+  pendingNavigation: string | null;
+}
+
+/**
+ * Hook for managing smooth navigation transitions with enhanced animations
+ */
+export const useNavigationTransitions = (options: NavigationTransitionOptions = {}) => {
   const {
-    transitionDuration = 300,
-    enableTransitions = true
+    enablePreloading = true,
+    enableStaggeredAnimations = true,
+    customDuration,
+    customEasing
   } = options;
 
-  const location = useLocation();
-  const [transition, setTransition] = useState<NavigationTransition>({
-    isTransitioning: false,
-    transitionDirection: 'none',
-    previousPath: null,
-    currentPath: location.pathname
-  });
+  const { state, actions } = useNavigation();
+  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const transitionProgressRef = useRef(0);
 
-  const [navigationHistory, setNavigationHistory] = useState<string[]>([location.pathname]);
-
-  // Update transition state when location changes
+  // Set custom transition settings if provided
   useEffect(() => {
-    if (!enableTransitions) return;
+    if (customDuration) {
+      actions.setTransitionDuration(customDuration);
+    }
+    if (customEasing) {
+      actions.setTransitionEasing(customEasing);
+    }
+  }, [customDuration, customEasing, actions]);
 
-    const currentPath = location.pathname;
-    const previousPath = transition.currentPath;
+  // Enhanced navigation with smooth transitions
+  const navigateWithTransition = useCallback((
+    path: string, 
+    direction: 'forward' | 'backward' = 'forward',
+    options?: { immediate?: boolean; duration?: number }
+  ) => {
+    // Clear any existing timeouts
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+    }
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current);
+    }
 
-    // Skip transition on initial render
-    if (previousPath === currentPath) {
+    // Reset progress
+    transitionProgressRef.current = 0;
+
+    // Use immediate navigation if requested or animations are disabled
+    if (options?.immediate || !state.activeIndicators.animateTransitions) {
+      actions.navigateTo(path);
       return;
     }
 
-    // Determine transition direction based on history
-    const currentIndex = navigationHistory.indexOf(currentPath);
-    const previousIndex = navigationHistory.indexOf(previousPath);
-    
-    let direction: 'forward' | 'backward' | 'none' = 'none';
-    
-    if (currentIndex === -1) {
-      // New page - forward transition
-      direction = 'forward';
-      setNavigationHistory(prev => [...prev, currentPath]);
-    } else if (currentIndex < previousIndex) {
-      // Going back in history
-      direction = 'backward';
-    } else if (currentIndex > previousIndex) {
-      // Going forward in history
-      direction = 'forward';
-    }
+    const duration = options?.duration || state.transitionDuration;
 
     // Start transition
-    setTransition({
-      isTransitioning: true,
-      transitionDirection: direction,
-      previousPath,
-      currentPath
-    });
+    actions.startTransition(direction, duration);
 
-    // End transition after duration
-    const timer = setTimeout(() => {
-      setTransition(prev => ({
-        ...prev,
-        isTransitioning: false,
-        transitionDirection: 'none',
-        previousPath: null
-      }));
-    }, transitionDuration);
+    // Track transition progress
+    const progressInterval = 50; // Update every 50ms
+    const progressStep = (progressInterval / duration) * 100;
 
-    return () => clearTimeout(timer);
-  }, [location.pathname, transitionDuration, enableTransitions]);
-
-  // Manual transition trigger
-  const triggerTransition = useCallback((direction: 'forward' | 'backward' = 'forward') => {
-    if (!enableTransitions) return;
-
-    setTransition(prev => ({
-      ...prev,
-      isTransitioning: true,
-      transitionDirection: direction
-    }));
-
-    setTimeout(() => {
-      setTransition(prev => ({
-        ...prev,
-        isTransitioning: false,
-        transitionDirection: 'none'
-      }));
-    }, transitionDuration);
-  }, [transitionDuration, enableTransitions]);
-
-  // Get transition classes for animations
-  const getTransitionClasses = useCallback((baseClasses: string = '') => {
-    const classes = [baseClasses];
-
-    if (transition.isTransitioning) {
-      classes.push('transition-all duration-300 ease-in-out');
+    progressIntervalRef.current = setInterval(() => {
+      transitionProgressRef.current = Math.min(100, transitionProgressRef.current + progressStep);
       
-      switch (transition.transitionDirection) {
-        case 'forward':
-          classes.push('transform translate-x-0 opacity-100');
-          break;
-        case 'backward':
-          classes.push('transform -translate-x-0 opacity-100');
-          break;
-        default:
-          classes.push('opacity-100');
+      if (transitionProgressRef.current >= 100) {
+        if (progressIntervalRef.current) {
+          clearInterval(progressIntervalRef.current);
+        }
       }
-    } else {
-      classes.push('opacity-100');
+    }, progressInterval);
+
+    // Navigate to the new path
+    actions.navigateTo(path);
+
+  }, [state.activeIndicators.animateTransitions, state.transitionDuration, actions]);
+
+  // Preload navigation target (if enabled)
+  const preloadNavigation = useCallback((path: string) => {
+    if (!enablePreloading) return;
+
+    // Create a link element to trigger browser preloading
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = path;
+    document.head.appendChild(link);
+
+    // Clean up after a short delay
+    setTimeout(() => {
+      if (document.head.contains(link)) {
+        document.head.removeChild(link);
+      }
+    }, 5000);
+  }, [enablePreloading]);
+
+  // Staggered animation for multiple navigation items
+  const getStaggerDelay = useCallback((index: number, totalItems: number = 1) => {
+    if (!enableStaggeredAnimations || !state.isTransitioning) return 0;
+    
+    const maxDelay = state.transitionDuration * 0.3; // Max 30% of transition duration
+    const delayStep = maxDelay / Math.max(1, totalItems - 1);
+    
+    return Math.min(maxDelay, index * delayStep);
+  }, [enableStaggeredAnimations, state.isTransitioning, state.transitionDuration]);
+
+  // Get transition classes for elements
+  const getTransitionClasses = useCallback((
+    baseClasses: string = '',
+    staggerIndex?: number,
+    totalItems?: number
+  ) => {
+    const { transitionDuration, transitionEasing, isTransitioning, transitionDirection } = state;
+    
+    let classes = baseClasses;
+    
+    // Add base transition classes
+    if (state.activeIndicators.animateTransitions) {
+      classes += ` transition-all duration-${transitionDuration} ${transitionEasing} transform will-change-transform`;
     }
 
-    return classes.filter(Boolean).join(' ');
-  }, [transition]);
+    // Add stagger delay if provided
+    if (staggerIndex !== undefined && totalItems !== undefined) {
+      const delay = getStaggerDelay(staggerIndex, totalItems);
+      if (delay > 0) {
+        classes += ` delay-${Math.round(delay)}`;
+      }
+    }
 
-  // Get page transition variants for Framer Motion
-  const getPageTransitionVariants = useCallback(() => {
-    return {
-      initial: {
-        opacity: 0,
-        x: transition.transitionDirection === 'backward' ? -20 : 20,
-        scale: 0.98
-      },
-      in: {
-        opacity: 1,
-        x: 0,
-        scale: 1
-      },
-      out: {
-        opacity: 0,
-        x: transition.transitionDirection === 'backward' ? 20 : -20,
-        scale: 0.98
+    // Add transition state classes
+    if (isTransitioning) {
+      const intensity = transitionDirection === 'forward' ? 1 : -1;
+      classes += ` translate-x-${intensity} opacity-90 scale-98`;
+    }
+
+    return classes.trim();
+  }, [state, getStaggerDelay]);
+
+  // Get current transition state
+  const getTransitionState = useCallback((): NavigationTransitionState => ({
+    isTransitioning: state.isTransitioning,
+    transitionDirection: state.transitionDirection,
+    transitionProgress: transitionProgressRef.current,
+    pendingNavigation: state.pendingNavigation
+  }), [state.isTransitioning, state.transitionDirection, state.pendingNavigation]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
       }
     };
-  }, [transition.transitionDirection]);
-
-  const getPageTransition = useCallback(() => {
-    return {
-      type: 'tween',
-      ease: 'anticipate',
-      duration: transitionDuration / 1000
-    };
-  }, [transitionDuration]);
+  }, []);
 
   return {
-    transition,
-    triggerTransition,
+    // Navigation methods
+    navigateWithTransition,
+    preloadNavigation,
+    
+    // Utility methods
+    getStaggerDelay,
     getTransitionClasses,
-    getPageTransitionVariants,
-    getPageTransition,
-    navigationHistory
+    getTransitionState,
+    
+    // State
+    transitionState: getTransitionState(),
+    
+    // Configuration
+    isAnimationEnabled: state.activeIndicators.animateTransitions,
+    transitionDuration: state.transitionDuration,
+    transitionEasing: state.transitionEasing
   };
 };
 

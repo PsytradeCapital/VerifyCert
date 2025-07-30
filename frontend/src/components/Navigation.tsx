@@ -40,6 +40,13 @@ export default function Navigation({
     return matchingItem ? navigation.state.activeItems.has(matchingItem.id) : false;
   };
 
+  // Enhanced active state detection
+  const getActiveState = (path: string) => {
+    const contextActive = isActiveFromContext(path);
+    const pathActive = isActivePath(path);
+    return contextActive || pathActive;
+  };
+
   const handleWalletConnect = (address: string, provider: any) => {
     onWalletConnect?.(address, provider);
   };
@@ -73,7 +80,7 @@ export default function Navigation({
                 
                 if (!shouldShow) return null;
 
-                const isActive = isActivePath(item.href) || isActiveFromContext(item.href);
+                const isActive = getActiveState(item.href);
                 const matchingItem = navigation.state.navigationItems.find(navItem => navItem.href === item.href);
                 const indicatorStyles = useActiveIndicator(matchingItem?.id || item.name, isActive);
 
@@ -144,7 +151,7 @@ export default function Navigation({
               
               if (!shouldShow) return null;
 
-              const isActive = isActivePath(item.href) || isActiveFromContext(item.href);
+              const isActive = getActiveState(item.href);
               const matchingItem = navigation.state.navigationItems.find(navItem => navItem.href === item.href);
               const indicatorStyles = useActiveIndicator(matchingItem?.id || item.name, isActive);
 

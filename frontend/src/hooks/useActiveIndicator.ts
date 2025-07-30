@@ -10,7 +10,14 @@ export interface ActiveIndicatorStyles {
 
 export const useActiveIndicator = (itemId: string, isActive: boolean = false): ActiveIndicatorStyles => {
   const { state } = useNavigation();
-  const { activeIndicators, isTransitioning, transitionDirection } = state;
+  const { 
+    activeIndicators, 
+    isTransitioning, 
+    transitionDirection, 
+    transitionDuration, 
+    transitionEasing,
+    pendingNavigation 
+  } = state;
 
   const styles = useMemo(() => {
     const {
@@ -20,9 +27,14 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
       animateTransitions
     } = activeIndicators;
 
-    // Base transition classes
+    // Base transition classes with dynamic duration and easing
     const transitionClasses = animateTransitions 
-      ? 'transition-all duration-300 ease-in-out transform'
+      ? `transition-all duration-${transitionDuration} ${transitionEasing} transform`
+      : '';
+
+    // Enhanced transition classes for smoother animations
+    const smoothTransitionClasses = animateTransitions
+      ? `transition-all duration-${transitionDuration} ${transitionEasing} transform will-change-transform`
       : '';
 
     // Container classes for positioning the indicator
@@ -90,27 +102,48 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
       }
     }
 
-    // Add transition effects if transitioning
+    // Add enhanced transition effects if transitioning
     if (isTransitioning && animateTransitions) {
-      const transitionEffect = transitionDirection === 'forward' 
-        ? 'translate-x-1 opacity-90' 
-        : '-translate-x-1 opacity-90';
+      // Different transition effects based on direction and item state
+      let transitionEffect = '';
+      
+      if (transitionDirection === 'forward') {
+        transitionEffect = isActive 
+          ? 'translate-x-2 opacity-80 scale-98 blur-[0.5px]' 
+          : 'translate-x-1 opacity-85 scale-99';
+      } else if (transitionDirection === 'backward') {
+        transitionEffect = isActive 
+          ? '-translate-x-2 opacity-80 scale-98 blur-[0.5px]' 
+          : '-translate-x-1 opacity-85 scale-99';
+      }
       
       containerClasses += ` ${transitionEffect}`;
+      
+      // Add staggered animation delay for better visual flow
+      const staggerDelay = `delay-${Math.min(500, transitionDuration * 0.1)}`;
+      containerClasses += ` ${staggerDelay}`;
+    }
+
+    // Add hover effects for better interactivity
+    if (!isActive) {
+      itemClasses += ' hover:bg-neutral-50 hover:text-neutral-900';
     }
 
     return {
-      containerClasses: `${containerClasses} ${transitionClasses}`,
-      indicatorClasses,
-      itemClasses,
-      transitionClasses
+      containerClasses: `${containerClasses} ${smoothTransitionClasses}`,
+      indicatorClasses: `${indicatorClasses} ${smoothTransitionClasses}`,
+      itemClasses: `${itemClasses} ${smoothTransitionClasses}`,
+      transitionClasses: smoothTransitionClasses
     };
   }, [
     itemId,
     isActive,
     activeIndicators,
     isTransitioning,
-    transitionDirection
+    transitionDirection,
+    transitionDuration,
+    transitionEasing,
+    pendingNavigation
   ]);
 
   return styles;

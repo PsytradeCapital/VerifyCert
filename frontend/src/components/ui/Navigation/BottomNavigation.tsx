@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigation } from '../../../contexts/NavigationContext';
 import { useActiveIndicator } from '../../../hooks/useActiveIndicator';
+import { useNavigationTransitions } from '../../../hooks/useNavigationTransitions';
 import type { NavigationItem } from '../../../contexts/NavigationContext';
 
 export interface BottomNavItem {
@@ -32,6 +33,16 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
 }) => {
   const location = useLocation();
   const navigationContext = useContext ? useNavigation() : null;
+  const { 
+    navigateWithTransition, 
+    preloadNavigation, 
+    getTransitionClasses,
+    getStaggerDelay 
+  } = useNavigationTransitions({
+    enablePreloading: true,
+    enableStaggeredAnimations: true,
+    customDuration: 250 // Slightly faster for bottom nav
+  });
   
   // Use context state if available, otherwise fall back to props
   const items = useContext && navigationContext 
@@ -79,7 +90,8 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
         items.length === 4 ? 'grid-cols-4' :
         'grid-cols-5'
       }`}>
-        {itemsWithActiveState.map((item) => {
+        {itemsWithActiveState.map((item, index) => {
+          const staggerDelay = getStaggerDelay(index, itemsWithActiveState.length);
           // Get active indicator styles
           const indicatorStyles = useActiveIndicator(item.id, item.active || false);
           
@@ -114,21 +126,21 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
             </>
           );
 
-          const commonClasses = `
+          const commonClasses = getTransitionClasses(`
             ${indicatorStyles.containerClasses}
             flex flex-col items-center justify-center 
             min-h-[44px] px-2 py-2 text-xs font-medium 
-            transition-all duration-200 ease-out
             rounded-lg touch-manipulation
             focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
             disabled:opacity-50 disabled:cursor-not-allowed
             ${item.active 
-              ? `text-primary-600 bg-primary-50 ${indicatorStyles.itemClasses}` 
-              : 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50 active:text-neutral-800 active:bg-neutral-100'
+              ? `text-primary-600 bg-primary-50 shadow-sm border-t-2 border-primary-500 ${indicatorStyles.itemClasses}` 
+              : 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50 active:text-neutral-800 active:bg-neutral-100 hover:border-t-2 hover:border-neutral-300'
             }
             ${variant === 'floating' ? 'mx-1' : ''}
-            ${indicatorStyles.transitionClasses}
-          `;
+            transform hover:scale-105 active:scale-95
+            hover:shadow-lg active:shadow-md
+          `, index, itemsWithActiveState.length);
 
           if (item.onClick) {
             return (
@@ -138,6 +150,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 type="button"
                 disabled={item.disabled}
                 className={commonClasses}
+                style={{ 
+                  transitionDelay: `${staggerDelay}ms`,
+                  animationDelay: `${staggerDelay}ms`
+                }}
                 aria-label={item.label}
                 aria-current={item.active ? 'page' : undefined}
               >
@@ -153,16 +169,33 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
               key={item.id}
               to={item.href}
               className={`${commonClasses} ${item.disabled ? 'pointer-events-none' : ''}`}
+              style={{ 
+                transitionDelay: `${staggerDelay}ms`,
+                animationDelay: `${staggerDelay}ms`
+              }}
               onClick={(e) => {
                 if (item.disabled) {
                   e.preventDefault();
                   return;
                 }
-                // Use navigation context if available
+                // Use enhanced navigation with transitions
                 if (navigationContext) {
                   e.preventDefault();
-                  navigationContext.actions.navigateTo(item.href);
+                  
+                  // Preload the navigation target
+                  preloadNavigation(item.href);
+                  
+                  // Determine direction based on item order
+                  const currentIndex = itemsWithActiveState.findIndex(i => i.href === location.pathname);
+                  const targetIndex = index;
+                  const direction = targetIndex > currentIndex ? 'forward' : 'backward';
+                  
+                  navigateWithTransition(item.href, direction);
                 }
+              }}
+              onMouseEnter={() => {
+                // Preload on hover for better UX
+                preloadNavigation(item.href);
               }}
               aria-label={item.label}
               aria-current={item.active ? 'page' : undefined}

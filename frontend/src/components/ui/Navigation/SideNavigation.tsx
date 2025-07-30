@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigation } from '../../../contexts/NavigationContext';
 import { useActiveIndicator } from '../../../hooks/useActiveIndicator';
+import { useNavigationTransitions } from '../../../hooks/useNavigationTransitions';
 import type { NavigationItem } from '../../../contexts/NavigationContext';
 
 export interface SideNavigationProps {
@@ -23,6 +24,15 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
 }) => {
   const location = useLocation();
   const navigationContext = useContext ? useNavigation() : null;
+  const { 
+    navigateWithTransition, 
+    preloadNavigation, 
+    getTransitionClasses,
+    getStaggerDelay 
+  } = useNavigationTransitions({
+    enablePreloading: true,
+    enableStaggeredAnimations: true
+  });
   
   // Use context state if available, otherwise fall back to props
   const items = useContext && navigationContext 
@@ -65,7 +75,7 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
     setExpandedItems(newExpanded);
   };
 
-  const renderNavigationItem = (item: NavigationItem, level = 0) => {
+  const renderNavigationItem = (item: NavigationItem, level = 0, index = 0) => {
     const hasChildren = item.children && item.children.length > 0;
     const isExpanded = expandedItems.has(item.id);
     const isHovered = hoveredItem === item.id;
@@ -73,6 +83,9 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
     
     // Get active indicator styles
     const indicatorStyles = useActiveIndicator(item.id, isActive);
+    
+    // Get stagger delay for smooth animations
+    const staggerDelay = getStaggerDelay(index, items.length);
 
     return (
       <div key={item.id} className={`relative ${indicatorStyles.containerClasses}`}>
@@ -90,37 +103,57 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
         {isActive && <div className={indicatorStyles.indicatorClasses} />}
         
         <div
-          className={`
-            group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ease-in-out
+          className={getTransitionClasses(`
+            group flex items-center px-3 py-2 text-sm font-medium rounded-lg
             ${item.disabled 
               ? 'opacity-50 cursor-not-allowed' 
               : 'cursor-pointer'
             }
             ${isActive 
-              ? `bg-primary-100 text-primary-900 shadow-sm ${indicatorStyles.itemClasses}` 
-              : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 hover:shadow-sm'
+              ? `bg-primary-100 text-primary-900 shadow-sm border-l-2 border-primary-500 ${indicatorStyles.itemClasses}` 
+              : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 hover:shadow-sm hover:border-l-2 hover:border-neutral-300'
             }
             ${level > 0 ? 'ml-4 text-xs bg-neutral-25' : ''}
             ${collapsed ? 'justify-center px-2' : ''}
-            hover:bg-neutral-100
-            ${indicatorStyles.transitionClasses}
-          `}
+            transform hover:scale-[1.02] active:scale-[0.98]
+            hover:shadow-md active:shadow-sm
+            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+          `, index, items.length)}
+          style={{ 
+            transitionDelay: `${staggerDelay}ms`,
+            animationDelay: `${staggerDelay}ms`
+          }}
           onClick={(e) => {
             if (item.disabled) return;
             e.preventDefault();
             if (hasChildren) {
               toggleExpanded(item.id);
             } else {
-              // Use navigation context if available
+              // Preload the navigation target
+              preloadNavigation(item.href);
+              
+              // Use enhanced navigation with transitions
               if (navigationContext) {
-                navigationContext.actions.navigateTo(item.href);
+                const currentIndex = items.findIndex(i => i.href === location.pathname);
+                const targetIndex = items.findIndex(i => i.id === item.id);
+                const direction = targetIndex > currentIndex ? 'forward' : 'backward';
+                
+                navigateWithTransition(item.href, direction);
               } else {
                 window.location.href = item.href;
               }
             }
           }}
-          onMouseEnter={() => setHoveredItem(item.id)}
+          onMouseEnter={() => {
+            setHoveredItem(item.id);
+            // Preload on hover for better UX
+            if (!hasChildren) {
+              preloadNavigation(item.href);
+            }
+          }}
           onMouseLeave={() => setHoveredItem(null)}
+          onFocus={() => setHoveredItem(item.id)}
+          onBlur={() => setHoveredItem(null)}
           role="button"
           tabIndex={item.disabled ? -1 : 0}
           aria-expanded={hasChildren ? isExpanded : undefined}
@@ -168,14 +201,19 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
           )}
         </div>
         
-        {/* Submenu with smooth animation */}
+        {/* Submenu with enhanced smooth animation */}
         {hasChildren && !collapsed && (
           <div className={`
-            overflow-hidden transition-all duration-300 ease-in-out
-            ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+            overflow-hidden transition-all duration-500 ease-in-out transform
+            ${isExpanded 
+              ? 'max-h-96 opacity-100 translate-y-0 scale-y-100' 
+              : 'max-h-0 opacity-0 -translate-y-2 scale-y-95'
+            }
           `}>
             <div className="mt-1 space-y-1 pl-2">
-              {item.children!.map(child => renderNavigationItem(child, level + 1))}
+              {item.children!.map((child, childIndex) => 
+                renderNavigationItem(child, level + 1, childIndex)
+              )}
             </div>
           </div>
         )}
@@ -185,11 +223,11 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
 
   return (
     <nav 
-      className={`space-y-1 transition-all duration-300 ease-in-out ${className}`}
+      className={getTransitionClasses(`space-y-1 ${className}`)}
       role="navigation"
       aria-label="Side navigation"
     >
-      {items.map(item => renderNavigationItem(item))}
+      {items.map((item, index) => renderNavigationItem(item, 0, index))}
     </nav>
   );
 };

@@ -1,58 +1,75 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { NavigationProvider } from '../../contexts/NavigationContext';
 import { useNavigationTransitions } from '../useNavigationTransitions';
 
-// Test component that uses the navigation transitions hook
+// Test component that uses the hook
 const TestComponent: React.FC = () => {
-  const location = useLocation();
-  const {
-    transition,
-    triggerTransition,
+  const { 
+    navigateWithTransition, 
+    transitionState, 
     getTransitionClasses,
-    getPageTransitionVariants,
-    getPageTransition,
-    navigationHistory
+    isAnimationEnabled,
+    transitionDuration 
   } = useNavigationTransitions({
-    transitionDuration: 100, // Short duration for testing
-    enableTransitions: true
+    enablePreloading: true,
+    enableStaggeredAnimations: true,
+    customDuration: 500
   });
 
   return (
     <div>
-      <div data-testid="current-path">{location.pathname}</div>
-      <div data-testid="is-transitioning">{transition.isTransitioning.toString()}</div>
-      <div data-testid="transition-direction">{transition.transitionDirection}</div>
-      <div data-testid="previous-path">{transition.previousPath || 'none'}</div>
-      <div data-testid="history-length">{navigationHistory.length}</div>
-      <div data-testid="transition-classes">{getTransitionClasses('base-class')}</div>
-      
-      <button onClick={() => triggerTransition('forward')}>Trigger Forward</button>
-      <button onClick={() => triggerTransition('backward')}>Trigger Backward</button>
-      
-      <div data-testid="page-variants">
-        {JSON.stringify(getPageTransitionVariants())}
+      <div data-testid="transition-state">
+        {JSON.stringify(transitionState)}
       </div>
-      <div data-testid="page-transition">
-        {JSON.stringify(getPageTransition())}
+      <div data-testid="animation-enabled">
+        {isAnimationEnabled.toString()}
       </div>
+      <div data-testid="transition-duration">
+        {transitionDuration}
+      </div>
+      <div 
+        data-testid="transition-classes"
+        className={getTransitionClasses('base-class', 0, 3)}
+      >
+        Transition Element
+      </div>
+      <button
+        data-testid="navigate-forward"
+        onClick={() => navigateWithTransition('/test', 'forward')}
+      >
+        Navigate Forward
+      </button>
+      <button
+        data-testid="navigate-backward"
+        onClick={() => navigateWithTransition('/test', 'backward')}
+      >
+        Navigate Backward
+      </button>
+      <button
+        data-testid="navigate-immediate"
+        onClick={() => navigateWithTransition('/test', 'forward', { immediate: true })}
+      >
+        Navigate Immediate
+      </button>
     </div>
   );
 };
 
-const renderWithRouter = (component: React.ReactElement, initialPath = '/') => {
-  window.history.pushState({}, 'Test page', initialPath);
-  
+const renderWithProviders = (component: React.ReactElement) => {
   return render(
     <BrowserRouter>
-      {component}
+      <NavigationProvider>
+        {component}
+      </NavigationProvider>
     </BrowserRouter>
   );
 };
 
 describe('useNavigationTransitions', () => {
   beforeEach(() => {
-    window.history.pushState({}, 'Test page', '/');
+    // Reset any timers
     jest.clearAllTimers();
     jest.useFakeTimers();
   });
@@ -62,127 +79,171 @@ describe('useNavigationTransitions', () => {
     jest.useRealTimers();
   });
 
-  it('should provide initial transition state', () => {
-    renderWithRouter(<TestComponent />);
-
-    expect(screen.getByTestId('current-path')).toHaveTextContent('/');
-    expect(screen.getByTestId('is-transitioning')).toHaveTextContent('false');
-    expect(screen.getByTestId('transition-direction')).toHaveTextContent('none');
-    expect(screen.getByTestId('previous-path')).toHaveTextContent('none');
-    expect(screen.getByTestId('history-length')).toHaveTextContent('1');
-  });
-
-  it('should trigger manual transitions', () => {
-    renderWithRouter(<TestComponent />);
-
-    const forwardButton = screen.getByText('Trigger Forward');
-    
-    act(() => {
-      forwardButton.click();
+  describe('Hook initialization', () => {
+    it('initializes with correct default values', () => {
+      renderWithProviders(<TestComponent />);
+      
+      const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+      expect(transitionState.isTransitioning).toBe(false);
+      expect(transitionState.transitionDirection).toBe('none');
+      expect(transitionState.transitionProgress).toBe(0);
+      expect(transitionState.pendingNavigation).toBeNull();
     });
 
-    expect(screen.getByTestId('is-transitioning')).toHaveTextContent('true');
-    expect(screen.getByTestId('transition-direction')).toHaveTextContent('forward');
-
-    // Fast-forward time to end transition
-    act(() => {
-      jest.advanceTimersByTime(100);
+    it('applies custom duration setting', () => {
+      renderWithProviders(<TestComponent />);
+      
+      // The custom duration should be applied
+      expect(screen.getByTestId('transition-duration')).toHaveTextContent('500');
     });
 
-    expect(screen.getByTestId('is-transitioning')).toHaveTextContent('false');
-    expect(screen.getByTestId('transition-direction')).toHaveTextContent('none');
+    it('respects animation enabled state', () => {
+      renderWithProviders(<TestComponent />);
+      
+      // Animation should be enabled by default
+      expect(screen.getByTestId('animation-enabled')).toHaveTextContent('true');
+    });
   });
 
-  it('should trigger backward transitions', () => {
-    renderWithRouter(<TestComponent />);
-
-    const backwardButton = screen.getByText('Trigger Backward');
-    
-    act(() => {
-      backwardButton.click();
+  describe('Transition classes', () => {
+    it('generates correct transition classes', () => {
+      renderWithProviders(<TestComponent />);
+      
+      const element = screen.getByTestId('transition-classes');
+      expect(element).toHaveClass('base-class');
+      
+      // Should include transition classes
+      const classList = element.className;
+      expect(classList).toContain('transition-all');
+      expect(classList).toContain('transform');
+      expect(classList).toContain('will-change-transform');
     });
 
-    expect(screen.getByTestId('is-transitioning')).toHaveTextContent('true');
-    expect(screen.getByTestId('transition-direction')).toHaveTextContent('backward');
-
-    // Fast-forward time to end transition
-    act(() => {
-      jest.advanceTimersByTime(100);
+    it('includes stagger delay in classes', () => {
+      renderWithProviders(<TestComponent />);
+      
+      const element = screen.getByTestId('transition-classes');
+      const classList = element.className;
+      
+      // Should include some form of delay or stagger
+      expect(classList).toMatch(/delay-\d+|duration-\d+/);
     });
-
-    expect(screen.getByTestId('is-transitioning')).toHaveTextContent('false');
-    expect(screen.getByTestId('transition-direction')).toHaveTextContent('none');
   });
 
-  it('should generate transition classes', () => {
-    renderWithRouter(<TestComponent />);
-
-    const classes = screen.getByTestId('transition-classes').textContent;
-    expect(classes).toContain('base-class');
-    expect(classes).toContain('opacity-100');
-  });
-
-  it('should generate page transition variants', () => {
-    renderWithRouter(<TestComponent />);
-
-    const variants = JSON.parse(screen.getByTestId('page-variants').textContent || '{}');
-    
-    expect(variants).toHaveProperty('initial');
-    expect(variants).toHaveProperty('in');
-    expect(variants).toHaveProperty('out');
-    expect(variants.initial).toHaveProperty('opacity', 0);
-    expect(variants.in).toHaveProperty('opacity', 1);
-    expect(variants.out).toHaveProperty('opacity', 0);
-  });
-
-  it('should generate page transition config', () => {
-    renderWithRouter(<TestComponent />);
-
-    const transition = JSON.parse(screen.getByTestId('page-transition').textContent || '{}');
-    
-    expect(transition).toHaveProperty('type', 'tween');
-    expect(transition).toHaveProperty('ease', 'anticipate');
-    expect(transition).toHaveProperty('duration', 0.1); // 100ms / 1000
-  });
-
-  it('should handle disabled transitions', () => {
-    const TestDisabledComponent: React.FC = () => {
-      const { transition, triggerTransition } = useNavigationTransitions({
-        enableTransitions: false
+  describe('Navigation with transitions', () => {
+    it('starts transition on navigation', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-forward');
+      fireEvent.click(navigateButton);
+      
+      // Should start transitioning immediately
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.isTransitioning).toBe(true);
+        expect(transitionState.transitionDirection).toBe('forward');
       });
-
-      return (
-        <div>
-          <div data-testid="is-transitioning">{transition.isTransitioning.toString()}</div>
-          <button onClick={() => triggerTransition('forward')}>Trigger</button>
-        </div>
-      );
-    };
-
-    renderWithRouter(<TestDisabledComponent />);
-
-    const triggerButton = screen.getByText('Trigger');
-    
-    act(() => {
-      triggerButton.click();
     });
 
-    // Should not transition when disabled
-    expect(screen.getByTestId('is-transitioning')).toHaveTextContent('false');
+    it('handles backward navigation', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-backward');
+      fireEvent.click(navigateButton);
+      
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.isTransitioning).toBe(true);
+        expect(transitionState.transitionDirection).toBe('backward');
+      });
+    });
+
+    it('handles immediate navigation without transition', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-immediate');
+      fireEvent.click(navigateButton);
+      
+      // Should not start transitioning for immediate navigation
+      const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+      expect(transitionState.isTransitioning).toBe(false);
+    });
+
+    it('completes transition after duration', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-forward');
+      fireEvent.click(navigateButton);
+      
+      // Should be transitioning initially
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.isTransitioning).toBe(true);
+      });
+      
+      // Fast-forward time to complete transition
+      jest.advanceTimersByTime(500);
+      
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.isTransitioning).toBe(false);
+        expect(transitionState.transitionDirection).toBe('none');
+      });
+    });
   });
 
-  it('should update transition classes during transition', () => {
-    renderWithRouter(<TestComponent />);
-
-    const forwardButton = screen.getByText('Trigger Forward');
-    
-    act(() => {
-      forwardButton.click();
+  describe('Transition state management', () => {
+    it('tracks transition progress', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-forward');
+      fireEvent.click(navigateButton);
+      
+      // Progress should start at 0 and increase
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.transitionProgress).toBeGreaterThanOrEqual(0);
+      });
+      
+      // Advance time partially
+      jest.advanceTimersByTime(250);
+      
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.transitionProgress).toBeGreaterThan(0);
+        expect(transitionState.transitionProgress).toBeLessThan(100);
+      });
     });
 
-    const classes = screen.getByTestId('transition-classes').textContent;
-    expect(classes).toContain('transition-all');
-    expect(classes).toContain('duration-300');
-    expect(classes).toContain('ease-in-out');
+    it('sets pending navigation during transition', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-forward');
+      fireEvent.click(navigateButton);
+      
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.pendingNavigation).toBe('/test');
+      });
+    });
+  });
+
+  describe('Error handling', () => {
+    it('handles multiple rapid navigation calls gracefully', async () => {
+      renderWithProviders(<TestComponent />);
+      
+      const navigateButton = screen.getByTestId('navigate-forward');
+      
+      // Click multiple times rapidly
+      fireEvent.click(navigateButton);
+      fireEvent.click(navigateButton);
+      fireEvent.click(navigateButton);
+      
+      // Should still handle gracefully
+      await waitFor(() => {
+        const transitionState = JSON.parse(screen.getByTestId('transition-state').textContent || '{}');
+        expect(transitionState.isTransitioning).toBe(true);
+      });
+    });
   });
 });

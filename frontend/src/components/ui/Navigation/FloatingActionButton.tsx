@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useNavigation } from '../../../contexts/NavigationContext';
+import { fabInteractions } from '../../../utils/interactionAnimations';
 
 export interface FloatingActionButtonProps {
   icon: React.ReactNode;
@@ -15,6 +17,7 @@ export interface FloatingActionButtonProps {
   badge?: string | number;
   tooltip?: string;
   useContext?: boolean;
+  enableAnimations?: boolean;
 }
 
 const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
@@ -29,7 +32,8 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   disabled = false,
   badge,
   tooltip,
-  useContext = true
+  useContext = true,
+  enableAnimations = true
 }) => {
   const navigationContext = useContext ? useNavigation() : null;
 
@@ -56,10 +60,8 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
 
   const baseClasses = `
     inline-flex items-center justify-center
-    rounded-full shadow-lg hover:shadow-xl
-    transition-all duration-300 ease-out
+    rounded-full shadow-lg
     focus:outline-none focus:ring-4 focus:ring-offset-2
-    transform hover:scale-105 active:scale-95
     z-50 relative
     ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
     ${positionClasses[position]}
@@ -67,6 +69,11 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     ${variantClasses[variant]}
     ${className}
   `;
+
+  // Get animation props based on variant
+  const animationProps = enableAnimations && !disabled 
+    ? fabInteractions[variant] || fabInteractions.primary
+    : {};
 
   const content = (
     <>
@@ -102,21 +109,23 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
 
   if (onClick) {
     return (
-      <button
+      <motion.button
         type="button"
         onClick={onClick}
         disabled={disabled}
         className={`${baseClasses} group`}
         aria-label={label || tooltip || 'Floating action button'}
+        {...animationProps}
       >
         {content}
-      </button>
+      </motion.button>
     );
   }
 
   if (href) {
+    const MotionLink = motion(Link);
     return (
-      <Link
+      <MotionLink
         to={href}
         className={`${baseClasses} group ${disabled ? 'pointer-events-none' : ''}`}
         onClick={(e) => {
@@ -131,19 +140,21 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           }
         }}
         aria-label={label || tooltip || 'Floating action button'}
+        {...animationProps}
       >
         {content}
-      </Link>
+      </MotionLink>
     );
   }
 
   return (
-    <div
+    <motion.div
       className={`${baseClasses} group`}
       aria-label={label || tooltip || 'Floating action button'}
+      {...animationProps}
     >
       {content}
-    </div>
+    </motion.div>
   );
 };
 

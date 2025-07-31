@@ -1,0 +1,407 @@
+/**
+ * Interaction Animation Styles
+ * CSS-based hover and focus animations that complement Framer Motion
+ */
+
+/* Base interaction styles */
+.interactive-element {
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.interactive-element:focus {
+  outline: none;
+}
+
+.interactive-element:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Button interaction styles */
+.btn-interactive {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-interactive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-interactive:hover::before {
+  left: 100%;
+}
+
+/* Card interaction styles */
+.card-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-interactive:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+/* Input interaction styles */
+.input-interactive {
+  transition: all 0.2s ease-out;
+  position: relative;
+}
+
+.input-interactive::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #3b82f6;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.input-interactive:focus::after {
+  width: 100%;
+}
+
+.input-interactive:hover {
+  border-color: rgba(107, 114, 128, 0.6);
+}
+
+/* Navigation item styles */
+.nav-item-interactive {
+  position: relative;
+  transition: all 0.2s ease-out;
+  overflow: hidden;
+}
+
+.nav-item-interactive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: #3b82f6;
+  transform: scaleY(0);
+  transition: transform 0.2s ease-out;
+  transform-origin: bottom;
+}
+
+.nav-item-interactive:hover::before {
+  transform: scaleY(1);
+}
+
+.nav-item-interactive.active::before {
+  transform: scaleY(1);
+  background: #1d4ed8;
+}
+
+/* Icon interaction styles */
+.icon-interactive {
+  transition: all 0.2s ease-out;
+  transform-origin: center;
+}
+
+.icon-interactive:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.icon-interactive:active {
+  transform: scale(0.95) rotate(-5deg);
+}
+
+.icon-spin:hover {
+  animation: spin-hover 0.6s ease-in-out;
+}
+
+@keyframes spin-hover {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+
+.icon-bounce:hover {
+  animation: bounce-hover 0.6s ease-in-out;
+}
+
+@keyframes bounce-hover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Link interaction styles */
+.link-interactive {
+  position: relative;
+  transition: color 0.2s ease-out;
+}
+
+.link-interactive::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s ease-out;
+}
+
+.link-interactive:hover::after {
+  width: 100%;
+}
+
+.link-interactive:focus {
+  color: #3b82f6;
+}
+
+/* Badge interaction styles */
+.badge-interactive {
+  transition: all 0.2s ease-out;
+  transform-origin: center;
+}
+
+.badge-interactive:hover {
+  transform: scale(1.05);
+}
+
+.badge-pulse {
+  animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Modal interaction styles */
+.modal-backdrop {
+  backdrop-filter: blur(4px);
+  transition: backdrop-filter 0.3s ease-out;
+}
+
+.modal-content {
+  transform-origin: center;
+}
+
+/* Floating Action Button styles */
+.fab-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.fab-interactive:hover {
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.fab-interactive:active {
+  transform: scale(0.95) translateY(-2px);
+}
+
+/* Select dropdown styles */
+.select-interactive {
+  transition: all 0.2s ease-out;
+}
+
+.select-interactive:hover {
+  border-color: rgba(107, 114, 128, 0.6);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.select-option-interactive {
+  transition: all 0.15s ease-out;
+  position: relative;
+}
+
+.select-option-interactive:hover {
+  background-color: rgba(239, 246, 255, 1);
+  transform: translateX(4px);
+}
+
+.select-option-interactive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: #3b82f6;
+  transform: scaleX(0);
+  transition: transform 0.2s ease-out;
+  transform-origin: left;
+}
+
+.select-option-interactive:hover::before {
+  transform: scaleX(1);
+}
+
+/* Tooltip styles */
+.tooltip-trigger:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tooltip-content {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: all 0.2s ease-out;
+}
+
+/* Focus ring utilities */
+.focus-ring {
+  transition: box-shadow 0.2s ease-out;
+}
+
+.focus-ring:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.focus-ring-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
+}
+
+.focus-ring-success:focus {
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .interactive-element,
+  .btn-interactive,
+  .card-interactive,
+  .input-interactive,
+  .nav-item-interactive,
+  .icon-interactive,
+  .link-interactive,
+  .badge-interactive,
+  .fab-interactive,
+  .select-interactive,
+  .select-option-interactive,
+  .tooltip-content,
+  .focus-ring {
+    transition: none;
+    animation: none;
+  }
+  
+  .btn-interactive::before,
+  .input-interactive::after,
+  .nav-item-interactive::before,
+  .link-interactive::after,
+  .select-option-interactive::before {
+    transition: none;
+  }
+  
+  /* Provide alternative feedback for reduced motion */
+  .interactive-element:hover {
+    opacity: 0.8;
+  }
+  
+  .card-interactive:hover {
+    opacity: 0.9;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .focus-ring:focus {
+    box-shadow: 0 0 0 3px currentColor;
+  }
+  
+  .nav-item-interactive::before,
+  .select-option-interactive::before {
+    background: currentColor;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .card-interactive:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .modal-backdrop {
+    backdrop-filter: blur(8px);
+  }
+  
+  .input-interactive::after {
+    background: #60a5fa;
+  }
+  
+  .nav-item-interactive::before,
+  .select-option-interactive::before {
+    background: #60a5fa;
+  }
+}
+
+/* Animation performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Utility classes for common interaction patterns */
+.hover-lift {
+  transition: transform 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform 0.2s ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow 0.2s ease-out;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.active-press {
+  transition: transform 0.1s ease-out;
+}
+
+.active-press:active {
+  transform: scale(0.98);
+}

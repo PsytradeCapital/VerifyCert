@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { cardInteractions } from '../../../utils/interactionAnimations';
 
 export interface CardProps {
   children: React.ReactNode;
@@ -7,6 +9,7 @@ export interface CardProps {
   hover?: boolean;
   className?: string;
   onClick?: () => void;
+  enableAnimations?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -15,13 +18,14 @@ const Card: React.FC<CardProps> = ({
   padding = 'md',
   hover = false,
   className = '',
-  onClick
+  onClick,
+  enableAnimations = true
 }) => {
-  const baseClasses = 'bg-white rounded-lg transition-all duration-200';
+  const baseClasses = 'bg-white rounded-lg';
   
   const variantClasses = {
     default: 'border border-gray-200',
-    elevated: 'shadow-md hover:shadow-lg',
+    elevated: 'shadow-md',
     outlined: 'border-2 border-gray-300'
   };
 
@@ -32,23 +36,30 @@ const Card: React.FC<CardProps> = ({
     lg: 'p-6'
   };
 
-  const hoverClasses = hover ? 'hover:shadow-md hover:-translate-y-0.5 cursor-pointer' : '';
   const clickableClasses = onClick ? 'cursor-pointer' : '';
+  const isInteractive = hover || onClick;
+
+  // Get animation props based on variant and interaction settings
+  const animationProps = enableAnimations && isInteractive 
+    ? cardInteractions[variant] || cardInteractions.default
+    : {};
+
+  const MotionDiv = motion.div;
 
   return (
-    <div
+    <MotionDiv
       className={`
         ${baseClasses}
         ${variantClasses[variant]}
         ${paddingClasses[padding]}
-        ${hoverClasses}
         ${clickableClasses}
         ${className}
       `}
       onClick={onClick}
+      {...animationProps}
     >
       {children}
-    </div>
+    </MotionDiv>
   );
 };
 

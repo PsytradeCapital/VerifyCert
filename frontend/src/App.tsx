@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 
 // Context
 import { NavigationProvider } from './contexts/NavigationContext';
+import { FeedbackProvider } from './components/ui/Feedback';
 
 // Components
 import Navigation from './components/Navigation';
@@ -13,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import RouteErrorBoundary from './components/RouteErrorBoundary';
 import BlockchainErrorBoundary from './components/BlockchainErrorBoundary';
+import { PageTransition } from './components/ui';
 
 // Services
 import { errorLogger } from './services/errorLogger';
@@ -27,6 +29,8 @@ import LayoutDemo from './pages/LayoutDemo';
 import BreadcrumbsDemo from './pages/BreadcrumbsDemo';
 import NavigationDemo from './pages/NavigationDemo';
 import NavigationStateDemo from './pages/NavigationStateDemo';
+import PageTransitionDemo from './pages/PageTransitionDemo';
+import FeedbackAnimationsDemo from './components/FeedbackAnimationsDemo';
 import NotFound from './pages/NotFound';
 
 import './App.css';
@@ -74,9 +78,10 @@ function App() {
 
   return (
     <ErrorBoundary onError={handleGlobalError}>
-      <Router>
-        <NavigationProvider isWalletConnected={walletState.isConnected}>
-          <div className="App min-h-screen bg-gray-50">
+      <FeedbackProvider>
+        <Router>
+          <NavigationProvider isWalletConnected={walletState.isConnected}>
+            <div className="App min-h-screen bg-gray-50">
           {/* Navigation */}
           <BlockchainErrorBoundary onError={handleGlobalError}>
             <Navigation
@@ -159,6 +164,15 @@ function App() {
                 />
                 
                 <Route 
+                  path="/feedback-animations-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <FeedbackAnimationsDemo />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
                   path="/certificate/:tokenId" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
@@ -220,9 +234,10 @@ function App() {
               },
             }}
           />
-          </div>
-        </NavigationProvider>
-      </Router>
+            </div>
+          </NavigationProvider>
+        </Router>
+      </FeedbackProvider>
     </ErrorBoundary>
   );
 }

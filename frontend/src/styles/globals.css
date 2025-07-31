@@ -11,6 +11,9 @@
 /* Import design tokens as CSS custom properties */
 @import './tokens.css';
 
+/* Import interaction animations */
+@import './interaction-animations.css';
+
 /* Base layer customizations */
 @layer base {
   /* Enhanced CSS Reset */

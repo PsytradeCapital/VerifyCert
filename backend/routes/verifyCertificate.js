@@ -1,364 +1,288 @@
 const express = require('express');
 const { ethers } = require('ethers');
-const rateLimit = require('express-rate-limit');
-const { param, validationResult } = require('express-validator');
-const NodeCache = require('node-cache');
-
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs').promises;
 const router = express.Router();
 
-// Cache for verification results (5 minute TTL)
-const verificationCache = new NodeCache({ stdTTL: 300 });
+// Import contract ABI and configuration
+const certificateABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractAddresses = require('../contract-addresses.json');
 
-// Rate limiting for verification requests
-const verifyRateLimit = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 30, // Limit each IP to 30 requests per minute
-  message: {
-    error: 'Too many verification requests, please try again later.'
+// Configure multer for file uploads
+const upload = multer({
+  dest: 'uploads/',
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit
   },
-  standardHeaders: true,
-  legacyHeaders: false,
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['.pdf', '.json', '.png', '.jpg', '.jpeg'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowedTypes.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only PDF, JSON, PNG, JPG, and JPEG files are allowed.'));
+    }
+  }
 });
 
-// Load contract configuration
-const loadContractConfig = () => {
-  try {
-    const contractAddresses = require('../contract-addresses.json');
-    const contractABI = require('../artifacts/contracts/Certificate.sol/Certificate.json');
-    
-    return {
-      address: contractAddresses.Certificate,
-      abi: contractABI.abi
-    };
-  } catch (error) {
-    throw new Error('Failed to load contract configuration: ' + error.message);
-  }
-};
-
-// Initialize provider and contract
-let provider;
-let certificateContract;
-
-const initializeContract = () => {
-  try {
-    const contractConfig = loadContractConfig();
-    provider = new ethers.JsonRpcProvider(process.env.POLYGON_MUMBAI_RPC_URL);
-    certificateContract = new ethers.Contract(
-      contractConfig.address,
-      contractConfig.abi,
-      provider
-    );
-  } catch (error) {
-    console.error('Failed to initialize contract:', error);
-    throw error;
-  }
-};
-
-// Initialize contract on module load
-initializeContract();
-
-// Validation middleware
-const validateCertificateHash = [
-  param('hash')
-    .isLength({ min: 1, max: 128 })
-    .matches(/^[a-fA-F0-9]+$/)
-    .withMessage('Invalid certificate hash format')
-];
-
-// Format certificate data for response
-const formatCertificateData = (certificateData, tokenId, verificationStatus) => {
-  return {
-    tokenId: tokenId.toString(),
-    recipientName: certificateData.recipientName,
-    courseName: certificateData.courseName,
-    institutionName: certificateData.institutionName,
-    issueDate: certificateData.issueDate.toString(),
-    expiryDate: certificateData.expiryDate.toString(),
-    isRevoked: certificateData.isRevoked,
-    issuer: certificateData.issuer,
-    certificateHash: certificateData.certificateHash,
-    metadataURI: certificateData.metadataURI,
-    ...verificationStatus,
-    verificationTimestamp: Math.floor(Date.now() / 1000),
-    blockchainNetwork: 'Polygon Mumbai Testnet'
-  };
-};
-
-// Get detailed verification status
-const getVerificationStatus = (certificateData) => {
-  const now = Math.floor(Date.now() / 1000);
-  const isRevoked = certificateData.isRevoked;
-  const isExpired = certificateData.expiryDate > 0 && now > certificateData.expiryDate;
-  const isValid = !isRevoked && !isExpired;
-
-  return {
-    isValid,
-    isRevoked,
-    isExpired,
-    status: isRevoked ? 'revoked' : isExpired ? 'expired' : isValid ? 'valid' : 'unknown',
-    statusMessage: isRevoked 
-      ? 'This certificate has been revoked by the issuer'
-      : isExpired 
-        ? 'This certificate has expired'
-        : isValid 
-          ? 'This certificate is valid and authentic'
-          : 'Certificate status unknown'
-  };
-};
-
 /**
- * @route GET /api/certificates/verify/:hash
- * @desc Verify a certificate by its hash
+ * @route GET /api/certificates/verify/:tokenId
+ * @desc Verify a certificate by token ID
  * @access Public
  */
-router.get('/verify/:hash', verifyRateLimit, validateCertificateHash, async (req, res) => {
+router.get('/verify/:tokenId', async (req, res) => {
   try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    const { tokenId } = req.params;
+
+    // Validate token ID
+    if (!tokenId || isNaN(tokenId)) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid certificate hash',
-        details: errors.array()
+        message: 'Invalid certificate ID'
       });
     }
 
-    const { hash } = req.params;
-    const cacheKey = `verify_${hash}`;
+    // Initialize provider
+    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
 
-    // Check cache first
-    const cachedResult = verificationCache.get(cacheKey);
-    if (cachedResult) {
-      return res.json({
-        success: true,
-        data: cachedResult,
-        cached: true
-      });
-    }
-
-    // Verify certificate exists and get detailed status
-    const verificationResult = await certificateContract.verifyCertificateByHash(hash);
-    const [exists, tokenId, isValid, isExpired, isRevoked] = verificationResult;
-
-    if (!exists) {
-      return res.status(404).json({
+    // Get contract instance
+    const contractAddress = contractAddresses.mumbai?.Certificate || contractAddresses.Certificate;
+    if (!contractAddress) {
+      return res.status(500).json({
         success: false,
-        error: 'Certificate not found',
-        message: 'No certificate found with the provided hash'
+        message: 'Contract address not found'
       });
     }
 
-    // Get full certificate data
-    const certificateData = await certificateContract.getCertificate(tokenId);
-    
-    // Get verification status
-    const verificationStatus = {
-      isValid,
-      isExpired,
-      isRevoked,
-      status: isRevoked ? 'revoked' : isExpired ? 'expired' : isValid ? 'valid' : 'unknown',
-      statusMessage: isRevoked 
-        ? 'This certificate has been revoked by the issuer'
-        : isExpired 
-          ? 'This certificate has expired'
-          : isValid 
-            ? 'This certificate is valid and authentic'
-            : 'Certificate status unknown'
-    };
+    const contract = new ethers.Contract(contractAddress, certificateABI, provider);
 
-    // Format response data
-    const formattedData = formatCertificateData(certificateData, tokenId, verificationStatus);
+    try {
+      // Check if certificate exists
+      const exists = await contract.ownerOf(tokenId);
+      if (!exists) {
+        return res.status(404).json({
+          success: false,
+          message: 'Certificate not found'
+        });
+      }
 
-    // Cache the result
-    verificationCache.set(cacheKey, formattedData);
+      // Get certificate data
+      const certificateData = await contract.getCertificate(tokenId);
+      const isValid = await contract.isValidCertificate(tokenId);
+      const tokenURI = await contract.tokenURI(tokenId);
+      const owner = await contract.ownerOf(tokenId);
 
-    res.json({
-      success: true,
-      data: formattedData,
-      cached: false
-    });
+      // Format certificate data
+      const certificate = {
+        tokenId: tokenId.toString(),
+        recipientName: certificateData.recipientName,
+        courseName: certificateData.courseName,
+        institutionName: certificateData.institutionName,
+        issueDate: certificateData.issueDate.toString(),
+        issuer: certificateData.issuer,
+        isRevoked: certificateData.isRevoked,
+        owner: owner,
+        tokenURI: tokenURI,
+        contractAddress: contractAddress
+      };
+
+      // Get additional blockchain information
+      let blockNumber = null;
+      let transactionHash = null;
+
+      try {
+        // Query for CertificateIssued events to get transaction details
+        const filter = contract.filters.CertificateIssued(tokenId);
+        const events = await contract.queryFilter(filter);
+        
+        if (events.length > 0) {
+          const event = events[0];
+          blockNumber = event.blockNumber;
+          transactionHash = event.transactionHash;
+        }
+      } catch (eventError) {
+        console.warn('Could not fetch event data:', eventError.message);
+      }
+
+      res.json({
+        success: true,
+        message: 'Certificate verification completed',
+        data: {
+          certificate: {
+            ...certificate,
+            blockNumber,
+            transactionHash
+          },
+          verification: {
+            isValid,
+            isRevoked: certificateData.isRevoked,
+            onChain: true,
+            verifiedAt: new Date().toISOString(),
+            network: 'Polygon Mumbai Testnet',
+            contractAddress
+          }
+        }
+      });
+
+    } catch (contractError) {
+      // Handle specific contract errors
+      if (contractError.message.includes('ERC721: invalid token ID') || 
+          contractError.message.includes('ERC721: owner query for nonexistent token')) {
+        return res.status(404).json({
+          success: false,
+          message: 'Certificate not found'
+        });
+      }
+
+      throw contractError;
+    }
 
   } catch (error) {
     console.error('Certificate verification error:', error);
-
-    // Handle specific contract errors
-    if (error.code === 'CALL_EXCEPTION') {
-      return res.status(400).json({
-        success: false,
-        error: 'Contract call failed',
-        message: 'Unable to verify certificate on blockchain',
-        details: error.reason
-      });
-    }
-
-    // Handle network errors
-    if (error.code === 'NETWORK_ERROR') {
-      return res.status(503).json({
-        success: false,
-        error: 'Network error',
-        message: 'Unable to connect to the blockchain network'
-      });
-    }
-
-    // Generic error response
     res.status(500).json({
       success: false,
-      error: 'Verification failed',
-      message: 'An unexpected error occurred during certificate verification',
-      ...(process.env.NODE_ENV === 'development' && { details: error.message })
+      message: 'Failed to verify certificate',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 });
 
 /**
- * @route GET /api/certificates/verify/:hash/metadata
- * @desc Get certificate metadata
+ * @route POST /api/certificates/verify-file
+ * @desc Verify a certificate by uploaded file
  * @access Public
  */
-router.get('/verify/:hash/metadata', verifyRateLimit, validateCertificateHash, async (req, res) => {
+router.post('/verify-file', upload.single('certificate'), async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    if (!req.file) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid certificate hash',
-        details: errors.array()
+        message: 'No file uploaded'
       });
     }
 
-    const { hash } = req.params;
+    const filePath = req.file.path;
+    const fileExtension = path.extname(req.file.originalname).toLowerCase();
 
-    // Verify certificate exists
-    const verificationResult = await certificateContract.verifyCertificateByHash(hash);
-    const [exists, tokenId] = verificationResult;
+    let certificateData = null;
 
-    if (!exists) {
-      return res.status(404).json({
-        success: false,
-        error: 'Certificate not found'
-      });
-    }
-
-    // Get certificate data
-    const certificateData = await certificateContract.getCertificate(tokenId);
-    
-    // Create OpenGraph metadata for social sharing
-    const metadata = {
-      title: `${certificateData.courseName} Certificate`,
-      description: `Certificate of completion for ${certificateData.courseName} issued by ${certificateData.institutionName} to ${certificateData.recipientName}`,
-      image: `${req.protocol}://${req.get('host')}/api/certificates/verify/${hash}/image`,
-      url: `${req.protocol}://${req.get('host')}/verify/${hash}`,
-      type: 'website',
-      siteName: 'VerifyCert',
-      certificate: {
-        recipient: certificateData.recipientName,
-        course: certificateData.courseName,
-        institution: certificateData.institutionName,
-        issueDate: new Date(parseInt(certificateData.issueDate) * 1000).toISOString(),
-        tokenId: tokenId.toString()
+    try {
+      if (fileExtension === '.json') {
+        // Handle JSON certificate files
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        const jsonData = JSON.parse(fileContent);
+        
+        // Extract token ID from JSON data
+        if (jsonData.tokenId) {
+          // Redirect to token ID verification
+          const verifyResponse = await fetch(`${req.protocol}://${req.get('host')}/api/certificates/verify/${jsonData.tokenId}`);
+          const verifyData = await verifyResponse.json();
+          
+          return res.json(verifyData);
+        } else {
+          throw new Error('Token ID not found in certificate file');
+        }
+      } else if (['.pdf', '.png', '.jpg', '.jpeg'].includes(fileExtension)) {
+        // For image/PDF files, we would typically:
+        // 1. Extract QR code if present
+        // 2. Parse embedded metadata
+        // 3. Extract certificate information
+        
+        // For demo purposes, we'll return a placeholder response
+        return res.status(400).json({
+          success: false,
+          message: 'File type verification not yet implemented. Please use JSON files or enter certificate ID manually.'
+        });
+      } else {
+        throw new Error('Unsupported file type');
       }
-    };
 
-    res.json({
-      success: true,
-      data: metadata
-    });
+    } finally {
+      // Clean up uploaded file
+      try {
+        await fs.unlink(filePath);
+      } catch (unlinkError) {
+        console.warn('Failed to delete uploaded file:', unlinkError.message);
+      }
+    }
 
   } catch (error) {
-    console.error('Metadata retrieval error:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to retrieve certificate metadata',
-      message: error.message
-    });
-  }
-});
-
-/**
- * @route GET /api/certificates/verify/:hash/image
- * @desc Generate certificate image for social sharing
- * @access Public
- */
-router.get('/verify/:hash/image', async (req, res) => {
-  try {
-    const { hash } = req.params;
-
-    // For now, return a placeholder image URL
-    // In production, you would generate an actual certificate image
-    const placeholderImageUrl = `https://via.placeholder.com/800x600/4F46E5/FFFFFF?text=VerifyCert+Certificate`;
+    console.error('File verification error:', error);
     
-    res.redirect(placeholderImageUrl);
+    // Clean up uploaded file on error
+    if (req.file) {
+      try {
+        await fs.unlink(req.file.path);
+      } catch (unlinkError) {
+        console.warn('Failed to delete uploaded file:', unlinkError.message);
+      }
+    }
 
-  } catch (error) {
-    console.error('Image generation error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to generate certificate image'
+      message: 'Failed to verify certificate file',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 });
 
 /**
- * @route POST /api/certificates/verify/batch
- * @desc Verify multiple certificates at once
+ * @route GET /api/certificates/verify-batch
+ * @desc Verify multiple certificates by token IDs
  * @access Public
  */
-router.post('/batch', verifyRateLimit, async (req, res) => {
+router.post('/verify-batch', async (req, res) => {
   try {
-    const { hashes } = req.body;
+    const { tokenIds } = req.body;
 
-    if (!Array.isArray(hashes) || hashes.length === 0) {
+    if (!Array.isArray(tokenIds) || tokenIds.length === 0) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid request',
-        message: 'Hashes array is required'
+        message: 'Token IDs array is required'
       });
     }
 
-    if (hashes.length > 10) {
+    if (tokenIds.length > 100) {
       return res.status(400).json({
         success: false,
-        error: 'Too many hashes',
-        message: 'Maximum 10 certificates can be verified at once'
+        message: 'Maximum 100 certificates per batch'
+      });
+    }
+
+    // Validate all token IDs
+    const invalidIds = tokenIds.filter(id => !id || isNaN(id));
+    if (invalidIds.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid certificate IDs found',
+        invalidIds
       });
     }
 
     const results = [];
+    const errors = [];
 
-    for (const hash of hashes) {
+    // Verify each certificate
+    for (const tokenId of tokenIds) {
       try {
-        const cacheKey = `verify_${hash}`;
-        let result = verificationCache.get(cacheKey);
-
-        if (!result) {
-          const verificationResult = await certificateContract.verifyCertificateByHash(hash);
-          const [exists, tokenId, isValid, isExpired, isRevoked] = verificationResult;
-
-          if (exists) {
-            const certificateData = await certificateContract.getCertificate(tokenId);
-            const verificationStatus = {
-              isValid,
-              isExpired,
-              isRevoked,
-              status: isRevoked ? 'revoked' : isExpired ? 'expired' : isValid ? 'valid' : 'unknown'
-            };
-            result = formatCertificateData(certificateData, tokenId, verificationStatus);
-            verificationCache.set(cacheKey, result);
-          }
+        const verifyResponse = await fetch(`${req.protocol}://${req.get('host')}/api/certificates/verify/${tokenId}`);
+        const verifyData = await verifyResponse.json();
+        
+        if (verifyData.success) {
+          results.push({
+            tokenId,
+            ...verifyData.data
+          });
+        } else {
+          errors.push({
+            tokenId,
+            error: verifyData.message
+          });
         }
-
-        results.push({
-          hash,
-          success: !!result,
-          data: result || null,
-          error: result ? null : 'Certificate not found'
-        });
-
       } catch (error) {
-        results.push({
-          hash,
-          success: false,
-          data: null,
+        errors.push({
+          tokenId,
           error: error.message
         });
       }
@@ -366,11 +290,15 @@ router.post('/batch', verifyRateLimit, async (req, res) => {
 
     res.json({
       success: true,
-      data: results,
-      summary: {
-        total: hashes.length,
-        verified: results.filter(r => r.success).length,
-        failed: results.filter(r => !r.success).length
+      message: `Batch verification completed. ${results.length} successful, ${errors.length} failed.`,
+      data: {
+        successful: results,
+        failed: errors,
+        summary: {
+          total: tokenIds.length,
+          successful: results.length,
+          failed: errors.length
+        }
       }
     });
 
@@ -378,43 +306,84 @@ router.post('/batch', verifyRateLimit, async (req, res) => {
     console.error('Batch verification error:', error);
     res.status(500).json({
       success: false,
-      error: 'Batch verification failed',
-      message: error.message
+      message: 'Batch verification failed',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 });
 
 /**
- * @route GET /api/certificates/verify/stats
- * @desc Get verification statistics
+ * @route GET /api/certificates/:tokenId/metadata
+ * @desc Get certificate metadata
  * @access Public
  */
-router.get('/stats', async (req, res) => {
+router.get('/:tokenId/metadata', async (req, res) => {
   try {
-    // Get total supply of certificates
-    const totalSupply = await certificateContract.totalSupply();
-    
-    // Get cache statistics
-    const cacheStats = verificationCache.getStats();
+    const { tokenId } = req.params;
 
-    res.json({
-      success: true,
-      data: {
-        totalCertificates: totalSupply.toString(),
-        cacheHits: cacheStats.hits,
-        cacheMisses: cacheStats.misses,
-        cacheKeys: cacheStats.keys,
-        network: 'Polygon Mumbai Testnet',
-        contractAddress: certificateContract.target || certificateContract.address
+    if (!tokenId || isNaN(tokenId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid certificate ID'
+      });
+    }
+
+    // Initialize provider
+    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
+    const contractAddress = contractAddresses.mumbai?.Certificate || contractAddresses.Certificate;
+    const contract = new ethers.Contract(contractAddress, certificateABI, provider);
+
+    try {
+      const certificateData = await contract.getCertificate(tokenId);
+      const tokenURI = await contract.tokenURI(tokenId);
+      const owner = await contract.ownerOf(tokenId);
+
+      // Generate metadata in OpenSea standard format
+      const metadata = {
+        name: `${certificateData.courseName} Certificate`,
+        description: `Certificate of completion for ${certificateData.courseName} issued by ${certificateData.institutionName} to ${certificateData.recipientName}`,
+        image: `${process.env.BASE_URL}/api/certificates/${tokenId}/image`,
+        external_url: `${process.env.FRONTEND_URL}/verify/${tokenId}`,
+        attributes: [
+          {
+            trait_type: "Recipient",
+            value: certificateData.recipientName
+          },
+          {
+            trait_type: "Course",
+            value: certificateData.courseName
+          },
+          {
+            trait_type: "Institution",
+            value: certificateData.institutionName
+          },
+          {
+            trait_type: "Issue Date",
+            display_type: "date",
+            value: parseInt(certificateData.issueDate.toString())
+          },
+          {
+            trait_type: "Status",
+            value: certificateData.isRevoked ? "Revoked" : "Valid"
+          }
+        ]
+      };
+
+      res.json(metadata);
+
+    } catch (contractError) {
+      if (contractError.message.includes('ERC721: invalid token ID')) {
+        return res.status(404).json({
+          error: 'Certificate not found'
+        });
       }
-    });
+      throw contractError;
+    }
 
   } catch (error) {
-    console.error('Stats retrieval error:', error);
+    console.error('Metadata fetch error:', error);
     res.status(500).json({
-      success: false,
-      error: 'Failed to retrieve statistics',
-      message: error.message
+      error: 'Failed to fetch certificate metadata'
     });
   }
 });

@@ -2,140 +2,213 @@
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Certificate is ERC721, Ownable {
+/**
+ * @title Certificate
+ * @dev Non-transferable ERC721 certificate contract for VerifyCert
+ * Implements tamper-proof digital certificates as NFTs
+ */
+contract Certificate is ERC721, ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     
-    Counters.Counter private _tokenIds;
+    Counters.Counter private _tokenIdCounter;
+    
+    // Mapping from issuer address to authorization status
+    mapping(address => bool) public authorizedIssuers;
+    
+    // Mapping from token ID to certificate metadata
+    mapping(uint256 => CertificateData) public certificates;
+    
+    // Mapping from token ID to revocation status
+    mapping(uint256 => bool) public revokedCertificates;
     
     struct CertificateData {
-        address issuer;
-        address recipient;
         string recipientName;
         string courseName;
         string institutionName;
         uint256 issueDate;
-        string metadataURI;
-        bool isValid;
+        address issuer;
+        bool isRevoked;
     }
     
-    mapping(uint256 => CertificateData) public certificates;
-    mapping(address => bool) public authorizedIssuers;
+    event CertificateIssued(
+        uint256 indexed tokenId,
+        address indexed recipient,
+        address indexed issuer,
+        string recipientName,
+        string courseName,
+        string institutionName
+    );
     
-    event CertificateMinted(uint256 indexed tokenId, address indexed issuer, address indexed recipient);
-    event CertificateRevoked(uint256 indexed tokenId);
+    event CertificateRevoked(uint256 indexed tokenId, address indexed revoker);
     event IssuerAuthorized(address indexed issuer);
     event IssuerRevoked(address indexed issuer);
     
-    error UnauthorizedIssuer();
-    error InvalidRecipient();
-    error CertificateNotFound();
-    error CertificateAlreadyRevoked();
-    error TransferNotAllowed();
-    
     modifier onlyAuthorizedIssuer() {
-        if (!authorizedIssuers[msg.sender] && msg.sender != owner()) {
-            revert UnauthorizedIssuer();
-        }
+        require(authorizedIssuers[msg.sender] || msg.sender == owner(), "Not authorized to issue certificates");
         _;
     }
     
-    constructor() ERC721("VerifyCert", "VCERT") {}
+    modifier certificateExists(uint256 tokenId) {
+        require(_exists(tokenId), "Certificate does not exist");
+        _;
+    }
     
-    function mintCertificate(
+    constructor() ERC721("VerifyCert Certificate", "VCERT") {
+        // Owner is automatically authorized
+        authorizedIssuers[msg.sender] = true;
+    }
+    
+    /**
+     * @dev Issue a new certificate
+     * @param recipient Address of the certificate recipient
+     * @param recipientName Name of the certificate recipient
+     * @param courseName Name of the course/program
+     * @param institutionName Name of the issuing institution
+     * @param tokenURI IPFS URI for certificate metadata
+     */
+    function issueCertificate(
         address recipient,
         string memory recipientName,
         string memory courseName,
         string memory institutionName,
-        string memory metadataURI
-    ) external onlyAuthorizedIssuer returns (uint256) {
-        if (recipient == address(0)) {
-            revert InvalidRecipient();
-        }
+        string memory tokenURI
+    ) public onlyAuthorizedIssuer returns (uint256) {
+        require(recipient != address(0), "Invalid recipient address");
+        require(bytes(recipientName).length > 0, "Recipient name required");
+        require(bytes(courseName).length > 0, "Course name required");
+        require(bytes(institutionName).length > 0, "Institution name required");
         
-        _tokenIds.increment();
-        uint256 newTokenId = _tokenIds.current();
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
         
-        _mint(recipient, newTokenId);
+        _safeMint(recipient, tokenId);
+        _setTokenURI(tokenId, tokenURI);
         
-        certificates[newTokenId] = CertificateData({
-            issuer: msg.sender,
-            recipient: recipient,
+        certificates[tokenId] = CertificateData({
             recipientName: recipientName,
             courseName: courseName,
             institutionName: institutionName,
             issueDate: block.timestamp,
-            metadataURI: metadataURI,
-            isValid: true
+            issuer: msg.sender,
+            isRevoked: false
         });
         
-        emit CertificateMinted(newTokenId, msg.sender, recipient);
-        return newTokenId;
-    }
-    
-    function getCertificate(uint256 tokenId) external view returns (CertificateData memory) {
-        if (!_exists(tokenId)) {
-            revert CertificateNotFound();
-        }
-        return certificates[tokenId];
-    }
-    
-    function verifyCertificate(uint256 tokenId) external view returns (bool) {
-        if (!_exists(tokenId)) {
-            return false;
-        }
-        return certificates[tokenId].isValid;
-    }
-    
-    function revokeCertificate(uint256 tokenId) external {
-        if (!_exists(tokenId)) {
-            revert CertificateNotFound();
-        }
+        emit CertificateIssued(
+            tokenId,
+            recipient,
+            msg.sender,
+            recipientName,
+            courseName,
+            institutionName
+        );
         
-        CertificateData storage cert = certificates[tokenId];
-        if (msg.sender != cert.issuer && msg.sender != owner()) {
-            revert UnauthorizedIssuer();
-        }
-        
-        if (!cert.isValid) {
-            revert CertificateAlreadyRevoked();
-        }
-        
-        cert.isValid = false;
-        emit CertificateRevoked(tokenId);
+        return tokenId;
     }
     
-    function authorizeIssuer(address issuer) external onlyOwner {
+    /**
+     * @dev Revoke a certificate
+     * @param tokenId ID of the certificate to revoke
+     */
+    function revokeCertificate(uint256 tokenId) public certificateExists(tokenId) {
+        require(
+            msg.sender == certificates[tokenId].issuer || msg.sender == owner(),
+            "Only issuer or owner can revoke certificate"
+        );
+        require(!certificates[tokenId].isRevoked, "Certificate already revoked");
+        
+        certificates[tokenId].isRevoked = true;
+        revokedCertificates[tokenId] = true;
+        
+        emit CertificateRevoked(tokenId, msg.sender);
+    }
+    
+    /**
+     * @dev Authorize an issuer
+     * @param issuer Address to authorize
+     */
+    function authorizeIssuer(address issuer) public onlyOwner {
+        require(issuer != address(0), "Invalid issuer address");
         authorizedIssuers[issuer] = true;
         emit IssuerAuthorized(issuer);
     }
     
-    function revokeIssuer(address issuer) external onlyOwner {
+    /**
+     * @dev Revoke issuer authorization
+     * @param issuer Address to revoke authorization from
+     */
+    function revokeIssuerAuthorization(address issuer) public onlyOwner {
         authorizedIssuers[issuer] = false;
         emit IssuerRevoked(issuer);
     }
     
-    // Override transfer functions to make NFTs non-transferable
-    function transferFrom(address, address, uint256) public pure override {
-        revert TransferNotAllowed();
+    /**
+     * @dev Get certificate data
+     * @param tokenId ID of the certificate
+     */
+    function getCertificate(uint256 tokenId) public view certificateExists(tokenId) returns (CertificateData memory) {
+        return certificates[tokenId];
     }
     
-    function safeTransferFrom(address, address, uint256) public pure override {
-        revert TransferNotAllowed();
+    /**
+     * @dev Check if certificate is valid (exists and not revoked)
+     * @param tokenId ID of the certificate
+     */
+    function isValidCertificate(uint256 tokenId) public view returns (bool) {
+        return _exists(tokenId) && !certificates[tokenId].isRevoked;
     }
     
-    function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
-        revert TransferNotAllowed();
+    /**
+     * @dev Get total number of certificates issued
+     */
+    function totalSupply() public view returns (uint256) {
+        return _tokenIdCounter.current();
     }
     
-    // Override approval functions to prevent misleading approvals since transfers are not allowed
-    function approve(address, uint256) public pure override {
-        revert TransferNotAllowed();
+    // Override transfer functions to make certificates non-transferable
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override {
+        require(from == address(0), "Certificates are non-transferable");
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
     
-    function setApprovalForAll(address, bool) public pure override {
-        revert TransferNotAllowed();
+    function approve(address to, uint256 tokenId) public override {
+        revert("Certificates are non-transferable");
+    }
+    
+    function setApprovalForAll(address operator, bool approved) public override {
+        revert("Certificates are non-transferable");
+    }
+    
+    function transferFrom(address from, address to, uint256 tokenId) public override {
+        revert("Certificates are non-transferable");
+    }
+    
+    function safeTransferFrom(address from, address to, uint256 tokenId) public override {
+        revert("Certificates are non-transferable");
+    }
+    
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) public override {
+        revert("Certificates are non-transferable");
+    }
+    
+    // Required overrides
+    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
+    }
+    
+    function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+        return super.tokenURI(tokenId);
+    }
+    
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 }

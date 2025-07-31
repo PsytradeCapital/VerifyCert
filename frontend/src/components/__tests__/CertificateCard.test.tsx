@@ -3,13 +3,16 @@ import { jest } from '@jest/globals';
 import CertificateCard, { Certificate } from '../CertificateCard';
 
 // Mock react-hot-toast
-jest.mock('react-hot-toast', () => ({
-  __esModule: true,
-  default: {
-    success: jest.fn(),
-    error: jest.fn(),
-  },
-}));
+jest.mock('react-hot-toast', () => {
+  const mockFn = () => {};
+  return {
+    __esModule: true,
+    default: {
+      success: mockFn,
+      error: mockFn,
+    },
+  };
+});
 
 // Mock clipboard API
 Object.assign(navigator, {

@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { buttonInteractions } from '../../../utils/interactionAnimations';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'danger';
@@ -7,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
+  enableAnimations?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,15 +22,16 @@ const Button: React.FC<ButtonProps> = ({
   fullWidth = false,
   className = '',
   disabled,
+  enableAnimations = true,
   ...props
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg focus:outline-none';
   
   const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-300',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500 disabled:bg-gray-50 disabled:text-gray-400',
-    tertiary: 'bg-transparent text-blue-600 hover:bg-blue-50 focus:ring-blue-500 disabled:text-blue-300',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300'
+    primary: 'bg-blue-600 text-white focus:ring-blue-500 disabled:bg-blue-300',
+    secondary: 'bg-gray-100 text-gray-900 focus:ring-gray-500 disabled:bg-gray-50 disabled:text-gray-400',
+    tertiary: 'bg-transparent text-blue-600 focus:ring-blue-500 disabled:text-blue-300',
+    danger: 'bg-red-600 text-white focus:ring-red-500 disabled:bg-red-300'
   };
 
   const sizeClasses = {
@@ -39,8 +43,15 @@ const Button: React.FC<ButtonProps> = ({
   const widthClass = fullWidth ? 'w-full' : '';
   const isDisabled = disabled || loading;
 
+  // Get animation props based on variant and animation settings
+  const animationProps = enableAnimations && !isDisabled 
+    ? buttonInteractions[variant] || buttonInteractions.primary
+    : {};
+
+  const MotionButton = motion.button;
+
   return (
-    <button
+    <MotionButton
       className={`
         ${baseClasses}
         ${variantClasses[variant]}
@@ -50,6 +61,7 @@ const Button: React.FC<ButtonProps> = ({
         ${className}
       `}
       disabled={isDisabled}
+      {...animationProps}
       {...props}
     >
       {loading && (
@@ -84,7 +96,7 @@ const Button: React.FC<ButtonProps> = ({
       {!loading && icon && iconPosition === 'right' && (
         <span className="ml-2">{icon}</span>
       )}
-    </button>
+    </MotionButton>
   );
 };
 

@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   showCloseButton?: boolean;
   closeOnBackdropClick?: boolean;
+  closeOnEscape?: boolean;
   className?: string;
+  backdropClassName?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -19,15 +23,34 @@ const Modal: React.FC<ModalProps> = ({
   size = 'md',
   showCloseButton = true,
   closeOnBackdropClick = true,
-  className = ''
+  closeOnEscape = true,
+  className = '',
+  backdropClassName = ''
 }) => {
-  const sizeClasses = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl'
-  };
+  const modalRef = useRef<HTMLDivElement>(null);
 
+  // Handle escape key
+  useEffect(() => {
+    if (!closeOnEscape) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose, closeOnEscape]);
+
+  // Focus management
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [isOpen]);
+
+  // Body scroll lock
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -40,84 +63,110 @@ const Modal: React.FC<ModalProps> = ({
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && closeOnBackdropClick) {
+  const handleBackdropClick = (event: React.MouseEvent) => {
+    if (closeOnBackdropClick && event.target === event.currentTarget) {
       onClose();
     }
   };
 
+  const sizeClasses = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    full: 'max-w-full mx-4'
+  };
+
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+  };
+
+  const modalVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.8,
+      y: 50
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        damping: 25,
+        stiffness: 300
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.8,
+      y: 50,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div
-        className="flex min-h-screen items-center justify-center p-4 text-center sm:p-0"
-        onClick={handleBackdropClick}
-      >
-        {/* Backdrop */}
-        <div
-          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-          aria-hidden="true"
-        />
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <motion.div
+            className={`fixed inset-0 bg-black bg-opacity-50 ${backdropClassName}`}
+            variants={backdropVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            onClick={handleBackdropClick}
+          />
 
-        {/* Modal panel */}
-        <div
-          className={`
-            relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all
-            w-full ${sizeClasses[size]} ${className}
-          `}
-        >
-          {/* Header */}
-          {(title || showCloseButton) && (
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-              {title && (
-                <h3 className="text-lg font-medium text-gray-900">
-                  {title}
-                </h3>
-              )}
-              {showCloseButton && (
-                <button
-                  type="button"
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                  onClick={onClose}
-                >
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+          {/* Modal */}
+          <motion.div
+            ref={modalRef}
+            className={`
+              relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]}
+              max-h-[90vh] overflow-hidden focus:outline-none
+              ${className}
+            `}
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={title ? 'modal-title' : undefined}
+          >
+            {/* Header */}
+            {(title || showCloseButton) && (
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                {title && (
+                  <h2 id="modal-title" className="text-lg font-semibold text-gray-900">
+                    {title}
+                  </h2>
+                )}
+                {showCloseButton && (
+                  <button
+                    onClick={onClose}
+                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-md hover:bg-gray-100"
+                    aria-label="Close modal"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              )}
-            </div>
-          )}
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+            )}
 
-          {/* Content */}
-          <div className="px-6 py-4">
-            {children}
-          </div>
+            {/* Content */}
+            <div className="overflow-y-auto max-h-[calc(90vh-4rem)]">
+              {children}
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };
 

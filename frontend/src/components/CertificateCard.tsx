@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
+import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
 
 export interface Certificate {
   tokenId: string;
@@ -34,6 +34,7 @@ export default function CertificateCard({
 }: CertificateCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const feedback = useFeedbackAnimations();
 
   const formatDate = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleDateString('en-US', {
@@ -119,10 +120,15 @@ export default function CertificateCard({
       link.href = canvas.toDataURL();
       link.click();
 
-      toast.success('Certificate downloaded successfully!');
+      feedback.showSuccess('Certificate downloaded successfully!', {
+        showConfetti: true,
+        position: 'top-right'
+      });
     } catch (error) {
       console.error('Download failed:', error);
-      toast.error('Failed to download certificate');
+      feedback.showError('Failed to download certificate', {
+        shake: true
+      });
     } finally {
       setIsLoading(false);
     }
@@ -143,15 +149,19 @@ export default function CertificateCard({
     try {
       if (navigator.share) {
         await navigator.share(shareData);
-        toast.success('Certificate shared successfully!');
+        feedback.showSuccess('Certificate shared successfully!', {
+          showConfetti: true
+        });
       } else {
         // Fallback to clipboard
         await navigator.clipboard.writeText(shareData.url || window.location.href);
-        toast.success('Certificate link copied to clipboard!');
+        feedback.showSuccess('Certificate link copied to clipboard!');
       }
     } catch (error) {
       console.error('Share failed:', error);
-      toast.error('Failed to share certificate');
+      feedback.showError('Failed to share certificate', {
+        shake: true
+      });
     }
   };
 
@@ -159,10 +169,12 @@ export default function CertificateCard({
     try {
       const url = certificate.verificationURL || window.location.href;
       await navigator.clipboard.writeText(url);
-      toast.success('Verification link copied to clipboard!');
+      feedback.showSuccess('Verification link copied to clipboard!');
     } catch (error) {
       console.error('Copy failed:', error);
-      toast.error('Failed to copy link');
+      feedback.showError('Failed to copy link', {
+        shake: true
+      });
     }
   };
 

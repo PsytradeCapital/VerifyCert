@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ChevronRight, Home } from 'lucide-react';
 import { useBreadcrumbs } from '../../../hooks/useBreadcrumbs';
+import { navigationInteractions } from '../../../utils/interactionAnimations';
 
 export interface BreadcrumbItem {
   label: string;
@@ -15,6 +17,7 @@ export interface BreadcrumbsProps {
   className?: string;
   showHomeIcon?: boolean;
   maxItems?: number;
+  enableAnimations?: boolean;
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
@@ -22,7 +25,8 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   separator = <ChevronRight className="w-4 h-4" />,
   className = '',
   showHomeIcon = true,
-  maxItems
+  maxItems,
+  enableAnimations = true
 }) => {
   const autoBreadcrumbs = useBreadcrumbs();
   const breadcrumbItems = items || autoBreadcrumbs;
@@ -56,15 +60,19 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 {item.label}
               </span>
             ) : item.href && !item.active ? (
-              <Link
-                to={item.href}
-                className="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1 px-1 py-1 rounded hover:bg-gray-100"
+              <motion.div
+                {...(enableAnimations ? navigationInteractions.breadcrumbItem : {})}
               >
-                {index === 0 && showHomeIcon && item.href === '/' && (
-                  <Home className="w-4 h-4" />
-                )}
-                {item.label}
-              </Link>
+                <Link
+                  to={item.href}
+                  className="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center gap-1 px-1 py-1 rounded"
+                >
+                  {index === 0 && showHomeIcon && item.href === '/' && (
+                    <Home className="w-4 h-4" />
+                  )}
+                  {item.label}
+                </Link>
+              </motion.div>
             ) : (
               <span
                 className={`text-sm font-medium px-1 py-1 rounded flex items-center gap-1 ${

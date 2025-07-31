@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { designTokens } from '../../../styles/tokens';
+import { selectInteractions } from '../../../utils/interactionAnimations';
 
 export interface SelectOption {
   value: string;
@@ -25,6 +27,7 @@ export interface SelectProps {
   variant?: 'default' | 'outlined' | 'filled';
   className?: string;
   'data-testid'?: string;
+  enableAnimations?: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -42,7 +45,8 @@ const Select: React.FC<SelectProps> = ({
   size = 'md',
   variant = 'default',
   className = '',
-  'data-testid': testId
+  'data-testid': testId,
+  enableAnimations = true
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -137,12 +141,12 @@ const Select: React.FC<SelectProps> = ({
       )}
       
       <div className="relative" ref={selectRef}>
-        <button
+        <motion.button
           id={selectId}
           type="button"
           className={`
             relative w-full rounded-lg text-left cursor-default
-            focus:outline-none transition-all duration-200
+            focus:outline-none
             ${sizeStyles[size].button}
             ${variantStyles[variant].button}
             ${variantStyles[variant].focus}
@@ -160,6 +164,7 @@ const Select: React.FC<SelectProps> = ({
           disabled={disabled || loading}
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          {...(enableAnimations && !disabled && !loading ? selectInteractions.trigger : {})}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center min-w-0 flex-1">
@@ -215,14 +220,19 @@ const Select: React.FC<SelectProps> = ({
               )}
             </div>
           </div>
-        </button>
+        </motion.button>
 
-        {isOpen && (
-          <div 
-            className="absolute z-dropdown mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 ring-1 ring-neutral-200 overflow-auto focus:outline-none"
-            style={{ zIndex: designTokens.zIndex.dropdown }}
-            role="listbox"
-          >
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div 
+              className="absolute z-dropdown mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 ring-1 ring-neutral-200 overflow-auto focus:outline-none"
+              style={{ zIndex: designTokens.zIndex.dropdown }}
+              role="listbox"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+            >
             {searchable && (
               <div className="px-2 py-2 border-b border-neutral-100">
                 <div className="relative">
@@ -257,15 +267,15 @@ const Select: React.FC<SelectProps> = ({
               </div>
             ) : (
               filteredOptions.map((option) => (
-                <button
+                <motion.button
                   key={option.value}
                   type="button"
                   className={`
-                    w-full text-left px-3 py-2 transition-colors duration-150 flex items-center
+                    w-full text-left px-3 py-2 flex items-center
                     ${sizeStyles[size].dropdown}
                     ${option.disabled
                       ? 'text-neutral-400 cursor-not-allowed'
-                      : 'text-neutral-900 hover:bg-primary-50 hover:text-primary-900 cursor-pointer'
+                      : 'text-neutral-900 cursor-pointer'
                     }
                     ${option.value === value ? 'bg-primary-100 text-primary-900' : ''}
                   `}
@@ -273,6 +283,7 @@ const Select: React.FC<SelectProps> = ({
                   disabled={option.disabled}
                   role="option"
                   aria-selected={option.value === value}
+                  {...(enableAnimations && !option.disabled ? selectInteractions.option : {})}
                 >
                   {option.icon && (
                     <span className="mr-2 flex-shrink-0">{option.icon}</span>
@@ -290,11 +301,12 @@ const Select: React.FC<SelectProps> = ({
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   )}
-                </button>
+                </motion.button>
               ))
             )}
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {error && (

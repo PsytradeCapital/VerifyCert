@@ -1,214 +1,96 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useNavigation } from '../../../contexts/NavigationContext';
-import { useActiveIndicator } from '../../../hooks/useActiveIndicator';
-import { useNavigationTransitions } from '../../../hooks/useNavigationTransitions';
-import type { NavigationItem } from '../../../contexts/NavigationContext';
+import { Home, FileText, Search, User, Plus } from 'lucide-react';
 
-export interface BottomNavItem {
+interface NavigationItem {
   id: string;
   label: string;
-  icon: React.ReactNode;
-  href: string;
-  active?: boolean;
-  badge?: string | number;
-  disabled?: boolean;
-  onClick?: () => void;
+  icon: React.ComponentType<{ className?: string }>;
+  path: string;
+  badge?: number;
 }
 
-export interface BottomNavigationProps {
-  items?: NavigationItem[];
+interface BottomNavigationProps {
+  onQuickAction?: () => void;
   className?: string;
-  variant?: 'default' | 'floating';
-  showLabels?: boolean;
-  useContext?: boolean;
 }
 
-const BottomNavigation: React.FC<BottomNavigationProps> = ({
-  items: propItems,
-  className = '',
-  variant = 'default',
-  showLabels = true,
-  useContext = true
-}) => {
+const navigationItems: NavigationItem[] = [
+  { id: 'home', label: 'Home', icon: Home, path: '/' },
+  { id: 'verify', label: 'Verify', icon: Search, path: '/verify' },
+  { id: 'certificates', label: 'Certificates', icon: FileText, path: '/certificates' },
+  { id: 'profile', label: 'Profile', icon: User, path: '/profile' },
+];
+
+export default function BottomNavigation({ onQuickAction, className = '' }: BottomNavigationProps) {
   const location = useLocation();
-  const navigationContext = useContext ? useNavigation() : null;
-  const { 
-    navigateWithTransition, 
-    preloadNavigation, 
-    getTransitionClasses,
-    getStaggerDelay 
-  } = useNavigationTransitions({
-    enablePreloading: true,
-    enableStaggeredAnimations: true,
-    customDuration: 250 // Slightly faster for bottom nav
-  });
-  
-  // Use context state if available, otherwise fall back to props
-  const items = useContext && navigationContext 
-    ? navigationContext.state.navigationItems.filter(item => item.public || true) // Filter based on visibility
-    : propItems || [];
-  const activeItems = useContext && navigationContext 
-    ? navigationContext.state.activeItems 
-    : new Set<string>();
 
-  // Helper function to determine if an item is active
-  const isItemActive = (itemPath: string, currentPath: string): boolean => {
-    if (itemPath === '/') {
-      return currentPath === '/';
-    }
-    return currentPath.startsWith(itemPath);
-  };
-
-  // Auto-detect active state based on current route if not explicitly set
-  const itemsWithActiveState = items.map(item => ({
-    ...item,
-    active: activeItems.has(item.id) || isItemActive(item.href, location.pathname)
-  }));
-
-  const baseClasses = variant === 'floating' 
-    ? 'fixed bottom-4 left-4 right-4 mx-auto max-w-md bg-white/95 backdrop-blur-sm border border-neutral-200 rounded-2xl shadow-xl'
-    : 'fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-neutral-200 shadow-lg';
-
-  const containerClasses = variant === 'floating'
-    ? 'grid py-3 px-2'
-    : 'grid py-2 pb-safe-bottom';
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav 
-      className={`${baseClasses} z-fixed ${className}`}
-      role="navigation"
-      aria-label="Bottom navigation"
-      style={{
-        paddingBottom: variant === 'default' ? 'env(safe-area-inset-bottom)' : undefined
-      }}
-    >
-      <div className={`${containerClasses} ${
-        items.length === 1 ? 'grid-cols-1' :
-        items.length === 2 ? 'grid-cols-2' :
-        items.length === 3 ? 'grid-cols-3' :
-        items.length === 4 ? 'grid-cols-4' :
-        'grid-cols-5'
-      }`}>
-        {itemsWithActiveState.map((item, index) => {
-          const staggerDelay = getStaggerDelay(index, itemsWithActiveState.length);
-          // Get active indicator styles
-          const indicatorStyles = useActiveIndicator(item.id, item.active || false);
-          
-          const commonContent = (
-            <>
-              <div className="relative">
+    <nav className={`
+      fixed bottom-0 left-0 right-0 z-50
+      bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700
+      safe-area-inset-bottom
+      ${className}
+    `}>
+      <div className="flex items-center justify-around px-2 py-2">
+        {navigationItems.map((item, index) => {
+          const Icon = item.icon;
+          const active = isActive(item.path);
+
+          return (
+            <React.Fragment key={item.id}>
+              <Link
+                to={item.path}
+                className={`
+                  flex flex-col items-center justify-center px-3 py-2 rounded-lg
+                  transition-all duration-200 min-w-0 flex-1
+                  ${active 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                  }
+                `}
+              >
+                <div className="relative">
+                  <Icon className={`
+                    w-6 h-6 mb-1
+                    ${active ? 'text-blue-600 dark:text-blue-400' : ''}
+                  `} />
+                  {item.badge && item.badge > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {item.badge > 99 ? '99+' : item.badge}
+                    </span>
+                  )}
+                </div>
                 <span className={`
-                  h-6 w-6 flex items-center justify-center
-                  transition-transform duration-200 ease-out
-                  ${item.active ? 'scale-110' : 'hover:scale-105'}
-                `}>
-                  {item.icon}
-                </span>
-                {item.badge && (
-                  <span 
-                    className="absolute -top-1 -right-1 h-4 w-4 bg-error-500 text-white text-xs rounded-full flex items-center justify-center min-w-4 font-semibold animate-pulse"
-                    aria-label={`${item.badge} notifications`}
-                  >
-                    {typeof item.badge === 'number' && item.badge > 99 ? '99+' : item.badge}
-                  </span>
-                )}
-              </div>
-              {showLabels && (
-                <span className={`
-                  mt-1 truncate max-w-16 text-center leading-tight
-                  transition-all duration-200 ease-out
-                  ${item.active ? 'font-semibold' : ''}
+                  text-xs font-medium truncate
+                  ${active ? 'text-blue-600 dark:text-blue-400' : ''}
                 `}>
                   {item.label}
                 </span>
+              </Link>
+
+              {/* Quick Action Button in the middle */}
+              {index === 1 && onQuickAction && (
+                <button
+                  onClick={onQuickAction}
+                  className="
+                    flex items-center justify-center w-14 h-14 mx-2
+                    bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600
+                    text-white rounded-full shadow-lg
+                    transition-all duration-200 transform hover:scale-105
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                  "
+                  aria-label="Quick action"
+                >
+                  <Plus className="w-6 h-6" />
+                </button>
               )}
-            </>
-          );
-
-          const commonClasses = getTransitionClasses(`
-            ${indicatorStyles.containerClasses}
-            flex flex-col items-center justify-center 
-            min-h-[44px] px-2 py-2 text-xs font-medium 
-            rounded-lg touch-manipulation
-            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-            disabled:opacity-50 disabled:cursor-not-allowed
-            ${item.active 
-              ? `text-primary-600 bg-primary-50 shadow-sm border-t-2 border-primary-500 ${indicatorStyles.itemClasses}` 
-              : 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50 active:text-neutral-800 active:bg-neutral-100 hover:border-t-2 hover:border-neutral-300'
-            }
-            ${variant === 'floating' ? 'mx-1' : ''}
-            transform hover:scale-105 active:scale-95
-            hover:shadow-lg active:shadow-md
-          `, index, itemsWithActiveState.length);
-
-          if (item.onClick) {
-            return (
-              <button
-                key={item.id}
-                onClick={item.onClick}
-                type="button"
-                disabled={item.disabled}
-                className={commonClasses}
-                style={{ 
-                  transitionDelay: `${staggerDelay}ms`,
-                  animationDelay: `${staggerDelay}ms`
-                }}
-                aria-label={item.label}
-                aria-current={item.active ? 'page' : undefined}
-              >
-                {/* Active indicator */}
-                {item.active && <div className={indicatorStyles.indicatorClasses} />}
-                {commonContent}
-              </button>
-            );
-          }
-
-          return (
-            <Link
-              key={item.id}
-              to={item.href}
-              className={`${commonClasses} ${item.disabled ? 'pointer-events-none' : ''}`}
-              style={{ 
-                transitionDelay: `${staggerDelay}ms`,
-                animationDelay: `${staggerDelay}ms`
-              }}
-              onClick={(e) => {
-                if (item.disabled) {
-                  e.preventDefault();
-                  return;
-                }
-                // Use enhanced navigation with transitions
-                if (navigationContext) {
-                  e.preventDefault();
-                  
-                  // Preload the navigation target
-                  preloadNavigation(item.href);
-                  
-                  // Determine direction based on item order
-                  const currentIndex = itemsWithActiveState.findIndex(i => i.href === location.pathname);
-                  const targetIndex = index;
-                  const direction = targetIndex > currentIndex ? 'forward' : 'backward';
-                  
-                  navigateWithTransition(item.href, direction);
-                }
-              }}
-              onMouseEnter={() => {
-                // Preload on hover for better UX
-                preloadNavigation(item.href);
-              }}
-              aria-label={item.label}
-              aria-current={item.active ? 'page' : undefined}
-            >
-              {/* Active indicator */}
-              {item.active && <div className={indicatorStyles.indicatorClasses} />}
-              {commonContent}
-            </Link>
+            </React.Fragment>
           );
         })}
       </div>
     </nav>
   );
-};
-
-export default BottomNavigation;
+}

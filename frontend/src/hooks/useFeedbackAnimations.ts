@@ -332,6 +332,10 @@ export const useFeedbackAnimations = () => {
     feedback.dismissAll();
   }, [feedback]);
 
+  const renderFeedback = useCallback(() => {
+    return feedback.renderFeedback();
+  }, [feedback]);
+
   return {
     showSuccess,
     showError,
@@ -347,6 +351,7 @@ export const useFeedbackAnimations = () => {
     updateProgress,
     dismiss,
     dismissAll,
+    renderFeedback,
   };
 };
 

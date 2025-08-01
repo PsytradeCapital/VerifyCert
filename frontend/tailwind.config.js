@@ -285,7 +285,6 @@ module.exports = {
         focusRipple: {
           '0%': { transform: 'scale(0)', opacity: '0.5' },
           '100%': { transform: 'scale(1)', opacity: '0' }
-          '50%': { transform: 'translateY(-10px)' }
         },
         skeleton: {
           '0%': { backgroundPosition: '200% 0' },

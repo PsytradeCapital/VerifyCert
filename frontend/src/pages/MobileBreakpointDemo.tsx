@@ -44,7 +44,7 @@ const MobileBreakpointDemo: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Mobile Only</h3>
                 <p className="text-sm text-neutral-600">
-                  This content only appears on mobile devices (< 768px)
+                  This content only appears on mobile devices (&lt; 768px)
                 </p>
               </MobileOnly>
             </Card>

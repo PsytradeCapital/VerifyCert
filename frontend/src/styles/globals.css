@@ -14,6 +14,9 @@
 /* Import interaction animations */
 @import './interaction-animations.css';
 
+/* Import responsive design system */
+@import './responsive.css';
+
 /* Base layer customizations */
 @layer base {
   /* Enhanced CSS Reset */

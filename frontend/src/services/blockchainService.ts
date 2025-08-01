@@ -127,6 +127,9 @@ export interface VerificationResult {
   onChain: boolean;
   message: string;
   verificationTimestamp: number;
+  transactionHash?: string;
+  blockNumber?: string;
+  contractAddress?: string;
 }
 
 class BlockchainService {
@@ -199,9 +202,24 @@ class BlockchainService {
       
       // Additional verification: check if the certificate owner exists
       let ownerExists = false;
+      let transactionHash: string | undefined;
+      let blockNumber: string | undefined;
+      
       try {
         const owner = await this.contract.ownerOf(tokenId);
         ownerExists = owner && owner !== ethers.ZeroAddress;
+        
+        // Try to get transaction information from Transfer events
+        if (ownerExists) {
+          const filter = this.contract.filters.Transfer(ethers.ZeroAddress, null, tokenId);
+          const events = await this.contract.queryFilter(filter);
+          
+          if (events.length > 0) {
+            const mintEvent = events[0];
+            transactionHash = mintEvent.transactionHash;
+            blockNumber = mintEvent.blockNumber.toString();
+          }
+        }
       } catch (ownerError) {
         // If ownerOf fails, the token doesn't exist
         ownerExists = false;
@@ -215,7 +233,10 @@ class BlockchainService {
           : certificate.isValid 
             ? 'Certificate exists but may have been revoked'
             : 'Certificate is not valid or has been revoked',
-        verificationTimestamp: Date.now()
+        verificationTimestamp: Date.now(),
+        transactionHash,
+        blockNumber,
+        contractAddress: CONTRACT_ADDRESS
       };
 
       return result;
@@ -227,7 +248,8 @@ class BlockchainService {
         isValid: false,
         onChain: false,
         message: error instanceof Error ? error.message : 'Verification failed',
-        verificationTimestamp: Date.now()
+        verificationTimestamp: Date.now(),
+        contractAddress: CONTRACT_ADDRESS
       };
     }
   }

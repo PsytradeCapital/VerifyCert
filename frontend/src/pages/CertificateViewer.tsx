@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
+import { VerificationResult as VerificationResultComponent } from '../components/ui';
+import certificateService from '../services/certificateService';
 
 interface CertificateViewerState {
   certificate: Certificate | null;
@@ -12,6 +14,10 @@ interface CertificateViewerState {
     isValid: boolean;
     onChain: boolean;
     message: string;
+    verificationTimestamp?: number;
+    transactionHash?: string;
+    blockNumber?: string;
+    contractAddress?: string;
   } | null;
 }
 
@@ -74,6 +80,40 @@ export default function CertificateViewer() {
     setState(prev => ({ ...prev, isVerifying: true }));
 
     try {
+      // Try blockchain verification first (enhanced approach)
+      try {
+        const { default: getBlockchainService } = await import('../services/blockchainService');
+        const blockchainService = getBlockchainService();
+        
+        if (blockchainService.isConfigured()) {
+          const verificationResult = await blockchainService.verifyCertificate(tokenId);
+          
+          setState(prev => ({
+            ...prev,
+            verificationResult: {
+              isValid: verificationResult.isValid,
+              onChain: verificationResult.onChain,
+              message: verificationResult.message,
+              verificationTimestamp: verificationResult.verificationTimestamp,
+              transactionHash: verificationResult.transactionHash,
+              blockNumber: verificationResult.blockNumber,
+              contractAddress: verificationResult.contractAddress,
+            },
+            isVerifying: false,
+          }));
+          
+          if (verificationResult.isValid) {
+            toast.success('Certificate verified successfully on blockchain!');
+          } else {
+            toast.error('Certificate verification failed');
+          }
+          return;
+        }
+      } catch (blockchainError) {
+        console.warn('Blockchain verification failed, falling back to API:', blockchainError);
+      }
+
+      // Fallback to API verification
       const response = await fetch(`/api/v1/certificates/verify/${tokenId}`, {
         method: 'POST',
         headers: {
@@ -94,6 +134,7 @@ export default function CertificateViewer() {
             isValid: data.data.verification.isValid,
             onChain: data.data.verification.onChain,
             message: data.data.verification.message || 'Certificate verified successfully',
+            verificationTimestamp: Date.now(),
           },
           isVerifying: false,
         }));
@@ -114,6 +155,7 @@ export default function CertificateViewer() {
           isValid: false,
           onChain: false,
           message: error instanceof Error ? error.message : 'Verification failed',
+          verificationTimestamp: Date.now(),
         },
         isVerifying: false,
       }));
@@ -272,6 +314,63 @@ export default function CertificateViewer() {
   // Navigate back
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  // Enhanced handlers for verification result component
+  const handleDownloadCertificate = async () => {
+    if (!state.certificate) return;
+    
+    try {
+      await certificateService.downloadCertificate({
+        tokenId: state.certificate.tokenId,
+        recipientName: state.certificate.recipientName,
+        courseName: state.certificate.courseName,
+        institutionName: state.certificate.institutionName,
+        issueDate: state.certificate.issueDate,
+        issuer: state.certificate.issuer,
+        recipient: state.certificate.recipient,
+        metadataURI: state.certificate.metadataURI,
+        isValid: state.certificate.isValid,
+        verificationURL: state.certificate.verificationURL,
+        qrCodeURL: state.certificate.qrCodeURL
+      });
+      toast.success('Certificate downloaded successfully!');
+    } catch (error) {
+      console.error('Download failed:', error);
+      toast.error('Failed to download certificate');
+    }
+  };
+
+  const handleShareCertificate = async () => {
+    if (!state.certificate) return;
+    
+    try {
+      await certificateService.shareCertificate({
+        tokenId: state.certificate.tokenId,
+        recipientName: state.certificate.recipientName,
+        courseName: state.certificate.courseName,
+        institutionName: state.certificate.institutionName,
+        issueDate: state.certificate.issueDate,
+        issuer: state.certificate.issuer,
+        recipient: state.certificate.recipient,
+        metadataURI: state.certificate.metadataURI,
+        isValid: state.certificate.isValid,
+        verificationURL: state.certificate.verificationURL,
+        qrCodeURL: state.certificate.qrCodeURL
+      });
+      toast.success('Certificate link copied to clipboard!');
+    } catch (error) {
+      console.error('Share failed:', error);
+      toast.error('Failed to share certificate');
+    }
+  };
+
+  const handleViewOnBlockchain = () => {
+    if (!state.verificationResult?.transactionHash) return;
+    
+    // Open blockchain explorer (Polygon Mumbai testnet)
+    const explorerUrl = `https://mumbai.polygonscan.com/tx/${state.verificationResult.transactionHash}`;
+    window.open(explorerUrl, '_blank', 'noopener,noreferrer');
   };
 
   // Load certificate on mount
@@ -433,43 +532,34 @@ export default function CertificateViewer() {
           </div>
         </div>
 
-        {/* Verification Status */}
-        {state.verificationResult && (
-          <div className={`mb-6 rounded-lg p-4 ${
-            state.verificationResult.isValid 
-              ? 'bg-green-50 border border-green-200' 
-              : 'bg-red-50 border border-red-200'
-          }`}>
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                {state.verificationResult.isValid ? (
-                  <svg className="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                ) : (
-                  <svg className="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </div>
-              <div className="ml-3">
-                <h3 className={`text-sm font-medium ${
-                  state.verificationResult.isValid ? 'text-green-800' : 'text-red-800'
-                }`}>
-                  {state.verificationResult.isValid ? 'Certificate Verified' : 'Verification Failed'}
-                </h3>
-                <p className={`text-sm ${
-                  state.verificationResult.isValid ? 'text-green-700' : 'text-red-700'
-                }`}>
-                  {state.verificationResult.message}
-                </p>
-                {state.verificationResult.onChain && (
-                  <p className="text-xs text-gray-600 mt-1">
-                    ✓ Confirmed on Polygon blockchain
-                  </p>
-                )}
-              </div>
-            </div>
+        {/* Enhanced Verification Results Display */}
+        {state.verificationResult && state.certificate && (
+          <div className="mb-6">
+            <VerificationResultComponent
+              result={{
+                isValid: state.verificationResult.isValid,
+                isRevoked: false, // Add revocation logic if needed
+                onChain: state.verificationResult.onChain,
+                verificationDate: state.verificationResult.verificationTimestamp 
+                  ? new Date(state.verificationResult.verificationTimestamp).toISOString()
+                  : new Date().toISOString(),
+                transactionHash: state.verificationResult.transactionHash,
+                blockNumber: state.verificationResult.blockNumber,
+                contractAddress: state.verificationResult.contractAddress,
+                confidence: state.verificationResult.isValid ? 100 : 0
+              }}
+              certificate={{
+                tokenId: state.certificate.tokenId,
+                recipientName: state.certificate.recipientName,
+                courseName: state.certificate.courseName,
+                institutionName: state.certificate.institutionName,
+                issueDate: state.certificate.issueDate,
+                issuer: state.certificate.issuer
+              }}
+              onDownload={() => handleDownloadCertificate()}
+              onShare={() => handleShareCertificate()}
+              onViewOnBlockchain={() => handleViewOnBlockchain()}
+            />
           </div>
         )}
 

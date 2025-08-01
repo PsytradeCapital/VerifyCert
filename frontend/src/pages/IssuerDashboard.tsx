@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 import WalletConnect from '../components/WalletConnect';
 import CertificateForm, { CertificateFormData } from '../components/CertificateForm';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
+import { DashboardOverview, ActivityFeed, QuickStats, DashboardStats, ActivityItem, CertificateList } from '../components/ui';
 
-interface DashboardStats {
-  totalIssued: number;
-  thisMonth: number;
-  thisWeek: number;
-  activeRecipients: number;
+interface ExtendedDashboardStats extends DashboardStats {
+  previousMonth: number;
+  previousWeek: number;
+  growthRate: number;
 }
 
 interface WalletState {
@@ -26,19 +26,25 @@ export default function IssuerDashboard() {
   });
 
   const [issuedCertificates, setIssuedCertificates] = useState<Certificate[]>([]);
-  const [filteredCertificates, setFilteredCertificates] = useState<Certificate[]>([]);
-  const [stats, setStats] = useState<DashboardStats>({
+  const [stats, setStats] = useState<ExtendedDashboardStats>({
     totalIssued: 0,
     thisMonth: 0,
     thisWeek: 0,
     activeRecipients: 0,
+    previousMonth: 0,
+    previousWeek: 0,
+    growthRate: 0,
+  });
+
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
+  const [quickStats, setQuickStats] = useState({
+    verificationRate: 95,
+    averageProcessingTime: '2.3s',
+    successRate: 98,
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<'date' | 'name' | 'course'>('date');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   // Handle wallet connection
   const handleWalletConnect = useCallback((address: string, provider: ethers.BrowserProvider) => {
@@ -58,13 +64,16 @@ export default function IssuerDashboard() {
       provider: null,
     });
     setIssuedCertificates([]);
-    setFilteredCertificates([]);
     setStats({
       totalIssued: 0,
       thisMonth: 0,
       thisWeek: 0,
       activeRecipients: 0,
+      previousMonth: 0,
+      previousWeek: 0,
+      growthRate: 0,
     });
+    setActivities([]);
   }, []);
 
   // Fetch issued certificates for the connected wallet
@@ -96,6 +105,8 @@ export default function IssuerDashboard() {
     const now = new Date();
     const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+    const twoMonthsAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
 
     const thisWeek = certificates.filter(cert => 
       new Date(cert.issueDate * 1000) >= oneWeekAgo
@@ -105,14 +116,44 @@ export default function IssuerDashboard() {
       new Date(cert.issueDate * 1000) >= oneMonthAgo
     ).length;
 
+    const previousWeek = certificates.filter(cert => {
+      const date = new Date(cert.issueDate * 1000);
+      return date >= twoWeeksAgo && date < oneWeekAgo;
+    }).length;
+
+    const previousMonth = certificates.filter(cert => {
+      const date = new Date(cert.issueDate * 1000);
+      return date >= twoMonthsAgo && date < oneMonthAgo;
+    }).length;
+
     const uniqueRecipients = new Set(certificates.map(cert => cert.recipient)).size;
+    const growthRate = previousMonth > 0 ? ((thisMonth - previousMonth) / previousMonth) * 100 : 0;
 
     setStats({
       totalIssued: certificates.length,
       thisMonth,
       thisWeek,
       activeRecipients: uniqueRecipients,
+      previousMonth,
+      previousWeek,
+      growthRate: Math.round(growthRate),
     });
+
+    // Generate activity feed from recent certificates
+    const recentActivities: ActivityItem[] = certificates
+      .sort((a, b) => b.issueDate - a.issueDate)
+      .slice(0, 10)
+      .map(cert => ({
+        id: cert.tokenId,
+        type: 'issued' as const,
+        title: `Certificate issued to ${cert.recipientName}`,
+        description: `${cert.courseName} - ${cert.institutionName}`,
+        timestamp: new Date(cert.issueDate * 1000),
+        recipient: cert.recipientName,
+        certificateId: cert.tokenId,
+      }));
+
+    setActivities(recentActivities);
   };
 
   // Handle certificate minting
@@ -153,6 +194,19 @@ export default function IssuerDashboard() {
       if (data.success) {
         toast.success('Certificate minted successfully!');
         
+        // Add new activity to the feed
+        const newActivity: ActivityItem = {
+          id: data.tokenId || Date.now().toString(),
+          type: 'issued',
+          title: `Certificate issued to ${formData.recipientName}`,
+          description: `${formData.courseName} - ${formData.institutionName}`,
+          timestamp: new Date(),
+          recipient: formData.recipientName,
+          certificateId: data.tokenId,
+        };
+        
+        setActivities(prev => [newActivity, ...prev.slice(0, 9)]);
+        
         // Refresh the certificates list
         await fetchIssuedCertificates();
       } else {
@@ -166,51 +220,42 @@ export default function IssuerDashboard() {
     }
   };
 
-  // Filter and sort certificates
-  useEffect(() => {
-    let filtered = [...issuedCertificates];
-
-    // Apply search filter
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(cert =>
-        cert.recipientName.toLowerCase().includes(term) ||
-        cert.courseName.toLowerCase().includes(term) ||
-        cert.institutionName.toLowerCase().includes(term) ||
-        cert.tokenId.toLowerCase().includes(term)
-      );
+  // Handle certificate actions
+  const handleCertificateAction = useCallback(async (action: string, certificate: Certificate) => {
+    switch (action) {
+      case 'view':
+        // Navigate to certificate view page or open modal
+        window.open(`/verify/${certificate.tokenId}`, '_blank');
+        break;
+      
+      case 'download':
+        try {
+          // Use the certificate service to download
+          const certificateService = (await import('../services/certificateService')).default;
+          await certificateService.downloadCertificate(certificate, { format: 'png' });
+          toast.success('Certificate downloaded successfully!');
+        } catch (error) {
+          console.error('Download failed:', error);
+          toast.error('Failed to download certificate');
+        }
+        break;
+      
+      case 'share':
+        try {
+          // Use the certificate service to share
+          const certificateService = (await import('../services/certificateService')).default;
+          await certificateService.shareCertificate(certificate, { platform: 'copy' });
+          toast.success('Certificate link copied to clipboard!');
+        } catch (error) {
+          console.error('Share failed:', error);
+          toast.error('Failed to share certificate');
+        }
+        break;
+      
+      default:
+        console.warn(`Unknown certificate action: ${action}`);
     }
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      let aValue: string | number;
-      let bValue: string | number;
-
-      switch (sortBy) {
-        case 'name':
-          aValue = a.recipientName.toLowerCase();
-          bValue = b.recipientName.toLowerCase();
-          break;
-        case 'course':
-          aValue = a.courseName.toLowerCase();
-          bValue = b.courseName.toLowerCase();
-          break;
-        case 'date':
-        default:
-          aValue = a.issueDate;
-          bValue = b.issueDate;
-          break;
-      }
-
-      if (sortOrder === 'asc') {
-        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
-      } else {
-        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
-      }
-    });
-
-    setFilteredCertificates(filtered);
-  }, [issuedCertificates, searchTerm, sortBy, sortOrder]);
+  }, []);
 
   // Fetch certificates when wallet connects
   useEffect(() => {
@@ -265,78 +310,28 @@ export default function IssuerDashboard() {
         ) : (
           // Connected state - show dashboard
           <div className="space-y-8">
-            {/* Statistics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Total Issued</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.totalIssued}</dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
+            {/* Enhanced Dashboard Overview */}
+            <DashboardOverview 
+              stats={stats} 
+              isLoading={isLoading}
+            />
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">This Month</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.thisMonth}</dd>
-                    </dl>
-                  </div>
-                </div>
+            {/* Additional Dashboard Insights */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <ActivityFeed 
+                  activities={activities}
+                  isLoading={isLoading}
+                  maxItems={5}
+                />
               </div>
-
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
-                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">This Week</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.thisWeek}</dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
-                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Recipients</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.activeRecipients}</dd>
-                    </dl>
-                  </div>
-                </div>
+              <div>
+                <QuickStats 
+                  verificationRate={quickStats.verificationRate}
+                  averageProcessingTime={quickStats.averageProcessingTime}
+                  successRate={quickStats.successRate}
+                  isLoading={isLoading}
+                />
               </div>
             </div>
 
@@ -348,125 +343,13 @@ export default function IssuerDashboard() {
               isConnected={walletState.isConnected}
             />
 
-            {/* Issued Certificates Section */}
-            <div className="bg-white rounded-lg shadow">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900">Issued Certificates</h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {filteredCertificates.length} of {issuedCertificates.length} certificates
-                    </p>
-                  </div>
-                  
-                  <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-                    {/* Search */}
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Search certificates..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    {/* Sort */}
-                    <div className="flex space-x-2">
-                      <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value as 'date' | 'name' | 'course')}
-                        className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
-                      >
-                        <option value="date">Sort by Date</option>
-                        <option value="name">Sort by Name</option>
-                        <option value="course">Sort by Course</option>
-                      </select>
-                      
-                      <button
-                        onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                        className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      >
-                        {sortOrder === 'asc' ? (
-                          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z" />
-                          </svg>
-                        ) : (
-                          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z" />
-                          </svg>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6">
-                {isLoading ? (
-                  <div className="text-center py-12">
-                    <svg className="animate-spin mx-auto h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    <p className="mt-2 text-sm text-gray-500">Loading certificates...</p>
-                  </div>
-                ) : filteredCertificates.length === 0 ? (
-                  <div className="text-center py-12">
-                    <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <h3 className="mt-2 text-sm font-medium text-gray-900">
-                      {searchTerm ? 'No certificates found' : 'No certificates issued yet'}
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {searchTerm 
-                        ? 'Try adjusting your search terms or filters.'
-                        : 'Start by issuing your first certificate using the form above.'
-                      }
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-6">
-                    {filteredCertificates.map((certificate) => (
-                      <div key={certificate.tokenId} className="border border-gray-200 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-4">
-                          <div>
-                            <h4 className="text-lg font-medium text-gray-900">
-                              {certificate.recipientName}
-                            </h4>
-                            <p className="text-sm text-gray-500">
-                              {certificate.courseName} • {formatDate(certificate.issueDate)}
-                            </p>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              certificate.isValid 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-red-100 text-red-800'
-                            }`}>
-                              {certificate.isValid ? 'Valid' : 'Invalid'}
-                            </span>
-                            <span className="text-sm text-gray-500">#{certificate.tokenId}</span>
-                          </div>
-                        </div>
-                        <CertificateCard
-                          certificate={certificate}
-                          showQR={false}
-                          isPublicView={false}
-                          className="border-0 shadow-none"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+            {/* Enhanced Certificate List */}
+            <CertificateList
+              certificates={issuedCertificates}
+              isLoading={isLoading}
+              showBulkActions={true}
+              onCertificateAction={handleCertificateAction}
+            />
           </div>
         )}
       </div>

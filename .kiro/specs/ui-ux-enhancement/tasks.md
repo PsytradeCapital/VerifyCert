@@ -302,7 +302,10 @@
 **Description:** Redesign the main certificate verification page with improved UX, better visual hierarchy, and enhanced interaction patterns.
 
 **Acceptance Criteria:**
-- [ ] Create hero section with clear call-to-action and QR code scanner
+- [-] Create hero section with clear call-to-action and QR code scanner
+
+
+
 
 
 
@@ -311,9 +314,25 @@
 
 
 
+
+
 - [ ] Redesign verification results display with better visual feedback
-- [ ] Add certificate sharing and download functionality
-- [ ] Implement responsive design for all screen sizes
+
+
+
+
+
+- [-] Add certificate sharing and download functionality
+
+
+
+- [x] Implement responsive design for all screen sizes
+
+
+
+
+
+
 
 **Dependencies:** Task 2, Task 4, Task 6
 
@@ -326,9 +345,23 @@
 **Description:** Transform the issuer dashboard with modern data visualization, improved navigation, and enhanced certificate management interface.
 
 **Acceptance Criteria:**
-- [ ] Create dashboard overview with key metrics and visual indicators
-- [ ] Enhance certificate list with advanced filtering and search
-- [ ] Redesign certificate issuance flow with step-by-step wizard
+- [x] Create dashboard overview with key metrics and visual indicators
+
+
+
+
+
+
+- [x] Enhance certificate list with advanced filtering and search
+
+
+
+
+
+
+- [-] Redesign certificate issuance flow with step-by-step wizard
+
+
 - [ ] Improve settings and profile management interface
 - [ ] Add data visualization for certificate analytics
 

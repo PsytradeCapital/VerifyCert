@@ -64,46 +64,46 @@ const CertificateCard = ({ certificate, showQR = true, isPublicView = false, cla
   }
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg overflow-hidden max-w-2xl mx-auto print:shadow-none print:max-w-full ${className}`}>
+    <div className={`bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-4xl mx-auto print:shadow-none print:max-w-full ${className}`}>
       {/* Certificate Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 print:bg-gray-800">
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 sm:p-6 lg:p-8 print:bg-gray-800">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">Certificate of Completion</h1>
-          <div className="w-16 h-1 bg-white mx-auto rounded"></div>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Certificate of Completion</h1>
+          <div className="w-12 sm:w-16 h-1 bg-white mx-auto rounded"></div>
         </div>
       </div>
 
       {/* Certificate Body */}
-      <div className="p-8 print:p-6">
-        <div className="text-center mb-8">
-          <p className="text-gray-600 mb-4 text-lg">This is to certify that</p>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4 print:text-2xl">
+      <div className="p-4 sm:p-6 lg:p-8 print:p-6">
+        <div className="text-center mb-6 sm:mb-8">
+          <p className="text-gray-600 mb-3 sm:mb-4 text-base sm:text-lg">This is to certify that</p>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 print:text-2xl break-words">
             {certificate.recipientName}
           </h2>
-          <p className="text-gray-600 mb-2 text-lg">has successfully completed</p>
-          <h3 className="text-xl font-semibold text-blue-600 mb-6 print:text-lg print:text-gray-800">
+          <p className="text-gray-600 mb-2 text-base sm:text-lg">has successfully completed</p>
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-blue-600 mb-4 sm:mb-6 print:text-lg print:text-gray-800 break-words">
             {certificate.courseName}
           </h3>
         </div>
 
         {/* Certificate Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 print:gap-4">
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8 print:gap-4">
+          <div className="space-y-3 sm:space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Institution</label>
-              <p className="text-gray-800 font-medium text-lg">{certificate.institutionName}</p>
+              <label className="block text-xs sm:text-sm font-medium text-gray-500 mb-1">Institution</label>
+              <p className="text-gray-800 font-medium text-base sm:text-lg break-words">{certificate.institutionName}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Issue Date</label>
-              <p className="text-gray-800">{formatDate(certificate.issueDate)}</p>
+              <label className="block text-xs sm:text-sm font-medium text-gray-500 mb-1">Issue Date</label>
+              <p className="text-gray-800 text-sm sm:text-base">{formatDate(certificate.issueDate)}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Certificate ID</label>
-              <p className="text-gray-800 font-mono text-sm">#{certificate.tokenId}</p>
+              <label className="block text-xs sm:text-sm font-medium text-gray-500 mb-1">Certificate ID</label>
+              <p className="text-gray-800 font-mono text-xs sm:text-sm break-all">#{certificate.tokenId}</p>
             </div>
             {certificate.recipient && (
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Recipient Address</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-500 mb-1">Recipient Address</label>
                 <p className="text-gray-800 font-mono text-xs break-all">
                   {certificate.recipient}
                 </p>
@@ -112,14 +112,14 @@ const CertificateCard = ({ certificate, showQR = true, isPublicView = false, cla
           </div>
 
           {showQR && (
-            <div className="flex flex-col items-center print:hidden">
-              <label className="block text-sm font-medium text-gray-500 mb-2">
+            <div className="flex flex-col items-center justify-center print:hidden">
+              <label className="block text-xs sm:text-sm font-medium text-gray-500 mb-2">
                 Verification QR Code
               </label>
-              <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
                 <QRCodeSVG
                   value={getVerificationUrl()}
-                  size={120}
+                  size={window.innerWidth < 640 ? 100 : 120}
                   level="M"
                   includeMargin={true}
                 />
@@ -152,26 +152,26 @@ const CertificateCard = ({ certificate, showQR = true, isPublicView = false, cla
 
         {/* Action Buttons */}
         {!isPublicView && (
-          <div className="flex flex-col sm:flex-row gap-3 justify-center print:hidden">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center print:hidden">
             <button
               onClick={handleDownload}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="btn-responsive bg-blue-600 text-white hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               aria-label="Download certificate"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Download
+              <span className="truncate">Download</span>
             </button>
             <button
               onClick={handleShare}
-              className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              className="btn-responsive bg-green-600 text-white hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
               aria-label="Share certificate"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
               </svg>
-              Share
+              <span className="truncate">Share</span>
             </button>
           </div>
         )}

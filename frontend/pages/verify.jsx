@@ -3,19 +3,12 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Shield, 
-  CheckCircle, 
-  XCircle, 
   Search, 
   Upload, 
-  QrCode,
-  AlertCircle,
-  Download,
-  Share2,
-  ExternalLink
+  QrCode
 } from 'lucide-react';
-import CertificateCard from '../components/CertificateCard';
-import { pageTransition, fadeInUp, staggerContainer, staggerItem } from '../src/utils/animations';
-import { Card, Button, Alert, Input } from '../src/components/ui';
+import { pageTransition, fadeInUp } from '../src/utils/animations';
+import { Card, Button, Alert, Input, VerificationResult } from '../src/components/ui';
 
 /**
  * Certificate Verification Page
@@ -150,42 +143,7 @@ const VerifyPage = () => {
     }
   };
 
-  const getVerificationStatus = () => {
-    if (!verificationResult) return null;
-    
-    if (verificationResult.isRevoked) {
-      return {
-        icon: XCircle,
-        color: 'text-red-600',
-        bgColor: 'bg-red-50',
-        borderColor: 'border-red-200',
-        title: 'Certificate Revoked',
-        message: 'This certificate has been revoked and is no longer valid.'
-      };
-    }
-    
-    if (verificationResult.isValid && verificationResult.onChain) {
-      return {
-        icon: CheckCircle,
-        color: 'text-green-600',
-        bgColor: 'bg-green-50',
-        borderColor: 'border-green-200',
-        title: 'Certificate Valid',
-        message: 'This certificate is authentic and verified on the blockchain.'
-      };
-    }
-    
-    return {
-      icon: AlertCircle,
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-200',
-      title: 'Verification Pending',
-      message: 'Certificate found but verification is still in progress.'
-    };
-  };
 
-  const verificationStatus = getVerificationStatus();
 
   return (
     <motion.div
@@ -345,100 +303,27 @@ const VerifyPage = () => {
           </Alert>
         )}
 
-        {/* Verification Result */}
-        {verificationStatus && (
-          <motion.div
-            className={`border rounded-lg p-6 mb-8 ${verificationStatus.bgColor} ${verificationStatus.borderColor}`}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex items-center space-x-3">
-              <verificationStatus.icon className={`w-6 h-6 ${verificationStatus.color}`} />
-              <div>
-                <h3 className={`font-semibold ${verificationStatus.color}`}>
-                  {verificationStatus.title}
-                </h3>
-                <p className="text-gray-700 mt-1">
-                  {verificationStatus.message}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Certificate Display */}
-        {certificate && (
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            className="space-y-6"
-          >
-            <motion.div variants={staggerItem}>
-              <CertificateCard
-                certificate={{
-                  ...certificate,
-                  isValid: verificationResult?.isValid,
-                  isRevoked: verificationResult?.isRevoked
-                }}
-                onVerify={() => handleVerification(certificate.tokenId)}
-                onDownload={handleDownload}
-                onShare={handleShare}
-                variant="detailed"
-              />
-            </motion.div>
-
-            {/* Blockchain Information */}
-            <Card 
-              className="p-6"
-              variants={staggerItem}
-            >
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Blockchain Information
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Transaction Hash</p>
-                  <p className="font-mono text-sm text-gray-900 break-all">
-                    {certificate.transactionHash || 'N/A'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Block Number</p>
-                  <p className="font-mono text-sm text-gray-900">
-                    {certificate.blockNumber || 'N/A'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Contract Address</p>
-                  <p className="font-mono text-sm text-gray-900 break-all">
-                    {certificate.contractAddress || 'N/A'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Network</p>
-                  <p className="text-sm text-gray-900">
-                    Polygon Mumbai Testnet
-                  </p>
-                </div>
-              </div>
-              
-              {certificate.transactionHash && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <a
-                    href={`https://mumbai.polygonscan.com/tx/${certificate.transactionHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    <span>View on PolygonScan</span>
-                  </a>
-                </div>
-              )}
-            </Card>
-          </motion.div>
+        {/* Enhanced Verification Result */}
+        {verificationResult && (
+          <VerificationResult
+            result={{
+              ...verificationResult,
+              transactionHash: certificate?.transactionHash,
+              blockNumber: certificate?.blockNumber,
+              contractAddress: certificate?.contractAddress,
+              confidence: verificationResult.isRevoked ? 0 : 
+                         verificationResult.isValid && verificationResult.onChain ? 100 :
+                         verificationResult.isValid ? 75 : 0
+            }}
+            certificate={certificate}
+            onDownload={() => handleDownload(certificate)}
+            onShare={() => handleShare(certificate)}
+            onViewOnBlockchain={() => {
+              if (certificate?.transactionHash) {
+                window.open(`https://mumbai.polygonscan.com/tx/${certificate.transactionHash}`, '_blank');
+              }
+            }}
+          />
         )}
       </div>
     </motion.div>

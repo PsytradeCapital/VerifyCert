@@ -391,7 +391,10 @@
 **Description:** Create a premium certificate display component that mimics physical certificates while providing digital verification features.
 
 **Acceptance Criteria:**
-- [ ] Design certificate card component with professional styling
+- [-] Design certificate card component with professional styling
+
+
+
 - [ ] Add verification badge and blockchain proof indicators
 - [ ] Create metadata display with organized information layout
 - [ ] Implement certificate actions (share, download, verify)

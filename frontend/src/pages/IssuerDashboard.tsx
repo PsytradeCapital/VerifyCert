@@ -2,9 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
 import WalletConnect from '../components/WalletConnect';
-import CertificateForm, { CertificateFormData } from '../components/CertificateForm';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
-import { DashboardOverview, ActivityFeed, QuickStats, DashboardStats, ActivityItem, CertificateList } from '../components/ui';
+import { DashboardOverview, ActivityFeed, QuickStats, DashboardStats, ActivityItem, CertificateList, CertificateWizard, CertificateFormData } from '../components/ui';
 
 interface ExtendedDashboardStats extends DashboardStats {
   previousMonth: number;
@@ -335,8 +334,8 @@ export default function IssuerDashboard() {
               </div>
             </div>
 
-            {/* Certificate Form */}
-            <CertificateForm
+            {/* Certificate Wizard */}
+            <CertificateWizard
               onSubmit={handleCertificateMint}
               isLoading={isMinting}
               walletAddress={walletState.address}

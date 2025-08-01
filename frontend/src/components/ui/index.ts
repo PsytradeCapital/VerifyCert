@@ -90,6 +90,9 @@ export {
 // Certificate Components
 export { default as CertificateList } from './CertificateList/CertificateList';
 
+// Wizard Components
+export { CertificateWizard } from './Wizard';
+
 // Types
 export type { AppLayoutProps } from './Layout/AppLayout';
 export type { HeaderProps, UserMenuProps } from './Layout/Header';
@@ -152,6 +155,9 @@ export type {
 
 // Certificate Component Types
 export type { FilterOptions } from './CertificateList';
+
+// Wizard Component Types
+export type { CertificateFormData } from './Wizard';
 export type {
   ResponsiveUtilityProps,
   ResponsiveShowProps,

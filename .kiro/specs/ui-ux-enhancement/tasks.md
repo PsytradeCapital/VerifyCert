@@ -359,11 +359,26 @@
 
 
 
-- [-] Redesign certificate issuance flow with step-by-step wizard
+- [x] Redesign certificate issuance flow with step-by-step wizard
 
 
-- [ ] Improve settings and profile management interface
-- [ ] Add data visualization for certificate analytics
+
+
+
+
+
+
+- [-] Improve settings and profile management interface
+
+
+
+
+
+
+- [-] Add data visualization for certificate analytics
+
+
+
 
 **Dependencies:** Task 2, Task 3, Task 6
 

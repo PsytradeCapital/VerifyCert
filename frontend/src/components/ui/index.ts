@@ -34,7 +34,7 @@ export { default as FloatingActionButton } from './Navigation/FloatingActionButt
 // Form Components
 export { default as Button } from './Button/Button';
 export { default as Input } from './Input/Input';
-export { Select, Dropdown, MultiSelect } from './Select';
+export { default as Select } from './Select/Select';
 export { default as FileUpload } from './FileUpload/FileUpload';
 
 // Content Components

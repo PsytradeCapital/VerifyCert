@@ -9,13 +9,13 @@ import {
   Download, 
   Share2, 
   ExternalLink,
-  CheckCircle,
-  XCircle,
   QrCode,
   Copy,
   Printer
 } from 'lucide-react';
 import { useFeedbackAnimations } from '../../../hooks/useFeedbackAnimations';
+import { VerificationBadge } from '../Badge';
+import CertificateMetadata from './CertificateMetadata';
 
 export interface Certificate {
   tokenId: string;
@@ -250,29 +250,15 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   };
 
   const getStatusBadge = () => {
-    if (certificate.isRevoked) {
-      return (
-        <div className="flex items-center space-x-2 bg-red-50 text-red-700 px-4 py-2 rounded-full border border-red-200">
-          <XCircle className="h-5 w-5" />
-          <span className="font-medium">Revoked</span>
-        </div>
-      );
-    }
-    
-    if (certificate.isValid) {
-      return (
-        <div className="flex items-center space-x-2 bg-green-50 text-green-700 px-4 py-2 rounded-full border border-green-200">
-          <CheckCircle className="h-5 w-5" />
-          <span className="font-medium">Verified</span>
-        </div>
-      );
-    }
-
     return (
-      <div className="flex items-center space-x-2 bg-yellow-50 text-yellow-700 px-4 py-2 rounded-full border border-yellow-200">
-        <Shield className="h-5 w-5" />
-        <span className="font-medium">Pending</span>
-      </div>
+      <VerificationBadge
+        tokenId={certificate.tokenId}
+        isValid={certificate.isValid}
+        isRevoked={certificate.isRevoked}
+        variant="detailed"
+        showDetails={true}
+        size="md"
+      />
     );
   };
 
@@ -293,7 +279,13 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
               <p className="text-sm text-neutral-500">#{certificate.tokenId}</p>
             </div>
           </div>
-          {getStatusBadge()}
+          <VerificationBadge
+            tokenId={certificate.tokenId}
+            isValid={certificate.isValid}
+            isRevoked={certificate.isRevoked}
+            variant="minimal"
+            size="sm"
+          />
         </div>
 
         <div className="space-y-3 mb-4">
@@ -395,78 +387,31 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
           )}
         </div>
 
-        {/* Certificate Details Grid */}
+        {/* Certificate Metadata */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Left Column - Details */}
+          {/* Left Column - Organized Metadata */}
           <div className="space-y-6">
-            <div>
-              <h4 className="text-lg font-semibold text-neutral-900 mb-4">Certificate Details</h4>
-              
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <Calendar className="h-5 w-5 text-neutral-400 mt-1" />
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-500">Issue Date</label>
-                    <p className="text-lg font-medium text-neutral-900">{formatDate(certificate.issueDate)}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <Building className="h-5 w-5 text-neutral-400 mt-1" />
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-500">Institution</label>
-                    <p className="text-lg font-medium text-neutral-900">{certificate.institutionName}</p>
-                  </div>
-                </div>
-
-                {certificate.certificateType && (
-                  <div className="flex items-start space-x-3">
-                    <Award className="h-5 w-5 text-neutral-400 mt-1" />
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-500">Type</label>
-                      <p className="text-lg font-medium text-neutral-900">{certificate.certificateType}</p>
-                    </div>
-                  </div>
-                )}
-
-                {certificate.credits && (
-                  <div className="flex items-start space-x-3">
-                    <Shield className="h-5 w-5 text-neutral-400 mt-1" />
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-500">Credits</label>
-                      <p className="text-lg font-medium text-neutral-900">{certificate.credits} Credits</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Blockchain Information */}
-            <div className="pt-6 border-t border-neutral-200">
-              <h4 className="text-sm font-semibold text-neutral-500 mb-3">Blockchain Verification</h4>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs font-medium text-neutral-400">Certificate ID</label>
-                  <p className="text-sm font-mono text-neutral-700 bg-neutral-50 px-2 py-1 rounded">
-                    {certificate.tokenId}
-                  </p>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-neutral-400">Issuer Address</label>
-                  <p className="text-sm font-mono text-neutral-700 bg-neutral-50 px-2 py-1 rounded">
-                    {formatAddress(certificate.issuer)}
-                  </p>
-                </div>
-                {!isPublicView && (
-                  <div>
-                    <label className="block text-xs font-medium text-neutral-400">Recipient Address</label>
-                    <p className="text-sm font-mono text-neutral-700 bg-neutral-50 px-2 py-1 rounded">
-                      {formatAddress(certificate.recipient)}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
+            <CertificateMetadata
+              metadata={{
+                tokenId: certificate.tokenId,
+                issuer: certificate.issuer,
+                recipient: certificate.recipient,
+                recipientName: certificate.recipientName,
+                courseName: certificate.courseName,
+                institutionName: certificate.institutionName,
+                issueDate: certificate.issueDate,
+                certificateType: certificate.certificateType,
+                grade: certificate.grade,
+                credits: certificate.credits,
+                description: certificate.description,
+                networkName: 'Polygon Mumbai'
+              }}
+              variant="default"
+              showBlockchainInfo={!isPublicView}
+              showExtendedInfo={true}
+              collapsible={false}
+              className="border-0 bg-transparent p-0"
+            />
           </div>
 
           {/* Right Column - QR Code and Actions */}
@@ -569,20 +514,16 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         </div>
 
-        {/* Verification Status Banner */}
-        {certificate.isValid && !certificate.isRevoked && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
-            <div className="flex items-center justify-center space-x-3">
-              <div className="p-2 bg-green-100 rounded-full">
-                <Shield className="h-6 w-6 text-green-600" />
-              </div>
-              <div className="text-center">
-                <p className="text-green-800 font-semibold text-lg">Blockchain Verified</p>
-                <p className="text-green-600 text-sm">This certificate has been verified on the Polygon blockchain</p>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Enhanced Verification Status */}
+        <div className="mb-6">
+          <VerificationBadge
+            tokenId={certificate.tokenId}
+            isValid={certificate.isValid}
+            isRevoked={certificate.isRevoked}
+            variant="premium"
+            showDetails={true}
+          />
+        </div>
 
         {/* Print-only verification URL */}
         <div className="hidden print:block text-center border-t border-neutral-200 pt-6">

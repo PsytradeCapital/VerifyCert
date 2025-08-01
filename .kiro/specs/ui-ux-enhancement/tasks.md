@@ -395,8 +395,18 @@
 
 
 
-- [ ] Add verification badge and blockchain proof indicators
-- [ ] Create metadata display with organized information layout
+- [x] Add verification badge and blockchain proof indicators
+
+
+
+
+
+
+- [x] Create metadata display with organized information layout
+
+
+
+
 - [ ] Implement certificate actions (share, download, verify)
 - [ ] Add print-friendly styling for certificate display
 

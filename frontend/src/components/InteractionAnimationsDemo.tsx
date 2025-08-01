@@ -388,7 +388,6 @@ const InteractionAnimationsDemo: React.FC = () => {
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
               title="Animated Modal"
-              enableAnimations={true}
             >
               <div className="space-y-4">
                 <p className="text-gray-600">

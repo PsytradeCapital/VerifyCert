@@ -1,164 +1,303 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { 
-  Shield, 
-  Search, 
-  Upload, 
-  QrCode
-} from 'lucide-react';
-import { pageTransition, fadeInUp } from '../src/utils/animations';
-import { Card, Button, Alert, Input, VerificationResult } from '../src/components/ui';
+import React, { useState, useRef } from 'react';
+import { Shield, Upload, Search, QrCode, AlertCircle, CheckCircle, XCircle, Camera } from 'lucide-react';
+import CertificateCard from '../components/CertificateCard';
 
-/**
- * Certificate Verification Page
- * Allows users to verify certificate authenticity via token ID, QR code, or file upload
- */
 const VerifyPage = () => {
-  const { tokenId } = useParams();
-  const [searchParams] = useSearchParams();
-  const [verificationMethod, setVerificationMethod] = useState('search');
-  const [inputValue, setInputValue] = useState(tokenId || '');
-  const [certificate, setCertificate] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [verificationMethod, setVerificationMethod] = useState('id'); // 'id', 'file', 'qr'
+  const [certificateId, setCertificateId] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [verificationResult, setVerificationResult] = useState(null);
+  const [error, setError] = useState('');
+  const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    // Auto-verify if token ID is provided in URL
-    if (tokenId) {
-      handleVerification(tokenId);
-    }
-  }, [tokenId]);
-
-  const handleVerification = async (id = inputValue) => {
-    if (!id.trim()) {
+  const handleVerifyById = async () => {
+    if (!certificateId.trim()) {
       setError('Please enter a certificate ID');
       return;
     }
 
-    setLoading(true);
-    setError(null);
-    setCertificate(null);
+    setIsVerifying(true);
+    setError('');
     setVerificationResult(null);
 
     try {
-      const response = await fetch(`/api/certificates/verify/${id}`);
+      const response = await fetch(`/api/certificates/verify/${certificateId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
       const data = await response.json();
 
       if (data.success) {
-        setCertificate(data.data.certificate);
-        setVerificationResult({
-          isValid: data.data.isValid,
-          isRevoked: data.data.isRevoked,
-          onChain: data.data.onChain,
-          verificationDate: new Date().toISOString()
-        });
+        setVerificationResult(data.data);
       } else {
-        setError(data.message || 'Certificate not found');
+        setError(data.error || 'Verification failed');
       }
     } catch (err) {
       console.error('Verification error:', err);
-      setError('Failed to verify certificate. Please try again.');
+      setError('Network error. Please try again.');
     } finally {
-      setLoading(false);
+      setIsVerifying(false);
     }
   };
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
+  const handleFileUpload = async (file) => {
     if (!file) return;
 
-    setLoading(true);
-    setError(null);
+    setIsVerifying(true);
+    setError('');
+    setVerificationResult(null);
+
+    const formData = new FormData();
+    formData.append('certificate', file);
 
     try {
-      const formData = new FormData();
-      formData.append('certificate', file);
-
       const response = await fetch('/api/certificates/verify-file', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
       const data = await response.json();
 
       if (data.success) {
-        setCertificate(data.data.certificate);
-        setVerificationResult({
-          isValid: data.data.isValid,
-          isRevoked: data.data.isRevoked,
-          onChain: data.data.onChain,
-          verificationDate: new Date().toISOString()
-        });
+        setVerificationResult(data.data);
       } else {
-        setError(data.message || 'Invalid certificate file');
+        setError(data.error || 'File verification failed');
       }
     } catch (err) {
       console.error('File verification error:', err);
-      setError('Failed to verify certificate file. Please try again.');
+      setError('Failed to verify certificate file');
     } finally {
-      setLoading(false);
+      setIsVerifying(false);
     }
   };
 
-  const handleQRScan = () => {
-    // In a real implementation, this would open a QR scanner
-    // For now, we'll simulate it
-    alert('QR Scanner would open here. For demo, please enter certificate ID manually.');
-  };
-
-  const handleDownload = (cert) => {
-    // Generate and download certificate PDF
-    const certificateData = {
-      ...cert,
-      verificationResult,
-      verifiedAt: new Date().toISOString()
-    };
-    
-    const dataStr = JSON.stringify(certificateData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `certificate-${cert.tokenId}.json`;
-    link.click();
-    
-    URL.revokeObjectURL(url);
-  };
-
-  const handleShare = (cert) => {
-    const shareUrl = `${window.location.origin}/verify/${cert.tokenId}`;
-    
-    if (navigator.share) {
-      navigator.share({
-        title: `${cert.courseName} Certificate`,
-        text: `Certificate for ${cert.recipientName} from ${cert.institutionName}`,
-        url: shareUrl
-      });
-    } else {
-      navigator.clipboard.writeText(shareUrl);
-      alert('Certificate link copied to clipboard!');
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      handleFileUpload(file);
     }
   };
 
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file) {
+      setSelectedFile(file);
+      handleFileUpload(file);
+    }
+  };
 
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const startQRScanner = () => {
+    // In a real implementation, you'd integrate with a QR code scanning library
+    // like react-qr-scanner or use the device camera API
+    alert('QR Scanner would be implemented here using a camera library');
+  };
+
+  const renderVerificationMethod = () => {
+    switch (verificationMethod) {
+      case 'id':
+        return (
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="certificateId" className="block text-sm font-medium text-gray-700 mb-2">
+                Certificate ID
+              </label>
+              <div className="flex space-x-3">
+                <input
+                  type="text"
+                  id="certificateId"
+                  value={certificateId}
+                  onChange={(e) => setCertificateId(e.target.value)}
+                  placeholder="Enter certificate ID (e.g., 12345)"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  onKeyDown={(e) => e.key === 'Enter' && handleVerifyById()}
+                />
+                <button
+                  onClick={handleVerifyById}
+                  disabled={isVerifying || !certificateId.trim()}
+                  className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {isVerifying ? (
+                    <div className="flex items-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Verifying...
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <Search className="w-4 h-4 mr-2" />
+                      Verify
+                    </div>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'file':
+        return (
+          <div className="space-y-4">
+            <div
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-lg font-medium text-gray-700 mb-2">
+                Drop certificate file here or click to browse
+              </p>
+              <p className="text-sm text-gray-500">
+                Supports PDF, PNG, JPG files up to 10MB
+              </p>
+              {selectedFile && (
+                <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                  <p className="text-sm font-medium text-blue-700">
+                    Selected: {selectedFile.name}
+                  </p>
+                </div>
+              )}
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+          </div>
+        );
+
+      case 'qr':
+        return (
+          <div className="space-y-4">
+            <div className="text-center">
+              <div className="bg-gray-100 rounded-lg p-8 mb-4">
+                <QrCode className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-lg font-medium text-gray-700 mb-2">
+                  Scan QR Code
+                </p>
+                <p className="text-sm text-gray-500 mb-4">
+                  Point your camera at the QR code on the certificate
+                </p>
+                <button
+                  onClick={startQRScanner}
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <Camera className="w-4 h-4 mr-2" />
+                  Start Camera
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const renderVerificationResult = () => {
+    if (!verificationResult) return null;
+
+    const { certificate, isValid, blockchainProof, verificationDetails } = verificationResult;
+
+    return (
+      <div className="mt-8">
+        <div className="mb-6">
+          <div className={`flex items-center space-x-3 p-4 rounded-lg ${
+            isValid 
+              ? 'bg-green-50 border border-green-200' 
+              : 'bg-red-50 border border-red-200'
+          }`}>
+            {isValid ? (
+              <CheckCircle className="w-6 h-6 text-green-600" />
+            ) : (
+              <XCircle className="w-6 h-6 text-red-600" />
+            )}
+            <div>
+              <h3 className={`font-semibold ${isValid ? 'text-green-800' : 'text-red-800'}`}>
+                {isValid ? 'Certificate Verified' : 'Certificate Invalid'}
+              </h3>
+              <p className={`text-sm ${isValid ? 'text-green-600' : 'text-red-600'}`}>
+                {verificationDetails?.message || (isValid 
+                  ? 'This certificate is authentic and has been verified on the blockchain.'
+                  : 'This certificate could not be verified or has been revoked.'
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <CertificateCard 
+          certificate={{
+            ...certificate,
+            isValid,
+            blockchainProof
+          }}
+          showActions={true}
+          onVerify={() => {}}
+          onDownload={(cert) => {
+            // Implement download functionality
+            console.log('Download certificate:', cert);
+          }}
+          onShare={(cert) => {
+            // Implement share functionality
+            if (navigator.share) {
+              navigator.share({
+                title: `${cert.courseName} Certificate`,
+                text: `Certificate for ${cert.recipientName} from ${cert.institutionName}`,
+                url: window.location.href
+              });
+            }
+          }}
+        />
+
+        {blockchainProof && (
+          <div className="mt-6 bg-gray-50 rounded-lg p-4">
+            <h4 className="font-medium text-gray-900 mb-3">Blockchain Verification Details</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium text-gray-700">Transaction Hash:</span>
+                <p className="text-gray-600 font-mono break-all">
+                  {blockchainProof.transactionHash}
+                </p>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">Block Number:</span>
+                <p className="text-gray-600">{blockchainProof.blockNumber}</p>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">Network:</span>
+                <p className="text-gray-600">{blockchainProof.network}</p>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">Contract Address:</span>
+                <p className="text-gray-600 font-mono break-all">
+                  {blockchainProof.contractAddress}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
-    <motion.div
-      className="min-h-screen bg-gray-50 py-8"
-      variants={pageTransition}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-    >
+    <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div 
-          className="text-center mb-8"
-          variants={fadeInUp}
-        >
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="p-3 bg-blue-100 rounded-full">
               <Shield className="w-8 h-8 text-blue-600" />
@@ -170,17 +309,15 @@ const VerifyPage = () => {
           <p className="text-lg text-gray-600">
             Verify the authenticity of digital certificates on the blockchain
           </p>
-        </motion.div>
+        </div>
 
         {/* Verification Methods */}
-        <Card className="p-6 mb-8"
-          variants={fadeInUp}
-        >
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex flex-wrap gap-4 mb-6">
             <button
-              onClick={() => setVerificationMethod('search')}
+              onClick={() => setVerificationMethod('id')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                verificationMethod === 'search'
+                verificationMethod === 'id'
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
@@ -202,9 +339,9 @@ const VerifyPage = () => {
             </button>
             
             <button
-              onClick={() => setVerificationMethod('upload')}
+              onClick={() => setVerificationMethod('file')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                verificationMethod === 'upload'
+                verificationMethod === 'file'
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
@@ -214,119 +351,23 @@ const VerifyPage = () => {
             </button>
           </div>
 
-          {/* Search by ID */}
-          {verificationMethod === 'search' && (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Certificate ID
-                </label>
-                <div className="flex space-x-3">
-                  <Input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Enter certificate ID (e.g., 12345)"
-                    className="flex-1"
-                    onKeyPress={(e) => e.key === 'Enter' && handleVerification()}
-                  />
-                  <Button
-                    onClick={() => handleVerification()}
-                    disabled={loading}
-                    variant="primary"
-                    size="md"
-                  >
-                    {loading ? 'Verifying...' : 'Verify'}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* QR Code Scanner */}
-          {verificationMethod === 'qr' && (
-            <div className="text-center py-8">
-              <QrCode className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                QR Code Scanner
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Scan the QR code on your certificate to verify its authenticity
-              </p>
-              <Button
-                onClick={handleQRScan}
-                variant="primary"
-                size="lg"
-              >
-                Open QR Scanner
-              </Button>
-            </div>
-          )}
-
-          {/* File Upload */}
-          {verificationMethod === 'upload' && (
-            <div className="text-center py-8">
-              <Upload className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Upload Certificate File
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Upload your certificate file to verify its authenticity
-              </p>
-              <input
-                type="file"
-                accept=".pdf,.json,.png,.jpg,.jpeg"
-                onChange={handleFileUpload}
-                className="hidden"
-                id="certificate-upload"
-              />
-              <label
-                htmlFor="certificate-upload"
-                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors"
-              >
-                <Upload className="w-4 h-4 mr-2" />
-                Choose File
-              </label>
-            </div>
-          )}
-        </Card>
+          {renderVerificationMethod()}
+        </div>
 
         {/* Error Message */}
         {error && (
-          <Alert
-            variant="error"
-            closable
-            onClose={() => setError(null)}
-            className="mb-8"
-          >
-            {error}
-          </Alert>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+            <div className="flex items-center">
+              <AlertCircle className="w-5 h-5 text-red-600 mr-2" />
+              <p className="text-red-700">{error}</p>
+            </div>
+          </div>
         )}
 
-        {/* Enhanced Verification Result */}
-        {verificationResult && (
-          <VerificationResult
-            result={{
-              ...verificationResult,
-              transactionHash: certificate?.transactionHash,
-              blockNumber: certificate?.blockNumber,
-              contractAddress: certificate?.contractAddress,
-              confidence: verificationResult.isRevoked ? 0 : 
-                         verificationResult.isValid && verificationResult.onChain ? 100 :
-                         verificationResult.isValid ? 75 : 0
-            }}
-            certificate={certificate}
-            onDownload={() => handleDownload(certificate)}
-            onShare={() => handleShare(certificate)}
-            onViewOnBlockchain={() => {
-              if (certificate?.transactionHash) {
-                window.open(`https://mumbai.polygonscan.com/tx/${certificate.transactionHash}`, '_blank');
-              }
-            }}
-          />
-        )}
+        {/* Verification Result */}
+        {renderVerificationResult()}
       </div>
-    </motion.div>
+    </div>
   );
 };
 

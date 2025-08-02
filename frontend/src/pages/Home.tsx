@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
+import PWAInstallTest from '../components/PWAInstallTest';
 
 interface HomeProps {
   isWalletConnected: boolean;
@@ -60,7 +61,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                   </Link>
                 ) : (
                   <button
-                    onClick={() => toast.info('Please connect your wallet to get started')}
+                    onClick={() => toast('Please connect your wallet to get started')}
                     className="btn-responsive-lg w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
                   >
                     Get Started
@@ -77,6 +78,13 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* PWA Install Test - Development Only */}
+      <div className="py-8 bg-yellow-50 border-y border-yellow-200">
+        <div className="container-responsive">
+          <PWAInstallTest />
         </div>
       </div>
 
@@ -217,7 +225,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                   </Link>
                 ) : (
                   <button
-                    onClick={() => toast.info('Please use the wallet connect button in the navigation')}
+                    onClick={() => toast('Please use the wallet connect button in the navigation')}
                     className="btn-responsive bg-white text-blue-600 hover:bg-blue-50 shadow-lg w-full sm:w-auto"
                   >
                     Connect Wallet

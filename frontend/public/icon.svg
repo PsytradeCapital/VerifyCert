@@ -1,0 +1,19 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#3b82f6"/>
+  
+  <!-- Certificate icon -->
+  <rect x="128" y="160" width="256" height="192" rx="8" fill="white"/>
+  
+  <!-- Certificate lines -->
+  <rect x="160" y="200" width="192" height="4" rx="2" fill="#3b82f6"/>
+  <rect x="160" y="220" width="144" height="4" rx="2" fill="#6b7280"/>
+  <rect x="160" y="240" width="168" height="4" rx="2" fill="#6b7280"/>
+  
+  <!-- Seal/Badge -->
+  <circle cx="320" cy="300" r="24" fill="#eab308"/>
+  <circle cx="320" cy="300" r="16" fill="#f59e0b"/>
+  
+  <!-- Checkmark in seal -->
+  <path d="M312 300L318 306L328 294" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

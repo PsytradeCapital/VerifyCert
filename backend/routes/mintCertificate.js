@@ -1,43 +1,81 @@
 const express = require('express');
 const { ethers } = require('ethers');
+const rateLimit = require('express-rate-limit');
 const Joi = require('joi');
-const QRCode = require('qrcode');
+const pushNotificationService = require('../src/services/pushNotificationService');
 const router = express.Router();
 
-// Import contract ABI and configuration
-const certificateABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
-const contractAddresses = require('../contract-addresses.json');
+// Load contract ABI and address
+const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractAddresses = require('../../contract-addresses.json');
 
-// Validation schema
+// Rate limiting for minting
+const mintRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 10 mint requests per windowMs
+  message: {
+    error: 'Too many mint requests, please try again later'
+  }
+});
+
+// Validation schema for certificate minting
 const mintCertificateSchema = Joi.object({
-  recipientAddress: Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/).required(),
-  recipientName: Joi.string().min(1).max(100).required(),
-  courseName: Joi.string().min(1).max(200).required(),
-  institutionName: Joi.string().min(1).max(200).required(),
+  recipientAddress: Joi.string()
+    .pattern(/^0x[a-fA-F0-9]{40}$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Invalid Ethereum address format'
+    }),
+  recipientName: Joi.string()
+    .min(2)
+    .max(100)
+    .required()
+    .messages({
+      'string.min': 'Recipient name must be at least 2 characters',
+      'string.max': 'Recipient name must not exceed 100 characters'
+    }),
+  courseName: Joi.string()
+    .min(2)
+    .max(200)
+    .required()
+    .messages({
+      'string.min': 'Course name must be at least 2 characters',
+      'string.max': 'Course name must not exceed 200 characters'
+    }),
+  institutionName: Joi.string()
+    .min(2)
+    .max(100)
+    .required()
+    .messages({
+      'string.min': 'Institution name must be at least 2 characters',
+      'string.max': 'Institution name must not exceed 100 characters'
+    }),
   metadata: Joi.object({
     description: Joi.string().max(500),
     image: Joi.string().uri(),
-    attributes: Joi.array().items(Joi.object({
-      trait_type: Joi.string(),
-      value: Joi.string()
-    }))
+    attributes: Joi.array().items(
+      Joi.object({
+        trait_type: Joi.string().required(),
+        value: Joi.alternatives().try(Joi.string(), Joi.number()).required()
+      })
+    )
   }).optional()
 });
 
 /**
  * @route POST /api/certificates/mint
  * @desc Mint a new certificate NFT
- * @access Private (Authorized Issuers Only)
+ * @access Private (Authorized issuers only)
  */
-router.post('/mint', async (req, res) => {
+router.post('/mint', mintRateLimit, async (req, res) => {
   try {
     // Validate request body
     const { error, value } = mintCertificateSchema.validate(req.body);
     if (error) {
       return res.status(400).json({
         success: false,
-        message: 'Validation error',
-        errors: error.details.map(detail => detail.message)
+        error: 'Validation error',
+        details: error.details.map(detail => detail.message)
       });
     }
 
@@ -50,34 +88,36 @@ router.post('/mint', async (req, res) => {
     } = value;
 
     // Initialize provider and signer
-    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
     const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
     // Get contract instance
-    const contractAddress = contractAddresses.mumbai?.Certificate || contractAddresses.Certificate;
+    const contractAddress = contractAddresses[process.env.NETWORK || 'mumbai'];
     if (!contractAddress) {
       return res.status(500).json({
         success: false,
-        message: 'Contract address not found'
+        error: 'Contract not deployed on this network'
       });
     }
 
-    const contract = new ethers.Contract(contractAddress, certificateABI, signer);
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    // Check if sender is authorized issuer
+    // Check if signer is authorized to mint
     const isAuthorized = await contract.authorizedIssuers(signer.address);
-    if (!isAuthorized) {
+    const isOwner = await contract.owner() === signer.address;
+
+    if (!isAuthorized && !isOwner) {
       return res.status(403).json({
         success: false,
-        message: 'Not authorized to issue certificates'
+        error: 'Not authorized to mint certificates'
       });
     }
 
-    // Create metadata for IPFS (simplified - in production, upload to IPFS)
-    const certificateMetadata = {
+    // Create metadata JSON
+    const tokenMetadata = {
       name: `${courseName} Certificate`,
       description: metadata.description || `Certificate of completion for ${courseName} issued by ${institutionName}`,
-      image: metadata.image || `${process.env.BASE_URL}/api/certificates/image/placeholder`,
+      image: metadata.image || process.env.DEFAULT_CERTIFICATE_IMAGE,
       attributes: [
         {
           trait_type: "Recipient",
@@ -93,107 +133,121 @@ router.post('/mint', async (req, res) => {
         },
         {
           trait_type: "Issue Date",
-          value: new Date().toISOString()
+          value: new Date().toISOString().split('T')[0]
         },
         ...(metadata.attributes || [])
       ]
     };
 
-    // For demo purposes, we'll use a placeholder URI
-    // In production, upload metadata to IPFS and use the hash
-    const tokenURI = `${process.env.BASE_URL}/api/certificates/metadata/${Date.now()}`;
+    // Upload metadata to IPFS or use a metadata service
+    // For now, we'll create a simple metadata URI
+    const metadataURI = `${process.env.METADATA_BASE_URL}/certificates/${Date.now()}.json`;
 
-    // Estimate gas
+    // Estimate gas for the transaction
     const gasEstimate = await contract.issueCertificate.estimateGas(
       recipientAddress,
       recipientName,
       courseName,
       institutionName,
-      tokenURI
+      metadataURI
     );
 
     // Add 20% buffer to gas estimate
     const gasLimit = Math.floor(Number(gasEstimate) * 1.2);
 
-    // Issue certificate
-    const tx = await contract.issueCertificate(
+    // Execute the minting transaction
+    const transaction = await contract.issueCertificate(
       recipientAddress,
       recipientName,
       courseName,
       institutionName,
-      tokenURI,
-      { gasLimit }
+      metadataURI,
+      {
+        gasLimit: gasLimit
+      }
     );
 
-    console.log(`Certificate minting transaction: ${tx.hash}`);
+    console.log(`Certificate minting transaction submitted: ${transaction.hash}`);
 
     // Wait for transaction confirmation
-    const receipt = await tx.wait();
-    
-    // Extract token ID from events
-    const event = receipt.events?.find(e => e.event === 'CertificateIssued');
-    const tokenId = event?.args?.tokenId?.toString();
+    const receipt = await transaction.wait();
 
-    if (!tokenId) {
-      throw new Error('Failed to extract token ID from transaction receipt');
+    // Extract token ID from the event logs
+    const certificateIssuedEvent = receipt.logs.find(
+      log => log.topics[0] === ethers.id("CertificateIssued(uint256,address,address,string,string,string)")
+    );
+
+    let tokenId;
+    if (certificateIssuedEvent) {
+      const decodedEvent = contract.interface.parseLog(certificateIssuedEvent);
+      tokenId = decodedEvent.args.tokenId.toString();
     }
 
-    // Generate QR code for verification
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify/${tokenId}`;
-    const qrCodeDataUrl = await QRCode.toDataURL(verificationUrl);
+    // Store metadata (in a real implementation, you'd store this in IPFS or a database)
+    // For now, we'll just log it
+    console.log('Certificate metadata:', JSON.stringify(tokenMetadata, null, 2));
 
-    // Store metadata (in production, save to database)
-    const certificateData = {
-      tokenId,
-      recipientAddress,
-      recipientName,
-      courseName,
-      institutionName,
-      issuer: signer.address,
-      transactionHash: tx.hash,
-      blockNumber: receipt.blockNumber,
-      verificationUrl,
-      qrCode: qrCodeDataUrl,
-      metadata: certificateMetadata,
-      createdAt: new Date().toISOString()
-    };
+    // Send push notification to recipient
+    try {
+      await pushNotificationService.notifyCertificateIssued(recipientAddress, {
+        tokenId: tokenId,
+        courseName,
+        institutionName,
+        recipientName
+      });
+    } catch (notificationError) {
+      console.error('Failed to send push notification:', notificationError);
+      // Don't fail the entire request if notification fails
+    }
 
     res.status(201).json({
       success: true,
       message: 'Certificate minted successfully',
       data: {
-        tokenId,
-        transactionHash: tx.hash,
+        tokenId: tokenId,
+        transactionHash: transaction.hash,
         blockNumber: receipt.blockNumber,
-        verificationUrl,
-        qrCode: qrCodeDataUrl,
         gasUsed: receipt.gasUsed.toString(),
-        certificate: certificateData
+        contractAddress: contractAddress,
+        recipient: recipientAddress,
+        recipientName,
+        courseName,
+        institutionName,
+        metadataURI,
+        metadata: tokenMetadata
       }
     });
 
   } catch (error) {
-    console.error('Error minting certificate:', error);
-    
+    console.error('Certificate minting error:', error);
+
     // Handle specific contract errors
-    if (error.message.includes('Not authorized')) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to issue certificates'
-      });
-    }
-    
-    if (error.message.includes('insufficient funds')) {
+    if (error.code === 'CALL_EXCEPTION') {
       return res.status(400).json({
         success: false,
-        message: 'Insufficient funds for transaction'
+        error: 'Contract call failed',
+        details: error.reason || 'Transaction reverted'
+      });
+    }
+
+    if (error.code === 'INSUFFICIENT_FUNDS') {
+      return res.status(400).json({
+        success: false,
+        error: 'Insufficient funds for gas'
+      });
+    }
+
+    if (error.code === 'NETWORK_ERROR') {
+      return res.status(503).json({
+        success: false,
+        error: 'Network error, please try again later'
       });
     }
 
     res.status(500).json({
       success: false,
-      message: 'Failed to mint certificate',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -201,23 +255,23 @@ router.post('/mint', async (req, res) => {
 /**
  * @route POST /api/certificates/batch-mint
  * @desc Mint multiple certificates in batch
- * @access Private (Authorized Issuers Only)
+ * @access Private (Authorized issuers only)
  */
-router.post('/batch-mint', async (req, res) => {
+router.post('/batch-mint', mintRateLimit, async (req, res) => {
   try {
     const { certificates } = req.body;
-    
+
     if (!Array.isArray(certificates) || certificates.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Certificates array is required'
+        error: 'Certificates array is required and must not be empty'
       });
     }
 
     if (certificates.length > 50) {
       return res.status(400).json({
         success: false,
-        message: 'Maximum 50 certificates per batch'
+        error: 'Maximum 50 certificates can be minted in a single batch'
       });
     }
 
@@ -236,8 +290,8 @@ router.post('/batch-mint', async (req, res) => {
     if (validationErrors.length > 0) {
       return res.status(400).json({
         success: false,
-        message: 'Validation errors in batch',
-        errors: validationErrors
+        error: 'Validation errors in batch',
+        details: validationErrors
       });
     }
 
@@ -247,29 +301,19 @@ router.post('/batch-mint', async (req, res) => {
     // Process each certificate
     for (let i = 0; i < certificates.length; i++) {
       try {
-        // Create a mock request for individual minting
-        const mockReq = { body: certificates[i] };
-        const mockRes = {
-          status: () => mockRes,
-          json: (data) => data
-        };
-
-        // This is a simplified approach - in production, optimize with batch transactions
-        const result = await new Promise((resolve, reject) => {
-          // Simulate the mint process (you'd call the actual mint logic here)
-          setTimeout(() => {
-            resolve({
-              index: i,
-              tokenId: `${Date.now()}-${i}`,
-              success: true
-            });
-          }, 100);
+        // This is a simplified approach - in production, you'd want to optimize this
+        // by creating a batch minting function in the smart contract
+        const result = await mintSingleCertificate(certificates[i]);
+        results.push({
+          index: i,
+          success: true,
+          ...result
         });
 
-        results.push(result);
       } catch (error) {
         errors.push({
           index: i,
+          success: false,
           error: error.message
         });
       }
@@ -290,13 +334,95 @@ router.post('/batch-mint', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error in batch minting:', error);
+    console.error('Batch minting error:', error);
     res.status(500).json({
       success: false,
-      message: 'Batch minting failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+      error: 'Internal server error during batch minting'
     });
   }
 });
+
+// Helper function for single certificate minting (used in batch)
+async function mintSingleCertificate(certificateData) {
+  const {
+    recipientAddress,
+    recipientName,
+    courseName,
+    institutionName,
+    metadata = {}
+  } = certificateData;
+
+  // Initialize provider and signer
+  const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+
+  // Get contract instance
+  const contractAddress = contractAddresses[process.env.NETWORK || 'mumbai'];
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  // Create metadata JSON
+  const tokenMetadata = {
+    name: `${courseName} Certificate`,
+    description: metadata.description || `Certificate of completion for ${courseName} issued by ${institutionName}`,
+    image: metadata.image || process.env.DEFAULT_CERTIFICATE_IMAGE,
+    attributes: [
+      {
+        trait_type: "Recipient",
+        value: recipientName
+      },
+      {
+        trait_type: "Course",
+        value: courseName
+      },
+      {
+        trait_type: "Institution",
+        value: institutionName
+      },
+      {
+        trait_type: "Issue Date",
+        value: new Date().toISOString().split('T')[0]
+      },
+      ...(metadata.attributes || [])
+    ]
+  };
+
+  const metadataURI = `${process.env.METADATA_BASE_URL}/certificates/${Date.now()}.json`;
+
+  // Execute the minting transaction
+  const transaction = await contract.issueCertificate(
+    recipientAddress,
+    recipientName,
+    courseName,
+    institutionName,
+    metadataURI
+  );
+
+  const receipt = await transaction.wait();
+
+  // Extract token ID from the event logs
+  const certificateIssuedEvent = receipt.logs.find(
+    log => log.topics[0] === ethers.id("CertificateIssued(uint256,address,address,string,string,string)")
+  );
+
+  let tokenId;
+  if (certificateIssuedEvent) {
+    const decodedEvent = contract.interface.parseLog(certificateIssuedEvent);
+    tokenId = decodedEvent.args.tokenId.toString();
+  }
+
+  return {
+    tokenId: tokenId,
+    transactionHash: transaction.hash,
+    blockNumber: receipt.blockNumber,
+    gasUsed: receipt.gasUsed.toString(),
+    contractAddress: contractAddress,
+    recipient: recipientAddress,
+    recipientName,
+    courseName,
+    institutionName,
+    metadataURI,
+    metadata: tokenMetadata
+  };
+}
 
 module.exports = router;

@@ -76,6 +76,14 @@ export {
   useFeedback
 } from './Feedback';
 
+// PWA and Offline Components
+export {
+  OfflineIndicator,
+  ServiceWorkerUpdate,
+  PWAInstallPrompt
+} from './OfflineIndicator';
+export { default as CacheManager } from './CacheManager';
+
 // Verification Components
 export { default as VerificationResult } from './VerificationResult/VerificationResult';
 

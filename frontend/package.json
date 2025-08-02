@@ -17,6 +17,7 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "verify-cert": "file:..",
+    "web-push": "^3.6.7",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -45,7 +46,10 @@
     "build:production": "REACT_APP_NODE_ENV=production npm run build",
     "preview": "serve -s build -l 3000",
     "deploy:vercel": "vercel --prod",
-    "deploy:vercel:preview": "vercel"
+    "deploy:vercel:preview": "vercel",
+    "test:pwa": "node test-pwa.js",
+    "test:pwa:headless": "node test-pwa.js --headless true",
+    "test:pwa:all-browsers": "node test-pwa.js --browsers chrome,firefox,safari"
   },
   "eslintConfig": {
     "extends": [

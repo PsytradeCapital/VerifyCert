@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ethers } from 'ethers';
@@ -15,6 +15,12 @@ import ErrorBoundary from './components/ErrorBoundary';
 import RouteErrorBoundary from './components/RouteErrorBoundary';
 import BlockchainErrorBoundary from './components/BlockchainErrorBoundary';
 import { PageTransition } from './components/ui';
+import { OfflineIndicator, ServiceWorkerUpdate, PWAInstallPrompt, IOSInstallInstructions } from './components/ui/OfflineIndicator';
+import PushNotificationSettings from './components/ui/PushNotificationSettings';
+import PushNotificationDemo from './pages/PushNotificationDemo';
+
+// Hooks
+import useServiceWorker, { usePWAInstallation } from './hooks/useServiceWorker';
 
 // Services
 import { errorLogger } from './services/errorLogger';
@@ -31,6 +37,7 @@ import NavigationDemo from './pages/NavigationDemo';
 import NavigationStateDemo from './pages/NavigationStateDemo';
 import PageTransitionDemo from './pages/PageTransitionDemo';
 import FeedbackAnimationsDemo from './components/FeedbackAnimationsDemo';
+import PWATestPage from './pages/PWATestPage';
 import NotFound from './pages/NotFound';
 
 import './App.css';
@@ -47,6 +54,33 @@ function App() {
     address: null,
     provider: null,
   });
+
+  // Service Worker and PWA hooks
+  const [swState, swActions] = useServiceWorker();
+  const { 
+    canInstall, 
+    isInstalled, 
+    installPWA, 
+    installationState,
+    isMobile,
+    isIOSSafari,
+    showIOSInstructions 
+  } = usePWAInstallation();
+
+  // State for iOS install instructions
+  const [showIOSModal, setShowIOSModal] = React.useState(false);
+
+  // Show iOS instructions when appropriate
+  React.useEffect(() => {
+    if (showIOSInstructions && !showIOSModal) {
+      // Delay showing iOS instructions to avoid overwhelming the user
+      const timer = setTimeout(() => {
+        setShowIOSModal(true);
+      }, 5000); // 5 second delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [showIOSInstructions, showIOSModal]);
 
   // Handle wallet connection
   const handleWalletConnect = useCallback((address: string, provider: ethers.BrowserProvider) => {
@@ -173,6 +207,36 @@ function App() {
                 />
                 
                 <Route 
+                  path="/notifications" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <div className="container mx-auto px-4 py-8">
+                        <h1 className="text-2xl font-bold text-gray-900 mb-6">Push Notification Settings</h1>
+                        <PushNotificationSettings userId={walletState.address || 'demo-user'} />
+                      </div>
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/push-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <PushNotificationDemo />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/pwa-test" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <PWATestPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
                   path="/certificate/:tokenId" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
@@ -233,6 +297,21 @@ function App() {
                 },
               },
             }}
+          />
+
+          {/* PWA and Offline Components */}
+          <OfflineIndicator />
+          <ServiceWorkerUpdate 
+            hasUpdate={swState.hasUpdate}
+            onUpdate={swActions.update}
+          />
+          <PWAInstallPrompt 
+            canInstall={canInstall && !isInstalled && !isIOSSafari}
+            onInstall={installPWA}
+          />
+          <IOSInstallInstructions
+            isVisible={showIOSModal && showIOSInstructions}
+            onDismiss={() => setShowIOSModal(false)}
           />
             </div>
           </NavigationProvider>

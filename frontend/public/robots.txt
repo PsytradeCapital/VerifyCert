@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://verifycert.app/sitemap.xml
+
+# Disallow sensitive areas
+Disallow: /api/
+Disallow: /.well-known/
+Disallow: /admin/

@@ -3,14 +3,44 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    
+    <!-- PWA Theme and Color Configuration -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3b82f6" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e40af" />
+    
+    <!-- App Description -->
     <meta
       name="description"
-      content="VerifyCert - Blockchain-based digital certificate verification system"
+      content="VerifyCert - Decentralized Certificate Verification System. Secure, blockchain-based digital certificate issuance and verification."
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- PWA App Configuration -->
+    <meta name="application-name" content="VerifyCert" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="VerifyCert" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/icon.svg" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="%PUBLIC_URL%/icon-512.png" />
+    
+    <!-- Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#3b82f6" />
+    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/icon-192.png" />
+    <meta name="msapplication-config" content="%PUBLIC_URL%/browserconfig.xml" />
+    
+    <!-- SEO and Social -->
+    <meta name="author" content="VerifyCert Team" />
+    <meta name="keywords" content="certificate, verification, blockchain, digital, credentials, education, NFT" />
+    
     <title>VerifyCert - Digital Certificate Verification</title>
   </head>
   <body>

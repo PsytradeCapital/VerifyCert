@@ -5,8 +5,240 @@
  */
 
 const designTokens = {
+  // Light theme colors (default)
   colors: {
-    // Primary brand colors - Professional blue palette
+    light: {
+      // Primary brand colors - Professional blue palette
+      primary: {
+        50: '#eff6ff',
+        100: '#dbeafe',
+        200: '#bfdbfe',
+        300: '#93c5fd',
+        400: '#60a5fa',
+        500: '#3b82f6',
+        600: '#2563eb',
+        700: '#1d4ed8',
+        800: '#1e40af',
+        900: '#1e3a8a',
+        950: '#172554'
+      },
+      
+      // Accent colors - Gold for trust and premium feel
+      accent: {
+        50: '#fefce8',
+        100: '#fef9c3',
+        200: '#fef08a',
+        300: '#fde047',
+        400: '#facc15',
+        500: '#eab308',
+        600: '#ca8a04',
+        700: '#a16207',
+        800: '#854d0e',
+        900: '#713f12',
+        950: '#422006'
+      },
+      
+      // Neutral colors - Clean grays
+      neutral: {
+        50: '#f9fafb',
+        100: '#f3f4f6',
+        200: '#e5e7eb',
+        300: '#d1d5db',
+        400: '#9ca3af',
+        500: '#6b7280',
+        600: '#4b5563',
+        700: '#374151',
+        800: '#1f2937',
+        900: '#111827',
+        950: '#030712'
+      },
+      
+      // Semantic colors
+      success: {
+        50: '#f0fdf4',
+        100: '#dcfce7',
+        200: '#bbf7d0',
+        300: '#86efac',
+        400: '#4ade80',
+        500: '#22c55e',
+        600: '#16a34a',
+        700: '#15803d',
+        800: '#166534',
+        900: '#14532d'
+      },
+      
+      error: {
+        50: '#fef2f2',
+        100: '#fee2e2',
+        200: '#fecaca',
+        300: '#fca5a5',
+        400: '#f87171',
+        500: '#ef4444',
+        600: '#dc2626',
+        700: '#b91c1c',
+        800: '#991b1b',
+        900: '#7f1d1d'
+      },
+      
+      warning: {
+        50: '#fffbeb',
+        100: '#fef3c7',
+        200: '#fde68a',
+        300: '#fcd34d',
+        400: '#fbbf24',
+        500: '#f59e0b',
+        600: '#d97706',
+        700: '#b45309',
+        800: '#92400e',
+        900: '#78350f'
+      },
+      
+      info: {
+        50: '#eff6ff',
+        100: '#dbeafe',
+        200: '#bfdbfe',
+        300: '#93c5fd',
+        400: '#60a5fa',
+        500: '#3b82f6',
+        600: '#2563eb',
+        700: '#1d4ed8',
+        800: '#1e40af',
+        900: '#1e3a8a'
+      },
+
+      // Surface colors for light theme
+      surface: {
+        background: '#ffffff',
+        foreground: '#111827',
+        card: '#ffffff',
+        cardForeground: '#111827',
+        popover: '#ffffff',
+        popoverForeground: '#111827',
+        muted: '#f9fafb',
+        mutedForeground: '#6b7280',
+        border: '#e5e7eb',
+        input: '#ffffff',
+        ring: '#3b82f6'
+      }
+    },
+
+    // Dark theme colors
+    dark: {
+      // Primary brand colors - Adjusted for dark theme
+      primary: {
+        50: '#172554',
+        100: '#1e3a8a',
+        200: '#1e40af',
+        300: '#1d4ed8',
+        400: '#2563eb',
+        500: '#3b82f6',
+        600: '#60a5fa',
+        700: '#93c5fd',
+        800: '#bfdbfe',
+        900: '#dbeafe',
+        950: '#eff6ff'
+      },
+      
+      // Accent colors - Adjusted for dark theme
+      accent: {
+        50: '#422006',
+        100: '#713f12',
+        200: '#854d0e',
+        300: '#a16207',
+        400: '#ca8a04',
+        500: '#eab308',
+        600: '#facc15',
+        700: '#fde047',
+        800: '#fef08a',
+        900: '#fef9c3',
+        950: '#fefce8'
+      },
+      
+      // Neutral colors - Inverted for dark theme
+      neutral: {
+        50: '#030712',
+        100: '#111827',
+        200: '#1f2937',
+        300: '#374151',
+        400: '#4b5563',
+        500: '#6b7280',
+        600: '#9ca3af',
+        700: '#d1d5db',
+        800: '#e5e7eb',
+        900: '#f3f4f6',
+        950: '#f9fafb'
+      },
+      
+      // Semantic colors - Adjusted for dark theme
+      success: {
+        50: '#14532d',
+        100: '#166534',
+        200: '#15803d',
+        300: '#16a34a',
+        400: '#22c55e',
+        500: '#4ade80',
+        600: '#86efac',
+        700: '#bbf7d0',
+        800: '#dcfce7',
+        900: '#f0fdf4'
+      },
+      
+      error: {
+        50: '#7f1d1d',
+        100: '#991b1b',
+        200: '#b91c1c',
+        300: '#dc2626',
+        400: '#ef4444',
+        500: '#f87171',
+        600: '#fca5a5',
+        700: '#fecaca',
+        800: '#fee2e2',
+        900: '#fef2f2'
+      },
+      
+      warning: {
+        50: '#78350f',
+        100: '#92400e',
+        200: '#b45309',
+        300: '#d97706',
+        400: '#f59e0b',
+        500: '#fbbf24',
+        600: '#fcd34d',
+        700: '#fde68a',
+        800: '#fef3c7',
+        900: '#fffbeb'
+      },
+      
+      info: {
+        50: '#1e3a8a',
+        100: '#1e40af',
+        200: '#1d4ed8',
+        300: '#2563eb',
+        400: '#3b82f6',
+        500: '#60a5fa',
+        600: '#93c5fd',
+        700: '#bfdbfe',
+        800: '#dbeafe',
+        900: '#eff6ff'
+      },
+
+      // Surface colors for dark theme
+      surface: {
+        background: '#0f172a',
+        foreground: '#f1f5f9',
+        card: '#1e293b',
+        cardForeground: '#f1f5f9',
+        popover: '#1e293b',
+        popoverForeground: '#f1f5f9',
+        muted: '#334155',
+        mutedForeground: '#94a3b8',
+        border: '#334155',
+        input: '#1e293b',
+        ring: '#60a5fa'
+      }
+    },
+
+    // Backward compatibility - default to light theme
     primary: {
       50: '#eff6ff',
       100: '#dbeafe',
@@ -21,7 +253,6 @@ const designTokens = {
       950: '#172554'
     },
     
-    // Accent colors - Gold for trust and premium feel
     accent: {
       50: '#fefce8',
       100: '#fef9c3',
@@ -36,7 +267,6 @@ const designTokens = {
       950: '#422006'
     },
     
-    // Neutral colors - Clean grays
     neutral: {
       50: '#f9fafb',
       100: '#f3f4f6',
@@ -51,7 +281,6 @@ const designTokens = {
       950: '#030712'
     },
     
-    // Semantic colors
     success: {
       50: '#f0fdf4',
       100: '#dcfce7',
@@ -201,6 +430,30 @@ const designTokens = {
   },
   
   boxShadow: {
+    light: {
+      sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+      DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+      md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+      lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+      xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+      '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+      inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+      none: '0 0 #0000'
+    },
+    dark: {
+      sm: '0 1px 2px 0 rgb(0 0 0 / 0.3)',
+      DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)',
+      md: '0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4)',
+      lg: '0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)',
+      xl: '0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4)',
+      '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.6)',
+      inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.3)',
+      none: '0 0 #0000',
+      // Additional dark theme shadows with subtle highlights
+      glow: '0 0 20px rgb(59 130 246 / 0.15)',
+      glowLg: '0 0 40px rgb(59 130 246 / 0.2)'
+    },
+    // Backward compatibility - default to light theme
     sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
     DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
     md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
@@ -295,6 +548,72 @@ const designTokens = {
       xl: ['1.25rem', { lineHeight: '1.75rem' }],   // 20px/28px
       '2xl': ['1.5rem', { lineHeight: '2rem' }],    // 24px/32px
       '3xl': ['1.875rem', { lineHeight: '2.25rem' }] // 30px/36px
+    }
+  },
+
+  // Theme-specific utilities
+  themes: {
+    light: {
+      name: 'light',
+      colors: 'light',
+      shadows: 'light'
+    },
+    dark: {
+      name: 'dark',
+      colors: 'dark',
+      shadows: 'dark'
+    }
+  },
+
+  // CSS custom properties for theme switching
+  cssVariables: {
+    light: {
+      '--color-background': '#ffffff',
+      '--color-foreground': '#111827',
+      '--color-card': '#ffffff',
+      '--color-card-foreground': '#111827',
+      '--color-popover': '#ffffff',
+      '--color-popover-foreground': '#111827',
+      '--color-primary': '#3b82f6',
+      '--color-primary-foreground': '#ffffff',
+      '--color-secondary': '#f3f4f6',
+      '--color-secondary-foreground': '#111827',
+      '--color-muted': '#f9fafb',
+      '--color-muted-foreground': '#6b7280',
+      '--color-accent': '#eab308',
+      '--color-accent-foreground': '#111827',
+      '--color-destructive': '#ef4444',
+      '--color-destructive-foreground': '#ffffff',
+      '--color-border': '#e5e7eb',
+      '--color-input': '#ffffff',
+      '--color-ring': '#3b82f6',
+      '--shadow-sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+      '--shadow-md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+      '--shadow-lg': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
+    },
+    dark: {
+      '--color-background': '#0f172a',
+      '--color-foreground': '#f1f5f9',
+      '--color-card': '#1e293b',
+      '--color-card-foreground': '#f1f5f9',
+      '--color-popover': '#1e293b',
+      '--color-popover-foreground': '#f1f5f9',
+      '--color-primary': '#60a5fa',
+      '--color-primary-foreground': '#0f172a',
+      '--color-secondary': '#334155',
+      '--color-secondary-foreground': '#f1f5f9',
+      '--color-muted': '#334155',
+      '--color-muted-foreground': '#94a3b8',
+      '--color-accent': '#facc15',
+      '--color-accent-foreground': '#0f172a',
+      '--color-destructive': '#f87171',
+      '--color-destructive-foreground': '#0f172a',
+      '--color-border': '#334155',
+      '--color-input': '#1e293b',
+      '--color-ring': '#60a5fa',
+      '--shadow-sm': '0 1px 2px 0 rgb(0 0 0 / 0.3)',
+      '--shadow-md': '0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4)',
+      '--shadow-lg': '0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)'
     }
   }
 };

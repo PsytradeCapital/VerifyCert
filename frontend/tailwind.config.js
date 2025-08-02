@@ -13,22 +13,62 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      // Use CSS custom properties for better theme switching
       white: 'rgb(255 255 255)',
       black: 'rgb(0 0 0)',
+      
+      // Theme-aware colors using CSS custom properties
+      background: 'var(--color-background)',
+      foreground: 'var(--color-foreground)',
+      card: 'var(--color-card)',
+      'card-foreground': 'var(--color-card-foreground)',
+      popover: 'var(--color-popover)',
+      'popover-foreground': 'var(--color-popover-foreground)',
+      muted: 'var(--color-muted)',
+      'muted-foreground': 'var(--color-muted-foreground)',
+      border: 'var(--color-border)',
+      input: 'var(--color-input)',
+      ring: 'var(--color-ring)',
+      
+      // Semantic colors with theme support
+      primary: {
+        DEFAULT: 'var(--color-primary)',
+        foreground: 'var(--color-primary-foreground)',
+        ...designTokens.colors.primary,
+      },
+      secondary: {
+        DEFAULT: 'var(--color-secondary)',
+        foreground: 'var(--color-secondary-foreground)',
+      },
+      accent: {
+        DEFAULT: 'var(--color-accent)',
+        foreground: 'var(--color-accent-foreground)',
+        ...designTokens.colors.accent,
+      },
+      destructive: {
+        DEFAULT: 'var(--color-destructive)',
+        foreground: 'var(--color-destructive-foreground)',
+      },
+      success: {
+        DEFAULT: 'var(--color-success)',
+        foreground: 'var(--color-success-foreground)',
+        ...designTokens.colors.success,
+      },
+      warning: {
+        DEFAULT: 'var(--color-warning)',
+        foreground: 'var(--color-warning-foreground)',
+        ...designTokens.colors.warning,
+      },
+      info: {
+        DEFAULT: 'var(--color-info)',
+        foreground: 'var(--color-info-foreground)',
+        ...designTokens.colors.info,
+      },
+      error: {
+        ...designTokens.colors.error,
+      },
+      
+      // Full color palettes for both themes
       ...designTokens.colors,
-      // Add CSS custom property variants for dynamic theming
-      'primary-50': 'var(--color-primary-50)',
-      'primary-100': 'var(--color-primary-100)',
-      'primary-200': 'var(--color-primary-200)',
-      'primary-300': 'var(--color-primary-300)',
-      'primary-400': 'var(--color-primary-400)',
-      'primary-500': 'var(--color-primary-500)',
-      'primary-600': 'var(--color-primary-600)',
-      'primary-700': 'var(--color-primary-700)',
-      'primary-800': 'var(--color-primary-800)',
-      'primary-900': 'var(--color-primary-900)',
-      'primary-950': 'var(--color-primary-950)',
     },
     fontFamily: {
       ...designTokens.typography.fontFamily,
@@ -49,7 +89,16 @@ module.exports = {
       ...designTokens.borderRadius,
     },
     boxShadow: {
-      ...designTokens.boxShadow,
+      // Theme-aware shadows using CSS custom properties
+      sm: 'var(--shadow-sm)',
+      DEFAULT: 'var(--shadow-md)',
+      md: 'var(--shadow-md)',
+      lg: 'var(--shadow-lg)',
+      xl: 'var(--shadow-xl)',
+      '2xl': 'var(--shadow-2xl)',
+      inner: 'var(--shadow-inner)',
+      none: '0 0 #0000',
+      
       // Enhanced custom shadows for premium feel
       'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
       'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
@@ -59,6 +108,9 @@ module.exports = {
       'glow-success': '0 0 20px rgba(34, 197, 94, 0.15)',
       'glow-error': '0 0 20px rgba(239, 68, 68, 0.15)',
       'glow-warning': '0 0 20px rgba(245, 158, 11, 0.15)',
+      
+      // Full shadow palettes for both themes
+      ...designTokens.boxShadow,
     },
     zIndex: {
       ...designTokens.zIndex,

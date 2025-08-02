@@ -41,6 +41,7 @@ import PWATestPage from './pages/PWATestPage';
 import NotFound from './pages/NotFound';
 
 import './App.css';
+import './styles/themes.css';
 
 interface WalletState {
   isConnected: boolean;

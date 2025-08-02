@@ -1,0 +1,244 @@
+/**
+ * Theme CSS Variables
+ * Defines CSS custom properties for light and dark themes
+ * These variables can be used throughout the application for theme switching
+ */
+
+/* Root variables - Light theme (default) */
+:root {
+  /* Colors */
+  --color-background: #ffffff;
+  --color-foreground: #111827;
+  --color-card: #ffffff;
+  --color-card-foreground: #111827;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #111827;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f3f4f6;
+  --color-secondary-foreground: #111827;
+  --color-muted: #f9fafb;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #eab308;
+  --color-accent-foreground: #111827;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #22c55e;
+  --color-success-foreground: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-foreground: #111827;
+  --color-info: #3b82f6;
+  --color-info-foreground: #ffffff;
+  --color-border: #e5e7eb;
+  --color-input: #ffffff;
+  --color-ring: #3b82f6;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --gradient-accent: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  /* Colors */
+  --color-background: #0f172a;
+  --color-foreground: #f1f5f9;
+  --color-card: #1e293b;
+  --color-card-foreground: #f1f5f9;
+  --color-popover: #1e293b;
+  --color-popover-foreground: #f1f5f9;
+  --color-primary: #60a5fa;
+  --color-primary-foreground: #0f172a;
+  --color-secondary: #334155;
+  --color-secondary-foreground: #f1f5f9;
+  --color-muted: #334155;
+  --color-muted-foreground: #94a3b8;
+  --color-accent: #facc15;
+  --color-accent-foreground: #0f172a;
+  --color-destructive: #f87171;
+  --color-destructive-foreground: #0f172a;
+  --color-success: #4ade80;
+  --color-success-foreground: #0f172a;
+  --color-warning: #fbbf24;
+  --color-warning-foreground: #0f172a;
+  --color-info: #60a5fa;
+  --color-info-foreground: #0f172a;
+  --color-border: #334155;
+  --color-input: #1e293b;
+  --color-ring: #60a5fa;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.3);
+
+  /* Dark theme specific shadows */
+  --shadow-glow: 0 0 20px rgb(59 130 246 / 0.15);
+  --shadow-glow-lg: 0 0 40px rgb(59 130 246 / 0.2);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  --gradient-accent: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  --gradient-surface: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+/* System preference based theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    /* Colors */
+    --color-background: #0f172a;
+    --color-foreground: #f1f5f9;
+    --color-card: #1e293b;
+    --color-card-foreground: #f1f5f9;
+    --color-popover: #1e293b;
+    --color-popover-foreground: #f1f5f9;
+    --color-primary: #60a5fa;
+    --color-primary-foreground: #0f172a;
+    --color-secondary: #334155;
+    --color-secondary-foreground: #f1f5f9;
+    --color-muted: #334155;
+    --color-muted-foreground: #94a3b8;
+    --color-accent: #facc15;
+    --color-accent-foreground: #0f172a;
+    --color-destructive: #f87171;
+    --color-destructive-foreground: #0f172a;
+    --color-success: #4ade80;
+    --color-success-foreground: #0f172a;
+    --color-warning: #fbbf24;
+    --color-warning-foreground: #0f172a;
+    --color-info: #60a5fa;
+    --color-info-foreground: #0f172a;
+    --color-border: #334155;
+    --color-input: #1e293b;
+    --color-ring: #60a5fa;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+    --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.3);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    --gradient-accent: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+    --gradient-surface: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  }
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: 
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+/* Utility classes for theme-aware styling */
+.bg-background {
+  background-color: var(--color-background);
+}
+
+.text-foreground {
+  color: var(--color-foreground);
+}
+
+.bg-card {
+  background-color: var(--color-card);
+}
+
+.text-card-foreground {
+  color: var(--color-card-foreground);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.text-primary-foreground {
+  color: var(--color-primary-foreground);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.text-secondary-foreground {
+  color: var(--color-secondary-foreground);
+}
+
+.bg-muted {
+  background-color: var(--color-muted);
+}
+
+.text-muted-foreground {
+  color: var(--color-muted-foreground);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.text-accent-foreground {
+  color: var(--color-accent-foreground);
+}
+
+.border-border {
+  border-color: var(--color-border);
+}
+
+.shadow-theme-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-theme-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-theme-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-theme-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+.shadow-theme-2xl {
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Dark theme specific utilities */
+[data-theme="dark"] .shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+[data-theme="dark"] .shadow-glow-lg {
+  box-shadow: var(--shadow-glow-lg);
+}
+
+/* Gradient utilities */
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-accent {
+  background: var(--gradient-accent);
+}
+
+.bg-gradient-surface {
+  background: var(--gradient-surface);
+}

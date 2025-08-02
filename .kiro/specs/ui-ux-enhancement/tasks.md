@@ -464,7 +464,10 @@
 **Description:** Implement light/dark mode toggle with proper theme switching and persistence.
 
 **Acceptance Criteria:**
-- [ ] Create dark theme variants for all design tokens
+- [-] Create dark theme variants for all design tokens
+
+
+
 - [ ] Implement theme context and switching logic
 - [ ] Add theme toggle component in header
 - [ ] Ensure all components work properly in both themes

@@ -9,6 +9,11 @@ export interface CardProps {
   hover?: boolean;
   className?: string;
   onClick?: () => void;
+  onKeyDown?: (event: React.KeyboardEvent) => void;
+  tabIndex?: number;
+  role?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
   enableAnimations?: boolean;
 }
 
@@ -19,6 +24,11 @@ const Card: React.FC<CardProps> = ({
   hover = false,
   className = '',
   onClick,
+  onKeyDown,
+  tabIndex,
+  role,
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedBy,
   enableAnimations = true
 }) => {
   const baseClasses = 'bg-white rounded-lg';
@@ -36,8 +46,17 @@ const Card: React.FC<CardProps> = ({
     lg: 'p-6'
   };
 
-  const clickableClasses = onClick ? 'cursor-pointer' : '';
+  const clickableClasses = onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' : '';
   const isInteractive = hover || onClick;
+
+  // Handle keyboard events for interactive cards
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (onClick && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      onClick();
+    }
+    onKeyDown?.(event);
+  };
 
   // Get animation props based on variant and interaction settings
   const animationProps = enableAnimations && isInteractive 
@@ -46,18 +65,26 @@ const Card: React.FC<CardProps> = ({
 
   const MotionDiv = motion.div;
 
+  // Determine appropriate ARIA attributes and tab index
+  const cardProps = {
+    className: `
+      ${baseClasses}
+      ${variantClasses[variant]}
+      ${paddingClasses[padding]}
+      ${clickableClasses}
+      ${className}
+    `,
+    onClick,
+    onKeyDown: onClick || onKeyDown ? handleKeyDown : undefined,
+    tabIndex: onClick ? (tabIndex !== undefined ? tabIndex : 0) : tabIndex,
+    role: onClick ? (role || 'button') : role,
+    'aria-label': ariaLabel,
+    'aria-describedby': ariaDescribedBy,
+    ...animationProps
+  };
+
   return (
-    <MotionDiv
-      className={`
-        ${baseClasses}
-        ${variantClasses[variant]}
-        ${paddingClasses[padding]}
-        ${clickableClasses}
-        ${className}
-      `}
-      onClick={onClick}
-      {...animationProps}
-    >
+    <MotionDiv {...cardProps}>
       {children}
     </MotionDiv>
   );

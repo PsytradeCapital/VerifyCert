@@ -4,6 +4,7 @@ import WalletConnect from './WalletConnect';
 import { useNavigation } from '../contexts/NavigationContext';
 import { useActiveIndicator } from '../hooks/useActiveIndicator';
 import { ThemeToggle } from './ui/ThemeToggle';
+import { LazyLogo } from './ui/LazyAssets';
 
 interface NavigationProps {
   walletAddress?: string | null;
@@ -64,10 +65,11 @@ export default function Navigation({
           <div className="flex items-center min-w-0 flex-1">
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center">
-                <div className="h-7 w-7 sm:h-8 sm:w-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <svg className="h-4 w-4 sm:h-5 sm:w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <div className="h-7 w-7 sm:h-8 sm:w-8 bg-blue-600 rounded-lg flex items-center justify-center overflow-hidden">
+                  <LazyLogo 
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-white" 
+                    alt="VerifyCert Logo"
+                  />
                 </div>
                 <span className="ml-2 text-lg sm:text-xl font-bold text-foreground truncate">VerifyCert</span>
               </Link>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
+import { LazyImage } from '../utils/lazyLoading';
 
 export interface Certificate {
   tokenId: string;
@@ -264,20 +265,31 @@ export default function CertificateCard({
               <div>
                 <h4 className="text-sm font-medium text-gray-500 mb-2">Verification QR Code</h4>
                 <div className="bg-gray-50 p-4 rounded-lg text-center">
-                  {!imageError ? (
-                    <img
-                      src={certificate.qrCodeURL}
-                      alt="Certificate QR Code"
-                      className="mx-auto max-w-32 max-h-32"
-                      onError={() => setImageError(true)}
-                    />
-                  ) : (
-                    <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex items-center justify-center">
-                      <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                    </div>
-                  )}
+                  <LazyImage
+                    src={certificate.qrCodeURL}
+                    alt="Certificate QR Code"
+                    className="mx-auto max-w-32 max-h-32"
+                    loadingComponent={() => (
+                      <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex items-center justify-center animate-pulse">
+                        <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    )}
+                    errorComponent={({ retry }) => (
+                      <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex flex-col items-center justify-center">
+                        <svg className="h-8 w-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <button
+                          onClick={retry}
+                          className="text-xs text-blue-600 hover:text-blue-800 underline"
+                        >
+                          Retry
+                        </button>
+                      </div>
+                    )}
+                  />
                   <p className="text-xs text-gray-500 mt-2">Scan to verify</p>
                 </div>
               </div>

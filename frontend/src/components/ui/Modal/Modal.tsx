@@ -28,6 +28,9 @@ const Modal: React.FC<ModalProps> = ({
   backdropClassName = ''
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+  const lastFocusableRef = useRef<HTMLElement | null>(null);
 
   // Handle escape key
   useEffect(() => {
@@ -43,12 +46,58 @@ const Modal: React.FC<ModalProps> = ({
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose, closeOnEscape]);
 
-  // Focus management
+  // Focus management and focus trap
   useEffect(() => {
-    if (isOpen && modalRef.current) {
-      modalRef.current.focus();
+    if (isOpen) {
+      // Store the previously focused element
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      
+      // Find focusable elements within the modal
+      const focusableElements = modalRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      
+      if (focusableElements && focusableElements.length > 0) {
+        firstFocusableRef.current = focusableElements[0] as HTMLElement;
+        lastFocusableRef.current = focusableElements[focusableElements.length - 1] as HTMLElement;
+        
+        // Focus the first focusable element
+        setTimeout(() => {
+          firstFocusableRef.current?.focus();
+        }, 0);
+      } else {
+        // If no focusable elements, focus the modal itself
+        setTimeout(() => {
+          modalRef.current?.focus();
+        }, 0);
+      }
+    } else {
+      // Restore focus to the previously focused element
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+        previousFocusRef.current = null;
+      }
     }
   }, [isOpen]);
+
+  // Focus trap implementation
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Tab') {
+      if (event.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstFocusableRef.current) {
+          event.preventDefault();
+          lastFocusableRef.current?.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastFocusableRef.current) {
+          event.preventDefault();
+          firstFocusableRef.current?.focus();
+        }
+      }
+    }
+  };
 
   // Body scroll lock
   useEffect(() => {
@@ -138,6 +187,7 @@ const Modal: React.FC<ModalProps> = ({
             role="dialog"
             aria-modal="true"
             aria-labelledby={title ? 'modal-title' : undefined}
+            onKeyDown={handleKeyDown}
           >
             {/* Header */}
             {(title || showCloseButton) && (
@@ -150,7 +200,7 @@ const Modal: React.FC<ModalProps> = ({
                 {showCloseButton && (
                   <button
                     onClick={onClose}
-                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-md hover:bg-gray-100"
+                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     aria-label="Close modal"
                   >
                     <X className="w-5 h-5" />

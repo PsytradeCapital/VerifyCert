@@ -79,6 +79,38 @@ const AppLayout: React.FC<AppLayoutProps> = ({
 
   return (
     <div className={`min-h-screen bg-neutral-50 safe-area-y ${className}`}>
+      {/* Skip Navigation Links */}
+      <div className="sr-only focus-within:not-sr-only">
+        <a
+          href="#main-content"
+          className="absolute top-0 left-0 z-50 px-4 py-2 bg-blue-600 text-white rounded-br-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          onFocus={(e) => {
+            // Ensure the link is visible when focused
+            e.target.classList.remove('sr-only');
+          }}
+          onBlur={(e) => {
+            // Hide the link when focus is lost
+            e.target.classList.add('sr-only');
+          }}
+        >
+          Skip to main content
+        </a>
+        {showSidebar && (
+          <a
+            href="#navigation"
+            className="absolute top-0 left-20 z-50 px-4 py-2 bg-blue-600 text-white rounded-br-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            onFocus={(e) => {
+              e.target.classList.remove('sr-only');
+            }}
+            onBlur={(e) => {
+              e.target.classList.add('sr-only');
+            }}
+          >
+            Skip to navigation
+          </a>
+        )}
+      </div>
+
       {/* Header */}
       <Header
         title={title}
@@ -109,14 +141,17 @@ const AppLayout: React.FC<AppLayoutProps> = ({
             )}
             
             {/* Sidebar */}
-            <aside className={`
-              ${isMobile 
-                ? `fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out safe-area-x ${
-                    mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                  }`
-                : 'flex flex-shrink-0'
-              }
-            `}>
+            <aside 
+              id="navigation"
+              className={`
+                ${isMobile 
+                  ? `fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out safe-area-x ${
+                      mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`
+                  : 'flex flex-shrink-0'
+                }
+              `}
+            >
               <div className={`
                 flex flex-col bg-white border-r border-neutral-200 transition-all duration-300 ease-in-out
                 ${isMobile ? 'w-64' : (sidebarCollapsed ? 'w-16' : 'w-64')}
@@ -129,7 +164,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                   {isMobile && (
                     <button
                       onClick={closeMobileMenu}
-                      className="touch-target p-1 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                      className="touch-target p-1 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                       aria-label="Close navigation menu"
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -140,7 +175,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                 </div>
 
                 {/* Navigation */}
-                <div className="flex-1 overflow-y-auto py-4">
+                <nav className="flex-1 overflow-y-auto py-4" role="navigation" aria-label="Main navigation">
                   <div className="px-3">
                     <SideNavigation
                       items={navigationItems}
@@ -148,14 +183,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                       onToggle={toggleSidebar}
                     />
                   </div>
-                </div>
+                </nav>
               </div>
             </aside>
           </>
         )}
 
         {/* Main content */}
-        <main className="flex-1 relative overflow-hidden">
+        <main id="main-content" className="flex-1 relative overflow-hidden" role="main">
           <div className={`
             h-full mobile-padding-y mobile-padding-x
             ${showBottomNav ? 'pb-20 sm:pb-24' : ''}

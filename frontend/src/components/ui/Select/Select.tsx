@@ -50,8 +50,10 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const selectRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const selectedOption = options.find(option => option.value === value);
   
@@ -67,6 +69,7 @@ const Select: React.FC<SelectProps> = ({
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
         setSearchTerm('');
+        setFocusedIndex(-1);
       }
     };
 
@@ -74,11 +77,114 @@ const Select: React.FC<SelectProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Reset focused index when options change
+  useEffect(() => {
+    setFocusedIndex(-1);
+    optionRefs.current = optionRefs.current.slice(0, filteredOptions.length);
+  }, [filteredOptions.length]);
+
+  // Keyboard navigation handler
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (disabled || loading) return;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (!isOpen) {
+          setIsOpen(true);
+          setFocusedIndex(0);
+        } else {
+          const nextIndex = focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
+          setFocusedIndex(nextIndex);
+          optionRefs.current[nextIndex]?.scrollIntoView({ block: 'nearest' });
+        }
+        break;
+      
+      case 'ArrowUp':
+        event.preventDefault();
+        if (!isOpen) {
+          setIsOpen(true);
+          setFocusedIndex(filteredOptions.length - 1);
+        } else {
+          const prevIndex = focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
+          setFocusedIndex(prevIndex);
+          optionRefs.current[prevIndex]?.scrollIntoView({ block: 'nearest' });
+        }
+        break;
+      
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        if (!isOpen) {
+          setIsOpen(true);
+          setFocusedIndex(0);
+        } else if (focusedIndex >= 0 && !filteredOptions[focusedIndex]?.disabled) {
+          handleOptionSelect(filteredOptions[focusedIndex].value);
+        }
+        break;
+      
+      case 'Escape':
+        event.preventDefault();
+        setIsOpen(false);
+        setSearchTerm('');
+        setFocusedIndex(-1);
+        break;
+      
+      case 'Home':
+        if (isOpen) {
+          event.preventDefault();
+          setFocusedIndex(0);
+          optionRefs.current[0]?.scrollIntoView({ block: 'nearest' });
+        }
+        break;
+      
+      case 'End':
+        if (isOpen) {
+          event.preventDefault();
+          const lastIndex = filteredOptions.length - 1;
+          setFocusedIndex(lastIndex);
+          optionRefs.current[lastIndex]?.scrollIntoView({ block: 'nearest' });
+        }
+        break;
+      
+      default:
+        // Type-ahead functionality
+        if (!searchable && isOpen && event.key.length === 1) {
+          const char = event.key.toLowerCase();
+          const currentTime = Date.now();
+          const typeAheadTimeout = 1000; // 1 second
+          
+          // Find next matching option starting from current focus
+          const startIndex = focusedIndex >= 0 ? focusedIndex + 1 : 0;
+          let matchIndex = -1;
+          
+          for (let i = 0; i < filteredOptions.length; i++) {
+            const index = (startIndex + i) % filteredOptions.length;
+            const option = filteredOptions[index];
+            if (option.label.toLowerCase().startsWith(char) && !option.disabled) {
+              matchIndex = index;
+              break;
+            }
+          }
+          
+          if (matchIndex >= 0) {
+            setFocusedIndex(matchIndex);
+            optionRefs.current[matchIndex]?.scrollIntoView({ block: 'nearest' });
+          }
+        }
+        break;
+    }
+  };
+
   const handleToggle = () => {
     if (!disabled) {
-      setIsOpen(!isOpen);
-      if (searchable && !isOpen) {
+      const newIsOpen = !isOpen;
+      setIsOpen(newIsOpen);
+      if (searchable && newIsOpen) {
         setTimeout(() => inputRef.current?.focus(), 0);
+      } else if (newIsOpen) {
+        // Set focus to first option when opening
+        setFocusedIndex(0);
       }
     }
   };
@@ -87,6 +193,7 @@ const Select: React.FC<SelectProps> = ({
     onChange?.(optionValue);
     setIsOpen(false);
     setSearchTerm('');
+    setFocusedIndex(-1);
   };
 
   const handleClear = (e: React.MouseEvent) => {
@@ -161,9 +268,11 @@ const Select: React.FC<SelectProps> = ({
             ${loading ? 'cursor-wait' : ''}
           `}
           onClick={handleToggle}
+          onKeyDown={handleKeyDown}
           disabled={disabled || loading}
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          aria-activedescendant={isOpen && focusedIndex >= 0 ? `${selectId}-option-${focusedIndex}` : undefined}
           {...(enableAnimations && !disabled && !loading ? selectInteractions.trigger : {})}
         >
           <div className="flex items-center justify-between">
@@ -266,23 +375,28 @@ const Select: React.FC<SelectProps> = ({
                 {searchTerm ? 'No options found' : 'No options available'}
               </div>
             ) : (
-              filteredOptions.map((option) => (
+              filteredOptions.map((option, index) => (
                 <motion.button
                   key={option.value}
+                  ref={(el) => (optionRefs.current[index] = el)}
+                  id={`${selectId}-option-${index}`}
                   type="button"
                   className={`
                     w-full text-left px-3 py-2 flex items-center
                     ${sizeStyles[size].dropdown}
                     ${option.disabled
                       ? 'text-neutral-400 cursor-not-allowed'
-                      : 'text-neutral-900 cursor-pointer'
+                      : 'text-neutral-900 cursor-pointer hover:bg-neutral-50'
                     }
                     ${option.value === value ? 'bg-primary-100 text-primary-900' : ''}
+                    ${focusedIndex === index && !option.disabled ? 'bg-primary-50 ring-2 ring-primary-500' : ''}
                   `}
                   onClick={() => !option.disabled && handleOptionSelect(option.value)}
+                  onMouseEnter={() => setFocusedIndex(index)}
                   disabled={option.disabled}
                   role="option"
                   aria-selected={option.value === value}
+                  tabIndex={-1}
                   {...(enableAnimations && !option.disabled ? selectInteractions.option : {})}
                 >
                   {option.icon && (

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ethers } from 'ethers';
@@ -18,7 +18,26 @@ import BlockchainErrorBoundary from './components/BlockchainErrorBoundary';
 import { PageTransition } from './components/ui';
 import { OfflineIndicator, ServiceWorkerUpdate, PWAInstallPrompt, IOSInstallInstructions } from './components/ui/OfflineIndicator';
 import PushNotificationSettings from './components/ui/PushNotificationSettings';
-import PushNotificationDemo from './pages/PushNotificationDemo';
+
+// Lazy Components
+import {
+  LazyIssuerDashboard,
+  LazyCertificateViewer,
+  LazyVerificationPage,
+  LazyLayoutDemo,
+  LazyBreadcrumbsDemo,
+  LazyNavigationDemo,
+  LazyNavigationStateDemo,
+  LazyPageTransitionDemo,
+  LazyFeedbackAnimationsDemo,
+  LazyPWATestPage,
+  LazyThemeDemo,
+  LazyPushNotificationDemo,
+  ComponentLoading,
+  ComponentLoadError
+} from './components/lazy';
+
+import { LazyComponentWrapper } from './utils/lazyLoading';
 
 // Hooks
 import useServiceWorker, { usePWAInstallation } from './hooks/useServiceWorker';
@@ -26,20 +45,9 @@ import useServiceWorker, { usePWAInstallation } from './hooks/useServiceWorker';
 // Services
 import { errorLogger } from './services/errorLogger';
 
-// Pages
+// Pages (keep lightweight pages as regular imports)
 import Home from './pages/Home';
-import IssuerDashboard from './pages/IssuerDashboard';
-import CertificateViewer from './pages/CertificateViewer';
-import VerificationPage from './pages/VerificationPage';
 import Verify from './pages/Verify';
-import LayoutDemo from './pages/LayoutDemo';
-import BreadcrumbsDemo from './pages/BreadcrumbsDemo';
-import NavigationDemo from './pages/NavigationDemo';
-import NavigationStateDemo from './pages/NavigationStateDemo';
-import PageTransitionDemo from './pages/PageTransitionDemo';
-import FeedbackAnimationsDemo from './components/FeedbackAnimationsDemo';
-import PWATestPage from './pages/PWATestPage';
-import ThemeDemo from './pages/ThemeDemo';
 import NotFound from './pages/NotFound';
 
 import './App.css';
@@ -160,7 +168,12 @@ function App() {
                   path="/verify/:tokenId" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
-                      <VerificationPage />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyVerificationPage />
+                      </LazyComponentWrapper>
                     </BlockchainErrorBoundary>
                   } 
                 />
@@ -169,7 +182,12 @@ function App() {
                   path="/layout-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <LayoutDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyLayoutDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -178,7 +196,12 @@ function App() {
                   path="/breadcrumbs-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <BreadcrumbsDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyBreadcrumbsDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -187,7 +210,12 @@ function App() {
                   path="/navigation-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <NavigationDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyNavigationDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -196,7 +224,12 @@ function App() {
                   path="/navigation-state-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <NavigationStateDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyNavigationStateDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -205,7 +238,12 @@ function App() {
                   path="/feedback-animations-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <FeedbackAnimationsDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyFeedbackAnimationsDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -216,7 +254,9 @@ function App() {
                     <ErrorBoundary onError={handleGlobalError}>
                       <div className="container mx-auto px-4 py-8">
                         <h1 className="text-2xl font-bold text-gray-900 mb-6">Push Notification Settings</h1>
-                        <PushNotificationSettings userId={walletState.address || 'demo-user'} />
+                        <Suspense fallback={<ComponentLoading />}>
+                          <PushNotificationSettings userId={walletState.address || 'demo-user'} />
+                        </Suspense>
                       </div>
                     </ErrorBoundary>
                   } 
@@ -226,7 +266,12 @@ function App() {
                   path="/push-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <PushNotificationDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyPushNotificationDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -235,7 +280,12 @@ function App() {
                   path="/pwa-test" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <PWATestPage />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyPWATestPage />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -244,7 +294,12 @@ function App() {
                   path="/theme-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <ThemeDemo />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyThemeDemo />
+                      </LazyComponentWrapper>
                     </ErrorBoundary>
                   } 
                 />
@@ -253,7 +308,12 @@ function App() {
                   path="/certificate/:tokenId" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
-                      <CertificateViewer />
+                      <LazyComponentWrapper 
+                        fallback={<ComponentLoading />}
+                        errorFallback={ComponentLoadError}
+                      >
+                        <LazyCertificateViewer />
+                      </LazyComponentWrapper>
                     </BlockchainErrorBoundary>
                   } 
                 />
@@ -267,7 +327,12 @@ function App() {
                         isWalletConnected={walletState.isConnected}
                         requireWallet={true}
                       >
-                        <IssuerDashboard />
+                        <LazyComponentWrapper 
+                          fallback={<ComponentLoading />}
+                          errorFallback={ComponentLoadError}
+                        >
+                          <LazyIssuerDashboard />
+                        </LazyComponentWrapper>
                       </ProtectedRoute>
                     </BlockchainErrorBoundary>
                   } 

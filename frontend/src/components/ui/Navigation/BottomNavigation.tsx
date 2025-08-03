@@ -27,6 +27,25 @@ export default function BottomNavigation({ onQuickAction, className = '' }: Bott
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Handle keyboard navigation
+  const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
+    switch (event.key) {
+      case 'ArrowLeft':
+        event.preventDefault();
+        const prevIndex = index > 0 ? index - 1 : navigationItems.length - 1;
+        const prevItem = document.querySelector(`[data-bottom-nav-index="${prevIndex}"]`) as HTMLElement;
+        prevItem?.focus();
+        break;
+      
+      case 'ArrowRight':
+        event.preventDefault();
+        const nextIndex = index < navigationItems.length - 1 ? index + 1 : 0;
+        const nextItem = document.querySelector(`[data-bottom-nav-index="${nextIndex}"]`) as HTMLElement;
+        nextItem?.focus();
+        break;
+    }
+  };
+
   return (
     <nav className={`
       fixed bottom-0 left-0 right-0 z-50
@@ -34,7 +53,7 @@ export default function BottomNavigation({ onQuickAction, className = '' }: Bott
       safe-area-inset-bottom
       ${className}
     `}>
-      <div className="flex items-center justify-around px-2 py-2">
+      <div className="flex items-center justify-around px-2 py-2" role="tablist">
         {navigationItems.map((item, index) => {
           const Icon = item.icon;
           const active = isActive(item.path);
@@ -43,14 +62,20 @@ export default function BottomNavigation({ onQuickAction, className = '' }: Bott
             <React.Fragment key={item.id}>
               <Link
                 to={item.path}
+                data-bottom-nav-index={index}
                 className={`
                   flex flex-col items-center justify-center px-3 py-2 rounded-lg
                   transition-all duration-200 min-w-0 flex-1
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
                   ${active 
                     ? 'text-blue-600 dark:text-blue-400' 
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                   }
                 `}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                role="tab"
+                aria-selected={active}
+                aria-current={active ? 'page' : undefined}
               >
                 <div className="relative">
                   <Icon className={`
@@ -83,6 +108,17 @@ export default function BottomNavigation({ onQuickAction, className = '' }: Bott
                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
                   "
                   aria-label="Quick action"
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowLeft') {
+                      e.preventDefault();
+                      const prevItem = document.querySelector(`[data-bottom-nav-index="${index}"]`) as HTMLElement;
+                      prevItem?.focus();
+                    } else if (e.key === 'ArrowRight') {
+                      e.preventDefault();
+                      const nextItem = document.querySelector(`[data-bottom-nav-index="${index + 1}"]`) as HTMLElement;
+                      nextItem?.focus();
+                    }
+                  }}
                 >
                   <Plus className="w-6 h-6" />
                 </button>

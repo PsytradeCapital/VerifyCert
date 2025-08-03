@@ -41,6 +41,7 @@ import { LazyComponentWrapper } from './utils/lazyLoading';
 
 // Hooks
 import useServiceWorker, { usePWAInstallation } from './hooks/useServiceWorker';
+import { useImageOptimization } from './hooks/useImageOptimization';
 
 // Services
 import { errorLogger } from './services/errorLogger';
@@ -77,6 +78,9 @@ function App() {
     isIOSSafari,
     showIOSInstructions 
   } = usePWAInstallation();
+
+  // Image optimization hook
+  const { isInitialized: imageOptInitialized, webpSupported } = useImageOptimization();
 
   // State for iOS install instructions
   const [showIOSModal, setShowIOSModal] = React.useState(false);

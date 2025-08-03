@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
 import { LazyImage } from '../utils/lazyLoading';
+import { OptimizedImage } from './ui/OptimizedImage';
 
 export interface Certificate {
   tokenId: string;
@@ -265,10 +266,20 @@ export default function CertificateCard({
               <div>
                 <h4 className="text-sm font-medium text-gray-500 mb-2">Verification QR Code</h4>
                 <div className="bg-gray-50 p-4 rounded-lg text-center">
-                  <LazyImage
+                  <OptimizedImage
                     src={certificate.qrCodeURL}
                     alt="Certificate QR Code"
                     className="mx-auto max-w-32 max-h-32"
+                    aspectRatio="square"
+                    responsive={false} // QR codes should maintain exact dimensions
+                    webpFallback={false} // QR codes need to be precise, avoid WebP
+                    priority={true} // QR codes are important for verification
+                    optimization={{
+                      width: 128,
+                      height: 128,
+                      quality: 100, // Maximum quality for QR codes
+                      sizes: '128px'
+                    }}
                     loadingComponent={() => (
                       <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex items-center justify-center animate-pulse">
                         <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

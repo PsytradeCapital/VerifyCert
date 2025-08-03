@@ -28,6 +28,25 @@ export const generateImageSrcSet = (
 };
 
 /**
+ * Generate responsive breakpoints for different screen sizes
+ */
+export const generateResponsiveBreakpoints = (
+  baseSrc: string,
+  breakpoints: Array<{ width: number; media: string }> = [
+    { width: 320, media: '(max-width: 640px)' },
+    { width: 640, media: '(max-width: 1024px)' },
+    { width: 1024, media: '(max-width: 1280px)' },
+    { width: 1280, media: '(min-width: 1281px)' }
+  ]
+) => {
+  return breakpoints.map(({ width, media }) => ({
+    media,
+    src: optimizeImageUrl(baseSrc, { width }),
+    srcSet: generateImageSrcSet(baseSrc, [width, width * 2]), // Include 2x for retina
+  }));
+};
+
+/**
  * Optimize image URL with parameters
  */
 export const optimizeImageUrl = (
@@ -68,9 +87,74 @@ export const supportsWebP = (): Promise<boolean> => {
 };
 
 /**
- * Generate responsive image props
+ * Cached WebP support check
  */
-export const getResponsiveImageProps = (
+let webpSupported: boolean | null = null;
+
+export const isWebPSupported = async (): Promise<boolean> => {
+  if (webpSupported !== null) {
+    return webpSupported;
+  }
+  
+  webpSupported = await supportsWebP();
+  return webpSupported;
+};
+
+/**
+ * Convert image to WebP format if supported
+ */
+export const getOptimalImageFormat = async (originalSrc: string): Promise<string> => {
+  const isWebPAvailable = await isWebPSupported();
+  
+  if (!isWebPAvailable || originalSrc.includes('.svg') || originalSrc.startsWith('data:')) {
+    return originalSrc;
+  }
+  
+  // For local images, try to find WebP version
+  if (!originalSrc.startsWith('http')) {
+    const webpSrc = originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+    
+    // Check if WebP version exists
+    try {
+      const response = await fetch(webpSrc, { method: 'HEAD' });
+      if (response.ok) {
+        return webpSrc;
+      }
+    } catch {
+      // WebP version doesn't exist, use original
+    }
+  }
+  
+  return originalSrc;
+};
+
+/**
+ * Generate responsive image props with WebP support
+ */
+export const getResponsiveImageProps = async (
+  src: string,
+  alt: string,
+  options: ImageOptimizationOptions = {}
+) => {
+  const { width, height, lazy = true } = options;
+  const optimalSrc = await getOptimalImageFormat(src);
+  
+  return {
+    src: optimizeImageUrl(optimalSrc, options),
+    srcSet: generateImageSrcSet(optimalSrc),
+    sizes: options.sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+    alt,
+    width,
+    height,
+    loading: lazy ? ('lazy' as const) : ('eager' as const),
+    decoding: 'async' as const,
+  };
+};
+
+/**
+ * Generate responsive image props synchronously (for React components)
+ */
+export const getResponsiveImagePropsSync = (
   src: string,
   alt: string,
   options: ImageOptimizationOptions = {}
@@ -80,7 +164,7 @@ export const getResponsiveImageProps = (
   return {
     src: optimizeImageUrl(src, options),
     srcSet: generateImageSrcSet(src),
-    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+    sizes: options.sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
     alt,
     width,
     height,

@@ -1,8 +1,16 @@
 import React, { useState, useCallback, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
+
+// Bundle optimization
+import { initializeOptimization } from './utils/webpackOptimization';
+import { monitorBundleSize } from './utils/bundleOptimization';
+
+// Performance monitoring
+import { initializePerformanceMonitoring } from './utils/performanceSetup';
+import './utils/monitoredFetch'; // Initialize monitored fetch
 
 // Context
 import { NavigationProvider } from './contexts/NavigationContext';
@@ -45,6 +53,11 @@ import { useImageOptimization } from './hooks/useImageOptimization';
 
 // Services
 import { errorLogger } from './services/errorLogger';
+import { performanceMetrics, trackPageView } from './services/performanceMetrics';
+
+// Performance monitoring components
+import { PerformanceAlert, PerformanceIndicator } from './components/ui/Performance/PerformanceAlert';
+import RouteTracker from './components/RouteTracker';
 
 // Pages (keep lightweight pages as regular imports)
 import Home from './pages/Home';
@@ -84,6 +97,23 @@ function App() {
 
   // State for iOS install instructions
   const [showIOSModal, setShowIOSModal] = React.useState(false);
+  
+  // State for performance dashboard
+  const [showPerformanceDashboard, setShowPerformanceDashboard] = React.useState(false);
+
+  // Initialize bundle optimization monitoring
+  React.useEffect(() => {
+    initializeOptimization();
+    monitorBundleSize();
+    
+    // Initialize comprehensive performance monitoring
+    initializePerformanceMonitoring();
+    
+    // Initialize performance metrics reporting
+    if (process.env.REACT_APP_PERFORMANCE_ENDPOINT) {
+      performanceMetrics.setReportingEndpoint(process.env.REACT_APP_PERFORMANCE_ENDPOINT);
+    }
+  }, []);
 
   // Show iOS instructions when appropriate
   React.useEffect(() => {
@@ -141,6 +171,9 @@ function App() {
               onWalletDisconnect={handleWalletDisconnect}
             />
           </BlockchainErrorBoundary>
+
+          {/* Route Performance Tracking */}
+          <RouteTracker />
 
           {/* Main Content */}
           <main>
@@ -395,6 +428,45 @@ function App() {
             isVisible={showIOSModal && showIOSInstructions}
             onDismiss={() => setShowIOSModal(false)}
           />
+
+          {/* Performance Monitoring Components */}
+          <PerformanceAlert 
+            threshold={1000}
+            position="top-right"
+            showInProduction={false}
+          />
+          <PerformanceIndicator 
+            onClick={() => setShowPerformanceDashboard(true)}
+          />
+
+          {/* Performance Dashboard Modal */}
+          {showPerformanceDashboard && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-auto">
+                <div className="p-4 border-b flex justify-between items-center">
+                  <h2 className="text-xl font-bold">Performance Dashboard</h2>
+                  <button
+                    onClick={() => setShowPerformanceDashboard(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="p-4">
+                  <Suspense fallback={<div className="p-8 text-center">Loading performance dashboard...</div>}>
+                    <LazyComponentWrapper 
+                      fallback={<ComponentLoading />}
+                      errorFallback={ComponentLoadError}
+                    >
+                      {React.lazy(() => import('./components/ui/Performance/PerformanceDashboard'))}
+                    </LazyComponentWrapper>
+                  </Suspense>
+                </div>
+              </div>
+            </div>
+          )}
             </div>
           </NavigationProvider>
         </Router>

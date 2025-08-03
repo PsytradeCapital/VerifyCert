@@ -183,7 +183,8 @@ router.post('/mint-certificate', mintRateLimit, async (req, res) => {
         recipientName,
         courseName,
         institutionName,
-        tokenURI
+        tokenURI,
+        '' // metadataHash - empty for now
       );
     } catch (estimateError) {
       console.error('Gas estimation failed:', estimateError);
@@ -212,6 +213,7 @@ router.post('/mint-certificate', mintRateLimit, async (req, res) => {
       courseName,
       institutionName,
       tokenURI,
+      '', // metadataHash - empty for now
       { gasLimit }
     );
 

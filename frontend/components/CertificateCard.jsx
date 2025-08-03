@@ -11,9 +11,11 @@ import {
   Shield,
   AlertTriangle,
   Copy,
-  Check
+  Check,
+  QrCode
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { OptimizedImage } from '../src/components/ui/OptimizedImage';
 
 /**
  * CertificateCard Component
@@ -23,6 +25,8 @@ const CertificateCard = ({
   certificate,
   variant = 'default',
   showActions = true,
+  showQR = false,
+  isPublicView = false,
   className = '',
   onVerify,
   onDownload,
@@ -40,6 +44,12 @@ const CertificateCard = ({
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  // Format address for display
+  const formatAddress = (address) => {
+    if (!address) return 'Unknown';
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   // Handle certificate verification
@@ -60,7 +70,7 @@ const CertificateCard = ({
 
   // Handle copy certificate link
   const handleCopyLink = async () => {
-    const certificateUrl = `${window.location.origin}/verify/${certificate.tokenId}`;
+    const certificateUrl = certificate.verificationURL || `${window.location.origin}/verify/${certificate.tokenId}`;
     
     try {
       await navigator.clipboard.writeText(certificateUrl);
@@ -74,7 +84,7 @@ const CertificateCard = ({
 
   // Handle share certificate
   const handleShare = async () => {
-    const certificateUrl = `${window.location.origin}/verify/${certificate.tokenId}`;
+    const certificateUrl = certificate.verificationURL || `${window.location.origin}/verify/${certificate.tokenId}`;
     
     if (navigator.share) {
       try {
@@ -121,7 +131,7 @@ const CertificateCard = ({
       };
     }
     
-    if (certificate.isVerified === true) {
+    if (certificate.isValid === true || certificate.isVerified === true) {
       return {
         status: 'verified',
         color: 'text-green-600',
@@ -155,7 +165,7 @@ const CertificateCard = ({
   return (
     <motion.div
       className={`
-        rounded-lg transition-all duration-200 overflow-hidden
+        rounded-lg transition-all duration-200 overflow-hidden relative
         ${cardVariants[variant]}
         ${className}
       `}
@@ -192,28 +202,89 @@ const CertificateCard = ({
         </div>
 
         {/* Certificate Details */}
-        <div className="space-y-3">
-          {certificate.recipientName && (
-            <div className="flex items-center text-sm text-gray-600">
-              <User className="w-4 h-4 mr-2 text-gray-400" />
-              <span className="font-medium">Recipient:</span>
-              <span className="ml-1">{certificate.recipientName}</span>
-            </div>
-          )}
-          
-          {certificate.institutionName && (
-            <div className="flex items-center text-sm text-gray-600">
-              <Building className="w-4 h-4 mr-2 text-gray-400" />
-              <span className="font-medium">Institution:</span>
-              <span className="ml-1">{certificate.institutionName}</span>
-            </div>
-          )}
-          
-          {certificate.issueDate && (
-            <div className="flex items-center text-sm text-gray-600">
-              <Calendar className="w-4 h-4 mr-2 text-gray-400" />
-              <span className="font-medium">Issued:</span>
-              <span className="ml-1">{formatDate(certificate.issueDate)}</span>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            {certificate.recipientName && (
+              <div className="flex items-center text-sm text-gray-600">
+                <User className="w-4 h-4 mr-2 text-gray-400" />
+                <span className="font-medium">Recipient:</span>
+                <span className="ml-1">{certificate.recipientName}</span>
+              </div>
+            )}
+            
+            {certificate.institutionName && (
+              <div className="flex items-center text-sm text-gray-600">
+                <Building className="w-4 h-4 mr-2 text-gray-400" />
+                <span className="font-medium">Institution:</span>
+                <span className="ml-1">{certificate.institutionName}</span>
+              </div>
+            )}
+            
+            {certificate.issueDate && (
+              <div className="flex items-center text-sm text-gray-600">
+                <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+                <span className="font-medium">Issued:</span>
+                <span className="ml-1">{formatDate(certificate.issueDate)}</span>
+              </div>
+            )}
+
+            {/* Blockchain Info */}
+            {!isPublicView && (
+              <div className="pt-3 border-t border-gray-200">
+                <h4 className="text-xs font-medium text-gray-500 mb-2">Blockchain Information</h4>
+                <div className="space-y-1">
+                  {certificate.issuer && (
+                    <div className="text-xs text-gray-600">
+                      <span className="font-medium">Issuer:</span> {formatAddress(certificate.issuer)}
+                    </div>
+                  )}
+                  {certificate.recipient && (
+                    <div className="text-xs text-gray-600">
+                      <span className="font-medium">Recipient:</span> {formatAddress(certificate.recipient)}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* QR Code Section */}
+          {showQR && certificate.qrCodeURL && (
+            <div className="flex flex-col items-center">
+              <h4 className="text-sm font-medium text-gray-500 mb-2">Verification QR Code</h4>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <OptimizedImage
+                  src={certificate.qrCodeURL}
+                  alt="Certificate QR Code"
+                  className="w-32 h-32"
+                  aspectRatio="square"
+                  responsive={false} // QR codes should maintain exact dimensions
+                  webpFallback={false} // QR codes need to be precise, avoid WebP
+                  priority={true} // QR codes are important for verification
+                  optimization={{
+                    width: 128,
+                    height: 128,
+                    quality: 100 // Maximum quality for QR codes
+                  }}
+                  loadingComponent={() => (
+                    <div className="w-32 h-32 bg-gray-200 rounded-lg flex items-center justify-center animate-pulse">
+                      <QrCode className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
+                  errorComponent={({ retry }) => (
+                    <div className="w-32 h-32 bg-gray-200 rounded-lg flex flex-col items-center justify-center">
+                      <AlertTriangle className="w-6 h-6 text-gray-400 mb-2" />
+                      <button
+                        onClick={retry}
+                        className="text-xs text-blue-600 hover:text-blue-800 underline"
+                      >
+                        Retry
+                      </button>
+                    </div>
+                  )}
+                />
+                <p className="text-xs text-gray-500 mt-2 text-center">Scan to verify</p>
+              </div>
             </div>
           )}
         </div>
@@ -311,6 +382,28 @@ const CertificateCard = ({
               </button>
             </div>
           </div>
+
+          {/* Verification URL */}
+          {certificate.verificationURL && (
+            <div className="mt-3 pt-3 border-t border-gray-200">
+              <label className="block text-xs font-medium text-gray-500 mb-1">Verification URL</label>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="text"
+                  value={certificate.verificationURL}
+                  readOnly
+                  className="flex-1 text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 font-mono"
+                />
+                <button
+                  onClick={handleCopyLink}
+                  className="text-blue-600 hover:text-blue-700 p-1"
+                  title="Copy link"
+                >
+                  <Copy className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

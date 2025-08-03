@@ -9,6 +9,7 @@
     "@types/react-dom": "^18.2.7",
     "ethers": "^6.7.1",
     "framer-motion": "^10.18.0",
+    "lodash-es": "^4.17.21",
     "lucide-react": "^0.525.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,23 +22,31 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "autoprefixer": "^10.4.14",
+    "babel-plugin-import": "^1.13.8",
+    "bundlesize": "^0.18.1",
+    "compression-webpack-plugin": "^11.1.0",
     "cypress": "^13.1.0",
     "cypress-metamask": "^1.0.0",
     "postcss": "^8.4.27",
     "serve": "^14.2.0",
     "start-server-and-test": "^2.0.0",
     "tailwindcss": "^3.3.3",
-    "vercel": "^32.0.0"
+    "terser-webpack-plugin": "^5.3.14",
+    "vercel": "^32.0.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
+    "start": "craco start",
+    "build": "craco build",
+    "build:optimized": "node scripts/pre-build-optimization.js && npm run build",
+    "build:analyze": "node scripts/pre-build-optimization.js && set ANALYZE=true && craco build",
+    "test": "craco test --watchAll=false",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
@@ -49,7 +58,12 @@
     "deploy:vercel:preview": "vercel",
     "test:pwa": "node test-pwa.js",
     "test:pwa:headless": "node test-pwa.js --headless true",
-    "test:pwa:all-browsers": "node test-pwa.js --browsers chrome,firefox,safari"
+    "test:pwa:all-browsers": "node test-pwa.js --browsers chrome,firefox,safari",
+    "analyze": "npm run build:analyze",
+    "analyze:server": "npx webpack-bundle-analyzer build/static/js/*.js",
+    "size": "npm run build && npx bundlesize",
+    "build:full": "npm run build && node scripts/post-build-analysis.js",
+    "optimize": "node scripts/pre-build-optimization.js"
   },
   "eslintConfig": {
     "extends": [
@@ -68,5 +82,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "sideEffects": false
 }

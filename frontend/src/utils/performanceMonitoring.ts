@@ -268,16 +268,7 @@ export const withPerformanceMonitoring = <T extends (...args: any[]) => any>(
   }) as T;
 };
 
-// React hook for component performance monitoring
-export const usePerformanceMonitoring = (componentName: string) => {
-  React.useEffect(() => {
-    performanceMonitor.startComponentLoad(componentName);
-    
-    return () => {
-      performanceMonitor.endComponentLoad(componentName);
-    };
-  }, [componentName]);
-};
+// Note: React hook for component performance monitoring moved to hooks/usePerformanceMonitoring.ts
 
 // Performance monitoring for lazy loading
 export const monitorLazyLoading = {
@@ -320,4 +311,3 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-import React from 'react';

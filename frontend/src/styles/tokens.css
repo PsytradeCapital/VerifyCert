@@ -5,12 +5,12 @@
 
 :root {
   /* Primary Colors */
-  --color-primary-50: #eff6ff;
+  --color-primary-50: #ffffff;
   --color-primary-100: #dbeafe;
   --color-primary-200: #bfdbfe;
   --color-primary-300: #93c5fd;
   --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
+  --color-primary-500: #2563eb;
   --color-primary-600: #2563eb;
   --color-primary-700: #1d4ed8;
   --color-primary-800: #1e40af;
@@ -35,7 +35,7 @@
   --color-neutral-100: #f3f4f6;
   --color-neutral-200: #e5e7eb;
   --color-neutral-300: #d1d5db;
-  --color-neutral-400: #9ca3af;
+  --color-neutral-400: #6b7280;
   --color-neutral-500: #6b7280;
   --color-neutral-600: #4b5563;
   --color-neutral-700: #374151;
@@ -44,34 +44,34 @@
   --color-neutral-950: #030712;
 
   /* Semantic Colors */
-  --color-success-50: #f0fdf4;
+  --color-success-50: #ffffff;
   --color-success-100: #dcfce7;
   --color-success-200: #bbf7d0;
   --color-success-300: #86efac;
   --color-success-400: #4ade80;
-  --color-success-500: #22c55e;
+  --color-success-500: #16a34a;
   --color-success-600: #16a34a;
   --color-success-700: #15803d;
   --color-success-800: #166534;
   --color-success-900: #14532d;
 
-  --color-error-50: #fef2f2;
+  --color-error-50: #ffffff;
   --color-error-100: #fee2e2;
   --color-error-200: #fecaca;
   --color-error-300: #fca5a5;
   --color-error-400: #f87171;
-  --color-error-500: #ef4444;
+  --color-error-500: #dc2626;
   --color-error-600: #dc2626;
   --color-error-700: #b91c1c;
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
 
-  --color-warning-50: #fffbeb;
+  --color-warning-50: #ffffff;
   --color-warning-100: #fef3c7;
   --color-warning-200: #fde68a;
   --color-warning-300: #fcd34d;
   --color-warning-400: #fbbf24;
-  --color-warning-500: #f59e0b;
+  --color-warning-500: #d97706;
   --color-warning-600: #d97706;
   --color-warning-700: #b45309;
   --color-warning-800: #92400e;
@@ -228,15 +228,17 @@
 /* Dark mode variants */
 [data-theme="dark"] {
   /* Override specific colors for dark mode */
+  --color-primary-50: #000000;
   --color-neutral-50: #030712;
   --color-neutral-100: #111827;
   --color-neutral-200: #1f2937;
   --color-neutral-300: #374151;
-  --color-neutral-400: #4b5563;
-  --color-neutral-500: #6b7280;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #9ca3af;
   --color-neutral-600: #9ca3af;
   --color-neutral-700: #d1d5db;
   --color-neutral-800: #e5e7eb;
   --color-neutral-900: #f3f4f6;
   --color-neutral-950: #f9fafb;
+  --color-error-50: #000000;
 }

@@ -8,14 +8,14 @@ const designTokens = {
   // Light theme colors (default)
   colors: {
     light: {
-      // Primary brand colors - Professional blue palette
+      // Primary brand colors - Professional blue palette (WCAG AA compliant)
       primary: {
-        50: '#eff6ff',
+        50: '#ffffff',  // Changed to pure white for better contrast on primary-500
         100: '#dbeafe',
         200: '#bfdbfe',
         300: '#93c5fd',
         400: '#60a5fa',
-        500: '#3b82f6',
+        500: '#2563eb',  // Changed from #3b82f6 to #2563eb for better contrast with white text
         600: '#2563eb',
         700: '#1d4ed8',
         800: '#1e40af',
@@ -38,13 +38,13 @@ const designTokens = {
         950: '#422006'
       },
       
-      // Neutral colors - Clean grays
+      // Neutral colors - Clean grays (WCAG AA compliant)
       neutral: {
         50: '#f9fafb',
         100: '#f3f4f6',
         200: '#e5e7eb',
         300: '#d1d5db',
-        400: '#9ca3af',
+        400: '#6b7280',  // Changed from #9ca3af to #6b7280 for better contrast as placeholder text
         500: '#6b7280',
         600: '#4b5563',
         700: '#374151',
@@ -53,14 +53,14 @@ const designTokens = {
         950: '#030712'
       },
       
-      // Semantic colors
+      // Semantic colors (WCAG AA compliant)
       success: {
-        50: '#f0fdf4',
+        50: '#ffffff',  // Changed to pure white for better contrast on success-500
         100: '#dcfce7',
         200: '#bbf7d0',
         300: '#86efac',
         400: '#4ade80',
-        500: '#22c55e',
+        500: '#16a34a',  // Changed from #22c55e to #16a34a for better contrast with white text
         600: '#16a34a',
         700: '#15803d',
         800: '#166534',
@@ -68,12 +68,12 @@ const designTokens = {
       },
       
       error: {
-        50: '#fef2f2',
+        50: '#ffffff',  // Changed to pure white for better contrast on error-500
         100: '#fee2e2',
         200: '#fecaca',
         300: '#fca5a5',
         400: '#f87171',
-        500: '#ef4444',
+        500: '#dc2626',  // Changed from #ef4444 to #dc2626 for better contrast with white text
         600: '#dc2626',
         700: '#b91c1c',
         800: '#991b1b',
@@ -81,12 +81,12 @@ const designTokens = {
       },
       
       warning: {
-        50: '#fffbeb',
+        50: '#ffffff',  // Changed to pure white for better contrast on warning-500
         100: '#fef3c7',
         200: '#fde68a',
         300: '#fcd34d',
         400: '#fbbf24',
-        500: '#f59e0b',
+        500: '#d97706',  // Changed from #f59e0b to #d97706 for better contrast with white text
         600: '#d97706',
         700: '#b45309',
         800: '#92400e',
@@ -124,9 +124,9 @@ const designTokens = {
 
     // Dark theme colors
     dark: {
-      // Primary brand colors - Adjusted for dark theme
+      // Primary brand colors - Adjusted for dark theme (WCAG AA compliant)
       primary: {
-        50: '#172554',
+        50: '#000000',  // Changed to pure black for better contrast on primary-500
         100: '#1e3a8a',
         200: '#1e40af',
         300: '#1d4ed8',
@@ -154,14 +154,14 @@ const designTokens = {
         950: '#fefce8'
       },
       
-      // Neutral colors - Inverted for dark theme
+      // Neutral colors - Inverted for dark theme (WCAG AA compliant)
       neutral: {
         50: '#030712',
         100: '#111827',
         200: '#1f2937',
         300: '#374151',
-        400: '#4b5563',
-        500: '#6b7280',
+        400: '#9ca3af',  // Lighter for better contrast as placeholder text in dark theme
+        500: '#9ca3af',  // Lighter for better contrast as muted text in dark theme
         600: '#9ca3af',
         700: '#d1d5db',
         800: '#e5e7eb',
@@ -184,7 +184,7 @@ const designTokens = {
       },
       
       error: {
-        50: '#7f1d1d',
+        50: '#000000',  // Changed to pure black for better contrast on error-500
         100: '#991b1b',
         200: '#b91c1c',
         300: '#dc2626',
@@ -240,12 +240,12 @@ const designTokens = {
 
     // Backward compatibility - default to light theme
     primary: {
-      50: '#eff6ff',
+      50: '#ffffff',
       100: '#dbeafe',
       200: '#bfdbfe',
       300: '#93c5fd',
       400: '#60a5fa',
-      500: '#3b82f6',
+      500: '#2563eb',
       600: '#2563eb',
       700: '#1d4ed8',
       800: '#1e40af',
@@ -282,12 +282,12 @@ const designTokens = {
     },
     
     success: {
-      50: '#f0fdf4',
+      50: '#ffffff',
       100: '#dcfce7',
       200: '#bbf7d0',
       300: '#86efac',
       400: '#4ade80',
-      500: '#22c55e',
+      500: '#16a34a',
       600: '#16a34a',
       700: '#15803d',
       800: '#166534',

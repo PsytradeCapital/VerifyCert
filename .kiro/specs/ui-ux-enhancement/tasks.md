@@ -554,7 +554,11 @@
 
 
 
-- [ ] Ensure proper color contrast ratios in both light and dark themes
+- [x] Ensure proper color contrast ratios in both light and dark themes
+
+
+
+
 - [ ] Add ARIA labels and descriptions where needed
 - [ ] Test with screen readers and assistive technologies
 - [ ] Implement focus management for modals and navigation

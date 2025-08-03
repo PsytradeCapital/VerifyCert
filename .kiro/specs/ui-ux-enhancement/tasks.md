@@ -469,7 +469,22 @@
 
 
 - [ ] Implement theme context and switching logic
+
+
+
+
+
+
+
+
+
+
+
 - [ ] Add theme toggle component in header
+
+
+
+
 - [ ] Ensure all components work properly in both themes
 - [ ] Persist theme preference in localStorage
 
@@ -484,7 +499,10 @@
 **Description:** Implement code splitting, lazy loading, and other performance optimizations to maintain fast load times.
 
 **Acceptance Criteria:**
-- [ ] Implement route-based code splitting
+- [-] Implement route-based code splitting
+
+
+
 - [ ] Add lazy loading for heavy components and images
 - [ ] Optimize bundle size with tree shaking and compression
 - [ ] Implement image optimization with WebP and responsive images

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, Menu, X, Bell, User } from 'lucide-react';
 import Button from '../Button/Button';
+import { ThemeToggle } from '../ThemeToggle';
 
 export interface UserMenuProps {
   user?: {
@@ -120,6 +121,12 @@ const Header: React.FC<HeaderProps> = ({
               <Search className="h-5 w-5" />
             </Button>
           )}
+
+          {/* Theme Toggle */}
+          <ThemeToggle 
+            size="sm" 
+            className="touch-target"
+          />
 
           {/* Notifications */}
           <Button

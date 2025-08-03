@@ -8,7 +8,7 @@
 const { designTokens: jsTokens } = require('./tokens.js');
 
 // Export with proper TypeScript typing
-export const designTokens = jsTokens as const;
+export const designTokens = jsTokens;
 
 // Type definitions for better TypeScript support
 export type ColorScale = typeof designTokens.colors.primary;
@@ -35,9 +35,9 @@ export interface ThemeConfig {
 // Helper function to get theme-specific tokens
 export const getThemeTokens = (theme: Theme): ThemeConfig => ({
   theme,
-  colors: designTokens.colors[theme],
-  shadows: designTokens.boxShadow[theme],
-  cssVariables: designTokens.cssVariables[theme]
+  colors: designTokens.colors[theme] || designTokens.colors.light,
+  shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
+  cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
 });
 
 // Color utility types

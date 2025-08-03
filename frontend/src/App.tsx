@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 // Context
 import { NavigationProvider } from './contexts/NavigationContext';
 import { FeedbackProvider } from './components/ui/Feedback';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 // Components
 import Navigation from './components/Navigation';
@@ -38,6 +39,7 @@ import NavigationStateDemo from './pages/NavigationStateDemo';
 import PageTransitionDemo from './pages/PageTransitionDemo';
 import FeedbackAnimationsDemo from './components/FeedbackAnimationsDemo';
 import PWATestPage from './pages/PWATestPage';
+import ThemeDemo from './pages/ThemeDemo';
 import NotFound from './pages/NotFound';
 
 import './App.css';
@@ -113,10 +115,11 @@ function App() {
 
   return (
     <ErrorBoundary onError={handleGlobalError}>
-      <FeedbackProvider>
-        <Router>
-          <NavigationProvider isWalletConnected={walletState.isConnected}>
-            <div className="App min-h-screen bg-gray-50">
+      <ThemeProvider>
+        <FeedbackProvider>
+          <Router>
+            <NavigationProvider isWalletConnected={walletState.isConnected}>
+            <div className="App min-h-screen bg-background text-foreground transition-colors duration-200">
           {/* Navigation */}
           <BlockchainErrorBoundary onError={handleGlobalError}>
             <Navigation
@@ -238,6 +241,15 @@ function App() {
                 />
                 
                 <Route 
+                  path="/theme-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <ThemeDemo />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
                   path="/certificate/:tokenId" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
@@ -318,6 +330,7 @@ function App() {
           </NavigationProvider>
         </Router>
       </FeedbackProvider>
+    </ThemeProvider>
     </ErrorBoundary>
   );
 }

@@ -277,17 +277,17 @@ export class NotificationEventHandler {
     // Handle different actions
     switch (action) {
       case 'view':
-        if (data.url) {
+        if (data.url && typeof self !== 'undefined' && 'clients' in self) {
           event.waitUntil(
-            clients.openWindow(data.url)
+            (self as any).clients.openWindow(data.url)
           );
         }
         break;
       case 'share':
         // Handle share action
-        if (data.certificateId) {
+        if (data.certificateId && typeof self !== 'undefined' && 'clients' in self) {
           event.waitUntil(
-            clients.openWindow(`/certificate/${data.certificateId}/share`)
+            (self as any).clients.openWindow(`/certificate/${data.certificateId}/share`)
           );
         }
         break;
@@ -296,14 +296,16 @@ export class NotificationEventHandler {
         break;
       default:
         // Default action - open the app
-        if (data.url) {
-          event.waitUntil(
-            clients.openWindow(data.url)
-          );
-        } else {
-          event.waitUntil(
-            clients.openWindow('/')
-          );
+        if (typeof self !== 'undefined' && 'clients' in self) {
+          if (data.url) {
+            event.waitUntil(
+              (self as any).clients.openWindow(data.url)
+            );
+          } else {
+            event.waitUntil(
+              (self as any).clients.openWindow('/')
+            );
+          }
         }
     }
   }

@@ -14,7 +14,7 @@ export interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
-  tokens: ThemeConfig;
+  tokens: any;
   isDark: boolean;
   isLight: boolean;
 }
@@ -34,8 +34,16 @@ export const useTheme = (): ThemeContextType => {
     }
     
     // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+    try {
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mediaQuery && mediaQuery.matches) {
+          return 'dark';
+        }
+      }
+    } catch (error) {
+      // Fallback for environments where matchMedia is not available or throws
+      console.warn('matchMedia not available, defaulting to light theme');
     }
     
     return 'light';
@@ -83,23 +91,30 @@ export const useTheme = (): ThemeContextType => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const handleChange = (e: MediaQueryListEvent) => {
-      // Only update if no theme is stored (user hasn't made a choice)
-      const stored = localStorage.getItem(THEME_STORAGE_KEY);
-      if (!stored) {
-        const newTheme = e.matches ? 'dark' : 'light';
-        setThemeState(newTheme);
-        applyTheme(newTheme);
-      }
-    };
+    try {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      const handleChange = (e: MediaQueryListEvent) => {
+        // Only update if no theme is stored (user hasn't made a choice)
+        const stored = localStorage.getItem(THEME_STORAGE_KEY);
+        if (!stored) {
+          const newTheme = e.matches ? 'dark' : 'light';
+          setThemeState(newTheme);
+          applyTheme(newTheme);
+        }
+      };
 
-    mediaQuery.addEventListener('change', handleChange);
-    
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-    };
+      if (mediaQuery && mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleChange);
+        
+        return () => {
+          mediaQuery.removeEventListener('change', handleChange);
+        };
+      }
+    } catch (error) {
+      // Fallback for environments where matchMedia is not available
+      console.warn('matchMedia not available for theme change detection');
+    }
   }, [applyTheme]);
 
   // Apply theme on mount and when theme changes
@@ -136,7 +151,16 @@ export const getCurrentTheme = (): Theme => {
 export const isSystemDarkMode = (): boolean => {
   if (typeof window === 'undefined') return false;
   
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  try {
+    if (window.matchMedia) {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      return mediaQuery && mediaQuery.matches;
+    }
+  } catch (error) {
+    console.warn('matchMedia not available for system theme detection');
+  }
+  
+  return false;
 };
 
 /**

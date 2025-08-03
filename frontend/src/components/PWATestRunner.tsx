@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { pwaBrowserTester, PWATestSuite } from '../tests/pwa-browser-tests';
 
 interface TestRunnerProps {

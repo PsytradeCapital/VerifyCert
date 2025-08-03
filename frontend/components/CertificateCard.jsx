@@ -1,40 +1,7 @@
 import React from 'react';
 import { Shield, Calendar, User, Building, ExternalLink, Download, Share2, AlertTriangle, CheckCircle } from 'lucide-react';
 
-export interface Certificate {
-  tokenId: string;
-  recipientName: string;
-  courseName: string;
-  institutionName: string;
-  issueDate: number;
-  issuer: string;
-  recipient?: string;
-  isRevoked?: boolean;
-  isValid?: boolean;
-  blockchainProof?: {
-    transactionHash?: string;
-    blockNumber?: number;
-    network?: string;
-    contractAddress?: string;
-  };
-  qrCodeURL?: string;
-  verificationURL?: string;
-  metadata?: any;
-}
-
-interface CertificateCardProps {
-  certificate: Certificate;
-  showActions?: boolean;
-  compact?: boolean;
-  showQR?: boolean;
-  isPublicView?: boolean;
-  onVerify?: (certificate: Certificate) => void;
-  onDownload?: (certificate: Certificate) => void;
-  onShare?: (certificate: Certificate) => void;
-  onRevoke?: (certificate: Certificate) => void;
-}
-
-const CertificateCard: React.FC<CertificateCardProps> = ({ 
+const CertificateCard = ({ 
   certificate, 
   showActions = true, 
   compact = false,
@@ -58,7 +25,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
     verificationURL
   } = certificate;
 
-  const formatDate = (timestamp: number) => {
+  const formatDate = (timestamp) => {
     return new Date(timestamp * 1000).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -343,3 +310,24 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 };
 
 export default CertificateCard;
+
+// Export Certificate interface for TypeScript projects
+export const Certificate = {};
+
+// Certificate type definition for JSDoc
+/**
+ * @typedef {Object} Certificate
+ * @property {string} tokenId - Unique token identifier
+ * @property {string} recipientName - Name of certificate recipient
+ * @property {string} courseName - Name of the course/program
+ * @property {string} institutionName - Name of issuing institution
+ * @property {number} issueDate - Unix timestamp of issue date
+ * @property {string} issuer - Address of certificate issuer
+ * @property {string} [recipient] - Address of certificate recipient
+ * @property {boolean} [isRevoked] - Whether certificate is revoked
+ * @property {boolean} [isValid] - Whether certificate is valid
+ * @property {Object} [blockchainProof] - Blockchain verification data
+ * @property {string} [qrCodeURL] - QR code image URL
+ * @property {string} [verificationURL] - Public verification URL
+ * @property {any} [metadata] - Additional certificate metadata
+ */

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PWATestRunner from '../components/PWATestRunner';
 import PWAInstallTest from '../components/PWAInstallTest';
-import { useServiceWorker, useOfflineStatus, usePWAInstallation } from '../hooks/useServiceWorker';
+import { useServiceWorker, useOfflineStatus } from '../hooks/useServiceWorker';
 import { PWATestSuite } from '../tests/pwa-browser-tests';
 
 const PWATestPage: React.FC = () => {
   const [swState, swActions] = useServiceWorker();
   const isOffline = useOfflineStatus();
-  const pwaInstall = usePWAInstallation();
   const [testResults, setTestResults] = useState<PWATestSuite | null>(null);
   const [networkTest, setNetworkTest] = useState<'idle' | 'testing' | 'online' | 'offline'>('idle');
 

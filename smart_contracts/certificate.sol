@@ -89,15 +89,13 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
      * @param courseName Name of the course/program
      * @param institutionName Name of the issuing institution
      * @param tokenURI IPFS URI for certificate metadata
-     * @param ipfsHash IPFS hash for additional verification
      */
     function issueCertificate(
         address recipient,
         string memory recipientName,
         string memory courseName,
         string memory institutionName,
-        string memory tokenURI,
-        string memory ipfsHash
+        string memory tokenURI
     ) public onlyAuthorizedIssuer nonReentrant whenNotPaused returns (uint256) {
         require(recipient != address(0), "Invalid recipient address");
         require(bytes(recipientName).length > 0, "Recipient name required");
@@ -119,7 +117,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
             issuer: msg.sender,
             recipient: recipient,
             isRevoked: false,
-            ipfsHash: ipfsHash
+            ipfsHash: ""
         });
         
         // Track certificates by recipient and issuer
@@ -166,8 +164,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
                 recipientNames[i],
                 courseName,
                 institutionName,
-                tokenURI,
-                ""
+                tokenURI
             );
         }
         

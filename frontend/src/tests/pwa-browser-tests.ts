@@ -27,10 +27,8 @@ export interface PWATestSuite {
 }
 
 export class PWABrowserTester {
-  private results: PWATestResult[] = [];
-  
   constructor() {
-    this.results = [];
+    // Initialize tester
   }
 
   /**
@@ -38,7 +36,6 @@ export class PWABrowserTester {
    */
   getBrowserInfo(): BrowserInfo {
     const ua = navigator.userAgent;
-    const platform = navigator.platform;
     
     let name = 'Unknown';
     let version = 'Unknown';
@@ -78,7 +75,7 @@ export class PWABrowserTester {
       name,
       version,
       engine,
-      platform,
+      platform: navigator.platform,
       isMobile
     };
   }

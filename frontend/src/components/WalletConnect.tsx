@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
+import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
 
 interface WalletConnectProps {
   onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
@@ -255,23 +256,34 @@ export default function WalletConnect({
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
+  const warningId = generateAriaId('metamask-warning');
+  const statusId = generateAriaId('wallet-status');
+
   if (!isMetaMaskInstalled()) {
     return (
-      <div className={`bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}`}>
+      <div 
+        className={`bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}`}
+        role="alert"
+        aria-labelledby={`${warningId}-title`}
+        aria-describedby={`${warningId}-description`}
+      >
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
-            <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+            <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
             </svg>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-yellow-800">MetaMask Required</h3>
-            <p className="text-sm text-yellow-700 mt-1">
+            <h3 id={`${warningId}-title`} className="text-sm font-medium text-yellow-800">
+              MetaMask Required
+            </h3>
+            <p id={`${warningId}-description`} className="text-sm text-yellow-700 mt-1">
               Please install MetaMask to connect your wallet.
             </p>
             <button
               onClick={() => window.open('https://metamask.io/download/', '_blank')}
-              className="mt-2 text-sm bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1 rounded transition-colors"
+              className="mt-2 text-sm bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              aria-label="Install MetaMask browser extension"
             >
               Install MetaMask
             </button>

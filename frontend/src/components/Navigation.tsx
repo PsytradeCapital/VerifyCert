@@ -5,6 +5,7 @@ import { useNavigation } from '../contexts/NavigationContext';
 import { useActiveIndicator } from '../hooks/useActiveIndicator';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { LazyLogo } from './ui/LazyAssets';
+import { ariaLabels, generateAriaId } from '../utils/ariaUtils';
 
 interface NavigationProps {
   walletAddress?: string | null;
@@ -57,18 +58,29 @@ export default function Navigation({
     onWalletDisconnect?.();
   };
 
+  const navId = generateAriaId('main-nav');
+  const mobileMenuId = generateAriaId('mobile-menu');
+
   return (
-    <nav className="bg-background shadow-sm border-b border-border sticky top-0 z-50 transition-colors duration-200">
+    <nav 
+      className="bg-background shadow-sm border-b border-border sticky top-0 z-50 transition-colors duration-200"
+      role="navigation"
+      aria-label={ariaLabels.navigation.main}
+    >
       <div className="container-responsive">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo and primary navigation */}
           <div className="flex items-center min-w-0 flex-1">
             <div className="flex-shrink-0">
-              <Link to="/" className="flex items-center">
+              <Link 
+                to="/" 
+                className="flex items-center"
+                aria-label="VerifyCert home page"
+              >
                 <div className="h-7 w-7 sm:h-8 sm:w-8 bg-blue-600 rounded-lg flex items-center justify-center overflow-hidden">
                   <LazyLogo 
                     className="h-4 w-4 sm:h-5 sm:w-5 text-white" 
-                    alt="VerifyCert Logo"
+                    alt={ariaLabels.media.logo}
                   />
                 </div>
                 <span className="ml-2 text-lg sm:text-xl font-bold text-foreground truncate">VerifyCert</span>
@@ -76,7 +88,11 @@ export default function Navigation({
             </div>
             
             {/* Desktop navigation */}
-            <div className="hidden md:ml-6 md:flex md:space-x-4 lg:space-x-8">
+            <div 
+              className="hidden md:ml-6 md:flex md:space-x-4 lg:space-x-8"
+              role="menubar"
+              aria-label="Main navigation menu"
+            >
               {navigationItems.map((item) => {
                 // Show all public routes, and private routes only if wallet is connected
                 const shouldShow = item.public || isWalletConnected;
@@ -100,6 +116,9 @@ export default function Navigation({
                         ? `border-primary text-foreground bg-primary/10 ${indicatorStyles.itemClasses}`
                         : 'border-transparent text-muted-foreground hover:border-border hover:text-foreground hover:bg-muted'
                     } ${indicatorStyles.transitionClasses}`}
+                    role="menuitem"
+                    aria-current={isActive ? 'page' : undefined}
+                    aria-label={`Navigate to ${item.name}`}
                   >
                     {/* Active indicator */}
                     {isActive && <div className={indicatorStyles.indicatorClasses} />}
@@ -130,7 +149,9 @@ export default function Navigation({
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="touch-target p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary transition-colors"
                 aria-expanded={isMobileMenuOpen}
-                aria-label="Toggle navigation menu"
+                aria-controls={mobileMenuId}
+                aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-describedby="mobile-menu-description"
               >
                 {!isMobileMenuOpen ? (
                   <svg className="block h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,7 +170,17 @@ export default function Navigation({
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background transition-colors duration-200">
+        <div 
+          id={mobileMenuId}
+          className="md:hidden border-t border-border bg-background transition-colors duration-200"
+          role="menu"
+          aria-label={ariaLabels.navigation.mobileMenu}
+        >
+          {/* Screen reader description */}
+          <div id="mobile-menu-description" className="sr-only">
+            Mobile navigation menu with links to main application sections
+          </div>
+          
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigationItems.map((item) => {
               // Show all public routes, and private routes only if wallet is connected
@@ -175,6 +206,9 @@ export default function Navigation({
                       ? `bg-primary/10 border-primary text-primary ${indicatorStyles.itemClasses}`
                       : 'border-transparent text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground'
                   } ${indicatorStyles.transitionClasses}`}
+                  role="menuitem"
+                  aria-current={isActive ? 'page' : undefined}
+                  aria-label={`Navigate to ${item.name}`}
                 >
                   {/* Active indicator */}
                   {isActive && <div className={indicatorStyles.indicatorClasses} />}

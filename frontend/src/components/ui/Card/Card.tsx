@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cardInteractions } from '../../../utils/interactionAnimations';
+import { generateAriaId } from '../../../utils/ariaUtils';
 
 export interface CardProps {
   children: React.ReactNode;
@@ -64,9 +65,14 @@ const Card: React.FC<CardProps> = ({
     : {};
 
   const MotionDiv = motion.div;
+  
+  // Generate unique ID for aria-describedby if needed
+  const cardId = generateAriaId('card');
+  const descriptionId = ariaDescribedBy || (onClick ? `${cardId}-description` : undefined);
 
   // Determine appropriate ARIA attributes and tab index
   const cardProps = {
+    id: cardId,
     className: `
       ${baseClasses}
       ${variantClasses[variant]}
@@ -78,13 +84,18 @@ const Card: React.FC<CardProps> = ({
     onKeyDown: onClick || onKeyDown ? handleKeyDown : undefined,
     tabIndex: onClick ? (tabIndex !== undefined ? tabIndex : 0) : tabIndex,
     role: onClick ? (role || 'button') : role,
-    'aria-label': ariaLabel,
-    'aria-describedby': ariaDescribedBy,
+    'aria-label': ariaLabel || (onClick ? 'Interactive card' : undefined),
+    'aria-describedby': descriptionId,
     ...animationProps
   };
 
   return (
     <MotionDiv {...cardProps}>
+      {onClick && !ariaDescribedBy && (
+        <div id={descriptionId} className="sr-only">
+          Interactive card. Press Enter or Space to activate.
+        </div>
+      )}
       {children}
     </MotionDiv>
   );

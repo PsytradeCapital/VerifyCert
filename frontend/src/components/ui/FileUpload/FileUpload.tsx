@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { ariaLabels, ariaDescriptions, generateAriaId } from '../../../utils/ariaUtils';
 
 export interface FileUploadProps {
   onFileSelect: (files: File[]) => void;
@@ -164,7 +165,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
     };
   }, [selectedFiles]);
 
-  const uploadId = `upload-${Math.random().toString(36).substr(2, 9)}`;
+  const uploadId = generateAriaId('file-upload');
+  const descriptionId = generateAriaId('upload-description');
+  const instructionsId = generateAriaId('upload-instructions');
 
   return (
     <div className={className}>
@@ -173,6 +176,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
           {label}
         </label>
       )}
+      
+      {/* Screen reader instructions */}
+      <div id={instructionsId} className="sr-only">
+        {ariaDescriptions.forms.fileUpload}
+      </div>
 
       <div
         className={`
@@ -190,7 +198,21 @@ const FileUpload: React.FC<FileUploadProps> = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={handleClick}
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        aria-label={ariaLabels.forms.fileUpload}
+        aria-describedby={`${instructionsId} ${descriptionId}`}
+        onKeyDown={(e) => {
+          if ((e.key === 'Enter' || e.key === ' ') && !disabled) {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
       >
+        {/* Description for screen readers */}
+        <div id={descriptionId} className="sr-only">
+          {ariaDescriptions.forms.dragDrop}
+        </div>
         <input
           ref={fileInputRef}
           id={uploadId}
@@ -200,6 +222,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           multiple={multiple}
           onChange={handleInputChange}
           disabled={disabled}
+          aria-describedby={instructionsId}
         />
 
         <div className="text-center">

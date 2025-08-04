@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { designTokens } from '../../../styles/tokens';
 import { selectInteractions } from '../../../utils/interactionAnimations';
+import { generateAriaId, ariaLabels, createFieldRelationships } from '../../../utils/ariaUtils';
 
 export interface SelectOption {
   value: string;
@@ -202,7 +203,12 @@ const Select: React.FC<SelectProps> = ({
     setSearchTerm('');
   };
 
-  const selectId = `select-${Math.random().toString(36).substr(2, 9)}`;
+  const selectId = generateAriaId('select');
+  const listboxId = generateAriaId('listbox');
+  const searchInputId = generateAriaId('search-input');
+  
+  // Create field relationships for accessibility
+  const fieldRelationships = createFieldRelationships('select');
 
   // Size-based styles
   const sizeStyles = {
@@ -242,7 +248,11 @@ const Select: React.FC<SelectProps> = ({
   return (
     <div className={className} data-testid={testId}>
       {label && (
-        <label htmlFor={selectId} className="block text-sm font-medium text-neutral-700 mb-1">
+        <label 
+          htmlFor={selectId} 
+          id={fieldRelationships.labelId}
+          className="block text-sm font-medium text-neutral-700 mb-1"
+        >
           {label}
         </label>
       )}
@@ -272,7 +282,10 @@ const Select: React.FC<SelectProps> = ({
           disabled={disabled || loading}
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          aria-controls={listboxId}
           aria-activedescendant={isOpen && focusedIndex >= 0 ? `${selectId}-option-${focusedIndex}` : undefined}
+          aria-label={label ? undefined : 'Select an option'}
+          aria-describedby={fieldRelationships.getInputProps(!!error, !!helperText)['aria-describedby']}
           {...(enableAnimations && !disabled && !loading ? selectInteractions.trigger : {})}
         >
           <div className="flex items-center justify-between">
@@ -287,23 +300,17 @@ const Select: React.FC<SelectProps> = ({
             
             <div className="flex items-center ml-2">
               {clearable && selectedOption && !disabled && !loading && (
-                <span
+                <button
+                  type="button"
                   onClick={handleClear}
-                  className="mr-1 p-1 rounded-full hover:bg-neutral-100 transition-colors duration-150 cursor-pointer"
-                  aria-label="Clear selection"
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      handleClear(e);
-                    }
-                  }}
+                  className="mr-1 p-1 rounded-full hover:bg-neutral-100 transition-colors duration-150 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  aria-label={ariaLabels.buttons.delete}
+                  title="Clear selection"
                 >
-                  <svg className="h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                </span>
+                </button>
               )}
               
               {loading ? (
@@ -334,9 +341,12 @@ const Select: React.FC<SelectProps> = ({
         <AnimatePresence>
           {isOpen && (
             <motion.div 
+              id={listboxId}
               className="absolute z-dropdown mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 ring-1 ring-neutral-200 overflow-auto focus:outline-none"
               style={{ zIndex: designTokens.zIndex.dropdown }}
               role="listbox"
+              aria-label="Select options"
+              aria-multiselectable="false"
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -347,6 +357,7 @@ const Select: React.FC<SelectProps> = ({
                 <div className="relative">
                   <input
                     ref={inputRef}
+                    id={searchInputId}
                     type="text"
                     className={`
                       w-full border border-neutral-300 rounded-md 
@@ -357,12 +368,18 @@ const Select: React.FC<SelectProps> = ({
                     placeholder="Search options..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    aria-label={ariaLabels.forms.search}
+                    aria-describedby="search-description"
                   />
+                  <div id="search-description" className="sr-only">
+                    Type to filter the available options
+                  </div>
                   <svg 
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400"
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -424,8 +441,13 @@ const Select: React.FC<SelectProps> = ({
       </div>
 
       {error && (
-        <p className="mt-1 text-sm text-error-600 flex items-center">
-          <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <p 
+          id={fieldRelationships.errorId}
+          className="mt-1 text-sm text-error-600 flex items-center"
+          role="alert"
+          aria-live="polite"
+        >
+          <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
           {error}
@@ -433,7 +455,12 @@ const Select: React.FC<SelectProps> = ({
       )}
       
       {helperText && !error && (
-        <p className="mt-1 text-sm text-neutral-500">{helperText}</p>
+        <p 
+          id={fieldRelationships.helpId}
+          className="mt-1 text-sm text-neutral-500"
+        >
+          {helperText}
+        </p>
       )}
     </div>
   );

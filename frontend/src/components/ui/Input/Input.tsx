@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { inputInteractions } from '../../../utils/interactionAnimations';
+import { createFieldRelationships, ariaLabels } from '../../../utils/ariaUtils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -9,6 +10,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   icon?: React.ReactNode;
   validationState?: 'default' | 'success' | 'error';
   enableAnimations?: boolean;
+  fieldName?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({
@@ -19,6 +21,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   validationState = 'default',
   className = '',
   enableAnimations = true,
+  fieldName,
+  required,
   ...props
 }, ref) => {
   const baseClasses = 'w-full px-3 py-2 border rounded-lg focus:outline-none transition-colors';
@@ -31,19 +35,32 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
 
   const currentState = error ? 'error' : validationState;
   const animationProps = enableAnimations ? inputInteractions[currentState] || inputInteractions.default : {};
+  
+  // Create field relationships for accessibility
+  const fieldRelationships = fieldName ? createFieldRelationships(fieldName) : null;
+  const inputId = props.id || fieldRelationships?.labelId || `input-${Math.random().toString(36).substr(2, 9)}`;
 
   return (
     <div className="space-y-1">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label 
+          htmlFor={inputId}
+          id={fieldRelationships?.labelId}
+          className="block text-sm font-medium text-gray-700"
+        >
           {label}
+          {required && (
+            <span className="text-red-500 ml-1" aria-label={ariaLabels.forms.required}>
+              *
+            </span>
+          )}
         </label>
       )}
       
       <div className="relative">
         {icon && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <div className="text-gray-400">
+            <div className="text-gray-400" aria-hidden="true">
               {icon}
             </div>
           </div>
@@ -51,20 +68,34 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         
         <motion.input
           ref={ref}
+          id={inputId}
           className={`
             ${baseClasses}
             ${stateClasses[currentState]}
             ${icon ? 'pl-10' : ''}
             ${className}
           `}
+          aria-required={required}
+          aria-invalid={!!error}
+          {...(fieldRelationships ? fieldRelationships.getInputProps(!!error, !!helperText) : {})}
           {...animationProps}
           {...props}
         />
       </div>
       
       {error && (
-        <p className="text-sm text-red-600 flex items-center">
-          <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <p 
+          id={fieldRelationships?.errorId}
+          className="text-sm text-red-600 flex items-center"
+          role="alert"
+          aria-live="polite"
+        >
+          <svg 
+            className="mr-1 h-4 w-4" 
+            fill="currentColor" 
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+          >
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
           {error}
@@ -72,7 +103,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       )}
       
       {helperText && !error && (
-        <p className="text-sm text-gray-500">{helperText}</p>
+        <p 
+          id={fieldRelationships?.helpId}
+          className="text-sm text-gray-500"
+        >
+          {helperText}
+        </p>
       )}
     </div>
   );

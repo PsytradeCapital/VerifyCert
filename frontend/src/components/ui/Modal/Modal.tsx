@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { createModalRelationships, ariaLabels } from '../../../utils/ariaUtils';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -31,6 +32,11 @@ const Modal: React.FC<ModalProps> = ({
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const firstFocusableRef = useRef<HTMLElement | null>(null);
   const lastFocusableRef = useRef<HTMLElement | null>(null);
+  
+  // Create modal relationships for accessibility
+  const modalRelationships = createModalRelationships('modal');
+  const titleId = title ? modalRelationships.titleId : undefined;
+  const descriptionId = modalRelationships.descriptionId;
 
   // Handle escape key
   useEffect(() => {
@@ -169,6 +175,7 @@ const Modal: React.FC<ModalProps> = ({
             animate="visible"
             exit="hidden"
             onClick={handleBackdropClick}
+            aria-hidden="true"
           />
 
           {/* Modal */}
@@ -186,14 +193,19 @@ const Modal: React.FC<ModalProps> = ({
             tabIndex={-1}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={title ? 'modal-title' : undefined}
+            aria-labelledby={titleId}
+            aria-describedby={descriptionId}
             onKeyDown={handleKeyDown}
           >
+            {/* Screen reader description */}
+            <div id={descriptionId} className="sr-only">
+              Modal dialog. Press Escape to close or use the close button.
+            </div>
             {/* Header */}
             {(title || showCloseButton) && (
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
                 {title && (
-                  <h2 id="modal-title" className="text-lg font-semibold text-gray-900">
+                  <h2 id={titleId} className="text-lg font-semibold text-gray-900">
                     {title}
                   </h2>
                 )}
@@ -201,9 +213,13 @@ const Modal: React.FC<ModalProps> = ({
                   <button
                     onClick={onClose}
                     className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    aria-label="Close modal"
+                    aria-label={ariaLabels.buttons.close}
+                    aria-describedby="close-button-description"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-5 h-5" aria-hidden="true" />
+                    <span id="close-button-description" className="sr-only">
+                      Close this modal dialog
+                    </span>
                   </button>
                 )}
               </div>

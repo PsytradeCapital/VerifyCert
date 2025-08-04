@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
 import { LazyImage } from '../utils/lazyLoading';
 import { OptimizedImage } from './ui/OptimizedImage';
+import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
 
 export interface Certificate {
   tokenId: string;
@@ -37,6 +38,12 @@ export default function CertificateCard({
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const feedback = useFeedbackAnimations();
+  
+  // Generate IDs for ARIA relationships
+  const cardId = generateAriaId('certificate-card');
+  const detailsId = generateAriaId('certificate-details');
+  const actionsId = generateAriaId('certificate-actions');
+  const qrCodeId = generateAriaId('qr-code');
 
   const formatDate = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleDateString('en-US', {
@@ -181,39 +188,57 @@ export default function CertificateCard({
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden ${className}`}>
+    <article 
+      id={cardId}
+      className={`bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden ${className}`}
+      role="article"
+      aria-labelledby={`${cardId}-title`}
+      aria-describedby={detailsId}
+    >
       {/* Certificate Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-2">Certificate of Completion</h2>
+            <h2 id={`${cardId}-title`} className="text-2xl font-bold mb-2">
+              Certificate of Completion
+            </h2>
             <p className="text-blue-100">Verified on Blockchain</p>
           </div>
           {certificate.isValid ? (
-            <div className="flex items-center space-x-2 bg-green-500 px-3 py-1 rounded-full">
-              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <div 
+              className="flex items-center space-x-2 bg-green-500 px-3 py-1 rounded-full"
+              role="status"
+              aria-label={ariaLabels.status.verified}
+            >
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               <span className="text-sm font-medium">Verified</span>
             </div>
           ) : (
-            <div className="flex items-center space-x-2 bg-red-500 px-3 py-1 rounded-full">
-              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <div 
+              className="flex items-center space-x-2 bg-red-500 px-3 py-1 rounded-full"
+              role="status"
+              aria-label={ariaLabels.status.unverified}
+            >
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
               <span className="text-sm font-medium">Invalid</span>
             </div>
           )}
         </div>
-      </div>
+      </header>
 
       {/* Certificate Body */}
       <div className="p-6">
         <div className="grid md:grid-cols-2 gap-6">
           {/* Certificate Details */}
-          <div className="space-y-4">
+          <section id={detailsId} className="space-y-4" aria-labelledby="details-heading">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Certificate Details</h3>
+              <h3 id="details-heading" className="text-lg font-semibold text-gray-900 mb-4">
+                Certificate Details
+              </h3>
               
               <div className="space-y-3">
                 <div>
@@ -261,14 +286,23 @@ export default function CertificateCard({
           </div>
 
           {/* QR Code and Actions */}
-          <div className="space-y-4">
+          <aside className="space-y-4" aria-labelledby="qr-actions-heading">
             {showQR && certificate.qrCodeURL && (
               <div>
-                <h4 className="text-sm font-medium text-gray-500 mb-2">Verification QR Code</h4>
-                <div className="bg-gray-50 p-4 rounded-lg text-center">
+                <h4 id="qr-actions-heading" className="text-sm font-medium text-gray-500 mb-2">
+                  Verification QR Code
+                </h4>
+                <div 
+                  className="bg-gray-50 p-4 rounded-lg text-center"
+                  role="img"
+                  aria-labelledby={qrCodeId}
+                >
+                  <div id={qrCodeId} className="sr-only">
+                    {ariaDescriptions.certificates.qrCode}
+                  </div>
                   <OptimizedImage
                     src={certificate.qrCodeURL}
-                    alt="Certificate QR Code"
+                    alt={ariaLabels.media.qrCode}
                     className="mx-auto max-w-32 max-h-32"
                     aspectRatio="square"
                     responsive={false} // QR codes should maintain exact dimensions
@@ -307,15 +341,20 @@ export default function CertificateCard({
             )}
 
             {/* Action Buttons */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-medium text-gray-500">Actions</h4>
+            <section id={actionsId} className="space-y-3" aria-labelledby="actions-heading">
+              <h4 id="actions-heading" className="text-sm font-medium text-gray-500">Actions</h4>
               
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-1 gap-2" role="group" aria-labelledby="actions-heading">
                 <button
                   onClick={handleDownload}
                   disabled={isLoading}
                   className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  aria-label={ariaLabels.actions.downloadCertificate}
+                  aria-describedby="download-description"
                 >
+                  <div id="download-description" className="sr-only">
+                    {ariaDescriptions.certificates.download}
+                  </div>
                   {isLoading ? (
                     <>
                       <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
@@ -337,8 +376,13 @@ export default function CertificateCard({
                 <button
                   onClick={handleShare}
                   className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  aria-label={ariaLabels.actions.shareCertificate}
+                  aria-describedby="share-description"
                 >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div id="share-description" className="sr-only">
+                    {ariaDescriptions.certificates.share}
+                  </div>
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                   </svg>
                   <span>Share</span>
@@ -347,8 +391,13 @@ export default function CertificateCard({
                 <button
                   onClick={handleCopyLink}
                   className="flex items-center justify-center space-x-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  aria-label={ariaLabels.actions.copyCertificateLink}
+                  aria-describedby="copy-description"
                 >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div id="copy-description" className="sr-only">
+                    Copy the verification link for this certificate to your clipboard
+                  </div>
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                   </svg>
                   <span>Copy Link</span>

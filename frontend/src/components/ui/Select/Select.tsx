@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { designTokens } from '../../../styles/tokens';
 import { selectInteractions } from '../../../utils/interactionAnimations';
 import { generateAriaId, ariaLabels, createFieldRelationships } from '../../../utils/ariaUtils';
+import { useDropdownFocus } from '../../../hooks/useFocusManagement';
 
 export interface SelectOption {
   value: string;
@@ -55,6 +56,9 @@ const Select: React.FC<SelectProps> = ({
   const selectRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  
+  // Use dropdown focus management hook
+  const { triggerRef, menuRef } = useDropdownFocus(isOpen);
 
   const selectedOption = options.find(option => option.value === value);
   
@@ -259,6 +263,7 @@ const Select: React.FC<SelectProps> = ({
       
       <div className="relative" ref={selectRef}>
         <motion.button
+          ref={triggerRef}
           id={selectId}
           type="button"
           className={`
@@ -341,6 +346,7 @@ const Select: React.FC<SelectProps> = ({
         <AnimatePresence>
           {isOpen && (
             <motion.div 
+              ref={menuRef}
               id={listboxId}
               className="absolute z-dropdown mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 ring-1 ring-neutral-200 overflow-auto focus:outline-none"
               style={{ zIndex: designTokens.zIndex.dropdown }}

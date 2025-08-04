@@ -1,11 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import WalletConnect from './WalletConnect';
 import { useNavigation } from '../contexts/NavigationContext';
 import { useActiveIndicator } from '../hooks/useActiveIndicator';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { LazyLogo } from './ui/LazyAssets';
 import { ariaLabels, generateAriaId } from '../utils/ariaUtils';
+import { NavigationFocusManager, focusUtils } from '../utils/focusManagement';
 
 interface NavigationProps {
   walletAddress?: string | null;
@@ -23,6 +24,13 @@ export default function Navigation({
   const location = useLocation();
   const navigation = useNavigation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Focus management refs
+  const desktopNavRef = useRef<HTMLDivElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const desktopFocusManagerRef = useRef<NavigationFocusManager | null>(null);
+  const mobileFocusManagerRef = useRef<NavigationFocusManager | null>(null);
 
   const navigationItems = [
     { name: 'Home', href: '/', public: true },
@@ -61,6 +69,78 @@ export default function Navigation({
   const navId = generateAriaId('main-nav');
   const mobileMenuId = generateAriaId('mobile-menu');
 
+  // Initialize focus managers for desktop and mobile navigation
+  useEffect(() => {
+    if (desktopNavRef.current) {
+      const navItems = Array.from(
+        desktopNavRef.current.querySelectorAll('[role="menuitem"]')
+      ) as HTMLElement[];
+      
+      if (navItems.length > 0) {
+        desktopFocusManagerRef.current = new NavigationFocusManager(navItems, {
+          orientation: 'horizontal',
+          wrap: true,
+        });
+      }
+    }
+  }, [isWalletConnected]); // Re-initialize when wallet connection changes
+
+  // Handle mobile menu focus management
+  useEffect(() => {
+    if (isMobileMenuOpen && mobileNavRef.current) {
+      const navItems = Array.from(
+        mobileNavRef.current.querySelectorAll('[role="menuitem"]')
+      ) as HTMLElement[];
+      
+      if (navItems.length > 0) {
+        mobileFocusManagerRef.current = new NavigationFocusManager(navItems, {
+          orientation: 'vertical',
+          wrap: true,
+        });
+        
+        // Focus first item when mobile menu opens
+        setTimeout(() => {
+          navItems[0]?.focus();
+        }, 0);
+      }
+    } else if (!isMobileMenuOpen && mobileMenuButtonRef.current) {
+      // Return focus to menu button when mobile menu closes
+      mobileMenuButtonRef.current.focus();
+    }
+  }, [isMobileMenuOpen]);
+
+  // Handle keyboard navigation for desktop nav
+  const handleDesktopNavKeyDown = (event: React.KeyboardEvent) => {
+    if (desktopFocusManagerRef.current) {
+      desktopFocusManagerRef.current.handleKeyDown(event.nativeEvent);
+    }
+  };
+
+  // Handle keyboard navigation for mobile nav
+  const handleMobileNavKeyDown = (event: React.KeyboardEvent) => {
+    if (mobileFocusManagerRef.current) {
+      mobileFocusManagerRef.current.handleKeyDown(event.nativeEvent);
+    }
+    
+    // Close mobile menu on Escape
+    if (event.key === 'Escape') {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  // Handle mobile menu toggle with proper focus management
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    
+    if (!isMobileMenuOpen) {
+      // Announce menu opening to screen readers
+      focusUtils.announce('Navigation menu opened', 'polite');
+    } else {
+      // Announce menu closing to screen readers
+      focusUtils.announce('Navigation menu closed', 'polite');
+    }
+  };
+
   return (
     <nav 
       className="bg-background shadow-sm border-b border-border sticky top-0 z-50 transition-colors duration-200"
@@ -89,9 +169,11 @@ export default function Navigation({
             
             {/* Desktop navigation */}
             <div 
+              ref={desktopNavRef}
               className="hidden md:ml-6 md:flex md:space-x-4 lg:space-x-8"
               role="menubar"
               aria-label="Main navigation menu"
+              onKeyDown={handleDesktopNavKeyDown}
             >
               {navigationItems.map((item) => {
                 // Show all public routes, and private routes only if wallet is connected
@@ -146,7 +228,8 @@ export default function Navigation({
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                ref={mobileMenuButtonRef}
+                onClick={handleMobileMenuToggle}
                 className="touch-target p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary transition-colors"
                 aria-expanded={isMobileMenuOpen}
                 aria-controls={mobileMenuId}
@@ -171,10 +254,12 @@ export default function Navigation({
       {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div 
+          ref={mobileNavRef}
           id={mobileMenuId}
           className="md:hidden border-t border-border bg-background transition-colors duration-200"
           role="menu"
           aria-label={ariaLabels.navigation.mobileMenu}
+          onKeyDown={handleMobileNavKeyDown}
         >
           {/* Screen reader description */}
           <div id="mobile-menu-description" className="sr-only">
@@ -200,6 +285,8 @@ export default function Navigation({
                     e.preventDefault();
                     navigation.actions.navigateTo(item.href);
                     setIsMobileMenuOpen(false);
+                    // Announce navigation to screen readers
+                    focusUtils.announce(`Navigated to ${item.name}`, 'polite');
                   }}
                   className={`${indicatorStyles.containerClasses} block px-3 py-3 border-l-4 text-base font-medium transition-all duration-200 touch-target ${
                     isActive

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { createModalRelationships, ariaLabels } from '../../../utils/ariaUtils';
+import { ModalFocusManager } from '../../../utils/focusManagement';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -29,92 +30,38 @@ const Modal: React.FC<ModalProps> = ({
   backdropClassName = ''
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
-  const firstFocusableRef = useRef<HTMLElement | null>(null);
-  const lastFocusableRef = useRef<HTMLElement | null>(null);
+  const focusManagerRef = useRef<ModalFocusManager | null>(null);
   
   // Create modal relationships for accessibility
   const modalRelationships = createModalRelationships('modal');
   const titleId = title ? modalRelationships.titleId : undefined;
   const descriptionId = modalRelationships.descriptionId;
 
-  // Handle escape key
+  // Initialize focus manager
   useEffect(() => {
-    if (!closeOnEscape) return;
+    if (modalRef.current && !focusManagerRef.current) {
+      focusManagerRef.current = new ModalFocusManager(modalRef.current, {
+        onEscape: closeOnEscape ? onClose : undefined,
+        restoreFocusOnClose: true,
+      });
+    }
+  }, [closeOnEscape, onClose]);
 
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [isOpen, onClose, closeOnEscape]);
-
-  // Focus management and focus trap
+  // Manage focus when modal opens/closes
   useEffect(() => {
-    if (isOpen) {
-      // Store the previously focused element
-      previousFocusRef.current = document.activeElement as HTMLElement;
-      
-      // Find focusable elements within the modal
-      const focusableElements = modalRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      
-      if (focusableElements && focusableElements.length > 0) {
-        firstFocusableRef.current = focusableElements[0] as HTMLElement;
-        lastFocusableRef.current = focusableElements[focusableElements.length - 1] as HTMLElement;
-        
-        // Focus the first focusable element
-        setTimeout(() => {
-          firstFocusableRef.current?.focus();
-        }, 0);
+    if (focusManagerRef.current) {
+      if (isOpen) {
+        focusManagerRef.current.activate();
       } else {
-        // If no focusable elements, focus the modal itself
-        setTimeout(() => {
-          modalRef.current?.focus();
-        }, 0);
-      }
-    } else {
-      // Restore focus to the previously focused element
-      if (previousFocusRef.current) {
-        previousFocusRef.current.focus();
-        previousFocusRef.current = null;
+        focusManagerRef.current.deactivate();
       }
     }
-  }, [isOpen]);
 
-  // Focus trap implementation
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Tab') {
-      if (event.shiftKey) {
-        // Shift + Tab
-        if (document.activeElement === firstFocusableRef.current) {
-          event.preventDefault();
-          lastFocusableRef.current?.focus();
-        }
-      } else {
-        // Tab
-        if (document.activeElement === lastFocusableRef.current) {
-          event.preventDefault();
-          firstFocusableRef.current?.focus();
-        }
-      }
-    }
-  };
-
-  // Body scroll lock
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
+    // Cleanup on unmount
     return () => {
-      document.body.style.overflow = 'unset';
+      if (focusManagerRef.current) {
+        focusManagerRef.current.deactivate();
+      }
     };
   }, [isOpen]);
 
@@ -195,7 +142,6 @@ const Modal: React.FC<ModalProps> = ({
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={descriptionId}
-            onKeyDown={handleKeyDown}
           >
             {/* Screen reader description */}
             <div id={descriptionId} className="sr-only">

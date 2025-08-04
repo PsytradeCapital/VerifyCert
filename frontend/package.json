@@ -33,11 +33,13 @@
     "compression-webpack-plugin": "^11.1.0",
     "cypress": "^13.1.0",
     "cypress-metamask": "^1.0.0",
+    "jsdom": "^22.1.0",
     "postcss": "^8.4.27",
     "serve": "^14.2.0",
     "start-server-and-test": "^2.0.0",
     "tailwindcss": "^3.3.3",
     "terser-webpack-plugin": "^5.3.14",
+    "ts-node": "^10.9.1",
     "vercel": "^32.0.0",
     "webpack-bundle-analyzer": "^4.10.2"
   },
@@ -63,7 +65,19 @@
     "analyze:server": "npx webpack-bundle-analyzer build/static/js/*.js",
     "size": "npm run build && npx bundlesize",
     "build:full": "npm run build && node scripts/post-build-analysis.js",
-    "optimize": "node scripts/pre-build-optimization.js"
+    "optimize": "node scripts/pre-build-optimization.js",
+    "test:accessibility": "npm run test -- --testNamePattern=\"Screen Reader\"",
+    "test:screen-reader": "ts-node src/scripts/run-screen-reader-tests.ts",
+    "test:screen-reader:watch": "nodemon --exec \"npm run test:screen-reader\" --watch src/components --watch src/utils --ext ts,tsx",
+    "test:a11y": "npm run test:accessibility && npm run test:screen-reader",
+    "test:a11y:ci": "npm run test:accessibility --watchAll=false && npm run test:screen-reader",
+    "test:cross-browser": "node scripts/run-cross-browser-tests.js",
+    "test:cross-browser:manual": "echo 'Please follow the manual testing checklist in scripts/manual-browser-test-checklist.md'",
+    "test:browsers": "npm run test:cross-browser",
+    "test:browsers:chrome": "npm run test:cross-browser -- --browsers=chrome",
+    "test:browsers:firefox": "npm run test:cross-browser -- --browsers=firefox",
+    "test:browsers:edge": "npm run test:cross-browser -- --browsers=edge",
+    "test:browsers:safari": "npm run test:cross-browser -- --browsers=webkit"
   },
   "eslintConfig": {
     "extends": [

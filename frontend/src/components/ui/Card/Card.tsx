@@ -5,9 +5,13 @@ import { generateAriaId } from '../../../utils/ariaUtils';
 
 export interface CardProps {
   children: React.ReactNode;
-  variant?: 'default' | 'elevated' | 'outlined';
-  padding?: 'none' | 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'elevated' | 'outlined' | 'ghost' | 'gradient' | 'glass';
+  padding?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   hover?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
   className?: string;
   onClick?: () => void;
   onKeyDown?: (event: React.KeyboardEvent) => void;
@@ -22,7 +26,11 @@ const Card: React.FC<CardProps> = ({
   children,
   variant = 'default',
   padding = 'md',
+  rounded = 'lg',
+  shadow = 'none',
   hover = false,
+  loading = false,
+  disabled = false,
   className = '',
   onClick,
   onKeyDown,
@@ -32,37 +40,71 @@ const Card: React.FC<CardProps> = ({
   'aria-describedby': ariaDescribedBy,
   enableAnimations = true
 }) => {
-  const baseClasses = 'bg-white rounded-lg';
+  const baseClasses = 'transition-all duration-200';
   
   const variantClasses = {
-    default: 'border border-gray-200',
-    elevated: 'shadow-md',
-    outlined: 'border-2 border-gray-300'
+    default: 'bg-white border border-gray-200',
+    elevated: 'bg-white shadow-md',
+    outlined: 'bg-white border-2 border-gray-300',
+    ghost: 'bg-gray-50 border border-gray-100',
+    gradient: 'bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200',
+    glass: 'bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg'
   };
 
   const paddingClasses = {
     none: '',
+    xs: 'p-2',
     sm: 'p-3',
     md: 'p-4',
-    lg: 'p-6'
+    lg: 'p-6',
+    xl: 'p-8'
   };
 
-  const clickableClasses = onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' : '';
-  const isInteractive = hover || onClick;
+  const roundedClasses = {
+    none: 'rounded-none',
+    sm: 'rounded-sm',
+    md: 'rounded-md',
+    lg: 'rounded-lg',
+    xl: 'rounded-xl',
+    '2xl': 'rounded-2xl',
+    full: 'rounded-full'
+  };
+
+  const shadowClasses = {
+    none: '',
+    sm: 'shadow-sm',
+    md: 'shadow-md',
+    lg: 'shadow-lg',
+    xl: 'shadow-xl',
+    '2xl': 'shadow-2xl'
+  };
+
+  const clickableClasses = onClick && !disabled ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' : '';
+  const disabledClasses = disabled ? 'opacity-60 cursor-not-allowed' : '';
+  const hoverClasses = hover && !disabled ? 'hover:shadow-lg hover:-translate-y-1' : '';
+  const isInteractive = (hover || onClick) && !disabled;
 
   // Handle keyboard events for interactive cards
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (onClick && (event.key === 'Enter' || event.key === ' ')) {
+    if (onClick && !disabled && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
       onClick();
     }
     onKeyDown?.(event);
   };
 
+  const handleClick = () => {
+    if (onClick && !disabled && !loading) {
+      onClick();
+    }
+  };
+
   // Get animation props based on variant and interaction settings
-  const animationProps = enableAnimations && isInteractive 
-    ? cardInteractions[variant] || cardInteractions.default
-    : {};
+  const animationProps = enableAnimations && isInteractive ? {
+    whileHover: { scale: 1.02, y: -2 },
+    whileTap: { scale: 0.98 },
+    transition: { duration: 0.2 }
+  } : {};
 
   const MotionDiv = motion.div;
   
@@ -77,15 +119,20 @@ const Card: React.FC<CardProps> = ({
       ${baseClasses}
       ${variantClasses[variant]}
       ${paddingClasses[padding]}
+      ${roundedClasses[rounded]}
+      ${shadowClasses[shadow]}
       ${clickableClasses}
+      ${disabledClasses}
+      ${hoverClasses}
       ${className}
     `,
-    onClick,
+    onClick: handleClick,
     onKeyDown: onClick || onKeyDown ? handleKeyDown : undefined,
-    tabIndex: onClick ? (tabIndex !== undefined ? tabIndex : 0) : tabIndex,
+    tabIndex: onClick ? (tabIndex !== undefined ? tabIndex : (disabled ? -1 : 0)) : tabIndex,
     role: onClick ? (role || 'button') : role,
     'aria-label': ariaLabel || (onClick ? 'Interactive card' : undefined),
     'aria-describedby': descriptionId,
+    'aria-disabled': disabled,
     ...animationProps
   };
 
@@ -96,7 +143,14 @@ const Card: React.FC<CardProps> = ({
           Interactive card. Press Enter or Space to activate.
         </div>
       )}
-      {children}
+      {loading && (
+        <div className="absolute inset-0 bg-white/80 rounded-lg flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        </div>
+      )}
+      <div className={loading ? 'opacity-50' : ''}>
+        {children}
+      </div>
     </MotionDiv>
   );
 };

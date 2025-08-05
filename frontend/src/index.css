@@ -6,3 +6,6 @@
 
 /* Import validation animation styles */
 @import './styles/validation-animations.css';
+
+/* Import browser compatibility fixes */
+@import './styles/browser-compatibility.css';

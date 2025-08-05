@@ -61,7 +61,8 @@ export interface BrowserFeatures {
  */
 export function detectBrowser(): BrowserInfo {
   const userAgent = navigator.userAgent;
-  const platform = navigator.platform;
+  // Use userAgentData when available, fallback to deprecated platform
+  const platform = (navigator as any).userAgentData?.platform || navigator.platform || 'Unknown';
   
   // Browser detection
   let name = 'Unknown';
@@ -134,8 +135,8 @@ export function detectFeatures(): BrowserFeatures {
     // Device APIs
     geolocation: 'geolocation' in navigator,
     notifications: 'Notification' in window,
-    camera: checkMediaDevices('videoinput'),
-    microphone: checkMediaDevices('audioinput'),
+    camera: checkMediaDevices(),
+    microphone: checkMediaDevices(),
     bluetooth: 'bluetooth' in navigator,
     nfc: 'nfc' in navigator,
     vibration: 'vibrate' in navigator,
@@ -236,7 +237,7 @@ function checkStorage(type: 'localStorage' | 'sessionStorage'): boolean {
 /**
  * Check media devices
  */
-function checkMediaDevices(kind: string): boolean {
+function checkMediaDevices(): boolean {
   return 'mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices;
 }
 

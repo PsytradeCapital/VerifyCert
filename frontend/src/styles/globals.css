@@ -17,6 +17,9 @@
 /* Import responsive design system */
 @import './responsive.css';
 
+/* Import browser compatibility fixes */
+@import './browser-compatibility.css';
+
 /* Base layer customizations */
 @layer base {
   /* Enhanced CSS Reset */

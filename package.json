@@ -10,10 +10,13 @@
     "test:e2e:open": "cd frontend && npm run e2e:open",
     "test:all": "npm run test && npm run test:integration && cd backend && npm test && cd ../frontend && npm test && npm run e2e",
     "test:ci": "npm run test && npm run test:integration && cd backend && npm test && cd ../frontend && npm test && npm run cypress:run",
-    "pre-deploy": "hardhat run scripts/pre-deploy-check.js --network mumbai",
-    "deploy": "hardhat run scripts/deploy.js --network mumbai",
-    "verify": "hardhat run scripts/verify.js --network mumbai",
-    "deployment-status": "hardhat run scripts/deployment-status.js --network mumbai",
+    "pre-deploy": "hardhat run scripts/pre-deploy-check.js --network amoy",
+    "deploy": "hardhat run scripts/deploy.js --network amoy",
+    "verify": "hardhat run scripts/verify.js --network amoy",
+    "deployment-status": "hardhat run scripts/deployment-status.js --network amoy",
+    "deploy:amoy": "hardhat run scripts/deploy-simple-certificate.js --network amoy",
+    "verify:amoy": "hardhat verify --network amoy",
+    "pre-deploy:amoy": "hardhat run scripts/pre-deploy-check.js --network amoy",
     "deploy:production": "node scripts/deploy-production.js",
     "verify-deployment": "node scripts/verify-deployment.js",
     "node": "hardhat node",
@@ -52,7 +55,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.6",
     "@heroicons/react": "^2.2.0",
-    "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/contracts": "^4.9.6",
     "framer-motion": "^12.23.12"
   },
   "keywords": [

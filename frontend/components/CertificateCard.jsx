@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Download, Share2, ExternalLink, Shield, Calendar, User, GraduationCap, Building } from 'lucide-react';
-import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
-import { OptimizedImage } from './ui/OptimizedImage';
-import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
+import { QRCodeSVG } from 'qrcode.react';
+import { Download, Share2, ExternalLink, CheckCircle, XCircle, Copy } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-const CertificateCard = ({
-  certificate,
-  showQR = true,
-  isPublicView = false,
-  className = '',
+const CertificateCard = ({ 
+  certificate, 
+  showActions = true, 
+  compact = false,
   onDownload,
-  onShare,
-  onVerify
+  onShare 
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const feedback = useFeedbackAnimations();
-  
-  // Generate IDs for ARIA relationships
-  const cardId = generateAriaId('certificate-card');
-  const detailsId = generateAriaId('certificate-details');
-  const actionsId = generateAriaId('certificate-actions');
-  const qrCodeId = generateAriaId('qr-code');
+
+  if (!certificate) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+        </div>
+      </div>
+    );
+  }
 
   const formatDate = (timestamp) => {
     return new Date(timestamp * 1000).toLocaleDateString('en-US', {
@@ -37,106 +38,75 @@ const CertificateCard = ({
 
   const handleDownload = async () => {
     if (onDownload) {
-      onDownload();
+      onDownload(certificate);
       return;
     }
 
     setIsLoading(true);
     try {
-      // Create a downloadable certificate image/PDF
+      // Create a downloadable certificate
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       
-      if (!ctx) {
-        throw new Error('Canvas not supported');
-      }
+      canvas.width = 800;
+      canvas.height = 600;
 
-      // Set canvas size for high-quality output
-      canvas.width = 1200;
-      canvas.height = 900;
-
-      // Background gradient
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#f8fafc');
-      gradient.addColorStop(1, '#e2e8f0');
-      ctx.fillStyle = gradient;
+      // Background
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Border
       ctx.strokeStyle = '#2563eb';
-      ctx.lineWidth = 6;
-      ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+      ctx.lineWidth = 4;
+      ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-      // Inner border
-      ctx.strokeStyle = '#60a5fa';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(50, 50, canvas.width - 100, canvas.height - 100);
-
-      // Header
+      // Title
       ctx.fillStyle = '#1e40af';
-      ctx.font = 'bold 48px Arial';
+      ctx.font = 'bold 32px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText('Certificate of Completion', canvas.width / 2, 150);
-
-      // Verification badge
-      ctx.fillStyle = certificate.isValid ? '#059669' : '#dc2626';
-      ctx.font = '20px Arial';
-      ctx.fillText(certificate.isValid ? '✓ Verified on Blockchain' : '✗ Invalid Certificate', canvas.width / 2, 190);
+      ctx.fillText('Certificate of Completion', canvas.width / 2, 100);
 
       // Institution
       ctx.fillStyle = '#374151';
-      ctx.font = '28px Arial';
-      ctx.fillText(`${certificate.institutionName}`, canvas.width / 2, 250);
+      ctx.font = '20px Arial';
+      ctx.fillText(`Issued by: ${certificate.institutionName}`, canvas.width / 2, 150);
 
-      // Recipient section
+      // Recipient
       ctx.fillStyle = '#111827';
-      ctx.font = '24px Arial';
-      ctx.fillText('This certifies that', canvas.width / 2, 320);
-      
-      ctx.font = 'bold 42px Arial';
-      ctx.fillStyle = '#1e40af';
-      ctx.fillText(`${certificate.recipientName}`, canvas.width / 2, 380);
+      ctx.font = 'bold 28px Arial';
+      ctx.fillText(`${certificate.recipientName}`, canvas.width / 2, 220);
 
-      // Course section
+      // Course
       ctx.fillStyle = '#374151';
       ctx.font = '24px Arial';
-      ctx.fillText('has successfully completed', canvas.width / 2, 440);
-      
-      ctx.font = 'bold 36px Arial';
-      ctx.fillStyle = '#111827';
-      ctx.fillText(`${certificate.courseName}`, canvas.width / 2, 500);
+      ctx.fillText(`has successfully completed`, canvas.width / 2, 270);
+      ctx.font = 'bold 26px Arial';
+      ctx.fillText(`${certificate.courseName}`, canvas.width / 2, 320);
 
-      // Date and details
+      // Date
+      ctx.font = '18px Arial';
+      ctx.fillText(`Date: ${formatDate(certificate.issueDate)}`, canvas.width / 2, 380);
+
+      // Token ID
+      ctx.font = '14px Arial';
+      ctx.fillText(`Certificate ID: ${certificate.tokenId}`, canvas.width / 2, 420);
+
+      // Verification info
       ctx.fillStyle = '#6b7280';
-      ctx.font = '20px Arial';
-      ctx.fillText(`Issue Date: ${formatDate(certificate.issueDate)}`, canvas.width / 2, 580);
-      ctx.fillText(`Certificate ID: ${certificate.tokenId}`, canvas.width / 2, 610);
-      ctx.fillText(`Issuer: ${formatAddress(certificate.issuer)}`, canvas.width / 2, 640);
-
-      // Footer
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '16px Arial';
-      ctx.fillText('Powered by VerifyCert - Secured on Polygon Blockchain', canvas.width / 2, 750);
-      
-      if (certificate.verificationURL) {
-        ctx.fillText(`Verify at: ${certificate.verificationURL}`, canvas.width / 2, 780);
-      }
+      ctx.font = '12px Arial';
+      ctx.fillText('This certificate is verified on the blockchain', canvas.width / 2, 460);
+      ctx.fillText(`Issuer: ${formatAddress(certificate.issuer)}`, canvas.width / 2, 480);
 
       // Download
       const link = document.createElement('a');
-      link.download = `certificate-${certificate.tokenId}-${certificate.recipientName.replace(/\s+/g, '-')}.png`;
-      link.href = canvas.toDataURL('image/png', 1.0);
+      link.download = `certificate-${certificate.tokenId}.png`;
+      link.href = canvas.toDataURL();
       link.click();
 
-      feedback.showSuccess('Certificate downloaded successfully!', {
-        showConfetti: true,
-        position: 'top-right'
-      });
+      toast.success('Certificate downloaded successfully!');
     } catch (error) {
       console.error('Download failed:', error);
-      feedback.showError('Failed to download certificate', {
-        shake: true
-      });
+      toast.error('Failed to download certificate');
     } finally {
       setIsLoading(false);
     }
@@ -144,370 +114,245 @@ const CertificateCard = ({
 
   const handleShare = async () => {
     if (onShare) {
-      onShare();
+      onShare(certificate);
       return;
     }
 
     const shareData = {
       title: `Certificate: ${certificate.courseName}`,
       text: `${certificate.recipientName} has completed ${certificate.courseName} from ${certificate.institutionName}`,
-      url: certificate.verificationURL || window.location.href,
+      url: `${window.location.origin}/verify/${certificate.tokenId}`,
     };
 
     try {
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      if (navigator.share) {
         await navigator.share(shareData);
-        feedback.showSuccess('Certificate shared successfully!', {
-          showConfetti: true
-        });
+        toast.success('Certificate shared successfully!');
       } else {
         // Fallback to clipboard
-        await navigator.clipboard.writeText(shareData.url || window.location.href);
-        feedback.showSuccess('Certificate link copied to clipboard!');
+        await navigator.clipboard.writeText(shareData.url);
+        toast.success('Certificate link copied to clipboard!');
       }
     } catch (error) {
-      if (error.name !== 'AbortError') {
-        console.error('Share failed:', error);
-        feedback.showError('Failed to share certificate', {
-          shake: true
-        });
-      }
-    }
-  };
-
-  const handleVerify = () => {
-    if (onVerify) {
-      onVerify(certificate.tokenId);
-    } else {
-      // Navigate to verification page
-      window.open(`/verify?id=${certificate.tokenId}`, '_blank');
+      console.error('Share failed:', error);
+      toast.error('Failed to share certificate');
     }
   };
 
   const handleCopyLink = async () => {
     try {
-      const url = certificate.verificationURL || window.location.href;
+      const url = `${window.location.origin}/verify/${certificate.tokenId}`;
       await navigator.clipboard.writeText(url);
-      feedback.showSuccess('Verification link copied to clipboard!');
+      toast.success('Verification link copied to clipboard!');
     } catch (error) {
       console.error('Copy failed:', error);
-      feedback.showError('Failed to copy link', {
-        shake: true
-      });
+      toast.error('Failed to copy link');
     }
   };
 
-  return (
-    <motion.article 
-      id={cardId}
-      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 ${className}`}
-      role="article"
-      aria-labelledby={`${cardId}-title`}
-      aria-describedby={detailsId}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      whileHover={{ y: -2 }}
-    >
-      {/* Certificate Header */}
-      <header className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white p-6 relative overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
-        </div>
-        
-        <div className="relative flex items-center justify-between">
-          <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-2">
-              <GraduationCap className="h-6 w-6" aria-hidden="true" />
-              <h2 id={`${cardId}-title`} className="text-2xl font-bold">
-                Certificate of Completion
-              </h2>
-            </div>
-            <p className="text-blue-100 flex items-center space-x-2">
-              <Shield className="h-4 w-4" aria-hidden="true" />
-              <span>Verified on Blockchain</span>
+  const verificationUrl = `${window.location.origin}/verify/${certificate.tokenId}`;
+
+  if (compact) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="flex items-start justify-between">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-lg font-semibold text-gray-900 truncate">
+              {certificate.courseName}
+            </h3>
+            <p className="text-sm text-gray-600 truncate">
+              {certificate.recipientName}
+            </p>
+            <p className="text-xs text-gray-500">
+              {certificate.institutionName} • {formatDate(certificate.issueDate)}
             </p>
           </div>
-          
-          {/* Status Badge */}
-          <div className="flex-shrink-0">
+          <div className="ml-4 flex-shrink-0">
             {certificate.isValid ? (
-              <motion.div 
-                className="flex items-center space-x-2 bg-green-500 px-4 py-2 rounded-full shadow-lg"
-                role="status"
-                aria-label={ariaLabels.status.verified}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Shield className="h-4 w-4" aria-hidden="true" />
-                <span className="text-sm font-medium">Verified</span>
-              </motion.div>
+              <CheckCircle className="h-5 w-5 text-green-500" />
             ) : (
-              <motion.div 
-                className="flex items-center space-x-2 bg-red-500 px-4 py-2 rounded-full shadow-lg"
-                role="status"
-                aria-label={ariaLabels.status.unverified}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                <span className="text-sm font-medium">Invalid</span>
-              </motion.div>
+              <XCircle className="h-5 w-5 text-red-500" />
             )}
           </div>
         </div>
-      </header>
+      </div>
+    );
+  }
 
-      {/* Certificate Body */}
+  return (
+    <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Certificate of Completion</h2>
+            <p className="text-blue-100">Verified on Blockchain</p>
+          </div>
+          {certificate.isValid ? (
+            <div className="flex items-center space-x-2 bg-green-500 px-3 py-1 rounded-full">
+              <CheckCircle className="h-4 w-4" />
+              <span className="text-sm font-medium">Verified</span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-2 bg-red-500 px-3 py-1 rounded-full">
+              <XCircle className="h-4 w-4" />
+              <span className="text-sm font-medium">Invalid</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Content */}
       <div className="p-6">
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {/* Certificate Details */}
-          <section id={detailsId} className="lg:col-span-2 space-y-6" aria-labelledby="details-heading">
+          <div className="space-y-4">
             <div>
-              <h3 id="details-heading" className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-                <User className="h-5 w-5 text-blue-600" aria-hidden="true" />
-                <span>Certificate Details</span>
-              </h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Certificate Details</h3>
               
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Recipient</label>
-                  <p className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-                    <User className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                    <span>{certificate.recipientName}</span>
-                  </p>
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-500">Recipient</label>
+                  <p className="text-lg font-semibold text-gray-900">{certificate.recipientName}</p>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Course/Achievement</label>
-                  <p className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-                    <GraduationCap className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                    <span>{certificate.courseName}</span>
-                  </p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-500">Course/Achievement</label>
+                  <p className="text-lg font-semibold text-gray-900">{certificate.courseName}</p>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Institution</label>
-                  <p className="text-base text-gray-900 flex items-center space-x-2">
-                    <Building className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                    <span>{certificate.institutionName}</span>
-                  </p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-500">Institution</label>
+                  <p className="text-base text-gray-900">{certificate.institutionName}</p>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Issue Date</label>
-                  <p className="text-base text-gray-900 flex items-center space-x-2">
-                    <Calendar className="h-4 w-4 text-gray-400" aria-hidden="true" />
-                    <span>{formatDate(certificate.issueDate)}</span>
-                  </p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-500">Issue Date</label>
+                  <p className="text-base text-gray-900">{formatDate(certificate.issueDate)}</p>
                 </div>
               </div>
             </div>
 
             {/* Blockchain Info */}
             <div className="pt-4 border-t border-gray-200">
-              <h4 className="text-sm font-medium text-gray-500 mb-3 flex items-center space-x-2">
-                <Shield className="h-4 w-4" aria-hidden="true" />
-                <span>Blockchain Information</span>
-              </h4>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <h4 className="text-sm font-medium text-gray-500 mb-2">Blockchain Information</h4>
+              <div className="space-y-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-400">Certificate ID</label>
-                  <p className="text-sm font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
-                    {certificate.tokenId}
-                  </p>
+                  <p className="text-sm font-mono text-gray-700">{certificate.tokenId}</p>
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-400">Issuer Address</label>
-                  <p className="text-sm font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
-                    {formatAddress(certificate.issuer)}
-                  </p>
+                  <p className="text-sm font-mono text-gray-700">{formatAddress(certificate.issuer)}</p>
                 </div>
-                {!isPublicView && certificate.recipient && (
-                  <div className="sm:col-span-2">
-                    <label className="block text-xs font-medium text-gray-400">Recipient Address</label>
-                    <p className="text-sm font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
-                      {formatAddress(certificate.recipient)}
-                    </p>
-                  </div>
-                )}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400">Recipient Address</label>
+                  <p className="text-sm font-mono text-gray-700">{formatAddress(certificate.recipient)}</p>
+                </div>
               </div>
             </div>
-          </section>
+          </div>
 
           {/* QR Code and Actions */}
-          <aside className="space-y-6" aria-labelledby="qr-actions-heading">
-            {showQR && certificate.qrCodeURL && (
-              <div>
-                <h4 id="qr-actions-heading" className="text-sm font-medium text-gray-500 mb-3">
-                  Verification QR Code
-                </h4>
-                <div 
-                  className="bg-gray-50 p-4 rounded-lg text-center border-2 border-dashed border-gray-300"
-                  role="img"
-                  aria-labelledby={qrCodeId}
-                >
-                  <div id={qrCodeId} className="sr-only">
-                    {ariaDescriptions.certificates.qrCode}
-                  </div>
-                  <OptimizedImage
-                    src={certificate.qrCodeURL}
-                    alt={ariaLabels.media.qrCode}
-                    className="mx-auto w-32 h-32 rounded-lg shadow-sm"
-                    aspectRatio="square"
-                    responsive={false}
-                    webpFallback={false}
-                    priority={true}
-                    optimization={{
-                      width: 128,
-                      height: 128,
-                      quality: 100,
-                    }}
-                    loadingComponent={() => (
-                      <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex items-center justify-center animate-pulse">
-                        <Shield className="h-8 w-8 text-gray-400" />
-                      </div>
-                    )}
-                    errorComponent={({ retry }) => (
-                      <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex flex-col items-center justify-center">
-                        <ExternalLink className="h-8 w-8 text-gray-400 mb-2" />
-                        <button
-                          onClick={retry}
-                          className="text-xs text-blue-600 hover:text-blue-800 underline"
-                        >
-                          Retry
-                        </button>
-                      </div>
-                    )}
-                  />
-                  <p className="text-xs text-gray-500 mt-2 font-medium">Scan to verify</p>
-                </div>
+          <div className="space-y-4">
+            {/* QR Code */}
+            <div>
+              <h4 className="text-sm font-medium text-gray-500 mb-2">Verification QR Code</h4>
+              <div className="bg-gray-50 p-4 rounded-lg text-center">
+                <QRCodeSVG
+                  value={verificationUrl}
+                  size={128}
+                  className="mx-auto"
+                  includeMargin={true}
+                />
+                <p className="text-xs text-gray-500 mt-2">Scan to verify</p>
               </div>
-            )}
+            </div>
 
             {/* Action Buttons */}
-            <section id={actionsId} className="space-y-3" aria-labelledby="actions-heading">
-              <h4 id="actions-heading" className="text-sm font-medium text-gray-500">Actions</h4>
-              
-              <div className="space-y-2" role="group" aria-labelledby="actions-heading">
-                <motion.button
-                  onClick={handleDownload}
-                  disabled={isLoading}
-                  className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-3 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md"
-                  aria-label={ariaLabels.actions.downloadCertificate}
-                  aria-describedby="download-description"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div id="download-description" className="sr-only">
-                    {ariaDescriptions.certificates.download}
-                  </div>
-                  {isLoading ? (
-                    <>
-                      <motion.div
-                        className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      />
-                      <span>Downloading...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Download className="h-4 w-4" aria-hidden="true" />
-                      <span>Download</span>
-                    </>
-                  )}
-                </motion.button>
+            {showActions && (
+              <div className="space-y-3">
+                <h4 className="text-sm font-medium text-gray-500">Actions</h4>
+                
+                <div className="grid grid-cols-1 gap-2">
+                  <button
+                    onClick={handleDownload}
+                    disabled={isLoading}
+                    className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        <span>Downloading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="h-4 w-4" />
+                        <span>Download</span>
+                      </>
+                    )}
+                  </button>
 
-                <motion.button
-                  onClick={handleShare}
-                  className="w-full flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md"
-                  aria-label={ariaLabels.actions.shareCertificate}
-                  aria-describedby="share-description"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div id="share-description" className="sr-only">
-                    {ariaDescriptions.certificates.share}
-                  </div>
-                  <Share2 className="h-4 w-4" aria-hidden="true" />
-                  <span>Share</span>
-                </motion.button>
+                  <button
+                    onClick={handleShare}
+                    className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    <Share2 className="h-4 w-4" />
+                    <span>Share</span>
+                  </button>
 
-                <motion.button
-                  onClick={handleVerify}
-                  className="w-full flex items-center justify-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md"
-                  aria-label="Verify certificate authenticity"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Shield className="h-4 w-4" aria-hidden="true" />
-                  <span>Verify</span>
-                </motion.button>
-
-                <motion.button
-                  onClick={handleCopyLink}
-                  className="w-full flex items-center justify-center space-x-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-lg font-medium transition-colors shadow-sm hover:shadow-md"
-                  aria-label={ariaLabels.actions.copyCertificateLink}
-                  aria-describedby="copy-description"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div id="copy-description" className="sr-only">
-                    Copy the verification link for this certificate to your clipboard
-                  </div>
-                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                  <span>Copy Link</span>
-                </motion.button>
-              </div>
-            </section>
-
-            {/* Verification Link */}
-            {certificate.verificationURL && (
-              <div className="pt-3 border-t border-gray-200">
-                <label className="block text-xs font-medium text-gray-400 mb-2">Verification URL</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="text"
-                    value={certificate.verificationURL}
-                    readOnly
-                    className="flex-1 text-xs bg-gray-50 border border-gray-200 rounded px-2 py-2 font-mono text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Certificate verification URL"
-                  />
                   <button
                     onClick={handleCopyLink}
-                    className="text-blue-600 hover:text-blue-700 p-2 rounded hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    title="Copy verification link"
-                    aria-label="Copy verification link"
+                    className="flex items-center justify-center space-x-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    <Copy className="h-4 w-4" />
+                    <span>Copy Link</span>
+                  </button>
+
+                  <a
+                    href={certificate.explorerUrl || `https://amoy.polygonscan.com/token/${certificate.contractAddress || 'unknown'}?a=${certificate.tokenId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                   >
                     <ExternalLink className="h-4 w-4" />
-                  </button>
+                    <span>View on Blockchain</span>
+                  </a>
                 </div>
               </div>
             )}
-          </aside>
+
+            {/* Verification Link */}
+            <div className="pt-3 border-t border-gray-200">
+              <label className="block text-xs font-medium text-gray-400 mb-1">Verification URL</label>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="text"
+                  value={verificationUrl}
+                  readOnly
+                  className="flex-1 text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 font-mono"
+                />
+                <button
+                  onClick={handleCopyLink}
+                  className="text-blue-600 hover:text-blue-700 p-1"
+                  title="Copy link"
+                >
+                  <Copy className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-50 px-6 py-4 border-t border-gray-200">
+      <div className="bg-gray-50 px-6 py-3 border-t border-gray-200">
         <div className="flex items-center justify-between text-sm text-gray-500">
-          <div className="flex items-center space-x-2">
-            <Shield className="h-4 w-4" aria-hidden="true" />
-            <span>Powered by VerifyCert</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" aria-hidden="true"></div>
-            <span>Secured on Polygon Blockchain</span>
-          </div>
+          <span>Powered by VerifyCert</span>
+          <span>Secured on Polygon Blockchain</span>
         </div>
-      </footer>
-    </motion.article>
+      </div>
+    </div>
   );
 };
 

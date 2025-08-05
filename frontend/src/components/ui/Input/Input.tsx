@@ -1,6 +1,4 @@
 import React, { forwardRef } from 'react';
-import { motion } from 'framer-motion';
-import { inputInteractions } from '../../../utils/interactionAnimations';
 import { createFieldRelationships, ariaLabels } from '../../../utils/ariaUtils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -34,11 +32,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   };
 
   const currentState = error ? 'error' : validationState;
-  const animationProps = enableAnimations ? inputInteractions[currentState] || inputInteractions.default : {};
   
   // Create field relationships for accessibility
   const fieldRelationships = fieldName ? createFieldRelationships(fieldName) : null;
-  const inputId = props.id || fieldRelationships?.labelId || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = props.id || fieldRelationships?.labelId || `input-${Math.random().toString(36).substring(2, 11)}`;
 
   return (
     <div className="space-y-1">
@@ -66,19 +63,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
           </div>
         )}
         
-        <motion.input
+        <input
           ref={ref}
           id={inputId}
           className={`
             ${baseClasses}
             ${stateClasses[currentState]}
             ${icon ? 'pl-10' : ''}
+            ${enableAnimations ? 'transition-all duration-200 ease-in-out' : ''}
             ${className}
           `}
           aria-required={required}
-          aria-invalid={!!error}
           {...(fieldRelationships ? fieldRelationships.getInputProps(!!error, !!helperText) : {})}
-          {...animationProps}
           {...props}
         />
       </div>

@@ -18,23 +18,23 @@ interface WalletState {
   networkName: string | null;
 }
 
-const POLYGON_MUMBAI_CHAIN_ID = '0x13881'; // 80001 in hex
-const POLYGON_MUMBAI_CONFIG = {
-  chainId: POLYGON_MUMBAI_CHAIN_ID,
-  chainName: 'Polygon Mumbai',
+const POLYGON_AMOY_CHAIN_ID = '0x13882'; // 80002 in hex
+const POLYGON_AMOY_CONFIG = {
+  chainId: POLYGON_AMOY_CHAIN_ID,
+  chainName: 'Polygon Amoy Testnet',
   nativeCurrency: {
     name: 'MATIC',
     symbol: 'MATIC',
     decimals: 18,
   },
-  rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
-  blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+  rpcUrls: ['https://rpc-amoy.polygon.technology/'],
+  blockExplorerUrls: ['https://amoy.polygonscan.com/'],
 };
 
 export default function WalletConnect({
   onConnect,
   onDisconnect,
-  requiredNetwork = 'polygon-mumbai',
+  requiredNetwork = 'polygon-amoy',
   className = '',
 }: WalletConnectProps) {
   const [walletState, setWalletState] = useState<WalletState>({
@@ -59,6 +59,8 @@ export default function WalletConnect({
         return 'Polygon Mainnet';
       case '0x13881':
         return 'Polygon Mumbai';
+      case '0x13882':
+        return 'Polygon Amoy';
       case '0x5':
         return 'Goerli Testnet';
       default:
@@ -66,15 +68,15 @@ export default function WalletConnect({
     }
   }, []);
 
-  // Switch to Polygon Mumbai network
-  const switchToPolygonMumbai = useCallback(async () => {
+  // Switch to Polygon Amoy network
+  const switchToPolygonAmoy = useCallback(async () => {
     if (!(window as any).ethereum) return false;
 
     try {
       // Try to switch to the network
       await (window as any).ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: POLYGON_MUMBAI_CHAIN_ID }],
+        params: [{ chainId: POLYGON_AMOY_CHAIN_ID }],
       });
       return true;
     } catch (switchError: any) {
@@ -83,17 +85,17 @@ export default function WalletConnect({
         try {
           await (window as any).ethereum.request({
             method: 'wallet_addEthereumChain',
-            params: [POLYGON_MUMBAI_CONFIG],
+            params: [POLYGON_AMOY_CONFIG],
           });
           return true;
         } catch (addError) {
-          console.error('Failed to add Polygon Mumbai network:', addError);
-          toast.error('Failed to add Polygon Mumbai network');
+          console.error('Failed to add Polygon Amoy network:', addError);
+          toast.error('Failed to add Polygon Amoy network');
           return false;
         }
       } else {
-        console.error('Failed to switch to Polygon Mumbai:', switchError);
-        toast.error('Failed to switch to Polygon Mumbai network');
+        console.error('Failed to switch to Polygon Amoy:', switchError);
+        toast.error('Failed to switch to Polygon Amoy network');
         return false;
       }
     }
@@ -124,9 +126,9 @@ export default function WalletConnect({
       const chainId = `0x${network.chainId.toString(16)}`;
       const networkName = getNetworkName(chainId);
 
-      // Check if we need to switch to Polygon Mumbai
-      if (requiredNetwork === 'polygon-mumbai' && chainId !== POLYGON_MUMBAI_CHAIN_ID) {
-        const switched = await switchToPolygonMumbai();
+      // Check if we need to switch to Polygon Amoy
+      if (requiredNetwork === 'polygon-amoy' && chainId !== POLYGON_AMOY_CHAIN_ID) {
+        const switched = await switchToPolygonAmoy();
         if (!switched) {
           setWalletState(prev => ({ ...prev, isConnecting: false }));
           return;
@@ -197,9 +199,9 @@ export default function WalletConnect({
     const networkName = getNetworkName(chainId);
     setWalletState(prev => ({ ...prev, networkName }));
     
-    // If required network is polygon-mumbai and we're not on it, show warning
-    if (requiredNetwork === 'polygon-mumbai' && chainId !== POLYGON_MUMBAI_CHAIN_ID) {
-      toast.error('Please switch to Polygon Mumbai network');
+    // If required network is polygon-amoy and we're not on it, show warning
+    if (requiredNetwork === 'polygon-amoy' && chainId !== POLYGON_AMOY_CHAIN_ID) {
+      toast.error('Please switch to Polygon Amoy network');
     }
   }, [getNetworkName, requiredNetwork]);
 
@@ -341,14 +343,14 @@ export default function WalletConnect({
               Disconnect
             </button>
           </div>
-          {requiredNetwork === 'polygon-mumbai' && walletState.networkName !== 'Polygon Mumbai' && (
+          {requiredNetwork === 'polygon-amoy' && walletState.networkName !== 'Polygon Amoy' && (
             <div className="mt-3 pt-3 border-t border-green-200">
               <div className="flex items-center justify-between">
                 <p className="text-sm text-yellow-700">
-                  Please switch to Polygon Mumbai
+                  Please switch to Polygon Amoy
                 </p>
                 <button
-                  onClick={switchToPolygonMumbai}
+                  onClick={switchToPolygonAmoy}
                   className="text-sm bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1 rounded transition-colors"
                 >
                   Switch Network

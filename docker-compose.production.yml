@@ -12,8 +12,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - POLYGON_MUMBAI_RPC_URL=https://rpc-mumbai.maticvigil.com
-      - CONTRACT_ADDRESS=0x742d35Cc6634C0532925a3b8D4C9db96C4b4d4d4
+      - POLYGON_AMOY_RPC_URL=https://rpc-amoy.polygon.technology/
+      - CONTRACT_ADDRESS=0x6c9D554C721dA0CEA1b975982eAEe1f924271F50
       - PRIVATE_KEY=${PRIVATE_KEY}
       - SMTP_HOST=${SMTP_HOST}
       - SMTP_PORT=${SMTP_PORT}

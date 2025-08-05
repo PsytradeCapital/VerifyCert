@@ -1,21 +1,22 @@
+export { FeedbackCollector } from './FeedbackCollector';
+export { FeedbackButton } from './FeedbackButton';
+export { FeedbackDashboard } from './FeedbackDashboard';
 export { 
-  FeedbackAnimation,
-  SuccessAnimation,
-  ErrorAnimation,
-  LoadingAnimation,
-  type FeedbackAnimationProps
-} from './FeedbackAnimations';
+  FeedbackIntegration,
+  NavigationFeedback,
+  VisualDesignFeedback,
+  OverallExperienceFeedback,
+  useFeedbackIntegration
+} from './FeedbackIntegration';
 
+// Re-export service and hooks
+export { feedbackService } from '../../../services/feedbackService';
 export { 
-  FeedbackProvider,
-  useFeedback,
-  type FeedbackItem
-} from './FeedbackManager';
+  useFeedbackTrigger,
+  useNavigationFeedback,
+  useVisualDesignFeedback,
+  useErrorFeedback
+} from '../../../hooks/useFeedbackTrigger';
 
-export { 
-  useFeedbackAnimations,
-  type FeedbackOptions,
-  type SuccessOptions,
-  type ErrorOptions,
-  type LoadingOptions
-} from '../../../hooks/useFeedbackAnimations';
+// Types
+export type { FeedbackData, FeedbackAnalytics } from '../../../services/feedbackService';

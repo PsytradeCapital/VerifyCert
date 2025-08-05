@@ -14,7 +14,7 @@ import './utils/monitoredFetch'; // Initialize monitored fetch
 
 // Context
 import { NavigationProvider } from './contexts/NavigationContext';
-import { FeedbackProvider } from './components/ui/Feedback';
+import { FeedbackProvider } from './contexts/FeedbackContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 // Components
@@ -26,6 +26,7 @@ import BlockchainErrorBoundary from './components/BlockchainErrorBoundary';
 import { PageTransition } from './components/ui';
 import { OfflineIndicator, ServiceWorkerUpdate, PWAInstallPrompt, IOSInstallInstructions } from './components/ui/OfflineIndicator';
 import PushNotificationSettings from './components/ui/PushNotificationSettings';
+import { FeedbackIntegration } from './components/ui/Feedback';
 
 // Lazy Components
 import {
@@ -342,6 +343,28 @@ function App() {
                 />
                 
                 <Route 
+                  path="/feedback-dashboard" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <Suspense fallback={<ComponentLoading />}>
+                        {React.lazy(() => import('./pages/FeedbackDashboard'))}
+                      </Suspense>
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/feedback-demo" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <Suspense fallback={<ComponentLoading />}>
+                        {React.lazy(() => import('./pages/FeedbackDemo'))}
+                      </Suspense>
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
                   path="/certificate/:tokenId" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
@@ -467,6 +490,26 @@ function App() {
               </div>
             </div>
           )}
+
+          {/* Feedback Integration */}
+          <FeedbackIntegration
+            showFloatingButton={true}
+            showAutoTrigger={true}
+            triggerAfterTime={30000}
+            triggerAfterScroll={80}
+            buttonPosition="bottom-right"
+            onFeedbackSubmitted={(feedback) => {
+              console.log('Feedback submitted:', feedback);
+              // Track feedback submission in analytics
+              if (window.gtag) {
+                window.gtag('event', 'feedback_submitted', {
+                  category: feedback.category,
+                  rating: feedback.rating,
+                  page: feedback.page
+                });
+              }
+            }}
+          />
             </div>
           </NavigationProvider>
         </Router>

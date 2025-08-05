@@ -77,7 +77,20 @@
     "test:browsers:chrome": "npm run test:cross-browser -- --browsers=chrome",
     "test:browsers:firefox": "npm run test:cross-browser -- --browsers=firefox",
     "test:browsers:edge": "npm run test:cross-browser -- --browsers=edge",
-    "test:browsers:safari": "npm run test:cross-browser -- --browsers=webkit"
+    "test:browsers:safari": "npm run test:cross-browser -- --browsers=webkit",
+    "test:unit": "npm test -- --coverage --watchAll=false",
+    "test:integration": "npm test -- src/tests/integration.test.tsx --watchAll=false",
+    "test:e2e": "cypress run --spec \"cypress/e2e/ui-ux-complete.cy.js\"",
+    "test:performance": "npm run build && npm run analyze",
+    "test:visual": "cypress run --spec \"cypress/e2e/visual-regression.cy.js\"",
+    "test:comprehensive": "node scripts/run-comprehensive-tests.js",
+    "test:comprehensive:unit": "node scripts/run-comprehensive-tests.js unit",
+    "test:comprehensive:integration": "node scripts/run-comprehensive-tests.js integration",
+    "test:comprehensive:e2e": "node scripts/run-comprehensive-tests.js e2e",
+    "test:comprehensive:all": "node scripts/run-comprehensive-tests.js unit integration e2e accessibility performance",
+    "test:mobile": "cypress run --config viewportWidth=375,viewportHeight=667",
+    "test:tablet": "cypress run --config viewportWidth=768,viewportHeight=1024",
+    "test:desktop": "cypress run --config viewportWidth=1280,viewportHeight=720"
   },
   "eslintConfig": {
     "extends": [

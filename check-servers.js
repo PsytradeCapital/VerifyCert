@@ -40,7 +40,7 @@ function checkServer(host, port, name) {
 }
 
 async function checkAllServers() {
-  const backendRunning = await checkServer('localhost', 3003, 'Backend API');
+  const backendRunning = await checkServer('localhost', 4000, 'Backend API');
   const frontendRunning = await checkServer('localhost', 3000, 'Frontend App');
 
   console.log('\n' + '='.repeat(40));

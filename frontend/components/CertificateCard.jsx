@@ -259,12 +259,20 @@ const CertificateCard = ({
             <div>
               <h4 className="text-sm font-medium text-gray-500 mb-2">Verification QR Code</h4>
               <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <QRCodeSVG
-                  value={verificationUrl}
-                  size={128}
-                  className="mx-auto"
-                  includeMargin={true}
-                />
+                {certificate.qrCodeURL ? (
+                  <img
+                    src={certificate.qrCodeURL}
+                    alt="QR Code for certificate verification"
+                    className="mx-auto w-32 h-32"
+                  />
+                ) : (
+                  <QRCodeSVG
+                    value={verificationUrl}
+                    size={128}
+                    className="mx-auto"
+                    includeMargin={true}
+                  />
+                )}
                 <p className="text-xs text-gray-500 mt-2">Scan to verify</p>
               </div>
             </div>

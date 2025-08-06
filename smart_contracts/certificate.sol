@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * @title Certificate
@@ -14,9 +13,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
  * Implements tamper-proof digital certificates on Polygon Amoy
  */
 contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Pausable {
-    using Counters for Counters.Counter;
-    
-    Counters.Counter private _tokenIdCounter;
+    uint256 private _tokenIdCounter;
 
     struct CertificateData {
         string recipientName;
@@ -89,8 +86,8 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
         require(bytes(metadataHash).length > 0, "Metadata hash required");
         require(metadataHashToTokenId[metadataHash] == 0, "Certificate with this hash already exists");
 
-        _tokenIdCounter.increment();
-        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter++;
+        uint256 tokenId = _tokenIdCounter;
 
         _safeMint(recipient, tokenId);
         _setTokenURI(tokenId, certificateURI);
@@ -215,18 +212,18 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
     }
 
     /**
-     * @dev Get total number of certificates issued
-     */
-    function totalSupply() public view returns (uint256) {
-        return _tokenIdCounter.current();
-    }
-
-    /**
      * @dev Check if an address is an authorized issuer
      * @param issuer Address to check
      */
     function isAuthorizedIssuer(address issuer) public view returns (bool) {
         return authorizedIssuers[issuer] || issuer == owner();
+    }
+
+    /**
+     * @dev Get total number of certificates issued
+     */
+    function totalSupply() public view returns (uint256) {
+        return _tokenIdCounter;
     }
 
     /**

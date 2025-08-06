@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { createModalRelationships, ariaLabels } from '../../../utils/ariaUtils';
-import { ModalFocusManager } from '../../../utils/focusManagement';
+import { cn } from '../../../utils/cn';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -14,10 +13,9 @@ export interface ModalProps {
   closeOnBackdropClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
-  backdropClassName?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({
+export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   title,
@@ -26,87 +24,37 @@ const Modal: React.FC<ModalProps> = ({
   showCloseButton = true,
   closeOnBackdropClick = true,
   closeOnEscape = true,
-  className = '',
-  backdropClassName = ''
+  className,
 }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const focusManagerRef = useRef<ModalFocusManager | null>(null);
-  
-  // Create modal relationships for accessibility
-  const modalRelationships = createModalRelationships('modal');
-  const titleId = title ? modalRelationships.titleId : undefined;
-  const descriptionId = modalRelationships.descriptionId;
-
-  // Initialize focus manager
   useEffect(() => {
-    if (modalRef.current && !focusManagerRef.current) {
-      focusManagerRef.current = new ModalFocusManager(modalRef.current, {
-        onEscape: closeOnEscape ? onClose : undefined,
-        restoreFocusOnClose: true,
-      });
-    }
-  }, [closeOnEscape, onClose]);
-
-  // Manage focus when modal opens/closes
-  useEffect(() => {
-    if (focusManagerRef.current) {
-      if (isOpen) {
-        focusManagerRef.current.activate();
-      } else {
-        focusManagerRef.current.deactivate();
-      }
-    }
-
-    // Cleanup on unmount
-    return () => {
-      if (focusManagerRef.current) {
-        focusManagerRef.current.deactivate();
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && closeOnEscape) {
+        onClose();
       }
     };
-  }, [isOpen]);
 
-  const handleBackdropClick = (event: React.MouseEvent) => {
-    if (closeOnBackdropClick && event.target === event.currentTarget) {
-      onClose();
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
     }
-  };
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, closeOnEscape, onClose]);
 
   const sizeClasses = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    full: 'max-w-full mx-4'
+    sm: 'max-w-md',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-full mx-4',
   };
 
-  const backdropVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 }
-  };
-
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8,
-      y: 50
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        damping: 25,
-        stiffness: 300
-      }
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.8,
-      y: 50,
-      transition: {
-        duration: 0.2
-      }
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget && closeOnBackdropClick) {
+      onClose();
     }
   };
 
@@ -116,63 +64,43 @@ const Modal: React.FC<ModalProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Backdrop */}
           <motion.div
-            className={`fixed inset-0 bg-black bg-opacity-50 ${backdropClassName}`}
-            variants={backdropVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={handleBackdropClick}
-            aria-hidden="true"
           />
-
+          
           {/* Modal */}
           <motion.div
-            ref={modalRef}
-            className={`
-              relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]}
-              max-h-[90vh] overflow-hidden focus:outline-none
-              ${className}
-            `}
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            tabIndex={-1}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            aria-describedby={descriptionId}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className={cn(
+              'relative bg-white rounded-lg shadow-xl max-h-[90vh] overflow-hidden',
+              sizeClasses[size],
+              className
+            )}
           >
-            {/* Screen reader description */}
-            <div id={descriptionId} className="sr-only">
-              Modal dialog. Press Escape to close or use the close button.
-            </div>
             {/* Header */}
             {(title || showCloseButton) && (
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <div className="flex items-center justify-between p-6 border-b">
                 {title && (
-                  <h2 id={titleId} className="text-lg font-semibold text-gray-900">
-                    {title}
-                  </h2>
+                  <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
                 )}
                 {showCloseButton && (
                   <button
                     onClick={onClose}
-                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    aria-label={ariaLabels.buttons.close}
-                    aria-describedby="close-button-description"
+                    className="p-1 hover:bg-gray-100 rounded-full transition-colors"
                   >
-                    <X className="w-5 h-5" aria-hidden="true" />
-                    <span id="close-button-description" className="sr-only">
-                      Close this modal dialog
-                    </span>
+                    <X className="h-5 w-5" />
                   </button>
                 )}
               </div>
             )}
-
+            
             {/* Content */}
-            <div className="overflow-y-auto max-h-[calc(90vh-4rem)]">
+            <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
               {children}
             </div>
           </motion.div>
@@ -182,4 +110,31 @@ const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export default Modal;
+export interface DialogProps extends Omit<ModalProps, 'children'> {
+  description?: string;
+  actions?: React.ReactNode;
+  children?: React.ReactNode;
+}
+
+export const Dialog: React.FC<DialogProps> = ({
+  description,
+  actions,
+  children,
+  ...modalProps
+}) => {
+  return (
+    <Modal {...modalProps} size="sm">
+      <div className="p-6">
+        {description && (
+          <p className="text-gray-600 mb-4">{description}</p>
+        )}
+        {children}
+        {actions && (
+          <div className="flex justify-end space-x-3 mt-6">
+            {actions}
+          </div>
+        )}
+      </div>
+    </Modal>
+  );
+};

@@ -14,7 +14,7 @@ import {
   Zap
 } from 'lucide-react';
 import { Card, Button, Badge } from '../';
-import { SuccessAnimation, ErrorAnimation } from '../Feedback/FeedbackAnimations';
+import { FeedbackAnimation } from '../Feedback/FeedbackAnimations';
 
 export interface VerificationResultProps {
   result: {

@@ -51,11 +51,11 @@ router.get('/verify-certificate/:tokenId', verifyRateLimit, async (req, res) => 
     const { tokenId } = req.params;
 
     // Validate token ID
-    if (!tokenId || isNaN(tokenId) || parseInt(tokenId) <= 0) {
+    if (!tokenId || isNaN(tokenId) || parseInt(tokenId) < 0) {
       return res.status(400).json({
         success: false,
         error: 'Invalid token ID',
-        message: 'Token ID must be a positive number'
+        message: 'Token ID must be a valid positive number'
       });
     }
 
@@ -64,89 +64,96 @@ router.get('/verify-certificate/:tokenId', verifyRateLimit, async (req, res) => 
       return res.status(500).json({
         success: false,
         error: 'Contract not initialized',
-        message: 'Verification service is temporarily unavailable'
+        message: 'Verification service is currently unavailable'
       });
     }
 
-    console.log('🔍 Verifying certificate:', tokenId);
+    console.log(`🔍 Verifying certificate with token ID: ${tokenId}`);
 
-    // Check if certificate exists
-    let certificateExists;
     try {
-      // Try to get the owner of the token (this will throw if token doesn't exist)
-      await contract.ownerOf(tokenId);
-      certificateExists = true;
-    } catch (error) {
-      certificateExists = false;
-    }
+      // Check if token exists
+      const owner = await contract.ownerOf(tokenId);
+      console.log(`📋 Certificate owner: ${owner}`);
+      
+      // Get certificate data
+      const certificateData = await contract.getCertificate(tokenId);
+      console.log(`📄 Certificate data retrieved for token ${tokenId}`);
+      
+      // Check if certificate is valid (not revoked)
+      const isValid = await contract.isValidCertificate(tokenId);
+      console.log(`✅ Certificate validity: ${isValid}`);
+      
+      // Get token URI for metadata
+      let metadataURI = '';
+      try {
+        metadataURI = await contract.tokenURI(tokenId);
+      } catch (error) {
+        console.warn('Could not retrieve metadata URI:', error.message);
+      }
 
-    if (!certificateExists) {
-      return res.status(404).json({
+      // Format the response data
+      const verificationResult = {
+        tokenId: tokenId.toString(),
+        contractAddress: await contract.getAddress(),
+        owner: owner,
+        recipient: owner, // In this system, owner is the recipient
+        issuer: certificateData.issuer,
+        recipientName: certificateData.recipientName,
+        courseName: certificateData.courseName,
+        institutionName: certificateData.institutionName,
+        issueDate: certificateData.issueDate.toString(),
+        isValid: isValid && certificateData.isValid,
+        metadataURI: metadataURI,
+        metadataHash: certificateData.metadataHash,
+        verificationTimestamp: new Date().toISOString(),
+        network: 'Polygon Amoy Testnet',
+        explorerUrl: `https://amoy.polygonscan.com/token/${await contract.getAddress()}?a=${tokenId}`
+      };
+
+      console.log(`✅ Certificate ${tokenId} verification completed successfully`);
+
+      res.json({
+        success: true,
+        message: isValid ? 'Certificate verified successfully' : 'Certificate found but is invalid or revoked',
+        data: verificationResult
+      });
+
+    } catch (contractError) {
+      console.error('Contract interaction error:', contractError);
+      
+      // Handle specific contract errors
+      if (contractError.message.includes('ERC721: invalid token ID') || 
+          contractError.message.includes('nonexistent token')) {
+        return res.status(404).json({
+          success: false,
+          error: 'Certificate not found',
+          message: `No certificate found with ID ${tokenId}`
+        });
+      }
+      
+      if (contractError.message.includes('call revert exception')) {
+        return res.status(404).json({
+          success: false,
+          error: 'Certificate not found',
+          message: `Certificate with ID ${tokenId} does not exist`
+        });
+      }
+
+      // Generic contract error
+      return res.status(500).json({
         success: false,
-        error: 'Certificate not found',
-        message: 'No certificate found with the provided ID'
+        error: 'Blockchain query failed',
+        message: 'Failed to query certificate data from blockchain'
       });
     }
-
-    // Get certificate data
-    const certificateData = await contract.getCertificate(tokenId);
-    const isValid = await contract.isValidCertificate(tokenId);
-    const owner = await contract.ownerOf(tokenId);
-    const tokenURI = await contract.tokenURI(tokenId);
-
-    // Format the response
-    const verificationResult = {
-      tokenId: tokenId.toString(),
-      isValid,
-      recipient: owner,
-      recipientName: certificateData.recipientName,
-      courseName: certificateData.courseName,
-      institutionName: certificateData.institutionName,
-      issuer: certificateData.issuer,
-      issueDate: certificateData.issueDate.toString(),
-      metadataURI: tokenURI,
-      metadataHash: certificateData.metadataHash,
-      contractAddress: await contract.getAddress(),
-      verificationTime: new Date().toISOString(),
-      blockchainNetwork: 'Polygon Amoy Testnet'
-    };
-
-    console.log('✅ Certificate verification completed:', {
-      tokenId,
-      isValid,
-      recipient: verificationResult.recipientName
-    });
-
-    res.json({
-      success: true,
-      message: isValid ? 'Certificate verified successfully' : 'Certificate found but is not valid',
-      data: verificationResult
-    });
 
   } catch (error) {
     console.error('❌ Certificate verification error:', error);
     
-    // Handle specific blockchain errors
-    if (error.message.includes('network')) {
-      return res.status(503).json({
-        success: false,
-        error: 'Network error',
-        message: 'Unable to connect to blockchain network. Please try again later.'
-      });
-    }
-    
-    if (error.message.includes('timeout')) {
-      return res.status(504).json({
-        success: false,
-        error: 'Request timeout',
-        message: 'Blockchain request timed out. Please try again.'
-      });
-    }
-
     res.status(500).json({
       success: false,
-      error: 'Verification failed',
-      message: 'An error occurred while verifying the certificate',
+      error: 'Internal server error',
+      message: 'An unexpected error occurred during verification',
       ...(process.env.NODE_ENV === 'development' && { details: error.message })
     });
   }
@@ -172,104 +179,82 @@ router.post('/verify-certificate/batch', verifyRateLimit, async (req, res) => {
     if (tokenIds.length > 10) {
       return res.status(400).json({
         success: false,
-        error: 'Too many certificates',
+        error: 'Too many requests',
         message: 'Maximum 10 certificates can be verified at once'
       });
     }
 
-    // Validate each token ID
-    for (const tokenId of tokenIds) {
-      if (!tokenId || isNaN(tokenId) || parseInt(tokenId) <= 0) {
-        return res.status(400).json({
-          success: false,
-          error: 'Invalid token ID',
-          message: `Token ID ${tokenId} is invalid`
-        });
-      }
-    }
-
+    // Check if contract is initialized
     if (!contract) {
       return res.status(500).json({
         success: false,
         error: 'Contract not initialized',
-        message: 'Verification service is temporarily unavailable'
+        message: 'Verification service is currently unavailable'
       });
     }
 
-    console.log('🔍 Batch verifying certificates:', tokenIds);
+    console.log(`🔍 Batch verifying ${tokenIds.length} certificates`);
 
     const results = [];
-    const contractAddress = await contract.getAddress();
+    const errors = [];
 
     // Verify each certificate
     for (const tokenId of tokenIds) {
       try {
-        // Check if certificate exists
-        let certificateExists;
-        try {
-          await contract.ownerOf(tokenId);
-          certificateExists = true;
-        } catch (error) {
-          certificateExists = false;
-        }
-
-        if (!certificateExists) {
-          results.push({
-            tokenId: tokenId.toString(),
-            success: false,
-            error: 'Certificate not found'
+        // Validate token ID
+        if (!tokenId || isNaN(tokenId) || parseInt(tokenId) < 0) {
+          errors.push({
+            tokenId: tokenId,
+            error: 'Invalid token ID format'
           });
           continue;
         }
 
         // Get certificate data
+        const owner = await contract.ownerOf(tokenId);
         const certificateData = await contract.getCertificate(tokenId);
         const isValid = await contract.isValidCertificate(tokenId);
-        const owner = await contract.ownerOf(tokenId);
-        const tokenURI = await contract.tokenURI(tokenId);
+        
+        let metadataURI = '';
+        try {
+          metadataURI = await contract.tokenURI(tokenId);
+        } catch (error) {
+          console.warn(`Could not retrieve metadata URI for token ${tokenId}:`, error.message);
+        }
 
         results.push({
           tokenId: tokenId.toString(),
-          success: true,
-          data: {
-            isValid,
-            recipient: owner,
-            recipientName: certificateData.recipientName,
-            courseName: certificateData.courseName,
-            institutionName: certificateData.institutionName,
-            issuer: certificateData.issuer,
-            issueDate: certificateData.issueDate.toString(),
-            metadataURI: tokenURI,
-            metadataHash: certificateData.metadataHash,
-            contractAddress
-          }
+          isValid: isValid && certificateData.isValid,
+          recipientName: certificateData.recipientName,
+          courseName: certificateData.courseName,
+          institutionName: certificateData.institutionName,
+          issueDate: certificateData.issueDate.toString(),
+          owner: owner,
+          issuer: certificateData.issuer
         });
 
       } catch (error) {
-        console.error(`❌ Error verifying certificate ${tokenId}:`, error);
-        results.push({
-          tokenId: tokenId.toString(),
-          success: false,
-          error: 'Verification failed',
-          message: error.message
+        console.error(`Error verifying certificate ${tokenId}:`, error);
+        errors.push({
+          tokenId: tokenId,
+          error: error.message.includes('nonexistent token') ? 'Certificate not found' : 'Verification failed'
         });
       }
     }
 
-    const successCount = results.filter(r => r.success).length;
-    console.log(`✅ Batch verification completed: ${successCount}/${tokenIds.length} successful`);
+    console.log(`✅ Batch verification completed: ${results.length} successful, ${errors.length} errors`);
 
     res.json({
       success: true,
-      message: `Verified ${successCount} out of ${tokenIds.length} certificates`,
+      message: `Verified ${results.length} certificates`,
       data: {
-        results,
+        results: results,
+        errors: errors,
         summary: {
           total: tokenIds.length,
-          successful: successCount,
-          failed: tokenIds.length - successCount
-        },
-        verificationTime: new Date().toISOString()
+          successful: results.length,
+          failed: errors.length
+        }
       }
     });
 
@@ -278,8 +263,8 @@ router.post('/verify-certificate/batch', verifyRateLimit, async (req, res) => {
     
     res.status(500).json({
       success: false,
-      error: 'Batch verification failed',
-      message: 'An error occurred while verifying certificates',
+      error: 'Internal server error',
+      message: 'An unexpected error occurred during batch verification',
       ...(process.env.NODE_ENV === 'development' && { details: error.message })
     });
   }
@@ -302,17 +287,17 @@ router.get('/verify-certificate/status', async (req, res) => {
     if (contract) {
       try {
         // Test contract connectivity
+        const contractAddress = await contract.getAddress();
         const totalSupply = await contract.totalSupply();
-        status.contractAddress = await contract.getAddress();
-        status.totalCertificatesIssued = totalSupply.toString();
         
-        // Test network connectivity
-        const blockNumber = await provider.getBlockNumber();
-        status.currentBlockNumber = blockNumber;
+        status.contractAddress = contractAddress;
+        status.totalCertificates = totalSupply.toString();
+        status.networkConnected = true;
         
       } catch (error) {
         status.status = 'degraded';
-        status.error = 'Failed to fetch blockchain data';
+        status.networkConnected = false;
+        status.error = 'Failed to connect to blockchain';
         status.details = error.message;
       }
     } else {
@@ -333,19 +318,18 @@ router.get('/verify-certificate/status', async (req, res) => {
 });
 
 /**
- * GET /api/verify-certificate/recipient/:address
- * Get all certificates for a recipient address
+ * GET /api/verify-certificate/search
+ * Search certificates by recipient name or course name
  */
-router.get('/verify-certificate/recipient/:address', verifyRateLimit, async (req, res) => {
+router.get('/verify-certificate/search', verifyRateLimit, async (req, res) => {
   try {
-    const { address } = req.params;
+    const { query, limit = 10 } = req.query;
 
-    // Validate address
-    if (!ethers.isAddress(address)) {
+    if (!query || query.trim().length < 2) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid address',
-        message: 'Please provide a valid Ethereum address'
+        error: 'Invalid query',
+        message: 'Search query must be at least 2 characters long'
       });
     }
 
@@ -353,75 +337,71 @@ router.get('/verify-certificate/recipient/:address', verifyRateLimit, async (req
       return res.status(500).json({
         success: false,
         error: 'Contract not initialized',
-        message: 'Verification service is temporarily unavailable'
+        message: 'Search service is currently unavailable'
       });
     }
 
-    console.log('🔍 Getting certificates for recipient:', address);
+    console.log(`🔍 Searching certificates with query: "${query}"`);
 
-    // Get certificate token IDs for the recipient
-    const tokenIds = await contract.getCertificatesByRecipient(address);
-    
-    if (tokenIds.length === 0) {
-      return res.json({
-        success: true,
-        message: 'No certificates found for this address',
-        data: {
-          recipient: address,
-          certificates: [],
-          count: 0
-        }
-      });
-    }
+    // Get total supply to know how many certificates exist
+    const totalSupply = await contract.totalSupply();
+    const searchLimit = Math.min(parseInt(limit), 50); // Max 50 results
+    const results = [];
 
-    // Get detailed data for each certificate
-    const certificates = [];
-    const contractAddress = await contract.getAddress();
-
-    for (const tokenId of tokenIds) {
+    // Search through certificates (this is a simple implementation)
+    // In production, you'd want to use events/indexing for better performance
+    for (let i = 1; i <= Math.min(totalSupply, 100); i++) { // Limit search to first 100 certificates
       try {
-        const certificateData = await contract.getCertificate(tokenId);
-        const isValid = await contract.isValidCertificate(tokenId);
-        const tokenURI = await contract.tokenURI(tokenId);
-
-        certificates.push({
-          tokenId: tokenId.toString(),
-          isValid,
-          recipientName: certificateData.recipientName,
-          courseName: certificateData.courseName,
-          institutionName: certificateData.institutionName,
-          issuer: certificateData.issuer,
-          issueDate: certificateData.issueDate.toString(),
-          metadataURI: tokenURI,
-          metadataHash: certificateData.metadataHash,
-          contractAddress
-        });
+        const certificateData = await contract.getCertificate(i);
+        const isValid = await contract.isValidCertificate(i);
+        
+        // Check if query matches recipient name or course name
+        const queryLower = query.toLowerCase();
+        const recipientMatch = certificateData.recipientName.toLowerCase().includes(queryLower);
+        const courseMatch = certificateData.courseName.toLowerCase().includes(queryLower);
+        const institutionMatch = certificateData.institutionName.toLowerCase().includes(queryLower);
+        
+        if (recipientMatch || courseMatch || institutionMatch) {
+          results.push({
+            tokenId: i.toString(),
+            recipientName: certificateData.recipientName,
+            courseName: certificateData.courseName,
+            institutionName: certificateData.institutionName,
+            issueDate: certificateData.issueDate.toString(),
+            isValid: isValid && certificateData.isValid,
+            matchType: recipientMatch ? 'recipient' : courseMatch ? 'course' : 'institution'
+          });
+          
+          if (results.length >= searchLimit) {
+            break;
+          }
+        }
       } catch (error) {
-        console.error(`Error getting certificate ${tokenId}:`, error);
-        // Continue with other certificates even if one fails
+        // Skip certificates that can't be read (might be revoked or have issues)
+        continue;
       }
     }
 
-    console.log(`✅ Found ${certificates.length} certificates for recipient`);
+    console.log(`✅ Search completed: found ${results.length} matching certificates`);
 
     res.json({
       success: true,
-      message: `Found ${certificates.length} certificates`,
+      message: `Found ${results.length} matching certificates`,
       data: {
-        recipient: address,
-        certificates,
-        count: certificates.length,
-        verificationTime: new Date().toISOString()
+        query: query,
+        results: results,
+        totalFound: results.length,
+        searchLimit: searchLimit
       }
     });
 
   } catch (error) {
-    console.error('❌ Recipient certificates error:', error);
+    console.error('❌ Certificate search error:', error);
     
     res.status(500).json({
       success: false,
-      error: 'Failed to get recipient certificates',
-      message: 'An error occurred while fetching certificates',
+      error: 'Internal server error',
+      message: 'An unexpected error occurred during search',
       ...(process.env.NODE_ENV === 'development' && { details: error.message })
     });
   }

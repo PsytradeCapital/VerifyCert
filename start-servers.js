@@ -1,174 +1,169 @@
-s();vertartSerervers
-start the s
+const { spawn } = require('child_process');
+const path = require('path');
+
+// Function to kill processes on specific ports
+function killPort(port) {
+  return new Promise((resolve) => {
+    const killCmd = process.platform === 'win32' 
+      ? `netstat -ano | findstr :${port} && for /f "tokens=5" %a in ('netstat -ano ^| findstr :${port}') do taskkill /PID %a /F`
+      : `lsof -ti :${port} | xargs kill -9`;
+    
+    const proc = spawn('cmd', ['/c', killCmd], { stdio: 'ignore' });
+    proc.on('close', () => resolve());
+  });
 }
 
-// St(1);
-  }ss.exi    proce);
-ror.messageerservers:', tart to s❌ Failed error('  console.) {
-   (erroratch  
-  } ce();
-  .stdin.resum   process
- vealis es the proc Keep    
-    //
-  });;
-  .exit(0)ocess
-      prkill();ss.endProce  front;
-    ss.kill()cerodPkenbac;
-      ...')own servers🛑 Shutting dole.log('\n
-      consT', () => {on('SIGIN    process. shutdown
-raceful gndle // Ha
-     ers');
-  both servtop Ctrl+C to slog('Press nsole.);
-    cork!'moy netwoo use on A ready terifyCert is.log('\n✨ V    console60));
-t('='.repeansole.log( coy/');
-   nologygon.techpolps://faucet.ttucet: h.log('💰 Fa  consoleF50');
-  2712eAEe1f9240CEA1b97598C721dA0x6c9D554t: ac('📍 Contronsole.log  cstnet');
-   Teygon Amoyetwork: Pol'🌐 Nle.log(
-    conso');00:30calhost/lo:/d App: httpntenFrolog('🎨     console.t:3002');
-alhosttp://locd API: hcken.log('🔧 Bale  conso60));
-  at(g('='.repesole.loon');
-    cY!SUCCESSFULL STARTED ('🎉 SERVERSsole.logon;
-    c0))at(6+ '='.repe'\n' le.log(  conso;
+// Function to start backend server
+function startBackend() {
+  return new Promise((resolve, reject) => {
+    console.log('🔧 Starting backend server on port 4000...');
     
-  Frontend()it startocess = awarontendPronst fntend
-    c// Start fro    0));
-    
-ve, 500solut(reeosetTimolve => romise(resawait new P   nitialize
- o fully ior backend tt f bit a // Wai;
-    
-   ckend()Baarts = await stdProcest backen
-    constnd first backearSt  //    
-  ;
- .')g servers.. Startin('\n📡console.log    
-
-    2);rt(300ait killPo
-    aw0);t(300 killPor   await
- ses...'); procesingxistny e aing upeanlog('🧹 Cl    console.  try {
-{
-ers() rvtion startSe funcyncfunction
-asain startup 
-// M  });
-}
-}, 60000);
-  }
-    nd);
-    ve(fronte     resol   .');
-continuing.., but  timeouttend startup.log('⏰ Fronole    cons) {
-    rontendReady if (!f
-     => {t(() eouimds
-    setT0 secon 6out after  // Time;
-
-   }
+    const backend = spawn('node', ['src/server.js'], {
+      cwd: path.join(__dirname, 'backend'),
+      stdio: 'pipe',
+      shell: true
     });
-     art`))to st failed `Frontendror((new Er     reject
-   e ${code}`);with codted process exirontend e.error(`❌ Fonsol    c
-    ) {dyendReant (!fro {
-      if (code) =>close',n('rontend.o    f  });
 
+    let backendReady = false;
 
+    backend.stdout.on('data', (data) => {
+      const output = data.toString();
+      console.log(`[Backend] ${output.trim()}`);
+      
+      if (output.includes('running on port') || output.includes('listening')) {
+        backendReady = true;
+        console.log('✅ Backend server started successfully!');
+        resolve(backend);
       }
-        });
-  ct), 3000);tch(reje.caresolve)en(ontend().th=> startFr(() ut    setTimeo     
- () => {0).then((300    killPort');
-    cess...xisting pro kill eing touse, try0 in 🔄 Port 300og('ole.l  cons    {
-  INUSE')) s('EADDR.includeror    if (er      
-  ;
-r.trim()}`) ${erroend Error]`[Frontrror(   console.eg();
-   Strindata.toerror = const      
- {ta) =>  (dar.on('data',tder frontend.s  });
+    });
 
-   
+    backend.stderr.on('data', (data) => {
+      const error = data.toString();
+      console.error(`[Backend Error] ${error.trim()}`);
+      
+      if (error.includes('EADDRINUSE')) {
+        console.log('🔄 Port 4000 in use, trying to kill existing process...');
       }
-  );(frontend resolve       ;
-ully!') successfartedserver sttend  Fron'✅sole.log(  conrue;
-      y = tdReadonten
-        frt:3000')) {('localhost.includespual:') || outludes('Locnc || output.i')piledwebpack comncludes('(output.i if    
-     ;
-   `)tput.trim()}tend] ${ouFronnsole.log(`[     co
- toString();ut = data.utpt o     cons> {
-  =ta)(dan('data', tdout.oontend.s   fr false;
+    });
 
-  =eadyt frontendRle
+    backend.on('close', (code) => {
+      if (!backendReady) {
+        if (code) {
+          console.error(`❌ Backend process exited with code ${code}`);
+          reject(new Error(`Backend failed to start`));
+        }
+      }
+    });
 
-    });true
-        shell:   e',
-o: 'pip
-      stdind'), 'fronteirname,join(__dwd: path.  c {
-    t'],pm', ['star('nwnpand = sronteonst f   
-    c00...');
-  on port 30end serverg front🎨 Startinog('nsole.l
-    co) => {ectlve, rejresoise((n new Prom retur{
- () ontendartFr
-function stvernd ser fronten to starttio Func//});
+    // Timeout after 30 seconds
+    setTimeout(() => {
+      if (!backendReady) {
+        console.log('⏰ Backend startup timeout, but continuing...');
+        resolve(backend);
+      }
+    }, 30000);
+  });
 }
 
-0000);
-  
-    }, 3   }d);
-   olve(backen    res...');
-    t continuingut, bup timeokend startu('⏰ Baclog   console.{
-     endReady)   if (!back{
-    () => tTimeout(onds
-    seafter 30 seceout     // Tim });
-
-   }
-     `));
- o startfailed tackend r(`BErroreject(new 
-        `);e ${code}h coditd wess exite procnd Backee.error(`❌ol       consy) {
- addRe!backen if ({
-     => ode) ', (con('closend.ke    bac });
-
-
-       }
-     });00);
-     ct), 30h(rejesolve).catcn(reckend().the startBaeout(() =>tTim  se        > {
-then(() =rt(3002).Poll  ki
-      ..'); process. existing to kill, trying002 in usert 3🔄 Posole.log('    con {
-    DDRINUSE'))s('EAincluder.   if (erro     
-   
- .trim()}`);or] ${errorkend Err`[Bacrror(sole.e      con();
-toStringdata.rror = onst e c  > {
-    (data) =n('data',stderr.od.   backen;
-
- })    }
-    ;
-  nd)lve(backe       resofully!');
-  success started serverkend Bacole.log('✅    cons
-    true;dReady =  backen       n')) {
-listening oludes('nctput.iou port') || g on'runnin.includes((output   if    
-   )}`);
-   trim(] ${output.kend`[Baclog(ole.   cons;
-   a.toString()atput = dst out   con
-   a) => {ata', (dat('dout.onackend.std
-    bfalse;
-eady = let backendR });
-
-    rue
-     shell: t  ipe',
-    stdio: 'p   kend'),
- name, 'bach.join(__dirwd: pat, {
-      c 'dev']['run',n('npm', kend = spaw  const bac    
-  2...');
-300n port er orvg backend setartinog('🔧 S  console.l
-  ject) => {lve, reresoromise((ew Peturn n  rnd() {
-rtBacke stafunctionr
-kend servet bacion to starctun
-}
-
-// F  });s
-2 secondmeout after / Ti /000); 2ve,eout(resol  setTim);
-  => resolve(), () se'oc.on('clo   prre' });
- dio: 'ignollCmd], { st', ['/c', kiwn('cmd = spaconst proc  
+// Function to start frontend server
+function startFrontend() {
+  return new Promise((resolve, reject) => {
+    console.log('🎨 Starting frontend server on port 3000...');
     
-   -9`;| xargs kill:${port} f -ti    : `lso%a /F`
-  ID ill /P') do taskk :${port}dstr ^| finetstat -anoa in ('ntokens=5" %f "rt} && for /dstr :${poin -ano | fetstat   ? `nn32' 
-   orm === 'wiess.platf prockillCmd = const {
-   ve) => e((resolw Promis ne
-  return(port) { killPortnctionrts
-fu specific po on processesillto k Function 0));
+    const frontend = spawn('npm', ['start'], {
+      cwd: path.join(__dirname, 'frontend'),
+      stdio: 'pipe',
+      shell: true
+    });
 
-//t(6peae.log('='.reol');
-consy network... Amors forrvet serifyCerting Vetar'🚀 Slog(le.');
+    let frontendReady = false;
 
-consoquire('path= reath ');
-const pocess'child_prre(} = requinst { spawn co
+    frontend.stdout.on('data', (data) => {
+      const output = data.toString();
+      console.log(`[Frontend] ${output.trim()}`);
+      
+      if (output.includes('webpack compiled') || output.includes('Local:') || output.includes('localhost:3000')) {
+        frontendReady = true;
+        console.log('✅ Frontend server started successfully!');
+        resolve(frontend);
+      }
+    });
+
+    frontend.stderr.on('data', (data) => {
+      const error = data.toString();
+      console.error(`[Frontend Error] ${error.trim()}`);
+      
+      if (error.includes('EADDRINUSE')) {
+        console.log('🔄 Port 3000 in use, trying to kill existing process...');
+      }
+    });
+
+    frontend.on('close', (code) => {
+      if (!frontendReady) {
+        if (code) {
+          console.error(`❌ Frontend process exited with code ${code}`);
+          reject(new Error(`Frontend failed to start`));
+        }
+      }
+    });
+
+    // Timeout after 60 seconds
+    setTimeout(() => {
+      if (!frontendReady) {
+        console.log('⏰ Frontend startup timeout, but continuing...');
+        resolve(frontend);
+      }
+    }, 60000);
+  });
+}
+
+// Main startup function
+async function startServers() {
+  try {
+    console.log('🚀 Starting VerifyCert servers for Amoy network...');
+    console.log('='.repeat(60));
+    
+    // Clean up any existing processes
+    console.log('🧹 Cleaning up existing processes...');
+    await killPort(4000);
+    await killPort(3000);
+    
+    // Start backend first
+    const backendProcess = await startBackend();
+    
+    // Wait a bit for backend to fully initialize
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    
+    // Start frontend
+    const frontendProcess = await startFrontend();
+    
+    console.log('\n' + '='.repeat(60));
+    console.log('🎉 SERVERS STARTED SUCCESSFULLY!');
+    console.log('='.repeat(60));
+    console.log('🔧 Backend API: http://localhost:4000');
+    console.log('🎨 Frontend App: http://localhost:3000');
+    console.log('🌐 Network: Polygon Amoy Testnet');
+    console.log('📍 Contract: 0x6c9D554C721dA0CEA1b975982eAEe1f924271F50');
+    console.log('💰 Faucet: https://faucet.polygon.technology/');
+    console.log('='.repeat(60));
+    
+    console.log('\n✨ VerifyCert is ready to use on Amoy network!');
+    console.log('Press Ctrl+C to stop both servers');
+    
+    // Handle graceful shutdown
+    process.on('SIGINT', () => {
+      console.log('\n🛑 Shutting down servers...');
+      backendProcess.kill();
+      frontendProcess.kill();
+      // Keep the process alive
+      process.stdin.resume();
+      process.exit(0);
+    });
+    
+  } catch (error) {
+    console.error('❌ Failed to start servers:', error.message);
+    process.exit(1);
+  }
+}
+
+startServers();

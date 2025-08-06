@@ -1,13 +1,13 @@
 # VerifyCert Product Overview
 
-VerifyCert is a decentralized certificate verification system built on Polygon Mumbai that enables institutions to issue tamper-proof digital certificates as non-transferable NFTs.
+VerifyCert is a decentralized certificate verification system built on Polygon Amoy that enables institutions to issue tamper-proof digital certificates as non-transferable NFTs.
 
 ## Core Features
 
 - **Certificate Issuance**: Authorized institutions can mint non-transferable certificate NFTs
 - **Public Verification**: Anyone can verify certificate authenticity via QR codes or links  
 - **Issuer Dashboard**: Manage certificate issuance and view issued certificates
-- **Blockchain Security**: Immutable certificate storage on Polygon Mumbai
+- **Blockchain Security**: Immutable certificate storage on Polygon Amoy
 - **Responsive Design**: Works on desktop and mobile devices
 
 ## Key Concepts

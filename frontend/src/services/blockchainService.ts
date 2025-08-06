@@ -120,6 +120,7 @@ export interface CertificateData {
   isValid: boolean;
   verificationURL?: string;
   qrCodeURL?: string;
+  transactionHash?: string;
 }
 
 export interface VerificationResult {

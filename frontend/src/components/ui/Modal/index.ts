@@ -1,4 +1,2 @@
-export { default as Modal } from './Modal';
-export { default as Dialog } from './Dialog';
-export type { ModalProps } from './Modal';
-export type { DialogProps } from './Dialog';
+export { Modal, Dialog } from './Modal';
+export type { ModalProps, DialogProps } from './Modal';

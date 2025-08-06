@@ -74,4 +74,12 @@ export const verifyTreeShaking = () => {
   }
 };
 
+// Bundle size monitoring
+export const monitorBundleSize = () => {
+  if (process.env.NODE_ENV === 'development') {
+    logBundleInfo();
+    verifyTreeShaking();
+  }
+};
+
 import * as React from 'react';

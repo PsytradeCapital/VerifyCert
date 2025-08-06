@@ -1,129 +1,53 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+import { cn } from '../../../utils/cn';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'success' | 'warning' | 'ghost' | 'outline';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
   loading?: boolean;
-  loadingText?: string;
-  icon?: React.ReactNode;
-  iconPosition?: 'left' | 'right';
-  fullWidth?: boolean;
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
-  enableAnimations?: boolean;
-  'aria-label'?: string;
-  'aria-describedby'?: string;
-  'aria-pressed'?: boolean;
-  'aria-expanded'?: boolean;
-  'aria-controls'?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  variant = 'primary',
-  size = 'md',
-  loading = false,
-  loadingText,
-  icon,
-  iconPosition = 'left',
-  fullWidth = false,
-  rounded = 'md',
-  className = '',
-  disabled,
-  enableAnimations = true,
-  'aria-label': ariaLabel,
-  'aria-describedby': ariaDescribedBy,
-  'aria-pressed': ariaPressed,
-  'aria-expanded': ariaExpanded,
-  'aria-controls': ariaControls,
-  ...props
-}) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
-  const variantClasses = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500 disabled:bg-blue-300 disabled:hover:bg-blue-300',
-    secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-900 focus:ring-gray-500 disabled:bg-gray-50 disabled:text-gray-400 disabled:hover:bg-gray-50',
-    tertiary: 'bg-transparent hover:bg-gray-50 text-blue-600 focus:ring-blue-500 disabled:text-blue-300 disabled:hover:bg-transparent',
-    danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500 disabled:bg-red-300 disabled:hover:bg-red-300',
-    success: 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500 disabled:bg-green-300 disabled:hover:bg-green-300',
-    warning: 'bg-yellow-600 hover:bg-yellow-700 text-white focus:ring-yellow-500 disabled:bg-yellow-300 disabled:hover:bg-yellow-300',
-    ghost: 'bg-transparent hover:bg-gray-100 text-gray-700 focus:ring-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent',
-    outline: 'bg-transparent border-2 border-blue-600 hover:bg-blue-50 text-blue-600 focus:ring-blue-500 disabled:border-blue-300 disabled:text-blue-300 disabled:hover:bg-transparent'
-  };
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant = 'default', size = 'default', loading = false, disabled, children, ...props }, ref) => {
+    const baseStyles = 'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+    
+    const variants = {
+      default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+      destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+      outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+      ghost: 'hover:bg-accent hover:text-accent-foreground',
+      link: 'text-primary underline-offset-4 hover:underline',
+    };
 
-  const sizeClasses = {
-    xs: 'px-2 py-1 text-xs',
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base',
-    xl: 'px-8 py-4 text-lg'
-  };
+    const sizes = {
+      default: 'h-10 px-4 py-2',
+      sm: 'h-9 rounded-md px-3',
+      lg: 'h-11 rounded-md px-8',
+      icon: 'h-10 w-10',
+    };
 
-  const roundedClasses = {
-    none: 'rounded-none',
-    sm: 'rounded-sm',
-    md: 'rounded-md',
-    lg: 'rounded-lg',
-    full: 'rounded-full'
-  };
+    return (
+      <button
+        className={cn(
+          baseStyles,
+          variants[variant],
+          sizes[size],
+          className
+        )}
+        ref={ref}
+        disabled={disabled || loading}
+        {...props}
+      >
+        {loading && (
+          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        )}
+        {children}
+      </button>
+    );
+  }
+);
 
-  const iconSizeClasses = {
-    xs: 'w-3 h-3',
-    sm: 'w-4 h-4',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5',
-    xl: 'w-6 h-6'
-  };
+Button.displayName = 'Button';
 
-  const widthClass = fullWidth ? 'w-full' : '';
-  const isDisabled = disabled || loading;
-
-  const animationProps = enableAnimations && !isDisabled ? {
-    whileHover: { scale: 1.02 },
-    whileTap: { scale: 0.98 },
-    transition: { duration: 0.1 }
-  } : {};
-
-  return (
-    <motion.button
-      className={`
-        ${baseClasses}
-        ${variantClasses[variant]}
-        ${sizeClasses[size]}
-        ${roundedClasses[rounded]}
-        ${widthClass}
-        ${isDisabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}
-        ${className}
-      `}
-      disabled={isDisabled}
-      aria-label={ariaLabel}
-      aria-describedby={ariaDescribedBy}
-      aria-pressed={ariaPressed}
-      aria-expanded={ariaExpanded}
-      aria-controls={ariaControls}
-      {...animationProps}
-      {...props}
-    >
-      {loading && (
-        <Loader2 className={`animate-spin ${iconSizeClasses[size]} ${children || loadingText ? 'mr-2' : ''}`} />
-      )}
-      
-      {!loading && icon && iconPosition === 'left' && (
-        <span className={`${children ? 'mr-2' : ''}`}>
-          {icon}
-        </span>
-      )}
-      
-      {loading && loadingText ? loadingText : children}
-      
-      {!loading && icon && iconPosition === 'right' && (
-        <span className={`${children ? 'ml-2' : ''}`}>
-          {icon}
-        </span>
-      )}
-    </motion.button>
-  );
-};
-
-export default Button;
+export { Button };

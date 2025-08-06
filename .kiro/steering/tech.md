@@ -39,7 +39,7 @@ npm run dev:all              # Start all services (node, backend, frontend)
 ```bash
 npm run compile              # Compile contracts
 npm test                     # Run contract tests
-npm run deploy               # Deploy to Mumbai testnet
+npm run deploy               # Deploy to Amoy testnet
 npm run verify               # Verify contract on PolygonScan
 ```
 
@@ -67,7 +67,7 @@ npm run test:ci             # CI-optimized test suite
 - Root `.env`: Blockchain RPC URLs, private keys, API URLs
 - Backend `.env`: Port, SMTP config, CORS settings
 - Frontend `.env`: API endpoints, contract addresses, network config
-- All environments use Polygon Mumbai testnet (Chain ID: 80001)
+- All environments use Polygon Amoy testnet (Chain ID: 80002)
 
 ## Deployment Patterns
 

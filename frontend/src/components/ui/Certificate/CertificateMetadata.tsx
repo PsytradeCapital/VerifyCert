@@ -17,7 +17,7 @@ import {
   ExternalLink,
   Info
 } from 'lucide-react';
-import { Tooltip } from '../Tooltip/Tooltip';
+import Tooltip from '../Tooltip/Tooltip';
 
 export interface CertificateMetadata {
   // Core Information

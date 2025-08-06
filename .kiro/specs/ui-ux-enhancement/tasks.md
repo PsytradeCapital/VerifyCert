@@ -93,7 +93,12 @@
 - [x] Create Card component with multiple variants (default, elevated, outlined)
 - [x] Build Modal and Dialog components with backdrop and animations
 - [x] Implement Alert and Notification components
+
+
 - [x] Create Badge and Tag components for status indicators
+
+
+
 - [x] Add Tooltip component for additional information
 
 **Dependencies:** Task 1, Task 5

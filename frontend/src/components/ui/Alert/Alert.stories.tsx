@@ -19,17 +19,17 @@ type Story = StoryObj<typeof Alert>;
 // Alert Stories
 export const AlertVariants: Story = {
   render: () => (
-    <div className=\"space-y-4\">
-      <Alert variant=\"success\" title=\"Success\">
+    <div className="space-y-4">
+      <Alert variant="success" title="Success">
         Your changes have been saved successfully.
       </Alert>
-      <Alert variant=\"error\" title=\"Error\">
+      <Alert variant="error" title="Error">
         There was an error processing your request.
       </Alert>
-      <Alert variant=\"warning\" title=\"Warning\">
+      <Alert variant="warning" title="Warning">
         This action cannot be undone.
       </Alert>
-      <Alert variant=\"info\" title=\"Information\">
+      <Alert variant="info" title="Information">
         New features are available in this update.
       </Alert>
     </div>
@@ -38,17 +38,17 @@ export const AlertVariants: Story = {
 
 export const AlertWithoutTitle: Story = {
   render: () => (
-    <div className=\"space-y-4\">
-      <Alert variant=\"success\">
+    <div className="space-y-4">
+      <Alert variant="success">
         Your changes have been saved successfully.
       </Alert>
-      <Alert variant=\"error\">
+      <Alert variant="error">
         There was an error processing your request.
       </Alert>
-      <Alert variant=\"warning\">
+      <Alert variant="warning">
         This action cannot be undone.
       </Alert>
-      <Alert variant=\"info\">
+      <Alert variant="info">
         New features are available in this update.
       </Alert>
     </div>
@@ -69,7 +69,7 @@ export const ClosableAlerts: Story = {
     };
 
     return (
-      <div className=\"space-y-4\">
+      <div className="space-y-4">
         {alerts.map(alert => (
           <Alert
             key={alert.id}
@@ -81,7 +81,7 @@ export const ClosableAlerts: Story = {
           </Alert>
         ))}
         {alerts.length === 0 && (
-          <p className=\"text-gray-500 text-center py-8\">
+          <p className="text-gray-500 text-center py-8">
             All alerts have been dismissed
           </p>
         )}
@@ -92,14 +92,14 @@ export const ClosableAlerts: Story = {
 
 export const AlertWithCustomIcon: Story = {
   render: () => (
-    <div className=\"space-y-4\">
-      <Alert variant=\"success\" icon={<Heart className=\"h-5 w-5 text-red-500\" />}>
+    <div className="space-y-4">
+      <Alert variant="success" icon={<Heart className="h-5 w-5 text-red-500" />}>
         Custom heart icon alert
       </Alert>
-      <Alert variant=\"info\" icon={<Star className=\"h-5 w-5 text-yellow-500\" />}>
+      <Alert variant="info" icon={<Star className="h-5 w-5 text-yellow-500" />}>
         Custom star icon alert
       </Alert>
-      <Alert variant=\"warning\" icon={<Zap className=\"h-5 w-5 text-purple-500\" />}>
+      <Alert variant="warning" icon={<Zap className="h-5 w-5 text-purple-500" />}>
         Custom lightning icon alert
       </Alert>
     </div>
@@ -108,17 +108,17 @@ export const AlertWithCustomIcon: Story = {
 
 export const AlertWithoutIcon: Story = {
   render: () => (
-    <div className=\"space-y-4\">
-      <Alert variant=\"success\" showIcon={false}>
+    <div className="space-y-4">
+      <Alert variant="success" showIcon={false}>
         Success alert without icon
       </Alert>
-      <Alert variant=\"error\" showIcon={false}>
+      <Alert variant="error" showIcon={false}>
         Error alert without icon
       </Alert>
-      <Alert variant=\"warning\" showIcon={false}>
+      <Alert variant="warning" showIcon={false}>
         Warning alert without icon
       </Alert>
-      <Alert variant=\"info\" showIcon={false}>
+      <Alert variant="info" showIcon={false}>
         Info alert without icon
       </Alert>
     </div>
@@ -127,19 +127,19 @@ export const AlertWithoutIcon: Story = {
 
 export const ComplexAlert: Story = {
   render: () => (
-    <Alert variant=\"info\" title=\"System Update Available\" closable onClose={() => {}}>
-      <div className=\"mt-2\">
-        <p className=\"text-sm\">
+    <Alert variant="info" title="System Update Available" closable onClose={() => {}}>
+      <div className="mt-2">
+        <p className="text-sm">
           A new system update is available with the following improvements:
         </p>
-        <ul className=\"mt-2 text-sm list-disc list-inside space-y-1\">
+        <ul className="mt-2 text-sm list-disc list-inside space-y-1">
           <li>Enhanced security features</li>
           <li>Improved performance</li>
           <li>Bug fixes and stability improvements</li>
         </ul>
-        <div className=\"mt-4 flex space-x-3\">
-          <Button size=\"sm\">Update Now</Button>
-          <Button variant=\"outline\" size=\"sm\">Remind Me Later</Button>
+        <div className="mt-4 flex space-x-3">
+          <Button size="sm">Update Now</Button>
+          <Button variant="outline" size="sm">Remind Me Later</Button>
         </div>
       </div>
     </Alert>
@@ -178,18 +178,18 @@ export const NotificationDemo: Story = {
     };
 
     return (
-      <div className=\"space-y-4\">
-        <div className=\"flex space-x-2\">
-          <Button onClick={() => addNotification('success')} variant=\"default\">
+      <div className="space-y-4">
+        <div className="flex space-x-2">
+          <Button onClick={() => addNotification('success')} variant="default">
             Success
           </Button>
-          <Button onClick={() => addNotification('error')} variant=\"destructive\">
+          <Button onClick={() => addNotification('error')} variant="destructive">
             Error
           </Button>
-          <Button onClick={() => addNotification('warning')} variant=\"outline\">
+          <Button onClick={() => addNotification('warning')} variant="outline">
             Warning
           </Button>
-          <Button onClick={() => addNotification('info')} variant=\"secondary\">
+          <Button onClick={() => addNotification('info')} variant="secondary">
             Info
           </Button>
         </div>
@@ -226,14 +226,14 @@ export const NotificationPositions: Story = {
     ] as const;
 
     return (
-      <div className=\"space-y-4\">
-        <div className=\"flex flex-wrap gap-2\">
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-2">
           {positions.map(pos => (
             <Button
               key={pos}
               onClick={() => setPosition(pos)}
               variant={position === pos ? 'default' : 'outline'}
-              size=\"sm\"
+              size="sm"
             >
               {pos}
             </Button>
@@ -247,8 +247,8 @@ export const NotificationPositions: Story = {
         {notification && (
           <Notification
             id={notification}
-            variant=\"info\"
-            title=\"Position Demo\"
+            variant="info"
+            title="Position Demo"
             message={`This notification appears at ${position}`}
             position={position}
             onClose={() => setNotification(null)}
@@ -277,9 +277,9 @@ export const PersistentNotification: Story = {
         {notification && (
           <Notification
             id={notification}
-            variant=\"warning\"
-            title=\"Persistent Notification\"
-            message=\"This notification won't auto-dismiss. You must close it manually.\"
+            variant="warning"
+            title="Persistent Notification"
+            message="This notification won't auto-dismiss. You must close it manually."
             onClose={() => setNotification(null)}
             duration={0} // No auto-dismiss
           />

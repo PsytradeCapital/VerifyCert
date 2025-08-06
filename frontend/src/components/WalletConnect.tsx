@@ -167,7 +167,7 @@ export default function WalletConnect({
         toast.error('Failed to connect wallet');
       }
     }
-  }, [isMetaMaskInstalled, getNetworkName, requiredNetwork, switchToPolygonMumbai, onConnect]);
+  }, [isMetaMaskInstalled, getNetworkName, requiredNetwork, switchToPolygonAmoy, onConnect]);
 
   // Disconnect wallet
   const disconnectWallet = useCallback(() => {

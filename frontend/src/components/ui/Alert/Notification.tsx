@@ -156,7 +156,9 @@ const Notification: React.FC<NotificationProps> = ({
                   {React.isValidElement(IconComponent) ? (
                     IconComponent
                   ) : (
-                    <IconComponent className={`h-5 w-5 ${styles.icon}`} />
+                    React.createElement(IconComponent as React.ComponentType<any>, { 
+                      className: `h-5 w-5 ${styles.icon}` 
+                    })
                   )}
                 </div>
               )}

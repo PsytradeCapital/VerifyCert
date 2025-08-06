@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
-import { LazyImage } from '../utils/lazyLoading';
-import { OptimizedImage } from './ui/OptimizedImage';
 import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
 
 export interface Certificate {
@@ -35,7 +33,6 @@ export default function CertificateCard({
   onDownload,
   onShare,
 }: CertificateCardProps) {
-  const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const feedback = useFeedbackAnimations();
   
@@ -283,7 +280,7 @@ export default function CertificateCard({
                 )}
               </div>
             </div>
-          </div>
+          </section>
 
           {/* QR Code and Actions */}
           <aside className="space-y-4" aria-labelledby="qr-actions-heading">
@@ -300,40 +297,10 @@ export default function CertificateCard({
                   <div id={qrCodeId} className="sr-only">
                     {ariaDescriptions.certificates.qrCode}
                   </div>
-                  <OptimizedImage
+                  <img
                     src={certificate.qrCodeURL}
                     alt={ariaLabels.media.qrCode}
-                    className="mx-auto max-w-32 max-h-32"
-                    aspectRatio="square"
-                    responsive={false} // QR codes should maintain exact dimensions
-                    webpFallback={false} // QR codes need to be precise, avoid WebP
-                    priority={true} // QR codes are important for verification
-                    optimization={{
-                      width: 128,
-                      height: 128,
-                      quality: 100, // Maximum quality for QR codes
-                      sizes: '128px'
-                    }}
-                    loadingComponent={() => (
-                      <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex items-center justify-center animate-pulse">
-                        <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
-                    errorComponent={({ retry }) => (
-                      <div className="w-32 h-32 mx-auto bg-gray-200 rounded-lg flex flex-col items-center justify-center">
-                        <svg className="h-8 w-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        <button
-                          onClick={retry}
-                          className="text-xs text-blue-600 hover:text-blue-800 underline"
-                        >
-                          Retry
-                        </button>
-                      </div>
-                    )}
+                    className="mx-auto w-32 h-32"
                   />
                   <p className="text-xs text-gray-500 mt-2">Scan to verify</p>
                 </div>
@@ -403,32 +370,32 @@ export default function CertificateCard({
                   <span>Copy Link</span>
                 </button>
               </div>
-            </div>
 
-            {/* Verification Link */}
-            {certificate.verificationURL && (
-              <div className="pt-3 border-t border-gray-200">
-                <label className="block text-xs font-medium text-gray-400 mb-1">Verification URL</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="text"
-                    value={certificate.verificationURL}
-                    readOnly
-                    className="flex-1 text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 font-mono"
-                  />
-                  <button
-                    onClick={handleCopyLink}
-                    className="text-blue-600 hover:text-blue-700 p-1"
-                    title="Copy link"
-                  >
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                  </button>
+              {/* Verification Link */}
+              {certificate.verificationURL && (
+                <div className="pt-3 border-t border-gray-200">
+                  <label className="block text-xs font-medium text-gray-400 mb-1">Verification URL</label>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      value={certificate.verificationURL}
+                      readOnly
+                      className="flex-1 text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 font-mono"
+                    />
+                    <button
+                      onClick={handleCopyLink}
+                      className="text-blue-600 hover:text-blue-700 p-1"
+                      title="Copy link"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </section>
+          </aside>
         </div>
       </div>
 
@@ -439,6 +406,6 @@ export default function CertificateCard({
           <span>Secured on Polygon Blockchain</span>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

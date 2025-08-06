@@ -29,7 +29,7 @@ export default function Verify() {
   };
 
   const handleScanQR = () => {
-    toast.info('QR code scanning feature coming soon! For now, please enter the certificate ID manually.');
+    toast('QR code scanning feature coming soon! For now, please enter the certificate ID manually.');
   };
 
   return (

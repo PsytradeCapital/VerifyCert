@@ -1,96 +1,66 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, AlertTriangle, Info, Download, Share2, Eye, Copy } from 'lucide-react';
-import Button from '../Button/Button';
+import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import Card from '../Card/Card';
 
 export interface VerificationResult {
   id: string;
-  status: 'verified' | 'invalid' | 'pending' | 'error';
-  certificateId?: string;
-  recipientName?: string;
-  courseName?: string;
-  institution?: string;
-  issueDate?: string;
-  expiryDate?: string;
-  issuerAddress?: string;
-  blockchainTxHash?: string;
-  metadata?: Record<string, any>;
-  errorMessage?: string;
+  status: 'verified' | 'error' | 'pending';
+  message?: string;
+  certificate?: {
+    id: string;
+    recipientName: string;
+    courseName: string;
+    institution: string;
+    issueDate: string;
+    isValid: boolean;
+  };
 }
 
 export interface VerificationResultsProps {
   result: VerificationResult;
-  onDownload?: () => void;
   onShare?: () => void;
-  onViewDetails?: () => void;
+  onDownload?: () => void;
   className?: string;
-  showActions?: boolean;
 }
-
-const statusConfig = {
-  verified: {
-    icon: CheckCircle,
-    color: 'text-green-600',
-    bgColor: 'bg-green-50',
-    borderColor: 'border-green-200',
-    title: 'Certificate Verified',
-    description: 'This certificate is authentic and valid'
-  },
-  invalid: {
-    icon: XCircle,
-    color: 'text-red-600',
-    bgColor: 'bg-red-50',
-    borderColor: 'border-red-200',
-    title: 'Certificate Invalid',
-    description: 'This certificate could not be verified'
-  },
-  pending: {
-    icon: Info,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-200',
-    title: 'Verification Pending',
-    description: 'Certificate verification in progress'
-  },
-  error: {
-    icon: AlertTriangle,
-    color: 'text-yellow-600',
-    bgColor: 'bg-yellow-50',
-    borderColor: 'border-yellow-200',
-    title: 'Verification Error',
-    description: 'An error occurred during verification'
-  }
-};
 
 export const VerificationResults: React.FC<VerificationResultsProps> = ({
   result,
-  onDownload,
   onShare,
-  onViewDetails,
-  className = '',
-  showActions = true
+  onDownload,
+  className = ''
 }) => {
-  const config = statusConfig[result.status];
-  const Icon = config.icon;
-
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      // You could show a toast notification here
-    } catch (err) {
-      console.error('Failed to copy:', err);
+  const getStatusConfig = () => {
+    switch (result.status) {
+      case 'verified':
+        return {
+          icon: CheckCircle,
+          color: 'text-green-600',
+          bgColor: 'bg-green-50',
+          borderColor: 'border-green-200',
+          title: 'Certificate Verified'
+        };
+      case 'error':
+        return {
+          icon: XCircle,
+          color: 'text-red-600',
+          bgColor: 'bg-red-50',
+          borderColor: 'border-red-200',
+          title: 'Verification Failed'
+        };
+      default:
+        return {
+          icon: AlertCircle,
+          color: 'text-yellow-600',
+          bgColor: 'bg-yellow-50',
+          borderColor: 'border-yellow-200',
+          title: 'Verification Pending'
+        };
     }
   };
 
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+  const config = getStatusConfig();
+  const Icon = config.icon;
 
   return (
     <motion.div
@@ -99,45 +69,66 @@ export const VerificationResults: React.FC<VerificationResultsProps> = ({
       transition={{ duration: 0.5 }}
       className={className}
     >
-      <Card
-        variant="elevated"
-        padding="lg"
-        className={`${config.bgColor} ${config.borderColor} border-2`}
-      >
+      <Card className={`${config.bgColor} ${config.borderColor} border-2 p-6`}>
         {/* Status Header */}
         <div className="flex items-center mb-6">
           <div className={`p-3 rounded-full ${config.bgColor} mr-4`}>
             <Icon className={`w-8 h-8 ${config.color}`} />
           </div>
           <div>
-            <h2 className={`text-2xl font-bold ${config.color}`}>
-              {config.title}
-            </h2>
-            <p className="text-gray-600 mt-1">
-              {result.errorMessage || config.description}
-            </p>
+            <h3 className="text-xl font-semibold text-gray-900">{config.title}</h3>
+            {result.message && (
+              <p className="text-gray-600 mt-1">{result.message}</p>
+            )}
           </div>
         </div>
 
         {/* Certificate Details */}
-        {result.status === 'verified' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="space-y-4 mb-6"
-          >
+        {result.status === 'verified' && result.certificate && (
+          <div className="space-y-4 mb-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {result.recipientName && (
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <label className="text-sm font-medium text-gray-500">Recipient</label>
-                  <p className="text-lg font-semibold text-gray-900">{result.recipientName}</p>
-                </div>
-              )}
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <label className="text-sm font-medium text-gray-500">Recipient</label>
+                <p className="text-lg font-semibold text-gray-900">{result.certificate.recipientName}</p>
+              </div>
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <label className="text-sm font-medium text-gray-500">Course</label>
+                <p className="text-lg font-semibold text-gray-900">{result.certificate.courseName}</p>
+              </div>
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <label className="text-sm font-medium text-gray-500">Institution</label>
+                <p className="text-lg font-semibold text-gray-900">{result.certificate.institution}</p>
+              </div>
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <label className="text-sm font-medium text-gray-500">Issue Date</label>
+                <p className="text-lg font-semibold text-gray-900">{result.certificate.issueDate}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
-              {result.courseName && (
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <label className="text-sm font-medium text-gray-500">Course/Program</label>
-                  <p className="text-lg font-semibold text-gray-900">{result.courseName}</p>
-                </div>
- 
+        {/* Action Buttons */}
+        {result.status === 'verified' && (onShare || onDownload) && (
+          <div className="flex space-x-4">
+            {onShare && (
+              <button
+                onClick={onShare}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                Share Certificate
+              </button>
+            )}
+            {onDownload && (
+              <button
+                onClick={onDownload}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                Download Certificate
+              </button>
+            )}
+          </div>
+        )}
+      </Card>
+    </motion.div>
+  );
+};

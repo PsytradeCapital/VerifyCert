@@ -4,7 +4,7 @@ import { useNavigationSync } from '../hooks/useNavigationSync';
 import { useNavigationTransitions } from '../hooks/useNavigationTransitions';
 import { NavigationControls } from './ui/Navigation/NavigationStateManager';
 import SideNavigation from './ui/Navigation/SideNavigation';
-import BottomNavigation from './ui/Navigation/BottomNavigation';
+import { BottomNavigation } from './ui/Navigation/BottomNavigation';
 
 /**
  * Demo component to showcase navigation state management and active indicators

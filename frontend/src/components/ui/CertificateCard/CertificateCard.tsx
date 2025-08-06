@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Share2, Copy, CheckCircle, XCircle, Calendar, User, Building, Award, QrCode } from 'lucide-react';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import Card from '../Card/Card';
 
 export interface Certificate {

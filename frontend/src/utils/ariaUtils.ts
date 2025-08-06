@@ -19,6 +19,13 @@ export const ariaLabels = {
     breadcrumb: 'Breadcrumb navigation',
     mainMenu: 'Main navigation menu',
     userMenu: 'User account menu',
+    main: 'Main navigation',
+    mobileMenu: 'Mobile navigation menu',
+  },
+  media: {
+    qrCode: 'QR code for certificate verification',
+    certificateImage: 'Certificate image',
+    logo: 'VerifyCert logo',
   },
 };
 
@@ -33,6 +40,7 @@ export const ariaDescriptions = {
   forms: {
     fileUpload: 'Upload a certificate file in JSON, PDF, or image format for verification',
     search: 'Enter a certificate ID number to search for and verify the certificate',
+    dragDrop: 'Drag and drop files here or click to browse',
   },
 };
 

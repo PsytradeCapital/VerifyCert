@@ -1,7 +1,4 @@
-import { error } from 'console';
-import { Loading } from '../ui/CertificateList/CertificateList.stories';
-import { Component } from 'lucide-react';
-import { error } from 'console';
+import React from 'react';
 import { createLazyComponent } from '../../utils/lazyLoading';
 
 // Lazy load heavy page components
@@ -89,7 +86,7 @@ export const LazyPushNotificationDemo = createLazyComponent(
 
 // Lazy load complex UI components
 export const LazyModal = createLazyComponent(
-  () => import('../ui/Modal/Modal')
+  () => import('../ui/Modal/Modal').then(module => ({ default: module.Modal }))
 );
 
 export const LazySelect = createLazyComponent(

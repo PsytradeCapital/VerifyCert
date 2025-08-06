@@ -98,7 +98,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         errors.push(`${file.name}: ${error}`);
       } else {
         const preview = await generatePreview(file);
-        const fileWithPreview: FileWithPreview = Object.assign(file, { preview });
+        const fileWithPreview: FileWithPreview = Object.assign(file, { preview: preview || undefined });
         validFiles.push(fileWithPreview);
       }
     }

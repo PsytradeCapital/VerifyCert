@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { QrCode, Upload, ArrowRight, Shield, CheckCircle } from 'lucide-react';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 
 export interface HeroSectionProps {
   title?: string;

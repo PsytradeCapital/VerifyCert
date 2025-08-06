@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Alert, Notification } from './index';
-import { Button } from '../Button';
+import { Button } from '../Button/Button';
 import { Heart, Star, Zap } from 'lucide-react';
 
 const meta: Meta<typeof Alert> = {
@@ -201,7 +201,7 @@ export const NotificationDemo: Story = {
             variant={notification.variant}
             title={notification.title}
             message={notification.message}
-            onClose={removeNotification}
+            onClose={() => removeNotification(notification.id)}
             duration={5000}
           />
         ))}

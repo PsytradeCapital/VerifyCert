@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Certificate } from '../../CertificateCard';
 import CertificateCard from '../../CertificateCard';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import { Select } from '../Select';
 
 export interface FilterOptions {

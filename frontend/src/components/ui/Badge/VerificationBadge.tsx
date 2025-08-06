@@ -12,7 +12,7 @@ import {
   Link as LinkIcon,
   Eye
 } from 'lucide-react';
-import Badge from './Badge';
+import { Badge } from './Badge';
 import { getBlockchainService, VerificationResult } from '../../../services/blockchainService';
 
 export interface VerificationBadgeProps {

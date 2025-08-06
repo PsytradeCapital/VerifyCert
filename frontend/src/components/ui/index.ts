@@ -27,12 +27,12 @@ export {
 
 // Navigation Components
 export { default as SideNavigation } from './Navigation/SideNavigation';
-export { default as BottomNavigation } from './Navigation/BottomNavigation';
+export { BottomNavigation } from './Navigation/BottomNavigation';
 export { default as Breadcrumbs, AutoBreadcrumbs } from './Navigation/Breadcrumbs';
 export { default as FloatingActionButton } from './Navigation/FloatingActionButton';
 
 // Form Components
-export { default as Button } from './Button/Button';
+export { Button } from './Button/Button';
 export { default as Input } from './Input/Input';
 export { default as Select } from './Select/Select';
 export { default as FileUpload } from './FileUpload/FileUpload';

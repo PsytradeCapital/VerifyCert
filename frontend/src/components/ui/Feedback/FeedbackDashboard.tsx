@@ -10,7 +10,7 @@ import {
   RefreshCw,
   Filter
 } from 'lucide-react';
-import { Card } from '../Card/Card';
+import Card from '../Card/Card';
 import { Button } from '../Button/Button';
 import { feedbackService, FeedbackAnalytics, FeedbackData } from '../../../services/feedbackService';
 

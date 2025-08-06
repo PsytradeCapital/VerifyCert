@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageSquare, Star, Send, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import { Card } from '../Card/Card';
+import Input from '../Input/Input';
+import Card from '../Card/Card';
 
 interface FeedbackData {
   category: 'navigation' | 'visual-design' | 'overall-experience';

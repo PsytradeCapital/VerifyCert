@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 
 // Security middleware
 app.use(helmet());
@@ -46,14 +46,37 @@ app.use((req, res, next) => {
 app.get('/health', (req, res) => {
   res.json({ 
     success: true,
-    message: 'VerifyCert Backend API',
+    message: 'VerifyCert Backend API - Amoy Network',
+    network: 'amoy',
+    chainId: 80002,
+    contractAddress: process.env.CONTRACT_ADDRESS || '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
   });
 });
 
-// API routes
-app.use('/api/v1', require('./routes'));
+// Import Amoy-specific routes
+const mintCertificateAmoy = require('../routes/mintCertificateAmoy');
+const verifyCertificateAmoy = require('../routes/verifyCertificateAmoy');
+
+// API routes for Amoy network
+app.use('/api/certificates', mintCertificateAmoy);
+app.use('/api/certificates', verifyCertificateAmoy);
+
+// Network info endpoint
+app.get('/api/network', (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      network: 'amoy',
+      chainId: 80002,
+      rpcUrl: process.env.RPC_URL || 'https://rpc-amoy.polygon.technology/',
+      blockExplorer: 'https://amoy.polygonscan.com',
+      faucet: 'https://faucet.polygon.technology/',
+      contractAddress: process.env.CONTRACT_ADDRESS || '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50'
+    }
+  });
+});
 
 // 404 handler
 app.use('*', (req, res) => {

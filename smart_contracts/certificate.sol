@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * @title Certificate
@@ -13,7 +14,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
  * Implements tamper-proof digital certificates on Polygon Amoy
  */
 contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Pausable {
-    uint256 private _tokenIdCounter;
+    using Counters for Counters.Counter;
+    
+    Counters.Counter private _tokenIdCounter;
 
     struct CertificateData {
         string recipientName;
@@ -86,8 +89,8 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
         require(bytes(metadataHash).length > 0, "Metadata hash required");
         require(metadataHashToTokenId[metadataHash] == 0, "Certificate with this hash already exists");
 
-        _tokenIdCounter++;
-        uint256 tokenId = _tokenIdCounter;
+        _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter.current();
 
         _safeMint(recipient, tokenId);
         _setTokenURI(tokenId, certificateURI);
@@ -215,7 +218,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Paus
      * @dev Get total number of certificates issued
      */
     function totalSupply() public view returns (uint256) {
-        return _tokenIdCounter;
+        return _tokenIdCounter.current();
     }
 
     /**

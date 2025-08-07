@@ -1,5 +1,5 @@
 import React, { useState, useCallback, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
@@ -37,11 +37,13 @@ import {
   LazyBreadcrumbsDemo,
   LazyNavigationDemo,
   LazyNavigationStateDemo,
-  LazyPageTransitionDemo,
   LazyFeedbackAnimationsDemo,
   LazyPWATestPage,
   LazyThemeDemo,
   LazyPushNotificationDemo,
+  LazyFeedbackDashboard,
+  LazyFeedbackDemo,
+  LazyPerformanceDashboard,
   ComponentLoading,
   ComponentLoadError
 } from './components/lazy';
@@ -54,7 +56,7 @@ import { useImageOptimization } from './hooks/useImageOptimization';
 
 // Services
 import { errorLogger } from './services/errorLogger';
-import { performanceMetrics, trackPageView } from './services/performanceMetrics';
+import { performanceMetrics } from './services/performanceMetrics';
 
 // Performance monitoring components
 import { PerformanceAlert, PerformanceIndicator } from './components/ui/Performance/PerformanceAlert';
@@ -87,14 +89,12 @@ function App() {
     canInstall, 
     isInstalled, 
     installPWA, 
-    installationState,
-    isMobile,
     isIOSSafari,
     showIOSInstructions 
   } = usePWAInstallation();
 
-  // Image optimization hook
-  const { isInitialized: imageOptInitialized, webpSupported } = useImageOptimization();
+  // Image optimization hook - commented out unused variables
+  // const { isInitialized: imageOptInitialized, webpSupported } = useImageOptimization();
 
   // State for iOS install instructions
   const [showIOSModal, setShowIOSModal] = React.useState(false);
@@ -347,7 +347,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <Suspense fallback={<ComponentLoading />}>
-                        {React.lazy(() => import('./pages/FeedbackDashboard'))}
+                        <LazyFeedbackDashboard />
                       </Suspense>
                     </ErrorBoundary>
                   } 
@@ -358,7 +358,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <Suspense fallback={<ComponentLoading />}>
-                        {React.lazy(() => import('./pages/FeedbackDemo'))}
+                        <LazyFeedbackDemo />
                       </Suspense>
                     </ErrorBoundary>
                   } 
@@ -483,7 +483,7 @@ function App() {
                       fallback={<ComponentLoading />}
                       errorFallback={ComponentLoadError}
                     >
-                      {React.lazy(() => import('./components/ui/Performance/PerformanceDashboard'))}
+                      <LazyPerformanceDashboard />
                     </LazyComponentWrapper>
                   </Suspense>
                 </div>

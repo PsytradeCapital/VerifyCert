@@ -84,6 +84,18 @@ export const LazyPushNotificationDemo = createLazyComponent(
   () => import('../../pages/PushNotificationDemo')
 );
 
+export const LazyFeedbackDashboard = createLazyComponent(
+  () => import('../../pages/FeedbackDashboard')
+);
+
+export const LazyFeedbackDemo = createLazyComponent(
+  () => import('../../pages/FeedbackDemo')
+);
+
+export const LazyPerformanceDashboard = createLazyComponent(
+  () => import('../ui/Performance/PerformanceDashboard')
+);
+
 // Lazy load complex UI components
 export const LazyModal = createLazyComponent(
   () => import('../ui/Modal/Modal').then(module => ({ default: module.Modal }))

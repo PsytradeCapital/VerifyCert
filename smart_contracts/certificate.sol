@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 /**
  * @title Certificate
  * @dev Non-transferable ERC721 certificate contract for issuing verifiable digital certificates
+ * @notice This contract implements a certificate system where certificates are issued as NFTs
+ * but cannot be transferred, ensuring they remain with the original recipient
  */
 contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -26,6 +28,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         bool isRevoked;
         address issuer;
         string metadataURI;
+        bytes32 certificateHash; // Hash of certificate content for integrity
     }
 
     // Mappings
@@ -33,6 +36,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     mapping(address => bool) public authorizedIssuers;
     mapping(address => uint256[]) public recipientCertificates;
     mapping(address => uint256[]) public issuerCertificates;
+    mapping(bytes32 => uint256) public certificateHashToTokenId;
 
     // Events
     event CertificateIssued(
@@ -41,26 +45,51 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         address indexed issuer,
         string recipientName,
         string courseName,
-        string institutionName
+        string institutionName,
+        bytes32 certificateHash
     );
     
-    event CertificateRevoked(uint256 indexed tokenId, address indexed revoker);
+    event CertificateRevoked(
+        uint256 indexed tokenId, 
+        address indexed revoker,
+        string reason
+    );
+    
     event IssuerAuthorized(address indexed issuer, address indexed authorizer);
     event IssuerRevoked(address indexed issuer, address indexed revoker);
+    
+    event CertificateMetadataUpdated(
+        uint256 indexed tokenId,
+        string newMetadataURI
+    );
 
     // Modifiers
     modifier onlyAuthorizedIssuer() {
-        require(authorizedIssuers[msg.sender] || msg.sender == owner(), "Not authorized to issue certificates");
+        require(
+            authorizedIssuers[msg.sender] || msg.sender == owner(), 
+            "Certificate: Not authorized to issue certificates"
+        );
         _;
     }
 
     modifier certificateExists(uint256 tokenId) {
-        require(_exists(tokenId), "Certificate does not exist");
+        require(_exists(tokenId), "Certificate: Certificate does not exist");
         _;
     }
 
     modifier notRevoked(uint256 tokenId) {
-        require(!certificates[tokenId].isRevoked, "Certificate has been revoked");
+        require(
+            !certificates[tokenId].isRevoked, 
+            "Certificate: Certificate has been revoked"
+        );
+        _;
+    }
+
+    modifier onlyIssuerOrOwner(uint256 tokenId) {
+        require(
+            msg.sender == certificates[tokenId].issuer || msg.sender == owner(),
+            "Certificate: Only issuer or owner can perform this action"
+        );
         _;
     }
 
@@ -68,6 +97,13 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 
     /**
      * @dev Issue a new certificate
+     * @param recipient Address of the certificate recipient
+     * @param recipientName Name of the certificate recipient
+     * @param courseName Name of the course or program
+     * @param institutionName Name of the issuing institution
+     * @param expiryDate Expiry timestamp (0 for no expiry)
+     * @param metadataURI URI pointing to certificate metadata
+     * @return tokenId The ID of the newly minted certificate
      */
     function issueCertificate(
         address recipient,
@@ -77,14 +113,36 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         uint256 expiryDate,
         string memory metadataURI
     ) public onlyAuthorizedIssuer nonReentrant returns (uint256) {
-        require(recipient != address(0), "Invalid recipient address");
-        require(bytes(recipientName).length > 0, "Recipient name required");
-        require(bytes(courseName).length > 0, "Course name required");
-        require(bytes(institutionName).length > 0, "Institution name required");
-        require(expiryDate == 0 || expiryDate > block.timestamp, "Invalid expiry date");
+        require(recipient != address(0), "Certificate: Invalid recipient address");
+        require(bytes(recipientName).length > 0, "Certificate: Recipient name required");
+        require(bytes(courseName).length > 0, "Certificate: Course name required");
+        require(bytes(institutionName).length > 0, "Certificate: Institution name required");
+        require(
+            expiryDate == 0 || expiryDate > block.timestamp, 
+            "Certificate: Invalid expiry date"
+        );
 
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
+
+        // Generate certificate hash for integrity verification
+        bytes32 certificateHash = keccak256(
+            abi.encodePacked(
+                recipient,
+                recipientName,
+                courseName,
+                institutionName,
+                block.timestamp,
+                msg.sender,
+                tokenId
+            )
+        );
+
+        // Ensure certificate hash is unique
+        require(
+            certificateHashToTokenId[certificateHash] == 0,
+            "Certificate: Duplicate certificate detected"
+        );
 
         // Mint the certificate NFT
         _safeMint(recipient, tokenId);
@@ -103,54 +161,85 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
             expiryDate: expiryDate,
             isRevoked: false,
             issuer: msg.sender,
-            metadataURI: metadataURI
+            metadataURI: metadataURI,
+            certificateHash: certificateHash
         });
 
         // Update mappings
         recipientCertificates[recipient].push(tokenId);
         issuerCertificates[msg.sender].push(tokenId);
+        certificateHashToTokenId[certificateHash] = tokenId;
 
-        emit CertificateIssued(tokenId, recipient, msg.sender, recipientName, courseName, institutionName);
+        emit CertificateIssued(
+            tokenId, 
+            recipient, 
+            msg.sender, 
+            recipientName, 
+            courseName, 
+            institutionName,
+            certificateHash
+        );
         
         return tokenId;
     }
 
     /**
      * @dev Revoke a certificate
+     * @param tokenId ID of the certificate to revoke
+     * @param reason Reason for revocation
      */
-    function revokeCertificate(uint256 tokenId) 
+    function revokeCertificate(uint256 tokenId, string memory reason) 
         public 
         certificateExists(tokenId) 
-        notRevoked(tokenId) 
+        notRevoked(tokenId)
+        onlyIssuerOrOwner(tokenId)
     {
-        require(
-            msg.sender == certificates[tokenId].issuer || msg.sender == owner(),
-            "Only issuer or owner can revoke certificate"
-        );
-
         certificates[tokenId].isRevoked = true;
-        emit CertificateRevoked(tokenId, msg.sender);
+        emit CertificateRevoked(tokenId, msg.sender, reason);
+    }
+
+    /**
+     * @dev Update certificate metadata URI
+     * @param tokenId ID of the certificate
+     * @param newMetadataURI New metadata URI
+     */
+    function updateCertificateMetadata(uint256 tokenId, string memory newMetadataURI)
+        public
+        certificateExists(tokenId)
+        onlyIssuerOrOwner(tokenId)
+    {
+        certificates[tokenId].metadataURI = newMetadataURI;
+        _setTokenURI(tokenId, newMetadataURI);
+        emit CertificateMetadataUpdated(tokenId, newMetadataURI);
     }
 
     /**
      * @dev Authorize an issuer
+     * @param issuer Address to authorize as certificate issuer
      */
     function authorizeIssuer(address issuer) public onlyOwner {
-        require(issuer != address(0), "Invalid issuer address");
+        require(issuer != address(0), "Certificate: Invalid issuer address");
+        require(!authorizedIssuers[issuer], "Certificate: Issuer already authorized");
+        
         authorizedIssuers[issuer] = true;
         emit IssuerAuthorized(issuer, msg.sender);
     }
 
     /**
      * @dev Revoke issuer authorization
+     * @param issuer Address to revoke authorization from
      */
     function revokeIssuer(address issuer) public onlyOwner {
+        require(authorizedIssuers[issuer], "Certificate: Issuer not authorized");
+        
         authorizedIssuers[issuer] = false;
         emit IssuerRevoked(issuer, msg.sender);
     }
 
     /**
      * @dev Get certificate details
+     * @param tokenId ID of the certificate
+     * @return Certificate data structure
      */
     function getCertificate(uint256 tokenId) 
         public 
@@ -163,6 +252,8 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 
     /**
      * @dev Check if certificate is valid (exists, not revoked, not expired)
+     * @param tokenId ID of the certificate to validate
+     * @return bool indicating if certificate is valid
      */
     function isValidCertificate(uint256 tokenId) public view returns (bool) {
         if (!_exists(tokenId)) return false;
@@ -175,7 +266,24 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
+     * @dev Verify certificate integrity using hash
+     * @param tokenId ID of the certificate
+     * @param expectedHash Expected certificate hash
+     * @return bool indicating if certificate hash matches
+     */
+    function verifyCertificateIntegrity(uint256 tokenId, bytes32 expectedHash) 
+        public 
+        view 
+        certificateExists(tokenId)
+        returns (bool) 
+    {
+        return certificates[tokenId].certificateHash == expectedHash;
+    }
+
+    /**
      * @dev Get certificates owned by an address
+     * @param recipient Address of the certificate recipient
+     * @return Array of token IDs owned by the recipient
      */
     function getCertificatesByRecipient(address recipient) 
         public 
@@ -187,6 +295,8 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 
     /**
      * @dev Get certificates issued by an address
+     * @param issuer Address of the certificate issuer
+     * @return Array of token IDs issued by the issuer
      */
     function getCertificatesByIssuer(address issuer) 
         public 
@@ -198,30 +308,55 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
 
     /**
      * @dev Get total number of certificates issued
+     * @return Total supply of certificates
      */
     function totalSupply() public view returns (uint256) {
         return _tokenIdCounter.current();
     }
 
+    /**
+     * @dev Check if an address is an authorized issuer
+     * @param issuer Address to check
+     * @return bool indicating if address is authorized
+     */
+    function isAuthorizedIssuer(address issuer) public view returns (bool) {
+        return authorizedIssuers[issuer] || issuer == owner();
+    }
+
+    /**
+     * @dev Get certificate by hash
+     * @param certificateHash Hash of the certificate
+     * @return tokenId Token ID associated with the hash
+     */
+    function getCertificateByHash(bytes32 certificateHash) 
+        public 
+        view 
+        returns (uint256) 
+    {
+        uint256 tokenId = certificateHashToTokenId[certificateHash];
+        require(tokenId > 0, "Certificate: Certificate not found for hash");
+        return tokenId;
+    }
+
     // Override transfer functions to make certificates non-transferable
     function transferFrom(address, address, uint256) public pure override {
-        revert("Certificates are non-transferable");
+        revert("Certificate: Certificates are non-transferable");
     }
 
     function safeTransferFrom(address, address, uint256) public pure override {
-        revert("Certificates are non-transferable");
+        revert("Certificate: Certificates are non-transferable");
     }
 
     function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
-        revert("Certificates are non-transferable");
+        revert("Certificate: Certificates are non-transferable");
     }
 
     function approve(address, uint256) public pure override {
-        revert("Certificates are non-transferable");
+        revert("Certificate: Certificates are non-transferable");
     }
 
     function setApprovalForAll(address, bool) public pure override {
-        revert("Certificates are non-transferable");
+        revert("Certificate: Certificates are non-transferable");
     }
 
     function getApproved(uint256) public pure override returns (address) {
@@ -232,16 +367,33 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         return false;
     }
 
-    // Required overrides
+    // Required overrides for multiple inheritance
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
+        
+        // Clean up mappings
+        delete certificates[tokenId];
+        bytes32 certHash = certificates[tokenId].certificateHash;
+        if (certHash != bytes32(0)) {
+            delete certificateHashToTokenId[certHash];
+        }
     }
 
-    function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+    function tokenURI(uint256 tokenId) 
+        public 
+        view 
+        override(ERC721, ERC721URIStorage) 
+        returns (string memory) 
+    {
         return super.tokenURI(tokenId);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) 
+        public 
+        view 
+        override(ERC721, ERC721URIStorage) 
+        returns (bool) 
+    {
         return super.supportsInterface(interfaceId);
     }
 }

@@ -20,12 +20,12 @@ export default function CertificateWizardDemo() {
   };
 
   const handleCancel = () => {
-    toast.info('Certificate issuance cancelled');
+    toast('Certificate issuance cancelled');
   };
 
   const toggleConnection = () => {
     setIsConnected(!isConnected);
-    toast.info(isConnected ? 'Wallet disconnected' : 'Wallet connected');
+    toast(isConnected ? 'Wallet disconnected' : 'Wallet connected');
   };
 
   return (

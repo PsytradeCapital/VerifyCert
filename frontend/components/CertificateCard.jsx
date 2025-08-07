@@ -18,6 +18,7 @@ import {
 import QRCode from 'qrcode';
 import html2canvas from 'html2canvas';
 import toast from 'react-hot-toast';
+import Card from '../src/components/ui/Card/Card';
 
 const CertificateCard = ({ 
   certificate, 
@@ -190,11 +191,17 @@ const CertificateCard = ({
   return (
     <motion.div
       ref={certificateRef}
-      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <Card
+        variant="elevated"
+        padding="none"
+        hover={!isPublicView}
+        enableAnimations={true}
+        className={`overflow-hidden ${className}`}
+      >
       {/* Certificate Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -425,6 +432,7 @@ const CertificateCard = ({
           </div>
         </div>
       )}
+      </Card>
     </motion.div>
   );
 };

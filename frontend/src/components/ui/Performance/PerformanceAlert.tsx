@@ -157,14 +157,13 @@ export const PerformanceIndicator: React.FC<{
   onClick?: () => void;
 }> = ({ onClick }) => {
   const [status, setStatus] = useState<'good' | 'warning' | 'poor'>('good');
-  const [metrics, setMetrics] = useState<any>(null);
 
   useEffect(() => {
     const updateStatus = () => {
       const summary = performanceMonitor.getSummary();
       const slowMetrics = performanceMonitor.getSlowMetrics(500);
       
-      setMetrics(summary);
+      // Remove the setMetrics call as it's not defined
       
       if (slowMetrics.length > 3) {
         setStatus('poor');

@@ -30,7 +30,7 @@ const TestComponent: React.FC = () => {
         Show Error
       </button>
       <button
-        onClick={() => feedback.showLoading('Test loading message')}
+        onClick={() => feedback.showInfo('Test loading message')}
         data-testid="loading-button"
       >
         Show Loading

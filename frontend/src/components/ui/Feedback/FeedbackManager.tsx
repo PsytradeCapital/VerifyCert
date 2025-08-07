@@ -129,7 +129,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       type: 'success',
       message,
       confetti: true,
-      position: 'center',
+      position: 'top-center',
       duration: 3000,
       ...options,
     });

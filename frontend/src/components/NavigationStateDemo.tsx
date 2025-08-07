@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '../contexts/NavigationContext';
+import { useNavigation, NavigationItem } from '../contexts/NavigationContext';
 import { useNavigationSync } from '../hooks/useNavigationSync';
 import { useNavigationTransitions } from '../hooks/useNavigationTransitions';
 import { NavigationControls } from './ui/Navigation/NavigationStateManager';
@@ -25,37 +25,36 @@ const NavigationStateDemo: React.FC = () => {
   });
 
   // Demo navigation items
-  const demoItems = [
+  const demoItems: NavigationItem[] = [
     {
       id: 'demo-home',
       label: 'Home',
-      path: '/',
       href: '/',
-      icon: ({ className }: { className?: string }) => (
-        <svg className={className || "w-5 h-5"} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
       ),
+      public: true
     },
     {
       id: 'demo-verify',
       label: 'Verify',
-      path: '/verify',
       href: '/verify',
-      icon: ({ className }: { className?: string }) => (
-        <svg className={className || "w-5 h-5"} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      badge: 2
+      badge: "2",
+      public: true
     },
     {
       id: 'demo-dashboard',
       label: 'Dashboard',
-      path: '/dashboard',
       href: '/dashboard',
-      icon: ({ className }: { className?: string }) => (
-        <svg className={className || "w-5 h-5"} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z" />
         </svg>
       ),
@@ -83,6 +82,36 @@ const NavigationStateDemo: React.FC = () => {
     const randomBadge = Math.floor(Math.random() * 10) + 1;
     actions.updateItemBadge('demo-verify', randomBadge);
   };
+
+  // Convert NavigationItem to SideNavigation format
+  const convertToSideNavItems = (items: NavigationItem[]) => {
+    return items.filter(item => item.icon).map(item => ({
+      id: item.id,
+      label: item.label,
+      href: item.href,
+      path: item.href,
+      badge: typeof item.badge === 'number' ? item.badge.toString() : item.badge,
+      icon: ({ className }: { className?: string }) => (
+        <div className={className}>
+          {item.icon}
+        </div>
+      ),
+      active: item.active,
+      disabled: item.disabled,
+      public: item.public
+    }));
+  };
+
+  // Convert NavigationItem to BottomNavigation format
+  const convertToBottomNavItems = (items: NavigationItem[]) => {
+    return items.filter(item => item.icon).map(item => ({
+      ...item,
+      badge: typeof item.badge === 'number' ? item.badge.toString() : item.badge,
+      icon: item.icon!
+    }));
+  };
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -195,14 +224,14 @@ const NavigationStateDemo: React.FC = () => {
                 <div className="w-64">
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Normal</h3>
                   <SideNavigation 
-                    items={demoItems}
+                    items={convertToSideNavItems(demoItems)}
                     collapsed={false}
                   />
                 </div>
                 <div className="w-16">
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Collapsed</h3>
                   <SideNavigation 
-                    items={demoItems}
+                    items={convertToSideNavItems(demoItems)}
                     collapsed={true}
                   />
                 </div>
@@ -219,7 +248,7 @@ const NavigationStateDemo: React.FC = () => {
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Default Style</h3>
                   <div className="relative bg-gray-100 rounded-lg p-4" style={{ height: '120px' }}>
                     <BottomNavigation 
-                      items={demoItems}
+                      items={convertToBottomNavItems(demoItems)}
                       variant="default"
                     />
                   </div>
@@ -228,7 +257,7 @@ const NavigationStateDemo: React.FC = () => {
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Floating Style</h3>
                   <div className="relative bg-gray-100 rounded-lg p-4" style={{ height: '120px' }}>
                     <BottomNavigation 
-                      items={demoItems}
+                      items={convertToBottomNavItems(demoItems)}
                       variant="floating"
                     />
                   </div>

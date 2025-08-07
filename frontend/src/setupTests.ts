@@ -19,6 +19,7 @@ global.IntersectionObserver = class IntersectionObserver {
   observe() {}
   unobserve() {}
 };
+};
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {

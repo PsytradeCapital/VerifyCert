@@ -8,6 +8,7 @@ import { ariaLabels, generateAriaId } from '../utils/ariaUtils';
 import { NavigationFocusManager, focusUtils } from '../utils/focusManagement';
 
 interface NavigationProps {
+  walletAddress?: string | null;
   isWalletConnected?: boolean;
   onWalletConnect?: (address: string, provider: any) => void;
   onWalletDisconnect?: () => void;

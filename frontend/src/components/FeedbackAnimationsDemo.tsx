@@ -12,7 +12,7 @@ const FeedbackAnimationsDemo: React.FC = () => {
   const handleSuccessWithConfetti = () => {
     feedback.showSuccess('Certificate minted successfully!', {
       showConfetti: true,
-      position: 'center',
+      position: 'top-center',
     });
   };
 
@@ -35,34 +35,21 @@ const FeedbackAnimationsDemo: React.FC = () => {
   };
 
   const handleLoading = () => {
-    const id = feedback.showLoading('Processing your request...');
+    feedback.showInfo('Processing your request...');
     
     setTimeout(() => {
-      feedback.dismiss(id);
       feedback.showSuccess('Request processed successfully!');
     }, 3000);
   };
 
   const handleLoadingWithProgress = () => {
-    let progress = 0;
-    const id = feedback.showLoading('Uploading certificate...', {
-      showProgress: true,
-      progress: 0,
-    });
-
-    const interval = setInterval(() => {
-      progress += 10;
-      feedback.updateProgress(id, progress);
-      
-      if (progress >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          feedback.dismiss(id);
-          feedback.showSuccess('Certificate uploaded successfully!', {
-            showConfetti: true,
-          });
-        }, 500);
-      }
+    feedback.showInfo('Uploading certificate...');
+    
+    setTimeout(() => {
+      feedback.showSuccess('Certificate uploaded successfully!', {
+        showConfetti: true,
+      });
+    }, 2000);
     }, 300);
   };
 

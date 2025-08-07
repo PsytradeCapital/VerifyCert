@@ -372,6 +372,34 @@ export const fabInteractions = {
         ease: easings.easeOut
       }
     }
+  },
+  accent: {
+    whileHover: {
+      scale: 1.1,
+      y: -4,
+      boxShadow: '0 12px 30px rgba(168, 85, 247, 0.4)',
+      transition: {
+        duration: durations.normal,
+        ease: easings.easeOut
+      }
+    },
+    whileTap: {
+      scale: 0.95,
+      y: -2,
+      transition: {
+        duration: durations.fast,
+        ease: easings.easeInOut
+      }
+    },
+    whileFocus: {
+      scale: 1.05,
+      y: -2,
+      boxShadow: '0 0 0 4px rgba(168, 85, 247, 0.3)',
+      transition: {
+        duration: durations.fast,
+        ease: easings.easeOut
+      }
+    }
   }
 };
 

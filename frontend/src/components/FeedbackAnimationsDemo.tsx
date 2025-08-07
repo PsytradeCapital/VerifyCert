@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
 
@@ -50,57 +50,6 @@ const FeedbackAnimationsDemo: React.FC = () => {
         showConfetti: true,
       });
     }, 2000);
-    }, 300);
-  };
-
-  const handleBlockchainSuccess = () => {
-    feedback.showBlockchainSuccess(
-      'Transaction confirmed!',
-      '0x1234567890abcdef1234567890abcdef12345678'
-    );
-  };
-
-  const handleBlockchainError = () => {
-    const mockError = {
-      code: 4001,
-      message: 'User rejected the transaction'
-    };
-    feedback.showBlockchainError('Transaction failed', mockError);
-  };
-
-  const handleWalletConnection = () => {
-    const loadingId = feedback.showWalletConnection(true);
-    
-    setTimeout(() => {
-      feedback.dismiss(loadingId);
-      feedback.showWalletConnection(false);
-    }, 2000);
-  };
-
-  const handleNetworkError = () => {
-    feedback.showNetworkError();
-  };
-
-  const handleWrongNetwork = () => {
-    feedback.showWrongNetwork();
-  };
-
-  const handleCertificateOperation = () => {
-    const mockPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() > 0.5) {
-          resolve('Certificate verified successfully');
-        } else {
-          reject(new Error('Verification failed'));
-        }
-      }, 3000);
-    });
-
-    feedback.showCertificateOperation('verifying', mockPromise);
-  };
-
-  const handleDismissAll = () => {
-    feedback.dismissAll();
   };
 
   return (
@@ -181,62 +130,38 @@ const FeedbackAnimationsDemo: React.FC = () => {
             </button>
           </div>
 
-          {/* Blockchain Feedback */}
+          {/* Additional Actions */}
           <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">Blockchain Feedback</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">Additional Actions</h3>
             
             <button
-              onClick={handleBlockchainSuccess}
+              onClick={() => feedback.showSuccess('Blockchain transaction confirmed!')}
               className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
             >
               Blockchain Success
             </button>
             
             <button
-              onClick={handleBlockchainError}
-              className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Blockchain Error
-            </button>
-            
-            <button
-              onClick={handleWalletConnection}
-              className="w-full px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
-            >
-              Wallet Connection
-            </button>
-            
-            <button
-              onClick={handleNetworkError}
+              onClick={() => feedback.showError('Network connection failed!')}
               className="w-full px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
             >
               Network Error
             </button>
+            
+            <button
+              onClick={() => feedback.showWarning('Please switch to the correct network')}
+              className="w-full px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
+            >
+              Wrong Network
+            </button>
+            
+            <button
+              onClick={() => feedback.showInfo('Certificate verification in progress...')}
+              className="w-full px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+            >
+              Certificate Operation
+            </button>
           </div>
-        </div>
-
-        {/* Additional Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <button
-            onClick={handleWrongNetwork}
-            className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
-          >
-            Wrong Network
-          </button>
-          
-          <button
-            onClick={handleCertificateOperation}
-            className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-          >
-            Certificate Operation
-          </button>
-          
-          <button
-            onClick={handleDismissAll}
-            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Dismiss All
-          </button>
         </div>
 
         {/* Instructions */}
@@ -246,8 +171,7 @@ const FeedbackAnimationsDemo: React.FC = () => {
             <li>• Click any button to trigger different types of feedback animations</li>
             <li>• Success animations can include confetti effects for celebrations</li>
             <li>• Error animations can include shake effects for emphasis</li>
-            <li>• Loading animations can show progress indicators</li>
-            <li>• Blockchain-specific feedback includes transaction links and error handling</li>
+            <li>• Loading animations show progress indicators</li>
             <li>• All animations respect user motion preferences</li>
           </ul>
         </div>

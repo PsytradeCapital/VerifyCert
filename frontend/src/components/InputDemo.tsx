@@ -64,38 +64,24 @@ const InputDemo: React.FC = () => {
           <Input
             label="Email Address"
             placeholder="Enter your email..."
-            variant="floating"
             icon={<EmailIcon />}
-            iconPosition="left"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            validationState={emailValidation.state}
+            validationState={emailValidation.state === 'error' ? 'error' : emailValidation.state === 'success' ? 'success' : 'default'}
             error={emailValidation.state === 'error' ? emailValidation.message : undefined}
-            helperText={emailValidation.state !== 'error' ? emailValidation.message : undefined}
-            enableValidationAnimation={true}
-            animationConfig={{
-              duration: 300,
-              enableSequence: true
-            }}
+            helperText={emailValidation.state === 'warning' || emailValidation.state === 'default' ? emailValidation.message : undefined}
           />
           <Input
             label="Password"
             placeholder="Enter your password..."
-            variant="floating"
             icon={<LockIcon />}
-            iconPosition="left"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            validationState={passwordValidation.state}
+            validationState={passwordValidation.state === 'error' ? 'error' : passwordValidation.state === 'success' ? 'success' : 'default'}
             error={passwordValidation.state === 'error' ? passwordValidation.message : undefined}
-            helperText={passwordValidation.state !== 'error' ? passwordValidation.message : undefined}
-            enableValidationAnimation={true}
-            animationConfig={{
-              duration: 300,
-              enableSequence: true
-            }}
+            helperText={passwordValidation.state === 'warning' || passwordValidation.state === 'default' ? passwordValidation.message : undefined}
           />
           <Input
             label="Confirm Password"
@@ -106,9 +92,9 @@ const InputDemo: React.FC = () => {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            validationState={confirmPasswordValidation.state}
+            validationState={confirmPasswordValidation.state === 'error' ? 'error' : confirmPasswordValidation.state === 'success' ? 'success' : 'default'}
             error={confirmPasswordValidation.state === 'error' ? confirmPasswordValidation.message : undefined}
-            helperText={confirmPasswordValidation.state !== 'error' ? confirmPasswordValidation.message : undefined}
+            helperText={confirmPasswordValidation.state === 'warning' || confirmPasswordValidation.state === 'default' ? confirmPasswordValidation.message : undefined}
             enableValidationAnimation={true}
             animationConfig={{
               duration: 300,

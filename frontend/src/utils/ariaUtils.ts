@@ -23,6 +23,16 @@ export const ariaLabels = {
     main: 'Main navigation',
     mobileMenu: 'Mobile navigation menu',
   },
+  forms: {
+    fileUpload: 'Upload file',
+    required: 'Required field',
+    search: 'Search'
+  },
+  buttons: {
+    delete: 'Delete',
+    close: 'Close',
+    save: 'Save'
+  },
 };
 
 // ARIA descriptions for complex interactions

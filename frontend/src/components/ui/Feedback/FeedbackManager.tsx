@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { FeedbackAnimation, SuccessAnimation, ErrorAnimation, LoadingAnimation } from './FeedbackAnimations';
+import { FeedbackAnimation } from './FeedbackAnimations';
 
 export interface FeedbackItem {
   id: string;
@@ -129,7 +129,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       type: 'success',
       message,
       confetti: true,
-      position: 'top-center',
+      position: 'center',
       duration: 3000,
       ...options,
     });
@@ -262,7 +262,7 @@ const FeedbackRenderer: React.FC<{
                   }}
                 >
                   <FeedbackAnimation
-                    type={feedback.type}
+                    type={feedback.type as 'success' | 'error' | 'warning' | 'info'}
                     message={feedback.message}
                     isVisible={true}
                     onClose={handleClose}

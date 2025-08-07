@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '../contexts/NavigationContext';
 import { NavigationControls } from '../components/ui/Navigation/NavigationStateManager';
 import SideNavigation from '../components/ui/Navigation/SideNavigation';
-import BottomNavigation from '../components/ui/Navigation/BottomNavigation';
+import { BottomNavigation } from '../components/ui/Navigation/BottomNavigation';
 import AppLayout from '../components/ui/Layout/AppLayout';
 
 const NavigationStateDemo: React.FC = () => {

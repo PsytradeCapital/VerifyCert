@@ -68,12 +68,19 @@ export {
 
 // Feedback Components
 export {
-  FeedbackAnimation,
-  SuccessAnimation,
-  ErrorAnimation,
-  LoadingAnimation,
-  FeedbackProvider,
-  useFeedback
+  FeedbackCollector,
+  FeedbackButton,
+  FeedbackDashboard,
+  FeedbackIntegration,
+  NavigationFeedback,
+  VisualDesignFeedback,
+  OverallExperienceFeedback,
+  feedbackService,
+  useFeedbackTrigger,
+  useNavigationFeedback,
+  useVisualDesignFeedback,
+  useErrorFeedback,
+  useFeedbackIntegration
 } from './Feedback';
 
 // PWA and Offline Components
@@ -140,12 +147,8 @@ export type {
 
 // Feedback Component Types
 export type {
-  FeedbackAnimationProps,
-  FeedbackItem,
-  FeedbackOptions,
-  SuccessOptions,
-  ErrorOptions,
-  LoadingOptions
+  FeedbackData,
+  FeedbackAnalytics
 } from './Feedback';
 
 // Verification Component Types

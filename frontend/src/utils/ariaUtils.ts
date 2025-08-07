@@ -14,6 +14,7 @@ export const ariaLabels = {
   media: {
     qrCode: 'QR code for certificate verification',
     certificateImage: 'Certificate image',
+    logo: 'VerifyCert logo',
   },
   navigation: {
     breadcrumb: 'Breadcrumb navigation',
@@ -21,11 +22,6 @@ export const ariaLabels = {
     userMenu: 'User account menu',
     main: 'Main navigation',
     mobileMenu: 'Mobile navigation menu',
-  },
-  media: {
-    qrCode: 'QR code for certificate verification',
-    certificateImage: 'Certificate image',
-    logo: 'VerifyCert logo',
   },
 };
 
@@ -49,4 +45,39 @@ let idCounter = 0;
 export const generateAriaId = (prefix: string): string => {
   idCounter += 1;
   return `${prefix}-${idCounter}`;
+};
+
+// Create field relationships for form accessibility
+export const createFieldRelationships = (fieldId: string) => {
+  const labelId = generateAriaId(`${fieldId}-label`);
+  const errorId = generateAriaId(`${fieldId}-error`);
+  const helpId = generateAriaId(`${fieldId}-help`);
+  
+  return {
+    fieldId,
+    labelId,
+    errorId,
+    helpId,
+    getFieldProps: (hasError: boolean = false, hasHelp: boolean = false) => ({
+      id: fieldId,
+      'aria-labelledby': labelId,
+      'aria-describedby': [
+        hasError ? errorId : null,
+        hasHelp ? helpId : null,
+      ].filter(Boolean).join(' ') || undefined,
+      'aria-invalid': hasError ? 'true' : undefined,
+    }),
+    getLabelProps: () => ({
+      id: labelId,
+      htmlFor: fieldId,
+    }),
+    getErrorProps: () => ({
+      id: errorId,
+      role: 'alert',
+      'aria-live': 'polite' as const,
+    }),
+    getHelpProps: () => ({
+      id: helpId,
+    }),
+  };
 };

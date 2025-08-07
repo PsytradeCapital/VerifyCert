@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { performanceMonitor } from '../../../utils/performanceMonitoring';
-import { Card } from '../Card/Card';
+import Card from '../Card/Card';
 
 interface PerformanceMetric {
   name: string;

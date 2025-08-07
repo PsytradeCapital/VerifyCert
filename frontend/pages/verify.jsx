@@ -6,7 +6,7 @@ import CertificateCard from '../components/CertificateCard';
 import FileUpload from '../src/components/ui/FileUpload/FileUpload';
 import Input from '../src/components/ui/Input/Input';
 import Button from '../src/components/ui/Button/Button';
-import { ariaLabels, ariaDescriptions, generateAriaId } from '../src/utils/ariaUtils';
+import { generateAriaId } from '../src/utils/ariaUtils';
 import { useFeedbackAnimations } from '../src/hooks/useFeedbackAnimations';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
@@ -15,7 +15,7 @@ export default function VerifyPage() {
   const { tokenId } = useParams();
   const [searchParams] = useSearchParams();
   const feedback = useFeedbackAnimations();
-  
+
   // State management
   const [certificate, setCertificate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function VerifyPage() {
   useEffect(() => {
     const urlTokenId = tokenId || searchParams.get('id');
     const txHash = searchParams.get('tx');
-    
+
     if (urlTokenId) {
       setVerificationMethod('id');
       setInputValue(urlTokenId);
@@ -136,7 +136,7 @@ export default function VerifyPage() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!inputValue.trim()) {
       setError('Please enter a certificate ID or transaction hash');
       feedback.showError('Please enter a certificate ID or transaction hash');
@@ -144,7 +144,7 @@ export default function VerifyPage() {
     }
 
     const verificationData = {};
-    
+
     if (verificationMethod === 'id') {
       if (!/^\d+$/.test(inputValue.trim())) {
         setError('Certificate ID must be a valid number');
@@ -202,7 +202,7 @@ export default function VerifyPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.h1 
+          <motion.h1
             className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -210,7 +210,7 @@ export default function VerifyPage() {
           >
             Verify Certificate
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-lg text-gray-600 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -221,7 +221,7 @@ export default function VerifyPage() {
         </div>
 
         {/* Verification Methods */}
-        <motion.div 
+        <motion.div
           className="bg-white rounded-lg shadow-md p-6 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -230,40 +230,37 @@ export default function VerifyPage() {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Choose Verification Method
           </h2>
-          
+
           {/* Method Selection */}
           <div className="flex flex-wrap gap-4 mb-6">
             <button
               onClick={() => handleMethodChange('id')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                verificationMethod === 'id'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${verificationMethod === 'id'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
               aria-pressed={verificationMethod === 'id'}
             >
               Certificate ID
             </button>
-            
+
             <button
               onClick={() => handleMethodChange('transaction')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                verificationMethod === 'transaction'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${verificationMethod === 'transaction'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
               aria-pressed={verificationMethod === 'transaction'}
             >
               Transaction Hash
             </button>
-            
+
             <button
               onClick={() => handleMethodChange('file')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                verificationMethod === 'file'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${verificationMethod === 'file'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
               aria-pressed={verificationMethod === 'file'}
             >
               Upload File
@@ -285,8 +282,8 @@ export default function VerifyPage() {
               <Input
                 label={verificationMethod === 'id' ? 'Certificate ID' : 'Transaction Hash'}
                 placeholder={
-                  verificationMethod === 'id' 
-                    ? 'Enter certificate ID (e.g., 123)' 
+                  verificationMethod === 'id'
+                    ? 'Enter certificate ID (e.g., 123)'
                     : 'Enter transaction hash (0x...)'
                 }
                 value={inputValue}
@@ -362,7 +359,7 @@ export default function VerifyPage() {
                 Clear History
               </button>
             </div>
-            
+
             <div className="space-y-3">
               {verificationHistory.map((item) => (
                 <div
@@ -381,11 +378,10 @@ export default function VerifyPage() {
                 >
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        item.isValid 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}>
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${item.isValid
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                        }`}>
                         {item.isValid ? 'Valid' : 'Invalid'}
                       </span>
                       <span className="text-sm font-medium text-gray-900 truncate">

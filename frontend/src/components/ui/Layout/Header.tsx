@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search, Menu, X, Bell, User } from 'lucide-react';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import { ThemeToggle } from '../ThemeToggle';
 
 export interface UserMenuProps {

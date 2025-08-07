@@ -141,12 +141,7 @@ module.exports = {
         libraryDirectory: '',
         camel2DashComponentName: false,
       }, 'lodash'],
-      // Optimize React imports
-      ['import', {
-        libraryName: 'react',
-        libraryDirectory: '',
-        camel2DashComponentName: false,
-      }, 'react'],
+      // React imports should not be transformed - removed problematic plugin
     ],
     presets: [
       ['@babel/preset-env', {

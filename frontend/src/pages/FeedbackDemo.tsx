@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, BarChart3, Settings, Users } from 'lucide-react';
-import { Card } from '../components/ui/Card/Card';
+import Card from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { 
   FeedbackButton, 

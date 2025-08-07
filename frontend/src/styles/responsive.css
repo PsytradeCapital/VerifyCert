@@ -62,8 +62,7 @@
 }
 
 /* Base responsive utilities */
-@layer utilities {
-  /* Container utilities with responsive behavior */
+/* Container utilities with responsive behavior */
   .container-responsive {
     width: 100%;
     margin-left: auto;
@@ -885,7 +884,6 @@
       animation: none;
     }
   }
-}
 
 /* Print-specific responsive styles */
 @media print {

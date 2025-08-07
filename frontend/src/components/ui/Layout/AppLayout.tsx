@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SideNavigation, { NavigationItem } from '../Navigation/SideNavigation';
-import BottomNavigation, { BottomNavItem } from '../Navigation/BottomNavigation';
+import { BottomNavigation, BottomNavItem } from '../Navigation/BottomNavigation';
 import Header, { UserMenuProps } from './Header';
 
 export interface AppLayoutProps {

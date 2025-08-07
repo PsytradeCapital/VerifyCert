@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { ChevronLeft, ChevronRight, Check, AlertCircle, User, Award, Building, Calendar, FileText, Send } from 'lucide-react';
 import { StepProgress } from '../Loading';
 import { Button } from '../Button/Button';
-import { Card } from '../Card/Card';
+import Card from '../Card/Card';
 
 export interface CertificateFormData {
   recipientAddress: string;

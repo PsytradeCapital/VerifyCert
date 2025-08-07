@@ -268,7 +268,7 @@ export const PerformanceDashboard: React.FC = () => {
               ⚠️ Performance Warnings
             </h3>
             <p className="text-red-700 mb-3">
-              The following resources are loading slowly (>1000ms):
+              The following resources are loading slowly (&gt;1000ms):
             </p>
             <ul className="space-y-1">
               {slowMetrics.map((metric, index) => (

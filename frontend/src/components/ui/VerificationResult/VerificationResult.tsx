@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   CheckCircle, 
   XCircle, 
@@ -14,7 +14,6 @@ import {
   Zap
 } from 'lucide-react';
 import { Card, Button, Badge } from '../';
-import { FeedbackAnimation } from '../Feedback/FeedbackAnimations';
 
 export interface VerificationResultProps {
   result: {
@@ -348,9 +347,9 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
                         variant="secondary"
                         size="sm"
                         onClick={copyTransactionHash}
-                        icon={<Copy className="w-4 h-4" />}
                         className={copiedHash ? 'bg-green-100 text-green-700' : ''}
                       >
+                        <Copy className="w-4 h-4 mr-1" />
                         {copiedHash ? 'Copied!' : 'Copy'}
                       </Button>
                     </div>
@@ -384,12 +383,12 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
         >
           {onDownload && (
             <Button
-              variant="primary"
+              variant="default"
               size="lg"
               onClick={onDownload}
-              icon={<Download className="w-5 h-5" />}
               className="flex-1 sm:flex-none"
             >
+              <Download className="w-5 h-5 mr-2" />
               Download Certificate
             </Button>
           )}
@@ -399,9 +398,9 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
               variant="secondary"
               size="lg"
               onClick={onShare}
-              icon={<Share2 className="w-5 h-5" />}
               className="flex-1 sm:flex-none"
             >
+              <Share2 className="w-5 h-5 mr-2" />
               Share
             </Button>
           )}
@@ -411,29 +410,45 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
               variant="secondary"
               size="lg"
               onClick={onViewOnBlockchain}
-              icon={<ExternalLink className="w-5 h-5" />}
               className="flex-1 sm:flex-none"
             >
+              <ExternalLink className="w-5 h-5 mr-2" />
               View on Blockchain
             </Button>
           )}
         </motion.div>
       </motion.div>
 
-      {/* Success/Error Animations */}
-      <SuccessAnimation
-        message="Certificate successfully verified!"
-        isVisible={showSuccessAnimation}
-        onClose={() => setShowSuccessAnimation(false)}
-        showConfetti={true}
-      />
+      {/* Success/Error Animations - Placeholder for future implementation */}
+      {showSuccessAnimation && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p className="text-green-600 font-semibold">Certificate successfully verified!</p>
+            <button 
+              onClick={() => setShowSuccessAnimation(false)}
+              className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       
-      <ErrorAnimation
-        message={result.isRevoked ? "Certificate has been revoked" : "Certificate verification failed"}
-        isVisible={showErrorAnimation}
-        onClose={() => setShowErrorAnimation(false)}
-        shake={true}
-      />
+      {showErrorAnimation && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p className="text-red-600 font-semibold">
+              {result.isRevoked ? "Certificate has been revoked" : "Certificate verification failed"}
+            </p>
+            <button 
+              onClick={() => setShowErrorAnimation(false)}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

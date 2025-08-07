@@ -3,6 +3,8 @@
  * Provides utilities for tree shaking and dynamic imports
  */
 
+import * as React from 'react';
+
 // Tree shaking helper for conditional imports
 export const conditionalImport = async <T>(
   condition: boolean,
@@ -81,5 +83,3 @@ export const monitorBundleSize = () => {
     verifyTreeShaking();
   }
 };
-
-import * as React from 'react';

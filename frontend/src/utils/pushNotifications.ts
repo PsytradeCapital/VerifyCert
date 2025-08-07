@@ -277,17 +277,17 @@ export class NotificationEventHandler {
     // Handle different actions
     switch (action) {
       case 'view':
-        if (data.url && typeof self !== 'undefined' && 'clients' in self) {
+        if (data.url && typeof globalThis !== 'undefined' && 'clients' in globalThis) {
           event.waitUntil(
-            (self as any).clients.openWindow(data.url)
+            (globalThis as any).clients.openWindow(data.url)
           );
         }
         break;
       case 'share':
         // Handle share action
-        if (data.certificateId && typeof self !== 'undefined' && 'clients' in self) {
+        if (data.certificateId && typeof globalThis !== 'undefined' && 'clients' in globalThis) {
           event.waitUntil(
-            (self as any).clients.openWindow(`/certificate/${data.certificateId}/share`)
+            (globalThis as any).clients.openWindow(`/certificate/${data.certificateId}/share`)
           );
         }
         break;
@@ -296,14 +296,14 @@ export class NotificationEventHandler {
         break;
       default:
         // Default action - open the app
-        if (typeof self !== 'undefined' && 'clients' in self) {
+        if (typeof globalThis !== 'undefined' && 'clients' in globalThis) {
           if (data.url) {
             event.waitUntil(
-              (self as any).clients.openWindow(data.url)
+              (globalThis as any).clients.openWindow(data.url)
             );
           } else {
             event.waitUntil(
-              (self as any).clients.openWindow('/')
+              (globalThis as any).clients.openWindow('/')
             );
           }
         }
@@ -320,5 +320,5 @@ export class NotificationEventHandler {
 const pushNotificationManager = new PushNotificationManager();
 
 export default pushNotificationManager;
-export { PushNotificationManager, NotificationEventHandler };
+export { PushNotificationManager };
 export type { PushSubscriptionData, NotificationPayload };

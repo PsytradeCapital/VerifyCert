@@ -251,7 +251,7 @@ export const withApiMonitoring = <T extends (...args: any[]) => Promise<any>>(
 };
 
 // Export the original fetch as well for cases where monitoring is not needed
-export { fetch as originalFetch };
+export const originalFetch = globalThis.fetch;
 
 // Replace global fetch with monitored version in development
 if (process.env.NODE_ENV === 'development') {

@@ -35,7 +35,8 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   useContext = true,
   enableAnimations = true
 }) => {
-  const navigationContext = useContext ? useNavigation() : null;
+  const navigationContext = useNavigation();
+  const shouldUseContext = useContext && navigationContext;
 
   // Position classes
   const positionClasses = {
@@ -134,7 +135,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
             return;
           }
           // Use navigation context if available
-          if (navigationContext) {
+          if (shouldUseContext) {
             e.preventDefault();
             navigationContext.actions.navigateTo(href);
           }

@@ -2,21 +2,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import WalletConnect from './WalletConnect';
 import { useNavigation } from '../contexts/NavigationContext';
-import { useActiveIndicator } from '../hooks/useActiveIndicator';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { LazyLogo } from './ui/LazyAssets';
 import { ariaLabels, generateAriaId } from '../utils/ariaUtils';
 import { NavigationFocusManager, focusUtils } from '../utils/focusManagement';
 
 interface NavigationProps {
-  walletAddress?: string | null;
   isWalletConnected?: boolean;
   onWalletConnect?: (address: string, provider: any) => void;
   onWalletDisconnect?: () => void;
 }
 
 export default function Navigation({
-  walletAddress,
   isWalletConnected = false,
   onWalletConnect,
   onWalletDisconnect,
@@ -66,7 +63,6 @@ export default function Navigation({
     onWalletDisconnect?.();
   };
 
-  const navId = generateAriaId('main-nav');
   const mobileMenuId = generateAriaId('mobile-menu');
 
   // Initialize focus managers for desktop and mobile navigation
@@ -182,8 +178,6 @@ export default function Navigation({
                 if (!shouldShow) return null;
 
                 const isActive = getActiveState(item.href);
-                const matchingItem = navigation.state.navigationItems.find(navItem => navItem.href === item.href);
-                const indicatorStyles = useActiveIndicator(matchingItem?.id || item.name, isActive);
 
                 return (
                   <Link
@@ -193,17 +187,15 @@ export default function Navigation({
                       e.preventDefault();
                       navigation.actions.navigateTo(item.href);
                     }}
-                    className={`${indicatorStyles.containerClasses} inline-flex items-center px-2 lg:px-3 py-2 border-b-2 text-sm font-medium transition-all duration-200 ${
+                    className={`inline-flex items-center px-2 lg:px-3 py-2 border-b-2 text-sm font-medium transition-all duration-200 ${
                       isActive
-                        ? `border-primary text-foreground bg-primary/10 ${indicatorStyles.itemClasses}`
+                        ? 'border-primary text-foreground bg-primary/10'
                         : 'border-transparent text-muted-foreground hover:border-border hover:text-foreground hover:bg-muted'
-                    } ${indicatorStyles.transitionClasses}`}
+                    }`}
                     role="menuitem"
                     aria-current={isActive ? 'page' : undefined}
                     aria-label={`Navigate to ${item.name}`}
                   >
-                    {/* Active indicator */}
-                    {isActive && <div className={indicatorStyles.indicatorClasses} />}
                     <span className="truncate">{item.name}</span>
                   </Link>
                 );
@@ -274,9 +266,7 @@ export default function Navigation({
               if (!shouldShow) return null;
 
               const isActive = getActiveState(item.href);
-              const matchingItem = navigation.state.navigationItems.find(navItem => navItem.href === item.href);
-              const indicatorStyles = useActiveIndicator(matchingItem?.id || item.name, isActive);
-
+              
               return (
                 <Link
                   key={item.name}
@@ -285,20 +275,17 @@ export default function Navigation({
                     e.preventDefault();
                     navigation.actions.navigateTo(item.href);
                     setIsMobileMenuOpen(false);
-                    // Announce navigation to screen readers
                     focusUtils.announce(`Navigated to ${item.name}`, 'polite');
                   }}
-                  className={`${indicatorStyles.containerClasses} block px-3 py-3 border-l-4 text-base font-medium transition-all duration-200 touch-target ${
+                  className={`block px-3 py-3 border-l-4 text-base font-medium transition-all duration-200 touch-target ${
                     isActive
-                      ? `bg-primary/10 border-primary text-primary ${indicatorStyles.itemClasses}`
+                      ? 'bg-primary/10 border-primary text-primary'
                       : 'border-transparent text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground'
-                  } ${indicatorStyles.transitionClasses}`}
+                  }`}
                   role="menuitem"
                   aria-current={isActive ? 'page' : undefined}
                   aria-label={`Navigate to ${item.name}`}
                 >
-                  {/* Active indicator */}
-                  {isActive && <div className={indicatorStyles.indicatorClasses} />}
                   <span className="truncate">{item.name}</span>
                 </Link>
               );

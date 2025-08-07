@@ -23,12 +23,11 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [isVisible, setIsVisible] = useState(true);
 
-  // Don't show in production unless explicitly enabled
-  if (process.env.NODE_ENV === 'production' && !showInProduction) {
-    return null;
-  }
+  const shouldShow = process.env.NODE_ENV !== 'production' || showInProduction;
 
   useEffect(() => {
+    if (!shouldShow) return;
+    
     const checkPerformance = () => {
       const slowMetrics = performanceMonitor.getSlowMetrics(threshold);
       const newAlerts: Alert[] = [];
@@ -59,17 +58,19 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
 
     const interval = setInterval(checkPerformance, 2000);
     return () => clearInterval(interval);
-  }, [threshold, alerts]);
+  }, [threshold, alerts, shouldShow]);
 
   // Auto-dismiss alerts after 10 seconds
   useEffect(() => {
+    if (!shouldShow) return;
+    
     const dismissTimer = setInterval(() => {
       const now = Date.now();
       setAlerts(prev => prev.filter(alert => now - alert.timestamp < 10000));
     }, 1000);
 
     return () => clearInterval(dismissTimer);
-  }, []);
+  }, [shouldShow]);
 
   const dismissAlert = (alertId: string) => {
     setAlerts(prev => prev.filter(alert => alert.id !== alertId));
@@ -90,7 +91,8 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
     }
   };
 
-  if (!isVisible || alerts.length === 0) {
+  // Don't show in production unless explicitly enabled
+  if (!shouldShow || !isVisible || alerts.length === 0) {
     return null;
   }
 

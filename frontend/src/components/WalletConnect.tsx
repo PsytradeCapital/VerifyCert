@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
-import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
+import { generateAriaId } from '../utils/ariaUtils';
 
 interface WalletConnectProps {
   onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
@@ -146,6 +146,7 @@ export default function WalletConnect({
           provider,
           isConnecting: false,
           networkName: newNetworkName,
+          hasShownSuccessMessage: false,
         });
       } else {
         setWalletState({
@@ -154,6 +155,7 @@ export default function WalletConnect({
           provider,
           isConnecting: false,
           networkName,
+          hasShownSuccessMessage: false,
         });
       }
 
@@ -250,6 +252,7 @@ export default function WalletConnect({
             provider,
             isConnecting: false,
             networkName,
+            hasShownSuccessMessage: false,
           });
 
           // Only call onConnect for initial connection check, don't show success message
@@ -268,7 +271,6 @@ export default function WalletConnect({
   };
 
   const warningId = generateAriaId('metamask-warning');
-  const statusId = generateAriaId('wallet-status');
 
   if (!isMetaMaskInstalled()) {
     return (

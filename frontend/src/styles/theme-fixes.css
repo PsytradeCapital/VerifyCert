@@ -1,0 +1,95 @@
+/**
+ * Theme Fixes
+ * Aggressive fixes for text visibility issues
+ */
+
+/* Force text colors in light theme */
+:root,
+[data-theme="light"] {
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] * {
+  color: inherit;
+}
+
+[data-theme="light"] .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .text-black {
+  color: #000000 !important;
+}
+
+/* Force text colors in dark theme */
+[data-theme="dark"] {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] * {
+  color: inherit;
+}
+
+[data-theme="dark"] .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .text-black {
+  color: #000000 !important;
+}
+
+/* Specific fixes for common elements */
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] div,
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: #1f2937;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #f8fafc;
+}
+
+/* Button text fixes */
+[data-theme="light"] button {
+  color: inherit;
+}
+
+[data-theme="dark"] button {
+  color: inherit;
+}
+
+/* Input text fixes */
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  color: #1f2937;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  color: #f8fafc;
+}
+
+/* Card text fixes */
+[data-theme="light"] .card,
+[data-theme="light"] [class*="card"] {
+  color: #1f2937;
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] [class*="card"] {
+  color: #f8fafc;
+}

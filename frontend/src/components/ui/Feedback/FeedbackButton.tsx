@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { FeedbackCollector } from './FeedbackCollector';
 
 interface FeedbackButtonProps {
@@ -38,7 +38,7 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         aria-label="Open feedback form"
       >
         <div className="flex items-center gap-2 px-4 py-3">
-          <MessageSquare size={20} className="text-white" />
+          <MessageSquare size={20} style={{ color: '#ffffff' }} />
           <motion.span
             initial={{ width: 0, opacity: 0 }}
             animate={{ 

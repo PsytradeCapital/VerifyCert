@@ -1,456 +1,261 @@
-import { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import toast from 'react-hot-toast';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Shield, CheckCircle, XCircle, Search, AlertTriangle, ExternalLink } from 'lucide-react';
 import CertificateCard from '../components/CertificateCard';
-import FileUpload from '../src/components/ui/FileUpload/FileUpload';
-import Input from '../src/components/ui/Input/Input';
-import Button from '../src/components/ui/Button/Button';
-import { generateAriaId } from '../src/utils/ariaUtils';
-import { useFeedbackAnimations } from '../src/hooks/useFeedbackAnimations';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
-
-export default function VerifyPage() {
-  const { tokenId } = useParams();
-  const [searchParams] = useSearchParams();
-  const feedback = useFeedbackAnimations();
-
-  // State management
+const VerifyPage = () => {
+  const { tokenId: urlTokenId } = useParams();
+  const navigate = useNavigate();
+  
+  const [tokenId, setTokenId] = useState(urlTokenId || '');
   const [certificate, setCertificate] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [verificationMethod, setVerificationMethod] = useState('id');
-  const [inputValue, setInputValue] = useState('');
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [verificationHistory, setVerificationHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [verificationStatus, setVerificationStatus] = useState(null);
 
-  // Form IDs for accessibility
-  const formId = generateAriaId('verification-form');
-  const resultsId = generateAriaId('verification-results');
-  const historyId = generateAriaId('verification-history');
-
-  // Load certificate if tokenId is provided in URL
+  // Auto-verify if tokenId is in URL
   useEffect(() => {
-    const urlTokenId = tokenId || searchParams.get('id');
-    const txHash = searchParams.get('tx');
-
     if (urlTokenId) {
-      setVerificationMethod('id');
-      setInputValue(urlTokenId);
-      verifyCertificate({ certificateId: urlTokenId });
-    } else if (txHash) {
-      setVerificationMethod('transaction');
-      setInputValue(txHash);
-      verifyCertificate({ transactionHash: txHash });
+      verifyCertificate(urlTokenId);
     }
-  }, [tokenId, searchParams]);
+  }, [urlTokenId]);
 
-  // Load verification history from localStorage
-  useEffect(() => {
-    const savedHistory = localStorage.getItem('verificationHistory');
-    if (savedHistory) {
-      try {
-        setVerificationHistory(JSON.parse(savedHistory));
-      } catch (error) {
-        console.error('Failed to load verification history:', error);
-      }
-    }
-  }, []);
-
-  // Save verification to history
-  const saveToHistory = (verificationData) => {
-    const historyItem = {
-      id: Date.now(),
-      timestamp: new Date().toISOString(),
-      method: verificationData.method,
-      input: verificationData.input,
-      isValid: verificationData.isValid,
-      certificateId: verificationData.certificate?.tokenId,
-      recipientName: verificationData.certificate?.recipientName,
-      courseName: verificationData.certificate?.courseName,
-    };
-
-    const newHistory = [historyItem, ...verificationHistory.slice(0, 9)];
-    setVerificationHistory(newHistory);
-    localStorage.setItem('verificationHistory', JSON.stringify(newHistory));
-  };
-
-  // Verify certificate function
-  const verifyCertificate = async (verificationData) => {
-    setIsLoading(true);
-    setError(null);
-    setCertificate(null);
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/verify-certificate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(verificationData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Verification failed');
-      }
-
-      if (data.success && data.certificate) {
-        setCertificate(data.certificate);
-        saveToHistory({
-          method: data.verificationDetails.method,
-          input: Object.values(verificationData)[0],
-          isValid: data.isValid,
-          certificate: data.certificate,
-        });
-
-        if (data.isValid) {
-          feedback.showSuccess('Certificate verified successfully!', {
-            showConfetti: true,
-            position: 'top-center'
-          });
-        } else {
-          feedback.showWarning('Certificate found but may be invalid or revoked', {
-            position: 'top-center'
-          });
-        }
-      } else {
-        setError(data.message || 'Certificate not found');
-        feedback.showError(data.message || 'Certificate not found', {
-          shake: true
-        });
-      }
-    } catch (error) {
-      console.error('Verification error:', error);
-      setError(error.message);
-      feedback.showError(error.message, {
-        shake: true
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!inputValue.trim()) {
-      setError('Please enter a certificate ID or transaction hash');
-      feedback.showError('Please enter a certificate ID or transaction hash');
+  const verifyCertificate = async (id = tokenId) => {
+    if (!id || !id.trim()) {
+      setError('Please enter a certificate ID');
       return;
     }
 
-    const verificationData = {};
-
-    if (verificationMethod === 'id') {
-      if (!/^\d+$/.test(inputValue.trim())) {
-        setError('Certificate ID must be a valid number');
-        feedback.showError('Certificate ID must be a valid number');
-        return;
-      }
-      verificationData.certificateId = inputValue.trim();
-    } else if (verificationMethod === 'transaction') {
-      if (!/^0x[a-fA-F0-9]{64}$/.test(inputValue.trim())) {
-        setError('Transaction hash must be a valid Ethereum transaction hash');
-        feedback.showError('Invalid transaction hash format');
-        return;
-      }
-      verificationData.transactionHash = inputValue.trim();
-    }
-
-    verifyCertificate(verificationData);
-  };
-
-  // Handle file upload
-  const handleFileUpload = (files) => {
-    setUploadedFiles(files);
-    if (files.length > 0) {
-      toast.error('File verification is not yet implemented. Please use Certificate ID instead.');
-    }
-  };
-
-  // Handle verification method change
-  const handleMethodChange = (method) => {
-    setVerificationMethod(method);
-    setInputValue('');
-    setError(null);
+    setLoading(true);
+    setError('');
     setCertificate(null);
-    setUploadedFiles([]);
-  };
+    setVerificationStatus(null);
 
-  // Handle history item click
-  const handleHistoryClick = (historyItem) => {
-    if (historyItem.method === 'certificateId') {
-      setVerificationMethod('id');
-      setInputValue(historyItem.certificateId);
-      verifyCertificate({ certificateId: historyItem.certificateId });
+    try {
+      const response = await fetch(`/api/verify-certificate/${id.trim()}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.details || data.error || 'Verification failed');
+      }
+
+      if (data.success) {
+        setCertificate(data.data.certificate);
+        setVerificationStatus({
+          isValid: data.data.isValid,
+          exists: data.data.exists,
+          tokenId: id.trim()
+        });
+
+        // Update URL if not already there
+        if (!urlTokenId) {
+          navigate(`/verify/${id.trim()}`, { replace: true });
+        }
+      } else {
+        throw new Error(data.error || 'Verification failed');
+      }
+    } catch (err) {
+      console.error('Verification error:', err);
+      setError(err.message);
+      setVerificationStatus({
+        isValid: false,
+        exists: false,
+        tokenId: id.trim()
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Clear verification history
-  const clearHistory = () => {
-    setVerificationHistory([]);
-    localStorage.removeItem('verificationHistory');
-    toast.success('Verification history cleared');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    verifyCertificate();
   };
+
+  const getStatusIcon = () => {
+    if (!verificationStatus) return null;
+
+    if (!verificationStatus.exists) {
+      return <XCircle className="h-8 w-8 text-red-500" />;
+    }
+
+    if (verificationStatus.isValid) {
+      return <CheckCircle className="h-8 w-8 text-green-500" />;
+    } else {
+      return <AlertTriangle className="h-8 w-8 text-yellow-500" />;
+    }
+  };
+
+  const getStatusMessage = () => {
+    if (!verificationStatus) return null;
+
+    if (!verificationStatus.exists) {
+      return {
+        title: 'Certificate Not Found',
+        message: 'No certificate exists with this ID. Please check the ID and try again.',
+        color: 'text-red-600'
+      };
+    }
+
+    if (verificationStatus.isValid) {
+      return {
+        title: 'Certificate Valid',
+        message: 'This certificate is authentic and has not been revoked.',
+        color: 'text-green-600'
+      };
+    } else {
+      return {
+        title: 'Certificate Revoked',
+        message: 'This certificate exists but has been revoked by the issuer.',
+        color: 'text-yellow-600'
+      };
+    }
+  };
+
+  const statusInfo = getStatusMessage();
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.h1
-            className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Verify Certificate
-          </motion.h1>
-          <motion.p
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Verify the authenticity of blockchain certificates using certificate ID, transaction hash, or by uploading the certificate file.
-          </motion.p>
+          <div className="flex justify-center items-center space-x-3 mb-4">
+            <Shield className="h-10 w-10 text-blue-600" />
+            <h1 className="text-3xl font-bold text-gray-900">Certificate Verification</h1>
+          </div>
+          <p className="text-lg text-gray-600">
+            Enter a certificate ID to verify its authenticity on the blockchain
+          </p>
         </div>
 
-        {/* Verification Methods */}
-        <motion.div
-          className="bg-white rounded-lg shadow-md p-6 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Choose Verification Method
-          </h2>
-
-          {/* Method Selection */}
-          <div className="flex flex-wrap gap-4 mb-6">
-            <button
-              onClick={() => handleMethodChange('id')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${verificationMethod === 'id'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              aria-pressed={verificationMethod === 'id'}
-            >
-              Certificate ID
-            </button>
-
-            <button
-              onClick={() => handleMethodChange('transaction')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${verificationMethod === 'transaction'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              aria-pressed={verificationMethod === 'transaction'}
-            >
-              Transaction Hash
-            </button>
-
-            <button
-              onClick={() => handleMethodChange('file')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${verificationMethod === 'file'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              aria-pressed={verificationMethod === 'file'}
-            >
-              Upload File
-            </button>
-          </div>
-
-          {/* Verification Form */}
-          <form id={formId} onSubmit={handleSubmit} className="space-y-4">
-            {verificationMethod === 'file' ? (
-              <FileUpload
-                onFileSelect={handleFileUpload}
-                accept=".pdf,.json,.png,.jpg,.jpeg"
-                maxSize={10 * 1024 * 1024}
-                label="Upload Certificate File"
-                helperText="Supported formats: PDF, JSON, PNG, JPG (max 10MB)"
-                showPreview={true}
-              />
-            ) : (
-              <Input
-                label={verificationMethod === 'id' ? 'Certificate ID' : 'Transaction Hash'}
-                placeholder={
-                  verificationMethod === 'id'
-                    ? 'Enter certificate ID (e.g., 123)'
-                    : 'Enter transaction hash (0x...)'
-                }
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                error={error}
-                helperText={
-                  verificationMethod === 'id'
-                    ? 'The unique identifier for the certificate'
-                    : 'The blockchain transaction hash where the certificate was issued'
-                }
-                required
-                fieldName="verification-input"
-              />
-            )}
-
-            <Button
-              type="submit"
-              loading={isLoading}
-              disabled={verificationMethod === 'file' && uploadedFiles.length === 0}
-              className="w-full sm:w-auto"
-            >
-              {isLoading ? 'Verifying...' : 'Verify Certificate'}
-            </Button>
-          </form>
-        </motion.div>
-
-        {/* Verification Results */}
-        <AnimatePresence>
-          {certificate && (
-            <motion.div
-              id={resultsId}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="mb-8"
-              role="region"
-              aria-labelledby="results-heading"
-            >
-              <h2 id="results-heading" className="text-2xl font-semibold text-gray-900 mb-4">
-                Verification Results
-              </h2>
-              <CertificateCard
-                certificate={certificate}
-                showQR={true}
-                isPublicView={true}
-                className="max-w-none"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Verification History */}
-        {verificationHistory.length > 0 && (
-          <motion.div
-            id={historyId}
-            className="bg-white rounded-lg shadow-md p-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            role="region"
-            aria-labelledby="history-heading"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 id="history-heading" className="text-xl font-semibold text-gray-900">
-                Recent Verifications
-              </h2>
-              <button
-                onClick={clearHistory}
-                className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-                aria-label="Clear verification history"
-              >
-                Clear History
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {verificationHistory.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-                  onClick={() => handleHistoryClick(item)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      handleHistoryClick(item);
-                    }
-                  }}
-                  aria-label={`Verify certificate ${item.certificateId} for ${item.recipientName}`}
+        {/* Search Form */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="tokenId" className="block text-sm font-medium text-gray-700 mb-2">
+                Certificate ID
+              </label>
+              <div className="flex space-x-3">
+                <input
+                  type="text"
+                  id="tokenId"
+                  value={tokenId}
+                  onChange={(e) => setTokenId(e.target.value)}
+                  placeholder="Enter certificate ID (e.g., 1, 2, 3...)"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  disabled={loading}
+                />
+                <button
+                  type="submit"
+                  disabled={loading || !tokenId.trim()}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center space-x-2 transition-colors duration-200"
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${item.isValid
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                        }`}>
-                        {item.isValid ? 'Valid' : 'Invalid'}
-                      </span>
-                      <span className="text-sm font-medium text-gray-900 truncate">
-                        {item.recipientName || 'Unknown Recipient'}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-500 truncate">
-                      {item.courseName || 'Unknown Course'} • ID: {item.certificateId}
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-400">
-                    {new Date(item.timestamp).toLocaleDateString()}
-                  </div>
-                </div>
-              ))}
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Verifying...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Search className="h-4 w-4" />
+                      <span>Verify</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-          </motion.div>
+          </form>
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+            <div className="flex items-center space-x-2">
+              <XCircle className="h-5 w-5 text-red-500" />
+              <p className="text-red-700 font-medium">Verification Error</p>
+            </div>
+            <p className="text-red-600 mt-1">{error}</p>
+          </div>
         )}
 
-        {/* Help Section */}
-        <motion.div
-          className="bg-blue-50 rounded-lg p-6 mt-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <h3 className="text-lg font-semibold text-blue-900 mb-3">
-            How to Verify Certificates
-          </h3>
-          <div className="space-y-3 text-blue-800">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-sm font-medium">
-                1
-              </div>
+        {/* Verification Status */}
+        {statusInfo && (
+          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="flex items-center space-x-4 mb-4">
+              {getStatusIcon()}
               <div>
-                <strong>Certificate ID:</strong> Look for the certificate ID number in your certificate document or QR code.
+                <h2 className={`text-xl font-semibold ${statusInfo.color}`}>
+                  {statusInfo.title}
+                </h2>
+                <p className="text-gray-600">{statusInfo.message}</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-sm font-medium">
-                2
+
+            {/* Blockchain Link */}
+            {verificationStatus && (
+              <div className="pt-4 border-t border-gray-200">
+                <a
+                  href={`https://amoy.polygonscan.com/token/${process.env.REACT_APP_CONTRACT_ADDRESS}?a=${verificationStatus.tokenId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  <span>View on Polygon Amoy Explorer</span>
+                </a>
               </div>
-              <div>
-                <strong>Transaction Hash:</strong> Use the blockchain transaction hash if you have the transaction details.
+            )}
+          </div>
+        )}
+
+        {/* Certificate Details */}
+        {certificate && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Certificate Details</h2>
+            <CertificateCard 
+              certificate={certificate} 
+              tokenId={verificationStatus.tokenId}
+              showActions={false}
+            />
+          </div>
+        )}
+
+        {/* How It Works */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">How Certificate Verification Works</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="bg-blue-100 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                <Search className="h-6 w-6 text-blue-600" />
               </div>
+              <h3 className="font-medium text-gray-900 mb-2">1. Enter Certificate ID</h3>
+              <p className="text-sm text-gray-600">
+                Input the unique certificate ID you want to verify
+              </p>
             </div>
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-sm font-medium">
-                3
+            <div className="text-center">
+              <div className="bg-blue-100 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                <Shield className="h-6 w-6 text-blue-600" />
               </div>
-              <div>
-                <strong>File Upload:</strong> Upload the certificate file directly for automatic verification (coming soon).
+              <h3 className="font-medium text-gray-900 mb-2">2. Blockchain Verification</h3>
+              <p className="text-sm text-gray-600">
+                We check the certificate data stored on Polygon Amoy blockchain
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="bg-blue-100 rounded-full p-3 w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                <CheckCircle className="h-6 w-6 text-blue-600" />
               </div>
+              <h3 className="font-medium text-gray-900 mb-2">3. Instant Results</h3>
+              <p className="text-sm text-gray-600">
+                Get immediate verification of authenticity and validity
+              </p>
             </div>
           </div>
-        </motion.div>
-
-        {/* QR Code Scanner Info */}
-        <motion.div
-          className="text-center mt-8 p-4 bg-gray-100 rounded-lg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <p className="text-gray-600">
-            <strong>Tip:</strong> If you have a QR code on your certificate, scan it with your mobile device to automatically verify the certificate.
-          </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default VerifyPage;

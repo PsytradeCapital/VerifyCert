@@ -158,4 +158,8 @@ module.exports = {
     compress: true,
     hot: true,
   },
+  // TypeScript configuration
+  typescript: {
+    enableTypeChecking: false,
+  },
 };

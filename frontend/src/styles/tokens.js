@@ -618,4 +618,4 @@ const designTokens = {
   }
 };
 
-module.exports = { designTokens };
+export { designTokens };

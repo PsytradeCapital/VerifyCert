@@ -1,14 +1,16 @@
 /**
  * Design Tokens (TypeScript version)
  * Central configuration for all design values used throughout the application
- * This file imports from the JavaScript version to maintain consistency with Tailwind
  */
 
 // Import the JavaScript version to ensure consistency
-const { designTokens: jsTokens } = require('./tokens.js');
+import { designTokens as jsTokens } from './tokens';
 
 // Export with proper TypeScript typing
 export const designTokens = jsTokens;
+
+// Theme-specific types
+export type Theme = 'light' | 'dark';
 
 // Type definitions for better TypeScript support
 export type ColorScale = typeof designTokens.colors.primary;
@@ -19,7 +21,6 @@ export type BorderRadius = keyof typeof designTokens.borderRadius;
 export type BoxShadow = keyof typeof designTokens.boxShadow;
 
 // Theme-specific types
-export type Theme = 'light' | 'dark';
 export type ThemeColors = typeof designTokens.colors.light;
 export type ThemeShadows = typeof designTokens.boxShadow.light;
 export type CSSVariables = typeof designTokens.cssVariables.light;
@@ -32,6 +33,11 @@ export interface ThemeConfig {
   cssVariables: CSSVariables;
 }
 
+// Color utility types
+export type ColorVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'error' | 'warning' | 'info';
+export type ColorShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
+export type SurfaceColor = keyof typeof designTokens.colors.light.surface;
+
 // Helper function to get theme-specific tokens
 export const getThemeTokens = (theme: Theme): ThemeConfig => ({
   theme,
@@ -39,8 +45,3 @@ export const getThemeTokens = (theme: Theme): ThemeConfig => ({
   shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
   cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
 });
-
-// Color utility types
-export type ColorVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'error' | 'warning' | 'info';
-export type ColorShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
-export type SurfaceColor = keyof typeof designTokens.colors.light.surface;

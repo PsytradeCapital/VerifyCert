@@ -328,31 +328,31 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     // Override transfer functions to make certificates non-transferable
-    function transferFrom(address, address, uint256) public pure override {
+    function transferFrom(address, address, uint256) public pure override(ERC721, IERC721) {
         revert("Certificate: Certificates are non-transferable");
     }
 
-    function safeTransferFrom(address, address, uint256) public pure override {
+    function safeTransferFrom(address, address, uint256) public pure override(ERC721, IERC721) {
         revert("Certificate: Certificates are non-transferable");
     }
 
-    function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
+    function safeTransferFrom(address, address, uint256, bytes memory) public pure override(ERC721, IERC721) {
         revert("Certificate: Certificates are non-transferable");
     }
 
-    function approve(address, uint256) public pure override {
+    function approve(address, uint256) public pure override(ERC721, IERC721) {
         revert("Certificate: Certificates are non-transferable");
     }
 
-    function setApprovalForAll(address, bool) public pure override {
+    function setApprovalForAll(address, bool) public pure override(ERC721, IERC721) {
         revert("Certificate: Certificates are non-transferable");
     }
 
-    function getApproved(uint256) public pure override returns (address) {
+    function getApproved(uint256) public pure override(ERC721, IERC721) returns (address) {
         return address(0);
     }
 
-    function isApprovedForAll(address, address) public pure override returns (bool) {
+    function isApprovedForAll(address, address) public pure override(ERC721, IERC721) returns (bool) {
         return false;
     }
 

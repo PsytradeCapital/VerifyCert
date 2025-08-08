@@ -46,9 +46,9 @@ export const designTokens = {
       },
       surface: {
         background: '#0f172a',
-        foreground: '#f8fafc',  // Brighter foreground for better contrast
+        foreground: '#f1f5f9',  // Light text for dark background
         card: '#1e293b',
-        cardForeground: '#f8fafc'  // Brighter card text
+        cardForeground: '#f1f5f9'  // Light text for dark cards
       }
     }
   },

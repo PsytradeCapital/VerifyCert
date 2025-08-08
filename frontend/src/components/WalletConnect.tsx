@@ -156,7 +156,7 @@ export default function WalletConnect({
       }
 
       onConnect?.(accounts[0], provider);
-      // Only show success message if not already connected
+      // Only show success message if not already connected and this is a user-initiated connection
       if (!walletState.isConnected) {
         toast.success('Wallet connected successfully!');
       }
@@ -248,6 +248,7 @@ export default function WalletConnect({
             networkName,
           });
 
+          // Only call onConnect for initial connection check, don't show success message
           onConnect?.(accounts[0], provider);
         }
       } catch (error) {

@@ -129,6 +129,14 @@ module.exports = {
         });
       }
 
+      // Add ProvidePlugin to make React available globally
+      const webpack = require('webpack');
+      webpackConfig.plugins.push(
+        new webpack.ProvidePlugin({
+          React: 'react',
+        })
+      );
+
       return webpackConfig;
     },
   },
@@ -149,7 +157,9 @@ module.exports = {
         useBuiltIns: 'entry',
         corejs: 3,
       }],
-      '@babel/preset-react',
+      ['@babel/preset-react', {
+        runtime: 'classic'
+      }],
       '@babel/preset-typescript',
     ],
   },

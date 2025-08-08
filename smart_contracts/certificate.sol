@@ -186,7 +186,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     /**
      * @dev Issue a certificate with basic parameters (backward compatibility)
      */
-    function issueCertificate(
+    function issueCertificateBasic(
         address recipient,
         string memory recipientName,
         string memory courseName,

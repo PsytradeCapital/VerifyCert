@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
     }
 
     // Estimate gas for the transaction
-    const gasEstimate = await contract.issueCertificate.estimateGas(
+    const gasEstimate = await contract.issueCertificateBasic.estimateGas(
       recipientAddress,
       recipientName,
       courseName,
@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
     const gasLimit = Math.floor(Number(gasEstimate) * 1.2);
 
     // Issue the certificate
-    const tx = await contract.issueCertificate(
+    const tx = await contract.issueCertificateBasic(
       recipientAddress,
       recipientName,
       courseName,

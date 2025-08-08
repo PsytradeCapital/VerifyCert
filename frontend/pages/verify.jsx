@@ -195,7 +195,7 @@ const VerifyPage = () => {
             {verificationStatus && (
               <div className="pt-4 border-t border-gray-200">
                 <a
-                  href={`https://amoy.polygonscan.com/token/${process.env.REACT_APP_CONTRACT_ADDRESS}?a=${verificationStatus.tokenId}`}
+                  href={`https://amoy.polygonscan.com/token/0x6c9D554C721dA0CEA1b975982eAEe1f924271F50?a=${verificationStatus.tokenId}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 text-sm font-medium"

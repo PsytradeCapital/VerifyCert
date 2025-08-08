@@ -46,8 +46,8 @@ router.post('/', async (req, res) => {
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
     // Check if signer is authorized issuer
-    const isAuthorized = await contract.authorizedIssuers(signer.address);
-    const isOwner = await contract.owner() === signer.address;
+    const isAuthorized = await contract.isAuthorizedIssuer(signer.address);
+    const isOwner = (await contract.owner()) === signer.address;
     
     if (!isAuthorized && !isOwner) {
       return res.status(403).json({

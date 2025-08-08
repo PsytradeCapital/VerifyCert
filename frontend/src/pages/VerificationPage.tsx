@@ -31,18 +31,6 @@ export default function VerificationPage() {
   });
 
   // Verify certificate on mount
-  useEffect(() => {
-    if (tokenId) {
-      verifyCertificate();
-    } else {
-      setState(prev => ({
-        ...prev,
-        error: 'No certificate ID provided',
-        isLoading: false,
-      }));
-    }
-  }, [tokenId, verifyCertificate]);
-
   const verifyCertificate = useCallback(async () => {
     if (!tokenId) return;
 
@@ -108,6 +96,18 @@ export default function VerificationPage() {
       toast.error(errorMessage);
     }
   }, [tokenId]);
+
+  useEffect(() => {
+    if (tokenId) {
+      verifyCertificate();
+    } else {
+      setState(prev => ({
+        ...prev,
+        error: 'No certificate ID provided',
+        isLoading: false,
+      }));
+    }
+  }, [tokenId, verifyCertificate]);
 
   const handleRetry = () => {
     verifyCertificate();

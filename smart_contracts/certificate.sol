@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
  * @dev Non-transferable ERC721 certificate contract for issuing verifiable digital certificates
  * @notice This contract implements a certificate system where certificates are issued as NFTs
  * but cannot be transferred, ensuring they remain with the original recipient
+ * Deployed on Polygon Amoy testnet for secure, decentralized certificate verification
  */
 contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;

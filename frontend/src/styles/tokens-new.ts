@@ -25,9 +25,12 @@ export const designTokens = {
       },
       surface: {
         background: '#ffffff',
-        foreground: '#111827',
+        foreground: '#1f2937',  // Darker text for better contrast on white
         card: '#ffffff',
-        cardForeground: '#111827'
+        cardForeground: '#1f2937',
+        muted: '#f9fafb',
+        mutedForeground: '#6b7280',
+        border: '#e5e7eb'
       }
     },
     dark: {
@@ -46,9 +49,12 @@ export const designTokens = {
       },
       surface: {
         background: '#0f172a',
-        foreground: '#f1f5f9',  // Light text for dark background
+        foreground: '#f8fafc',  // Brighter light text for dark background
         card: '#1e293b',
-        cardForeground: '#f1f5f9'  // Light text for dark cards
+        cardForeground: '#f8fafc',  // Brighter light text for dark cards
+        muted: '#334155',
+        mutedForeground: '#94a3b8',
+        border: '#334155'
       }
     }
   },

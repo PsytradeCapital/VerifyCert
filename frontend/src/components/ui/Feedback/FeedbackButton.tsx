@@ -38,7 +38,7 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         aria-label="Open feedback form"
       >
         <div className="flex items-center gap-2 px-4 py-3">
-          <MessageSquare size={20} />
+          <MessageSquare size={20} className="text-white" />
           <motion.span
             initial={{ width: 0, opacity: 0 }}
             animate={{ 

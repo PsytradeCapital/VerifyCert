@@ -157,10 +157,10 @@ module.exports = {
         },
         // Text colors
         text: {
-          primary: 'var(--color-neutral-900)',
-          secondary: 'var(--color-neutral-600)',
+          primary: 'var(--color-foreground)',
+          secondary: 'var(--color-muted-foreground)',
           tertiary: 'var(--color-neutral-500)',
-          inverse: 'var(--color-neutral-50)',
+          inverse: 'var(--color-background)',
         },
       },
       animation: {

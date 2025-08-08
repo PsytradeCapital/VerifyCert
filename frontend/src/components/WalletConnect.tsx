@@ -16,6 +16,7 @@ interface WalletState {
   provider: ethers.BrowserProvider | null;
   isConnecting: boolean;
   networkName: string | null;
+  hasShownSuccessMessage: boolean;
 }
 
 const POLYGON_AMOY_CHAIN_ID = '0x13882'; // 80002 in hex
@@ -43,6 +44,7 @@ export default function WalletConnect({
     provider: null,
     isConnecting: false,
     networkName: null,
+    hasShownSuccessMessage: false,
   });
 
   // Check if MetaMask is installed
@@ -156,9 +158,10 @@ export default function WalletConnect({
       }
 
       onConnect?.(accounts[0], provider);
-      // Only show success message if not already connected and this is a user-initiated connection
-      if (!walletState.isConnected) {
+      // Only show success message if not already connected and haven't shown it before
+      if (!walletState.isConnected && !walletState.hasShownSuccessMessage) {
         toast.success('Wallet connected successfully!');
+        setWalletState(prev => ({ ...prev, hasShownSuccessMessage: true }));
       }
     } catch (error: any) {
       console.error('Failed to connect wallet:', error);
@@ -180,6 +183,7 @@ export default function WalletConnect({
       provider: null,
       isConnecting: false,
       networkName: null,
+      hasShownSuccessMessage: false, // Reset the flag on disconnect
     });
     onDisconnect?.();
     toast.success('Wallet disconnected');

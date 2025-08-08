@@ -1,4 +1,4 @@
-const { designTokens } = require('./src/styles/tokens.js');
+const { designTokens } = require('./src/styles/tokens.cjs');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

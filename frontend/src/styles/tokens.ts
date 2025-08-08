@@ -4,10 +4,13 @@
  */
 
 // Import the JavaScript version to ensure consistency
-import { designTokens as jsTokens } from './tokens';
+import { designTokens as jsTokens } from './tokens.js';
 
 // Export with proper TypeScript typing
 export const designTokens = jsTokens;
+
+// Also export a default to ensure module compatibility
+export default designTokens;
 
 // Theme-specific types
 export type Theme = 'light' | 'dark';
@@ -39,9 +42,31 @@ export type ColorShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 90
 export type SurfaceColor = keyof typeof designTokens.colors.light.surface;
 
 // Helper function to get theme-specific tokens
-export const getThemeTokens = (theme: Theme): ThemeConfig => ({
-  theme,
-  colors: designTokens.colors[theme] || designTokens.colors.light,
-  shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
-  cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
-});
+export function getThemeTokens(theme: Theme): ThemeConfig {
+  return {
+    theme,
+    colors: designTokens.colors[theme] || designTokens.colors.light,
+    shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
+    cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
+  };
+}
+
+// Explicit export list to ensure all exports are recognized
+export {
+  designTokens,
+  getThemeTokens,
+  type Theme,
+  type ThemeConfig,
+  type ColorScale,
+  type SpacingValue,
+  type FontSize,
+  type FontWeight,
+  type BorderRadius,
+  type BoxShadow,
+  type ThemeColors,
+  type ThemeShadows,
+  type CSSVariables,
+  type ColorVariant,
+  type ColorShade,
+  type SurfaceColor
+};

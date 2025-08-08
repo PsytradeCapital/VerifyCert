@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { designTokens } from './tokens';
+import { designTokens } from './index';
 
 /**
  * Utility function for combining class names

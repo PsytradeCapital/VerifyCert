@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Theme, getThemeTokens, ThemeConfig } from '../styles/tokens';
+import { Theme, getThemeTokens, ThemeConfig } from '../styles';
 
 // Theme storage key
 const THEME_STORAGE_KEY = 'verifycert-theme';

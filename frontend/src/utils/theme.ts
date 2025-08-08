@@ -3,7 +3,7 @@
  * Helper functions for theme management and styling
  */
 
-import { Theme, designTokens, getThemeTokens } from '../styles/tokens';
+import { Theme, designTokens, getThemeTokens } from '../styles';
 
 /**
  * Get theme-specific color value

@@ -3,8 +3,11 @@
  * Central export point for all design system utilities and tokens
  */
 
+// Import CSS tokens for side effects (CSS custom properties)
+import './tokens.css';
+
 // Export design tokens
-export { designTokens } from './tokens';
+export { designTokens, getThemeTokens, type Theme, type ThemeConfig } from './tokens-new';
 
 // Export utility functions and types
 export {
@@ -44,6 +47,3 @@ export {
   type BoxShadow,
   type ZIndex,
 } from './utils';
-
-// Import CSS tokens for side effects (CSS custom properties)
-import './tokens.css';

@@ -3,7 +3,7 @@
  * Ensures all color combinations meet WCAG accessibility standards
  */
 
-import { designTokens } from '../styles/tokens';
+import { designTokens } from '../styles';
 
 // WCAG contrast ratio requirements
 export const WCAG_LEVELS = {

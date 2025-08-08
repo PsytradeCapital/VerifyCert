@@ -5,7 +5,8 @@
  */
 
 /* Root variables - Light theme (default) */
-:root {
+:root,
+[data-theme="light"] {
   /* Colors */
   --color-background: #ffffff;
   --color-foreground: #111827;

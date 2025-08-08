@@ -63,7 +63,13 @@ export const useTheme = (): ThemeContextType => {
     // Apply new theme
     if (newTheme === 'dark') {
       root.setAttribute('data-theme', 'dark');
+    } else {
+      // Ensure light theme is explicitly set
+      root.setAttribute('data-theme', 'light');
     }
+    
+    // Force CSS variables to be recalculated
+    root.style.colorScheme = newTheme;
     
     // Update meta theme-color for mobile browsers
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');

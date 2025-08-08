@@ -1,15 +1,16 @@
+import React from 'react';
 import '@testing-library/jest-dom';
 
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-    nav: ({ children, ...props }: any) => <nav {...props}>{children}</nav>,
-    section: ({ children, ...props }: any) => <section {...props}>{children}</section>,
-    article: ({ children, ...props }: any) => <article {...props}>{children}</article>,
+    div: ({ children, ...props }: any) => React.createElement('div', props, children),
+    button: ({ children, ...props }: any) => React.createElement('button', props, children),
+    nav: ({ children, ...props }: any) => React.createElement('nav', props, children),
+    section: ({ children, ...props }: any) => React.createElement('section', props, children),
+    article: ({ children, ...props }: any) => React.createElement('article', props, children),
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: any) => React.createElement(React.Fragment, null, children),
 }));
 
 // Mock IntersectionObserver
@@ -18,7 +19,6 @@ global.IntersectionObserver = class IntersectionObserver {
   disconnect() {}
   observe() {}
   unobserve() {}
-};
 };
 
 // Mock ResizeObserver

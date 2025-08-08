@@ -145,9 +145,9 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg z-50"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md mx-4 z-50"
           >
-            <Card className="h-full md:h-auto bg-white shadow-2xl">
+            <Card className="max-h-[90vh] overflow-y-auto bg-white shadow-2xl">
               <div className="flex items-center justify-between p-6 border-b">
                 <div className="flex items-center gap-3">
                   <MessageSquare className="text-blue-600" size={24} />

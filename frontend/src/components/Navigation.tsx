@@ -215,7 +215,7 @@ export default function Navigation({
               <WalletConnect
                 onConnect={handleWalletConnect}
                 onDisconnect={handleWalletDisconnect}
-                requiredNetwork="polygon-mumbai"
+                requiredNetwork="polygon-amoy"
               />
             </div>
 
@@ -307,7 +307,7 @@ export default function Navigation({
               <WalletConnect
                 onConnect={handleWalletConnect}
                 onDisconnect={handleWalletDisconnect}
-                requiredNetwork="polygon-mumbai"
+                requiredNetwork="polygon-amoy"
               />
             </div>
           </div>

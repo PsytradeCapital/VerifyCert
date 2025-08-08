@@ -156,7 +156,10 @@ export default function WalletConnect({
       }
 
       onConnect?.(accounts[0], provider);
-      toast.success('Wallet connected successfully!');
+      // Only show success message if not already connected
+      if (!walletState.isConnected) {
+        toast.success('Wallet connected successfully!');
+      }
     } catch (error: any) {
       console.error('Failed to connect wallet:', error);
       setWalletState(prev => ({ ...prev, isConnecting: false }));
@@ -190,6 +193,7 @@ export default function WalletConnect({
       setWalletState(prev => ({ ...prev, address: accounts[0] }));
       if (walletState.provider) {
         onConnect?.(accounts[0], walletState.provider);
+        // Don't show success message for account changes, only for initial connection
       }
     }
   }, [disconnectWallet, walletState.address, walletState.provider, onConnect]);

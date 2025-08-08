@@ -286,7 +286,7 @@ export default function IssuerDashboard() {
             <WalletConnect
               onConnect={handleWalletConnect}
               onDisconnect={handleWalletDisconnect}
-              requiredNetwork="polygon-mumbai"
+              requiredNetwork="polygon-amoy"
             />
           </div>
         </div>

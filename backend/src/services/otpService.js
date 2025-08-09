@@ -27,6 +27,12 @@ class OTPService {
 
   // Send OTP via email
   async sendEmailOTP(user, otpCode, type = 'email') {
+    // Check if email service is configured
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      console.log(`⚠️ Email service not configured - OTP would be sent to ${AuthUtils.hashForLogging(user.email)}: ${otpCode}`);
+      return { success: true, messageId: 'test-mode', testMode: true };
+    }
+
     if (!this.emailTransporter) {
       throw new Error('Email service not configured');
     }
@@ -53,6 +59,12 @@ class OTPService {
 
   // Send OTP via SMS
   async sendSMSOTP(user, otpCode, type = 'sms') {
+    // Check if SMS service is configured
+    if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+      console.log(`⚠️ SMS service not configured - OTP would be sent to ${AuthUtils.hashForLogging(user.phone)}: ${otpCode}`);
+      return { success: true, sid: 'test-mode', testMode: true };
+    }
+
     if (!this.twilioClient) {
       throw new Error('SMS service not configured');
     }

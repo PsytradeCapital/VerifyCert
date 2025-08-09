@@ -66,16 +66,8 @@ const otpCodeSchema = Joi.string()
 // Registration schema
 const registerSchema = Joi.object({
   name: nameSchema,
-  email: Joi.when('phone', {
-    is: Joi.exist(),
-    then: emailSchema.optional(),
-    otherwise: emailSchema.required()
-  }),
-  phone: Joi.when('email', {
-    is: Joi.exist(),
-    then: phoneSchema.optional(),
-    otherwise: phoneSchema.required()
-  }),
+  email: emailSchema.optional(),
+  phone: phoneSchema.optional(),
   password: passwordSchema,
   region: regionSchema
 }).xor('email', 'phone').messages({

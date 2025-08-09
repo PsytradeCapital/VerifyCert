@@ -98,6 +98,12 @@ class OTP {
 
   // Verify OTP and mark as used if valid
   static async verifyAndConsume(userId, code, type) {
+    // In development mode, accept test OTP
+    if (process.env.NODE_ENV === 'development' && code === '123456') {
+      console.log(`⚠️ Test OTP accepted for user ${userId} in development mode`);
+      return { success: true, otp: { id: 'test', code: '123456', type, testMode: true } };
+    }
+
     const otp = await OTP.findValidOTP(userId, code, type);
     
     if (!otp) {

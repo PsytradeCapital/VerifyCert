@@ -46,52 +46,17 @@ app.use((req, res, next) => {
 app.get('/health', (req, res) => {
   res.json({ 
     success: true,
-    message: 'VerifyCert Backend API - Amoy Network',
-    network: 'amoy',
-    chainId: 80002,
-    contractAddress: process.env.CONTRACT_ADDRESS || '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50',
+    message: 'VerifyCert Authentication API',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
   });
 });
 
-// Import routes
-const authRoutes = require('./routes/auth');
-
-// Try to import certificate routes, but don't fail if contracts aren't compiled
-let mintCertificate, verifyCertificate;
-try {
-  mintCertificate = require('../routes/mintCertificate');
-  verifyCertificate = require('../routes/verifyCertificate');
-} catch (error) {
-  console.warn('Certificate routes not available - contracts may not be compiled:', error.message);
-}
+// Import auth routes only
+const authRoutes = require('./src/routes/auth');
 
 // API routes
 app.use('/api/auth', authRoutes);
-
-// Only add certificate routes if they loaded successfully
-if (mintCertificate) {
-  app.use('/api/mint-certificate', mintCertificate);
-}
-if (verifyCertificate) {
-  app.use('/api/verify-certificate', verifyCertificate);
-}
-
-// Network info endpoint
-app.get('/api/network', (req, res) => {
-  res.json({
-    success: true,
-    data: {
-      network: 'amoy',
-      chainId: 80002,
-      rpcUrl: process.env.RPC_URL || 'https://rpc-amoy.polygon.technology/',
-      blockExplorer: 'https://amoy.polygonscan.com',
-      faucet: 'https://faucet.polygon.technology/',
-      contractAddress: process.env.CONTRACT_ADDRESS || '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50'
-    }
-  });
-});
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -120,28 +85,6 @@ app.use((err, req, res, next) => {
     });
   }
   
-  if (err.code === 'BLOCKCHAIN_ERROR') {
-    return res.status(503).json({
-      success: false,
-      error: {
-        code: 'BLOCKCHAIN_ERROR',
-        message: 'Blockchain operation failed',
-        details: err.message
-      }
-    });
-  }
-  
-  if (err.code === 'NETWORK_ERROR') {
-    return res.status(503).json({
-      success: false,
-      error: {
-        code: 'NETWORK_ERROR',
-        message: 'Network connectivity issue',
-        details: err.message
-      }
-    });
-  }
-  
   // Default error response
   res.status(500).json({
     success: false,
@@ -155,7 +98,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`VerifyCert Backend API running on port ${PORT}`);
+  console.log(`VerifyCert Authentication API running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
 });

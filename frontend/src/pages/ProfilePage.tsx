@@ -1,312 +1,345 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { User, Settings, Award, BarChart3, Download, Share2 } from 'lucide-react';
-import { SettingsPanel } from '../components/ui/Settings';
-import { CertificateAnalytics } from '../components/ui/Analytics';
-import { CertificateCard } from '../components/ui/CertificateCard';
-import { Card } from '../components/ui/Card/Card';
-import Button from '../components/ui/Button/Button';
+import React, { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import toast from 'react-hot-toast';
 
-interface UserProfile {
-  name: string;
-  email: string;
-  institution: string;
-  role: string;
-  avatar?: string;
-  joinDate: string;
-  totalCertificates: number;
-  verifiedCertificates: number;
-}
-
-interface Certificate {
-  tokenId: string;
-  issuer: string;
-  recipient: string;
-  recipientName: string;
-  courseName: string;
-  institutionName: string;
-  issueDate: number;
-  isValid: boolean;
-  qrCodeURL?: string;
-  verificationURL?: string;
-  grade?: string;
-}
-
-const ProfilePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    institution: 'University of Technology',
-    role: 'student',
-    joinDate: '2023-01-15',
-    totalCertificates: 12,
-    verifiedCertificates: 11
+export const ProfilePage: React.FC = () => {
+  const { user, updateProfile, changePassword } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    region: user?.region || 'US'
+  });
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   });
 
-  const [certificates, setCertificates] = useState<Certificate[]>([
-    {
-      tokenId: '1',
-      issuer: '0x1234...5678',
-      recipient: '0x8765...4321',
-      recipientName: 'John Doe',
-      courseName: 'Advanced React Development',
-      institutionName: 'Tech Academy',
-      issueDate: Date.now() / 1000,
-      isValid: true,
-      grade: 'A+'
-    },
-    {
-      tokenId: '2',
-      issuer: '0x1234...5678',
-      recipient: '0x8765...4321',
-      recipientName: 'John Doe',
-      courseName: 'Blockchain Fundamentals',
-      institutionName: 'Crypto University',
-      issueDate: (Date.now() - 86400000) / 1000,
-      isValid: true,
-      grade: 'A'
-    }
-  ]);
+  const handleProfileUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  const analyticsData = {
-    totalCertificates: 12,
-    totalInstitutions: 5,
-    totalRecipients: 1,
-    verificationRate: 92,
-    monthlyIssuance: [
-      { month: 'Jan', count: 2 },
-      { month: 'Feb', count: 3 },
-      { month: 'Mar', count: 1 },
-      { month: 'Apr', count: 4 },
-      { month: 'May', count: 2 }
-    ],
-    topInstitutions: [
-      { name: 'Tech Academy', count: 5, percentage: 42 },
-      { name: 'Crypto University', count: 3, percentage: 25 },
-      { name: 'Design Institute', count: 2, percentage: 17 },
-      { name: 'Business School', count: 2, percentage: 16 }
-    ]
-  };
-
-  const tabs = [
-    { id: 'overview', label: 'Overview', icon: User },
-    { id: 'certificates', label: 'Certificates', icon: Award },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'settings', label: 'Settings', icon: Settings }
-  ];
-
-  const handleSettingsSave = (settings: any) => {
-    setUserProfile(prev => ({ ...prev, ...settings.profile }));
-    console.log('Settings saved:', settings);
-  };
-
-  const ProfileOverview = () => (
-    <div className="space-y-6">
-      <Card variant="elevated" padding="lg">
-        <div className="flex items-center space-x-6">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-            <User className="w-12 h-12 text-white" />
-          </div>
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-900">{userProfile.name}</h2>
-            <p className="text-gray-600">{userProfile.email}</p>
-            <p className="text-gray-600">{userProfile.institution}</p>
-            <p className="text-sm text-gray-500 capitalize">
-              {userProfile.role} • Joined {new Date(userProfile.joinDate).toLocaleDateString()}
-            </p>
-          </div>
-          <div className="text-right">
-            <Button variant="outline" size="sm">
-              Edit Profile
-            </Button>
-          </div>
-        </div>
-      </Card>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card variant="elevated" padding="lg" className="text-center">
-          <Award className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-gray-900">{userProfile.totalCertificates}</div>
-          <div className="text-sm text-gray-600">Total Certificates</div>
-        </Card>
-
-        <Card variant="elevated" padding="lg" className="text-center">
-          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-            <Award className="w-5 h-5 text-green-600" />
-          </div>
-          <div className="text-2xl font-bold text-gray-900">{userProfile.verifiedCertificates}</div>
-          <div className="text-sm text-gray-600">Verified</div>
-        </Card>
-
-        <Card variant="elevated" padding="lg" className="text-center">
-          <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-            <BarChart3 className="w-5 h-5 text-purple-600" />
-          </div>
-          <div className="text-2xl font-bold text-gray-900">
-            {Math.round((userProfile.verifiedCertificates / userProfile.totalCertificates) * 100)}%
-          </div>
-          <div className="text-sm text-gray-600">Success Rate</div>
-        </Card>
-      </div>
-
-      <Card variant="elevated" padding="lg">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Certificates</h3>
-        <div className="space-y-4">
-          {certificates.slice(0, 3).map((cert) => (
-            <div key={cert.tokenId} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                  <Award className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">{cert.courseName}</div>
-                  <div className="text-sm text-gray-600">{cert.institutionName}</div>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-sm text-gray-500">
-                  {new Date(cert.issueDate * 1000).toLocaleDateString()}
-                </span>
-                <Button variant="ghost" size="sm" icon={<Download />}>
-                  Download
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 text-center">
-          <Button variant="outline" onClick={() => setActiveTab('certificates')}>
-            View All Certificates
-          </Button>
-        </div>
-      </Card>
-    </div>
-  );
-
-  const CertificatesTab = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900">My Certificates</h2>
-        <div className="flex space-x-3">
-          <Button variant="outline" icon={<Download />}>
-            Download All
-          </Button>
-          <Button variant="outline" icon={<Share2 />}>
-            Share Portfolio
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid gap-6">
-        {certificates.map((certificate) => (
-          <CertificateCard
-            key={certificate.tokenId}
-            certificate={certificate}
-            showQR={true}
-          />
-        ))}
-      </div>
-    </div>
-  );
-
-  const AnalyticsTab = () => (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Certificate Analytics</h2>
-      <CertificateAnalytics data={analyticsData} />
-    </div>
-  );
-
-  const SettingsTab = () => (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Account Settings</h2>
-      <SettingsPanel
-        userProfile={userProfile}
-        notificationSettings={{
-          emailNotifications: true,
-          pushNotifications: false,
-          certificateIssued: true,
-          certificateVerified: true,
-          systemUpdates: false
-        }}
-        privacySettings={{
-          profileVisibility: 'public',
-          showEmail: false,
-          showInstitution: true,
-          dataSharing: false
-        }}
-        appearanceSettings={{
-          theme: 'light',
-          language: 'en',
-          dateFormat: 'MM/DD/YYYY',
-          timezone: 'UTC'
-        }}
-        onSave={handleSettingsSave}
-      />
-    </div>
-  );
-
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'overview':
-        return <ProfileOverview />;
-      case 'certificates':
-        return <CertificatesTab />;
-      case 'analytics':
-        return <AnalyticsTab />;
-      case 'settings':
-        return <SettingsTab />;
-      default:
-        return <ProfileOverview />;
+    try {
+      await updateProfile(formData);
+      setIsEditing(false);
+      toast.success('Profile updated successfully!');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update profile');
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error('New passwords do not match');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // This would call a changePassword method in authService
+      // await authService.changePassword(passwordData.currentPassword, passwordData.newPassword);
+      toast.success('Password changed successfully!');
+      setShowChangePassword(false);
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to change password');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handlePasswordDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({ ...prev, [name]: value }));
+  };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h2>
+          <p className="text-gray-600">Please log in to view your profile.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
-          <p className="text-gray-600">Manage your certificates and account settings</p>
-        </div>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white shadow rounded-lg">
+          {/* Header */}
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h1 className="text-2xl font-bold text-gray-900">Profile Settings</h1>
+            <p className="text-gray-600">Manage your account information and preferences</p>
+          </div>
 
-        {/* Navigation Tabs */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
+          {/* Profile Information */}
+          <div className="px-6 py-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-medium text-gray-900">Personal Information</h2>
+              {!isEditing && (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`
-                    flex items-center py-2 px-1 border-b-2 font-medium text-sm transition-colors
-                    ${activeTab === tab.id
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }
-                  `}
+                  onClick={() => setIsEditing(true)}
+                  className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500 border border-blue-600 hover:border-blue-500 rounded-lg transition-colors"
                 >
-                  <Icon className="w-5 h-5 mr-2" />
-                  {tab.label}
+                  Edit Profile
                 </button>
-              );
-            })}
-          </nav>
-        </div>
+              )}
+            </div>
 
-        {/* Tab Content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {renderTabContent()}
-        </motion.div>
+            {isEditing ? (
+              <form onSubmit={handleProfileUpdate} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="region" className="block text-sm font-medium text-gray-700 mb-2">
+                      Region
+                    </label>
+                    <select
+                      id="region"
+                      name="region"
+                      value={formData.region}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="US">United States</option>
+                      <option value="CA">Canada</option>
+                      <option value="GB">United Kingdom</option>
+                      <option value="AU">Australia</option>
+                      <option value="DE">Germany</option>
+                      <option value="FR">France</option>
+                      <option value="IN">India</option>
+                      <option value="CN">China</option>
+                      <option value="BR">Brazil</option>
+                      <option value="MX">Mexico</option>
+                      <option value="KE">Kenya</option>
+                      <option value="NG">Nigeria</option>
+                      <option value="ZA">South Africa</option>
+                    </select>
+                  </div>
+
+                  {user.email && (
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                      />
+                    </div>
+                  )}
+
+                  {user.phone && (
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isLoading ? 'Saving...' : 'Save Changes'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsEditing(false);
+                      setFormData({
+                        name: user?.name || '',
+                        email: user?.email || '',
+                        phone: user?.phone || '',
+                        region: user?.region || 'US'
+                      });
+                    }}
+                    className="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <p className="text-gray-900">{user.name}</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Region</label>
+                  <p className="text-gray-900">{user.region}</p>
+                </div>
+
+                {user.email && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <p className="text-gray-900">{user.email}</p>
+                  </div>
+                )}
+
+                {user.phone && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <p className="text-gray-900">{user.phone}</p>
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Account Status</label>
+                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                    user.isVerified 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {user.isVerified ? 'Verified' : 'Pending Verification'}
+                  </span>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                  <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 capitalize">
+                    {user.role}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Security Settings */}
+          <div className="px-6 py-6 border-t border-gray-200">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-medium text-gray-900">Security Settings</h2>
+              {!showChangePassword && (
+                <button
+                  onClick={() => setShowChangePassword(true)}
+                  className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500 border border-blue-600 hover:border-blue-500 rounded-lg transition-colors"
+                >
+                  Change Password
+                </button>
+              )}
+            </div>
+
+            {showChangePassword && (
+              <form onSubmit={handlePasswordChange} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="md:col-span-2">
+                    <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                      Current Password
+                    </label>
+                    <input
+                      type="password"
+                      id="currentPassword"
+                      name="currentPassword"
+                      value={passwordData.currentPassword}
+                      onChange={handlePasswordDataChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                      New Password
+                    </label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      name="newPassword"
+                      value={passwordData.newPassword}
+                      onChange={handlePasswordDataChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                      Confirm New Password
+                    </label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={passwordData.confirmPassword}
+                      onChange={handlePasswordDataChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isLoading ? 'Changing...' : 'Change Password'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowChangePassword(false);
+                      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                    }}
+                    className="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
 };
-
-export default ProfilePage;

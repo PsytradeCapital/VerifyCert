@@ -235,6 +235,16 @@ class AuthService {
     });
     return response.token;
   }
+
+  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
+    return this.makeRequest('/change-password', {
+      method: 'POST',
+      body: JSON.stringify({
+        currentPassword,
+        newPassword,
+      }),
+    });
+  }
 }
 
   // Token refresh mechanism

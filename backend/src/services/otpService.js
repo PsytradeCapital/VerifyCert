@@ -3,6 +3,15 @@ const twilio = require('twilio');
 const OTP = require('../models/OTP');
 const AuthUtils = require('../utils/auth');
 
+// Regional SMS gateway configuration
+const REGIONAL_SMS_GATEWAYS = {
+  // Africa's Talking regions
+  AFRICAS_TALKING: ['KE', 'UG', 'TZ', 'RW', 'ZM', 'MW', 'NG', 'GH'],
+  
+  // Twilio (default for most regions)
+  TWILIO: ['US', 'CA', 'GB', 'AU', 'DE', 'FR', 'IN', 'BR', 'MX', 'SG', 'MY']
+};
+
 class OTPService {
   constructor() {
     // Initialize email transporter
@@ -22,6 +31,12 @@ class OTPService {
         process.env.TWILIO_ACCOUNT_SID,
         process.env.TWILIO_AUTH_TOKEN
       );
+    }
+
+    // Initialize Africa's Talking client (if configured)
+    if (process.env.AFRICAS_TALKING_USERNAME && process.env.AFRICAS_TALKING_API_KEY) {
+      // Africa's Talking would be initialized here
+      // this.africasTalkingClient = new AfricasTalking({...});
     }
   }
 

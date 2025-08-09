@@ -57,6 +57,9 @@ app.get('/health', (req, res) => {
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard');
+const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user');
 
 // Try to import certificate routes, but don't fail if contracts aren't compiled
 let mintCertificate, verifyCertificate;
@@ -69,6 +72,9 @@ try {
 
 // API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/user', userRoutes);
 
 // Only add certificate routes if they loaded successfully
 if (mintCertificate) {

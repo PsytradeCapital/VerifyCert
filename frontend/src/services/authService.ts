@@ -3,14 +3,6 @@
  * Handles all authentication-related API calls
  */
 
-import { string } from "prop-types";
-
-import { string } from "prop-types";
-
-import { string } from "prop-types";
-
-import { string } from "prop-types";
-
 interface User {
   id: number;
   name: string;
@@ -57,7 +49,7 @@ class AuthService {
   ): Promise<T> {
     const url = `${this.baseURL}/api/auth${endpoint}`;
     
-    const defaultHeaders = {
+    const defaultHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
     };
 
@@ -94,6 +86,49 @@ class AuthService {
     }
   }
 
+  private async makeUserRequest<T>(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<T> {
+    const url = `${this.baseURL}/api/user${endpoint}`;
+    
+    const defaultHeaders: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    // Add auth token if available
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      defaultHeaders['Authorization'] = `Bearer ${token}`;
+    }
+
+    const config: RequestInit = {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+    };
+
+    try {
+      const response = await fetch(url, config);
+      const data: ApiResponse<T> = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error?.message || `HTTP ${response.status}`);
+      }
+
+      if (!data.success) {
+        throw new Error(data.error?.message || 'Request failed');
+      }
+
+      return data.data as T;
+    } catch (error) {
+      console.error(`User API Error (${endpoint}):`, error);
+      throw error;
+    }
+  }
+
   async register(data: RegisterData): Promise<{ userId: number; verificationType: string }> {
     return this.makeRequest('/register', {
       method: 'POST',
@@ -112,13 +147,12 @@ class AuthService {
   }
 
   async verifyOTP(code: string, userId?: number, type: string = 'email'): Promise<LoginResponse> {
-    // If userId is not provided, try to get it from localStorage or context
     const storedUserId = userId || localStorage.getItem('pendingUserId');
     
     return this.makeRequest('/verify-otp', {
       method: 'POST',
       body: JSON.stringify({
-        userId: storedUserId ? parseInt(storedUserId) : undefined,
+        userId: storedUserId ? parseInt(storedUserId.toString()) : undefined,
         code,
         type,
       }),
@@ -131,7 +165,7 @@ class AuthService {
     return this.makeRequest('/resend-otp', {
       method: 'POST',
       body: JSON.stringify({
-        userId: storedUserId ? parseInt(storedUserId) : undefined,
+        userId: storedUserId ? parseInt(storedUserId.toString()) : undefined,
         type,
       }),
     });
@@ -152,7 +186,7 @@ class AuthService {
     return this.makeRequest('/reset-password', {
       method: 'POST',
       body: JSON.stringify({
-        userId: storedUserId ? parseInt(storedUserId) : undefined,
+        userId: storedUserId ? parseInt(storedUserId.toString()) : undefined,
         code,
         newPassword,
       }),
@@ -160,7 +194,6 @@ class AuthService {
   }
 
   async validateToken(token: string): Promise<User> {
-    // Temporarily store the token for this request
     const originalToken = localStorage.getItem('authToken');
     localStorage.setItem('authToken', token);
     
@@ -168,7 +201,6 @@ class AuthService {
       const response = await this.makeRequest<{ user: User }>('/profile');
       return response.user;
     } finally {
-      // Restore original token
       if (originalToken) {
         localStorage.setItem('authToken', originalToken);
       } else {
@@ -190,14 +222,24 @@ class AuthService {
     return response.user;
   }
 
-  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
-    return this.makeRequest('/change-password', {
-      method: 'POST',
-      body: JSON.stringify({
-        currentPassword,
-        newPassword,
-      }),
+  async changePassword(data: { currentPassword: string; newPassword: string }): Promise<void> {
+    return this.makeUserRequest('/change-password', {
+      method: 'PUT',
+      body: JSON.stringify(data),
     });
+  }
+
+  async deleteAccount(password: string): Promise<void> {
+    try {
+      await this.makeUserRequest('/account', {
+        method: 'DELETE',
+        body: JSON.stringify({ password }),
+      });
+    } finally {
+      // Clear local storage after successful account deletion
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+    }
   }
 
   async logout(): Promise<void> {
@@ -206,8 +248,10 @@ class AuthService {
         method: 'POST',
       });
     } catch (error) {
-      // Ignore logout errors - we'll clear local storage anyway
       console.warn('Logout API call failed:', error);
+    } finally {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
     }
   }
 
@@ -236,39 +280,6 @@ class AuthService {
     return response.token;
   }
 
-  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
-    return this.makeRequest('/change-password', {
-      method: 'POST',
-      body: JSON.stringify({
-        currentPassword,
-        newPassword,
-      }),
-    });
-  }
-}
-
-  // Token refresh mechanism
-  async refreshToken(): Promise<string> {
-    const currentToken = localStorage.getItem('authToken');
-    if (!currentToken) {
-      throw new Error('No token to refresh');
-    }
-
-    try {
-      const response = await this.makeRequest<{ token: string }>('/refresh-token', {
-        method: 'POST',
-      });
-      
-      localStorage.setItem('authToken', response.token);
-      return response.token;
-    } catch (error) {
-      // If refresh fails, clear the token and redirect to login
-      localStorage.removeItem('authToken');
-      throw error;
-    }
-  }
-
-  // Auto-refresh token if it's about to expire
   async ensureValidToken(): Promise<string> {
     const token = localStorage.getItem('authToken');
     if (!token) {

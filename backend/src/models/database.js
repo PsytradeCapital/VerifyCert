@@ -46,17 +46,39 @@ class Database {
       )
     `;
 
+    // Create certificate issuances table
+    const createCertificatesTable = `
+      CREATE TABLE IF NOT EXISTS certificate_issuances (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        token_id TEXT,
+        transaction_hash TEXT NOT NULL,
+        recipient_address TEXT NOT NULL,
+        recipient_name TEXT NOT NULL,
+        course_name TEXT NOT NULL,
+        institution_name TEXT NOT NULL,
+        issuer_address TEXT NOT NULL,
+        block_number INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+      )
+    `;
+
     // Create indexes for performance
     const createIndexes = [
       'CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)',
       'CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone)',
       'CREATE INDEX IF NOT EXISTS idx_otps_user_id ON otps(user_id)',
-      'CREATE INDEX IF NOT EXISTS idx_otps_code ON otps(code)'
+      'CREATE INDEX IF NOT EXISTS idx_otps_code ON otps(code)',
+      'CREATE INDEX IF NOT EXISTS idx_certificates_user_id ON certificate_issuances(user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_certificates_token_id ON certificate_issuances(token_id)',
+      'CREATE INDEX IF NOT EXISTS idx_certificates_tx_hash ON certificate_issuances(transaction_hash)'
     ];
 
     this.db.serialize(() => {
       this.db.run(createUsersTable);
       this.db.run(createOtpsTable);
+      this.db.run(createCertificatesTable);
       
       createIndexes.forEach(indexQuery => {
         this.db.run(indexQuery);

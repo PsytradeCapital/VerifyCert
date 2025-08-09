@@ -1,6 +1,7 @@
 const express = require('express');
 const { ethers } = require('ethers');
 const Joi = require('joi');
+const { authenticateToken } = require('../src/middleware/auth');
 const router = express.Router();
 
 // Load contract ABI and address
@@ -16,7 +17,7 @@ const mintCertificateSchema = Joi.object({
 });
 
 // POST /api/mint-certificate
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     // Validate request body
     const { error, value } = mintCertificateSchema.validate(req.body);
@@ -95,6 +96,25 @@ router.post('/', async (req, res) => {
       tokenId = parsedLog.args.tokenId.toString();
     }
 
+    // Store certificate issuance record in database
+    try {
+      const db = require('../src/models/database');
+      await db.run(`
+        INSERT INTO certificate_issuances (
+          user_id, token_id, transaction_hash, recipient_address, 
+          recipient_name, course_name, institution_name, 
+          issuer_address, block_number, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `, [
+        req.user.id, tokenId, tx.hash, recipientAddress,
+        recipientName, courseName, institutionName,
+        signer.address, receipt.blockNumber, new Date().toISOString()
+      ]);
+    } catch (dbError) {
+      console.warn('Failed to store certificate record:', dbError);
+      // Don't fail the request if database storage fails
+    }
+
     res.json({
       success: true,
       data: {
@@ -107,7 +127,8 @@ router.post('/', async (req, res) => {
           recipientName,
           courseName,
           institutionName,
-          issuer: signer.address
+          issuer: signer.address,
+          issuedBy: req.user.name || req.user.email
         }
       }
     });

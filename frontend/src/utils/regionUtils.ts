@@ -2,7 +2,25 @@
  * Region detection and phone number utilities
  */
 
-import { parsePhoneNumber, CountryCode } from 'libphonenumber-js';
+// import { parsePhoneNumber, CountryCode } from 'libphonenumber-js';
+
+// Temporary type definitions until libphonenumber-js is installed
+interface ParsedPhoneNumber {
+  isValid(): boolean;
+  formatNational(): string;
+  format(format: string): string;
+}
+
+type CountryCode = string;
+
+// Mock parsePhoneNumber function
+function parsePhoneNumber(phoneNumber: string, region: string): ParsedPhoneNumber {
+  return {
+    isValid: () => /^\+?[\d\s\-\(\)]+$/.test(phoneNumber),
+    formatNational: () => phoneNumber,
+    format: (format: string) => phoneNumber
+  };
+}
 
 // Region preferences for authentication methods
 export const REGION_PREFERENCES = {

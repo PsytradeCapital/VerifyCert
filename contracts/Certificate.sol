@@ -184,6 +184,18 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
+     * @dev Issue a certificate with basic parameters (backward compatibility)
+     */
+    function issueCertificateBasic(
+        address recipient,
+        string memory recipientName,
+        string memory courseName,
+        string memory institutionName
+    ) public onlyAuthorizedIssuer returns (uint256) {
+        return issueCertificate(recipient, recipientName, courseName, institutionName, 0, "");
+    }
+
+    /**
      * @dev Revoke a certificate
      * @param tokenId ID of the certificate to revoke
      * @param reason Reason for revocation

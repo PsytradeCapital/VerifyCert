@@ -47,8 +47,10 @@ export default function WalletConnect({
     hasShownSuccessMessage: false,
   });
 
-  // Debounce success messages
+  // Debounce success messages and track connection state
   const lastSuccessMessageTime = React.useRef<number>(0);
+  const connectionAttemptId = React.useRef<string>('');
+  const isInitialMount = React.useRef<boolean>(true);
 
   // Check if MetaMask is installed
   const isMetaMaskInstalled = useCallback(() => {
@@ -114,6 +116,10 @@ export default function WalletConnect({
       return;
     }
 
+    // Generate unique connection attempt ID
+    const attemptId = Date.now().toString();
+    connectionAttemptId.current = attemptId;
+    
     setWalletState(prev => ({ ...prev, isConnecting: true }));
 
     try {
@@ -163,10 +169,14 @@ export default function WalletConnect({
       }
 
       onConnect?.(accounts[0], provider);
-      // Only show success message if not already connected and haven't shown it recently
+      
+      // Only show success message for user-initiated connections (not initial checks)
       const now = Date.now();
+      const isUserInitiated = connectionAttemptId.current === attemptId;
+      const hasRecentMessage = (now - lastSuccessMessageTime.current) < 10000; // 10 second cooldown
+      
       if (!walletState.isConnected && !walletState.hasShownSuccessMessage && 
-          (now - lastSuccessMessageTime.current) > 5000) { // 5 second cooldown
+          isUserInitiated && !isInitialMount.current && !hasRecentMessage) {
         toast.success('Wallet connected successfully!');
         setWalletState(prev => ({ ...prev, hasShownSuccessMessage: true }));
         lastSuccessMessageTime.current = now;
@@ -262,7 +272,7 @@ export default function WalletConnect({
             provider,
             isConnecting: false,
             networkName,
-            hasShownSuccessMessage: false,
+            hasShownSuccessMessage: true, // Mark as already shown for initial connection
           });
 
           // Only call onConnect for initial connection check, don't show success message
@@ -270,6 +280,11 @@ export default function WalletConnect({
         }
       } catch (error) {
         console.error('Failed to check wallet connection:', error);
+      } finally {
+        // Mark initial mount as complete
+        setTimeout(() => {
+          isInitialMount.current = false;
+        }, 1000);
       }
     };
 

@@ -17,8 +17,35 @@
   color: #1f2937 !important;
 }
 
-[data-theme="light"] *:not(.text-white):not(.text-black):not([class*="bg-"]) {
+[data-theme="light"] *:not(.text-white):not(.text-black):not([class*="bg-"]):not([class*="text-"]) {
   color: #1f2937 !important;
+}
+
+/* Force specific text elements in light theme */
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] div,
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6,
+[data-theme="light"] label,
+[data-theme="light"] li,
+[data-theme="light"] td,
+[data-theme="light"] th {
+  color: #1f2937 !important;
+}
+
+/* Force bold text to be visible in light theme */
+[data-theme="light"] strong,
+[data-theme="light"] b,
+[data-theme="light"] .font-bold,
+[data-theme="light"] .font-semibold,
+[data-theme="light"] .font-medium {
+  color: #000000 !important;
+  font-weight: 600 !important;
 }
 
 [data-theme="light"] .text-white {
@@ -36,8 +63,35 @@
   color: #f8fafc !important;
 }
 
-[data-theme="dark"] *:not(.text-white):not(.text-black):not([class*="bg-"]) {
+[data-theme="dark"] *:not(.text-white):not(.text-black):not([class*="bg-"]):not([class*="text-"]) {
   color: #f8fafc !important;
+}
+
+/* Force specific text elements in dark theme */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] label,
+[data-theme="dark"] li,
+[data-theme="dark"] td,
+[data-theme="dark"] th {
+  color: #f8fafc !important;
+}
+
+/* Force bold text to be visible in dark theme */
+[data-theme="dark"] strong,
+[data-theme="dark"] b,
+[data-theme="dark"] .font-bold,
+[data-theme="dark"] .font-semibold,
+[data-theme="dark"] .font-medium {
+  color: #ffffff !important;
+  font-weight: 600 !important;
 }
 
 [data-theme="dark"] .text-white {
@@ -152,4 +206,72 @@
 [data-theme="dark"] button[type="submit"] svg {
   color: #ffffff !important;
   fill: #ffffff !important;
+}
+
+/* Navigation and menu text fixes */
+[data-theme="light"] nav,
+[data-theme="light"] .nav,
+[data-theme="light"] [class*="nav"] {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] nav,
+[data-theme="dark"] .nav,
+[data-theme="dark"] [class*="nav"] {
+  color: #f8fafc !important;
+}
+
+/* Table text fixes */
+[data-theme="light"] table,
+[data-theme="light"] .table {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] table,
+[data-theme="dark"] .table {
+  color: #f8fafc !important;
+}
+
+/* Form label fixes */
+[data-theme="light"] .form-label,
+[data-theme="light"] .label {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .form-label,
+[data-theme="dark"] .label {
+  color: #f8fafc !important;
+}
+
+/* Text utility class overrides */
+[data-theme="light"] .text-gray-700,
+[data-theme="light"] .text-gray-600,
+[data-theme="light"] .text-gray-500 {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-500 {
+  color: #f8fafc !important;
+}
+
+/* Ensure all text is visible by default */
+* {
+  color: inherit !important;
+}
+
+/* Force visibility for common problematic elements */
+[data-theme="light"] .text-sm,
+[data-theme="light"] .text-xs,
+[data-theme="light"] .text-lg,
+[data-theme="light"] .text-xl {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .text-sm,
+[data-theme="dark"] .text-xs,
+[data-theme="dark"] .text-lg,
+[data-theme="dark"] .text-xl {
+  color: #f8fafc !important;
 }

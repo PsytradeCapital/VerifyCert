@@ -20,8 +20,8 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const positionClasses = {
-    'bottom-right': 'bottom-6 right-6',
-    'bottom-left': 'bottom-6 left-6',
+    'bottom-right': 'bottom-20 right-6',  // Raised from bottom-6 to bottom-20
+    'bottom-left': 'bottom-20 left-6',    // Raised from bottom-6 to bottom-20
     'top-right': 'top-6 right-6',
     'top-left': 'top-6 left-6'
   };
@@ -38,15 +38,15 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         aria-label="Open feedback form"
         style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
       >
-        <div className="flex items-center gap-2 px-4 py-3">
-          <MessageSquare size={20} style={{ color: '#ffffff', fill: 'none', stroke: '#ffffff' }} />
+        <div className="flex items-center gap-2 px-3 py-2">
+          <MessageSquare size={16} style={{ color: '#ffffff', fill: 'none', stroke: '#ffffff' }} />
           <motion.span
             initial={{ width: 0, opacity: 0 }}
             animate={{ 
               width: isHovered ? 'auto' : 0, 
               opacity: isHovered ? 1 : 0 
             }}
-            className="overflow-hidden whitespace-nowrap text-sm font-medium"
+            className="overflow-hidden whitespace-nowrap text-xs font-medium"
           >
             Feedback
           </motion.span>

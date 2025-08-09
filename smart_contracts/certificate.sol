@@ -12,7 +12,6 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
  * @dev Non-transferable ERC721 certificate contract for issuing verifiable digital certificates
  * @notice This contract implements a certificate system where certificates are issued as NFTs
  * but cannot be transferred, ensuring they remain with the original recipient
- * Deployed on Polygon Amoy testnet for secure, decentralized certificate verification
  */
 contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -212,6 +211,21 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
+     * @dev Update certificate metadata URI
+     * @param tokenId ID of the certificate
+     * @param newMetadataURI New metadata URI
+     */
+    function updateCertificateMetadata(uint256 tokenId, string memory newMetadataURI)
+        public
+        certificateExists(tokenId)
+        onlyIssuerOrOwner(tokenId)
+    {
+        certificates[tokenId].metadataURI = newMetadataURI;
+        _setTokenURI(tokenId, newMetadataURI);
+        emit CertificateMetadataUpdated(tokenId, newMetadataURI);
+    }
+
+    /**
      * @dev Authorize an issuer
      */
     function authorizeIssuer(address issuer) public onlyOwner {
@@ -287,12 +301,42 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
+     * @dev Verify certificate integrity using hash
+     * @param tokenId ID of the certificate
+     * @param expectedHash Expected certificate hash
+     * @return bool indicating if certificate hash matches
+     */
+    function verifyCertificateIntegrity(uint256 tokenId, bytes32 expectedHash) 
+        public 
+        view 
+        certificateExists(tokenId)
+        returns (bool) 
+    {
+        return certificates[tokenId].certificateHash == expectedHash;
+    }
+
+    /**
      * @dev Check if an address is an authorized issuer
      * @param issuer Address to check
      * @return bool indicating if address is authorized
      */
     function isAuthorizedIssuer(address issuer) public view returns (bool) {
         return authorizedIssuers[issuer] || issuer == owner();
+    }
+
+    /**
+     * @dev Get certificate by hash
+     * @param certificateHash Hash of the certificate
+     * @return tokenId Token ID associated with the hash
+     */
+    function getCertificateByHash(bytes32 certificateHash) 
+        public 
+        view 
+        returns (uint256) 
+    {
+        uint256 tokenId = certificateHashToTokenId[certificateHash];
+        require(tokenId > 0, "Certificate: Certificate not found for hash");
+        return tokenId;
     }
 
     // Override transfer functions to make certificates non-transferable

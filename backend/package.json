@@ -17,6 +17,7 @@
     "logs": "pm2 logs verify-cert-backend"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ethers": "^6.7.1",
@@ -25,8 +26,12 @@
     "express-validator": "^7.2.1",
     "helmet": "^7.0.0",
     "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.10.44",
     "nodemailer": "^6.9.4",
     "qrcode": "^1.5.3",
+    "sqlite3": "^5.1.6",
+    "twilio": "^4.19.0",
     "verify-cert": "file:..",
     "web-push": "^3.6.7"
   },

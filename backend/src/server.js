@@ -55,11 +55,13 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Import Amoy-specific routes
+// Import routes
 const mintCertificateAmoy = require('../routes/mintCertificateAmoy');
 const verifyCertificateAmoy = require('../routes/verifyCertificateAmoy');
+const authRoutes = require('./routes/auth');
 
-// API routes for Amoy network
+// API routes
+app.use('/api/auth', authRoutes);
 app.use('/api/certificates', mintCertificateAmoy);
 app.use('/api/certificates', verifyCertificateAmoy);
 

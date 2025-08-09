@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthLayout } from './AuthLayout';
-import { LoadingButton } from '../LoadingButton';
+import LoadingButton from '../LoadingButton';
 import { toast } from 'react-hot-toast';
 
 interface SignupFormData {

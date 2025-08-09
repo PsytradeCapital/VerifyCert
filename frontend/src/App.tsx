@@ -16,10 +16,12 @@ import './utils/monitoredFetch'; // Initialize monitored fetch
 import { NavigationProvider } from './contexts/NavigationContext';
 import { FeedbackProvider } from './contexts/FeedbackContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Components
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
+import { ProtectedRoute as AuthProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import RouteErrorBoundary from './components/RouteErrorBoundary';
 import BlockchainErrorBoundary from './components/BlockchainErrorBoundary';
@@ -66,6 +68,14 @@ import RouteTracker from './components/RouteTracker';
 import Home from './pages/Home';
 import Verify from './pages/Verify';
 import NotFound from './pages/NotFound';
+
+// Auth Pages
+import { LoginPage } from './pages/auth/LoginPage';
+import { SignupPage } from './pages/auth/SignupPage';
+import { OTPVerificationPage } from './pages/auth/OTPVerificationPage';
+import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
+import { UnauthorizedPage } from './pages/auth/UnauthorizedPage';
 
 import './App.css';
 import './styles/themes.css';
@@ -159,9 +169,10 @@ function App() {
   return (
     <ErrorBoundary onError={handleGlobalError}>
       <ThemeProvider>
-        <FeedbackProvider>
-          <Router>
-            <NavigationProvider isWalletConnected={walletState.isConnected}>
+        <AuthProvider>
+          <FeedbackProvider>
+            <Router>
+              <NavigationProvider isWalletConnected={walletState.isConnected}>
             <div className="App min-h-screen bg-background text-foreground transition-colors duration-200">
           {/* Navigation */}
           <BlockchainErrorBoundary onError={handleGlobalError}>
@@ -180,6 +191,61 @@ function App() {
           <main>
             <RouteErrorBoundary onError={handleGlobalError}>
               <Routes>
+                {/* Authentication Routes */}
+                <Route 
+                  path="/login" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <LoginPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/register" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <SignupPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/verify-otp" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <OTPVerificationPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/forgot-password" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <ForgotPasswordPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/reset-password" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <ResetPasswordPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/unauthorized" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <UnauthorizedPage />
+                    </ErrorBoundary>
+                  } 
+                />
+
                 {/* Public Routes */}
                 <Route 
                   path="/" 
@@ -378,23 +444,69 @@ function App() {
                   } 
                 />
 
-                {/* Protected Routes - Require Wallet Connection */}
+                {/* Protected Routes - Require Authentication and Wallet Connection */}
                 <Route 
                   path="/dashboard" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
-                      <ProtectedRoute 
-                        isWalletConnected={walletState.isConnected}
-                        requireWallet={true}
+                      <AuthProtectedRoute requireAuth={true} requireVerification={true}>
+                        <ProtectedRoute 
+                          isWalletConnected={walletState.isConnected}
+                          requireWallet={true}
+                        >
+                          <LazyComponentWrapper 
+                            fallback={<ComponentLoading />}
+                            errorFallback={ComponentLoadError}
+                          >
+                            <LazyIssuerDashboard />
+                          </LazyComponentWrapper>
+                        </ProtectedRoute>
+                      </AuthProtectedRoute>
+                    </BlockchainErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/issue" 
+                  element={
+                    <BlockchainErrorBoundary onError={handleGlobalError}>
+                      <AuthProtectedRoute 
+                        requireAuth={true} 
+                        requireVerification={true}
+                        allowedRoles={['issuer', 'admin']}
                       >
+                        <ProtectedRoute 
+                          isWalletConnected={walletState.isConnected}
+                          requireWallet={true}
+                        >
+                          <LazyComponentWrapper 
+                            fallback={<ComponentLoading />}
+                            errorFallback={ComponentLoadError}
+                          >
+                            <LazyIssuerDashboard />
+                          </LazyComponentWrapper>
+                        </ProtectedRoute>
+                      </AuthProtectedRoute>
+                    </BlockchainErrorBoundary>
+                  } 
+                />
+                
+                <Route 
+                  path="/profile" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <AuthProtectedRoute requireAuth={true} requireVerification={true}>
                         <LazyComponentWrapper 
                           fallback={<ComponentLoading />}
                           errorFallback={ComponentLoadError}
                         >
-                          <LazyIssuerDashboard />
+                          <div className="container mx-auto px-4 py-8">
+                            <h1 className="text-2xl font-bold mb-6">Profile Settings</h1>
+                            <p>Profile management coming soon...</p>
+                          </div>
                         </LazyComponentWrapper>
-                      </ProtectedRoute>
-                    </BlockchainErrorBoundary>
+                      </AuthProtectedRoute>
+                    </ErrorBoundary>
                   } 
                 />
 
@@ -514,6 +626,7 @@ function App() {
           </NavigationProvider>
         </Router>
       </FeedbackProvider>
+    </AuthProvider>
     </ThemeProvider>
     </ErrorBoundary>
   );

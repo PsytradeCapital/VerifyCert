@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthLayout } from './AuthLayout';
-import { LoadingButton } from '../LoadingButton';
+import LoadingButton from '../LoadingButton';
 import { toast } from 'react-hot-toast';
 
 export const OTPVerificationForm: React.FC = () => {

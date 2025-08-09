@@ -115,6 +115,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           dispatch({ type: 'AUTH_START' });
           const user = await authService.validateToken(token);
           dispatch({ type: 'AUTH_SUCCESS', payload: { user, token } });
+          
+          // Set up automatic token refresh
+          setupTokenRefresh();
         } catch (error) {
           localStorage.removeItem('authToken');
           dispatch({ type: 'AUTH_FAILURE' });
@@ -126,6 +129,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     initializeAuth();
   }, []);
+
+  // Set up automatic token refresh
+  const setupTokenRefresh = () => {
+    const refreshInterval = setInterval(async () => {
+      const token = localStorage.getItem('authToken');
+      if (token && !authService.isTokenExpired(token)) {
+        try {
+          await authService.ensureValidToken();
+        } catch (error) {
+          console.error('Auto token refresh failed:', error);
+          logout();
+        }
+      }
+    }, 5 * 60 * 1000); // Check every 5 minutes
+
+    // Clear interval on unmount
+    return () => clearInterval(refreshInterval);
+  };
 
   const login = async (emailOrPhone: string, password: string) => {
     try {

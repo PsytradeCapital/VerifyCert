@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import WalletConnect from './WalletConnect';
 import { useNavigation } from '../contexts/NavigationContext';
+import { useAuth } from '../contexts/AuthContext';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { LazyLogo } from './ui/LazyAssets';
 import { ariaLabels, generateAriaId } from '../utils/ariaUtils';
@@ -22,7 +23,9 @@ export default function Navigation({
 }: NavigationProps) {
   const location = useLocation();
   const navigation = useNavigation();
+  const { isAuthenticated, user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   
   // Focus management refs
   const desktopNavRef = useRef<HTMLDivElement>(null);
@@ -33,8 +36,9 @@ export default function Navigation({
 
   const navigationItems = [
     { name: 'Home', href: '/', public: true },
-    { name: 'Dashboard', href: '/dashboard', public: false },
+    { name: 'Dashboard', href: '/dashboard', public: false, requireAuth: true },
     { name: 'Verify Certificate', href: '/verify', public: true },
+    { name: 'Issue Certificate', href: '/issue', public: false, requireAuth: true, roles: ['issuer', 'admin'] },
   ];
 
   const isActivePath = (path: string) => {
@@ -174,8 +178,24 @@ export default function Navigation({
               onKeyDown={handleDesktopNavKeyDown}
             >
               {navigationItems.map((item) => {
-                // Show all public routes, and private routes only if wallet is connected
-                const shouldShow = item.public || isWalletConnected;
+                // Show public routes to everyone
+                // Show private routes only if authenticated (and wallet connected if needed)
+                // Check role requirements if specified
+                let shouldShow = item.public;
+                
+                if (!item.public && item.requireAuth) {
+                  shouldShow = isAuthenticated;
+                  
+                  // Check role requirements
+                  if (shouldShow && item.roles && user) {
+                    shouldShow = item.roles.includes(user.role);
+                  }
+                  
+                  // Some features might also need wallet connection
+                  if (shouldShow && item.name === 'Issue Certificate') {
+                    shouldShow = shouldShow && isWalletConnected;
+                  }
+                }
                 
                 if (!shouldShow) return null;
 
@@ -205,8 +225,68 @@ export default function Navigation({
             </div>
           </div>
 
-          {/* Theme toggle, wallet connection and mobile menu button */}
+          {/* Authentication, theme toggle, wallet connection and mobile menu button */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Authentication buttons - desktop */}
+            <div className="hidden md:flex items-center gap-2">
+              {isAuthenticated ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+                    aria-expanded={isUserMenuOpen}
+                    aria-haspopup="true"
+                  >
+                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="truncate max-w-24">{user?.name}</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-50">
+                      <div className="py-1">
+                        <Link
+                          to="/profile"
+                          className="block px-4 py-2 text-sm text-foreground hover:bg-muted"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          Profile Settings
+                        </Link>
+                        <button
+                          onClick={() => {
+                            logout();
+                            setIsUserMenuOpen(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-muted"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/login"
+                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="px-3 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-colors"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             {/* Theme toggle */}
             <ThemeToggle size="sm" className="hidden sm:flex" />
             
@@ -262,8 +342,24 @@ export default function Navigation({
           
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigationItems.map((item) => {
-              // Show all public routes, and private routes only if wallet is connected
-              const shouldShow = item.public || isWalletConnected;
+              // Show public routes to everyone
+              // Show private routes only if authenticated (and wallet connected if needed)
+              // Check role requirements if specified
+              let shouldShow = item.public;
+              
+              if (!item.public && item.requireAuth) {
+                shouldShow = isAuthenticated;
+                
+                // Check role requirements
+                if (shouldShow && item.roles && user) {
+                  shouldShow = item.roles.includes(user.role);
+                }
+                
+                // Some features might also need wallet connection
+                if (shouldShow && item.name === 'Issue Certificate') {
+                  shouldShow = shouldShow && isWalletConnected;
+                }
+              }
               
               if (!shouldShow) return null;
 
@@ -294,11 +390,61 @@ export default function Navigation({
             })}
           </div>
           
-          {/* Mobile theme toggle and wallet connection */}
+          {/* Mobile authentication, theme toggle and wallet connection */}
           <div className="pt-4 pb-3 border-t border-border bg-muted/50">
             <div className="px-4 space-y-3">
+              {/* Mobile authentication */}
+              {isAuthenticated ? (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3 py-2">
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-foreground">{user?.name}</div>
+                      <div className="text-xs text-muted-foreground">{user?.email || user?.phone}</div>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <Link
+                      to="/profile"
+                      className="block px-3 py-2 text-sm text-foreground hover:bg-muted rounded-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Profile Settings
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="block w-full text-left px-3 py-2 text-sm text-foreground hover:bg-muted rounded-lg"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Link
+                    to="/login"
+                    className="block w-full px-3 py-2 text-sm font-medium text-center bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="block w-full px-3 py-2 text-sm font-medium text-center border border-border text-foreground hover:bg-muted rounded-lg transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+              
               {/* Mobile theme toggle */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between pt-3 border-t border-border">
                 <span className="text-sm font-medium text-foreground">Theme</span>
                 <ThemeToggle size="sm" variant="switch" />
               </div>

@@ -56,14 +56,14 @@ app.get('/health', (req, res) => {
 });
 
 // Import routes
-const mintCertificateAmoy = require('../routes/mintCertificateAmoy');
-const verifyCertificateAmoy = require('../routes/verifyCertificateAmoy');
+const mintCertificate = require('../routes/mintCertificate');
+const verifyCertificate = require('../routes/verifyCertificate');
 const authRoutes = require('./routes/auth');
 
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/certificates', mintCertificateAmoy);
-app.use('/api/certificates', verifyCertificateAmoy);
+app.use('/api/mint-certificate', mintCertificate);
+app.use('/api/verify-certificate', verifyCertificate);
 
 // Network info endpoint
 app.get('/api/network', (req, res) => {

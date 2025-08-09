@@ -3,6 +3,14 @@
  * Handles all authentication-related API calls
  */
 
+import { string } from "prop-types";
+
+import { string } from "prop-types";
+
+import { string } from "prop-types";
+
+import { string } from "prop-types";
+
 interface User {
   id: number;
   name: string;
@@ -220,140 +228,53 @@ class AuthService {
       return null;
     }
   }
+
+  async refreshToken(): Promise<string> {
+    const response = await this.makeRequest<{ token: string }>('/refresh-token', {
+      method: 'POST',
+    });
+    return response.token;
+  }
+}
+
+  // Token refresh mechanism
+  async refreshToken(): Promise<string> {
+    const currentToken = localStorage.getItem('authToken');
+    if (!currentToken) {
+      throw new Error('No token to refresh');
+    }
+
+    try {
+      const response = await this.makeRequest<{ token: string }>('/refresh-token', {
+        method: 'POST',
+      });
+      
+      localStorage.setItem('authToken', response.token);
+      return response.token;
+    } catch (error) {
+      // If refresh fails, clear the token and redirect to login
+      localStorage.removeItem('authToken');
+      throw error;
+    }
+  }
+
+  // Auto-refresh token if it's about to expire
+  async ensureValidToken(): Promise<string> {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      throw new Error('No authentication token');
+    }
+
+    // Check if token expires in the next 5 minutes
+    const payload = this.getTokenPayload(token);
+    if (payload && payload.exp * 1000 - Date.now() < 5 * 60 * 1000) {
+      return await this.refreshToken();
+    }
+
+    return token;
+  }
 }
 
 // Create singleton instance
 export const authService = new AuthService();
-export default authService; User;
-  token: string;
-}
-
-interface RegisterData {
-  name: string;
-  email?: string;
-  phone?: string;
-  password: string;
-  region?: string;
-}
-
-class AuthService {
-  private getAuthHeaders() {
-    const token = localStorage.getItem('authToken');
-    return {
-      'Content-Type': 'application/json',
-      ...(token && { Authorization: `Bearer ${token}` }),
-    };
-  }
-
-  private async handleResponse(response: Response) {
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.error?.message || 'An error occurred');
-    }
-    
-    return data;
-  }
-
-  async register(userData: RegisterData): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
-    });
-
-    await this.handleResponse(response);
-  }
-
-  async verifyOTP(code: string): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code }),
-    });
-
-    const data = await this.handleResponse(response);
-    return data.data;
-  }
-
-  async login(emailOrPhone: string, password: string): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ emailOrPhone, password }),
-    });
-
-    const data = await this.handleResponse(response);
-    return data.data;
-  }
-
-  async validateToken(token: string): Promise<User> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const data = await this.handleResponse(response);
-    return data.data;
-  }
-
-  async forgotPassword(emailOrPhone: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ emailOrPhone }),
-    });
-
-    await this.handleResponse(response);
-  }
-
-  async resetPassword(code: string, newPassword: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/reset-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, newPassword }),
-    });
-
-    await this.handleResponse(response);
-  }
-
-  async resendOTP(): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/resend-otp`, {
-      method: 'POST',
-      headers: this.getAuthHeaders(),
-    });
-
-    await this.handleResponse(response);
-  }
-
-  async updateProfile(userData: Partial<User>): Promise<User> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/profile`, {
-      method: 'PUT',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify(userData),
-    });
-
-    const data = await this.handleResponse(response);
-    return data.data;
-  }
-
-  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/change-password`, {
-      method: 'POST',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify({ currentPassword, newPassword }),
-    });
-
-    await this.handleResponse(response);
-  }
-
-  logout(): void {
-    // Clear any client-side data
-    localStorage.removeItem('authToken');
-  }
-}
-
-export const authService = new AuthService();
+export default authService;

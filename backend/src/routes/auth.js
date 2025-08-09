@@ -572,4 +572,76 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+// POST /api/auth/refresh-token - Refresh JWT token
+router.post('/refresh-token',
+  authenticateToken,
+  authRateLimit(60 * 1000, 10), // 10 attempts per minute
+  logAuthEvent('TOKEN_REFRESH'),
+  async (req, res) => {
+    try {
+      const user = req.user;
+
+      // Generate new token
+      const newToken = AuthUtils.generateToken(user);
+
+      res.json({
+        success: true,
+        data: {
+          token: newToken,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            region: user.region,
+            role: user.role,
+            isVerified: user.is_verified
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Token refresh error:', error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: 'TOKEN_REFRESH_FAILED',
+          message: 'Failed to refresh token'
+        }
+      });
+    }
+  });
+
+// POST /api/auth/refresh-token - Refresh JWT token
+router.post('/refresh-token',
+  authenticateToken,
+  authRateLimit(60 * 1000, 10), // 10 attempts per minute
+  logAuthEvent('TOKEN_REFRESH'),
+  async (req, res) => {
+    try {
+      const user = req.user;
+
+      // Generate new token
+      const newToken = AuthUtils.generateToken(user);
+
+      res.json({
+        success: true,
+        message: 'Token refreshed successfully',
+        data: {
+          token: newToken
+        }
+      });
+
+    } catch (error) {
+      console.error('Token refresh error:', error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: 'TOKEN_REFRESH_FAILED',
+          message: 'Failed to refresh token. Please log in again.'
+        }
+      });
+    }
+  }
+);
+
 module.exports = router;

@@ -47,6 +47,9 @@ export default function WalletConnect({
     hasShownSuccessMessage: false,
   });
 
+  // Debounce success messages
+  const lastSuccessMessageTime = React.useRef<number>(0);
+
   // Check if MetaMask is installed
   const isMetaMaskInstalled = useCallback(() => {
     return typeof window !== 'undefined' && typeof (window as any).ethereum !== 'undefined';
@@ -160,10 +163,13 @@ export default function WalletConnect({
       }
 
       onConnect?.(accounts[0], provider);
-      // Only show success message if not already connected and haven't shown it before
-      if (!walletState.isConnected && !walletState.hasShownSuccessMessage) {
+      // Only show success message if not already connected and haven't shown it recently
+      const now = Date.now();
+      if (!walletState.isConnected && !walletState.hasShownSuccessMessage && 
+          (now - lastSuccessMessageTime.current) > 5000) { // 5 second cooldown
         toast.success('Wallet connected successfully!');
         setWalletState(prev => ({ ...prev, hasShownSuccessMessage: true }));
+        lastSuccessMessageTime.current = now;
       }
     } catch (error: any) {
       console.error('Failed to connect wallet:', error);
@@ -196,10 +202,14 @@ export default function WalletConnect({
     if (accounts.length === 0) {
       disconnectWallet();
     } else if (accounts[0] !== walletState.address) {
-      setWalletState(prev => ({ ...prev, address: accounts[0] }));
+      setWalletState(prev => ({ 
+        ...prev, 
+        address: accounts[0],
+        // Don't reset success message flag for account changes
+      }));
       if (walletState.provider) {
         onConnect?.(accounts[0], walletState.provider);
-        // Don't show success message for account changes, only for initial connection
+        // Never show success message for account changes
       }
     }
   }, [disconnectWallet, walletState.address, walletState.provider, onConnect]);

@@ -261,17 +261,18 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
                   <Button
                     type="submit"
                     disabled={rating === 0 || !feedback.trim() || isSubmitting}
-                    className="flex-1 flex items-center justify-center gap-2"
+                    className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                    style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
                   >
                     {isSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Sending...
+                        <span style={{ color: '#ffffff' }}>Sending...</span>
                       </>
                     ) : (
                       <>
-                        <Send size={16} />
-                        Send Feedback
+                        <Send size={16} style={{ color: '#ffffff', fill: 'none', stroke: '#ffffff' }} />
+                        <span style={{ color: '#ffffff' }}>Send Feedback</span>
                       </>
                     )}
                   </Button>

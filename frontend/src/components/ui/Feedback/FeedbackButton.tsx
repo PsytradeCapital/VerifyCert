@@ -32,13 +32,14 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         onClick={() => setIsOpen(true)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed ${positionClasses[position]} z-40 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ${className}`}
+        className={`fixed ${positionClasses[position]} z-40 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 feedback-button ${className}`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Open feedback form"
+        style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
       >
         <div className="flex items-center gap-2 px-4 py-3">
-          <MessageSquare size={20} style={{ color: '#ffffff' }} />
+          <MessageSquare size={20} style={{ color: '#ffffff', fill: 'none', stroke: '#ffffff' }} />
           <motion.span
             initial={{ width: 0, opacity: 0 }}
             animate={{ 

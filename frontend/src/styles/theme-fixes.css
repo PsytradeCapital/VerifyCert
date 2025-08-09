@@ -3,14 +3,22 @@
  * Aggressive fixes for text visibility issues
  */
 
+/* Set dark theme as default */
+:root {
+  color-scheme: dark;
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
 /* Force text colors in light theme */
-:root,
 [data-theme="light"] {
+  color-scheme: light;
+  background-color: #ffffff !important;
   color: #1f2937 !important;
 }
 
-[data-theme="light"] * {
-  color: inherit;
+[data-theme="light"] *:not(.text-white):not(.text-black):not([class*="bg-"]) {
+  color: #1f2937 !important;
 }
 
 [data-theme="light"] .text-white {
@@ -23,11 +31,13 @@
 
 /* Force text colors in dark theme */
 [data-theme="dark"] {
+  color-scheme: dark;
+  background-color: #0f172a !important;
   color: #f8fafc !important;
 }
 
-[data-theme="dark"] * {
-  color: inherit;
+[data-theme="dark"] *:not(.text-white):not(.text-black):not([class*="bg-"]) {
+  color: #f8fafc !important;
 }
 
 [data-theme="dark"] .text-white {
@@ -38,58 +48,108 @@
   color: #000000 !important;
 }
 
-/* Specific fixes for common elements */
-[data-theme="light"] p,
-[data-theme="light"] span,
-[data-theme="light"] div,
-[data-theme="light"] h1,
-[data-theme="light"] h2,
-[data-theme="light"] h3,
-[data-theme="light"] h4,
-[data-theme="light"] h5,
-[data-theme="light"] h6 {
-  color: #1f2937;
+/* Button text fixes - ensure buttons have proper colors */
+[data-theme="light"] button:not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]) {
+  color: #1f2937 !important;
 }
 
-[data-theme="dark"] p,
-[data-theme="dark"] span,
-[data-theme="dark"] div,
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4,
-[data-theme="dark"] h5,
-[data-theme="dark"] h6 {
-  color: #f8fafc;
+[data-theme="dark"] button:not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]) {
+  color: #f8fafc !important;
 }
 
-/* Button text fixes */
-[data-theme="light"] button {
-  color: inherit;
+/* Colored buttons should have white text */
+[data-theme="light"] button[class*="bg-blue"],
+[data-theme="light"] button[class*="bg-green"],
+[data-theme="light"] button[class*="bg-red"],
+[data-theme="dark"] button[class*="bg-blue"],
+[data-theme="dark"] button[class*="bg-green"],
+[data-theme="dark"] button[class*="bg-red"] {
+  color: #ffffff !important;
 }
 
-[data-theme="dark"] button {
-  color: inherit;
-}
-
-/* Input text fixes */
+/* Input and textarea fixes */
 [data-theme="light"] input,
-[data-theme="light"] textarea {
-  color: #1f2937;
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
 }
 
 [data-theme="dark"] input,
-[data-theme="dark"] textarea {
-  color: #f8fafc;
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
 }
 
-/* Card text fixes */
+/* Placeholder text */
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Card and modal fixes */
 [data-theme="light"] .card,
-[data-theme="light"] [class*="card"] {
-  color: #1f2937;
+[data-theme="light"] [class*="card"],
+[data-theme="light"] .modal,
+[data-theme="light"] [class*="modal"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
 }
 
 [data-theme="dark"] .card,
-[data-theme="dark"] [class*="card"] {
-  color: #f8fafc;
+[data-theme="dark"] [class*="card"],
+[data-theme="dark"] .modal,
+[data-theme="dark"] [class*="modal"] {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+/* Link fixes */
+[data-theme="light"] a {
+  color: #2563eb !important;
+}
+
+[data-theme="dark"] a {
+  color: #60a5fa !important;
+}
+
+/* Icon fixes */
+[data-theme="light"] svg {
+  color: inherit !important;
+}
+
+[data-theme="dark"] svg {
+  color: inherit !important;
+}
+
+/* Feedback button specific fixes */
+.feedback-button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.feedback-button svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* Send button in feedback form */
+[data-theme="light"] button[type="submit"],
+[data-theme="dark"] button[type="submit"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] button[type="submit"] svg,
+[data-theme="dark"] button[type="submit"] svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
 }

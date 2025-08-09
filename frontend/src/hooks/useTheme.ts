@@ -26,27 +26,27 @@ export interface ThemeContextType {
 export const useTheme = (): ThemeContextType => {
   // Get initial theme from localStorage or system preference
   const getInitialTheme = (): Theme => {
-    if (typeof window === 'undefined') return 'light';
+    if (typeof window === 'undefined') return 'dark';
     
     const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
     if (stored && (stored === 'light' || stored === 'dark')) {
       return stored;
     }
     
-    // Check system preference
+    // Check system preference, but default to dark if no preference
     try {
       if (window.matchMedia) {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
         if (mediaQuery && mediaQuery.matches) {
-          return 'dark';
+          return 'light';
         }
       }
     } catch (error) {
       // Fallback for environments where matchMedia is not available or throws
-      console.warn('matchMedia not available, defaulting to light theme');
+      console.warn('matchMedia not available, defaulting to dark theme');
     }
     
-    return 'light';
+    return 'dark'; // Default to dark theme
   };
 
   const [theme, setThemeState] = useState<Theme>(getInitialTheme);

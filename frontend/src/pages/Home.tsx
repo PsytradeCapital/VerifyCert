@@ -37,16 +37,16 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="bg-white">
+      <div className="bg-white dark:bg-gray-900">
         <div className="container-responsive py-12 sm:py-16 lg:py-20">
           <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white">
               <span className="block">Secure Digital</span>
-              <span className="block text-blue-600">Certificate Verification</span>
+              <span className="block text-blue-600 dark:text-blue-400">Certificate Verification</span>
             </h1>
-            <p className="mt-4 sm:mt-6 max-w-md sm:max-w-2xl lg:max-w-3xl mx-auto text-base sm:text-lg lg:text-xl text-gray-500 leading-relaxed">
+            <p className="mt-4 sm:mt-6 max-w-md sm:max-w-2xl lg:max-w-3xl mx-auto text-base sm:text-lg lg:text-xl text-gray-500 dark:text-gray-300 leading-relaxed">
               Issue and verify tamper-proof digital certificates using blockchain technology. 
               Built on Polygon for fast, secure, and cost-effective certificate management.
             </p>
@@ -63,7 +63,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                 ) : (
                   <button
                     onClick={() => toast('Please connect your wallet to get started')}
-                    className="btn-responsive-lg w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
+                    className="btn-responsive-lg w-full sm:w-auto bg-blue-600 dark:bg-blue-700 text-white hover:bg-blue-700 dark:hover:bg-blue-800 shadow-lg get-started-btn"
                   >
                     Get Started
                   </button>
@@ -72,7 +72,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
               <div className="w-full sm:w-auto">
                 <Link
                   to="/verify"
-                  className="btn-responsive-lg w-full sm:w-auto bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50 shadow-lg"
+                  className="btn-responsive-lg w-full sm:w-auto bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 shadow-lg"
                 >
                   Verify Certificate
                 </Link>
@@ -90,13 +90,13 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
       </div>
 
       {/* Features Section */}
-      <div className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+      <div className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-800">
         <div className="container-responsive">
           <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
               Why Choose VerifyCert?
             </h2>
-            <p className="mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Blockchain-powered certificate verification with unmatched security and transparency
             </p>
           </div>
@@ -109,8 +109,8 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">Tamper-Proof</h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Tamper-Proof</h3>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 Certificates stored immutably on the blockchain cannot be altered or forged
               </p>
             </div>
@@ -122,8 +122,8 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">Instant Verification</h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Instant V
+              <p className="text-sm sm:text-base text-gray-500 d
                 Verify certificate authenticity in seconds with QR code scanning
               </p>
             </div>

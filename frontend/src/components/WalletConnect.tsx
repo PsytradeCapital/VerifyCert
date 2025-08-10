@@ -337,7 +337,7 @@ export default function WalletConnect({
         <button
           onClick={connectWallet}
           disabled={walletState.isConnecting}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 connect-wallet-btn border-2 border-blue-600 dark:border-blue-700"
         >
           {walletState.isConnecting ? (
             <>
@@ -357,17 +357,17 @@ export default function WalletConnect({
           )}
         </button>
       ) : (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="flex-shrink-0">
                 <div className="h-3 w-3 bg-green-400 rounded-full"></div>
               </div>
               <div>
-                <p className="text-sm font-medium text-green-800">
+                <p className="text-sm font-medium text-green-800 dark:text-green-200">
                   {formatAddress(walletState.address!)}
                 </p>
-                <p className="text-xs text-green-600">
+                <p className="text-xs text-green-600 dark:text-green-300">
                   {walletState.networkName}
                 </p>
               </div>

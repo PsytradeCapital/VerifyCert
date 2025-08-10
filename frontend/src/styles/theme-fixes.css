@@ -374,6 +374,160 @@ body {
   border-left-color: #4b5563 !important;
 }
 
+/* Hero section and main content fixes */
+[data-theme="light"] .hero-section,
+[data-theme="light"] .main-content,
+[data-theme="light"] .landing-page {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .hero-section,
+[data-theme="dark"] .main-content,
+[data-theme="dark"] .landing-page {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Feature cards and content sections */
+[data-theme="light"] .feature-card,
+[data-theme="light"] .content-section,
+[data-theme="light"] .info-card {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .content-section,
+[data-theme="dark"] .info-card {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #374151 !important;
+}
+
+/* Call-to-action buttons and primary actions */
+[data-theme="light"] .cta-button,
+[data-theme="light"] .primary-button,
+[data-theme="light"] .get-started-btn {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+[data-theme="dark"] .cta-button,
+[data-theme="dark"] .primary-button,
+[data-theme="dark"] .get-started-btn {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 2px solid #3b82f6 !important;
+}
+
+/* Connect wallet button specific fixes */
+[data-theme="light"] .connect-wallet-btn,
+[data-theme="light"] [class*="connect-wallet"],
+[data-theme="light"] button[class*="wallet"] {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 2px solid #059669 !important;
+}
+
+[data-theme="dark"] .connect-wallet-btn,
+[data-theme="dark"] [class*="connect-wallet"],
+[data-theme="dark"] button[class*="wallet"] {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+  border: 2px solid #10b981 !important;
+}
+
+/* Logo and brand text */
+[data-theme="light"] .logo,
+[data-theme="light"] .brand-text,
+[data-theme="light"] .app-title {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .logo,
+[data-theme="dark"] .brand-text,
+[data-theme="dark"] .app-title {
+  color: #ffffff !important;
+}
+
+/* Main page content sections */
+[data-theme="light"] .page-content,
+[data-theme="light"] .main-section,
+[data-theme="light"] .content-wrapper {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .page-content,
+[data-theme="dark"] .main-section,
+[data-theme="dark"] .content-wrapper {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Feature list items and descriptions */
+[data-theme="light"] .feature-item,
+[data-theme="light"] .feature-description,
+[data-theme="light"] .benefit-text {
+  color: #374151 !important;
+}
+
+[data-theme="dark"] .feature-item,
+[data-theme="dark"] .feature-description,
+[data-theme="dark"] .benefit-text {
+  color: #d1d5db !important;
+}
+
+/* Ensure all text elements are visible */
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] div:not([class*="bg-"]),
+[data-theme="light"] section,
+[data-theme="light"] article {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div:not([class*="bg-"]),
+[data-theme="dark"] section,
+[data-theme="dark"] article {
+  color: #f8fafc !important;
+}
+
+/* Specific fixes for invisible elements */
+[data-theme="light"] .text-invisible,
+[data-theme="light"] .hidden-text {
+  color: #1f2937 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="dark"] .text-invisible,
+[data-theme="dark"] .hidden-text {
+  color: #f8fafc !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Frame and border visibility */
+[data-theme="light"] .frame,
+[data-theme="light"] .border-frame,
+[data-theme="light"] .card-frame {
+  border: 2px solid #e5e7eb !important;
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] .frame,
+[data-theme="dark"] .border-frame,
+[data-theme="dark"] .card-frame {
+  border: 2px solid #374151 !important;
+  background-color: #1e293b !important;
+}
+
 /* Ensure transitions work smoothly */
 * {
   transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;

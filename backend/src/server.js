@@ -12,7 +12,7 @@ const config = require('./config');
 
 // Import routes
 const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user-simple');
 const dashboardRoutes = require('./routes/dashboard');
 const mintCertificateRoutes = require('../routes/mintCertificate');
 const verifyCertificateRoutes = require('../routes/verifyCertificate');

@@ -19,11 +19,11 @@ try {
 }
 
 try {
-  const userRoutes = require('./src/routes/user');
-  console.log('✅ User routes imported successfully');
+  const userRoutes = require('./src/routes/user-simple');
+  console.log('✅ Simple user routes imported successfully');
   app.use('/api/user', userRoutes);
 } catch (error) {
-  console.error('❌ User routes failed:', error.message);
+  console.error('❌ Simple user routes failed:', error.message);
 }
 
 try {

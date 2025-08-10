@@ -212,6 +212,15 @@ function App() {
                 />
                 
                 <Route 
+                  path="/signup" 
+                  element={
+                    <ErrorBoundary onError={handleGlobalError}>
+                      <SignupPage />
+                    </ErrorBoundary>
+                  } 
+                />
+                
+                <Route 
                   path="/verify-otp" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>

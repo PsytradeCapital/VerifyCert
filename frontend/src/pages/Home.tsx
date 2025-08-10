@@ -56,7 +56,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                 {isWalletConnected ? (
                   <Link
                     to="/dashboard"
-                    className="btn-responsive-lg w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
+                    className="btn-responsive-lg w-full sm:w-auto bg-blue-600 dark:bg-blue-700 text-white hover:bg-blue-700 dark:hover:bg-blue-800 shadow-lg get-started-btn"
                   >
                     Go to Dashboard
                   </Link>
@@ -83,7 +83,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
       </div>
 
       {/* PWA Install Test - Development Only */}
-      <div className="py-8 bg-yellow-50 border-y border-yellow-200">
+      <div className="py-8 bg-yellow-50 dark:bg-yellow-900/20 border-y border-yellow-200 dark:border-yellow-700">
         <div className="container-responsive">
           <PWAInstallTest />
         </div>
@@ -103,7 +103,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
 
           <div className="grid-responsive-3">
             {/* Feature 1 */}
-            <div className="card-responsive text-center">
+            <div className="card-responsive text-center feature-card">
               <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-blue-500 text-white mx-auto mb-4">
                 <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -116,66 +116,66 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
             </div>
 
             {/* Feature 2 */}
-            <div className="card-responsive text-center">
+            <div className="card-responsive text-center feature-card">
               <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-green-500 text-white mx-auto mb-4">
                 <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Instant V
-              <p className="text-sm sm:text-base text-gray-500 d
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Instant Verification</h3>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 Verify certificate authenticity in seconds with QR code scanning
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="card-responsive text-center">
+            <div className="card-responsive text-center feature-card">
               <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-purple-500 text-white mx-auto mb-4">
                 <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">Global Access</h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Global Access</h3>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 Access and verify certificates from anywhere in the world, 24/7
               </p>
             </div>
 
             {/* Feature 4 */}
-            <div className="card-responsive text-center">
+            <div className="card-responsive text-center feature-card">
               <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-yellow-500 text-white mx-auto mb-4">
                 <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">Cost Effective</h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Cost Effective</h3>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 Low-cost certificate issuance and verification on Polygon network
               </p>
             </div>
 
             {/* Feature 5 */}
-            <div className="card-responsive text-center">
+            <div className="card-responsive text-center feature-card">
               <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-red-500 text-white mx-auto mb-4">
                 <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">Non-Transferable</h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Non-Transferable</h3>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 Certificates are bound to recipients and cannot be transferred or sold
               </p>
             </div>
 
             {/* Feature 6 */}
-            <div className="card-responsive text-center">
+            <div className="card-responsive text-center feature-card">
               <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-indigo-500 text-white mx-auto mb-4">
                 <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">Easy Integration</h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-2">Easy Integration</h3>
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 Simple API and web interface for seamless integration with existing systems
               </p>
             </div>
@@ -184,13 +184,13 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
       </div>
 
       {/* Sample Certificate Section */}
-      <div className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-900">
         <div className="container-responsive">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
               Sample Certificate
             </h2>
-            <p className="mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               See how your certificates will look with our professional design
             </p>
           </div>
@@ -206,13 +206,13 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-blue-600">
+      <div className="bg-blue-600 dark:bg-blue-800">
         <div className="container-responsive py-12 sm:py-16 lg:py-20">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-8">
             <div className="text-center lg:text-left">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
                 <span className="block">Ready to get started?</span>
-                <span className="block text-blue-200 mt-1">Connect your wallet today.</span>
+                <span className="block text-blue-200 dark:text-blue-300 mt-1">Connect your wallet today.</span>
               </h2>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:flex-shrink-0">
@@ -227,7 +227,7 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
                 ) : (
                   <button
                     onClick={() => toast('Please use the wallet connect button in the navigation')}
-                    className="btn-responsive bg-white text-blue-600 hover:bg-blue-50 shadow-lg w-full sm:w-auto"
+                    className="btn-responsive bg-white text-blue-600 hover:bg-blue-50 shadow-lg w-full sm:w-auto connect-wallet-btn"
                   >
                     Connect Wallet
                   </button>

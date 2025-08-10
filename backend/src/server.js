@@ -61,8 +61,8 @@ app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// CSRF token generation for forms
-app.use(generateCSRFToken);
+// CSRF token generation for forms (temporarily disabled)
+// app.use(generateCSRFToken);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

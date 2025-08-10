@@ -337,7 +337,13 @@ export default function WalletConnect({
         <button
           onClick={connectWallet}
           disabled={walletState.isConnecting}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 connect-wallet-btn border-2 border-blue-600 dark:border-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 connect-wallet-btn border-2 border-blue-600 dark:border-blue-700 shadow-lg hover:shadow-xl"
+          style={{
+            backgroundColor: '#2563eb !important',
+            color: '#ffffff !important',
+            border: '2px solid #2563eb !important',
+            minHeight: '48px'
+          }}
         >
           {walletState.isConnecting ? (
             <>
@@ -345,14 +351,19 @@ export default function WalletConnect({
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              <span>Connecting...</span>
+              <span style={{ color: '#ffffff !important' }}>Connecting...</span>
             </>
           ) : (
             <>
-              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <svg 
+                className="h-5 w-5" 
+                fill="currentColor" 
+                viewBox="0 0 20 20"
+                style={{ color: '#ffffff !important' }}
+              >
                 <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clipRule="evenodd" />
               </svg>
-              <span>Connect Wallet</span>
+              <span style={{ color: '#ffffff !important' }}>Connect Wallet</span>
             </>
           )}
         </button>

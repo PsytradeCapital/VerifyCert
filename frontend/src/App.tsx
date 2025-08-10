@@ -29,7 +29,7 @@ import BlockchainErrorBoundary from './components/BlockchainErrorBoundary';
 import { PageTransition } from './components/ui';
 import { OfflineIndicator, ServiceWorkerUpdate, PWAInstallPrompt, IOSInstallInstructions } from './components/ui/OfflineIndicator';
 import PushNotificationSettings from './components/ui/PushNotificationSettings';
-import { FeedbackIntegration } from './components/ui/Feedback';
+
 
 // Lazy Components
 import {
@@ -613,28 +613,11 @@ function App() {
             </div>
           )}
 
-          {/* Feedback Integration */}
-          <FeedbackIntegration
-            showFloatingButton={true}
-            showAutoTrigger={true}
-            triggerAfterTime={30000}
-            triggerAfterScroll={80}
-            buttonPosition="bottom-right"
-            onFeedbackSubmitted={(feedback) => {
-              console.log('Feedback submitted:', feedback);
-              // Track feedback submission in analytics
-              if (window.gtag) {
-                window.gtag('event', 'feedback_submitted', {
-                  category: feedback.category,
-                  rating: feedback.rating,
-                  page: feedback.page
-                });
-              }
-            }}
-          />
-          
           {/* Feedback Button */}
-          <FeedbackButton />
+          <FeedbackButton 
+            position="bottom-right"
+            className="feedback-single-instance"
+          />
             </div>
           </NavigationProvider>
         </Router>

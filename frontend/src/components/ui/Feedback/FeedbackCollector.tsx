@@ -163,7 +163,7 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", duration: 0.3 }}
-          className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden"
+          className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-sm w-full max-h-[80vh] overflow-hidden border-2 border-gray-200 dark:border-gray-700"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -194,8 +194,8 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
               <textarea
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
-                placeholder="What went well? What could be improved?"
-                rows={4}
+                placeholder="Brief feedback..."
+                rows={2}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
@@ -220,17 +220,31 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
             <Button
               onClick={handleSubmit}
               disabled={!rating || isSubmitting}
-              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed relative z-10"
+              style={{ 
+                backgroundColor: '#2563eb !important',
+                color: '#ffffff !important',
+                border: '2px solid #2563eb'
+              }}
             >
               {isSubmitting ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Sending...</span>
+                  <span style={{ color: '#ffffff !important' }}>Sending...</span>
                 </>
               ) : (
                 <>
-                  <Send size={16} />
-                  <span>Send Feedback</span>
+                  <Send 
+                    size={18} 
+                    style={{ 
+                      color: '#ffffff !important',
+                      fill: 'none',
+                      stroke: '#ffffff',
+                      strokeWidth: '2',
+                      zIndex: 20
+                    }} 
+                  />
+                  <span style={{ color: '#ffffff !important' }}>Send</span>
                 </>
               )}
             </Button>

@@ -255,11 +255,18 @@ body {
 .feedback-button {
   background-color: #2563eb !important;
   color: #ffffff !important;
+  z-index: 9999 !important;
+  border: 2px solid #2563eb !important;
 }
 
 .feedback-button svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
+  fill: none !important;
+}
+
+.feedback-button span {
+  color: #ffffff !important;
 }
 
 /* Modal and overlay fixes */
@@ -427,17 +434,26 @@ body {
 [data-theme="light"] .connect-wallet-btn,
 [data-theme="light"] [class*="connect-wallet"],
 [data-theme="light"] button[class*="wallet"] {
-  background-color: #059669 !important;
+  background-color: #2563eb !important;
   color: #ffffff !important;
-  border: 2px solid #059669 !important;
+  border: 2px solid #2563eb !important;
 }
 
 [data-theme="dark"] .connect-wallet-btn,
 [data-theme="dark"] [class*="connect-wallet"],
 [data-theme="dark"] button[class*="wallet"] {
-  background-color: #10b981 !important;
+  background-color: #2563eb !important;
   color: #ffffff !important;
-  border: 2px solid #10b981 !important;
+  border: 2px solid #2563eb !important;
+}
+
+.connect-wallet-btn svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+.connect-wallet-btn span {
+  color: #ffffff !important;
 }
 
 /* Logo and brand text */
@@ -531,4 +547,174 @@ body {
 /* Ensure transitions work smoothly */
 * {
   transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+}/*
+ Frame consistency and layering fixes */
+[data-theme="light"] .modal,
+[data-theme="light"] .dialog,
+[data-theme="light"] .popup,
+[data-theme="light"] .overlay {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="dark"] .modal,
+[data-theme="dark"] .dialog,
+[data-theme="dark"] .popup,
+[data-theme="dark"] .overlay {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 2px solid #374151 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Consistent card frames */
+[data-theme="light"] .card,
+[data-theme="light"] .panel,
+[data-theme="light"] .container {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .panel,
+[data-theme="dark"] .container {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #374151 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Z-index layering system */
+.feedback-button {
+  z-index: 9999 !important;
+}
+
+.modal-overlay {
+  z-index: 9998 !important;
+}
+
+.modal-content {
+  z-index: 9999 !important;
+}
+
+.dropdown {
+  z-index: 1000 !important;
+}
+
+.tooltip {
+  z-index: 1001 !important;
+}
+
+.navigation {
+  z-index: 100 !important;
+}
+
+/* Button consistency */
+[data-theme="light"] button:not(.feedback-button):not(.connect-wallet-btn) {
+  color: #1f2937 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+[data-theme="dark"] button:not(.feedback-button):not(.connect-wallet-btn) {
+  color: #f8fafc !important;
+  border: 1px solid #374151 !important;
+}
+
+/* Primary buttons */
+[data-theme="light"] .btn-primary,
+[data-theme="light"] button[class*="bg-blue"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] button[class*="bg-blue"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+/* Success buttons */
+[data-theme="light"] .btn-success,
+[data-theme="light"] button[class*="bg-green"] {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 2px solid #059669 !important;
+}
+
+[data-theme="dark"] .btn-success,
+[data-theme="dark"] button[class*="bg-green"] {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 2px solid #059669 !important;
+}
+
+/* Danger buttons */
+[data-theme="light"] .btn-danger,
+[data-theme="light"] button[class*="bg-red"] {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  border: 2px solid #dc2626 !important;
+}
+
+[data-theme="dark"] .btn-danger,
+[data-theme="dark"] button[class*="bg-red"] {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  border: 2px solid #dc2626 !important;
+}
+
+/* Ensure all button text is visible */
+button span {
+  color: inherit !important;
+}
+
+button svg {
+  color: inherit !important;
+}
+
+/* Fix for invisible elements */
+[data-theme="light"] * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="dark"] * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Override any hidden classes that might be causing issues */
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.opacity-0 {
+  opacity: 0 !important;
+}
+
+/* Ensure proper contrast for all text */
+[data-theme="light"] {
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --border-primary: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --border-primary: #374151;
 }

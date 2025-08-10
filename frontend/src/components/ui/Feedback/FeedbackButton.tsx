@@ -20,10 +20,10 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const positionClasses = {
-    'bottom-right': 'bottom-32 right-8',  // Raised higher to avoid overlap
-    'bottom-left': 'bottom-32 left-8',    
-    'top-right': 'top-8 right-8',
-    'top-left': 'top-8 left-8'
+    'bottom-right': 'bottom-6 right-6',  // Smaller, corner position
+    'bottom-left': 'bottom-6 left-6',    
+    'top-right': 'top-6 right-6',
+    'top-left': 'top-6 left-6'
   };
 
   return (
@@ -32,21 +32,37 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         onClick={() => setIsOpen(true)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed ${positionClasses[position]} z-50 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 feedback-button border-2 border-white/20 backdrop-blur-sm ${className}`}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        className={`fixed ${positionClasses[position]} z-[9999] bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 feedback-button border-2 border-blue-500 dark:border-blue-600 ${className}`}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         aria-label="Open feedback form"
-        style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
+        style={{ 
+          backgroundColor: '#2563eb !important', 
+          color: '#ffffff !important',
+          width: '48px',
+          height: '48px',
+          minWidth: '48px',
+          minHeight: '48px'
+        }}
       >
-        <div className="flex items-center gap-2 px-3 py-2">
-          <MessageSquare size={16} style={{ color: '#ffffff', fill: 'none', stroke: '#ffffff' }} />
+        <div className="flex items-center justify-center w-full h-full">
+          <MessageSquare 
+            size={20} 
+            style={{ 
+              color: '#ffffff !important', 
+              fill: 'none', 
+              stroke: '#ffffff',
+              strokeWidth: '2'
+            }} 
+          />
           <motion.span
             initial={{ width: 0, opacity: 0 }}
             animate={{ 
               width: isHovered ? 'auto' : 0, 
               opacity: isHovered ? 1 : 0 
             }}
-            className="overflow-hidden whitespace-nowrap text-xs font-medium"
+            className="overflow-hidden whitespace-nowrap text-xs font-medium ml-2"
+            style={{ color: '#ffffff !important' }}
           >
             Feedback
           </motion.span>

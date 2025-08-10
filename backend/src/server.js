@@ -18,7 +18,7 @@ const mintCertificateRoutes = require('../routes/mintCertificate');
 const verifyCertificateRoutes = require('../routes/verifyCertificate');
 
 // Import middleware
-const { generateCSRFToken } = require('./middleware/csrf');
+// const { generateCSRFToken } = require('./middleware/csrf');
 
 const app = express();
 

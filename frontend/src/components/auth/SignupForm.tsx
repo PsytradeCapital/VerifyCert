@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { AuthLayout } from './AuthLayout';
 import LoadingButton from '../LoadingButton';
 import { toast } from 'react-hot-toast';
+import { OTPVerificationForm } from './OTPVerificationForm';
 
 interface SignupFormData {
   name: string;
@@ -266,5 +267,3 @@ export const SignupForm: React.FC = () => {
   );
 };
 
-// Import OTPVerificationForm component (will create next)
-import { OTPVerificationForm } from './OTPVerificationForm';

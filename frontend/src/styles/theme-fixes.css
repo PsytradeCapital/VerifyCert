@@ -1,127 +1,75 @@
 /**
- * Theme Fixes
- * Aggressive fixes for text visibility issues
+ * Comprehensive Theme Fixes
+ * Ensures all text is visible in both light and dark modes
  */
 
-/* Set dark theme as default */
+/* Root theme setup */
 :root {
   color-scheme: dark;
-  background-color: #0f172a;
-  color: #f8fafc;
 }
 
-/* Force text colors in light theme */
 [data-theme="light"] {
   color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Base body styles */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body {
   background-color: #ffffff !important;
   color: #1f2937 !important;
 }
 
-[data-theme="light"] *:not(.text-white):not(.text-black):not([class*="bg-"]):not([class*="text-"]) {
-  color: #1f2937 !important;
-}
-
-/* Force specific text elements in light theme */
-[data-theme="light"] p,
-[data-theme="light"] span,
-[data-theme="light"] div,
-[data-theme="light"] h1,
-[data-theme="light"] h2,
-[data-theme="light"] h3,
-[data-theme="light"] h4,
-[data-theme="light"] h5,
-[data-theme="light"] h6,
-[data-theme="light"] label,
-[data-theme="light"] li,
-[data-theme="light"] td,
-[data-theme="light"] th {
-  color: #1f2937 !important;
-}
-
-/* Force bold text to be visible in light theme */
-[data-theme="light"] strong,
-[data-theme="light"] b,
-[data-theme="light"] .font-bold,
-[data-theme="light"] .font-semibold,
-[data-theme="light"] .font-medium {
-  color: #000000 !important;
-  font-weight: 600 !important;
-}
-
-[data-theme="light"] .text-white {
-  color: #ffffff !important;
-}
-
-[data-theme="light"] .text-black {
-  color: #000000 !important;
-}
-
-/* Force text colors in dark theme */
-[data-theme="dark"] {
-  color-scheme: dark;
+[data-theme="dark"] body {
   background-color: #0f172a !important;
   color: #f8fafc !important;
 }
 
-[data-theme="dark"] *:not(.text-white):not(.text-black):not([class*="bg-"]):not([class*="text-"]) {
-  color: #f8fafc !important;
-}
-
-/* Force specific text elements in dark theme */
-[data-theme="dark"] p,
-[data-theme="dark"] span,
-[data-theme="dark"] div,
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4,
-[data-theme="dark"] h5,
-[data-theme="dark"] h6,
-[data-theme="dark"] label,
-[data-theme="dark"] li,
-[data-theme="dark"] td,
-[data-theme="dark"] th {
-  color: #f8fafc !important;
-}
-
-/* Force bold text to be visible in dark theme */
-[data-theme="dark"] strong,
-[data-theme="dark"] b,
-[data-theme="dark"] .font-bold,
-[data-theme="dark"] .font-semibold,
-[data-theme="dark"] .font-medium {
-  color: #ffffff !important;
-  font-weight: 600 !important;
-}
-
-[data-theme="dark"] .text-white {
-  color: #ffffff !important;
-}
-
-[data-theme="dark"] .text-black {
-  color: #000000 !important;
-}
-
-/* Button text fixes - ensure buttons have proper colors */
-[data-theme="light"] button:not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]) {
+/* Universal text color fixes */
+[data-theme="light"] * {
   color: #1f2937 !important;
 }
 
-[data-theme="dark"] button:not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]) {
+[data-theme="dark"] * {
   color: #f8fafc !important;
 }
 
-/* Colored buttons should have white text */
-[data-theme="light"] button[class*="bg-blue"],
-[data-theme="light"] button[class*="bg-green"],
-[data-theme="light"] button[class*="bg-red"],
-[data-theme="dark"] button[class*="bg-blue"],
-[data-theme="dark"] button[class*="bg-green"],
-[data-theme="dark"] button[class*="bg-red"] {
+/* Override for elements that should keep their specific colors */
+[data-theme="light"] .text-white,
+[data-theme="light"] [class*="text-white"] {
   color: #ffffff !important;
 }
 
-/* Input and textarea fixes */
+[data-theme="dark"] .text-black,
+[data-theme="dark"] [class*="text-black"] {
+  color: #000000 !important;
+}
+
+/* Button text fixes */
+[data-theme="light"] button,
+[data-theme="dark"] button {
+  color: inherit !important;
+}
+
+/* Colored buttons should have contrasting text */
+[data-theme="light"] button[class*="bg-blue"],
+[data-theme="light"] button[class*="bg-green"],
+[data-theme="light"] button[class*="bg-red"],
+[data-theme="light"] button[class*="bg-yellow"],
+[data-theme="dark"] button[class*="bg-blue"],
+[data-theme="dark"] button[class*="bg-green"],
+[data-theme="dark"] button[class*="bg-red"],
+[data-theme="dark"] button[class*="bg-yellow"] {
+  color: #ffffff !important;
+}
+
+/* Input and form element fixes */
 [data-theme="light"] input,
 [data-theme="light"] textarea,
 [data-theme="light"] select {
@@ -149,21 +97,32 @@
   color: #94a3b8 !important;
 }
 
-/* Card and modal fixes */
-[data-theme="light"] .card,
-[data-theme="light"] [class*="card"],
-[data-theme="light"] .modal,
-[data-theme="light"] [class*="modal"] {
-  background-color: #ffffff !important;
-  color: #1f2937 !important;
+/* Label fixes */
+[data-theme="light"] label {
+  color: #374151 !important;
 }
 
-[data-theme="dark"] .card,
-[data-theme="dark"] [class*="card"],
-[data-theme="dark"] .modal,
-[data-theme="dark"] [class*="modal"] {
-  background-color: #1e293b !important;
-  color: #f8fafc !important;
+[data-theme="dark"] label {
+  color: #d1d5db !important;
+}
+
+/* Heading fixes */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: #111827 !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #ffffff !important;
 }
 
 /* Link fixes */
@@ -173,6 +132,114 @@
 
 [data-theme="dark"] a {
   color: #60a5fa !important;
+}
+
+/* Card and container fixes */
+[data-theme="light"] .bg-white,
+[data-theme="light"] [class*="bg-white"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] [class*="bg-white"] {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .bg-gray-50,
+[data-theme="light"] .bg-gray-100 {
+  background-color: #f9fafb !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .bg-gray-50,
+[data-theme="dark"] .bg-gray-100 {
+  background-color: #374151 !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .bg-gray-800,
+[data-theme="light"] .bg-gray-900 {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .bg-gray-800,
+[data-theme="dark"] .bg-gray-900 {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+/* Error text fixes */
+[data-theme="light"] .text-red-600,
+[data-theme="light"] .text-red-500 {
+  color: #dc2626 !important;
+}
+
+[data-theme="dark"] .text-red-600,
+[data-theme="dark"] .text-red-500 {
+  color: #f87171 !important;
+}
+
+/* Success text fixes */
+[data-theme="light"] .text-green-600,
+[data-theme="light"] .text-green-500 {
+  color: #059669 !important;
+}
+
+[data-theme="dark"] .text-green-600,
+[data-theme="dark"] .text-green-500 {
+  color: #34d399 !important;
+}
+
+/* Warning text fixes */
+[data-theme="light"] .text-yellow-600,
+[data-theme="light"] .text-yellow-500 {
+  color: #d97706 !important;
+}
+
+[data-theme="dark"] .text-yellow-600,
+[data-theme="dark"] .text-yellow-500 {
+  color: #fbbf24 !important;
+}
+
+/* Gray text variations */
+[data-theme="light"] .text-gray-300,
+[data-theme="light"] .text-gray-400,
+[data-theme="light"] .text-gray-500,
+[data-theme="light"] .text-gray-600,
+[data-theme="light"] .text-gray-700 {
+  color: #6b7280 !important;
+}
+
+[data-theme="dark"] .text-gray-300,
+[data-theme="dark"] .text-gray-400,
+[data-theme="dark"] .text-gray-500,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700 {
+  color: #9ca3af !important;
+}
+
+/* Border fixes */
+[data-theme="light"] .border-gray-300,
+[data-theme="light"] .border-gray-200 {
+  border-color: #d1d5db !important;
+}
+
+[data-theme="dark"] .border-gray-300,
+[data-theme="dark"] .border-gray-200 {
+  border-color: #374151 !important;
+}
+
+[data-theme="light"] .border-gray-600,
+[data-theme="light"] .border-gray-700 {
+  border-color: #4b5563 !important;
+}
+
+[data-theme="dark"] .border-gray-600,
+[data-theme="dark"] .border-gray-700 {
+  border-color: #4b5563 !important;
 }
 
 /* Icon fixes */
@@ -192,86 +259,122 @@
 
 .feedback-button svg {
   color: #ffffff !important;
-  fill: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
-/* Send button in feedback form */
-[data-theme="light"] button[type="submit"],
-[data-theme="dark"] button[type="submit"] {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-}
-
-[data-theme="light"] button[type="submit"] svg,
-[data-theme="dark"] button[type="submit"] svg {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-}
-
-/* Navigation and menu text fixes */
-[data-theme="light"] nav,
-[data-theme="light"] .nav,
-[data-theme="light"] [class*="nav"] {
+/* Modal and overlay fixes */
+[data-theme="light"] .modal,
+[data-theme="light"] [class*="modal"] {
+  background-color: #ffffff !important;
   color: #1f2937 !important;
 }
 
-[data-theme="dark"] nav,
-[data-theme="dark"] .nav,
-[data-theme="dark"] [class*="nav"] {
+[data-theme="dark"] .modal,
+[data-theme="dark"] [class*="modal"] {
+  background-color: #1e293b !important;
   color: #f8fafc !important;
 }
 
-/* Table text fixes */
+/* Table fixes */
 [data-theme="light"] table,
-[data-theme="light"] .table {
+[data-theme="light"] th,
+[data-theme="light"] td {
   color: #1f2937 !important;
 }
 
 [data-theme="dark"] table,
-[data-theme="dark"] .table {
+[data-theme="dark"] th,
+[data-theme="dark"] td {
   color: #f8fafc !important;
 }
 
-/* Form label fixes */
-[data-theme="light"] .form-label,
-[data-theme="light"] .label {
+/* Navigation fixes */
+[data-theme="light"] nav,
+[data-theme="light"] .nav {
   color: #1f2937 !important;
 }
 
-[data-theme="dark"] .form-label,
-[data-theme="dark"] .label {
+[data-theme="dark"] nav,
+[data-theme="dark"] .nav {
   color: #f8fafc !important;
 }
 
-/* Text utility class overrides */
-[data-theme="light"] .text-gray-700,
-[data-theme="light"] .text-gray-600,
-[data-theme="light"] .text-gray-500 {
-  color: #1f2937 !important;
-}
-
-[data-theme="dark"] .text-gray-700,
-[data-theme="dark"] .text-gray-600,
-[data-theme="dark"] .text-gray-500 {
-  color: #f8fafc !important;
-}
-
-/* Ensure all text is visible by default */
-* {
-  color: inherit !important;
-}
-
-/* Force visibility for common problematic elements */
-[data-theme="light"] .text-sm,
+/* Ensure all text sizes are visible */
 [data-theme="light"] .text-xs,
+[data-theme="light"] .text-sm,
+[data-theme="light"] .text-base,
 [data-theme="light"] .text-lg,
-[data-theme="light"] .text-xl {
+[data-theme="light"] .text-xl,
+[data-theme="light"] .text-2xl,
+[data-theme="light"] .text-3xl {
   color: #1f2937 !important;
 }
 
-[data-theme="dark"] .text-sm,
 [data-theme="dark"] .text-xs,
+[data-theme="dark"] .text-sm,
+[data-theme="dark"] .text-base,
 [data-theme="dark"] .text-lg,
-[data-theme="dark"] .text-xl {
+[data-theme="dark"] .text-xl,
+[data-theme="dark"] .text-2xl,
+[data-theme="dark"] .text-3xl {
   color: #f8fafc !important;
+}
+
+/* Font weight variations */
+[data-theme="light"] .font-light,
+[data-theme="light"] .font-normal,
+[data-theme="light"] .font-medium,
+[data-theme="light"] .font-semibold,
+[data-theme="light"] .font-bold {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .font-light,
+[data-theme="dark"] .font-normal,
+[data-theme="dark"] .font-medium,
+[data-theme="dark"] .font-semibold,
+[data-theme="dark"] .font-bold {
+  color: #f8fafc !important;
+}
+
+/* List fixes */
+[data-theme="light"] ul,
+[data-theme="light"] ol,
+[data-theme="light"] li {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] ul,
+[data-theme="dark"] ol,
+[data-theme="dark"] li {
+  color: #f8fafc !important;
+}
+
+/* Code and pre fixes */
+[data-theme="light"] code,
+[data-theme="light"] pre {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] code,
+[data-theme="dark"] pre {
+  background-color: #374151 !important;
+  color: #f8fafc !important;
+}
+
+/* Blockquote fixes */
+[data-theme="light"] blockquote {
+  color: #6b7280 !important;
+  border-left-color: #d1d5db !important;
+}
+
+[data-theme="dark"] blockquote {
+  color: #9ca3af !important;
+  border-left-color: #4b5563 !important;
+}
+
+/* Ensure transitions work smoothly */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }

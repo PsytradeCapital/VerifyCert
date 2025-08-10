@@ -19,7 +19,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 
 // Components
-import Navigation from './components/Navigation';
+import { Navigation } from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ProtectedRoute as AuthProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';

@@ -1,22 +1,21 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthLayout } from '../../components/auth/AuthLayout';
 import { ResetPasswordForm } from '../../components/auth/ResetPasswordForm';
 
 export const ResetPasswordPage: React.FC = () => {
-  const navigate = useNavigate();
-
   const handleSuccess = () => {
-    navigate('/login');
+    // Redirect to login page after successful password reset
+    window.location.href = '/login';
   };
 
   const handleBack = () => {
-    navigate('/login');
+    // Go back to login page
+    window.location.href = '/login';
   };
 
   return (
-    <AuthLayout>
-      <ResetPasswordForm onSuccess={handleSuccess} onBack={handleBack} />
-    </AuthLayout>
+    <ResetPasswordForm 
+      onSuccess={handleSuccess}
+      onBack={handleBack}
+    />
   );
 };

@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "noEmit": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false
+  },
+  "exclude": [
+    "src/tests/**/*",
+    "src/**/*.test.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts",
+    "src/utils/__tests__/**/*",
+    "src/components/__tests__/**/*",
+    "src/components/**/__tests__/**/*",
+    "src/pages/__tests__/**/*",
+    "src/hooks/__tests__/**/*",
+    "src/services/__tests__/**/*",
+    "**/*.test.*",
+    "**/*.stories.*",
+    "**/tests/**/*",
+    "**/__tests__/**/*"
+  ]
+}

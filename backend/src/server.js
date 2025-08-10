@@ -1,19 +1,52 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const path = require('path');
+
+// Load environment variables
+require('dotenv').config();
+
+// Import configuration
+const config = require('./config');
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const dashboardRoutes = require('./routes/dashboard');
+const mintCertificateRoutes = require('../routes/mintCertificate');
+const verifyCertificateRoutes = require('../routes/verifyCertificate');
+
+// Import middleware
+const { generateCSRFToken } = require('./middleware/csrf');
 
 const app = express();
-const PORT = process.env.PORT || 4000;
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://rpc-amoy.polygon.technology/"],
+    },
+  },
+}));
+
+// CORS configuration
+app.use(cors({
+  origin: config.frontendUrl,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
+}));
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: config.rateLimit.windowMs,
+  max: config.rateLimit.max,
   message: {
     success: false,
     error: {
@@ -24,144 +57,120 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
-
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-  next();
-});
+// CSRF token generation for forms
+app.use(generateCSRFToken);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ 
+  res.json({
     success: true,
-    message: 'VerifyCert Backend API - Amoy Network',
-    network: 'amoy',
-    chainId: 80002,
-    contractAddress: process.env.CONTRACT_ADDRESS || '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50',
+    message: 'Server is healthy',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    network: 'Polygon Amoy Testnet',
+    version: '1.0.0'
   });
 });
-
-// Import routes
-const authRoutes = require('./routes/auth');
-const dashboardRoutes = require('./routes/dashboard');
-const userRoutes = require('./routes/user');
-const userRoutes = require('./routes/user');
-
-// Try to import certificate routes, but don't fail if contracts aren't compiled
-let mintCertificate, verifyCertificate;
-try {
-  mintCertificate = require('../routes/mintCertificate');
-  verifyCertificate = require('../routes/verifyCertificate');
-} catch (error) {
-  console.warn('Certificate routes not available - contracts may not be compiled:', error.message);
-}
 
 // API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/mint-certificate', mintCertificateRoutes);
+app.use('/api/verify-certificate', verifyCertificateRoutes);
 
-// Only add certificate routes if they loaded successfully
-if (mintCertificate) {
-  app.use('/api/mint-certificate', mintCertificate);
-}
-if (verifyCertificate) {
-  app.use('/api/verify-certificate', verifyCertificate);
-}
-
-// Network info endpoint
-app.get('/api/network', (req, res) => {
-  res.json({
-    success: true,
-    data: {
-      network: 'amoy',
-      chainId: 80002,
-      rpcUrl: process.env.RPC_URL || 'https://rpc-amoy.polygon.technology/',
-      blockExplorer: 'https://amoy.polygonscan.com',
-      faucet: 'https://faucet.polygon.technology/',
-      contractAddress: process.env.CONTRACT_ADDRESS || '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50'
-    }
-  });
-});
-
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    error: {
-      code: 'NOT_FOUND',
-      message: 'Endpoint not found'
-    }
-  });
-});
-
-// Global error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Error:', err);
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../frontend/build')));
   
-  // Handle different error types
-  if (err.name === 'ValidationError') {
+  // Handle React Router (return `index.html` for all non-API routes)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/build', 'index.html'));
+  });
+}
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+
+  // Handle specific error types
+  if (err.type === 'entity.parse.failed') {
     return res.status(400).json({
       success: false,
       error: {
-        code: 'VALIDATION_ERROR',
-        message: 'Invalid input data',
-        details: err.message
+        code: 'INVALID_JSON',
+        message: 'Invalid JSON in request body'
       }
     });
   }
-  
-  if (err.code === 'BLOCKCHAIN_ERROR') {
-    return res.status(503).json({
+
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({
       success: false,
       error: {
-        code: 'BLOCKCHAIN_ERROR',
-        message: 'Blockchain operation failed',
-        details: err.message
+        code: 'PAYLOAD_TOO_LARGE',
+        message: 'Request payload too large'
       }
     });
   }
-  
-  if (err.code === 'NETWORK_ERROR') {
-    return res.status(503).json({
-      success: false,
-      error: {
-        code: 'NETWORK_ERROR',
-        message: 'Network connectivity issue',
-        details: err.message
-      }
-    });
-  }
-  
+
   // Default error response
   res.status(500).json({
     success: false,
     error: {
       code: 'INTERNAL_SERVER_ERROR',
-      message: 'An unexpected error occurred',
-      details: process.env.NODE_ENV === 'development' ? err.message : 'Please try again later'
+      message: process.env.NODE_ENV === 'production' 
+        ? 'An unexpected error occurred' 
+        : err.message
+    }
+  });
+});
+
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: {
+      code: 'ENDPOINT_NOT_FOUND',
+      message: `API endpoint ${req.method} ${req.path} not found`
     }
   });
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`VerifyCert Backend API running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+const PORT = config.port;
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌐 Frontend URL: ${config.frontendUrl}`);
+  console.log(`⛓️  Network: Polygon Amoy Testnet`);
+  
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`🔗 Health check: http://localhost:${PORT}/health`);
+    console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
+    console.log(`📜 Certificate API: http://localhost:${PORT}/api/verify-certificate`);
+  }
 });
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+    process.exit(0);
+  });
+});
+
+module.exports = app;

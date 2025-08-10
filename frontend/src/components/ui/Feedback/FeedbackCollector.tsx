@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageSquare, Star, Send, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, MessageSquare, Star, Send, ChevronDown, ChevronUp, Check } from 'lucide-react';
 import { Button } from '../Button/Button';
-import Input from '../Input/Input';
 import Card from '../Card/Card';
 
 interface FeedbackData {
   category: 'navigation' | 'visual-design' | 'overall-experience';
   rating: number;
-  feedback: string;
-  page: string;
-  timestamp: number;
-  userAgent: string;
-  screenSize: string;
+  comment: string;
+  context?: string;
 }
 
 interface FeedbackCollectorProps {
@@ -30,6 +26,7 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState(category);
   const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -52,45 +49,34 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
     if (isOpen) {
       setSelectedCategory(category);
       setRating(0);
+      setHoveredRating(0);
       setFeedback('');
       setIsSubmitting(false);
     }
   }, [isOpen, category]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (rating === 0 || !feedback.trim()) return;
+  const handleSubmit = async () => {
+    if (!rating || !feedback.trim()) return;
 
     setIsSubmitting(true);
-
-    const feedbackData: FeedbackData = {
-      category: selectedCategory,
-      rating,
-      feedback: feedback.trim(),
-      page: window.location.pathname,
-      timestamp: Date.now(),
-      userAgent: navigator.userAgent,
-      screenSize: `${window.innerWidth}x${window.innerHeight}`
-    };
-
+    
     try {
-      // Store feedback locally and send to analytics
-      const existingFeedback = JSON.parse(localStorage.getItem('verifycert-feedback') || '[]');
-      existingFeedback.push(feedbackData);
-      localStorage.setItem('verifycert-feedback', JSON.stringify(existingFeedback));
-
-      // Send to analytics service (if available)
-      if (window.gtag) {
-        window.gtag('event', 'feedback_submitted', {
-          category: selectedCategory,
-          rating,
-          page: window.location.pathname
-        });
-      }
+      const feedbackData: FeedbackData = {
+        category: selectedCategory,
+        rating,
+        comment: feedback.trim(),
+        context
+      };
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-
+      
+      console.log('Feedback submitted:', feedbackData);
+      
+      // Reset form and close
+      setRating(0);
+      setHoveredRating(0);
+      setFeedback('');
       onClose();
     } catch (error) {
       console.error('Failed to submit feedback:', error);
@@ -100,188 +86,159 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
   };
 
   const StarRating = () => (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <button
-          key={star}
-          type="button"
-          onClick={() => setRating(star)}
-          className={`p-1 transition-colors ${
-            star <= rating 
-              ? 'text-yellow-400 hover:text-yellow-500' 
-              : 'text-gray-300 hover:text-gray-400'
-          }`}
-          aria-label={`Rate ${star} out of 5 stars`}
-        >
-          <Star 
-            size={24} 
-            fill={star <= rating ? 'currentColor' : 'none'}
-          />
-        </button>
-      ))}
-      {rating > 0 && (
-        <span className="ml-2 text-sm text-gray-600">
-          {ratingLabels[rating - 1]}
-        </span>
-      )}
+    <div className="space-y-3">
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        Rate your experience
+      </label>
+      <div className="flex items-center space-x-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            type="button"
+            onClick={() => setRating(star)}
+            onMouseEnter={() => setHoveredRating(star)}
+            onMouseLeave={() => setHoveredRating(0)}
+            className="p-1 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+          >
+            <Star
+              size={28}
+              className={`transition-colors ${
+                star <= (hoveredRating || rating)
+                  ? 'text-yellow-400 fill-yellow-400'
+                  : 'text-gray-300 dark:text-gray-600'
+              }`}
+            />
+          </button>
+        ))}
+        {(rating > 0 || hoveredRating > 0) && (
+          <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+            {ratingLabels[(hoveredRating || rating) - 1]}
+          </span>
+        )}
+      </div>
     </div>
   );
 
+  const CategorySelector = () => (
+    <div className="space-y-3">
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        Feedback Category
+      </label>
+      <div className="grid grid-cols-1 gap-2">
+        {categories.map((cat) => (
+          <button
+            key={cat.value}
+            type="button"
+            onClick={() => setSelectedCategory(cat.value as any)}
+            className={`flex items-center p-3 rounded-lg border-2 transition-all ${
+              selectedCategory === cat.value
+                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
+            }`}
+          >
+            <span className="text-lg mr-3">{cat.icon}</span>
+            <span className="font-medium text-gray-900 dark:text-white">{cat.label}</span>
+            {selectedCategory === cat.value && (
+              <Check size={20} className="ml-auto text-blue-500" />
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  if (!isOpen) return null;
+
   return (
     <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50"
-            onClick={onClose}
-          />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.9, opacity: 0, y: 20 }}
+          transition={{ type: "spring", duration: 0.3 }}
+          className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center space-x-3">
+              <MessageSquare className="text-blue-500" size={24} />
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Share Feedback
+              </h2>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            >
+              <X size={20} className="text-gray-500 dark:text-gray-400" />
+            </button>
+          </div>
 
-          {/* Feedback Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md mx-4 z-50"
-          >
-            <Card className="max-h-[90vh] overflow-y-auto bg-white shadow-2xl">
-              <div className="flex items-center justify-between p-6 border-b">
-                <div className="flex items-center gap-3">
-                  <MessageSquare className="text-blue-600" size={24} />
-                  <h2 className="text-xl font-semibold text-gray-900">
-                    Share Your Feedback
-                  </h2>
-                </div>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  aria-label="Close feedback form"
-                >
-                  <X size={20} />
-                </button>
+          {/* Content */}
+          <div className="p-6 space-y-6 max-h-[calc(90vh-140px)] overflow-y-auto">
+            <CategorySelector />
+            <StarRating />
+            
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Tell us more (optional)
+              </label>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="What went well? What could be improved?"
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              />
+            </div>
+
+            {context && (
+              <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Context: {context}
+                </p>
               </div>
+            )}
+          </div>
 
-              <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                {/* Category Selection */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    What would you like to provide feedback on?
-                  </label>
-                  <div className="space-y-2">
-                    {categories.map((cat) => (
-                      <label
-                        key={cat.value}
-                        className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                          selectedCategory === cat.value
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="category"
-                          value={cat.value}
-                          checked={selectedCategory === cat.value}
-                          onChange={(e) => setSelectedCategory(e.target.value as any)}
-                          className="sr-only"
-                        />
-                        <span className="text-lg mr-3">{cat.icon}</span>
-                        <span className="font-medium text-gray-900">
-                          {cat.label}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Rating */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    How would you rate this aspect?
-                  </label>
-                  <StarRating />
-                </div>
-
-                {/* Feedback Text */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Tell us more about your experience
-                  </label>
-                  <textarea
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    placeholder="What did you like? What could be improved? Any specific suggestions?"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
-                    rows={4}
-                    required
-                  />
-                </div>
-
-                {/* Context Information (Expandable) */}
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800"
-                  >
-                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                    Technical Details
-                  </button>
-                  
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="mt-2 p-3 bg-gray-50 rounded-lg text-xs text-gray-600 space-y-1"
-                      >
-                        <div>Page: {window.location.pathname}</div>
-                        <div>Screen: {window.innerWidth}x{window.innerHeight}</div>
-                        <div>Browser: {navigator.userAgent.split(' ').slice(-2).join(' ')}</div>
-                        {context && <div>Context: {context}</div>}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Submit Button */}
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={onClose}
-                    className="flex-1"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={rating === 0 || !feedback.trim() || isSubmitting}
-                    className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
-                    style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span style={{ color: '#ffffff' }}>Sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send size={16} style={{ color: '#ffffff', fill: 'none', stroke: '#ffffff' }} />
-                        <span style={{ color: '#ffffff' }}>Send Feedback</span>
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </form>
-            </Card>
-          </motion.div>
-        </>
-      )}
+          {/* Footer */}
+          <div className="flex items-center justify-between p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+            >
+              Cancel
+            </button>
+            <Button
+              onClick={handleSubmit}
+              disabled={!rating || isSubmitting}
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Sending...</span>
+                </>
+              ) : (
+                <>
+                  <Send size={16} />
+                  <span>Send Feedback</span>
+                </>
+              )}
+            </Button>
+          </div>
+        </motion.div>
+      </motion.div>
     </AnimatePresence>
   );
 };
+
+export default FeedbackCollector;

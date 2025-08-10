@@ -20,10 +20,10 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const positionClasses = {
-    'bottom-right': 'bottom-20 right-6',  // Raised from bottom-6 to bottom-20
-    'bottom-left': 'bottom-20 left-6',    // Raised from bottom-6 to bottom-20
-    'top-right': 'top-6 right-6',
-    'top-left': 'top-6 left-6'
+    'bottom-right': 'bottom-24 right-8',  // Even more raised and better spacing
+    'bottom-left': 'bottom-24 left-8',    
+    'top-right': 'top-8 right-8',
+    'top-left': 'top-8 left-8'
   };
 
   return (
@@ -32,7 +32,7 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         onClick={() => setIsOpen(true)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed ${positionClasses[position]} z-40 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 feedback-button ${className}`}
+        className={`fixed ${positionClasses[position]} z-50 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 feedback-button border-2 border-white/20 backdrop-blur-sm ${className}`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Open feedback form"

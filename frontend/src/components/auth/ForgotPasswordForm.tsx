@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthLayout } from './AuthLayout';
+import { ResetPasswordForm } from './ResetPasswordForm';
 import LoadingButton from '../LoadingButton';
 import { toast } from 'react-hot-toast';
 
@@ -31,7 +32,7 @@ export const ForgotPasswordForm: React.FC = () => {
   };
 
   if (isCodeSent) {
-    return <ResetPasswordForm />;
+    return <ResetPasswordForm onSuccess={() => window.location.href = '/login'} />;
   }
 
   return (
@@ -73,6 +74,3 @@ export const ForgotPasswordForm: React.FC = () => {
     </AuthLayout>
   );
 };
-
-// Import ResetPasswordForm component (will create next)
-import { ResetPasswordForm } from './ResetPasswordForm';

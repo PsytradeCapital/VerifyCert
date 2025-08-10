@@ -214,7 +214,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const changePassword = async (currentPassword: string, newPassword: string) => {
     try {
-      await authService.changePassword(currentPassword, newPassword);
+      await authService.changePassword({ currentPassword, newPassword });
     } catch (error) {
       throw error;
     }

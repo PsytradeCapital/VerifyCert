@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import toast from 'react-hot-toast';
+import { ChangePasswordForm } from '../components/user/ChangePasswordForm';
+import LoadingButton from '../components/LoadingButton';
+import { toast } from 'react-hot-toast';
+import { User, Mail, Phone, MapPin, Shield, Trash2 } from 'lucide-react';
 
 export const ProfilePage: React.FC = () => {
-  const { user, updateProfile, changePassword } = useAuth();
+  const { user, updateProfile, logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showDeleteAccount, setShowDeleteAccount] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
     phone: user?.phone || '',
-    region: user?.region || 'US'
-  });
-  const [showChangePassword, setShowChangePassword] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    region: user?.region || 'US',
   });
 
-  const handleProfileUpdate = async (e: React.FormEvent) => {
+  const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     setIsLoading(true);
-
     try {
       await updateProfile(formData);
       setIsEditing(false);
@@ -34,23 +34,38 @@ export const ProfilePage: React.FC = () => {
     }
   };
 
-  const handlePasswordChange = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      toast.error('New passwords do not match');
+  const handleDeleteAccount = async () => {
+    if (!deletePassword) {
+      toast.error('Please enter your password to delete account');
+      return;
+    }
+
+    if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
       return;
     }
 
     setIsLoading(true);
     try {
-      // This would call a changePassword method in authService
-      // await authService.changePassword(passwordData.currentPassword, passwordData.newPassword);
-      toast.success('Password changed successfully!');
-      setShowChangePassword(false);
-      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      // Call delete account API
+      const response = await fetch('/api/user/account', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({ password: deletePassword }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error?.message || 'Failed to delete account');
+      }
+
+      toast.success('Account deleted successfully');
+      logout();
     } catch (error: any) {
-      toast.error(error.message || 'Failed to change password');
+      toast.error(error.message || 'Failed to delete account');
     } finally {
       setIsLoading(false);
     }
@@ -61,18 +76,10 @@ export const ProfilePage: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handlePasswordDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPasswordData(prev => ({ ...prev, [name]: value }));
-  };
-
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h2>
-          <p className="text-gray-600">Please log in to view your profile.</p>
-        </div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -80,263 +87,226 @@ export const ProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow rounded-lg">
+        <div className="bg-white rounded-lg shadow-md">
           {/* Header */}
           <div className="px-6 py-4 border-b border-gray-200">
-            <h1 className="text-2xl font-bold text-gray-900">Profile Settings</h1>
-            <p className="text-gray-600">Manage your account information and preferences</p>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="bg-blue-100 rounded-full p-2">
+                  <User className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">Profile Settings</h1>
+                  <p className="text-gray-600">Manage your account information</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                {user.isVerified ? (
+                  <div className="flex items-center space-x-1 text-green-600">
+                    <Shield className="h-4 w-4" />
+                    <span className="text-sm font-medium">Verified</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-1 text-yellow-600">
+                    <Shield className="h-4 w-4" />
+                    <span className="text-sm font-medium">Unverified</span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Profile Information */}
           <div className="px-6 py-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-medium text-gray-900">Personal Information</h2>
-              {!isEditing && (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500 border border-blue-600 hover:border-blue-500 rounded-lg transition-colors"
-                >
-                  Edit Profile
-                </button>
-              )}
-            </div>
-
-            {isEditing ? (
-              <form onSubmit={handleProfileUpdate} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="region" className="block text-sm font-medium text-gray-700 mb-2">
-                      Region
-                    </label>
-                    <select
-                      id="region"
-                      name="region"
-                      value={formData.region}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="US">United States</option>
-                      <option value="CA">Canada</option>
-                      <option value="GB">United Kingdom</option>
-                      <option value="AU">Australia</option>
-                      <option value="DE">Germany</option>
-                      <option value="FR">France</option>
-                      <option value="IN">India</option>
-                      <option value="CN">China</option>
-                      <option value="BR">Brazil</option>
-                      <option value="MX">Mexico</option>
-                      <option value="KE">Kenya</option>
-                      <option value="NG">Nigeria</option>
-                      <option value="ZA">South Africa</option>
-                    </select>
-                  </div>
-
-                  {user.email && (
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Basic Information */}
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
+                
+                {isEditing ? (
+                  <form onSubmit={handleUpdateProfile} className="space-y-4">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
                       </label>
                       <input
                         type="email"
-                        id="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                       />
                     </div>
-                  )}
 
-                  {user.phone && (
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Phone
                       </label>
                       <input
                         type="tel"
-                        id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                       />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Region
+                      </label>
+                      <select
+                        name="region"
+                        value={formData.region}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="IN">India</option>
+                        <option value="NG">Nigeria</option>
+                        <option value="KE">Kenya</option>
+                        <option value="ZA">South Africa</option>
+                      </select>
+                    </div>
+
+                    <div className="flex space-x-3">
+                      <LoadingButton
+                        type="submit"
+                        isLoading={isLoading}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                      >
+                        Save Changes
+                      </LoadingButton>
+                      <button
+                        type="button"
+                        onClick={() => setIsEditing(false)}
+                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <User className="h-4 w-4 text-gray-500" />
+                      <div>
+                        <span className="text-sm text-gray-500">Name:</span>
+                        <p className="font-medium">{user.name}</p>
+                      </div>
+                    </div>
+
+                    {user.email && (
+                      <div className="flex items-center space-x-3">
+                        <Mail className="h-4 w-4 text-gray-500" />
+                        <div>
+                          <span className="text-sm text-gray-500">Email:</span>
+                          <p className="font-medium">{user.email}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {user.phone && (
+                      <div className="flex items-center space-x-3">
+                        <Phone className="h-4 w-4 text-gray-500" />
+                        <div>
+                          <span className="text-sm text-gray-500">Phone:</span>
+                          <p className="font-medium">{user.phone}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex items-center space-x-3">
+                      <MapPin className="h-4 w-4 text-gray-500" />
+                      <div>
+                        <span className="text-sm text-gray-500">Region:</span>
+                        <p className="font-medium">{user.region}</p>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                    >
+                      Edit Profile
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Security Settings */}
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Security Settings</h2>
+                
+                <div className="space-y-4">
+                  <button
+                    onClick={() => setShowChangePassword(!showChangePassword)}
+                    className="w-full text-left bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="font-medium text-gray-900">Change Password</div>
+                    <div className="text-sm text-gray-600">Update your account password</div>
+                  </button>
+
+                  {showChangePassword && (
+                    <div className="mt-4">
+                      <ChangePasswordForm />
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => setShowDeleteAccount(!showDeleteAccount)}
+                    className="w-full text-left bg-red-50 p-4 rounded-lg hover:bg-red-100 transition-colors"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Trash2 className="h-4 w-4 text-red-600" />
+                      <div className="font-medium text-red-900">Delete Account</div>
+                    </div>
+                    <div className="text-sm text-red-600">Permanently delete your account</div>
+                  </button>
+
+                  {showDeleteAccount && (
+                    <div className="mt-4 p-4 bg-red-50 rounded-lg">
+                      <p className="text-sm text-red-700 mb-3">
+                        This action cannot be undone. Please enter your password to confirm.
+                      </p>
+                      <div className="flex space-x-3">
+                        <input
+                          type="password"
+                          value={deletePassword}
+                          onChange={(e) => setDeletePassword(e.target.value)}
+                          placeholder="Enter your password"
+                          className="flex-1 px-3 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                        />
+                        <LoadingButton
+                          onClick={handleDeleteAccount}
+                          isLoading={isLoading}
+                          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                        >
+                          Delete
+                        </LoadingButton>
+                      </div>
                     </div>
                   )}
                 </div>
-
-                <div className="flex gap-4">
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    {isLoading ? 'Saving...' : 'Save Changes'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsEditing(false);
-                      setFormData({
-                        name: user?.name || '',
-                        email: user?.email || '',
-                        phone: user?.phone || '',
-                        region: user?.region || 'US'
-                      });
-                    }}
-                    className="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <p className="text-gray-900">{user.name}</p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Region</label>
-                  <p className="text-gray-900">{user.region}</p>
-                </div>
-
-                {user.email && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <p className="text-gray-900">{user.email}</p>
-                  </div>
-                )}
-
-                {user.phone && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <p className="text-gray-900">{user.phone}</p>
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Account Status</label>
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    user.isVerified 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {user.isVerified ? 'Verified' : 'Pending Verification'}
-                  </span>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                  <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 capitalize">
-                    {user.role}
-                  </span>
-                </div>
               </div>
-            )}
-          </div>
-
-          {/* Security Settings */}
-          <div className="px-6 py-6 border-t border-gray-200">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-medium text-gray-900">Security Settings</h2>
-              {!showChangePassword && (
-                <button
-                  onClick={() => setShowChangePassword(true)}
-                  className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500 border border-blue-600 hover:border-blue-500 rounded-lg transition-colors"
-                >
-                  Change Password
-                </button>
-              )}
             </div>
-
-            {showChangePassword && (
-              <form onSubmit={handlePasswordChange} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="md:col-span-2">
-                    <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                      Current Password
-                    </label>
-                    <input
-                      type="password"
-                      id="currentPassword"
-                      name="currentPassword"
-                      value={passwordData.currentPassword}
-                      onChange={handlePasswordDataChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                      New Password
-                    </label>
-                    <input
-                      type="password"
-                      id="newPassword"
-                      name="newPassword"
-                      value={passwordData.newPassword}
-                      onChange={handlePasswordDataChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                      Confirm New Password
-                    </label>
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      value={passwordData.confirmPassword}
-                      onChange={handlePasswordDataChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    {isLoading ? 'Changing...' : 'Change Password'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowChangePassword(false);
-                      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
-                    }}
-                    className="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            )}
           </div>
         </div>
       </div>

@@ -1,152 +1,104 @@
 const express = require('express');
-const { authenticateToken } = require('../middleware/auth');
-const db = require('../models/database');
 const router = express.Router();
+const { authenticateToken, requireVerified } = require('../middleware/auth');
+
+// GET /api/dashboard/stats - Get user dashboard statistics
+router.get('/stats',
+  authenticateToken,
+  requireVerified,
+  async (req, res) => {
+    try {
+      const database = require('../models/database');
+      
+      // Get user's certificate issuances
+      const certificateStats = await database.get(`
+        SELECT COUNT(*) as total_issued
+        FROM certificate_issuances 
+        WHERE user_id = ?
+      `, [req.user.id]);
+
+      // Get recent certificate issuances
+      const recentCertificates = await database.all(`
+        SELECT * FROM certificate_issuances 
+        WHERE user_id = ? 
+        ORDER BY created_at DESC 
+        LIMIT 5
+      `, [req.user.id]);
+
+      res.json({
+        success: true,
+        data: {
+          user: req.user.toPublicJSON(),
+          stats: {
+            totalCertificatesIssued: certificateStats.total_issued || 0
+          },
+          recentCertificates: recentCertificates || []
+        }
+      });
+
+    } catch (error) {
+      console.error('Dashboard stats error:', error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: 'DASHBOARD_STATS_FAILED',
+          message: 'Failed to fetch dashboard statistics'
+        }
+      });
+    }
+  }
+);
 
 // GET /api/dashboard/certificates - Get user's issued certificates
-router.get('/certificates', authenticateToken, async (req, res) => {
-  try {
-    const certificates = await db.all(`
-      SELECT 
-        id,
-        token_id,
-        transaction_hash,
-        recipient_address,
-        recipient_name,
-        course_name,
-        institution_name,
-        issuer_address,
-        block_number,
-        created_at
-      FROM certificate_issuances 
-      WHERE user_id = ? 
-      ORDER BY created_at DESC
-    `, [req.user.id]);
+router.get('/certificates',
+  authenticateToken,
+  requireVerified,
+  async (req, res) => {
+    try {
+      const database = require('../models/database');
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const offset = (page - 1) * limit;
 
-    res.json({
-      success: true,
-      data: {
-        certificates,
-        total: certificates.length
-      }
-    });
+      // Get user's certificate issuances with pagination
+      const certificates = await database.all(`
+        SELECT * FROM certificate_issuances 
+        WHERE user_id = ? 
+        ORDER BY created_at DESC 
+        LIMIT ? OFFSET ?
+      `, [req.user.id, limit, offset]);
 
-  } catch (error) {
-    console.error('Error fetching user certificates:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to fetch certificates'
-    });
-  }
-});
+      // Get total count
+      const totalResult = await database.get(`
+        SELECT COUNT(*) as total 
+        FROM certificate_issuances 
+        WHERE user_id = ?
+      `, [req.user.id]);
 
-// GET /api/dashboard/stats - Get user's dashboard statistics
-router.get('/stats', authenticateToken, async (req, res) => {
-  try {
-    const stats = await db.get(`
-      SELECT 
-        COUNT(*) as total_certificates,
-        COUNT(CASE WHEN DATE(created_at) = DATE('now') THEN 1 END) as today_certificates,
-        COUNT(CASE WHEN DATE(created_at) >= DATE('now', '-7 days') THEN 1 END) as week_certificates,
-        COUNT(CASE WHEN DATE(created_at) >= DATE('now', '-30 days') THEN 1 END) as month_certificates
-      FROM certificate_issuances 
-      WHERE user_id = ?
-    `, [req.user.id]);
+      res.json({
+        success: true,
+        data: {
+          certificates: certificates || [],
+          pagination: {
+            page,
+            limit,
+            total: totalResult.total || 0,
+            totalPages: Math.ceil((totalResult.total || 0) / limit)
+          }
+        }
+      });
 
-    // Get recent certificates
-    const recentCertificates = await db.all(`
-      SELECT 
-        recipient_name,
-        course_name,
-        created_at
-      FROM certificate_issuances 
-      WHERE user_id = ? 
-      ORDER BY created_at DESC 
-      LIMIT 5
-    `, [req.user.id]);
-
-    res.json({
-      success: true,
-      data: {
-        stats: {
-          totalCertificates: stats.total_certificates || 0,
-          todayCertificates: stats.today_certificates || 0,
-          weekCertificates: stats.week_certificates || 0,
-          monthCertificates: stats.month_certificates || 0
-        },
-        recentCertificates
-      }
-    });
-
-  } catch (error) {
-    console.error('Error fetching dashboard stats:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to fetch dashboard statistics'
-    });
-  }
-});
-
-// GET /api/dashboard/profile - Get user profile
-router.get('/profile', authenticateToken, async (req, res) => {
-  try {
-    const user = await db.get(`
-      SELECT id, name, email, phone, region, role, is_verified, created_at
-      FROM users 
-      WHERE id = ?
-    `, [req.user.id]);
-
-    if (!user) {
-      return res.status(404).json({
+    } catch (error) {
+      console.error('Dashboard certificates error:', error);
+      res.status(500).json({
         success: false,
-        error: 'User not found'
+        error: {
+          code: 'DASHBOARD_CERTIFICATES_FAILED',
+          message: 'Failed to fetch certificates'
+        }
       });
     }
-
-    res.json({
-      success: true,
-      data: { user }
-    });
-
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to fetch profile'
-    });
   }
-});
-
-// PUT /api/dashboard/profile - Update user profile
-router.put('/profile', authenticateToken, async (req, res) => {
-  try {
-    const { name, region } = req.body;
-
-    if (!name || name.trim().length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: 'Name is required'
-      });
-    }
-
-    await db.run(`
-      UPDATE users 
-      SET name = ?, region = ?, updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `, [name.trim(), region || 'US', req.user.id]);
-
-    res.json({
-      success: true,
-      message: 'Profile updated successfully'
-    });
-
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to update profile'
-    });
-  }
-});
+);
 
 module.exports = router;

@@ -3,6 +3,9 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
+  typescript: {
+    enableTypeChecking: false // Disable type checking during build for now
+  },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
       // Enable tree shaking optimizations

@@ -1,104 +1,82 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+#!/usr/bin/env node
 
-const app = express();
-const PORT = process.env.PORT || 4000;
+/**
+ * Authentication Server Startup Script
+ * Starts the backend server with authentication system
+ */
 
-// Security middleware
-app.use(helmet());
+const path = require('path');
+const fs = require('fs');
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: {
-    success: false,
-    error: {
-      code: 'RATE_LIMIT_EXCEEDED',
-      message: 'Too many requests from this IP, please try again later.'
-    }
-  }
-});
-app.use(limiter);
+// Ensure data directory exists
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+  console.log('📁 Created data directory');
+}
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// Check environment configuration
+const requiredEnvVars = [
+  'AMOY_RPC_URL',
+  'PRIVATE_KEY',
+  'JWT_SECRET'
+];
 
-// Body parsing middleware
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
 
-// Request logging middleware
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-  next();
-});
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ 
-    success: true,
-    message: 'VerifyCert Authentication API',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+if (missingVars.length > 0) {
+  console.error('❌ Missing required environment variables:');
+  missingVars.forEach(varName => {
+    console.error(`   - ${varName}`);
   });
+  console.error('\n💡 Please check your .env file and ensure all required variables are set.');
+  process.exit(1);
+}
+
+// Set default port if not specified
+if (!process.env.PORT) {
+  process.env.PORT = '4000';
+}
+
+console.log('🔐 Starting VerifyCert Authentication Server...');
+console.log('=' .repeat(50));
+
+// Start the server
+require('./src/server');
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('💥 Uncaught Exception:', error);
+  process.exit(1);
 });
 
-// Import auth routes only
-const authRoutes = require('./src/routes/auth');
-
-// API routes
-app.use('/api/auth', authRoutes);
-
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    error: {
-      code: 'NOT_FOUND',
-      message: 'Endpoint not found'
-    }
-  });
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('💥 Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
 });
 
-// Global error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  
-  // Handle different error types
-  if (err.name === 'ValidationError') {
-    return res.status(400).json({
-      success: false,
-      error: {
-        code: 'VALIDATION_ERROR',
-        message: 'Invalid input data',
-        details: err.message
-      }
-    });
-  }
-  
-  // Default error response
-  res.status(500).json({
-    success: false,
-    error: {
-      code: 'INTERNAL_SERVER_ERROR',
-      message: 'An unexpected error occurred',
-      details: process.env.NODE_ENV === 'development' ? err.message : 'Please try again later'
-    }
-  });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`VerifyCert Authentication API running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
-});
+// Display startup information
+setTimeout(() => {
+  console.log('\n' + '=' .repeat(50));
+  console.log('✅ Authentication Server Started Successfully!');
+  console.log('=' .repeat(50));
+  console.log(`🌐 Server URL: http://localhost:${process.env.PORT}`);
+  console.log(`🔗 Health Check: http://localhost:${process.env.PORT}/health`);
+  console.log(`🔐 Auth API: http://localhost:${process.env.PORT}/api/auth`);
+  console.log(`📜 Certificate API: http://localhost:${process.env.PORT}/api/verify-certificate`);
+  console.log(`📊 Mint API: http://localhost:${process.env.PORT}/api/mint-certificate`);
+  console.log('\n📋 Available Endpoints:');
+  console.log('   POST /api/auth/register - User registration');
+  console.log('   POST /api/auth/login - User login');
+  console.log('   POST /api/auth/verify-otp - OTP verification');
+  console.log('   POST /api/auth/forgot-password - Password reset request');
+  console.log('   POST /api/auth/reset-password - Password reset');
+  console.log('   GET  /api/auth/profile - Get user profile');
+  console.log('   PUT  /api/auth/profile - Update user profile');
+  console.log('   POST /api/mint-certificate - Issue new certificate');
+  console.log('   GET  /api/verify-certificate/:id - Verify certificate');
+  console.log('\n🧪 Test the system:');
+  console.log('   node test-auth-system.js');
+  console.log('   node test-certificate-system.js');
+  console.log('\n🚀 Ready to accept requests!');
+}, 1000);

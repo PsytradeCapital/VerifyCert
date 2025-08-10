@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../hooks/useTheme';
 import { 
   Shield, 
   User, 
@@ -10,11 +11,14 @@ import {
   Home, 
   Search, 
   Plus,
-  Settings
+  Settings,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export const Navigation: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const { theme, toggleTheme, isDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -92,16 +96,30 @@ export const Navigation: React.FC = () => {
               )}
             </div>
 
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+              aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+            >
+              {isDark ? (
+                <Sun size={20} className="text-yellow-500" />
+              ) : (
+                <Moon size={20} className="text-blue-600" />
+              )}
+            </button>
+
             {/* User menu */}
             {isAuthenticated && user ? (
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="bg-gray-100 rounded-full p-2">
-                    <User className="h-4 w-4 text-gray-600" />
+                  <div className="bg-gray-100 dark:bg-gray-700 rounded-full p-2">
+                    <User className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                   </div>
                   <div className="text-sm">
-                    <div className="font-medium text-gray-900">{user.name}</div>
-                    <div className="text-gray-500 capitalize">{user.role}</div>
+                    <div className="font-medium text-gray-900 dark:text-gray-100">{user.name}</div>
+                    <div className="text-gray-500 dark:text-gray-400 capitalize">{user.role}</div>
                   </div>
                 </div>
                 

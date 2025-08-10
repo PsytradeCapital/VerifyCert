@@ -20,8 +20,8 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const positionClasses = {
-    'bottom-right': 'bottom-24 right-8',  // Even more raised and better spacing
-    'bottom-left': 'bottom-24 left-8',    
+    'bottom-right': 'bottom-32 right-8',  // Raised higher to avoid overlap
+    'bottom-left': 'bottom-32 left-8',    
     'top-right': 'top-8 right-8',
     'top-left': 'top-8 left-8'
   };

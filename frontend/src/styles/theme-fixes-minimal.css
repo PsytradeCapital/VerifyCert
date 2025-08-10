@@ -1,0 +1,82 @@
+/**
+ * Minimal Theme Fixes - Only for specific issues
+ * Preserves original design while fixing visibility problems
+ */
+
+/* Feedback button fixes only */
+.feedback-button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  z-index: 9999 !important;
+  border: 2px solid #2563eb !important;
+}
+
+.feedback-button svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+.feedback-button span {
+  color: #ffffff !important;
+}
+
+/* Wallet connect button fixes only */
+.connect-wallet-btn {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+.connect-wallet-btn svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+.connect-wallet-btn span {
+  color: #ffffff !important;
+}
+
+/* Z-index layering system - minimal */
+.feedback-button {
+  z-index: 9999 !important;
+}
+
+.modal-overlay {
+  z-index: 9998 !important;
+}
+
+.modal-content {
+  z-index: 9999 !important;
+}
+
+/* Only fix invisible text issues - preserve original colors */
+[data-theme="light"] .text-invisible,
+[data-theme="light"] .hidden-text {
+  color: inherit !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="dark"] .text-invisible,
+[data-theme="dark"] .hidden-text {
+  color: inherit !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure send button is visible */
+.feedback-modal .btn-primary,
+.feedback-modal button[type="submit"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+  z-index: 10 !important;
+}
+
+.feedback-modal .btn-primary svg,
+.feedback-modal button[type="submit"] svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}

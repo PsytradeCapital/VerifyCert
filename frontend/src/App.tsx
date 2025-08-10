@@ -80,6 +80,7 @@ import { UnauthorizedPage } from './pages/auth/UnauthorizedPage';
 
 import './App.css';
 import './styles/themes.css';
+import './styles/theme-fixes-minimal.css';
 
 interface WalletState {
   isConnected: boolean;

@@ -39,15 +39,15 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
         style={{ 
           backgroundColor: '#2563eb !important', 
           color: '#ffffff !important',
-          width: '48px',
-          height: '48px',
-          minWidth: '48px',
-          minHeight: '48px'
+          width: '40px',
+          height: '40px',
+          minWidth: '40px',
+          minHeight: '40px'
         }}
       >
         <div className="flex items-center justify-center w-full h-full">
           <MessageSquare 
-            size={20} 
+            size={16} 
             style={{ 
               color: '#ffffff !important', 
               fill: 'none', 

@@ -15,10 +15,23 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
+import WalletConnect from './WalletConnect';
 
-export const Navigation: React.FC = () => {
+interface NavigationProps {
+  walletAddress?: string | null;
+  isWalletConnected?: boolean;
+  onWalletConnect?: (address: string, provider: any) => void;
+  onWalletDisconnect?: () => void;
+}
+
+export const Navigation: React.FC<NavigationProps> = ({
+  walletAddress,
+  isWalletConnected,
+  onWalletConnect,
+  onWalletDisconnect
+}) => {
   const { isAuthenticated, user, logout } = useAuth();
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { toggleTheme, isDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -94,6 +107,15 @@ export const Navigation: React.FC = () => {
                   ))}
                 </>
               )}
+            </div>
+
+            {/* Wallet Connect */}
+            <div className="flex items-center">
+              <WalletConnect
+                onConnect={onWalletConnect}
+                onDisconnect={onWalletDisconnect}
+                className="mr-4"
+              />
             </div>
 
             {/* Theme Toggle */}

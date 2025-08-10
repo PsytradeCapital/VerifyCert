@@ -17,6 +17,7 @@ import { NavigationProvider } from './contexts/NavigationContext';
 import { FeedbackProvider } from './contexts/FeedbackContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { FeedbackButton } from './components/ui/Feedback/FeedbackButton';
 
 // Components
 import { Navigation } from './components/Navigation';
@@ -622,6 +623,9 @@ function App() {
               }
             }}
           />
+          
+          {/* Feedback Button */}
+          <FeedbackButton />
             </div>
           </NavigationProvider>
         </Router>

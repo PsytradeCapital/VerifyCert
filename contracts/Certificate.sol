@@ -93,7 +93,10 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         _;
     }
 
-    constructor() ERC721("VerifyCert Certificate", "VCERT") {}
+    constructor() ERC721("VerifyCert Certificate", "VCERT") {
+        // Start token IDs from 1 instead of 0
+        _tokenIdCounter.increment();
+    }
 
     /**
      * @dev Issue a new certificate
@@ -297,7 +300,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
      * @dev Get total number of certificates issued
      */
     function totalSupply() public view returns (uint256) {
-        return _tokenIdCounter.current();
+        return _tokenIdCounter.current() - 1; // Subtract 1 since we start from 1
     }
 
     /**
@@ -373,8 +376,8 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         super._burn(tokenId);
         
         // Clean up mappings
-        delete certificates[tokenId];
         bytes32 certHash = certificates[tokenId].certificateHash;
+        delete certificates[tokenId];
         if (certHash != bytes32(0)) {
             delete certificateHashToTokenId[certHash];
         }

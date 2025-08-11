@@ -235,13 +235,15 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
               ) : (
                 <>
                   <Send 
-                    size={18} 
+                    size={24} 
                     style={{ 
                       color: '#ffffff !important',
                       fill: 'none',
                       stroke: '#ffffff',
-                      strokeWidth: '2',
-                      zIndex: 20
+                      strokeWidth: '3',
+                      zIndex: 20,
+                      display: 'block',
+                      visibility: 'visible'
                     }} 
                   />
                   <span style={{ color: '#ffffff !important' }}>Send</span>

@@ -46,7 +46,7 @@ export const useTheme = (): ThemeContextType => {
       console.warn('matchMedia not available, defaulting to dark theme');
     }
     
-    return 'dark'; // Default to dark theme
+    return 'dark'; // Default to dark theme always
   };
 
   const [theme, setThemeState] = useState<Theme>(getInitialTheme);

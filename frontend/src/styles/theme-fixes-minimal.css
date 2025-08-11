@@ -75,9 +75,10 @@ textarea {
 
 /* Wallet connect button fixes only */
 .connect-wallet-btn {
-  background-color: #2563eb !important;
+  background-color: #059669 !important;
   color: #ffffff !important;
-  border: 2px solid #2563eb !important;
+  border: 2px solid #059669 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
 .connect-wallet-btn svg {
@@ -131,4 +132,81 @@ textarea {
   color: #ffffff !important;
   stroke: #ffffff !important;
   fill: none !important;
+}
+/* Certif
+icate card styling - always light golden */
+.certificate-card,
+[class*="certificate"] {
+  background: linear-gradient(135deg, #fef7cd, #fef3c7) !important;
+  border: 2px solid #f59e0b !important;
+  color: #92400e !important;
+}
+
+/* Dark mode default styling */
+[data-theme="dark"] {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] body {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Light mode styling */
+[data-theme="light"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] body {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+/* Ensure all text is visible in both modes */
+[data-theme="dark"] * {
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] * {
+  color: #1f2937 !important;
+}
+
+/* Override for buttons and special elements */
+[data-theme="dark"] button,
+[data-theme="light"] button {
+  color: inherit !important;
+}
+
+/* Feedback send button - make icon huge and clear */
+.feedback-modal button[type="submit"] svg {
+  width: 24px !important;
+  height: 24px !important;
+  stroke-width: 3 !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Navigation icons visibility */
+nav svg,
+.navigation svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+/* Ensure wallet connect is always visible */
+.connect-wallet-btn svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+.connect-wallet-btn span {
+  color: #ffffff !important;
+  font-weight: 600 !important;
 }

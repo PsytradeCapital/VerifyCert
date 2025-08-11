@@ -85,6 +85,12 @@ import './styles/theme-fixes-minimal.css';
 // Force browser cache refresh with timestamp
 const APP_VERSION = Date.now();
 
+// Add cache-busting to document
+if (typeof document !== 'undefined') {
+  document.documentElement.setAttribute('data-version', APP_VERSION.toString());
+  console.log('🔄 App Version:', APP_VERSION);
+}
+
 interface WalletState {
   isConnected: boolean;
   address: string | null;

@@ -337,11 +337,11 @@ export default function WalletConnect({
         <button
           onClick={connectWallet}
           disabled={walletState.isConnecting}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 connect-wallet-btn border-2 border-blue-600 dark:border-blue-700 shadow-lg hover:shadow-xl"
+          className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 dark:bg-green-700 dark:hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2 connect-wallet-btn border-2 border-green-600 dark:border-green-700 shadow-lg hover:shadow-xl"
           style={{
-            backgroundColor: '#2563eb !important',
+            backgroundColor: '#059669 !important',
             color: '#ffffff !important',
-            border: '2px solid #2563eb !important',
+            border: '2px solid #059669 !important',
             minHeight: '48px'
           }}
         >

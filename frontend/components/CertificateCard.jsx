@@ -17,8 +17,8 @@ const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md border-2 p-6 transition-all duration-200 hover:shadow-lg ${
-      certificate.isRevoked ? 'border-red-300 bg-red-50' : 'border-blue-300'
+    <div className={`bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg shadow-md border-2 p-6 transition-all duration-200 hover:shadow-lg ${
+      certificate.isRevoked ? 'border-red-300 bg-red-50' : 'border-amber-200'
     }`}>
       {/* Header */}
       <div className="flex justify-between items-start mb-4">

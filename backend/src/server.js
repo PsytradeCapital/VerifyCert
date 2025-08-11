@@ -61,6 +61,18 @@ app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Cache-busting middleware to ensure browsers always get fresh content
+app.use((req, res, next) => {
+  res.set({
+    'Cache-Control': 'no-cache, no-store, must-revalidate, proxy-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+    'Surrogate-Control': 'no-store',
+    'ETag': false
+  });
+  next();
+});
+
 // CSRF token generation for forms (temporarily disabled)
 // app.use(generateCSRFToken);
 

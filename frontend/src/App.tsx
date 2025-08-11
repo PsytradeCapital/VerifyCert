@@ -82,6 +82,9 @@ import './App.css';
 import './styles/themes.css';
 import './styles/theme-fixes-minimal.css';
 
+// Force browser cache refresh with timestamp
+const APP_VERSION = Date.now();
+
 interface WalletState {
   isConnected: boolean;
   address: string | null;

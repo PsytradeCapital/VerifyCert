@@ -464,24 +464,23 @@ function App() {
                   } 
                 />
 
-                {/* Protected Routes - Require Authentication and Wallet Connection */}
+                {/* Dashboard Route - Supports both authenticated users and demo mode with wallet connection */}
                 <Route 
                   path="/dashboard" 
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
-                      <AuthProtectedRoute requireAuth={true} requireVerification={true}>
-                        <ProtectedRoute 
-                          isWalletConnected={walletState.isConnected}
-                          requireWallet={true}
+                      <ProtectedRoute 
+                        isWalletConnected={walletState.isConnected}
+                        requireWallet={true}
+                        allowDemoMode={true}
+                      >
+                        <LazyComponentWrapper 
+                          fallback={<ComponentLoading />}
+                          errorFallback={ComponentLoadError}
                         >
-                          <LazyComponentWrapper 
-                            fallback={<ComponentLoading />}
-                            errorFallback={ComponentLoadError}
-                          >
-                            <LazyIssuerDashboard />
-                          </LazyComponentWrapper>
-                        </ProtectedRoute>
-                      </AuthProtectedRoute>
+                          <LazyIssuerDashboard />
+                        </LazyComponentWrapper>
+                      </ProtectedRoute>
                     </BlockchainErrorBoundary>
                   } 
                 />

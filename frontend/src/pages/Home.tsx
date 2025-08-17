@@ -16,7 +16,15 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
   // Show message if redirected from protected route
   useEffect(() => {
     if (location.state?.message) {
-      toast.error(location.state.message);
+      if (location.state?.showDemoPrompt) {
+        // Special handling for demo mode redirect
+        toast.success(location.state.message, {
+          duration: 6000,
+          icon: '🚀',
+        });
+      } else {
+        toast.error(location.state.message);
+      }
       // Clear the state to prevent showing the message again
       window.history.replaceState({}, document.title);
     }
@@ -38,6 +46,19 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Demo Mode Banner */}
+      {location.state?.showDemoPrompt && (
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3">
+          <div className="container-responsive">
+            <div className="text-center">
+              <p className="text-sm sm:text-base font-medium">
+                🚀 <strong>Judge Demo Mode:</strong> Connect your wallet above to instantly access the full dashboard with sample data!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Hero Section */}
       <div className="bg-white dark:bg-gray-900">
         <div className="container-responsive py-12 sm:py-16 lg:py-20">

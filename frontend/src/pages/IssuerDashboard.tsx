@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import WalletConnect from '../components/WalletConnect';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
 import { DashboardOverview, ActivityFeed, QuickStats, DashboardStats, ActivityItem, CertificateList, CertificateWizard, CertificateFormData } from '../components/ui';
+import { demoDataService } from '../services/demoDataService';
+import { useAuth } from '../contexts/AuthContext';
 
 interface ExtendedDashboardStats extends DashboardStats {
   previousMonth: number;
@@ -18,11 +20,15 @@ interface WalletState {
 }
 
 export default function IssuerDashboard() {
+  const { user, isAuthenticated } = useAuth();
   const [walletState, setWalletState] = useState<WalletState>({
     isConnected: false,
     address: null,
     provider: null,
   });
+
+  // Determine if we're in demo mode
+  const isDemoMode = !isAuthenticated && walletState.isConnected;
 
   const [issuedCertificates, setIssuedCertificates] = useState<Certificate[]>([]);
   const [stats, setStats] = useState<ExtendedDashboardStats>({
@@ -75,29 +81,47 @@ export default function IssuerDashboard() {
     setActivities([]);
   }, []);
 
-  // Fetch issued certificates for the connected wallet
+  // Fetch issued certificates for the connected wallet or load demo data
   const fetchIssuedCertificates = useCallback(async () => {
     if (!walletState.isConnected || !walletState.address) return;
 
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/v1/certificates/issuer/${walletState.address}`);
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        setIssuedCertificates(data.data.certificates || []);
-        calculateStats(data.data.certificates || []);
+      if (isDemoMode) {
+        // Load demo data for non-authenticated users
+        const demoData = demoDataService.getDemoData();
+        setIssuedCertificates(demoData.certificates);
+        setStats(demoData.stats);
+        setActivities(demoData.activities);
+        setQuickStats(demoData.quickStats);
+        
+        // Show demo mode notification
+        toast.success('🚀 Demo Mode: Exploring with sample data. Create an account for full features!', {
+          duration: 5000,
+          position: 'top-center',
+        });
       } else {
-        throw new Error(data.error?.message || 'Failed to fetch certificates');
+        // Load real data for authenticated users
+        const response = await fetch(`/api/v1/certificates/issuer/${walletState.address}`);
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          setIssuedCertificates(data.data.certificates || []);
+          calculateStats(data.data.certificates || []);
+        } else {
+          throw new Error(data.error?.message || 'Failed to fetch certificates');
+        }
       }
     } catch (error) {
       console.error('Failed to fetch certificates:', error);
-      toast.error('Failed to load issued certificates');
-      setIssuedCertificates([]);
+      if (!isDemoMode) {
+        toast.error('Failed to load issued certificates');
+        setIssuedCertificates([]);
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [walletState.isConnected, walletState.address]);
+  }, [walletState.isConnected, walletState.address, isDemoMode]);
 
   // Calculate dashboard statistics
   const calculateStats = (certificates: Certificate[]) => {
@@ -164,52 +188,86 @@ export default function IssuerDashboard() {
 
     setIsMinting(true);
     try {
-      // Prepare certificate data for minting
-      const certificateData = {
-        recipient: formData.recipientAddress,
-        recipientName: formData.recipientName,
-        courseName: formData.courseName,
-        institutionName: formData.institutionName,
-        issueDate: Math.floor(new Date(formData.issueDate).getTime() / 1000),
-        description: formData.description || '',
-        issuer: walletState.address,
-      };
-
-      // Call the minting API
-      const response = await fetch('/api/v1/certificates/mint', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(certificateData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to mint certificate');
-      }
-
-      if (data.success) {
-        toast.success('Certificate minted successfully!');
+      if (isDemoMode) {
+        // Demo mode: simulate certificate creation
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network delay
         
-        // Add new activity to the feed
+        const newDemoCertificate: Certificate = {
+          tokenId: `demo-${Date.now()}`,
+          issuer: walletState.address,
+          recipient: formData.recipientAddress,
+          recipientName: formData.recipientName,
+          courseName: formData.courseName,
+          institutionName: formData.institutionName,
+          issueDate: Math.floor(Date.now() / 1000),
+          isValid: true,
+          qrCodeURL: `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=demo-${Date.now()}`,
+          verificationURL: `/verify/demo-${Date.now()}`,
+        };
+
+        // Add to demo certificates
+        setIssuedCertificates(prev => [newDemoCertificate, ...prev]);
+        
+        // Add new activity
         const newActivity: ActivityItem = {
-          id: data.tokenId || Date.now().toString(),
+          id: newDemoCertificate.tokenId,
           type: 'issued',
-          title: `Certificate issued to ${formData.recipientName}`,
+          title: `Demo certificate issued to ${formData.recipientName}`,
           description: `${formData.courseName} - ${formData.institutionName}`,
           timestamp: new Date(),
           recipient: formData.recipientName,
-          certificateId: data.tokenId,
+          certificateId: newDemoCertificate.tokenId,
         };
         
         setActivities(prev => [newActivity, ...prev.slice(0, 9)]);
         
-        // Refresh the certificates list
-        await fetchIssuedCertificates();
+        toast.success('🎯 Demo certificate created! Sign up for a full account to mint real blockchain certificates.', {
+          duration: 6000,
+        });
       } else {
-        throw new Error('Certificate minting failed');
+        // Real mode: actual certificate minting
+        const certificateData = {
+          recipient: formData.recipientAddress,
+          recipientName: formData.recipientName,
+          courseName: formData.courseName,
+          institutionName: formData.institutionName,
+          issueDate: Math.floor(new Date(formData.issueDate).getTime() / 1000),
+          description: formData.description || '',
+          issuer: walletState.address,
+        };
+
+        const response = await fetch('/api/v1/certificates/mint', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(certificateData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error?.message || 'Failed to mint certificate');
+        }
+
+        if (data.success) {
+          toast.success('Certificate minted successfully!');
+          
+          const newActivity: ActivityItem = {
+            id: data.tokenId || Date.now().toString(),
+            type: 'issued',
+            title: `Certificate issued to ${formData.recipientName}`,
+            description: `${formData.courseName} - ${formData.institutionName}`,
+            timestamp: new Date(),
+            recipient: formData.recipientName,
+            certificateId: data.tokenId,
+          };
+          
+          setActivities(prev => [newActivity, ...prev.slice(0, 9)]);
+          await fetchIssuedCertificates();
+        } else {
+          throw new Error('Certificate minting failed');
+        }
       }
     } catch (error) {
       console.error('Minting error:', error);
@@ -278,10 +336,30 @@ export default function IssuerDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Issuer Dashboard</h1>
+              <div className="flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-gray-900">Issuer Dashboard</h1>
+                {isDemoMode && (
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                    🚀 Demo Mode
+                  </span>
+                )}
+              </div>
               <p className="mt-1 text-gray-600">
-                Manage and track your issued certificates
+                {isDemoMode 
+                  ? 'Exploring with sample data - Create an account for full features!'
+                  : 'Manage and track your issued certificates'
+                }
               </p>
+              {isDemoMode && (
+                <div className="mt-2">
+                  <button
+                    onClick={() => window.location.href = '/signup'}
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
+                  >
+                    Upgrade to Full Account
+                  </button>
+                </div>
+              )}
             </div>
             <WalletConnect
               onConnect={handleWalletConnect}

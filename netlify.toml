@@ -1,0 +1,13 @@
+[build]
+  publish = "frontend/build"
+  command = "node build-simple.js"
+
+[build.environment]
+  CI = "false"
+  NODE_ENV = "production"
+  GENERATE_SOURCEMAP = "false"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

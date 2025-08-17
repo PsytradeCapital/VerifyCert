@@ -31,13 +31,13 @@ try {
   try {
     execSync('npx craco build', { 
       stdio: 'inherit',
-      env: { ...process.env, NODE_ENV: 'production' }
+      env: { ...process.env, NODE_ENV: 'production', CI: 'false' }
     });
   } catch (error) {
     console.log('⚠️ CRACO build failed, trying react-scripts...');
     execSync('npx react-scripts build', { 
       stdio: 'inherit',
-      env: { ...process.env, NODE_ENV: 'production' }
+      env: { ...process.env, NODE_ENV: 'production', CI: 'false' }
     });
   }
 

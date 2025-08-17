@@ -46,7 +46,9 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "cross-env CI=false craco build",
+    "build": "react-scripts build",
+    "build:craco": "craco build",
+    "build:no-lint": "set \"CI=false\" && set \"ESLINT_NO_DEV_ERRORS=true\" && react-scripts build",
     "build:optimized": "node scripts/pre-build-optimization.js && npm run build",
     "build:analyze": "node scripts/pre-build-optimization.js && set ANALYZE=true && craco build",
     "test": "craco test --watchAll=false",

@@ -303,7 +303,7 @@ export class BackgroundSync {
   }
 }
 
-export default {
+const serviceWorkerUtils = {
   registerSW,
   unregisterSW,
   updateSW,
@@ -316,3 +316,5 @@ export default {
   OfflineManager,
   BackgroundSync
 };
+
+export default serviceWorkerUtils;

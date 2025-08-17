@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
 import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
 

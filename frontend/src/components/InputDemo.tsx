@@ -70,7 +70,7 @@ const InputDemo: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             validationState={emailValidation.state === 'error' ? 'error' : emailValidation.state === 'success' ? 'success' : 'default'}
             error={emailValidation.state === 'error' ? emailValidation.message : undefined}
-            helperText={emailValidation.state === 'warning' || emailValidation.state === 'default' ? emailValidation.message : undefined}
+            helperText={emailValidation.state === 'default' ? emailValidation.message : undefined}
           />
           <Input
             label="Password"
@@ -79,8 +79,8 @@ const InputDemo: React.FC = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            validationState={passwordValidation.state === 'error' ? 'error' : passwordValidation.state === 'success' ? 'success' : 'default'}
-            error={passwordValidation.state === 'error' ? passwordValidation.message : undefined}
+            validationState={passwordValidation.state === 'success' ? 'success' : 'default'}
+            error={undefined}
             helperText={passwordValidation.state === 'warning' || passwordValidation.state === 'default' ? passwordValidation.message : undefined}
           />
           <Input

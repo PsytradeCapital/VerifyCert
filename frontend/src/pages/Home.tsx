@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
 import PWAInstallTest from '../components/PWAInstallTest';

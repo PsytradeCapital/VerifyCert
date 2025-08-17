@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Error Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .error { color: red; background: #ffe6e6; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { color: green; background: #e6ffe6; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .info { color: blue; background: #e6f3ff; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        #output { max-height: 400px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>VerifyCert Console Error Checker</h1>
+    <p>This page will help identify JavaScript errors in your deployed app.</p>
+    
+    <button onclick="checkApp()">Check App in New Tab</button>
+    <button onclick="clearOutput()">Clear Output</button>
+    
+    <div id="output"></div>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function clearOutput() {
+            output.innerHTML = '';
+        }
+        
+        // Capture console errors
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalLog = console.log;
+        
+        console.error = function(...args) {
+            log(`ERROR: ${args.join(' ')}`, 'error');
+            originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            log(`WARN: ${args.join(' ')}`, 'error');
+            originalWarn.apply(console, args);
+        };
+        
+        // Capture unhandled errors
+        window.addEventListener('error', (e) => {
+            log(`UNHANDLED ERROR: ${e.message} at ${e.filename}:${e.lineno}:${e.colno}`, 'error');
+        });
+        
+        window.addEventListener('unhandledrejection', (e) => {
+            log(`UNHANDLED PROMISE REJECTION: ${e.reason}`, 'error');
+        });
+        
+        function checkApp() {
+            log('Opening app in new tab...', 'info');
+            const newWindow = window.open('http://localhost:3001', '_blank');
+            
+            if (newWindow) {
+                log('App opened. Check this page for any errors that appear.', 'success');
+                
+                // Try to access the new window's console (may not work due to CORS)
+                setTimeout(() => {
+                    try {
+                        if (newWindow.console) {
+                            log('Successfully connected to app window', 'success');
+                        }
+                    } catch (e) {
+                        log('Cannot access app window console due to security restrictions. Please manually check browser console in the app tab.', 'info');
+                    }
+                }, 1000);
+            } else {
+                log('Failed to open app. Please check if popup blocker is enabled.', 'error');
+            }
+        }
+        
+        // Initial check
+        log('Console error checker loaded. Click "Check App in New Tab" to test your app.', 'success');
+        
+        // Test basic functionality
+        setTimeout(() => {
+            log('Testing basic JavaScript functionality...', 'info');
+            
+            // Test if modern JS features work
+            try {
+                const testArrow = () => 'arrow functions work';
+                const testAsync = async () => 'async/await works';
+                const testDestructuring = {a: 1, b: 2};
+                const {a, b} = testDestructuring;
+                
+                log('✓ Modern JavaScript features are supported', 'success');
+            } catch (e) {
+                log(`✗ Modern JavaScript features failed: ${e.message}`, 'error');
+            }
+            
+            // Test if React-like features would work
+            try {
+                if (typeof Symbol !== 'undefined' && typeof Promise !== 'undefined') {
+                    log('✓ React prerequisites (Symbol, Promise) are available', 'success');
+                } else {
+                    log('✗ React prerequisites missing', 'error');
+                }
+            } catch (e) {
+                log(`✗ Error checking React prerequisites: ${e.message}`, 'error');
+            }
+        }, 500);
+    </script>
+</body>
+</html>

@@ -12,7 +12,6 @@ interface LoadingOverlayProps {
   spinnerType?: 'spinner' | 'dots' | 'pulse';
   backdrop?: 'light' | 'dark' | 'blur';
   size?: 'sm' | 'md' | 'lg';
-}
 
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   isLoading,
@@ -37,13 +36,12 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
         return <PulseSpinner size={size} />;
       default:
         return <Spinner size={size === 'sm' ? 'md' : size === 'md' ? 'lg' : 'xl'} />;
-    }
   };
 
   const overlayVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-    exit: { opacity: 0 }
+    exit: { opacity: 0
   };
 
   const contentVariants = {
@@ -51,9 +49,9 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
     visible: { 
       scale: 1, 
       opacity: 1,
-      transition: { delay: 0.1 }
+      transition: { delay: 0.1
     },
-    exit: { scale: 0.8, opacity: 0 }
+    exit: { scale: 0.8, opacity: 0
   };
 
   return (

@@ -106,9 +106,9 @@ describe('ResponsiveUtility Components', () => {
     it('renders different content for different screen sizes', () => {
       render(
         <ResponsiveShow
-          mobile={<div data-testid="mobile">Mobile</div>}
-          tablet={<div data-testid="tablet">Tablet</div>}
-          desktop={<div data-testid="desktop">Desktop</div>}
+          mobile={<div data-testid="mobile">Mobile</div>
+          tablet={<div data-testid="tablet">Tablet</div>
+          desktop={<div data-testid="desktop">Desktop</div>
         />
       );
       
@@ -120,8 +120,8 @@ describe('ResponsiveUtility Components', () => {
     it('renders only provided content', () => {
       render(
         <ResponsiveShow
-          mobile={<div data-testid="mobile">Mobile</div>}
-          desktop={<div data-testid="desktop">Desktop</div>}
+          mobile={<div data-testid="mobile">Mobile</div>
+          desktop={<div data-testid="desktop">Desktop</div>
         />
       );
       

@@ -71,8 +71,6 @@ const MockFocusTrap = ({ children, isActive }: any) => {
       const firstFocusable = containerRef.current.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') as HTMLElement;
       if (firstFocusable) {
         firstFocusable.focus();
-      }
-    }
   }, [isActive]);
   
   return <div ref={containerRef}>{children}</div>;
@@ -87,7 +85,6 @@ const MockRovingTabIndex = ({ children, orientation }: any) => {
         tabIndex: index === activeIndex ? 0 : -1,
         onFocus: () => setActiveIndex(index),
       });
-    }
     return child;
   });
   

@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 interface ResetPasswordFormProps {
   onSuccess?: () => void;
   onBack?: () => void;
-}
 
 export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
   onSuccess,
@@ -27,7 +26,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       newErrors.code = 'Verification code is required';
     } else if (formData.code.length !== 6) {
       newErrors.code = 'Verification code must be 6 digits';
-    }
 
     if (!formData.newPassword) {
       newErrors.newPassword = 'New password is required';
@@ -35,13 +33,11 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       newErrors.newPassword = 'Password must be at least 8 characters';
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(formData.newPassword)) {
       newErrors.newPassword = 'Password must contain uppercase, lowercase, number, and special character';
-    }
 
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -61,7 +57,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       toast.error(error.message || 'Failed to reset password');
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +66,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
-    }
   };
 
   return (
@@ -101,7 +95,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
             }`}
             disabled={isLoading}
           />
-          {errors.code && <p className="mt-1 text-sm text-red-600">{errors.code}</p>}
+          {errors.code && <p className="mt-1 text-sm text-red-600">{errors.code}</p>
         </div>
 
         <div>
@@ -120,7 +114,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
             }`}
             disabled={isLoading}
           />
-          {errors.newPassword && <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>}
+          {errors.newPassword && <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>
         </div>
 
         <div>
@@ -139,7 +133,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
             }`}
             disabled={isLoading}
           />
-          {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
         </div>
 
         <button

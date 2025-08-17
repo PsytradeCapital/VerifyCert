@@ -6,7 +6,6 @@ interface AnimatedWrapperProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
   animation?: 'page' | 'fade' | 'fadeUp' | 'scale';
   className?: string;
-}
 
 /**
  * AnimatedWrapper Component
@@ -30,7 +29,6 @@ const AnimatedWrapper: React.FC<AnimatedWrapperProps> = ({
         return scaleIn;
       default:
         return fadeIn;
-    }
   };
 
   return (

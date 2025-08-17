@@ -15,14 +15,12 @@ export interface VerificationResult {
     issueDate: string;
     isValid: boolean;
   };
-}
 
 export interface VerificationResultsProps {
   result: VerificationResult;
   onShare?: () => void;
   onDownload?: () => void;
   className?: string;
-}
 
 export const VerificationResults: React.FC<VerificationResultsProps> = ({
   result,
@@ -56,7 +54,6 @@ export const VerificationResults: React.FC<VerificationResultsProps> = ({
           borderColor: 'border-yellow-200',
           title: 'Verification Pending'
         };
-    }
   };
 
   const config = getStatusConfig();

@@ -10,14 +10,12 @@ interface ThemeContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   setTheme: (theme: 'light' | 'dark') => void;
-}
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
   children: ReactNode;
   defaultTheme?: 'light' | 'dark';
-}
 
 export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<'light' | 'dark'>(defaultTheme);
@@ -40,7 +38,6 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
       if (!localStorage.getItem('theme-preference')) {
         const newTheme = e.matches ? 'dark' : 'light';
         setThemeState(newTheme);
-      }
     };
 
     mediaQuery.addEventListener('change', handleSystemThemeChange);
@@ -73,7 +70,6 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
       {children}
     </ThemeContext.Provider>
   );
-}
 
 /**
  * Hook to use theme context
@@ -83,9 +79,7 @@ export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
-  }
   return context;
-}
 
 /**
  * Theme Toggle Button Component
@@ -93,7 +87,6 @@ export function useTheme(): ThemeContextType {
 interface ThemeToggleProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg';
-}
 
 export function ThemeToggle({ className = '', size = 'md' }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
@@ -153,7 +146,6 @@ export function ThemeToggle({ className = '', size = 'md' }: ThemeToggleProps) {
       )}
     </button>
   );
-}
 
 /**
  * Theme-aware component wrapper
@@ -164,7 +156,6 @@ interface ThemeAwareProps {
   lightClass?: string;
   darkClass?: string;
   className?: string;
-}
 
 export function ThemeAware({ 
   children, 
@@ -182,7 +173,6 @@ export function ThemeAware({
       {children}
     </div>
   );
-}
 
 /**
  * Hook to get theme-specific values
@@ -193,7 +183,6 @@ export function ThemeAware({
 export function useThemeValue<T>(lightValue: T, darkValue: T): T {
   const { theme } = useTheme();
   return theme === 'light' ? lightValue : darkValue;
-}
 
 /**
  * System theme detection hook
@@ -215,4 +204,3 @@ export function useSystemTheme(): boolean {
   }, []);
 
   return systemPrefersDark;
-}

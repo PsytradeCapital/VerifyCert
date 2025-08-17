@@ -5,7 +5,6 @@ interface PulseSpinnerProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'white' | 'gray' | 'success' | 'warning' | 'error';
   className?: string;
-}
 
 const PulseSpinner: React.FC<PulseSpinnerProps> = ({ 
   size = 'md', 
@@ -37,7 +36,6 @@ const PulseSpinner: React.FC<PulseSpinnerProps> = ({
     end: {
       scale: 1,
       opacity: 0
-    }
   };
 
   return (

@@ -5,13 +5,11 @@ interface Props {
   children: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-}
 
 interface State {
   hasError: boolean;
   error: Error | null;
   errorInfo: ErrorInfo | null;
-}
 
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
@@ -21,7 +19,6 @@ class ErrorBoundary extends Component<Props, State> {
       error: null,
       errorInfo: null,
     };
-  }
 
   static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI
@@ -30,7 +27,6 @@ class ErrorBoundary extends Component<Props, State> {
       error,
       errorInfo: null,
     };
-  }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log error details
@@ -45,11 +41,9 @@ class ErrorBoundary extends Component<Props, State> {
     // Call custom error handler if provided
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
-    }
 
     // Log to external service (could be Sentry, LogRocket, etc.)
     this.logErrorToService(error, errorInfo);
-  }
 
   private logErrorToService = (error: Error, errorInfo: ErrorInfo) => {
     // In a real application, you would send this to an error reporting service
@@ -86,7 +80,6 @@ class ErrorBoundary extends Component<Props, State> {
       // Custom fallback UI provided
       if (this.props.fallback) {
         return this.props.fallback;
-      }
 
       // Default fallback UI
       return (
@@ -150,10 +143,7 @@ class ErrorBoundary extends Component<Props, State> {
           </div>
         </div>
       );
-    }
 
     return this.props.children;
-  }
-}
 
 export default ErrorBoundary;

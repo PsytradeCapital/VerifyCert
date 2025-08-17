@@ -15,14 +15,12 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -30,8 +28,6 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   secondary: {
     whileHover: {
@@ -41,14 +37,12 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -56,8 +50,6 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   tertiary: {
     whileHover: {
@@ -66,14 +58,12 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -82,8 +72,6 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   danger: {
     whileHover: {
@@ -92,14 +80,12 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -107,9 +93,6 @@ export const buttonInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
-  }
 };
 
 // Card interaction animations
@@ -121,7 +104,6 @@ export const cardInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       y: -2,
@@ -129,8 +111,6 @@ export const cardInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
   },
   elevated: {
     whileHover: {
@@ -139,7 +119,6 @@ export const cardInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       y: -3,
@@ -147,8 +126,6 @@ export const cardInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
   },
   outlined: {
     whileHover: {
@@ -158,7 +135,6 @@ export const cardInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       y: -1,
@@ -166,9 +142,6 @@ export const cardInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
-  }
 };
 
 // Input field interaction animations
@@ -181,15 +154,12 @@ export const inputInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileHover: {
       borderColor: 'rgba(107, 114, 128, 0.6)',
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   error: {
     whileFocus: {
@@ -199,15 +169,12 @@ export const inputInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileHover: {
       borderColor: 'rgba(220, 38, 38, 0.8)',
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   success: {
     whileFocus: {
@@ -217,16 +184,12 @@ export const inputInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileHover: {
       borderColor: 'rgba(34, 197, 94, 0.8)',
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
-  }
 };
 
 // Navigation item interaction animations
@@ -240,7 +203,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
@@ -248,7 +210,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -257,8 +218,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   bottomNavItem: {
     whileHover: {
@@ -267,7 +226,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
@@ -275,7 +233,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.05,
@@ -284,8 +241,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   breadcrumbItem: {
     whileHover: {
@@ -294,14 +249,12 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.02,
@@ -310,9 +263,6 @@ export const navigationInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
-  }
 };
 
 // Floating Action Button interactions
@@ -325,7 +275,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
@@ -333,7 +282,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.05,
@@ -342,8 +290,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   secondary: {
     whileHover: {
@@ -353,7 +299,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
@@ -361,7 +306,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.05,
@@ -370,8 +314,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   accent: {
     whileHover: {
@@ -381,7 +323,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
@@ -389,7 +330,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.05,
@@ -398,9 +338,6 @@ export const fabInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
-  }
 };
 
 // Select dropdown interactions
@@ -412,7 +349,6 @@ export const selectInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -421,8 +357,6 @@ export const selectInteractions = {
       transition: {
         duration: durations.normal,
         ease: easings.easeOut
-      }
-    }
   },
   option: {
     whileHover: {
@@ -431,7 +365,6 @@ export const selectInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       backgroundColor: 'rgba(219, 234, 254, 1)',
@@ -439,9 +372,6 @@ export const selectInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
-  }
 };
 
 // Modal interactions
@@ -453,7 +383,6 @@ export const modalInteractions = {
     transition: {
       duration: durations.normal,
       ease: easings.easeInOut
-    }
   },
   content: {
     initial: { 
@@ -474,7 +403,6 @@ export const modalInteractions = {
     transition: {
       duration: durations.normal,
       ease: easings.easeOut
-    }
   },
   closeButton: {
     whileHover: {
@@ -483,16 +411,12 @@ export const modalInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
-  }
 };
 
 // Icon interactions
@@ -504,7 +428,6 @@ export const iconInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
@@ -512,8 +435,6 @@ export const iconInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
   },
   spin: {
     whileHover: {
@@ -522,8 +443,6 @@ export const iconInteractions = {
       transition: {
         duration: durations.slow,
         ease: easings.easeInOut
-      }
-    }
   },
   bounce: {
     whileHover: {
@@ -535,8 +454,6 @@ export const iconInteractions = {
       scale: 0.9,
       y: 0,
       transition: springs.stiff
-    }
-  }
 };
 
 // Link interactions
@@ -548,14 +465,12 @@ export const linkInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.98,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
     },
     whileFocus: {
       scale: 1.01,
@@ -563,8 +478,6 @@ export const linkInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   underline: {
     whileHover: {
@@ -574,9 +487,6 @@ export const linkInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
-  }
 };
 
 // Badge interactions
@@ -587,15 +497,12 @@ export const badgeInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
     },
     whileTap: {
       scale: 0.95,
       transition: {
         duration: durations.fast,
         ease: easings.easeInOut
-      }
-    }
   },
   pulse: {
     animate: {
@@ -604,9 +511,6 @@ export const badgeInteractions = {
         duration: 2,
         repeat: Infinity,
         ease: easings.easeInOut
-      }
-    }
-  }
 };
 
 // Tooltip interactions
@@ -617,8 +521,6 @@ export const tooltipInteractions = {
       transition: {
         duration: durations.fast,
         ease: easings.easeOut
-      }
-    }
   },
   tooltip: {
     initial: { 
@@ -639,8 +541,6 @@ export const tooltipInteractions = {
     transition: {
       duration: durations.fast,
       ease: easings.easeOut
-    }
-  }
 };
 
 // Utility function to get interaction animations based on component type and variant
@@ -670,7 +570,7 @@ export const interactionPresets = {
   // Subtle interactions for professional interfaces
   subtle: {
     scale: 1.01,
-    transition: { duration: durations.fast, ease: easings.easeOut }
+    transition: { duration: durations.fast, ease: easings.easeOut
   },
   
   // Pronounced interactions for call-to-action elements
@@ -678,7 +578,7 @@ export const interactionPresets = {
     scale: 1.05,
     y: -2,
     boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
-    transition: { duration: durations.normal, ease: easings.easeOut }
+    transition: { duration: durations.normal, ease: easings.easeOut
   },
   
   // Playful interactions for engaging elements
@@ -691,6 +591,5 @@ export const interactionPresets = {
   // Minimal interactions for dense interfaces
   minimal: {
     opacity: 0.8,
-    transition: { duration: durations.fast, ease: easings.easeOut }
-  }
+    transition: { duration: durations.fast, ease: easings.easeOut
 };

@@ -6,7 +6,6 @@ interface LoadingOverlayProps {
   message?: string;
   children: React.ReactNode;
   className?: string;
-}
 
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   isLoading,

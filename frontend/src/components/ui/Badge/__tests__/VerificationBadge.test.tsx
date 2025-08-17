@@ -49,7 +49,7 @@ describe('VerificationBadge', () => {
         <VerificationBadge
           {...defaultProps}
           variant="minimal"
-          size="md"
+          size="default"
         />
       );
 
@@ -63,7 +63,7 @@ describe('VerificationBadge', () => {
           isValid={false}
           isRevoked={true}
           variant="minimal"
-          size="md"
+          size="default"
         />
       );
 
@@ -277,7 +277,6 @@ describe('VerificationBadge', () => {
         await waitFor(() => {
           expect(mockBlockchainService.verifyCertificate).toHaveBeenCalledWith('12345');
         });
-      }
     });
   });
 
@@ -309,7 +308,6 @@ describe('VerificationBadge', () => {
           expect(verifyButton).toBeInTheDocument();
           verifyButton.focus();
           expect(verifyButton).toHaveFocus();
-        }
       });
     });
   });

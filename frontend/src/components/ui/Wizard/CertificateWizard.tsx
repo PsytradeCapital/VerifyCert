@@ -14,7 +14,6 @@ export interface CertificateFormData {
   institutionName: string;
   issueDate: string;
   description?: string;
-}
 
 interface CertificateWizardProps {
   onSubmit: (data: CertificateFormData) => Promise<void>;
@@ -23,7 +22,6 @@ interface CertificateWizardProps {
   isConnected?: boolean;
   className?: string;
   onCancel?: () => void;
-}
 
 interface FormErrors {
   recipientAddress?: string;
@@ -32,46 +30,39 @@ interface FormErrors {
   institutionName?: string;
   issueDate?: string;
   description?: string;
-}
 
 interface WizardStep {
   id: string;
   title: string;
   description: string;
   icon: React.ReactNode;
-}
 
 const wizardSteps: WizardStep[] = [
   {
     id: 'recipient',
     title: 'Recipient Info',
     description: 'Enter recipient details',
-    icon: <User className="w-5 h-5" />
-  },
+    icon: <User className="w-5 h-5" />,
   {
     id: 'certificate',
     title: 'Certificate Details',
     description: 'Course and achievement info',
-    icon: <Award className="w-5 h-5" />
-  },
+    icon: <Award className="w-5 h-5" />,
   {
     id: 'institution',
     title: 'Institution Info',
     description: 'Issuing organization details',
-    icon: <Building className="w-5 h-5" />
-  },
+    icon: <Building className="w-5 h-5" />,
   {
     id: 'metadata',
     title: 'Additional Info',
     description: 'Date and description',
-    icon: <FileText className="w-5 h-5" />
-  },
+    icon: <FileText className="w-5 h-5" />,
   {
     id: 'review',
     title: 'Review & Submit',
     description: 'Confirm and issue certificate',
     icon: <Send className="w-5 h-5" />
-  }
 ];
 
 export default function CertificateWizard({
@@ -104,7 +95,6 @@ export default function CertificateWizard({
         ...prev,
         institutionName: 'My Institution',
       }));
-    }
   }, [isConnected, walletAddress, formData.institutionName]);
 
   const validateField = (name: string, value: string): string | undefined => {
@@ -112,72 +102,56 @@ export default function CertificateWizard({
       case 'recipientAddress':
         if (!value.trim()) {
           return 'Recipient address is required';
-        }
         if (!ethers.isAddress(value)) {
           return 'Please enter a valid Ethereum address';
-        }
         if (value.toLowerCase() === walletAddress?.toLowerCase()) {
           return 'Cannot issue certificate to yourself';
-        }
         break;
 
       case 'recipientName':
         if (!value.trim()) {
           return 'Recipient name is required';
-        }
         if (value.trim().length < 2) {
           return 'Name must be at least 2 characters long';
-        }
         if (value.trim().length > 100) {
           return 'Name must be less than 100 characters';
-        }
         break;
 
       case 'courseName':
         if (!value.trim()) {
           return 'Course/Achievement name is required';
-        }
         if (value.trim().length < 3) {
           return 'Course name must be at least 3 characters long';
-        }
         if (value.trim().length > 200) {
           return 'Course name must be less than 200 characters';
-        }
         break;
 
       case 'institutionName':
         if (!value.trim()) {
           return 'Institution name is required';
-        }
         if (value.trim().length < 2) {
           return 'Institution name must be at least 2 characters long';
-        }
         if (value.trim().length > 100) {
           return 'Institution name must be less than 100 characters';
-        }
         break;
 
       case 'issueDate':
         if (!value) {
           return 'Issue date is required';
-        }
         const selectedDate = new Date(value);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         if (selectedDate > today) {
           return 'Issue date cannot be in the future';
-        }
         break;
 
       case 'description':
         if (value && value.length > 500) {
           return 'Description must be less than 500 characters';
-        }
         break;
 
       default:
         break;
-    }
     return undefined;
   };
 
@@ -199,7 +173,6 @@ export default function CertificateWizard({
       if (error) {
         newErrors[field as keyof FormErrors] = error;
         isValid = false;
-      }
     });
 
     setErrors(prev => ({ ...prev, ...newErrors }));
@@ -220,7 +193,6 @@ export default function CertificateWizard({
         ...prev,
         [name]: undefined,
       }));
-    }
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -242,29 +214,24 @@ export default function CertificateWizard({
     if (!validateCurrentStep()) {
       toast.error('Please fix the errors before continuing');
       return;
-    }
 
     // Mark current step as completed
     if (!completedSteps.includes(currentStep.id)) {
       setCompletedSteps(prev => [...prev, currentStep.id]);
-    }
 
     if (currentStepIndex < wizardSteps.length - 1) {
       setCurrentStepIndex(prev => prev + 1);
-    }
   };
 
   const handlePrevious = () => {
     if (currentStepIndex > 0) {
       setCurrentStepIndex(prev => prev - 1);
-    }
   };
 
   const handleSubmit = async () => {
     if (!isConnected) {
       toast.error('Please connect your wallet first');
       return;
-    }
 
     // Validate all fields
     const allErrors: FormErrors = {};
@@ -276,15 +243,12 @@ export default function CertificateWizard({
         if (error) {
           allErrors[key as keyof FormErrors] = error;
           isValid = false;
-        }
-      }
     });
 
     if (!isValid) {
       setErrors(allErrors);
       toast.error('Please fix all errors before submitting');
       return;
-    }
 
     try {
       await onSubmit(formData);
@@ -305,14 +269,13 @@ export default function CertificateWizard({
       
     } catch (error) {
       console.error('Form submission error:', error);
-    }
   };
 
   const renderStepContent = () => {
     const stepVariants = {
       initial: { opacity: 0, x: 20 },
       animate: { opacity: 1, x: 0 },
-      exit: { opacity: 0, x: -20 }
+      exit: { opacity: 0, x: -20
     };
 
     switch (currentStep.id) {
@@ -660,7 +623,6 @@ export default function CertificateWizard({
 
       default:
         return null;
-    }
   };
 
   return (
@@ -684,7 +646,7 @@ export default function CertificateWizard({
           currentStep={currentStep.id}
           completedSteps={completedSteps}
           orientation="horizontal"
-          size="md"
+          size="default"
         />
       </div>
 
@@ -758,4 +720,3 @@ export default function CertificateWizard({
       </div>
     </div>
   );
-}

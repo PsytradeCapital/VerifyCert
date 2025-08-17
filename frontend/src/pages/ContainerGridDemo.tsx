@@ -39,7 +39,7 @@ const ContainerGridDemo: React.FC = () => {
               
               <div className="space-y-4">
                 {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((padding) => (
-                  <Container key={padding} size="md" padding={padding} className="bg-white border border-neutral-200 rounded-lg">
+                  <Container key={padding} size="default" padding={padding} className="bg-white border border-neutral-200 rounded-lg">
                     <div className="bg-primary-50 border border-primary-200 rounded text-center py-2">
                       <span className="text-sm font-medium text-primary-700">
                         Container padding="{padding}"
@@ -56,7 +56,7 @@ const ContainerGridDemo: React.FC = () => {
                 Separate Padding Controls
               </h2>
               
-              <Container size="md" paddingX="xl" paddingY="sm" className="bg-white border border-neutral-200 rounded-lg">
+              <Container size="default" paddingX="xl" paddingY="sm" className="bg-white border border-neutral-200 rounded-lg">
                 <div className="bg-accent-50 border border-accent-200 rounded text-center py-4">
                   <span className="text-sm font-medium text-accent-700">
                     Container paddingX="xl" paddingY="sm"

@@ -8,7 +8,6 @@ export interface QuickStatsProps {
   successRate?: number;
   isLoading?: boolean;
   className?: string;
-}
 
 const QuickStats: React.FC<QuickStatsProps> = ({
   verificationRate = 0,
@@ -47,7 +46,6 @@ const QuickStats: React.FC<QuickStatsProps> = ({
         </svg>
       ),
       color: 'text-purple-600'
-    }
   ];
 
   if (isLoading) {
@@ -67,7 +65,6 @@ const QuickStats: React.FC<QuickStatsProps> = ({
         </div>
       </Card>
     );
-  }
 
   return (
     <Card variant="elevated" padding="lg" className={className}>

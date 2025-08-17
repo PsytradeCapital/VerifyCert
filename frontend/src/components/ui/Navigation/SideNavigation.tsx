@@ -21,7 +21,6 @@ export interface NavigationItem {
   children?: NavigationItem[];
   disabled?: boolean;
   active?: boolean;
-}
 
 export interface SideNavigationProps {
   items?: NavigationItem[];
@@ -30,7 +29,6 @@ export interface SideNavigationProps {
   className?: string;
   showToggleButton?: boolean;
   showBranding?: boolean;
-}
 
 const defaultNavigationItems: NavigationItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard' },
@@ -64,7 +62,6 @@ export default function SideNavigation({
       allItems.push(item);
       if (item.children && expandedItems.has(item.id)) {
         allItems.push(...item.children);
-      }
     });
     return allItems;
   }, [items, expandedItems]);
@@ -72,7 +69,6 @@ export default function SideNavigation({
   const isActive = (path: string) => {
     if (path === '/') {
       return location.pathname === '/';
-    }
     return location.pathname.startsWith(path);
   };
 
@@ -87,7 +83,6 @@ export default function SideNavigation({
         newSet.delete(itemId);
       } else {
         newSet.add(itemId);
-      }
       return newSet;
     });
   };
@@ -134,9 +129,7 @@ export default function SideNavigation({
         const currentItem = allItems[index];
         if (currentItem?.children) {
           toggleExpanded(currentItem.id);
-        }
         break;
-    }
   };
 
   // Handle tooltip positioning for collapsed state
@@ -147,7 +140,6 @@ export default function SideNavigation({
       const rect = event.currentTarget.getBoundingClientRect();
       tooltipRef.current.style.top = `${rect.top + rect.height / 2}px`;
       tooltipRef.current.style.left = `${rect.right + 8}px`;
-    }
   };
 
   const handleMouseLeave = () => {
@@ -159,7 +151,6 @@ export default function SideNavigation({
     items.forEach(item => {
       if (item.children && hasActiveChild(item)) {
         setExpandedItems(prev => new Set(prev).add(item.id));
-      }
     });
   }, [items, location.pathname]);
 
@@ -183,7 +174,6 @@ export default function SideNavigation({
                 ${active || childActive
                   ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700' 
                   : 'text-gray-700 hover:bg-gray-100'
-                }
                 ${item.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
               `}
               onClick={() => !item.disabled && toggleExpanded(item.id)}
@@ -231,7 +221,6 @@ export default function SideNavigation({
               ${active 
                 ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700' 
                 : 'text-gray-700 hover:bg-gray-100'
-              }
               ${collapsed ? 'justify-center' : 'justify-start'}
               ${item.disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}
             `}
@@ -343,4 +332,3 @@ export default function SideNavigation({
       )}
     </nav>
   );
-}

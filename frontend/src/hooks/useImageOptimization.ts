@@ -21,13 +21,11 @@ export const useImageOptimization = () => {
         if (supported) {
           await initializeWebPOptimization();
           setCacheSize(webpCache.size());
-        }
 
         setIsInitialized(true);
       } catch (error) {
         console.error('Failed to initialize image optimization:', error);
         setIsInitialized(true); // Still mark as initialized to prevent blocking
-      }
     };
 
     initializeOptimization();
@@ -63,7 +61,6 @@ export const useOptimizedImage = (originalUrl: string) => {
         setOptimizedUrl(originalUrl);
       } finally {
         setIsLoading(false);
-      }
     };
 
     getOptimizedUrl();
@@ -94,8 +91,6 @@ export const useImagePreloader = (imagePaths: string[]) => {
           setPreloadedCount(loaded);
         } catch (error) {
           console.warn(`Failed to preload ${imagePath}:`, error);
-        }
-      }
       
       setIsComplete(true);
     };
@@ -104,7 +99,6 @@ export const useImagePreloader = (imagePaths: string[]) => {
       preloadImages();
     } else {
       setIsComplete(true);
-    }
   }, [imagePaths]);
 
   return {

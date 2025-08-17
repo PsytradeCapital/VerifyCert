@@ -13,7 +13,6 @@ export default function Verify() {
     if (!certificateId.trim()) {
       toast.error('Please enter a certificate ID');
       return;
-    }
 
     setIsLoading(true);
     
@@ -25,7 +24,6 @@ export default function Verify() {
       toast.error('Failed to navigate to verification page');
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleScanQR = () => {
@@ -149,4 +147,3 @@ export default function Verify() {
       </div>
     </div>
   );
-}

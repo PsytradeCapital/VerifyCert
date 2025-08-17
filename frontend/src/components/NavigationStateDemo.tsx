@@ -59,7 +59,6 @@ const NavigationStateDemo: React.FC = () => {
         </svg>
       ),
       public: false
-    }
   ];
 
   const handleTestTransition = (direction: 'forward' | 'backward') => {
@@ -75,7 +74,6 @@ const NavigationStateDemo: React.FC = () => {
       setTimeout(() => {
         actions.endTransition();
       }, state.transitionDuration);
-    }
   };
 
   const handleUpdateBadge = () => {

@@ -10,7 +10,6 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon?: React.ReactNode;
   removable?: boolean;
   onRemove?: () => void;
-}
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ 
@@ -59,7 +58,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
         onClick={onClick}
         {...props}
       >
-        {icon && <span className="mr-1">{icon}</span>}
+        {icon && <span className="mr-1">{icon}</span>
         {children}
         {removable && onRemove && (
           <button
@@ -74,7 +73,6 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
         )}
       </span>
     );
-  }
 );
 
 Badge.displayName = 'Badge';

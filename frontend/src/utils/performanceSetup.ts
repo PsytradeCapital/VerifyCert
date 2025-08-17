@@ -37,7 +37,6 @@ function setupAutomaticReporting() {
         console.warn('Failed to send performance report:', error);
       });
     }, 5 * 60 * 1000); // 5 minutes
-  }
   
   // Send report on page unload
   window.addEventListener('beforeunload', () => {
@@ -50,12 +49,9 @@ function setupAutomaticReporting() {
           process.env.REACT_APP_PERFORMANCE_ENDPOINT,
           JSON.stringify(report)
         );
-      }
     } catch (error) {
       console.warn('Failed to send final performance report:', error);
-    }
   });
-}
 
 /**
  * Set up performance alerts for critical issues
@@ -84,10 +80,7 @@ function setupPerformanceAlerts() {
         console.table(criticalMetrics);
         console.log('Recommendations:', performanceMetrics.getRecommendations());
         console.groupEnd();
-      }
-    }
   }, 10000); // Check every 10 seconds
-}
 
 /**
  * Set up memory monitoring
@@ -116,7 +109,6 @@ function setupMemoryMonitoring() {
     // Alert on high memory usage
     if (memoryInfo.usagePercentage > 80) {
       console.warn('⚠️ High memory usage detected:', memoryInfo);
-    }
   };
   
   // Monitor memory every 30 seconds
@@ -124,7 +116,6 @@ function setupMemoryMonitoring() {
   
   // Initial memory check
   memoryMonitor();
-}
 
 /**
  * Set up user interaction monitoring
@@ -190,9 +181,7 @@ function setupUserInteractionMonitoring() {
           success: true
         });
       }, 50);
-    }
   });
-}
 
 /**
  * Set up error monitoring integration
@@ -219,7 +208,6 @@ function setupErrorMonitoring() {
       performanceSummary
     });
   });
-}
 
 /**
  * Set up page visibility monitoring
@@ -242,15 +230,11 @@ function setupPageVisibilityMonitoring() {
           hiddenDuration: performance.now() - pageHiddenTime
         });
         pageHiddenTime = null;
-      }
       
       // Log performance stats when page becomes visible again
       if (process.env.NODE_ENV === 'development') {
         setTimeout(logPerformanceStats, 1000);
-      }
-    }
   });
-}
 
 /**
  * Get current performance health status
@@ -309,6 +293,5 @@ if (process.env.NODE_ENV === 'development') {
   };
   
   console.log('🔧 Performance debugging tools available at window.performanceDebug');
-}
 
 export default initializePerformanceMonitoring;

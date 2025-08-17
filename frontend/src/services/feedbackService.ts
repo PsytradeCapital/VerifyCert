@@ -7,7 +7,6 @@ interface FeedbackData {
   userAgent: string;
   screenSize: string;
   context?: string;
-}
 
 interface FeedbackAnalytics {
   totalFeedback: number;
@@ -27,7 +26,6 @@ interface FeedbackAnalytics {
     positiveAspects: string[];
     urgentIssues: string[];
   };
-}
 
 class FeedbackService {
   private readonly STORAGE_KEY = 'verifycert-feedback';
@@ -49,8 +47,6 @@ class FeedbackService {
       this.sendToAnalytics(feedback);
     } catch (error) {
       console.error('Failed to store feedback:', error);
-    }
-  }
 
   /**
    * Get all stored feedback
@@ -62,8 +58,6 @@ class FeedbackService {
     } catch (error) {
       console.error('Failed to retrieve feedback:', error);
       return [];
-    }
-  }
 
   /**
    * Get feedback analytics
@@ -73,15 +67,12 @@ class FeedbackService {
       const stored = localStorage.getItem(this.ANALYTICS_KEY);
       if (stored) {
         return JSON.parse(stored);
-      }
       
       // Generate analytics if not cached
       return this.generateAnalytics();
     } catch (error) {
       console.error('Failed to retrieve analytics:', error);
       return this.getEmptyAnalytics();
-    }
-  }
 
   /**
    * Generate analytics from feedback data
@@ -91,7 +82,6 @@ class FeedbackService {
     
     if (feedback.length === 0) {
       return this.getEmptyAnalytics();
-    }
 
     const totalFeedback = feedback.length;
     const averageRating = feedback.reduce((sum, f) => sum + f.rating, 0) / totalFeedback;
@@ -108,7 +98,6 @@ class FeedbackService {
           averageRating: categoryFeedback.reduce((sum, f) => sum + f.rating, 0) / categoryFeedback.length,
           commonIssues: this.extractCommonIssues(categoryFeedback)
         };
-      }
     });
 
     // Page breakdown
@@ -144,7 +133,6 @@ class FeedbackService {
     localStorage.setItem(this.ANALYTICS_KEY, JSON.stringify(analytics));
     
     return analytics;
-  }
 
   /**
    * Extract common issues from feedback text
@@ -162,7 +150,6 @@ class FeedbackService {
       keywords.forEach(keyword => {
         if (text.includes(keyword)) {
           issues[keyword] = (issues[keyword] || 0) + 1;
-        }
       });
     });
 
@@ -170,7 +157,6 @@ class FeedbackService {
       .sort(([,a], [,b]) => b - a)
       .slice(0, 5)
       .map(([keyword]) => keyword);
-  }
 
   /**
    * Analyze trends in feedback
@@ -188,7 +174,6 @@ class FeedbackService {
       positiveAspects,
       urgentIssues
     };
-  }
 
   /**
    * Extract positive aspects from high-rating feedback
@@ -205,7 +190,6 @@ class FeedbackService {
       keywords.forEach(keyword => {
         if (text.includes(keyword)) {
           aspects[keyword] = (aspects[keyword] || 0) + 1;
-        }
       });
     });
 
@@ -213,7 +197,6 @@ class FeedbackService {
       .sort(([,a], [,b]) => b - a)
       .slice(0, 5)
       .map(([keyword]) => keyword);
-  }
 
   /**
    * Identify urgent issues that need immediate attention
@@ -228,20 +211,16 @@ class FeedbackService {
         urgentKeywords.forEach(keyword => {
           if (text.includes(keyword)) {
             urgentIssues.add(`${f.category}: ${keyword}`);
-          }
         });
-      }
     });
 
     return Array.from(urgentIssues).slice(0, 5);
-  }
 
   /**
    * Update analytics cache
    */
   private updateAnalytics(): void {
     this.generateAnalytics();
-  }
 
   /**
    * Send feedback to external analytics service
@@ -256,9 +235,7 @@ class FeedbackService {
         custom_map: {
           dimension1: feedback.category,
           dimension2: feedback.page
-        }
       });
-    }
 
     // Custom analytics endpoint (if available)
     if (process.env.REACT_APP_ANALYTICS_ENDPOINT) {
@@ -274,8 +251,6 @@ class FeedbackService {
       }).catch(error => {
         console.warn('Failed to send feedback to analytics:', error);
       });
-    }
-  }
 
   /**
    * Get empty analytics structure
@@ -291,9 +266,7 @@ class FeedbackService {
         improvementAreas: [],
         positiveAspects: [],
         urgentIssues: []
-      }
     };
-  }
 
   /**
    * Export feedback data for analysis
@@ -307,7 +280,6 @@ class FeedbackService {
       feedback,
       analytics
     }, null, 2);
-  }
 
   /**
    * Clear all feedback data
@@ -315,7 +287,6 @@ class FeedbackService {
   clearFeedback(): void {
     localStorage.removeItem(this.STORAGE_KEY);
     localStorage.removeItem(this.ANALYTICS_KEY);
-  }
 
   /**
    * Get feedback summary for a specific page
@@ -335,7 +306,6 @@ class FeedbackService {
       averageRating,
       count: feedback.length
     };
-  }
 
   /**
    * Get feedback summary for a specific category
@@ -355,8 +325,6 @@ class FeedbackService {
       averageRating,
       count: feedback.length
     };
-  }
-}
 
 // Export singleton instance
 export const feedbackService = new FeedbackService();

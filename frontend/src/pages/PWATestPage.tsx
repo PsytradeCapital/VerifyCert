@@ -24,10 +24,8 @@ const PWATestPage: React.FC = () => {
         setNetworkTest('online');
       } else {
         setNetworkTest('offline');
-      }
     } catch (error) {
       setNetworkTest('offline');
-    }
     
     setTimeout(() => setNetworkTest('idle'), 3000);
   };
@@ -48,14 +46,12 @@ const PWATestPage: React.FC = () => {
     } catch (error) {
       console.error('Cache test failed:', error);
       return false;
-    }
   };
 
   // Test notification permission
   const testNotificationPermission = async () => {
     if (!('Notification' in window)) {
       return { supported: false, permission: 'not-supported' };
-    }
 
     const permission = Notification.permission;
     
@@ -65,8 +61,6 @@ const PWATestPage: React.FC = () => {
         return { supported: true, permission: result };
       } catch (error) {
         return { supported: true, permission: 'denied', error: error instanceof Error ? error.message : 'Unknown error' };
-      }
-    }
     
     return { supported: true, permission };
   };
@@ -81,7 +75,6 @@ const PWATestPage: React.FC = () => {
     // Keep only last 10 test results
     if (storedResults.length > 10) {
       storedResults.splice(0, storedResults.length - 10);
-    }
     
     localStorage.setItem('pwa-test-history', JSON.stringify(storedResults));
   };
@@ -236,7 +229,6 @@ const PWATestPage: React.FC = () => {
                       });
                     } else {
                       alert('Web Share API: NOT SUPPORTED');
-                    }
                   }}
                   className="w-full px-3 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700"
                 >

@@ -41,15 +41,15 @@ const InteractionAnimationsDemo: React.FC = () => {
 
   // Demo data
   const selectOptions = [
-    { value: 'option1', label: 'Option 1', icon: <Star className="w-4 h-4" /> },
-    { value: 'option2', label: 'Option 2', icon: <Heart className="w-4 h-4" /> },
-    { value: 'option3', label: 'Option 3', icon: <Download className="w-4 h-4" /> },
+    { value: 'option1', label: 'Option 1', icon: <Star className="w-4 h-4" />,
+    { value: 'option2', label: 'Option 2', icon: <Heart className="w-4 h-4" />,
+    { value: 'option3', label: 'Option 3', icon: <Download className="w-4 h-4" />,
   ];
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Components', href: '/components' },
-    { label: 'Animations', active: true }
+    { label: 'Animations', active: true
   ];
 
   // Animated icon component
@@ -240,7 +240,6 @@ const InteractionAnimationsDemo: React.FC = () => {
                 <Input
                   label="Input with Icon"
                   placeholder="Search..."
-                  icon={<Search className="w-4 h-4" />}
                 />
                 <Input
                   label="Success State"
@@ -294,28 +293,22 @@ const InteractionAnimationsDemo: React.FC = () => {
             <Card className="p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Animated Icons</h3>
               <div className="flex flex-wrap gap-4">
-                <AnimatedIcon 
-                  icon={<Heart className="w-6 h-6 text-red-500" />} 
+                <AnimatedIcon
                   variant="default"
                 />
-                <AnimatedIcon 
-                  icon={<Star className="w-6 h-6 text-yellow-500" />} 
+                <AnimatedIcon
                   variant="bounce"
                 />
-                <AnimatedIcon 
-                  icon={<Settings className="w-6 h-6 text-gray-500" />} 
+                <AnimatedIcon
                   variant="spin"
                 />
-                <AnimatedIcon 
-                  icon={<Download className="w-6 h-6 text-blue-500" />} 
+                <AnimatedIcon
                   variant="default"
                 />
-                <AnimatedIcon 
-                  icon={<User className="w-6 h-6 text-green-500" />} 
+                <AnimatedIcon
                   variant="bounce"
                 />
-                <AnimatedIcon 
-                  icon={<Mail className="w-6 h-6 text-purple-500" />} 
+                <AnimatedIcon
                   variant="default"
                 />
               </div>
@@ -335,8 +328,7 @@ const InteractionAnimationsDemo: React.FC = () => {
                   </AnimatedLink>
                 </div>
                 <div className="flex items-center gap-2">
-                  <AnimatedIcon 
-                    icon={<FileText className="w-4 h-4" />} 
+                  <AnimatedIcon
                     variant="default"
                   />
                   <AnimatedLink href="#" variant="default">
@@ -416,7 +408,6 @@ const InteractionAnimationsDemo: React.FC = () => {
 
         {/* Floating Action Button Demo */}
         <FloatingActionButton
-          icon={<Heart className="w-6 h-6" />}
           variant="primary"
           position="bottom-right"
           tooltip="Like this demo"

@@ -45,7 +45,6 @@ const FeedbackDemo: React.FC = () => {
       category: 'overall-experience' as const,
       icon: <MessageSquare className="text-purple-600" size={24} />,
       context: 'Demo: Overall experience assessment'
-    }
   ];
 
   return (

@@ -24,7 +24,6 @@ export interface VerificationBadgeProps {
   variant?: 'minimal' | 'detailed' | 'premium';
   onVerificationComplete?: (result: VerificationResult) => void;
   className?: string;
-}
 
 interface BlockchainProof {
   transactionHash?: string;
@@ -33,7 +32,6 @@ interface BlockchainProof {
   verificationTimestamp: number;
   networkName?: string;
   chainId?: number;
-}
 
 const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   tokenId,
@@ -55,7 +53,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   useEffect(() => {
     if (tokenId && variant !== 'minimal' && !process.env.NODE_ENV?.includes('test')) {
       handleVerification();
-    }
   }, [tokenId, variant]);
 
   const handleVerification = async () => {
@@ -81,11 +78,9 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
           networkName: networkInfo.name,
           chainId: networkInfo.chainId
         });
-      }
 
       if (onVerificationComplete) {
         onVerificationComplete(result);
-      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Verification failed';
       setError(errorMessage);
@@ -97,7 +92,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       });
     } finally {
       setIsVerifying(false);
-    }
   };
 
   const getVerificationStatus = () => {
@@ -109,7 +103,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         label: 'Revoked',
         description: 'This certificate has been revoked'
       };
-    }
 
     if (isVerifying) {
       return {
@@ -119,7 +112,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         label: 'Verifying...',
         description: 'Checking blockchain verification'
       };
-    }
 
     if (error) {
       return {
@@ -129,7 +121,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         label: 'Verification Error',
         description: error
       };
-    }
 
     if (verificationResult) {
       if (verificationResult.isValid && verificationResult.onChain) {
@@ -156,8 +147,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
           label: 'Not Found',
           description: 'Certificate not found on blockchain'
         };
-      }
-    }
 
     // Fallback to props
     if (isValid) {
@@ -168,7 +157,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         label: 'Valid',
         description: 'Certificate is valid'
       };
-    }
 
     return {
       status: 'unknown',
@@ -202,13 +190,11 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       <Badge
         variant={verification.color as any}
         size={size}
-        icon={<IconComponent className="h-3 w-3" />}
         className={className}
       >
         {verification.label}
       </Badge>
     );
-  }
 
   if (variant === 'detailed') {
     return (
@@ -221,11 +207,7 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         >
           <Badge
             variant={verification.color as any}
-            size={size}
-            icon={
-              isVerifying ? (
-                <motion.div
-                  animate={{ rotate: 360 }}
+            size={size}}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                 >
                   <Clock className="h-4 w-4" />
@@ -233,7 +215,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
               ) : (
                 <IconComponent className="h-4 w-4" />
               )
-            }
             onClick={showDetails ? () => setShowProofDetails(!showProofDetails) : undefined}
             className={showDetails ? 'cursor-pointer hover:shadow-md' : ''}
           >
@@ -334,7 +315,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         )}
       </div>
     );
-  }
 
   // Premium variant with enhanced styling
   return (

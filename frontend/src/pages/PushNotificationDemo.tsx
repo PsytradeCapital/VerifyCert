@@ -50,9 +50,8 @@ const PushNotificationDemo: React.FC = () => {
           },
           actions: [
             { action: 'view', title: 'View Certificate' },
-            { action: 'share', title: 'Share' }
+            { action: 'share', title: 'Share'
           ]
-        }
       },
       {
         type: 'Certificate Verified',
@@ -69,10 +68,8 @@ const PushNotificationDemo: React.FC = () => {
             url: '/certificate/123'
           },
           actions: [
-            { action: 'view', title: 'View Details' }
+            { action: 'view', title: 'View Details'
           ]
-        }
-      }
     ];
 
     for (const notification of notifications) {
@@ -107,8 +104,6 @@ const PushNotificationDemo: React.FC = () => {
           message: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
           timestamp: new Date()
         }]);
-      }
-    }
   };
 
   return (

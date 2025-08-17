@@ -7,7 +7,6 @@ interface SpinnerProps {
   color?: 'primary' | 'secondary' | 'white' | 'gray' | 'success' | 'warning' | 'error';
   className?: string;
   speed?: 'slow' | 'normal' | 'fast';
-}
 
 const Spinner: React.FC<SpinnerProps> = ({ 
   size = 'md', 

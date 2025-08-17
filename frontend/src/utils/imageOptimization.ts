@@ -9,7 +9,6 @@ export interface ImageOptimizationOptions {
   height?: number;
   lazy?: boolean;
   placeholder?: 'blur' | 'empty';
-}
 
 /**
  * Generate optimized image URLs with different formats and sizes
@@ -36,7 +35,7 @@ export const generateResponsiveBreakpoints = (
     { width: 320, media: '(max-width: 640px)' },
     { width: 640, media: '(max-width: 1024px)' },
     { width: 1024, media: '(max-width: 1280px)' },
-    { width: 1280, media: '(min-width: 1281px)' }
+    { width: 1280, media: '(min-width: 1281px)'
   ]
 ) => {
   return breakpoints.map(({ width, media }) => ({
@@ -59,7 +58,6 @@ export const optimizeImageUrl = (
   // return original URL
   if (src.startsWith('http') || src.startsWith('data:')) {
     return src;
-  }
   
   // Build query parameters for image optimization
   const params = new URLSearchParams();
@@ -94,7 +92,6 @@ let webpSupported: boolean | null = null;
 export const isWebPSupported = async (): Promise<boolean> => {
   if (webpSupported !== null) {
     return webpSupported;
-  }
   
   webpSupported = await supportsWebP();
   return webpSupported;
@@ -108,7 +105,6 @@ export const getOptimalImageFormat = async (originalSrc: string): Promise<string
   
   if (!isWebPAvailable || originalSrc.includes('.svg') || originalSrc.startsWith('data:')) {
     return originalSrc;
-  }
   
   // For local images, try to find WebP version
   if (!originalSrc.startsWith('http')) {
@@ -119,11 +115,8 @@ export const getOptimalImageFormat = async (originalSrc: string): Promise<string
       const response = await fetch(webpSrc, { method: 'HEAD' });
       if (response.ok) {
         return webpSrc;
-      }
     } catch {
       // WebP version doesn't exist, use original
-    }
-  }
   
   return originalSrc;
 };
@@ -233,9 +226,7 @@ export class LazyImageObserver {
         rootMargin: '50px',
         threshold: 0.1,
         ...options,
-      }
     );
-  }
   
   private handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
@@ -244,9 +235,7 @@ export class LazyImageObserver {
         this.loadImage(img);
         this.observer.unobserve(img);
         this.images.delete(img);
-      }
     });
-  }
   
   private loadImage(img: HTMLImageElement) {
     const src = img.dataset.src;
@@ -255,32 +244,25 @@ export class LazyImageObserver {
     if (src) {
       img.src = src;
       img.removeAttribute('data-src');
-    }
     
     if (srcSet) {
       img.srcset = srcSet;
       img.removeAttribute('data-srcset');
-    }
     
     img.classList.remove('lazy');
     img.classList.add('loaded');
-  }
   
   observe(img: HTMLImageElement) {
     this.images.add(img);
     this.observer.observe(img);
-  }
   
   unobserve(img: HTMLImageElement) {
     this.images.delete(img);
     this.observer.unobserve(img);
-  }
   
   disconnect() {
     this.observer.disconnect();
     this.images.clear();
-  }
-}
 
 /**
  * Global lazy image observer instance
@@ -314,7 +296,6 @@ export const compressImage = (
     if (!ctx) {
       reject(new Error('Canvas not supported'));
       return;
-    }
     
     img.onload = () => {
       // Calculate new dimensions
@@ -323,12 +304,10 @@ export const compressImage = (
       if (width > maxWidth) {
         height = (height * maxWidth) / width;
         width = maxWidth;
-      }
       
       if (height > maxHeight) {
         width = (width * maxHeight) / height;
         height = maxHeight;
-      }
       
       canvas.width = width;
       canvas.height = height;
@@ -342,7 +321,6 @@ export const compressImage = (
             resolve(blob);
           } else {
             reject(new Error('Failed to compress image'));
-          }
         },
         format,
         quality
@@ -373,8 +351,6 @@ export const imagePerformanceMonitor = {
       // Log slow loading images
       if (loadTime > 3000) {
         console.warn(`Slow image load: ${src} took ${loadTime}ms`);
-      }
-    }
   },
   
   getStats: () => {
@@ -382,7 +358,6 @@ export const imagePerformanceMonitor = {
     imagePerformanceMonitor.loadTimes.forEach((time, src) => {
       if (!src.endsWith('_start')) {
         stats[src] = time;
-      }
     });
     return stats;
   },

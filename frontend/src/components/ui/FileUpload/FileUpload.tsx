@@ -13,11 +13,9 @@ export interface FileUploadProps {
   className?: string;
   showPreview?: boolean;
   previewHeight?: number;
-}
 
 interface FileWithPreview extends File {
   preview?: string;
-}
 
 const FileUpload: React.FC<FileUploadProps> = ({
   onFileSelect,
@@ -39,7 +37,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const validateFile = (file: File): string | null => {
     if (maxSize && file.size > maxSize) {
       return `File size must be less than ${formatFileSize(maxSize)}`;
-    }
     return null;
   };
 
@@ -48,7 +45,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
       if (!showPreview) {
         resolve(null);
         return;
-      }
 
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
@@ -57,7 +53,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
         reader.readAsDataURL(file);
       } else {
         resolve(null);
-      }
     });
   };
 
@@ -100,24 +95,19 @@ const FileUpload: React.FC<FileUploadProps> = ({
         const preview = await generatePreview(file);
         const fileWithPreview: FileWithPreview = Object.assign(file, { preview: preview || undefined });
         validFiles.push(fileWithPreview);
-      }
-    }
 
     if (validFiles.length > 0) {
       setSelectedFiles(validFiles);
       onFileSelect(validFiles);
-    }
 
     if (errors.length > 0) {
       console.error('File validation errors:', errors);
-    }
   }, [maxSize, onFileSelect, showPreview]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     if (!disabled) {
       setIsDragOver(true);
-    }
   }, [disabled]);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
@@ -131,7 +121,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
     
     if (!disabled) {
       handleFiles(e.dataTransfer.files);
-    }
   }, [disabled, handleFiles]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,14 +130,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleClick = () => {
     if (!disabled) {
       fileInputRef.current?.click();
-    }
   };
 
   const removeFile = (index: number) => {
     const fileToRemove = selectedFiles[index];
     if (fileToRemove.preview) {
       URL.revokeObjectURL(fileToRemove.preview);
-    }
     const newFiles = selectedFiles.filter((_, i) => i !== index);
     setSelectedFiles(newFiles);
     onFileSelect(newFiles);
@@ -160,7 +147,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
       selectedFiles.forEach(file => {
         if (file.preview) {
           URL.revokeObjectURL(file.preview);
-        }
       });
     };
   }, [selectedFiles]);
@@ -190,7 +176,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
             : error
             ? 'border-red-300 bg-red-50'
             : 'border-gray-300 hover:border-gray-400'
-          }
           ${disabled ? 'bg-gray-50 cursor-not-allowed opacity-60' : 'hover:bg-gray-50 hover:shadow-md'}
           ${selectedFiles.length > 0 ? 'border-green-300 bg-green-50' : ''}
         `}
@@ -206,7 +191,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
           if ((e.key === 'Enter' || e.key === ' ') && !disabled) {
             e.preventDefault();
             handleClick();
-          }
         }}
       >
         {/* Description for screen readers */}

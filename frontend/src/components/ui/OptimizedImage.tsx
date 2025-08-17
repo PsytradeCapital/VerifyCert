@@ -21,7 +21,6 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   blurPlaceholder?: boolean;
   aspectRatio?: 'square' | 'video' | 'photo' | 'auto';
   priority?: boolean; // For above-the-fold images
-}
 
 export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
@@ -59,7 +58,6 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     if (blurPlaceholder && optimization.width && optimization.height) {
       const placeholder = createBlurPlaceholder(optimization.width, optimization.height);
       setBlurDataUrl(placeholder);
-    }
   }, [blurPlaceholder, optimization.width, optimization.height]);
 
   // Intersection observer for lazy loading
@@ -71,18 +69,15 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         if (entry.isIntersecting) {
           setIsInView(true);
           observer.disconnect();
-        }
       },
       {
         threshold: 0.1,
         rootMargin: '50px',
         ...observerOptions,
-      }
     );
 
     if (imgRef.current) {
       observer.observe(imgRef.current);
-    }
 
     return () => observer.disconnect();
   }, [priority, observerOptions]);
@@ -134,22 +129,18 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
             } catch {
               setLoadState('error');
               imagePerformanceMonitor.endLoad(src);
-            }
           } else {
             setLoadState('error');
             imagePerformanceMonitor.endLoad(src);
-          }
         };
         
         img.src = optimizedSrc;
         if (srcSet) {
           img.srcset = srcSet;
-        }
       } catch (error) {
         console.error('Image optimization failed:', error);
         setLoadState('error');
         imagePerformanceMonitor.endLoad(src);
-      }
     };
 
     loadOptimizedImage();
@@ -199,7 +190,6 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         )}
       </div>
     );
-  }
 
   // Error state
   if (loadState === 'error') {
@@ -237,7 +227,6 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         )}
       </div>
     );
-  }
 
   // Loaded state
   return (
@@ -271,7 +260,6 @@ interface ResponsivePictureProps {
     sizes?: string;
   }>;
   webpSources?: boolean;
-}
 
 export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
   src,
@@ -306,7 +294,6 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
         </div>
       </div>
     );
-  }
 
   const getWebPSrc = (originalSrc: string) => {
     return originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');

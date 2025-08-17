@@ -18,7 +18,6 @@ export interface FloatingActionButtonProps {
   tooltip?: string;
   useContext?: boolean;
   enableAnimations?: boolean;
-}
 
 const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   icon,
@@ -121,7 +120,6 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
         {content}
       </motion.button>
     );
-  }
 
   if (href) {
     const MotionLink = motion(Link);
@@ -133,12 +131,10 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           if (disabled) {
             e.preventDefault();
             return;
-          }
           // Use navigation context if available
           if (shouldUseContext) {
             e.preventDefault();
             navigationContext.actions.navigateTo(href);
-          }
         }}
         aria-label={label || tooltip || 'Floating action button'}
         {...animationProps}
@@ -146,7 +142,6 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
         {content}
       </MotionLink>
     );
-  }
 
   return (
     <motion.div

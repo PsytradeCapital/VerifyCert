@@ -18,7 +18,6 @@ export const RouteTracker: React.FC = () => {
     // Monitor route change performance if there was a previous route
     if (previousPath && previousPath !== currentPath) {
       monitorRouteChange(previousPath, currentPath);
-    }
 
     // Update previous location
     previousLocation.current = currentPath;
@@ -26,7 +25,6 @@ export const RouteTracker: React.FC = () => {
     // Log route change in development
     if (process.env.NODE_ENV === 'development') {
       console.log(`🔄 Route changed: ${previousPath || 'initial'} → ${currentPath}`);
-    }
   }, [location.pathname, monitorRouteChange]);
 
   return null; // This component doesn't render anything

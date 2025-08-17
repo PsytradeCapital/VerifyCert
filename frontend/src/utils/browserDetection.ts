@@ -12,7 +12,6 @@ export interface BrowserInfo {
   isTablet: boolean;
   isDesktop: boolean;
   features: BrowserFeatures;
-}
 
 export interface BrowserFeatures {
   serviceWorker: boolean;
@@ -54,7 +53,6 @@ export interface BrowserFeatures {
     aspectRatio: boolean;
     gap: boolean;
   };
-}
 
 /**
  * Detect current browser information
@@ -89,7 +87,6 @@ export function detectBrowser(): BrowserInfo {
     const match = userAgent.match(/Edg\/(\d+)/);
     version = match ? match[1] : 'Unknown';
     engine = 'Blink';
-  }
   
   // Device type detection
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
@@ -109,7 +106,6 @@ export function detectBrowser(): BrowserInfo {
     isDesktop,
     features
   };
-}
 
 /**
  * Detect browser features and capabilities
@@ -175,9 +171,7 @@ export function detectFeatures(): BrowserFeatures {
       subgrid: checkCSS('grid-template-rows', 'subgrid'),
       aspectRatio: checkCSS('aspect-ratio', '1'),
       gap: checkCSS('gap', '10px')
-    }
   };
-}
 
 /**
  * Check if image format is supported
@@ -192,8 +186,6 @@ function checkImageFormat(format: string): boolean {
     return dataURL.startsWith(`data:image/${format}`);
   } catch {
     return false;
-  }
-}
 
 /**
  * Check WebGL support
@@ -204,8 +196,6 @@ function checkWebGL(): boolean {
     return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
   } catch {
     return false;
-  }
-}
 
 /**
  * Check WebGL2 support
@@ -216,8 +206,6 @@ function checkWebGL2(): boolean {
     return !!canvas.getContext('webgl2');
   } catch {
     return false;
-  }
-}
 
 /**
  * Check storage availability
@@ -231,15 +219,12 @@ function checkStorage(type: 'localStorage' | 'sessionStorage'): boolean {
     return true;
   } catch {
     return false;
-  }
-}
 
 /**
  * Check media devices
  */
 function checkMediaDevices(): boolean {
   return 'mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices;
-}
 
 /**
  * Check fullscreen API
@@ -251,7 +236,6 @@ function checkFullscreen(): boolean {
     (document as any).mozFullScreenEnabled ||
     (document as any).msFullscreenEnabled
   );
-}
 
 /**
  * Check ES modules support
@@ -259,7 +243,6 @@ function checkFullscreen(): boolean {
 function checkModules(): boolean {
   const script = document.createElement('script');
   return 'noModule' in script;
-}
 
 /**
  * Check dynamic import support
@@ -270,8 +253,6 @@ function checkDynamicImport(): boolean {
     return true;
   } catch {
     return false;
-  }
-}
 
 /**
  * Check optional chaining support
@@ -282,8 +263,6 @@ function checkOptionalChaining(): boolean {
     return true;
   } catch {
     return false;
-  }
-}
 
 /**
  * Check nullish coalescing support
@@ -294,8 +273,6 @@ function checkNullishCoalescing(): boolean {
     return true;
   } catch {
     return false;
-  }
-}
 
 /**
  * Check CSS feature support
@@ -304,16 +281,13 @@ function checkCSS(property: string, value?: string): boolean {
   if (property.startsWith('@')) {
     // Check CSS at-rule support
     return CSS.supports(property, '');
-  }
   
   if (value) {
     return CSS.supports(property, value);
-  }
   
   // Check if property exists
   const element = document.createElement('div');
   return property in element.style;
-}
 
 /**
  * Get browser compatibility score (0-100)
@@ -332,11 +306,9 @@ export function getBrowserCompatibilityScore(browserInfo: BrowserInfo): number {
       });
     } else if (value) {
       supportedFeatures++;
-    }
   });
   
   return Math.round((supportedFeatures / totalFeatures) * 100);
-}
 
 /**
  * Get browser-specific recommendations
@@ -348,42 +320,33 @@ export function getBrowserRecommendations(browserInfo: BrowserInfo): string[] {
   // Service Worker recommendations
   if (!features.serviceWorker) {
     recommendations.push('Service Worker not supported - PWA features will be limited');
-  }
   
   // Image format recommendations
   if (!features.webp) {
     recommendations.push('WebP not supported - consider fallback images');
-  }
   
   // Storage recommendations
   if (!features.localStorage) {
     recommendations.push('Local Storage not available - user preferences cannot be saved');
-  }
   
   // CSS recommendations
   if (!features.css.grid) {
     recommendations.push('CSS Grid not supported - layout may use flexbox fallbacks');
-  }
   
   if (!features.css.customProperties) {
     recommendations.push('CSS Custom Properties not supported - theming may be limited');
-  }
   
   // Browser-specific recommendations
   if (name === 'Safari' && parseInt(version) < 14) {
     recommendations.push('Safari version is outdated - some modern features may not work');
-  }
   
   if (name === 'Firefox' && parseInt(version) < 90) {
     recommendations.push('Firefox version is outdated - consider updating for better performance');
-  }
   
   if (name === 'Chrome' && parseInt(version) < 90) {
     recommendations.push('Chrome version is outdated - some features may not be available');
-  }
   
   return recommendations;
-}
 
 /**
  * Log browser information for debugging
@@ -404,14 +367,12 @@ export function logBrowserInfo(): void {
     console.group('⚠️ Recommendations');
     recommendations.forEach(rec => console.warn(rec));
     console.groupEnd();
-  }
   
   console.group('🔧 Feature Support');
   console.table(browserInfo.features);
   console.groupEnd();
   
   console.groupEnd();
-}
 
 /**
  * Initialize browser detection and logging
@@ -422,7 +383,6 @@ export function initializeBrowserDetection(): BrowserInfo {
   // Log browser info in development
   if (process.env.NODE_ENV === 'development') {
     logBrowserInfo();
-  }
   
   // Add browser class to document for CSS targeting
   document.documentElement.classList.add(
@@ -432,4 +392,3 @@ export function initializeBrowserDetection(): BrowserInfo {
   );
   
   return browserInfo;
-}

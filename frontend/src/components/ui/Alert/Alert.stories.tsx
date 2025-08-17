@@ -93,13 +93,13 @@ export const ClosableAlerts: Story = {
 export const AlertWithCustomIcon: Story = {
   render: () => (
     <div className="space-y-4">
-      <Alert variant="success" icon={<Heart className="h-5 w-5 text-red-500" />}>
+      <Alert variant="success">
         Custom heart icon alert
       </Alert>
-      <Alert variant="info" icon={<Star className="h-5 w-5 text-yellow-500" />}>
+      <Alert variant="info">
         Custom star icon alert
       </Alert>
-      <Alert variant="warning" icon={<Zap className="h-5 w-5 text-purple-500" />}>
+      <Alert variant="warning">
         Custom lightning icon alert
       </Alert>
     </div>

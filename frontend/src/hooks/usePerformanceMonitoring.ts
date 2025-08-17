@@ -6,7 +6,6 @@ interface UsePerformanceMonitoringOptions {
   trackRenders?: boolean;
   trackEffects?: boolean;
   warnThreshold?: number;
-}
 
 export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOptions = {}) => {
   const {
@@ -38,9 +37,7 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
             averageRenderTime: renderCount.current > 0 ? 
               `${(totalLifetime / renderCount.current).toFixed(2)}ms` : 'N/A'
           });
-        }
       };
-    }
   }, [componentName, trackEffects]);
 
   // Track renders
@@ -57,7 +54,6 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
         // Warn about slow renders in development
         if (process.env.NODE_ENV === 'development' && renderTime > warnThreshold) {
           console.warn(`⚠️ Slow render detected in ${componentName}: ${renderTime.toFixed(2)}ms`);
-        }
 
         // Record render performance
         performanceMonitor.startTiming(`render_${componentName}_${renderCount.current}`);
@@ -69,7 +65,6 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
 
       // Use setTimeout to measure after render completion
       setTimeout(measureRender, 0);
-    }
   });
 
   // Performance measurement utilities
@@ -90,7 +85,6 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
         error: error instanceof Error ? error.message : 'Unknown error' 
       });
       throw error;
-    }
   }, [componentName]);
 
   const measureSync = useCallback(<T>(
@@ -110,7 +104,6 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
         error: error instanceof Error ? error.message : 'Unknown error' 
       });
       throw error;
-    }
   }, [componentName]);
 
   const startTiming = useCallback((operationName: string) => {
@@ -151,7 +144,6 @@ export const useOperationMonitoring = () => {
         ...metadata 
       });
       throw error;
-    }
   }, []);
 
   return { measureOperation };
@@ -190,7 +182,6 @@ export const useApiMonitoring = () => {
         method
       });
       throw error;
-    }
   }, []);
 
   return { monitorApiCall };

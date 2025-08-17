@@ -69,7 +69,6 @@ export const optimizedUtils = {
       return true;
     } catch {
       return false;
-    }
   },
   
   // Array utilities
@@ -90,10 +89,7 @@ export const optimizedUtils = {
         result[key] = deepMerge(result[key] || {}, source[key]);
       } else {
         result[key] = source[key] as T[Extract<keyof T, string>];
-      }
-    }
     return result;
-  }
 };
 
 // Tree-shakable constants
@@ -112,14 +108,12 @@ export const APP_CONSTANTS = {
     CERTIFICATES: '/api/certificates',
     VERIFY: '/api/verify',
     MINT: '/api/mint',
-  }
 } as const;
 
 // Tree-shakable type definitions
 export interface OptimizedComponent {
   displayName?: string;
   defaultProps?: Record<string, any>;
-}
 
 export type TreeShakableHook<T = any> = () => T;
 
@@ -127,4 +121,3 @@ export interface BundleOptimization {
   chunkName: string;
   priority: number;
   test: RegExp;
-}

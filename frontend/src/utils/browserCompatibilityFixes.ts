@@ -7,11 +7,16 @@ export interface BrowserCompatibilityConfig {
   enablePolyfills: boolean;
   enableFallbacks: boolean;
   logCompatibilityIssues: boolean;
-}
 
 /**
  * Initialize browser compatibility fixes
  */
+interface BrowserCompatibilityConfig {
+  enablePolyfills?: boolean;
+  enableFallbacks?: boolean;
+  logCompatibilityIssues?: boolean;
+}
+
 export function initializeBrowserCompatibility(config: BrowserCompatibilityConfig = {
   enablePolyfills: true,
   enableFallbacks: true,
@@ -25,12 +30,10 @@ export function initializeBrowserCompatibility(config: BrowserCompatibilityConfi
   // Apply JavaScript polyfills
   if (config.enablePolyfills) {
     applyPolyfills();
-  }
   
   // Apply runtime fallbacks
   if (config.enableFallbacks) {
     applyRuntimeFallbacks();
-  }
   
   // Fix browser-specific issues
   fixBrowserSpecificIssues();
@@ -38,8 +41,6 @@ export function initializeBrowserCompatibility(config: BrowserCompatibilityConfi
   // Log compatibility information
   if (config.logCompatibilityIssues) {
     logBrowserCompatibility();
-  }
-}
 
 /**
  * Apply CSS-based compatibility fixes
@@ -53,29 +54,22 @@ function applyCSSCompatibilityFixes(): void {
     @supports (-webkit-touch-callout: none) {
       input, textarea, select {
         font-size: 16px !important;
-      }
-    }
     
     /* Fix Chrome autofill styling */
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0 30px white inset !important;
       -webkit-text-fill-color: #111827 !important;
-    }
     
     /* Fix Firefox number input */
     @-moz-document url-prefix() {
       input[type="number"] {
         -moz-appearance: textfield;
-      }
-    }
     
     /* Fix Edge clear button */
     input::-ms-clear {
       display: none;
-    }
   `;
   document.head.appendChild(style);
-}
 
 /**
  * Apply JavaScript polyfills for missing features
@@ -90,24 +84,19 @@ function applyPolyfills(): void {
 
       constructor(callback: ResizeObserverCallback) {
         this.callback = callback;
-      }
 
       observe(element: Element): void {
         this.elements.add(element);
         this.scheduleCallback();
-      }
 
       unobserve(element: Element): void {
         this.elements.delete(element);
-      }
 
       disconnect(): void {
         this.elements.clear();
         if (this.rafId) {
           cancelAnimationFrame(this.rafId);
           this.rafId = null;
-        }
-      }
 
       private scheduleCallback(): void {
         if (this.rafId) return;
@@ -127,16 +116,12 @@ function applyPolyfills(): void {
           
           if (entries.length > 0) {
             this.callback(entries, this);
-          }
           
           this.rafId = null;
           if (this.elements.size > 0) {
             this.scheduleCallback();
-          }
         });
-      }
     };
-  }
 
   // IntersectionObserver polyfill (basic)
   if (!window.IntersectionObserver) {
@@ -146,7 +131,6 @@ function applyPolyfills(): void {
 
       constructor(callback: IntersectionObserverCallback) {
         this.callback = callback;
-      }
 
       observe(element: Element): void {
         this.elements.add(element);
@@ -162,17 +146,13 @@ function applyPolyfills(): void {
             time: Date.now()
           } as IntersectionObserverEntry], this);
         }, 0);
-      }
 
       unobserve(element: Element): void {
         this.elements.delete(element);
-      }
 
       disconnect(): void {
         this.elements.clear();
-      }
     };
-  }
 
   // requestIdleCallback polyfill
   if (!window.requestIdleCallback) {
@@ -183,31 +163,26 @@ function applyPolyfills(): void {
           didTimeout: false,
           timeRemaining() {
             return Math.max(0, 50 - (Date.now() - start));
-          }
         });
       }, 1) as unknown as number;
     };
-  }
 
   if (!window.cancelIdleCallback) {
     window.cancelIdleCallback = function(id: number): void {
       clearTimeout(id);
     };
-  }
 
   // Array.from polyfill for IE
   if (!Array.from) {
     Array.from = function<T>(arrayLike: ArrayLike<T>): T[] {
       return Array.prototype.slice.call(arrayLike);
     };
-  }
 
   // Object.assign polyfill for IE
   if (!Object.assign) {
     Object.assign = function(target: any, ...sources: any[]): any {
       if (target == null) {
         throw new TypeError('Cannot convert undefined or null to object');
-      }
 
       const to = Object(target);
       sources.forEach(source => {
@@ -215,13 +190,10 @@ function applyPolyfills(): void {
           Object.keys(source).forEach(key => {
             to[key] = source[key];
           });
-        }
       });
 
       return to;
     };
-  }
-}
 
 /**
  * Apply runtime fallbacks for unsupported features
@@ -230,28 +202,22 @@ function applyRuntimeFallbacks(): void {
   // CSS Grid fallback
   if (!CSS.supports('display', 'grid')) {
     document.documentElement.classList.add('no-css-grid');
-  }
 
   // Flexbox fallback
   if (!CSS.supports('display', 'flex')) {
     document.documentElement.classList.add('no-flexbox');
-  }
 
   // Custom properties fallback
   if (!CSS.supports('color', 'var(--test)')) {
     document.documentElement.classList.add('no-css-custom-properties');
-  }
 
   // Backdrop filter fallback
   if (!CSS.supports('backdrop-filter', 'blur(10px)')) {
     document.documentElement.classList.add('no-backdrop-filter');
-  }
 
   // Sticky positioning fallback
   if (!CSS.supports('position', 'sticky')) {
     document.documentElement.classList.add('no-sticky');
-  }
-}
 
 /**
  * Fix browser-specific issues
@@ -280,13 +246,10 @@ function fixBrowserSpecificIssues(): void {
         const currentFontSize = window.getComputedStyle(input).fontSize;
         if (parseFloat(currentFontSize) < 16) {
           input.style.fontSize = '16px';
-        }
-      }
     });
 
     // Fix iOS Safari scrolling issues
     document.body.style.webkitOverflowScrolling = 'touch';
-  }
 
   // Safari-specific fixes
   if (/^((?!chrome|android).)*safari/i.test(userAgent)) {
@@ -295,9 +258,7 @@ function fixBrowserSpecificIssues(): void {
     dateInputs.forEach(input => {
       if (input instanceof HTMLInputElement) {
         input.style.webkitAppearance = 'none';
-      }
     });
-  }
 
   // Firefox fixes
   if (userAgent.includes('Firefox')) {
@@ -314,7 +275,6 @@ function fixBrowserSpecificIssues(): void {
         (e.target as HTMLElement).style.outlineOffset = '';
       });
     });
-  }
 
   // Edge/IE fixes
   if (userAgent.includes('Edge') || userAgent.includes('Trident')) {
@@ -324,10 +284,7 @@ function fixBrowserSpecificIssues(): void {
       if (input instanceof HTMLInputElement) {
         input.style.msReveal = 'none';
         input.style.msClear = 'none';
-      }
     });
-  }
-}
 
 /**
  * Log browser compatibility information
@@ -351,7 +308,6 @@ function logBrowserCompatibility(): void {
         return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
       } catch {
         return false;
-      }
     })(),
     'Touch Events': 'ontouchstart' in window,
     'Pointer Events': 'onpointerdown' in window,
@@ -380,28 +336,22 @@ function logBrowserCompatibility(): void {
   
   if (!features['CSS Grid']) {
     issues.push('CSS Grid not supported - using flexbox fallbacks');
-  }
   
   if (!features['CSS Custom Properties']) {
     issues.push('CSS Custom Properties not supported - using static values');
-  }
   
   if (!features['Service Worker']) {
     issues.push('Service Worker not supported - PWA features unavailable');
-  }
   
   if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !features['Touch Events']) {
     issues.push('Touch events not properly supported on iOS device');
-  }
 
   if (issues.length > 0) {
     console.group('⚠️ Compatibility Issues');
     issues.forEach(issue => console.warn(issue));
     console.groupEnd();
-  }
 
   console.groupEnd();
-}
 
 /**
  * Fix specific component compatibility issues
@@ -414,15 +364,11 @@ export function fixComponentCompatibility(): void {
       // Ensure proper transform origin
       if (!element.style.transformOrigin) {
         element.style.transformOrigin = 'center';
-      }
       
       // Fix z-index stacking issues
       if (element.style.position === 'fixed' || element.style.position === 'absolute') {
         if (!element.style.zIndex) {
           element.style.zIndex = '1';
-        }
-      }
-    }
   });
 
   // Fix input autofill styling
@@ -433,9 +379,7 @@ export function fixComponentCompatibility(): void {
       input.addEventListener('animationstart', (e) => {
         if ((e as AnimationEvent).animationName === 'onAutoFillStart') {
           input.style.backgroundColor = 'transparent';
-        }
       });
-    }
   });
 
   // Fix modal backdrop issues
@@ -457,12 +401,8 @@ export function fixComponentCompatibility(): void {
           } else if (!e.shiftKey && document.activeElement === lastElement) {
             e.preventDefault();
             firstElement.focus();
-          }
-        }
       });
-    }
   });
-}
 
 /**
  * Apply browser-specific CSS classes
@@ -480,7 +420,6 @@ export function applyBrowserClasses(): void {
     classes.push('browser-safari');
   } else if (userAgent.includes('Edg')) {
     classes.push('browser-edge');
-  }
 
   // Platform detection
   if (/iPad|iPhone|iPod/.test(userAgent)) {
@@ -491,25 +430,21 @@ export function applyBrowserClasses(): void {
     classes.push('platform-windows');
   } else if (userAgent.includes('Mac')) {
     classes.push('platform-mac');
-  }
 
   // Device type detection
   if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
     classes.push('device-mobile');
   } else {
     classes.push('device-desktop');
-  }
 
   // Touch support
   if ('ontouchstart' in window) {
     classes.push('touch-enabled');
   } else {
     classes.push('no-touch');
-  }
 
   // Apply classes
   document.documentElement.classList.add(...classes);
-}
 
 /**
  * Monitor and fix runtime compatibility issues
@@ -524,12 +459,10 @@ export function monitorCompatibilityIssues(): void {
     if (message.includes('ResizeObserver') && !window.ResizeObserver) {
       console.warn('ResizeObserver not supported - applying polyfill');
       applyPolyfills();
-    }
     
     if (message.includes('IntersectionObserver') && !window.IntersectionObserver) {
       console.warn('IntersectionObserver not supported - applying polyfill');
       applyPolyfills();
-    }
     
     originalError.apply(console, args);
   };
@@ -541,16 +474,11 @@ export function monitorCompatibilityIssues(): void {
         for (const entry of list.getEntries()) {
           if (entry.entryType === 'layout-shift' && (entry as any).value > 0.1) {
             console.warn('Large layout shift detected:', entry);
-          }
-        }
       });
       
       observer.observe({ entryTypes: ['layout-shift'] });
     } catch (e) {
       // PerformanceObserver not fully supported
-    }
-  }
-}
 
 /**
  * Initialize all browser compatibility fixes
@@ -569,5 +497,3 @@ export function initializeAllCompatibilityFixes(): void {
     applyBrowserClasses();
     fixComponentCompatibility();
     monitorCompatibilityIssues();
-  }
-}

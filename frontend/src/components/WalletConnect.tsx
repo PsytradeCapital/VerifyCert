@@ -8,7 +8,6 @@ interface WalletConnectProps {
   onDisconnect?: () => void;
   requiredNetwork?: string;
   className?: string;
-}
 
 interface WalletState {
   isConnected: boolean;
@@ -17,7 +16,6 @@ interface WalletState {
   isConnecting: boolean;
   networkName: string | null;
   hasShownSuccessMessage: boolean;
-}
 
 const POLYGON_AMOY_CHAIN_ID = '0x13882'; // 80002 in hex
 const POLYGON_AMOY_CONFIG = {
@@ -72,7 +70,6 @@ export default function WalletConnect({
         return 'Goerli Testnet';
       default:
         return 'Unknown Network';
-    }
   }, []);
 
   // Switch to Polygon Amoy network
@@ -99,13 +96,10 @@ export default function WalletConnect({
           console.error('Failed to add Polygon Amoy network:', addError);
           toast.error('Failed to add Polygon Amoy network');
           return false;
-        }
       } else {
         console.error('Failed to switch to Polygon Amoy:', switchError);
         toast.error('Failed to switch to Polygon Amoy network');
         return false;
-      }
-    }
   }, []);
 
   // Connect wallet
@@ -114,7 +108,6 @@ export default function WalletConnect({
       toast.error('MetaMask is not installed. Please install MetaMask to continue.');
       window.open('https://metamask.io/download/', '_blank');
       return;
-    }
 
     // Generate unique connection attempt ID
     const attemptId = Date.now().toString();
@@ -130,7 +123,6 @@ export default function WalletConnect({
 
       if (accounts.length === 0) {
         throw new Error('No accounts found');
-      }
 
       const provider = new ethers.BrowserProvider((window as any).ethereum);
       const network = await provider.getNetwork();
@@ -143,7 +135,6 @@ export default function WalletConnect({
         if (!switched) {
           setWalletState(prev => ({ ...prev, isConnecting: false }));
           return;
-        }
         // Refresh network info after switching
         const newNetwork = await provider.getNetwork();
         const newChainId = `0x${newNetwork.chainId.toString(16)}`;
@@ -166,7 +157,6 @@ export default function WalletConnect({
           networkName,
           hasShownSuccessMessage: false,
         });
-      }
 
       onConnect?.(accounts[0], provider);
       
@@ -180,7 +170,6 @@ export default function WalletConnect({
         toast.success('Wallet connected successfully!');
         setWalletState(prev => ({ ...prev, hasShownSuccessMessage: true }));
         lastSuccessMessageTime.current = now;
-      }
     } catch (error: any) {
       console.error('Failed to connect wallet:', error);
       setWalletState(prev => ({ ...prev, isConnecting: false }));
@@ -189,8 +178,6 @@ export default function WalletConnect({
         toast.error('Connection rejected by user');
       } else {
         toast.error('Failed to connect wallet');
-      }
-    }
   }, [isMetaMaskInstalled, getNetworkName, requiredNetwork, switchToPolygonAmoy, onConnect]);
 
   // Disconnect wallet
@@ -220,8 +207,6 @@ export default function WalletConnect({
       if (walletState.provider) {
         onConnect?.(accounts[0], walletState.provider);
         // Never show success message for account changes
-      }
-    }
   }, [disconnectWallet, walletState.address, walletState.provider, onConnect]);
 
   // Handle network changes
@@ -232,7 +217,6 @@ export default function WalletConnect({
     // If required network is polygon-amoy and we're not on it, show warning
     if (requiredNetwork === 'polygon-amoy' && chainId !== POLYGON_AMOY_CHAIN_ID) {
       toast.error('Please switch to Polygon Amoy network');
-    }
   }, [getNetworkName, requiredNetwork]);
 
   // Set up event listeners
@@ -246,7 +230,6 @@ export default function WalletConnect({
       if ((window as any).ethereum?.removeListener) {
         (window as any).ethereum.removeListener('accountsChanged', handleAccountsChanged);
         (window as any).ethereum.removeListener('chainChanged', handleChainChanged);
-      }
     };
   }, [isMetaMaskInstalled, handleAccountsChanged, handleChainChanged]);
 
@@ -277,7 +260,6 @@ export default function WalletConnect({
 
           // Only call onConnect for initial connection check, don't show success message
           onConnect?.(accounts[0], provider);
-        }
       } catch (error) {
         console.error('Failed to check wallet connection:', error);
       } finally {
@@ -285,7 +267,6 @@ export default function WalletConnect({
         setTimeout(() => {
           isInitialMount.current = false;
         }, 1000);
-      }
     };
 
     checkConnection();
@@ -329,7 +310,6 @@ export default function WalletConnect({
         </div>
       </div>
     );
-  }
 
   return (
     <div className={`${className}`}>
@@ -409,4 +389,3 @@ export default function WalletConnect({
       )}
     </div>
   );
-}

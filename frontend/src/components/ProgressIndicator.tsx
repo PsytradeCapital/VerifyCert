@@ -5,14 +5,12 @@ interface Step {
   id: string;
   title: string;
   description?: string;
-}
 
 interface ProgressIndicatorProps {
   steps: Step[];
   currentStep: string;
   completedSteps: string[];
   className?: string;
-}
 
 const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   steps,
@@ -49,7 +47,6 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                       : status === 'current'
                       ? 'bg-blue-500 border-blue-500 text-white'
                       : 'bg-white border-gray-300 text-gray-500'
-                    }
                   `}
                 >
                   {status === 'completed' ? (
@@ -71,7 +68,6 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                         : status === 'completed'
                         ? 'text-green-600'
                         : 'text-gray-500'
-                      }
                     `}
                   >
                     {step.title}
@@ -92,7 +88,6 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                     ${completedSteps.includes(step.id) 
                       ? 'bg-green-500' 
                       : 'bg-gray-300'
-                    }
                   `}
                 />
               )}

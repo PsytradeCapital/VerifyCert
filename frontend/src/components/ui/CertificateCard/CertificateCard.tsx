@@ -16,7 +16,6 @@ export interface Certificate {
   qrCodeURL?: string;
   verificationURL?: string;
   grade?: string;
-}
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -26,7 +25,6 @@ interface CertificateCardProps {
   onDownload?: () => void;
   onShare?: () => void;
   onPrint?: () => void;
-}
 
 export const CertificateCard: React.FC<CertificateCardProps> = ({
   certificate,
@@ -55,7 +53,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
     if (onDownload) {
       onDownload();
       return;
-    }
 
     setIsLoading(true);
     try {
@@ -113,14 +110,12 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       console.error('Download failed:', error);
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleShare = async () => {
     if (onShare) {
       onShare();
       return;
-    }
 
     const shareData = {
       title: `Certificate: ${certificate.courseName}`,
@@ -133,10 +128,8 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(shareData.url || window.location.href);
-      }
     } catch (error) {
       console.error('Share failed:', error);
-    }
   };
 
   const handleCopyLink = async () => {
@@ -145,7 +138,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       await navigator.clipboard.writeText(url);
     } catch (error) {
       console.error('Copy failed:', error);
-    }
   };
 
   const handlePrint = () => {
@@ -153,7 +145,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       onPrint();
     } else {
       window.print();
-    }
   };
 
   return (
@@ -290,7 +281,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     size="default"
                     onClick={handleDownload}
                     loading={isLoading}
-                    icon={<Download />}
                     fullWidth
                   >
                     Download
@@ -300,7 +290,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     variant="outline"
                     size="default"
                     onClick={handleShare}
-                    icon={<Share2 />}
                     fullWidth
                   >
                     Share
@@ -310,7 +299,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     variant="ghost"
                     size="default"
                     onClick={handleCopyLink}
-                    icon={<Copy />}
                     fullWidth
                   >
                     Copy Link

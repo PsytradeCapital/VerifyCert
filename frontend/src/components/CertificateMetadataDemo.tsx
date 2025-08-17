@@ -18,4 +18,3 @@ export default function CertificateMetadataDemo() {
       </div>
     </div>
   );
-}

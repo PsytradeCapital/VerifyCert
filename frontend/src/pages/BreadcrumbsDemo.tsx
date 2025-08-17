@@ -9,7 +9,7 @@ const BreadcrumbsDemo: React.FC = () => {
     { label: 'Home', href: '/' },
     { label: 'Components', href: '/components' },
     { label: 'Navigation', href: '/components/navigation' },
-    { label: 'Breadcrumbs Demo', active: true }
+    { label: 'Breadcrumbs Demo', active: true
   ];
 
   const longBreadcrumbs = [
@@ -19,7 +19,7 @@ const BreadcrumbsDemo: React.FC = () => {
     { label: 'Level 3', href: '/level3' },
     { label: 'Level 4', href: '/level4' },
     { label: 'Level 5', href: '/level5' },
-    { label: 'Current Page', active: true }
+    { label: 'Current Page', active: true
   ];
 
   return (
@@ -77,7 +77,7 @@ const BreadcrumbsDemo: React.FC = () => {
           <div className="bg-gray-50 p-4 rounded-lg">
             <Breadcrumbs 
               items={manualBreadcrumbs} 
-              separator={<span className="text-blue-500">→</span>}
+              separator={<span className="text-blue-500">→</span>
             />
           </div>
         </Card>
@@ -161,7 +161,7 @@ const BreadcrumbsDemo: React.FC = () => {
   items={breadcrumbItems}
   showHomeIcon={false}
   maxItems={4}
-  separator={<span>→</span>}
+  separator={<span>→</span>
 />`}</code>
               </pre>
             </div>

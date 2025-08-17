@@ -10,8 +10,6 @@ const meta: Meta<typeof Select> = {
     docs: {
       description: {
         component: 'A customizable select component with search functionality, multiple variants, and comprehensive accessibility support.'
-      }
-    }
   },
   argTypes: {
     size: {
@@ -33,8 +31,6 @@ const meta: Meta<typeof Select> = {
     },
     loading: {
       control: 'boolean'
-    }
-  }
 };
 
 export default meta;
@@ -44,14 +40,14 @@ const basicOptions: SelectOption[] = [
   { value: 'option1', label: 'Option 1' },
   { value: 'option2', label: 'Option 2' },
   { value: 'option3', label: 'Option 3' },
-  { value: 'option4', label: 'Option 4' }
+  { value: 'option4', label: 'Option 4'
 ];
 
 const optionsWithIcons: SelectOption[] = [
-  { value: 'user', label: 'User', icon: <span>👤</span> },
-  { value: 'admin', label: 'Administrator', icon: <span>👑</span> },
-  { value: 'moderator', label: 'Moderator', icon: <span>🛡️</span> },
-  { value: 'guest', label: 'Guest', icon: <span>👻</span> }
+  { value: 'user', label: 'User', icon: <span>👤</span>,
+  { value: 'admin', label: 'Administrator', icon: <span>👑</span>,
+  { value: 'moderator', label: 'Moderator', icon: <span>🛡️</span>,
+  { value: 'guest', label: 'Guest', icon: <span>👻</span>
 ];
 
 const optionsWithDescriptions: SelectOption[] = [
@@ -59,20 +55,17 @@ const optionsWithDescriptions: SelectOption[] = [
     value: 'basic', 
     label: 'Basic Plan', 
     description: 'Perfect for individuals getting started',
-    icon: <span>📦</span>
-  },
+    icon: <span>📦</span>,
   { 
     value: 'pro', 
     label: 'Pro Plan', 
     description: 'Great for growing teams and businesses',
-    icon: <span>🚀</span>
-  },
+    icon: <span>🚀</span>,
   { 
     value: 'enterprise', 
     label: 'Enterprise Plan', 
     description: 'Advanced features for large organizations',
     icon: <span>🏢</span>
-  }
 ];
 
 const optionsWithDisabled: SelectOption[] = [
@@ -80,7 +73,7 @@ const optionsWithDisabled: SelectOption[] = [
   { value: 'available2', label: 'Available Option 2' },
   { value: 'disabled1', label: 'Disabled Option 1', disabled: true },
   { value: 'available3', label: 'Available Option 3' },
-  { value: 'disabled2', label: 'Disabled Option 2', disabled: true }
+  { value: 'disabled2', label: 'Disabled Option 2', disabled: true
 ];
 
 // Interactive wrapper for controlled stories
@@ -104,7 +97,6 @@ export const Default: Story = {
     options: basicOptions,
     placeholder: 'Select an option',
     label: 'Choose Option'
-  }
 };
 
 export const WithSearch: Story = {
@@ -114,7 +106,6 @@ export const WithSearch: Story = {
     placeholder: 'Search and select',
     label: 'Searchable Select',
     searchable: true
-  }
 };
 
 export const WithIcons: Story = {
@@ -123,7 +114,6 @@ export const WithIcons: Story = {
     options: optionsWithIcons,
     placeholder: 'Select a role',
     label: 'User Role'
-  }
 };
 
 export const WithDescriptions: Story = {
@@ -133,7 +123,6 @@ export const WithDescriptions: Story = {
     placeholder: 'Choose your plan',
     label: 'Subscription Plan',
     searchable: true
-  }
 };
 
 export const Clearable: Story = {
@@ -144,7 +133,6 @@ export const Clearable: Story = {
     label: 'Clearable Select',
     clearable: true,
     value: 'option2'
-  }
 };
 
 export const WithError: Story = {
@@ -154,7 +142,6 @@ export const WithError: Story = {
     placeholder: 'Select an option',
     label: 'Required Field',
     error: 'This field is required'
-  }
 };
 
 export const WithHelperText: Story = {
@@ -164,7 +151,6 @@ export const WithHelperText: Story = {
     placeholder: 'Select an option',
     label: 'With Helper Text',
     helperText: 'Choose the option that best fits your needs'
-  }
 };
 
 export const Disabled: Story = {
@@ -175,7 +161,6 @@ export const Disabled: Story = {
     label: 'Disabled Select',
     disabled: true,
     value: 'option2'
-  }
 };
 
 export const Loading: Story = {
@@ -185,7 +170,6 @@ export const Loading: Story = {
     placeholder: 'Loading options...',
     label: 'Loading State',
     loading: true
-  }
 };
 
 export const WithDisabledOptions: Story = {
@@ -195,7 +179,6 @@ export const WithDisabledOptions: Story = {
     placeholder: 'Select an option',
     label: 'Some Options Disabled',
     searchable: true
-  }
 };
 
 // Size variants
@@ -206,7 +189,6 @@ export const SmallSize: Story = {
     placeholder: 'Small select',
     label: 'Small Size',
     size: 'sm'
-  }
 };
 
 export const LargeSize: Story = {
@@ -216,7 +198,6 @@ export const LargeSize: Story = {
     placeholder: 'Large select',
     label: 'Large Size',
     size: 'lg'
-  }
 };
 
 // Variant styles
@@ -227,7 +208,6 @@ export const OutlinedVariant: Story = {
     placeholder: 'Outlined select',
     label: 'Outlined Variant',
     variant: 'outlined'
-  }
 };
 
 export const FilledVariant: Story = {
@@ -237,7 +217,6 @@ export const FilledVariant: Story = {
     placeholder: 'Filled select',
     label: 'Filled Variant',
     variant: 'filled'
-  }
 };
 
 // Complex example
@@ -251,7 +230,6 @@ export const ComplexExample: Story = {
     searchable: true,
     clearable: true,
     size: 'lg'
-  }
 };
 
 // Multiple selects in a form
@@ -262,10 +240,10 @@ export const FormExample: Story = {
     const [plan, setPlan] = useState('');
     
     const countries = [
-      { value: 'us', label: 'United States', icon: <span>🇺🇸</span> },
-      { value: 'uk', label: 'United Kingdom', icon: <span>🇬🇧</span> },
-      { value: 'ca', label: 'Canada', icon: <span>🇨🇦</span> },
-      { value: 'au', label: 'Australia', icon: <span>🇦🇺</span> }
+      { value: 'us', label: 'United States', icon: <span>🇺🇸</span>,
+      { value: 'uk', label: 'United Kingdom', icon: <span>🇬🇧</span>,
+      { value: 'ca', label: 'Canada', icon: <span>🇨🇦</span>,
+      { value: 'au', label: 'Australia', icon: <span>🇦🇺</span>
     ];
     
     return (
@@ -299,5 +277,4 @@ export const FormExample: Story = {
         />
       </div>
     );
-  }
 };

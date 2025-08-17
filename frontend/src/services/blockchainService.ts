@@ -8,7 +8,6 @@ const CERTIFICATE_ABI = [
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      }
     ],
     "name": "getCertificate",
     "outputs": [
@@ -53,12 +52,10 @@ const CERTIFICATE_ABI = [
             "internalType": "bool",
             "name": "isValid",
             "type": "bool"
-          }
         ],
         "internalType": "struct Certificate.CertificateData",
         "name": "",
         "type": "tuple"
-      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -69,7 +66,6 @@ const CERTIFICATE_ABI = [
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      }
     ],
     "name": "verifyCertificate",
     "outputs": [
@@ -77,7 +73,6 @@ const CERTIFICATE_ABI = [
         "internalType": "bool",
         "name": "",
         "type": "bool"
-      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -88,7 +83,6 @@ const CERTIFICATE_ABI = [
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      }
     ],
     "name": "ownerOf",
     "outputs": [
@@ -96,11 +90,9 @@ const CERTIFICATE_ABI = [
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
     ],
     "stateMutability": "view",
     "type": "function"
-  }
 ];
 
 // Configuration from environment variables
@@ -121,7 +113,6 @@ export interface CertificateData {
   verificationURL?: string;
   qrCodeURL?: string;
   transactionHash?: string;
-}
 
 export interface VerificationResult {
   isValid: boolean;
@@ -131,7 +122,6 @@ export interface VerificationResult {
   transactionHash?: string;
   blockNumber?: string;
   contractAddress?: string;
-}
 
 class BlockchainService {
   private provider: ethers.JsonRpcProvider;
@@ -140,14 +130,12 @@ class BlockchainService {
   constructor() {
     if (!CONTRACT_ADDRESS) {
       throw new Error('Contract address not configured. Please set REACT_APP_CONTRACT_ADDRESS environment variable.');
-    }
 
     // Create public provider (no wallet needed)
     this.provider = new ethers.JsonRpcProvider(RPC_URL);
     
     // Create contract instance
     this.contract = new ethers.Contract(CONTRACT_ADDRESS, CERTIFICATE_ABI, this.provider);
-  }
 
   /**
    * Get certificate data directly from blockchain
@@ -180,15 +168,10 @@ class BlockchainService {
       if (error instanceof Error) {
         if (error.message.includes('CertificateNotFound') || error.message.includes('execution reverted')) {
           throw new Error('Certificate not found on blockchain');
-        }
         if (error.message.includes('network') || error.message.includes('connection')) {
           throw new Error('Network connection error. Please check your internet connection.');
-        }
-      }
       
       throw new Error('Failed to fetch certificate from blockchain');
-    }
-  }
 
   /**
    * Verify certificate authenticity on blockchain
@@ -219,12 +202,9 @@ class BlockchainService {
             const mintEvent = events[0];
             transactionHash = mintEvent.transactionHash;
             blockNumber = mintEvent.blockNumber.toString();
-          }
-        }
       } catch (ownerError) {
         // If ownerOf fails, the token doesn't exist
         ownerExists = false;
-      }
 
       const result: VerificationResult = {
         isValid: isValid && certificate.isValid && ownerExists,
@@ -252,15 +232,12 @@ class BlockchainService {
         verificationTimestamp: Date.now(),
         contractAddress: CONTRACT_ADDRESS
       };
-    }
-  }
 
   /**
    * Check if the blockchain service is properly configured
    */
   isConfigured(): boolean {
     return !!(CONTRACT_ADDRESS && RPC_URL);
-  }
 
   /**
    * Get network information
@@ -280,9 +257,6 @@ class BlockchainService {
         chainId: 0,
         isCorrectNetwork: false
       };
-    }
-  }
-}
 
 // Lazy-loaded singleton instance
 let blockchainServiceInstance: BlockchainService | null = null;
@@ -290,7 +264,6 @@ let blockchainServiceInstance: BlockchainService | null = null;
 export const getBlockchainService = (): BlockchainService => {
   if (!blockchainServiceInstance) {
     blockchainServiceInstance = new BlockchainService();
-  }
   return blockchainServiceInstance;
 };
 

@@ -9,7 +9,6 @@ export interface RegionInfo {
   preferredAuthMethod: 'email' | 'phone';
   timezone: string;
   currency: string;
-}
 
 export const REGIONS: Record<string, RegionInfo> = {
   US: {
@@ -75,7 +74,6 @@ export const REGIONS: Record<string, RegionInfo> = {
     preferredAuthMethod: 'phone',
     timezone: 'Africa/Johannesburg',
     currency: 'ZAR'
-  }
 };
 
 /**
@@ -83,14 +81,12 @@ export const REGIONS: Record<string, RegionInfo> = {
  */
 export function getRegionInfo(regionCode: string): RegionInfo | null {
   return REGIONS[regionCode.toUpperCase()] || null;
-}
 
 /**
  * Get all available regions
  */
 export function getAllRegions(): RegionInfo[] {
   return Object.values(REGIONS);
-}
 
 /**
  * Get region options for select dropdown
@@ -100,7 +96,6 @@ export function getRegionOptions(): Array<{ value: string; label: string }> {
     value: region.code,
     label: region.name
   }));
-}
 
 /**
  * Detect region from phone number
@@ -108,17 +103,13 @@ export function getRegionOptions(): Array<{ value: string; label: string }> {
 export function detectRegionFromPhone(phoneNumber: string): string | null {
   if (!phoneNumber.startsWith('+')) {
     return null;
-  }
 
   // Simple detection based on phone prefix
   for (const region of Object.values(REGIONS)) {
     if (phoneNumber.startsWith(region.phonePrefix)) {
       return region.code;
-    }
-  }
 
   return null;
-}
 
 /**
  * Format phone number for display
@@ -133,11 +124,8 @@ export function formatPhoneNumber(phoneNumber: string, regionCode?: string): str
       // Basic formatting - can be enhanced with a proper phone formatting library
       const number = phoneNumber.substring(region.phonePrefix.length);
       return `${region.phonePrefix} ${number}`;
-    }
-  }
 
   return phoneNumber;
-}
 
 /**
  * Validate phone number format
@@ -146,7 +134,6 @@ export function isValidPhoneNumber(phoneNumber: string): boolean {
   // Basic validation - starts with + and has 7-15 digits
   const phoneRegex = /^\+[1-9]\d{6,14}$/;
   return phoneRegex.test(phoneNumber);
-}
 
 /**
  * Get preferred authentication method for region
@@ -154,7 +141,6 @@ export function isValidPhoneNumber(phoneNumber: string): boolean {
 export function getPreferredAuthMethod(regionCode: string): 'email' | 'phone' {
   const region = getRegionInfo(regionCode);
   return region?.preferredAuthMethod || 'email';
-}
 
 /**
  * Get timezone for region
@@ -162,7 +148,6 @@ export function getPreferredAuthMethod(regionCode: string): 'email' | 'phone' {
 export function getRegionTimezone(regionCode: string): string {
   const region = getRegionInfo(regionCode);
   return region?.timezone || 'UTC';
-}
 
 /**
  * Format date/time for region
@@ -182,8 +167,6 @@ export function formatDateForRegion(date: Date, regionCode: string): string {
   } catch (error) {
     // Fallback to UTC if timezone is not supported
     return date.toISOString();
-  }
-}
 
 /**
  * Get currency symbol for region
@@ -203,4 +186,3 @@ export function getCurrencySymbol(regionCode: string): string {
   };
 
   return currencySymbols[region?.currency || 'USD'] || '$';
-}

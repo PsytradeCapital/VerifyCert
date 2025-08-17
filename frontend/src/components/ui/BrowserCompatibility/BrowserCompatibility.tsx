@@ -11,7 +11,6 @@ interface BrowserCompatibilityProps {
   showRecommendations?: boolean;
   minCompatibilityScore?: number;
   className?: string;
-}
 
 export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
   showDetails = false,
@@ -36,7 +35,6 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
 
   if (!browserInfo) {
     return null;
-  }
 
   const isCompatible = compatibilityScore >= minCompatibilityScore;
   const hasRecommendations = recommendations.length > 0;
@@ -185,7 +183,6 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
                         </span>
                       </div>
                     ));
-                  }
                   
                   return (
                     <div key={feature} className="flex items-center justify-between p-2 bg-white rounded border">

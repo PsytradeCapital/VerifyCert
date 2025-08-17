@@ -176,7 +176,6 @@ describe('CertificateMetadata', () => {
         await waitFor(() => {
           expect(navigator.clipboard.writeText).toHaveBeenCalledWith('12345');
         });
-      }
     });
 
     it('shows success indicator after copying', async () => {

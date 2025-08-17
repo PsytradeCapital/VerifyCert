@@ -15,7 +15,6 @@ export interface AppLayoutProps {
   onSearchClick?: () => void;
   userMenu?: UserMenuProps;
   headerChildren?: React.ReactNode;
-}
 
 const AppLayout: React.FC<AppLayoutProps> = ({
   children,
@@ -45,7 +44,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({
       // Auto-close mobile menu when switching to desktop
       if (!mobile && mobileMenuOpen) {
         setMobileMenuOpen(false);
-      }
       
       // Auto-expand sidebar on desktop if it was collapsed due to mobile
       if (!mobile && !tablet) {
@@ -53,8 +51,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({
         const wasManuallyCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
         if (!wasManuallyCollapsed) {
           setSidebarCollapsed(false);
-        }
-      }
     };
 
     handleResize();
@@ -70,7 +66,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({
       setSidebarCollapsed(newCollapsed);
       // Remember user preference for desktop
       localStorage.setItem('sidebar-collapsed', newCollapsed.toString());
-    }
   };
 
   const closeMobileMenu = () => {
@@ -149,7 +144,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                       mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
                     }`
                   : 'flex flex-shrink-0'
-                }
               `}
             >
               <div className={`

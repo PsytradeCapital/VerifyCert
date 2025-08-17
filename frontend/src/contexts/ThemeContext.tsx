@@ -12,7 +12,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // Theme provider props
 interface ThemeProviderProps {
   children: ReactNode;
-}
 
 /**
  * Theme Provider Component
@@ -37,7 +36,6 @@ export const useThemeContext = (): ThemeContextType => {
   
   if (context === undefined) {
     throw new Error('useThemeContext must be used within a ThemeProvider');
-  }
   
   return context;
 };

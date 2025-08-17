@@ -8,7 +8,6 @@ export interface FABAction {
   onClick: () => void;
   disabled?: boolean;
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
-}
 
 export interface FloatingActionButtonProps {
   actions?: FABAction[];
@@ -20,7 +19,6 @@ export interface FloatingActionButtonProps {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
-}
 
 const positionClasses = {
   'bottom-right': 'fixed bottom-6 right-6',
@@ -67,14 +65,12 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
       setIsExpanded(!isExpanded);
     } else if (onClick) {
       onClick();
-    }
   };
 
   const handleActionClick = (action: FABAction) => {
     if (!action.disabled) {
       action.onClick();
       setIsExpanded(false);
-    }
   };
 
   const mainButtonClasses = `

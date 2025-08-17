@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Bell, Shield, Palette, Globe, Download, Trash2, Save, Camera } from 'lucide-react';
-import Button from '../Button/Button';
+import { Button } from "../Button/Button";
 import { Card } from '../Card/Card';
 
 interface UserProfile {
@@ -10,7 +10,6 @@ interface UserProfile {
   institution: string;
   role: string;
   avatar?: string;
-}
 
 interface NotificationSettings {
   emailNotifications: boolean;
@@ -18,21 +17,18 @@ interface NotificationSettings {
   certificateIssued: boolean;
   certificateVerified: boolean;
   systemUpdates: boolean;
-}
 
 interface PrivacySettings {
   profileVisibility: 'public' | 'private' | 'institution';
   showEmail: boolean;
   showInstitution: boolean;
   dataSharing: boolean;
-}
 
 interface AppearanceSettings {
   theme: 'light' | 'dark' | 'system';
   language: string;
   dateFormat: string;
   timezone: string;
-}
 
 interface SettingsPanelProps {
   userProfile: UserProfile;
@@ -41,7 +37,6 @@ interface SettingsPanelProps {
   appearanceSettings: AppearanceSettings;
   onSave: (settings: any) => void;
   className?: string;
-}
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   userProfile: initialProfile,
@@ -62,7 +57,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     { id: 'profile', label: 'Profile', icon: User },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'privacy', label: 'Privacy', icon: Shield },
-    { id: 'appearance', label: 'Appearance', icon: Palette }
+    { id: 'appearance', label: 'Appearance', icon: Palette
   ];
 
   const handleSave = () => {
@@ -321,7 +316,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         return <AppearanceSettings />;
       default:
         return <ProfileSettings />;
-    }
   };
 
   return (
@@ -344,7 +338,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         ${activeTab === tab.id
                           ? 'bg-blue-100 text-blue-700'
                           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                        }
                       `}
                     >
                       <Icon className="w-5 h-5 mr-3" />

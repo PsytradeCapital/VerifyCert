@@ -9,7 +9,6 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   validationState?: 'default' | 'success' | 'error';
   enableAnimations?: boolean;
   fieldName?: string;
-}
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,

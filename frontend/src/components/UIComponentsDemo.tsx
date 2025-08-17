@@ -128,7 +128,7 @@ const UIComponentsDemo: React.FC = () => {
             isOpen={modalOpen}
             onClose={() => setModalOpen(false)}
             title="Example Modal"
-            size="md"
+            size="default"
           >
             <div className="p-6">
               <p className="text-gray-600 mb-4">
@@ -181,7 +181,6 @@ const UIComponentsDemo: React.FC = () => {
                   Delete
                 </Button>
               </>
-            }
           >
             <div className="flex items-center space-x-3 p-4 bg-red-50 rounded-lg">
               <AlertTriangle className="w-5 h-5 text-red-500" />
@@ -262,10 +261,10 @@ const UIComponentsDemo: React.FC = () => {
             </div>
             
             <div className="flex flex-wrap gap-2 mb-4">
-              <Badge variant="success" icon={<CheckCircle className="w-3 h-3" />}>
+              <Badge variant="success">
                 Verified
               </Badge>
-              <Badge variant="info" icon={<Star className="w-3 h-3" />} rounded>
+              <Badge variant="info" rounded>
                 Premium
               </Badge>
               <Badge variant="warning" outline>
@@ -277,9 +276,9 @@ const UIComponentsDemo: React.FC = () => {
           <div>
             <h3 className="text-lg font-medium text-gray-700 mb-4">Tags</h3>
             <div className="flex flex-wrap gap-2">
-              <Tag color="blue" icon={<User />}>Frontend</Tag>
-              <Tag color="green" icon={<Star />}>React</Tag>
-              <Tag color="purple" icon={<Zap />}>TypeScript</Tag>
+              <Tag color="blue">Frontend</Tag>
+              <Tag color="green">React</Tag>
+              <Tag color="purple">TypeScript</Tag>
               <Tag color="yellow">JavaScript</Tag>
               <Tag color="red">CSS</Tag>
               <Tag color="indigo">Tailwind</Tag>
@@ -326,7 +325,6 @@ const UIComponentsDemo: React.FC = () => {
                   <strong>Complex Content</strong>
                   <p>Tooltips can contain rich content including HTML elements.</p>
                 </div>
-              }
             >
               <Button variant="outline">Rich Content</Button>
             </Tooltip>

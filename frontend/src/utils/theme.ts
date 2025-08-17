@@ -18,11 +18,9 @@ export const getThemeColor = (
   
   if (typeof colorGroup === 'string') {
     return colorGroup;
-  }
   
   if (shade && typeof colorGroup === 'object') {
     return colorGroup[shade] || colorGroup[500];
-  }
   
   return typeof colorGroup === 'object' ? colorGroup[500] : colorGroup;
 };
@@ -120,7 +118,6 @@ export const applyThemeToDocument = (theme: Theme): void => {
   // Apply new theme
   if (theme === 'dark') {
     root.setAttribute('data-theme', 'dark');
-  }
   
   // Update meta theme-color for mobile browsers
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
@@ -129,14 +126,12 @@ export const applyThemeToDocument = (theme: Theme): void => {
       'content',
       theme === 'dark' ? '#0f172a' : '#ffffff'
     );
-  }
   
   // Update manifest theme colors if available
   const manifestLink = document.querySelector('link[rel="manifest"]') as HTMLLinkElement;
   if (manifestLink) {
     // This would require dynamic manifest generation
     // For now, we'll just update the meta tag
-  }
 };
 
 /**

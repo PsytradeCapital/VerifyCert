@@ -8,7 +8,6 @@ interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
-}
 
 const LoadingButton: React.FC<LoadingButtonProps> = ({
   loading = false,
@@ -44,7 +43,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
   const buttonVariants = {
     idle: { scale: 1 },
     loading: { scale: 0.98 },
-    tap: { scale: 0.95 }
+    tap: { scale: 0.95
   };
 
   return (

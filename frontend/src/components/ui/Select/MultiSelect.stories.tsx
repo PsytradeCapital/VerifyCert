@@ -11,8 +11,6 @@ const meta: Meta<typeof MultiSelect> = {
     docs: {
       description: {
         component: 'A multi-selection component that allows users to select multiple options from a dropdown list with search functionality and tag display.'
-      }
-    }
   },
   argTypes: {
     size: {
@@ -27,8 +25,6 @@ const meta: Meta<typeof MultiSelect> = {
     },
     maxSelections: {
       control: 'number'
-    }
-  }
 };
 
 export default meta;
@@ -39,20 +35,20 @@ const basicOptions: SelectOption[] = [
   { value: 'option2', label: 'Option 2' },
   { value: 'option3', label: 'Option 3' },
   { value: 'option4', label: 'Option 4' },
-  { value: 'option5', label: 'Option 5' }
+  { value: 'option5', label: 'Option 5'
 ];
 
 const skillsOptions: SelectOption[] = [
-  { value: 'javascript', label: 'JavaScript', icon: <span>🟨</span> },
-  { value: 'typescript', label: 'TypeScript', icon: <span>🔷</span> },
-  { value: 'react', label: 'React', icon: <span>⚛️</span> },
-  { value: 'vue', label: 'Vue.js', icon: <span>💚</span> },
-  { value: 'angular', label: 'Angular', icon: <span>🅰️</span> },
-  { value: 'node', label: 'Node.js', icon: <span>💚</span> },
-  { value: 'python', label: 'Python', icon: <span>🐍</span> },
-  { value: 'java', label: 'Java', icon: <span>☕</span> },
-  { value: 'csharp', label: 'C#', icon: <span>🔷</span> },
-  { value: 'php', label: 'PHP', icon: <span>🐘</span> }
+  { value: 'javascript', label: 'JavaScript', icon: <span>🟨</span>,
+  { value: 'typescript', label: 'TypeScript', icon: <span>🔷</span>,
+  { value: 'react', label: 'React', icon: <span>⚛️</span>,
+  { value: 'vue', label: 'Vue.js', icon: <span>💚</span>,
+  { value: 'angular', label: 'Angular', icon: <span>🅰️</span>,
+  { value: 'node', label: 'Node.js', icon: <span>💚</span>,
+  { value: 'python', label: 'Python', icon: <span>🐍</span>,
+  { value: 'java', label: 'Java', icon: <span>☕</span>,
+  { value: 'csharp', label: 'C#', icon: <span>🔷</span>,
+  { value: 'php', label: 'PHP', icon: <span>🐘</span>
 ];
 
 const categoriesOptions: SelectOption[] = [
@@ -60,38 +56,32 @@ const categoriesOptions: SelectOption[] = [
     value: 'frontend', 
     label: 'Frontend Development', 
     description: 'User interface and user experience',
-    icon: <span>🎨</span>
-  },
+    icon: <span>🎨</span>,
   { 
     value: 'backend', 
     label: 'Backend Development', 
     description: 'Server-side logic and databases',
-    icon: <span>⚙️</span>
-  },
+    icon: <span>⚙️</span>,
   { 
     value: 'mobile', 
     label: 'Mobile Development', 
     description: 'iOS and Android applications',
-    icon: <span>📱</span>
-  },
+    icon: <span>📱</span>,
   { 
     value: 'devops', 
     label: 'DevOps & Infrastructure', 
     description: 'Deployment and system administration',
-    icon: <span>🚀</span>
-  },
+    icon: <span>🚀</span>,
   { 
     value: 'design', 
     label: 'UI/UX Design', 
     description: 'User interface and experience design',
-    icon: <span>🎯</span>
-  },
+    icon: <span>🎯</span>,
   { 
     value: 'data', 
     label: 'Data Science', 
     description: 'Analytics and machine learning',
     icon: <span>📊</span>
-  }
 ];
 
 const optionsWithDisabled: SelectOption[] = [
@@ -100,7 +90,7 @@ const optionsWithDisabled: SelectOption[] = [
   { value: 'disabled1', label: 'Disabled Option 1', disabled: true },
   { value: 'available3', label: 'Available Option 3' },
   { value: 'disabled2', label: 'Disabled Option 2', disabled: true },
-  { value: 'available4', label: 'Available Option 4' }
+  { value: 'available4', label: 'Available Option 4'
 ];
 
 // Interactive wrapper for controlled stories
@@ -124,7 +114,6 @@ export const Default: Story = {
     options: basicOptions,
     placeholder: 'Select multiple options',
     label: 'Multiple Selection'
-  }
 };
 
 export const WithSearch: Story = {
@@ -134,7 +123,6 @@ export const WithSearch: Story = {
     placeholder: 'Search and select skills',
     label: 'Technical Skills',
     searchable: true
-  }
 };
 
 export const WithIcons: Story = {
@@ -144,7 +132,6 @@ export const WithIcons: Story = {
     placeholder: 'Select programming languages',
     label: 'Programming Languages',
     value: ['javascript', 'react']
-  }
 };
 
 export const WithDescriptions: Story = {
@@ -155,7 +142,6 @@ export const WithDescriptions: Story = {
     label: 'Areas of Expertise',
     searchable: true,
     value: ['frontend', 'backend']
-  }
 };
 
 export const WithMaxSelections: Story = {
@@ -167,7 +153,6 @@ export const WithMaxSelections: Story = {
     maxSelections: 3,
     searchable: true,
     helperText: 'Choose your top 3 technical skills'
-  }
 };
 
 export const WithError: Story = {
@@ -177,7 +162,6 @@ export const WithError: Story = {
     placeholder: 'Select at least one option',
     label: 'Required Field',
     error: 'Please select at least one option'
-  }
 };
 
 export const WithHelperText: Story = {
@@ -188,7 +172,6 @@ export const WithHelperText: Story = {
     label: 'Technical Skills',
     helperText: 'Select all the technologies you are proficient in',
     searchable: true
-  }
 };
 
 export const Disabled: Story = {
@@ -199,7 +182,6 @@ export const Disabled: Story = {
     label: 'Disabled State',
     disabled: true,
     value: ['option1', 'option2']
-  }
 };
 
 export const WithDisabledOptions: Story = {
@@ -209,7 +191,6 @@ export const WithDisabledOptions: Story = {
     placeholder: 'Some options are disabled',
     label: 'Mixed Availability',
     searchable: true
-  }
 };
 
 // Size variants
@@ -221,7 +202,6 @@ export const SmallSize: Story = {
     label: 'Small Size',
     size: 'sm',
     value: ['option1', 'option2']
-  }
 };
 
 export const LargeSize: Story = {
@@ -232,7 +212,6 @@ export const LargeSize: Story = {
     label: 'Large Size',
     size: 'lg',
     value: ['option1', 'option2']
-  }
 };
 
 // Complex example with many selections
@@ -244,7 +223,6 @@ export const ManySelections: Story = {
     label: 'Technology Stack',
     searchable: true,
     value: ['javascript', 'typescript', 'react', 'node', 'python']
-  }
 };
 
 // Form example
@@ -260,7 +238,7 @@ export const FormExample: Story = {
       { value: 'iot', label: 'Internet of Things' },
       { value: 'ar', label: 'Augmented Reality' },
       { value: 'vr', label: 'Virtual Reality' },
-      { value: 'quantum', label: 'Quantum Computing' }
+      { value: 'quantum', label: 'Quantum Computing'
     ];
     
     return (
@@ -297,7 +275,6 @@ export const FormExample: Story = {
         />
       </div>
     );
-  }
 };
 
 // Performance example with many options
@@ -313,7 +290,6 @@ export const ManyOptions: Story = {
     label: 'Large Dataset',
     searchable: true,
     helperText: 'This example demonstrates performance with 100 options'
-  }
 };
 
 // Real-world example: Team member selection
@@ -325,37 +301,31 @@ export const TeamMemberSelection: Story = {
         value: 'john', 
         label: 'John Smith', 
         description: 'Frontend Developer',
-        icon: <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">JS</div>
-      },
+        icon: <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">JS</div>,
       { 
         value: 'sarah', 
         label: 'Sarah Johnson', 
         description: 'Backend Developer',
-        icon: <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">SJ</div>
-      },
+        icon: <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">SJ</div>,
       { 
         value: 'mike', 
         label: 'Mike Chen', 
         description: 'UI/UX Designer',
-        icon: <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs">MC</div>
-      },
+        icon: <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs">MC</div>,
       { 
         value: 'lisa', 
         label: 'Lisa Rodriguez', 
         description: 'Product Manager',
-        icon: <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs">LR</div>
-      },
+        icon: <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs">LR</div>,
       { 
         value: 'david', 
         label: 'David Kim', 
         description: 'DevOps Engineer',
         icon: <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">DK</div>
-      }
     ],
     placeholder: 'Select team members',
     label: 'Project Team',
     searchable: true,
     maxSelections: 4,
     helperText: 'Select up to 4 team members for this project'
-  }
 };

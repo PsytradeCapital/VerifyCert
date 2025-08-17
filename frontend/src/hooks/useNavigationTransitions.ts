@@ -6,14 +6,12 @@ export interface NavigationTransitionOptions {
   enableStaggeredAnimations?: boolean;
   customDuration?: number;
   customEasing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
-}
 
 export interface NavigationTransitionState {
   isTransitioning: boolean;
   transitionDirection: 'forward' | 'backward' | 'none';
   transitionProgress: number;
   pendingNavigation: string | null;
-}
 
 /**
  * Hook for managing smooth navigation transitions with enhanced animations
@@ -35,25 +33,21 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
   useEffect(() => {
     if (customDuration) {
       actions.setTransitionDuration(customDuration);
-    }
     if (customEasing) {
       actions.setTransitionEasing(customEasing);
-    }
   }, [customDuration, customEasing, actions]);
 
   // Enhanced navigation with smooth transitions
   const navigateWithTransition = useCallback((
     path: string, 
     direction: 'forward' | 'backward' = 'forward',
-    options?: { immediate?: boolean; duration?: number }
+    options?: { immediate?: boolean; duration?: number
   ) => {
     // Clear any existing timeouts
     if (transitionTimeoutRef.current) {
       clearTimeout(transitionTimeoutRef.current);
-    }
     if (progressIntervalRef.current) {
       clearInterval(progressIntervalRef.current);
-    }
 
     // Reset progress
     transitionProgressRef.current = 0;
@@ -62,7 +56,6 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
     if (options?.immediate || !state.activeIndicators.animateTransitions) {
       actions.navigateTo(path);
       return;
-    }
 
     const duration = options?.duration || state.transitionDuration;
 
@@ -79,8 +72,6 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
       if (transitionProgressRef.current >= 100) {
         if (progressIntervalRef.current) {
           clearInterval(progressIntervalRef.current);
-        }
-      }
     }, progressInterval);
 
     // Navigate to the new path
@@ -102,7 +93,6 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
     setTimeout(() => {
       if (document.head.contains(link)) {
         document.head.removeChild(link);
-      }
     }, 5000);
   }, [enablePreloading]);
 
@@ -129,21 +119,17 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
     // Add base transition classes
     if (state.activeIndicators.animateTransitions) {
       classes += ` transition-all duration-${transitionDuration} ${transitionEasing} transform will-change-transform`;
-    }
 
     // Add stagger delay if provided
     if (staggerIndex !== undefined && totalItems !== undefined) {
       const delay = getStaggerDelay(staggerIndex, totalItems);
       if (delay > 0) {
         classes += ` delay-${Math.round(delay)}`;
-      }
-    }
 
     // Add transition state classes
     if (isTransitioning) {
       const intensity = transitionDirection === 'forward' ? 1 : -1;
       classes += ` translate-x-${intensity} opacity-90 scale-98`;
-    }
 
     return classes.trim();
   }, [state, getStaggerDelay]);
@@ -161,10 +147,8 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
     return () => {
       if (transitionTimeoutRef.current) {
         clearTimeout(transitionTimeoutRef.current);
-      }
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
-      }
     };
   }, []);
 

@@ -4,14 +4,12 @@ import { useNavigation } from '../../../contexts/NavigationContext';
 export interface NavigationStateManagerProps {
   children?: React.ReactNode;
   className?: string;
-}
 
 export interface NavigationControlsProps {
   showIndicatorControls?: boolean;
   showTransitionControls?: boolean;
   showHistoryControls?: boolean;
   className?: string;
-}
 
 export const NavigationControls: React.FC<NavigationControlsProps> = ({
   showIndicatorControls = true,

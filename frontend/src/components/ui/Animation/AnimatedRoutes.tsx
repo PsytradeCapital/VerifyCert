@@ -13,7 +13,6 @@ export interface AnimatedRoutesProps {
    * Custom className for the page transition wrapper
    */
   className?: string;
-}
 
 /**
  * AnimatedRoutes component that wraps React Router Routes with page transitions

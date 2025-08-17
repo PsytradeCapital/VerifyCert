@@ -7,7 +7,6 @@ interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'danger' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
-}
 
 const LoadingButton: React.FC<LoadingButtonProps> = ({
   isLoading = false,

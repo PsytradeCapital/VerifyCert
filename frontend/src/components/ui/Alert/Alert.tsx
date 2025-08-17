@@ -17,7 +17,6 @@ export interface AlertProps {
   className?: string;
   icon?: React.ReactNode;
   showIcon?: boolean;
-}
 
 const Alert: React.FC<AlertProps> = ({
   variant = 'info',
@@ -53,7 +52,6 @@ const Alert: React.FC<AlertProps> = ({
       icon: 'text-blue-400',
       title: 'text-blue-800',
       content: 'text-blue-700'
-    }
   };
 
   const defaultIcons = {

@@ -11,7 +11,6 @@ export interface UserMenuProps {
   };
   onSignOut?: () => void;
   onProfile?: () => void;
-}
 
 export interface HeaderProps {
   title?: string;
@@ -26,7 +25,6 @@ export interface HeaderProps {
   userMenu?: UserMenuProps;
   children?: React.ReactNode;
   className?: string;
-}
 
 const Header: React.FC<HeaderProps> = ({
   title = 'VerifyCert',

@@ -4,7 +4,6 @@ export interface RouteConfig {
   parent?: string;
   dynamic?: boolean;
   generateLabel?: (params: Record<string, string>) => string;
-}
 
 export const routeConfig: RouteConfig[] = [
   {
@@ -39,7 +38,6 @@ export const routeConfig: RouteConfig[] = [
   {
     path: '/breadcrumbs-demo',
     label: 'Breadcrumbs Demo'
-  }
 ];
 
 export const getRouteConfig = (path: string): RouteConfig | undefined => {
@@ -49,12 +47,11 @@ export const getRouteConfig = (path: string): RouteConfig | undefined => {
       const pattern = route.path.replace(/:[^/]+/g, '[^/]+');
       const regex = new RegExp(`^${pattern}$`);
       return regex.test(path);
-    }
     return route.path === path;
   });
 };
 
-export const matchRoute = (path: string): { config: RouteConfig; params: Record<string, string> } | null => {
+export const matchRoute = (path: string): { config: RouteConfig; params: Record<string, string> | null => {
   for (const route of routeConfig) {
     if (route.dynamic) {
       // Convert route pattern to regex and extract params
@@ -74,11 +71,8 @@ export const matchRoute = (path: string): { config: RouteConfig; params: Record<
         });
         
         return { config: route, params };
-      }
     } else if (route.path === path) {
       return { config: route, params: {} };
-    }
-  }
   
   return null;
 };

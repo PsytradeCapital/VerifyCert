@@ -203,7 +203,6 @@ describe('ToastService', () => {
         // Simulate clicking the action
         if (options?.action?.onClick) {
           options.action.onClick();
-        }
         return 'toast-id';
       });
       

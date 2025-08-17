@@ -52,7 +52,7 @@ describe('Alert Component', () => {
 
   it('renders custom icon when provided', () => {
     const CustomIcon = () => <div data-testid="custom-icon">Custom</div>;
-    render(<Alert icon={<CustomIcon />}>Custom icon message</Alert>);
+    render(<Alert>Custom icon message</Alert>);
     expect(screen.getByTestId('custom-icon')).toBeInTheDocument();
   });
 

@@ -111,9 +111,7 @@ export const importWithRetry = async (
     if (retries > 0) {
       await new Promise(resolve => setTimeout(resolve, delay));
       return importWithRetry(importFn, retries - 1, delay * 2);
-    }
     throw error;
-  }
 };
 
 /**
@@ -129,7 +127,6 @@ export const prefetchCriticalRoutes = () => {
   } else if (currentPath === '/verify') {
     // From verify, users likely view certificates
     importWithRetry(() => import('../pages/CertificateViewer'));
-  }
 };
 
 /**
@@ -151,8 +148,6 @@ export const bundlePerformanceMonitor = {
       // Log slow loading bundles
       if (loadTime > 2000) {
         console.warn(`Slow bundle load: ${bundleName} took ${loadTime}ms`);
-      }
-    }
   },
   
   getStats: () => {
@@ -160,7 +155,6 @@ export const bundlePerformanceMonitor = {
     bundlePerformanceMonitor.loadTimes.forEach((time, name) => {
       if (!name.endsWith('_start')) {
         stats[name] = time;
-      }
     });
     return stats;
   },

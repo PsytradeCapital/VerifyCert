@@ -5,11 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
 // Import components to test
-import Button from '../Button/Button';
+import { Button } from "../Button/Button";
 import Input from '../Input/Input';
 import Select from '../Select/Select';
 import Card from '../Card/Card';
-import Modal from '../Modal/Modal';
+import { Modal } from "../Modal/Modal";
 import SideNavigation from '../Navigation/SideNavigation';
 import BottomNavigation from '../Navigation/BottomNavigation';
 

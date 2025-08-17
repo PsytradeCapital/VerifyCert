@@ -130,37 +130,31 @@ export const AllColors: Story = {
       <MetricCard
         title="Blue Theme"
         value="100"
-        icon={certificateIcon}
         color="blue"
       />
       <MetricCard
         title="Green Theme"
         value="200"
-        icon={certificateIcon}
         color="green"
       />
       <MetricCard
         title="Yellow Theme"
         value="300"
-        icon={certificateIcon}
         color="yellow"
       />
       <MetricCard
         title="Purple Theme"
         value="400"
-        icon={certificateIcon}
         color="purple"
       />
       <MetricCard
         title="Red Theme"
         value="500"
-        icon={certificateIcon}
         color="red"
       />
       <MetricCard
         title="Indigo Theme"
         value="600"
-        icon={certificateIcon}
         color="indigo"
       />
     </div>

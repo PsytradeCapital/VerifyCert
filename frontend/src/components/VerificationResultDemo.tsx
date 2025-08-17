@@ -48,7 +48,6 @@ const VerificationResultDemo: React.FC = () => {
       onChain: false,
       verificationDate: new Date().toISOString(),
       confidence: 0
-    }
   };
 
   const handleDownload = () => {
@@ -81,28 +80,28 @@ const VerificationResultDemo: React.FC = () => {
           <Button
             variant={currentDemo === 'valid' ? 'primary' : 'secondary'}
             onClick={() => setCurrentDemo('valid')}
-            size="md"
+            size="default"
           >
             Valid Certificate
           </Button>
           <Button
             variant={currentDemo === 'revoked' ? 'primary' : 'secondary'}
             onClick={() => setCurrentDemo('revoked')}
-            size="md"
+            size="default"
           >
             Revoked Certificate
           </Button>
           <Button
             variant={currentDemo === 'pending' ? 'primary' : 'secondary'}
             onClick={() => setCurrentDemo('pending')}
-            size="md"
+            size="default"
           >
             Pending Verification
           </Button>
           <Button
             variant={currentDemo === 'invalid' ? 'primary' : 'secondary'}
             onClick={() => setCurrentDemo('invalid')}
-            size="md"
+            size="default"
           >
             Invalid Certificate
           </Button>

@@ -12,7 +12,7 @@ const renderWithRouter = (
   return render(
     <MemoryRouter initialEntries={initialEntries}>
       <Routes>
-        <Route path="/" element={<HomeComponent />} />
+        <Route path="/" element={<HomeComponent /> />
         <Route path="/protected" element={component} />
       </Routes>
     </MemoryRouter>
@@ -110,16 +110,15 @@ describe('ProtectedRoute Component', () => {
       render(
         <MemoryRouter initialEntries={['/dashboard/settings']}>
           <Routes>
-            <Route path="/" element={<HomeComponent />} />
+            <Route path="/" element={<HomeComponent /> />
             <Route 
               path="/dashboard/*" 
               element={
                 <ProtectedRoute isWalletConnected={true} requireWallet={true}>
                   <Routes>
-                    <Route path="settings" element={<div>Dashboard Settings</div>} />
+                    <Route path="settings" element={<div>Dashboard Settings</div> />
                   </Routes>
-                </ProtectedRoute>
-              } 
+                </ProtectedRoute> 
             />
           </Routes>
         </MemoryRouter>
@@ -132,16 +131,15 @@ describe('ProtectedRoute Component', () => {
       render(
         <MemoryRouter initialEntries={['/dashboard/settings']}>
           <Routes>
-            <Route path="/" element={<HomeComponent />} />
+            <Route path="/" element={<HomeComponent /> />
             <Route 
               path="/dashboard/*" 
               element={
                 <ProtectedRoute isWalletConnected={false} requireWallet={true}>
                   <Routes>
-                    <Route path="settings" element={<div>Dashboard Settings</div>} />
+                    <Route path="settings" element={<div>Dashboard Settings</div> />
                   </Routes>
-                </ProtectedRoute>
-              } 
+                </ProtectedRoute> 
             />
           </Routes>
         </MemoryRouter>

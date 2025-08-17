@@ -35,7 +35,6 @@ jest.mock('../utils/interactionAnimations', () => ({
   selectInteractions: {
     trigger: {},
     option: {}
-  }
 }));
 
 describe('Screen Reader Component Tests', () => {
@@ -201,7 +200,7 @@ describe('Screen Reader Component Tests', () => {
     const options = [
       { value: 'option1', label: 'Option 1' },
       { value: 'option2', label: 'Option 2' },
-      { value: 'option3', label: 'Option 3' }
+      { value: 'option3', label: 'Option 3'
     ];
 
     test('should be accessible to screen readers', async () => {
@@ -421,7 +420,6 @@ describe('Screen Reader Component Tests', () => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               onClick();
-            }
           }}
         >
           <h3>Keyboard Card</h3>
@@ -567,7 +565,6 @@ describe('Screen Reader Component Tests', () => {
             setError('Please enter a valid email address');
           } else {
             setError('');
-          }
         };
         
         return (
@@ -613,13 +610,12 @@ describe('Screen Reader Component Tests', () => {
       const components = [
         { name: 'Button', element: render(<Button>Test</Button>).container.querySelector('button')! },
         { name: 'Input', element: render(<Input label="Test" />).container.querySelector('input')! },
-        { name: 'Select', element: render(<Select options={[]} />).container.querySelector('button')! }
+        { name: 'Select', element: render(<Select options={[]} />).container.querySelector('button')!
       ];
       
       // Test each component
       for (const { name, element } of components) {
         await screenReaderTester.testComponent(element, `${name} - Comprehensive`);
-      }
       
       // Generate report
       const report = screenReaderTester.generateReport();

@@ -31,14 +31,12 @@ const mockItems: BottomNavItem[] = [
     id: 'home',
     label: 'Home',
     href: '/',
-    icon: <Home data-testid="home-icon" />
-  },
+    icon: <Home data-testid="home-icon" />,
   {
     id: 'profile',
     label: 'Profile',
     href: '/profile',
-    icon: <User data-testid="profile-icon" />
-  },
+    icon: <User data-testid="profile-icon" />,
   {
     id: 'settings',
     label: 'Settings',
@@ -52,7 +50,6 @@ const mockItems: BottomNavItem[] = [
     href: '/notifications',
     icon: <Bell data-testid="notifications-icon" />,
     badge: 'new'
-  }
 ];
 
 describe('BottomNavigation', () => {
@@ -93,7 +90,6 @@ describe('BottomNavigation', () => {
         href: '/test',
         icon: <Home />,
         badge: 150
-      }
     ];
     
     renderWithRouter(<BottomNavigation items={itemsWithLargeBadge} />);
@@ -117,7 +113,6 @@ describe('BottomNavigation', () => {
         href: '/',
         icon: <Home />,
         active: true
-      }
     ];
     
     mockLocation.pathname = '/other';
@@ -136,7 +131,6 @@ describe('BottomNavigation', () => {
         href: '#',
         icon: <Home />,
         onClick: mockClick
-      }
     ];
     
     renderWithRouter(<BottomNavigation items={buttonItems} />);
@@ -155,7 +149,6 @@ describe('BottomNavigation', () => {
         href: '/disabled',
         icon: <Home />,
         disabled: true
-      }
     ];
     
     renderWithRouter(<BottomNavigation items={disabledItems} />);

@@ -4,7 +4,6 @@ import { cn } from '../../../styles/utils';
 export interface ResponsiveUtilityProps {
   children: React.ReactNode;
   className?: string;
-}
 
 /**
  * Mobile-only component - only renders on mobile devices
@@ -56,7 +55,6 @@ export interface ResponsiveShowProps {
   tablet?: React.ReactNode;
   desktop?: React.ReactNode;
   className?: string;
-}
 
 /**
  * Responsive show component - renders different content based on screen size
@@ -68,9 +66,9 @@ export const ResponsiveShow: React.FC<ResponsiveShowProps> = ({
   className
 }) => (
   <div className={className}>
-    {mobile && <MobileOnly>{mobile}</MobileOnly>}
-    {tablet && <TabletOnly>{tablet}</TabletOnly>}
-    {desktop && <DesktopOnly>{desktop}</DesktopOnly>}
+    {mobile && <MobileOnly>{mobile}</MobileOnly>
+    {tablet && <TabletOnly>{tablet}</TabletOnly>
+    {desktop && <DesktopOnly>{desktop}</DesktopOnly>
   </div>
 );
 
@@ -78,7 +76,6 @@ export interface SafeAreaProps {
   children: React.ReactNode;
   sides?: 'all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right';
   className?: string;
-}
 
 /**
  * Safe area component - adds safe area padding for mobile devices
@@ -110,7 +107,6 @@ export interface TouchTargetProps extends React.ButtonHTMLAttributes<HTMLButtonE
   size?: 'sm' | 'md' | 'lg' | 'xl';
   as?: 'button' | 'div' | 'a';
   href?: string;
-}
 
 /**
  * Touch target component - ensures minimum touch target size for accessibility
@@ -137,7 +133,6 @@ export const TouchTarget: React.FC<TouchTargetProps> = ({
         {children}
       </a>
     );
-  }
 
   if (Component === 'div') {
     return (
@@ -145,7 +140,6 @@ export const TouchTarget: React.FC<TouchTargetProps> = ({
         {children}
       </div>
     );
-  }
 
   return (
     <button className={combinedClassName} {...props}>
@@ -158,7 +152,6 @@ export interface MobilePaddingProps {
   children: React.ReactNode;
   direction?: 'all' | 'x' | 'y';
   className?: string;
-}
 
 /**
  * Mobile padding component - applies responsive padding optimized for mobile
@@ -188,7 +181,6 @@ export interface ResponsiveGridProps {
   desktopCols?: number;
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   className?: string;
-}
 
 /**
  * Responsive grid component - automatically adjusts columns based on screen size
@@ -238,7 +230,6 @@ export interface ResponsiveTextProps {
   tabletSize?: string;
   desktopSize?: string;
   className?: string;
-}
 
 /**
  * Responsive text component - adjusts text size based on screen size

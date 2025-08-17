@@ -12,7 +12,6 @@ import { designTokens } from './tokens-new';
  */
 export function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(' ');
-}
 
 // Type definitions for better TypeScript support
 export type ColorScale = typeof designTokens.colors.primary;
@@ -33,7 +32,6 @@ export type ZIndex = keyof typeof designTokens.zIndex;
  */
 export function getColor(colorName: ColorName, shade: ColorShade): string {
   return designTokens.colors[colorName][shade];
-}
 
 /**
  * Get a spacing value from the design tokens
@@ -42,7 +40,6 @@ export function getColor(colorName: ColorName, shade: ColorShade): string {
  */
 export function getSpacing(size: SpacingValue): string {
   return designTokens.spacing[size];
-}
 
 /**
  * Get a font size configuration from the design tokens
@@ -51,7 +48,6 @@ export function getSpacing(size: SpacingValue): string {
  */
 export function getFontSize(size: FontSize): [string, { lineHeight: string }] | string {
   return designTokens.typography.fontSize[size];
-}
 
 /**
  * Get a font weight value from the design tokens
@@ -60,7 +56,6 @@ export function getFontSize(size: FontSize): [string, { lineHeight: string }] | 
  */
 export function getFontWeight(weight: FontWeight): string {
   return designTokens.typography.fontWeight[weight];
-}
 
 /**
  * Get a border radius value from the design tokens
@@ -69,7 +64,6 @@ export function getFontWeight(weight: FontWeight): string {
  */
 export function getBorderRadius(radius: BorderRadius): string {
   return designTokens.borderRadius[radius];
-}
 
 /**
  * Get a box shadow value from the design tokens
@@ -78,7 +72,6 @@ export function getBorderRadius(radius: BorderRadius): string {
  */
 export function getBoxShadow(shadow: BoxShadow): string {
   return designTokens.boxShadow[shadow];
-}
 
 /**
  * Get a z-index value from the design tokens
@@ -87,7 +80,6 @@ export function getBoxShadow(shadow: BoxShadow): string {
  */
 export function getZIndex(layer: ZIndex): string {
   return designTokens.zIndex[layer];
-}
 
 /**
  * Create a CSS custom property name for a color
@@ -97,7 +89,6 @@ export function getZIndex(layer: ZIndex): string {
  */
 export function getColorCSSVar(colorName: ColorName, shade: ColorShade): string {
   return `--color-${colorName}-${shade}`;
-}
 
 /**
  * Create a CSS custom property name for spacing
@@ -106,7 +97,6 @@ export function getColorCSSVar(colorName: ColorName, shade: ColorShade): string 
  */
 export function getSpacingCSSVar(size: SpacingValue): string {
   return `--spacing-${size.toString().replace('.', '-')}`;
-}
 
 /**
  * Generate CSS-in-JS styles using design tokens
@@ -115,7 +105,6 @@ export function getSpacingCSSVar(size: SpacingValue): string {
  */
 export function createStyles<T extends Record<string, any>>(styles: T): T {
   return styles;
-}
 
 /**
  * Enhanced responsive breakpoint utilities
@@ -220,7 +209,6 @@ export const colorCombinations = {
  */
 export function isDarkMode(): boolean {
   return document.documentElement.getAttribute('data-theme') === 'dark';
-}
 
 /**
  * Get the current theme
@@ -228,7 +216,6 @@ export function isDarkMode(): boolean {
  */
 export function getCurrentTheme(): 'light' | 'dark' {
   return document.documentElement.getAttribute('data-theme') as 'light' | 'dark' || 'light';
-}
 
 /**
  * Toggle between light and dark themes
@@ -243,7 +230,6 @@ export function toggleTheme(): void {
   
   // Dispatch custom event for theme change
   window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: newTheme } }));
-}
 
 /**
  * Initialize theme based on user preference or system preference
@@ -261,9 +247,7 @@ export function initializeTheme(): void {
       const newTheme = e.matches ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', newTheme);
       window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: newTheme } }));
-    }
   });
-}
 
 /**
  * CSS Custom Property utilities
@@ -277,7 +261,6 @@ export function initializeTheme(): void {
 export function getCSSCustomProperty(property: string): string {
   const propName = property.startsWith('--') ? property : `--${property}`;
   return getComputedStyle(document.documentElement).getPropertyValue(propName).trim();
-}
 
 /**
  * Set a CSS custom property value
@@ -287,7 +270,6 @@ export function getCSSCustomProperty(property: string): string {
 export function setCSSCustomProperty(property: string, value: string): void {
   const propName = property.startsWith('--') ? property : `--${property}`;
   document.documentElement.style.setProperty(propName, value);
-}
 
 /**
  * Tailwind class generation utilities
@@ -304,9 +286,7 @@ export function generateTailwindClass(tokenPath: string, prefix: string): string
   if (parts.length >= 2) {
     const [category, variant] = parts;
     return `${prefix}-${category}-${variant}`;
-  }
   return `${prefix}-${tokenPath}`;
-}
 
 /**
  * Create responsive utility classes
@@ -322,10 +302,8 @@ export function createResponsiveClasses(
   
   for (const [breakpoint, className] of Object.entries(breakpoints)) {
     classes.push(`${breakpoint}:${className}`);
-  }
   
   return classes.join(' ');
-}
 
 /**
  * Accessibility utilities
@@ -365,7 +343,6 @@ export function validateContrast(
   const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
   
   return ratio >= requiredRatio;
-}
 
 /**
  * Component styling utilities
@@ -389,7 +366,6 @@ export function createVariants<T extends Record<string, any>>(
       ...variants[variant],
     };
   };
-}
 
 /**
  * Create size-based styles
@@ -404,7 +380,6 @@ export function createSizes<T extends Record<string, any>>(
   return (size: string = defaultSize): T => {
     return sizes[size] || sizes[defaultSize];
   };
-}
 
 /**
  * Mobile-specific utilities
@@ -416,7 +391,6 @@ export function createSizes<T extends Record<string, any>>(
  */
 export function isMobileDevice(): boolean {
   return window.innerWidth < 768;
-}
 
 /**
  * Check if the current device is likely a tablet
@@ -424,7 +398,6 @@ export function isMobileDevice(): boolean {
  */
 export function isTabletDevice(): boolean {
   return window.innerWidth >= 768 && window.innerWidth < 1024;
-}
 
 /**
  * Check if the current device is likely a desktop
@@ -432,7 +405,6 @@ export function isTabletDevice(): boolean {
  */
 export function isDesktopDevice(): boolean {
   return window.innerWidth >= 1024;
-}
 
 /**
  * Check if the current device supports touch
@@ -440,7 +412,6 @@ export function isDesktopDevice(): boolean {
  */
 export function isTouchDevice(): boolean {
   return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-}
 
 /**
  * Check if the current device supports hover
@@ -448,7 +419,6 @@ export function isTouchDevice(): boolean {
  */
 export function isHoverDevice(): boolean {
   return window.matchMedia('(hover: hover)').matches;
-}
 
 /**
  * Get the current viewport size category
@@ -459,7 +429,6 @@ export function getViewportSize(): 'mobile' | 'tablet' | 'desktop' {
   if (width < 768) return 'mobile';
   if (width < 1024) return 'tablet';
   return 'desktop';
-}
 
 /**
  * Create responsive class names based on viewport
@@ -480,10 +449,8 @@ export function createResponsiveClass(
     classes.push(`lg:${desktopClass}`);
   } else {
     classes.push(`md:${desktopClass}`);
-  }
   
   return classes.join(' ');
-}
 
 /**
  * Create mobile-first responsive spacing
@@ -498,7 +465,6 @@ export function createResponsiveSpacing(
   tablet?: string
 ): string {
   return createResponsiveClass(mobile, desktop, tablet);
-}
 
 /**
  * Create mobile-first responsive text sizes
@@ -513,7 +479,6 @@ export function createResponsiveText(
   tablet?: string
 ): string {
   return createResponsiveClass(`text-${mobile}`, `text-${desktop}`, tablet ? `text-${tablet}` : undefined);
-}
 
 /**
  * Create touch-friendly button classes
@@ -529,7 +494,6 @@ export function createTouchTarget(size: 'sm' | 'md' | 'lg' | 'xl' = 'md'): strin
   };
   
   return cn('flex items-center justify-center', sizeClasses[size]);
-}
 
 /**
  * Create safe area padding classes
@@ -550,7 +514,6 @@ export function createSafeAreaPadding(
   };
   
   return sideClasses[sides];
-}
 
 /**
  * Create mobile-optimized grid classes
@@ -569,7 +532,6 @@ export function createResponsiveGrid(
   const tabletClass = tabletCols ? `grid-cols-${tabletCols}` : undefined;
   
   return createResponsiveClass(mobileClass, desktopClass, tabletClass);
-}
 
 /**
  * Viewport change listener utility
@@ -582,35 +544,27 @@ export class ViewportListener {
     this.currentSize = getViewportSize();
     this.handleResize = this.handleResize.bind(this);
     window.addEventListener('resize', this.handleResize);
-  }
   
   private handleResize() {
     const newSize = getViewportSize();
     if (newSize !== this.currentSize) {
       this.currentSize = newSize;
       this.listeners.forEach(listener => listener(newSize));
-    }
-  }
   
   public addListener(callback: (size: 'mobile' | 'tablet' | 'desktop') => void) {
     this.listeners.push(callback);
     // Call immediately with current size
     callback(this.currentSize);
-  }
   
   public removeListener(callback: (size: 'mobile' | 'tablet' | 'desktop') => void) {
     this.listeners = this.listeners.filter(listener => listener !== callback);
-  }
   
   public destroy() {
     window.removeEventListener('resize', this.handleResize);
     this.listeners = [];
-  }
   
   public getCurrentSize(): 'mobile' | 'tablet' | 'desktop' {
     return this.currentSize;
-  }
-}
 
 /**
  * React hook for viewport size (if using React)
@@ -626,7 +580,6 @@ export function useViewportSize() {
   }, []);
   
   return viewportSize;
-}
 
 /**
  * Export all design tokens for direct access

@@ -6,7 +6,6 @@ interface SkeletonLoaderProps {
   height?: string | number;
   lines?: number;
   className?: string;
-}
 
 const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   variant = 'text',
@@ -29,7 +28,6 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         return 'h-48';
       default:
         return 'h-4';
-    }
   };
 
   const getStyle = () => {
@@ -53,7 +51,6 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         ))}
       </div>
     );
-  }
 
   return (
     <div

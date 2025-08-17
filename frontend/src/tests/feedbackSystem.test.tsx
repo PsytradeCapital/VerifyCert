@@ -22,7 +22,6 @@ jest.mock('framer-motion', () => ({
 
 interface TestWrapperProps {
   children: React.ReactNode;
-}
 
 const TestWrapper: React.FC<TestWrapperProps> = ({ children }) => (
   <BrowserRouter>
@@ -261,7 +260,6 @@ describe('Feedback System', () => {
           timestamp: Date.now(),
           userAgent: 'test-agent',
           screenSize: '1920x1080'
-        }
       ];
 
       feedbacks.forEach(feedback => feedbackService.storeFeedback(feedback));
@@ -344,7 +342,6 @@ describe('Feedback System', () => {
           timestamp: Date.now(),
           userAgent: 'test-agent',
           screenSize: '1920x1080'
-        }
       ];
 
       feedbacks.forEach(feedback => feedbackService.storeFeedback(feedback));
@@ -386,7 +383,6 @@ describe('Feedback System', () => {
           timestamp: Date.now(),
           userAgent: 'test-agent',
           screenSize: '1920x1080'
-        }
       ];
 
       feedbacks.forEach(feedback => feedbackService.storeFeedback(feedback));

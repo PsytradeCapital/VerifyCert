@@ -13,7 +13,6 @@ interface ScreenReaderAnnouncement {
   priority: 'polite' | 'assertive';
   timestamp: number;
   element?: HTMLElement;
-}
 
 class MockScreenReader {
   private announcements: ScreenReaderAnnouncement[] = [];
@@ -22,7 +21,6 @@ class MockScreenReader {
 
   constructor() {
     this.setupAriaLiveRegionMonitoring();
-  }
 
   /**
    * Monitor ARIA live regions for announcements
@@ -39,8 +37,6 @@ class MockScreenReader {
             
             if (ariaLive && target.textContent?.trim()) {
               this.announce(target.textContent.trim(), ariaLive as 'polite' | 'assertive', target);
-            }
-          }
         });
       });
 
@@ -53,8 +49,6 @@ class MockScreenReader {
           characterData: true
         });
       });
-    }
-  }
 
   /**
    * Simulate screen reader announcement
@@ -78,36 +72,30 @@ class MockScreenReader {
     } else {
       // Polite announcements wait for current speech to finish
       console.log(`[SCREEN READER - POLITE]: ${text}`);
-    }
-  }
 
   /**
    * Get all announcements made during testing
    */
   getAnnouncements(): ScreenReaderAnnouncement[] {
     return [...this.announcements];
-  }
 
   /**
    * Clear announcement history
    */
   clearAnnouncements(): void {
     this.announcements = [];
-  }
 
   /**
    * Set verbosity level
    */
   setVerbosity(level: 'low' | 'medium' | 'high'): void {
     this.verbosityLevel = level;
-  }
 
   /**
    * Toggle screen reader active state
    */
   setActive(active: boolean): void {
     this.isActive = active;
-  }
 
   /**
    * Simulate reading element content
@@ -123,22 +111,17 @@ class MockScreenReader {
     // Build announcement based on element type and verbosity
     if (accessibleName) {
       announcement += accessibleName;
-    }
 
     if (role && this.verbosityLevel !== 'low') {
       announcement += `, ${role}`;
-    }
 
     if (state && this.verbosityLevel === 'high') {
       announcement += `, ${state}`;
-    }
 
     if (description && this.verbosityLevel === 'high') {
       announcement += `. ${description}`;
-    }
 
     return announcement.trim();
-  }
 
   /**
    * Get accessible name for element
@@ -157,8 +140,6 @@ class MockScreenReader {
       
       if (labelElements.length > 0) {
         return labelElements.map(el => el!.textContent?.trim()).join(' ');
-      }
-    }
 
     // Check associated label
     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
@@ -166,8 +147,6 @@ class MockScreenReader {
       if (id) {
         const label = document.querySelector(`label[for="${id}"]`);
         if (label?.textContent) return label.textContent.trim();
-      }
-    }
 
     // Check title attribute
     const title = element.getAttribute('title');
@@ -177,17 +156,14 @@ class MockScreenReader {
     if (element.tagName === 'IMG') {
       const alt = element.getAttribute('alt');
       if (alt !== null) return alt;
-    }
 
     // Check placeholder for inputs
     if (element.tagName === 'INPUT') {
       const placeholder = element.getAttribute('placeholder');
       if (placeholder) return placeholder;
-    }
 
     // Fall back to text content
     return element.textContent?.trim() || '';
-  }
 
   /**
    * Get role for element
@@ -227,7 +203,6 @@ class MockScreenReader {
     };
 
     return implicitRoles[tagName] || '';
-  }
 
   /**
    * Get input role based on type
@@ -251,7 +226,6 @@ class MockScreenReader {
     };
 
     return inputRoles[type] || 'textbox';
-  }
 
   /**
    * Get state information for element
@@ -264,37 +238,29 @@ class MockScreenReader {
       states.push('expanded');
     } else if (element.getAttribute('aria-expanded') === 'false') {
       states.push('collapsed');
-    }
 
     if (element.getAttribute('aria-selected') === 'true') {
       states.push('selected');
-    }
 
     if (element.getAttribute('aria-checked') === 'true') {
       states.push('checked');
     } else if (element.getAttribute('aria-checked') === 'false') {
       states.push('unchecked');
-    }
 
     if (element.getAttribute('aria-pressed') === 'true') {
       states.push('pressed');
-    }
 
     if (element.getAttribute('aria-disabled') === 'true' || 
         (element as HTMLInputElement).disabled) {
       states.push('disabled');
-    }
 
     if (element.getAttribute('aria-invalid') === 'true') {
       states.push('invalid');
-    }
 
     if (element.getAttribute('aria-required') === 'true') {
       states.push('required');
-    }
 
     return states.join(', ');
-  }
 
   /**
    * Get description for element
@@ -308,12 +274,8 @@ class MockScreenReader {
       
       if (descriptionElements.length > 0) {
         return descriptionElements.map(el => el!.textContent?.trim()).join(' ');
-      }
-    }
 
     return '';
-  }
-}
 
 /**
  * Screen Reader Testing Suite
@@ -324,7 +286,6 @@ export class ScreenReaderTester {
 
   constructor() {
     this.mockScreenReader = new MockScreenReader();
-  }
 
   /**
    * Test component for screen reader compatibility
@@ -360,7 +321,6 @@ export class ScreenReaderTester {
       // Test form accessibility
       if (this.isFormComponent(component)) {
         issues.push(...this.testFormAccessibility(component));
-      }
 
       // Test interactive elements
       issues.push(...this.testInteractiveElements(component));
@@ -400,8 +360,6 @@ export class ScreenReaderTester {
 
       this.testResults.push(result);
       return result;
-    }
-  }
 
   /**
    * Test basic accessibility requirements
@@ -420,7 +378,6 @@ export class ScreenReaderTester {
         wcagCriterion: '4.1.2',
         suggestion: 'Add aria-label, aria-labelledby, or visible text content'
       });
-    }
 
     // Check for proper roles
     const role = element.getAttribute('role') || this.mockScreenReader['getRole'](element);
@@ -433,10 +390,8 @@ export class ScreenReaderTester {
         wcagCriterion: '4.1.2',
         suggestion: 'Add appropriate role attribute'
       });
-    }
 
     return issues;
-  }
 
   /**
    * Test keyboard navigation
@@ -458,7 +413,6 @@ export class ScreenReaderTester {
           wcagCriterion: '2.1.1',
           suggestion: 'Add tabindex="0" or use naturally focusable element'
         });
-      }
 
       // Check for positive tabindex (anti-pattern)
       if (tabIndex > 0) {
@@ -470,11 +424,8 @@ export class ScreenReaderTester {
           wcagCriterion: '2.4.3',
           suggestion: 'Use tabindex="0" or rely on natural tab order'
         });
-      }
-    }
 
     return issues;
-  }
 
   /**
    * Test ARIA attributes
@@ -499,9 +450,7 @@ export class ScreenReaderTester {
               wcagCriterion: '4.1.1',
               suggestion: 'Ensure referenced element exists or remove invalid reference'
             });
-          }
         });
-      }
     });
 
     // Check for required ARIA attributes based on role
@@ -518,12 +467,9 @@ export class ScreenReaderTester {
             wcagCriterion: '4.1.2',
             suggestion: `Add ${attr} attribute with appropriate value`
           });
-        }
       });
-    }
 
     return issues;
-  }
 
   /**
    * Test focus management
@@ -548,10 +494,8 @@ export class ScreenReaderTester {
         wcagCriterion: '2.4.7',
         suggestion: 'Add CSS focus styles (outline, box-shadow, or border)'
       });
-    }
 
     return issues;
-  }
 
   /**
    * Test live regions
@@ -571,7 +515,6 @@ export class ScreenReaderTester {
           wcagCriterion: '4.1.1',
           suggestion: 'Use "polite", "assertive", or "off"'
         });
-      }
 
       // Check if live region has accessible content
       if (!element.textContent?.trim()) {
@@ -583,11 +526,8 @@ export class ScreenReaderTester {
           wcagCriterion: '4.1.3',
           suggestion: 'Ensure live region contains meaningful content when updated'
         });
-      }
-    }
 
     return issues;
-  }
 
   /**
    * Test form accessibility
@@ -614,7 +554,6 @@ export class ScreenReaderTester {
           wcagCriterion: '3.3.2',
           suggestion: 'Add aria-label, aria-labelledby, or associated label element'
         });
-      }
 
       // Check for error indication
       if (element.getAttribute('aria-invalid') === 'true') {
@@ -628,8 +567,6 @@ export class ScreenReaderTester {
             wcagCriterion: '3.3.1',
             suggestion: 'Add aria-describedby pointing to error message'
           });
-        }
-      }
 
       // Check for required field indication
       if (input.required || element.getAttribute('aria-required') === 'true') {
@@ -649,12 +586,8 @@ export class ScreenReaderTester {
             wcagCriterion: '3.3.2',
             suggestion: 'Add visual and programmatic indication that field is required'
           });
-        }
-      }
-    }
 
     return issues;
-  }
 
   /**
    * Test interactive elements
@@ -673,7 +606,6 @@ export class ScreenReaderTester {
           wcagCriterion: '4.1.2',
           suggestion: 'Use button or add role="button" with keyboard support'
         });
-      }
 
       // Check for proper button implementation
       if (element.getAttribute('role') === 'button' || element.tagName === 'BUTTON') {
@@ -687,12 +619,8 @@ export class ScreenReaderTester {
             wcagCriterion: '2.1.1',
             suggestion: 'Add keyboard event handlers for Enter and Space keys'
           });
-        }
-      }
-    }
 
     return issues;
-  }
 
   /**
    * Helper methods
@@ -701,7 +629,6 @@ export class ScreenReaderTester {
     const interactiveRoles = ['button', 'link', 'textbox', 'combobox', 'checkbox', 'radio', 'slider'];
     const role = element.getAttribute('role') || this.mockScreenReader['getRole'](element);
     return interactiveRoles.includes(role) || this.isInteractive(element);
-  }
 
   private isInteractive(element: HTMLElement): boolean {
     const interactiveTags = ['button', 'a', 'input', 'select', 'textarea'];
@@ -713,34 +640,28 @@ export class ScreenReaderTester {
       element.hasAttribute('onclick') ||
       element.hasAttribute('tabindex')
     );
-  }
 
   private isNaturallyFocusable(element: HTMLElement): boolean {
     const focusableTags = ['button', 'a', 'input', 'select', 'textarea'];
     return focusableTags.includes(element.tagName.toLowerCase()) && 
            !(element as HTMLInputElement).disabled;
-  }
 
   private isNaturallyInteractive(element: HTMLElement): boolean {
     const interactiveTags = ['button', 'a', 'input', 'select', 'textarea'];
     return interactiveTags.includes(element.tagName.toLowerCase());
-  }
 
   private hasClickHandler(element: HTMLElement): boolean {
     return element.hasAttribute('onclick') || 
            element.addEventListener.length > 0; // This is a simplified check
-  }
 
   private hasKeyboardSupport(element: HTMLElement): boolean {
     // This is a simplified check - in real implementation, you'd check for actual event listeners
     return element.hasAttribute('onkeydown') || element.hasAttribute('onkeyup');
-  }
 
   private isFormComponent(element: HTMLElement): boolean {
     const formTags = ['input', 'select', 'textarea', 'button', 'form', 'fieldset', 'legend'];
     return formTags.includes(element.tagName.toLowerCase()) ||
            element.querySelector('input, select, textarea, button') !== null;
-  }
 
   private getRequiredAriaAttributes(role: string): string[] {
     const requirements: Record<string, string[]> = {
@@ -763,7 +684,6 @@ export class ScreenReaderTester {
     };
 
     return requirements[role] || [];
-  }
 
   /**
    * Generate comprehensive test report
@@ -799,7 +719,6 @@ export class ScreenReaderTester {
       recommendations: this.generateRecommendations(allIssues),
       timestamp: new Date().toISOString()
     };
-  }
 
   /**
    * Generate recommendations based on found issues
@@ -810,50 +729,39 @@ export class ScreenReaderTester {
 
     if (issueTypes.includes('missing-accessible-name')) {
       recommendations.push('Add accessible names to all interactive elements using aria-label, aria-labelledby, or visible text');
-    }
 
     if (issueTypes.includes('not-focusable')) {
       recommendations.push('Ensure all interactive elements are keyboard focusable');
-    }
 
     if (issueTypes.includes('no-focus-indicator')) {
       recommendations.push('Add visible focus indicators to all interactive elements');
-    }
 
     if (issueTypes.includes('invalid-aria-reference')) {
       recommendations.push('Fix all invalid ARIA references to ensure they point to existing elements');
-    }
 
     if (issueTypes.includes('missing-form-label')) {
       recommendations.push('Associate all form controls with descriptive labels');
-    }
 
     if (issueTypes.includes('missing-keyboard-support')) {
       recommendations.push('Implement keyboard support for all custom interactive elements');
-    }
 
     return recommendations;
-  }
 
   /**
    * Clear all test results
    */
   clearResults(): void {
     this.testResults = [];
-  }
-}
 
 // Type definitions
 export interface ScreenReaderTestOptions {
   verbosity?: 'low' | 'medium' | 'high';
   includeWarnings?: boolean;
   customRules?: ScreenReaderTestRule[];
-}
 
 export interface ScreenReaderTestRule {
   name: string;
   test: (element: HTMLElement) => ScreenReaderIssue[];
-}
 
 export interface ScreenReaderIssue {
   type: string;
@@ -862,7 +770,6 @@ export interface ScreenReaderIssue {
   element: HTMLElement;
   wcagCriterion: string;
   suggestion?: string;
-}
 
 export interface ScreenReaderTestResult {
   testName: string;
@@ -872,7 +779,6 @@ export interface ScreenReaderTestResult {
   announcements: ScreenReaderAnnouncement[];
   duration: number;
   timestamp: string;
-}
 
 export interface ScreenReaderTestReport {
   summary: {
@@ -891,7 +797,6 @@ export interface ScreenReaderTestReport {
   testResults: ScreenReaderTestResult[];
   recommendations: string[];
   timestamp: string;
-}
 
 // Export the mock screen reader for direct use
 export { MockScreenReader };

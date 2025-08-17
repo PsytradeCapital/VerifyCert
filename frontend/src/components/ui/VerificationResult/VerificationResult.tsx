@@ -38,7 +38,6 @@ export interface VerificationResultProps {
   onShare?: () => void;
   onViewOnBlockchain?: () => void;
   className?: string;
-}
 
 const VerificationResult: React.FC<VerificationResultProps> = ({
   result,
@@ -59,7 +58,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
     } else if (result.isRevoked || !result.isValid) {
       setShowErrorAnimation(true);
       setTimeout(() => setShowErrorAnimation(false), 3000);
-    }
   }, [result.isValid, result.isRevoked]);
 
   const getVerificationStatus = () => {
@@ -76,7 +74,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
         description: 'The issuing institution has invalidated this certificate. It should not be considered as proof of achievement.',
         confidence: 0
       };
-    }
     
     if (result.isValid && result.onChain) {
       return {
@@ -91,7 +88,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
         description: 'This certificate is genuine and has been cryptographically verified on the Polygon blockchain.',
         confidence: result.confidence || 100
       };
-    }
     
     if (result.isValid && !result.onChain) {
       return {
@@ -106,7 +102,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
         description: 'The certificate exists in our database but blockchain verification is still in progress.',
         confidence: result.confidence || 75
       };
-    }
 
     return {
       type: 'invalid' as const,
@@ -129,7 +124,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
       await navigator.clipboard.writeText(result.transactionHash);
       setCopiedHash(true);
       setTimeout(() => setCopiedHash(false), 2000);
-    }
   };
 
   const formatDate = (timestamp: number) => {

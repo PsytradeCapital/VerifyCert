@@ -206,7 +206,7 @@ const ThemeDemo: React.FC = () => {
             </div>
             <div className="space-y-2">
               <h3 className="text-sm font-medium text-foreground">With System Option</h3>
-              <ThemeToggleWithSystem size="md" />
+              <ThemeToggleWithSystem size="default" />
             </div>
           </div>
         </div>

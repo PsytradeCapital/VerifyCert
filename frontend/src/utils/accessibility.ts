@@ -35,7 +35,6 @@ export class FocusTrap {
     this.firstFocusableElement = this.focusableElements[0] || null;
     this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1] || null;
     this.previouslyFocusedElement = document.activeElement as HTMLElement;
-  }
 
   /**
    * Activate the focus trap
@@ -47,11 +46,9 @@ export class FocusTrap {
     } else {
       // If no focusable elements, focus the container itself
       this.container.focus();
-    }
 
     // Add event listener for tab key
     document.addEventListener('keydown', this.handleKeyDown);
-  }
 
   /**
    * Deactivate the focus trap and restore previous focus
@@ -62,8 +59,6 @@ export class FocusTrap {
     // Restore focus to previously focused element
     if (this.previouslyFocusedElement) {
       this.previouslyFocusedElement.focus();
-    }
-  }
 
   /**
    * Handle keydown events for focus trapping
@@ -75,21 +70,17 @@ export class FocusTrap {
     if (this.focusableElements.length === 0) {
       event.preventDefault();
       return;
-    }
 
     if (event.shiftKey) {
       // Shift + Tab (backwards)
       if (document.activeElement === this.firstFocusableElement) {
         event.preventDefault();
         this.lastFocusableElement?.focus();
-      }
     } else {
       // Tab (forwards)
       if (document.activeElement === this.lastFocusableElement) {
         event.preventDefault();
         this.firstFocusableElement?.focus();
-      }
-    }
   };
 
   /**
@@ -99,8 +90,6 @@ export class FocusTrap {
     this.focusableElements = getFocusableElements(this.container);
     this.firstFocusableElement = this.focusableElements[0] || null;
     this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1] || null;
-  }
-}
 
 /**
  * Keyboard navigation handler for lists and menus
@@ -123,7 +112,6 @@ export class KeyboardNavigationHandler {
     this.currentIndex = options.initialIndex ?? -1;
     this.orientation = options.orientation ?? 'vertical';
     this.wrap = options.wrap ?? true;
-  }
 
   /**
    * Handle keyboard navigation
@@ -137,28 +125,24 @@ export class KeyboardNavigationHandler {
         if (this.orientation === 'vertical') {
           this.moveNext();
           handled = true;
-        }
         break;
       
       case 'ArrowUp':
         if (this.orientation === 'vertical') {
           this.movePrevious();
           handled = true;
-        }
         break;
       
       case 'ArrowRight':
         if (this.orientation === 'horizontal') {
           this.moveNext();
           handled = true;
-        }
         break;
       
       case 'ArrowLeft':
         if (this.orientation === 'horizontal') {
           this.movePrevious();
           handled = true;
-        }
         break;
       
       case 'Home':
@@ -170,15 +154,12 @@ export class KeyboardNavigationHandler {
         this.moveToLast();
         handled = true;
         break;
-    }
 
     if (handled) {
       event.preventDefault();
       this.focusCurrentItem();
-    }
 
     return handled;
-  }
 
   /**
    * Move to next item
@@ -190,8 +171,6 @@ export class KeyboardNavigationHandler {
       this.currentIndex++;
     } else if (this.wrap) {
       this.currentIndex = 0;
-    }
-  }
 
   /**
    * Move to previous item
@@ -203,8 +182,6 @@ export class KeyboardNavigationHandler {
       this.currentIndex--;
     } else if (this.wrap) {
       this.currentIndex = this.items.length - 1;
-    }
-  }
 
   /**
    * Move to first item
@@ -212,8 +189,6 @@ export class KeyboardNavigationHandler {
   private moveToFirst(): void {
     if (this.items.length > 0) {
       this.currentIndex = 0;
-    }
-  }
 
   /**
    * Move to last item
@@ -221,8 +196,6 @@ export class KeyboardNavigationHandler {
   private moveToLast(): void {
     if (this.items.length > 0) {
       this.currentIndex = this.items.length - 1;
-    }
-  }
 
   /**
    * Focus the current item
@@ -230,8 +203,6 @@ export class KeyboardNavigationHandler {
   private focusCurrentItem(): void {
     if (this.currentIndex >= 0 && this.currentIndex < this.items.length) {
       this.items[this.currentIndex].focus();
-    }
-  }
 
   /**
    * Set current index
@@ -239,15 +210,12 @@ export class KeyboardNavigationHandler {
   setCurrentIndex(index: number): void {
     if (index >= 0 && index < this.items.length) {
       this.currentIndex = index;
-    }
-  }
 
   /**
    * Get current index
    */
   getCurrentIndex(): number {
     return this.currentIndex;
-  }
 
   /**
    * Update items array
@@ -256,9 +224,6 @@ export class KeyboardNavigationHandler {
     this.items = items;
     if (this.currentIndex >= items.length) {
       this.currentIndex = items.length - 1;
-    }
-  }
-}
 
 /**
  * Type-ahead search functionality for lists
@@ -272,7 +237,6 @@ export class TypeAheadSearch {
   constructor(items: { element: HTMLElement; text: string }[], timeoutDuration = 1000) {
     this.items = items;
     this.timeoutDuration = timeoutDuration;
-  }
 
   /**
    * Handle character input for type-ahead search
@@ -281,7 +245,6 @@ export class TypeAheadSearch {
     // Clear existing timeout
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
-    }
 
     // Add character to search string
     this.searchString += char.toLowerCase();
@@ -295,7 +258,6 @@ export class TypeAheadSearch {
     }, this.timeoutDuration);
 
     return matchIndex;
-  }
 
   /**
    * Find matching item based on search string
@@ -310,18 +272,14 @@ export class TypeAheadSearch {
       
       if (item.text.toLowerCase().startsWith(this.searchString)) {
         return index;
-      }
-    }
 
     return -1; // No match found
-  }
 
   /**
    * Update items array
    */
   updateItems(items: { element: HTMLElement; text: string }[]): void {
     this.items = items;
-  }
 
   /**
    * Clear search string
@@ -331,9 +289,6 @@ export class TypeAheadSearch {
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
       this.searchTimeout = null;
-    }
-  }
-}
 
 /**
  * ARIA live region announcer
@@ -343,7 +298,6 @@ export class LiveRegionAnnouncer {
 
   constructor() {
     this.liveRegion = this.createLiveRegion();
-  }
 
   /**
    * Create a live region element
@@ -352,7 +306,6 @@ export class LiveRegionAnnouncer {
     const existing = document.getElementById('live-region-announcer');
     if (existing) {
       return existing;
-    }
 
     const liveRegion = document.createElement('div');
     liveRegion.id = 'live-region-announcer';
@@ -362,7 +315,6 @@ export class LiveRegionAnnouncer {
     
     document.body.appendChild(liveRegion);
     return liveRegion;
-  }
 
   /**
    * Announce a message to screen readers
@@ -375,8 +327,6 @@ export class LiveRegionAnnouncer {
     setTimeout(() => {
       this.liveRegion.textContent = '';
     }, 1000);
-  }
-}
 
 /**
  * Check if user prefers reduced motion
@@ -404,7 +354,6 @@ export const initKeyboardDetection = (): void => {
     if (event.key === 'Tab') {
       isUsingKeyboard = true;
       document.body.classList.add('using-keyboard');
-    }
   });
 
   // Detect mouse usage
@@ -431,7 +380,6 @@ export class RovingTabindexManager {
     this.items = items;
     this.currentIndex = initialIndex;
     this.updateTabindices();
-  }
 
   /**
    * Move focus to specific index
@@ -441,8 +389,6 @@ export class RovingTabindexManager {
       this.currentIndex = index;
       this.updateTabindices();
       this.items[index].focus();
-    }
-  }
 
   /**
    * Update tabindex attributes
@@ -451,7 +397,6 @@ export class RovingTabindexManager {
     this.items.forEach((item, index) => {
       item.tabIndex = index === this.currentIndex ? 0 : -1;
     });
-  }
 
   /**
    * Update items array
@@ -462,17 +407,13 @@ export class RovingTabindexManager {
       this.currentIndex = newCurrentIndex;
     } else if (this.currentIndex >= items.length) {
       this.currentIndex = Math.max(0, items.length - 1);
-    }
     this.updateTabindices();
-  }
 
   /**
    * Get current index
    */
   getCurrentIndex(): number {
     return this.currentIndex;
-  }
-}
 
 // Global live region announcer instance
 export const liveAnnouncer = new LiveRegionAnnouncer();

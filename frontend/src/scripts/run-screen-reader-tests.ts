@@ -29,7 +29,6 @@ const dom = new JSDOM(`
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
-    }
     
     button:focus,
     input:focus,
@@ -37,11 +36,9 @@ const dom = new JSDOM(`
     textarea:focus {
       outline: 2px solid #3b82f6;
       outline-offset: 2px;
-    }
     
     [aria-invalid="true"] {
       border-color: #ef4444;
-    }
   </style>
 </head>
 <body>
@@ -95,7 +92,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
     { name: 'Button - Disabled', element: document.getElementById('disabled-button')!, description: 'Disabled button state' },
     { name: 'Button - Loading', element: document.getElementById('loading-button')!, description: 'Button with loading state' },
     { name: 'Button - Toggle', element: document.getElementById('toggle-button')!, description: 'Toggle button with pressed state' },
-    { name: 'Button - Menu', element: document.getElementById('menu-button')!, description: 'Menu button with expanded state' }
+    { name: 'Button - Menu', element: document.getElementById('menu-button')!, description: 'Menu button with expanded state'
   );
 
   // Form Component Tests
@@ -157,7 +154,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
     { name: 'Form - Textarea', element: document.getElementById('textarea-input')!, description: 'Textarea with help text' },
     { name: 'Form - Checkbox', element: document.getElementById('email-notifications')!, description: 'Checkbox with description' },
     { name: 'Form - Radio', element: document.getElementById('daily')!, description: 'Radio button in group' },
-    { name: 'Form - Complete', element: document.getElementById('test-form')!, description: 'Complete form with various input types' }
+    { name: 'Form - Complete', element: document.getElementById('test-form')!, description: 'Complete form with various input types'
   );
 
   // Modal Component Test
@@ -176,7 +173,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   components.push(
     { name: 'Modal - Dialog', element: document.getElementById('test-modal')!, description: 'Modal dialog with proper ARIA attributes' },
-    { name: 'Modal - Trigger', element: document.getElementById('modal-trigger')!, description: 'Button that opens modal' }
+    { name: 'Modal - Trigger', element: document.getElementById('modal-trigger')!, description: 'Button that opens modal'
   );
 
   // Navigation Component Test
@@ -216,7 +213,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   components.push(
     { name: 'Navigation - Main', element: navContainer.querySelector('nav[role="navigation"]')!, description: 'Main navigation with menubar' },
-    { name: 'Navigation - Breadcrumb', element: navContainer.querySelector('nav[aria-label="Breadcrumb"]')!, description: 'Breadcrumb navigation' }
+    { name: 'Navigation - Breadcrumb', element: navContainer.querySelector('nav[aria-label="Breadcrumb"]')!, description: 'Breadcrumb navigation'
   );
 
   // Live Region Test
@@ -242,7 +239,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   components.push(
     { name: 'Live Region - Polite', element: statusRegion, description: 'Polite live region for status updates' },
-    { name: 'Live Region - Assertive', element: alertRegion, description: 'Assertive live region for alerts' }
+    { name: 'Live Region - Assertive', element: alertRegion, description: 'Assertive live region for alerts'
   );
 
   // Table Component Test
@@ -290,11 +287,10 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
   root.appendChild(tableContainer);
 
   components.push(
-    { name: 'Table - Data Table', element: tableContainer.querySelector('table')!, description: 'Data table with proper headers and scope' }
+    { name: 'Table - Data Table', element: tableContainer.querySelector('table')!, description: 'Data table with proper headers and scope'
   );
 
   return components;
-}
 
 /**
  * Run comprehensive screen reader tests
@@ -324,23 +320,18 @@ async function runScreenReaderTests(): Promise<ScreenReaderTestReport> {
           console.log(`    ${severity}: ${issue.message}`);
           if (issue.suggestion) {
             console.log(`    💡 Suggestion: ${issue.suggestion}`);
-          }
         });
-      }
       
       if (result.announcements.length > 0) {
         console.log(`  📢 Announcements: ${result.announcements.length}`);
         result.announcements.forEach(announcement => {
           console.log(`    ${announcement.priority.toUpperCase()}: "${announcement.text}"`);
         });
-      }
       
     } catch (error) {
       console.log(`  💥 ERROR: ${error}`);
-    }
     
     console.log('');
-  }
   
   // Generate comprehensive report
   const report = tester.generateReport();
@@ -360,10 +351,8 @@ async function runScreenReaderTests(): Promise<ScreenReaderTestReport> {
     report.recommendations.forEach((rec, index) => {
       console.log(`  ${index + 1}. ${rec}`);
     });
-  }
   
   return report;
-}
 
 /**
  * Save test report to file
@@ -374,7 +363,6 @@ function saveReport(report: ScreenReaderTestReport): void {
   // Create reports directory if it doesn't exist
   if (!fs.existsSync(reportsDir)) {
     fs.mkdirSync(reportsDir, { recursive: true });
-  }
   
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const reportPath = path.join(reportsDir, `screen-reader-test-report-${timestamp}.json`);
@@ -387,7 +375,6 @@ function saveReport(report: ScreenReaderTestReport): void {
   const summaryContent = generateMarkdownSummary(report);
   fs.writeFileSync(summaryPath, summaryContent);
   console.log(`📄 Summary report saved to: ${summaryPath}`);
-}
 
 /**
  * Generate markdown summary of test results
@@ -419,7 +406,6 @@ function generateMarkdownSummary(report: ScreenReaderTestReport): string {
       markdown += `- **${type}:** ${count}\n`;
     });
     markdown += `\n`;
-  }
   
   // Test results
   markdown += `## Test Results\n\n`;
@@ -436,10 +422,8 @@ function generateMarkdownSummary(report: ScreenReaderTestReport): string {
         markdown += `- **WCAG Criterion:** ${issue.wcagCriterion}\n`;
         if (issue.suggestion) {
           markdown += `- **Suggestion:** ${issue.suggestion}\n`;
-        }
         markdown += `\n`;
       });
-    }
     
     if (result.announcements.length > 0) {
       markdown += `#### Screen Reader Announcements\n\n`;
@@ -447,7 +431,6 @@ function generateMarkdownSummary(report: ScreenReaderTestReport): string {
         markdown += `- **${announcement.priority.toUpperCase()}:** "${announcement.text}"\n`;
       });
       markdown += `\n`;
-    }
   });
   
   // Recommendations
@@ -457,10 +440,8 @@ function generateMarkdownSummary(report: ScreenReaderTestReport): string {
       markdown += `${index + 1}. ${rec}\n`;
     });
     markdown += `\n`;
-  }
   
   return markdown;
-}
 
 /**
  * Main execution
@@ -485,17 +466,13 @@ async function main(): Promise<void> {
     } else {
       console.log('\n🎉 All tests passed! Application is screen reader accessible.');
       process.exit(0);
-    }
     
   } catch (error) {
     console.error('\n💥 Error running screen reader tests:', error);
     process.exit(1);
-  }
-}
 
 // Run if called directly
 if (require.main === module) {
   main();
-}
 
 export { runScreenReaderTests, createTestComponents };

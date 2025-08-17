@@ -31,7 +31,7 @@ const LoadingAnimationsDemo: React.FC = () => {
     { id: 'step1', title: 'Validation', description: 'Validating certificate data' },
     { id: 'step2', title: 'Processing', description: 'Processing on blockchain' },
     { id: 'step3', title: 'Confirmation', description: 'Confirming transaction' },
-    { id: 'step4', title: 'Complete', description: 'Certificate issued' }
+    { id: 'step4', title: 'Complete', description: 'Certificate issued'
   ];
 
   const handleStepDemo = () => {
@@ -45,7 +45,6 @@ const LoadingAnimationsDemo: React.FC = () => {
       // Reset demo
       setCompletedSteps([]);
       setCurrentStep('step1');
-    }
   };
 
   const handleButtonDemo = () => {
@@ -75,7 +74,7 @@ const LoadingAnimationsDemo: React.FC = () => {
             <h3 className="text-lg font-medium mb-4">Basic Spinner</h3>
             <div className="flex items-center justify-center space-x-4 mb-4">
               <Spinner size="sm" />
-              <Spinner size="md" />
+              <Spinner size="default" />
               <Spinner size="lg" />
               <Spinner size="xl" />
             </div>
@@ -92,7 +91,7 @@ const LoadingAnimationsDemo: React.FC = () => {
             <h3 className="text-lg font-medium mb-4">Dots Spinner</h3>
             <div className="flex items-center justify-center space-x-4 mb-4">
               <DotsSpinner size="sm" />
-              <DotsSpinner size="md" />
+              <DotsSpinner size="default" />
               <DotsSpinner size="lg" />
             </div>
             <div className="flex items-center justify-center space-x-4">
@@ -107,7 +106,7 @@ const LoadingAnimationsDemo: React.FC = () => {
             <h3 className="text-lg font-medium mb-4">Pulse Spinner</h3>
             <div className="flex items-center justify-center space-x-4 mb-4">
               <PulseSpinner size="sm" />
-              <PulseSpinner size="md" />
+              <PulseSpinner size="default" />
               <PulseSpinner size="lg" />
             </div>
             <div className="flex items-center justify-center space-x-4">
@@ -191,7 +190,7 @@ const LoadingAnimationsDemo: React.FC = () => {
                 loading={isButtonLoading}
                 loadingText="Processing..."
                 onClick={handleButtonDemo}
-                variant="default"
+                variant="primary"
               >
                 Issue Certificate
               </LoadingButton>

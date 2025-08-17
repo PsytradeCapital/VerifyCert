@@ -162,17 +162,17 @@ describe('Input Component', () => {
     const TestIcon = () => <span data-testid="test-icon">🔍</span>;
 
     it('renders left icon', () => {
-      render(<Input label="Test" icon={<TestIcon />} iconPosition="left" />);
+      render(<Input label="Test" iconPosition="left" />);
       expect(screen.getByTestId('test-icon')).toBeInTheDocument();
     });
 
     it('renders right icon', () => {
-      render(<Input label="Test" icon={<TestIcon />} iconPosition="right" />);
+      render(<Input label="Test" iconPosition="right" />);
       expect(screen.getByTestId('test-icon')).toBeInTheDocument();
     });
 
     it('adjusts padding for icons', () => {
-      render(<Input label="Test" icon={<TestIcon />} iconPosition="left" />);
+      render(<Input label="Test" iconPosition="left" />);
       
       const input = screen.getByLabelText('Test');
       expect(input).toHaveClass('pl-10');
@@ -188,7 +188,7 @@ describe('Input Component', () => {
     });
 
     it('renders medium size correctly', () => {
-      render(<Input label="Test" size="md" />);
+      render(<Input label="Test" size="default" />);
       
       const input = screen.getByLabelText('Test');
       expect(input).toHaveClass('text-base');

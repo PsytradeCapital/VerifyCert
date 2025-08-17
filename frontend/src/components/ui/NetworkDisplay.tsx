@@ -5,7 +5,6 @@ interface NetworkDisplayProps {
   chainId?: number;
   contractAddress?: string;
   className?: string;
-}
 
 export const NetworkDisplay: React.FC<NetworkDisplayProps> = ({ 
   chainId = AMOY_NETWORK.chainId, 

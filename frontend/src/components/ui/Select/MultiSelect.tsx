@@ -16,7 +16,6 @@ export interface MultiSelectProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   'data-testid'?: string;
-}
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
   options,
@@ -52,7 +51,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
         setSearchTerm('');
-      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -64,8 +62,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       setIsOpen(!isOpen);
       if (searchable && !isOpen) {
         setTimeout(() => inputRef.current?.focus(), 0);
-      }
-    }
   };
 
   const handleOptionToggle = (optionValue: string) => {
@@ -109,7 +105,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       tag: 'px-2.5 py-1.5 text-base',
       dropdown: 'text-lg',
       input: 'px-4 py-2 text-lg'
-    }
   };
 
   return (
@@ -132,11 +127,9 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
             ${error 
               ? 'border-error-300 text-error-900 focus:ring-error-500 focus:border-error-500' 
               : 'text-neutral-900 hover:border-neutral-400'
-            }
             ${disabled 
               ? 'bg-neutral-50 text-neutral-500 cursor-not-allowed opacity-60' 
               : ''
-            }
           `}
           onClick={handleToggle}
           disabled={disabled}
@@ -168,7 +161,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           handleRemoveOption(option.value, e);
-                        }
                       }}
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +187,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     handleClearAll(e);
-                  }
                 }}
               >
                 <svg className="h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,7 +272,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                       ${isDisabled
                         ? 'text-neutral-400 cursor-not-allowed'
                         : 'text-neutral-900 hover:bg-primary-50 hover:text-primary-900 cursor-pointer'
-                      }
                       ${isSelected ? 'bg-primary-100 text-primary-900' : ''}
                     `}
                     onClick={() => !isDisabled && handleOptionToggle(option.value)}
@@ -295,7 +285,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                         ${isSelected 
                           ? 'bg-primary-600 border-primary-600' 
                           : 'border-neutral-300'
-                        }
                       `}>
                         {isSelected && (
                           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">

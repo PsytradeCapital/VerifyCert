@@ -10,8 +10,6 @@ const meta: Meta<typeof FileUpload> = {
     docs: {
       description: {
         component: 'A file upload component with drag-and-drop support, file validation, and preview functionality.'
-      }
-    }
   },
   argTypes: {
     onFileSelect: {
@@ -49,8 +47,6 @@ const meta: Meta<typeof FileUpload> = {
     className: {
       description: 'Additional CSS classes',
       control: 'text'
-    }
-  }
 };
 
 export default meta;
@@ -59,14 +55,12 @@ type Story = StoryObj<typeof FileUpload>;
 export const Default: Story = {
   args: {
     onFileSelect: action('files selected')
-  }
 };
 
 export const WithLabel: Story = {
   args: {
     onFileSelect: action('files selected'),
     label: 'Upload Certificate Files'
-  }
 };
 
 export const MultipleFiles: Story = {
@@ -75,7 +69,6 @@ export const MultipleFiles: Story = {
     label: 'Upload Multiple Files',
     multiple: true,
     helperText: 'You can select multiple files at once'
-  }
 };
 
 export const WithFileTypeRestriction: Story = {
@@ -84,7 +77,6 @@ export const WithFileTypeRestriction: Story = {
     label: 'Upload PDF Documents',
     accept: '.pdf',
     helperText: 'Only PDF files are allowed'
-  }
 };
 
 export const WithSizeLimit: Story = {
@@ -94,7 +86,6 @@ export const WithSizeLimit: Story = {
     accept: 'image/*',
     maxSize: 5 * 1024 * 1024, // 5MB
     helperText: 'Maximum file size: 5MB'
-  }
 };
 
 export const WithError: Story = {
@@ -102,7 +93,6 @@ export const WithError: Story = {
     onFileSelect: action('files selected'),
     label: 'Upload Files',
     error: 'File upload failed. Please try again.'
-  }
 };
 
 export const Disabled: Story = {
@@ -111,7 +101,6 @@ export const Disabled: Story = {
     label: 'Upload Files',
     disabled: true,
     helperText: 'File upload is currently disabled'
-  }
 };
 
 export const ImageUpload: Story = {
@@ -121,7 +110,6 @@ export const ImageUpload: Story = {
     accept: 'image/jpeg,image/png,image/gif',
     maxSize: 2 * 1024 * 1024, // 2MB
     helperText: 'Accepted formats: JPEG, PNG, GIF (max 2MB)'
-  }
 };
 
 export const DocumentUpload: Story = {
@@ -132,7 +120,6 @@ export const DocumentUpload: Story = {
     multiple: true,
     maxSize: 10 * 1024 * 1024, // 10MB
     helperText: 'Upload PDF or Word documents (max 10MB each)'
-  }
 };
 
 export const CompactVersion: Story = {
@@ -144,9 +131,6 @@ export const CompactVersion: Story = {
     docs: {
       description: {
         story: 'A more compact version of the file upload component'
-      }
-    }
-  }
 };
 
 // Interactive example showing file validation
@@ -167,7 +151,4 @@ export const WithValidation: Story = {
     docs: {
       description: {
         story: 'This example demonstrates file validation. Try uploading files larger than 1MB or with unsupported formats to see validation errors in the browser console.'
-      }
-    }
-  }
 };

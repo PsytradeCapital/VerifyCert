@@ -11,7 +11,6 @@ export interface BottomNavItem {
   active?: boolean;
   disabled?: boolean;
   onClick?: () => void;
-}
 
 export interface BottomNavigationProps {
   items?: BottomNavItem[];
@@ -20,33 +19,28 @@ export interface BottomNavigationProps {
   className?: string;
   onItemClick?: (item: BottomNavItem) => void;
   onQuickAction?: () => void;
-}
 
 const defaultNavigationItems: BottomNavItem[] = [
   { 
     id: 'home', 
     label: 'Home', 
     href: '/', 
-    icon: <Home className="w-6 h-6" /> 
-  },
+    icon: <Home className="w-6 h-6" />,
   { 
     id: 'verify', 
     label: 'Verify', 
     href: '/verify', 
-    icon: <Search className="w-6 h-6" /> 
-  },
+    icon: <Search className="w-6 h-6" />,
   { 
     id: 'certificates', 
     label: 'Certificates', 
     href: '/certificates', 
-    icon: <FileText className="w-6 h-6" /> 
-  },
+    icon: <FileText className="w-6 h-6" />,
   { 
     id: 'profile', 
     label: 'Profile', 
     href: '/profile', 
-    icon: <User className="w-6 h-6" /> 
-  }
+    icon: <User className="w-6 h-6" />
 ];
 
 export const BottomNavigation: React.FC<BottomNavigationProps> = ({
@@ -77,7 +71,6 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         const nextItem = document.querySelector(`[data-bottom-nav-index="${nextIndex}"]`) as HTMLElement;
         nextItem?.focus();
         break;
-    }
   };
 
   const baseClasses = variant === 'floating' 
@@ -103,13 +96,11 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                   ${active 
                     ? 'text-blue-600 dark:text-blue-400' 
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                  }
                 `}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onClick={() => {
                   if (!item.disabled && onItemClick) {
                     onItemClick(item);
-                  }
                 }}
                 role="tab"
                 aria-selected={active}
@@ -155,7 +146,6 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                       e.preventDefault();
                       const nextItem = document.querySelector(`[data-bottom-nav-index="${index + 1}"]`) as HTMLElement;
                       nextItem?.focus();
-                    }
                   }}
                 >
                   <Plus className="w-6 h-6" />

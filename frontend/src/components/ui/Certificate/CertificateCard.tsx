@@ -35,7 +35,6 @@ export interface Certificate {
   grade?: string;
   credits?: number;
   description?: string;
-}
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -48,7 +47,6 @@ interface CertificateCardProps {
   onShare?: () => void;
   onPrint?: () => void;
   onVerify?: () => void;
-}
 
 const CertificateCard: React.FC<CertificateCardProps> = ({
   certificate,
@@ -82,7 +80,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
     if (onDownload) {
       onDownload();
       return;
-    }
 
     setIsLoading(true);
     try {
@@ -92,7 +89,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       
       if (!ctx) {
         throw new Error('Canvas not supported');
-      }
 
       // Set canvas size for high-quality output
       canvas.width = 1200;
@@ -171,7 +167,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         ctx.fillStyle = '#22c55e';
         ctx.font = 'bold 16px Inter, Arial, sans-serif';
         ctx.fillText('✓ BLOCKCHAIN VERIFIED', canvas.width / 2, 720);
-      }
 
       // Footer
       ctx.fillStyle = '#9ca3af';
@@ -195,14 +190,12 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       });
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleShare = async () => {
     if (onShare) {
       onShare();
       return;
-    }
 
     const shareData = {
       title: `Certificate: ${certificate.courseName}`,
@@ -219,13 +212,11 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       } else {
         await navigator.clipboard.writeText(shareData.url || window.location.href);
         feedback.showSuccess('Certificate link copied to clipboard!');
-      }
     } catch (error) {
       console.error('Share failed:', error);
       feedback.showError('Failed to share certificate', {
         shake: true
       });
-    }
   };
 
   const handleCopyLink = async () => {
@@ -238,14 +229,12 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       feedback.showError('Failed to copy link', {
         shake: true
       });
-    }
   };
 
   const handlePrint = () => {
     if (onPrint) {
       onPrint();
       return;
-    }
     window.print();
   };
 
@@ -257,7 +246,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         isRevoked={certificate.isRevoked}
         variant="detailed"
         showDetails={true}
-        size="md"
+        size="default"
       />
     );
   };
@@ -322,7 +311,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         )}
       </motion.div>
     );
-  }
 
   return (
     <motion.div

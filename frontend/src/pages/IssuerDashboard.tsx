@@ -11,13 +11,11 @@ interface ExtendedDashboardStats extends DashboardStats {
   previousMonth: number;
   previousWeek: number;
   growthRate: number;
-}
 
 interface WalletState {
   isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
-}
 
 export default function IssuerDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -110,17 +108,13 @@ export default function IssuerDashboard() {
           calculateStats(data.data.certificates || []);
         } else {
           throw new Error(data.error?.message || 'Failed to fetch certificates');
-        }
-      }
     } catch (error) {
       console.error('Failed to fetch certificates:', error);
       if (!isDemoMode) {
         toast.error('Failed to load issued certificates');
         setIssuedCertificates([]);
-      }
     } finally {
       setIsLoading(false);
-    }
   }, [walletState.isConnected, walletState.address, isDemoMode]);
 
   // Calculate dashboard statistics
@@ -184,7 +178,6 @@ export default function IssuerDashboard() {
     if (!walletState.provider || !walletState.address) {
       toast.error('Please connect your wallet first');
       return;
-    }
 
     setIsMinting(true);
     try {
@@ -248,7 +241,6 @@ export default function IssuerDashboard() {
 
         if (!response.ok) {
           throw new Error(data.error?.message || 'Failed to mint certificate');
-        }
 
         if (data.success) {
           toast.success('Certificate minted successfully!');
@@ -267,14 +259,11 @@ export default function IssuerDashboard() {
           await fetchIssuedCertificates();
         } else {
           throw new Error('Certificate minting failed');
-        }
-      }
     } catch (error) {
       console.error('Minting error:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to mint certificate');
     } finally {
       setIsMinting(false);
-    }
   };
 
   // Handle certificate actions
@@ -294,7 +283,6 @@ export default function IssuerDashboard() {
         } catch (error) {
           console.error('Download failed:', error);
           toast.error('Failed to download certificate');
-        }
         break;
       
       case 'share':
@@ -306,19 +294,16 @@ export default function IssuerDashboard() {
         } catch (error) {
           console.error('Share failed:', error);
           toast.error('Failed to share certificate');
-        }
         break;
       
       default:
         console.warn(`Unknown certificate action: ${action}`);
-    }
   }, []);
 
   // Fetch certificates when wallet connects
   useEffect(() => {
     if (walletState.isConnected) {
       fetchIssuedCertificates();
-    }
   }, [walletState.isConnected, fetchIssuedCertificates]);
 
   const formatDate = (timestamp: number) => {
@@ -348,7 +333,6 @@ export default function IssuerDashboard() {
                 {isDemoMode 
                   ? 'Exploring with sample data - Create an account for full features!'
                   : 'Manage and track your issued certificates'
-                }
               </p>
               {isDemoMode && (
                 <div className="mt-2">
@@ -432,4 +416,3 @@ export default function IssuerDashboard() {
       </div>
     </div>
   );
-}

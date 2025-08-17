@@ -11,7 +11,6 @@ export interface SelectOption {
   disabled?: boolean;
   icon?: React.ReactNode;
   description?: string;
-}
 
 export interface SelectProps {
   options: SelectOption[];
@@ -30,7 +29,6 @@ export interface SelectProps {
   className?: string;
   'data-testid'?: string;
   enableAnimations?: boolean;
-}
 
 const Select: React.FC<SelectProps> = ({
   options,
@@ -75,7 +73,6 @@ const Select: React.FC<SelectProps> = ({
         setIsOpen(false);
         setSearchTerm('');
         setFocusedIndex(-1);
-      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -102,7 +99,6 @@ const Select: React.FC<SelectProps> = ({
           const nextIndex = focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
           setFocusedIndex(nextIndex);
           optionRefs.current[nextIndex]?.scrollIntoView({ block: 'nearest' });
-        }
         break;
       
       case 'ArrowUp':
@@ -114,7 +110,6 @@ const Select: React.FC<SelectProps> = ({
           const prevIndex = focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
           setFocusedIndex(prevIndex);
           optionRefs.current[prevIndex]?.scrollIntoView({ block: 'nearest' });
-        }
         break;
       
       case 'Enter':
@@ -125,7 +120,6 @@ const Select: React.FC<SelectProps> = ({
           setFocusedIndex(0);
         } else if (focusedIndex >= 0 && !filteredOptions[focusedIndex]?.disabled) {
           handleOptionSelect(filteredOptions[focusedIndex].value);
-        }
         break;
       
       case 'Escape':
@@ -140,7 +134,6 @@ const Select: React.FC<SelectProps> = ({
           event.preventDefault();
           setFocusedIndex(0);
           optionRefs.current[0]?.scrollIntoView({ block: 'nearest' });
-        }
         break;
       
       case 'End':
@@ -149,7 +142,6 @@ const Select: React.FC<SelectProps> = ({
           const lastIndex = filteredOptions.length - 1;
           setFocusedIndex(lastIndex);
           optionRefs.current[lastIndex]?.scrollIntoView({ block: 'nearest' });
-        }
         break;
       
       default:
@@ -169,16 +161,11 @@ const Select: React.FC<SelectProps> = ({
             if (option.label.toLowerCase().startsWith(char) && !option.disabled) {
               matchIndex = index;
               break;
-            }
-          }
           
           if (matchIndex >= 0) {
             setFocusedIndex(matchIndex);
             optionRefs.current[matchIndex]?.scrollIntoView({ block: 'nearest' });
-          }
-        }
         break;
-    }
   };
 
   const handleToggle = () => {
@@ -190,8 +177,6 @@ const Select: React.FC<SelectProps> = ({
       } else if (newIsOpen) {
         // Set focus to first option when opening
         setFocusedIndex(0);
-      }
-    }
   };
 
   const handleOptionSelect = (optionValue: string) => {
@@ -230,7 +215,6 @@ const Select: React.FC<SelectProps> = ({
       button: 'px-4 py-3 text-lg',
       dropdown: 'text-lg',
       input: 'px-4 py-2 text-lg'
-    }
   };
 
   // Variant-based styles
@@ -246,7 +230,6 @@ const Select: React.FC<SelectProps> = ({
     filled: {
       button: 'bg-neutral-50 border border-transparent hover:bg-neutral-100',
       focus: 'focus:ring-2 focus:ring-primary-500 focus:bg-white focus:border-primary-500'
-    }
   };
 
   return (
@@ -275,11 +258,9 @@ const Select: React.FC<SelectProps> = ({
             ${error 
               ? 'border-error-300 text-error-900 focus:ring-error-500 focus:border-error-500' 
               : 'text-neutral-900'
-            }
             ${disabled 
               ? 'bg-neutral-50 text-neutral-500 cursor-not-allowed opacity-60' 
               : ''
-            }
             ${loading ? 'cursor-wait' : ''}
           `}
           onClick={handleToggle}
@@ -410,7 +391,6 @@ const Select: React.FC<SelectProps> = ({
                     ${option.disabled
                       ? 'text-neutral-400 cursor-not-allowed'
                       : 'text-neutral-900 cursor-pointer hover:bg-neutral-50'
-                    }
                     ${option.value === value ? 'bg-primary-100 text-primary-900' : ''}
                     ${focusedIndex === index && !option.disabled ? 'bg-primary-50 ring-2 ring-primary-500' : ''}
                   `}

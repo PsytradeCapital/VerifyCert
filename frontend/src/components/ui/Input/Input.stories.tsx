@@ -146,21 +146,18 @@ export const Sizes: Story = {
         placeholder="Small size..."
         variant="floating"
         size="sm"
-        icon={<SearchIcon />}
       />
       <Input
         label="Medium Input"
         placeholder="Medium size..."
         variant="floating"
-        size="md"
-        icon={<SearchIcon />}
+        size="default"
       />
       <Input
         label="Large Input"
         placeholder="Large size..."
         variant="floating"
         size="lg"
-        icon={<SearchIcon />}
       />
     </div>
   ),
@@ -173,7 +170,6 @@ export const WithIcons: Story = {
         label="Email"
         placeholder="Enter your email..."
         variant="floating"
-        icon={<EmailIcon />}
         iconPosition="left"
         type="email"
       />
@@ -181,7 +177,6 @@ export const WithIcons: Story = {
         label="Password"
         placeholder="Enter your password..."
         variant="floating"
-        icon={<LockIcon />}
         iconPosition="left"
         type="password"
       />
@@ -189,7 +184,6 @@ export const WithIcons: Story = {
         label="Search"
         placeholder="Search..."
         variant="floating"
-        icon={<SearchIcon />}
         iconPosition="right"
       />
     </div>
@@ -231,7 +225,6 @@ export const Interactive: Story = {
           label="Email Address"
           placeholder="Enter your email..."
           variant="floating"
-          icon={<EmailIcon />}
           iconPosition="left"
           type="email"
           value={email}
@@ -244,7 +237,6 @@ export const Interactive: Story = {
           label="Password"
           placeholder="Enter your password..."
           variant="floating"
-          icon={<LockIcon />}
           iconPosition="left"
           type="password"
           value={password}
@@ -257,7 +249,6 @@ export const Interactive: Story = {
           label="Confirm Password"
           placeholder="Confirm your password..."
           variant="floating"
-          icon={<LockIcon />}
           iconPosition="left"
           type="password"
           value={confirmPassword}
@@ -319,7 +310,6 @@ export const AllVariants: Story = {
           label="With Icon"
           placeholder="Search..."
           variant="default"
-          icon={<SearchIcon />}
           iconPosition="left"
         />
         <Input
@@ -350,7 +340,6 @@ export const AllVariants: Story = {
           label="With Icon"
           placeholder="Search..."
           variant="floating"
-          icon={<SearchIcon />}
           iconPosition="left"
         />
         <Input

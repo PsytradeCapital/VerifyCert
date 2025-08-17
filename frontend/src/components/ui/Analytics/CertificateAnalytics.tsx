@@ -17,12 +17,10 @@ export interface AnalyticsData {
     count: number;
     percentage: number;
   }>;
-}
 
 interface CertificateAnalyticsProps {
   data: AnalyticsData;
   className?: string;
-}
 
 export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
   data,
@@ -61,7 +59,6 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
           totalRecipients: data.totalRecipients,
           verificationRate: data.verificationRate
         });
-      }
     }, stepDuration);
 
     return () => clearInterval(interval);
@@ -91,25 +88,21 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
         <StatCard
           title="Total Certificates"
           value={animatedNumbers.totalCertificates}
-          icon={<Award className="w-6 h-6 text-white" />}
           color="bg-blue-500"
         />
         <StatCard
           title="Institutions"
           value={animatedNumbers.totalInstitutions}
-          icon={<Users className="w-6 h-6 text-white" />}
           color="bg-green-500"
         />
         <StatCard
           title="Recipients"
           value={animatedNumbers.totalRecipients}
-          icon={<Users className="w-6 h-6 text-white" />}
           color="bg-purple-500"
         />
         <StatCard
           title="Verification Rate"
           value={animatedNumbers.verificationRate}
-          icon={<TrendingUp className="w-6 h-6 text-white" />}
           color="bg-orange-500"
           suffix="%"
         />

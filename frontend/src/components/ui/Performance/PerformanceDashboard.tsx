@@ -8,7 +8,6 @@ interface PerformanceMetric {
   endTime?: number;
   duration?: number;
   metadata?: Record<string, any>;
-}
 
 interface PerformanceSummary {
   total: number;
@@ -28,7 +27,6 @@ interface PerformanceSummary {
     slowest?: PerformanceMetric;
   };
   navigation?: PerformanceMetric;
-}
 
 export const PerformanceDashboard: React.FC = () => {
   const [summary, setSummary] = useState<PerformanceSummary | null>(null);
@@ -65,7 +63,6 @@ export const PerformanceDashboard: React.FC = () => {
       case 'good': return 'text-green-600';
       case 'warning': return 'text-yellow-600';
       case 'poor': return 'text-red-600';
-    }
   };
 
   const exportMetrics = () => {
@@ -88,7 +85,6 @@ export const PerformanceDashboard: React.FC = () => {
         <p className="mt-2 text-gray-600">Loading performance metrics...</p>
       </div>
     );
-  }
 
   return (
     <div className="space-y-6">

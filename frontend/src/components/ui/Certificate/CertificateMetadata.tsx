@@ -50,7 +50,6 @@ export interface CertificateMetadata {
   prerequisites?: string[];
   learningOutcomes?: string[];
   assessmentMethods?: string[];
-}
 
 interface CertificateMetadataProps {
   metadata: CertificateMetadata;
@@ -59,7 +58,6 @@ interface CertificateMetadataProps {
   showExtendedInfo?: boolean;
   collapsible?: boolean;
   className?: string;
-}
 
 const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
   metadata,
@@ -91,7 +89,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
       setTimeout(() => setCopiedField(null), 2000);
     } catch (error) {
       console.error('Failed to copy:', error);
-    }
   };
 
   const MetadataField: React.FC<{
@@ -169,7 +166,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
   }> = ({ title, children, icon }) => (
     <div className="space-y-4">
       <div className="flex items-center space-x-2 pb-2 border-b border-neutral-200">
-        {icon && <div className="text-neutral-600">{icon}</div>}
+        {icon && <div className="text-neutral-600">{icon}</div>
         <h4 className="text-lg font-semibold text-neutral-900">{title}</h4>
       </div>
       <div className="space-y-4">
@@ -199,24 +196,20 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
       <div className={`bg-neutral-50 rounded-lg p-4 ${className}`}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <MetadataField
-            icon={<Calendar className="h-4 w-4" />}
             label="Issue Date"
             value={formatDate(metadata.issueDate)}
           />
           <MetadataField
-            icon={<Building className="h-4 w-4" />}
             label="Institution"
             value={metadata.institutionName}
           />
           <MetadataField
-            icon={<Hash className="h-4 w-4" />}
             label="Certificate ID"
             value={metadata.tokenId}
             copyable
           />
           {metadata.grade && (
             <MetadataField
-              icon={<Star className="h-4 w-4" />}
               label="Grade"
               value={metadata.grade}
             />
@@ -224,7 +217,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
         </div>
       </div>
     );
-  }
 
   return (
     <div className={`bg-white rounded-xl border border-neutral-200 ${className}`}>
@@ -256,38 +248,32 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
           >
             <div className="p-6 space-y-8">
               {/* Core Information */}
-              <MetadataSection title="Certificate Details" icon={<Award className="h-5 w-5" />}>
+              <MetadataSection title="Certificate Details">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <MetadataField
-                    icon={<User className="h-5 w-5" />}
                     label="Recipient"
                     value={metadata.recipientName}
                   />
                   <MetadataField
-                    icon={<BookOpen className="h-5 w-5" />}
                     label="Course"
                     value={metadata.courseName}
                   />
                   <MetadataField
-                    icon={<Building className="h-5 w-5" />}
                     label="Institution"
                     value={metadata.institutionName}
                   />
                   <MetadataField
-                    icon={<Calendar className="h-5 w-5" />}
                     label="Issue Date"
                     value={formatDate(metadata.issueDate)}
                   />
                   {metadata.certificateType && (
                     <MetadataField
-                      icon={<Award className="h-5 w-5" />}
                       label="Type"
                       value={metadata.certificateType}
                     />
                   )}
                   {metadata.grade && (
                     <MetadataField
-                      icon={<Star className="h-5 w-5" />}
                       label="Grade"
                       value={metadata.grade}
                     />
@@ -299,46 +285,40 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
               {showExtendedInfo && (
                 <>
                   {(metadata.credits || metadata.duration || metadata.instructorName || metadata.location) && (
-                    <MetadataSection title="Course Details" icon={<BookOpen className="h-5 w-5" />}>
+                    <MetadataSection title="Course Details">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {metadata.credits && (
                           <MetadataField
-                            icon={<Shield className="h-5 w-5" />}
                             label="Credits"
                             value={`${metadata.credits} Credits`}
                           />
                         )}
                         {metadata.duration && (
                           <MetadataField
-                            icon={<Clock className="h-5 w-5" />}
                             label="Duration"
                             value={metadata.duration}
                           />
                         )}
                         {metadata.instructorName && (
                           <MetadataField
-                            icon={<User className="h-5 w-5" />}
                             label="Instructor"
                             value={metadata.instructorName}
                           />
                         )}
                         {metadata.location && (
                           <MetadataField
-                            icon={<MapPin className="h-5 w-5" />}
                             label="Location"
                             value={metadata.location}
                           />
                         )}
                         {metadata.completionDate && (
                           <MetadataField
-                            icon={<Calendar className="h-5 w-5" />}
                             label="Completion Date"
                             value={formatDate(metadata.completionDate)}
                           />
                         )}
                         {metadata.expiryDate && (
                           <MetadataField
-                            icon={<Calendar className="h-5 w-5" />}
                             label="Expiry Date"
                             value={formatDate(metadata.expiryDate)}
                           />
@@ -357,7 +337,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
 
                   {/* Skills and Learning Outcomes */}
                   {(metadata.skills || metadata.learningOutcomes || metadata.prerequisites || metadata.assessmentMethods) && (
-                    <MetadataSection title="Learning Information" icon={<BookOpen className="h-5 w-5" />}>
+                    <MetadataSection title="Learning Information">
                       <div className="space-y-6">
                         {metadata.skills && metadata.skills.length > 0 && (
                           <TagList items={metadata.skills} title="Skills Acquired" />
@@ -379,24 +359,21 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
 
               {/* Blockchain Information */}
               {showBlockchainInfo && (
-                <MetadataSection title="Blockchain Verification" icon={<Shield className="h-5 w-5" />}>
+                <MetadataSection title="Blockchain Verification">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <MetadataField
-                      icon={<Hash className="h-5 w-5" />}
                       label="Certificate ID"
                       value={metadata.tokenId}
                       copyable
                       tooltip="Unique identifier for this certificate on the blockchain"
                     />
                     <MetadataField
-                      icon={<User className="h-5 w-5" />}
                       label="Issuer Address"
                       value={formatAddress(metadata.issuer)}
                       copyable
                       tooltip="Blockchain address of the certificate issuer"
                     />
                     <MetadataField
-                      icon={<User className="h-5 w-5" />}
                       label="Recipient Address"
                       value={formatAddress(metadata.recipient)}
                       copyable
@@ -404,7 +381,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                     />
                     {metadata.networkName && (
                       <MetadataField
-                        icon={<Shield className="h-5 w-5" />}
                         label="Network"
                         value={metadata.networkName}
                         tooltip="Blockchain network where this certificate is stored"
@@ -412,7 +388,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                     )}
                     {metadata.blockNumber && (
                       <MetadataField
-                        icon={<Hash className="h-5 w-5" />}
                         label="Block Number"
                         value={metadata.blockNumber.toString()}
                         tooltip="Block number where this certificate was minted"
@@ -420,7 +395,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                     )}
                     {metadata.transactionHash && (
                       <MetadataField
-                        icon={<Hash className="h-5 w-5" />}
                         label="Transaction Hash"
                         value={formatAddress(metadata.transactionHash)}
                         copyable

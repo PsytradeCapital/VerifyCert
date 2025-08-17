@@ -6,7 +6,6 @@ export interface NavigationSyncOptions {
   syncOnMount?: boolean;
   syncOnLocationChange?: boolean;
   autoUpdateActiveItems?: boolean;
-}
 
 /**
  * Hook to synchronize navigation state with external systems
@@ -33,7 +32,6 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
     state.navigationItems.forEach(item => {
       if (isPathActive(item.href, location.pathname)) {
         activeItemIds.push(item.id);
-      }
       
       // Check children
       if (item.children) {
@@ -43,10 +41,7 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
             // Also activate parent
             if (!activeItemIds.includes(item.id)) {
               activeItemIds.push(item.id);
-            }
-          }
         });
-      }
     });
 
     // Only update if there are changes
@@ -57,14 +52,12 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
 
     if (hasChanges) {
       actions.setActiveItems(activeItemIds);
-    }
   }, [location.pathname, state.navigationItems, state.activeItems, actions, autoUpdateActiveItems]);
 
   // Helper function to determine if a path is active
   const isPathActive = (itemPath: string, currentPath: string): boolean => {
     if (itemPath === '/') {
       return currentPath === '/';
-    }
     return currentPath.startsWith(itemPath);
   };
 
@@ -72,14 +65,12 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
   useEffect(() => {
     if (syncOnMount) {
       syncActiveItems();
-    }
   }, [syncOnMount, syncActiveItems]);
 
   // Sync on location change
   useEffect(() => {
     if (syncOnLocationChange) {
       syncActiveItems();
-    }
   }, [location.pathname, syncOnLocationChange, syncActiveItems]);
 
   // Manual sync function
@@ -114,22 +105,16 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
   }) => {
     if (updates.activeItems) {
       actions.setActiveItems(updates.activeItems);
-    }
     if (updates.sidebarCollapsed !== undefined) {
       actions.setSidebarCollapsed(updates.sidebarCollapsed);
-    }
     if (updates.mobileMenuOpen !== undefined) {
       actions.setMobileMenuOpen(updates.mobileMenuOpen);
-    }
     if (updates.indicatorStyle) {
       actions.setActiveIndicatorStyle(updates.indicatorStyle);
-    }
     if (updates.indicatorPosition) {
       actions.setActiveIndicatorPosition(updates.indicatorPosition);
-    }
     if (updates.animateTransitions !== undefined) {
       actions.setAnimateTransitions(updates.animateTransitions);
-    }
   }, [actions]);
 
   // Reset navigation state to defaults

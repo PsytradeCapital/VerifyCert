@@ -9,7 +9,6 @@ export interface CertificateFormData {
   institutionName: string;
   issueDate: string;
   description?: string;
-}
 
 interface CertificateFormProps {
   onSubmit: (data: CertificateFormData) => Promise<void>;
@@ -17,7 +16,6 @@ interface CertificateFormProps {
   walletAddress?: string | null;
   isConnected?: boolean;
   className?: string;
-}
 
 interface FormErrors {
   recipientAddress?: string;
@@ -26,7 +24,6 @@ interface FormErrors {
   institutionName?: string;
   issueDate?: string;
   description?: string;
-}
 
 export default function CertificateForm({
   onSubmit,
@@ -54,7 +51,6 @@ export default function CertificateForm({
         ...prev,
         institutionName: 'My Institution', // Default value, user can change
       }));
-    }
   }, [isConnected, walletAddress, formData.institutionName]);
 
   const validateField = (name: string, value: string): string | undefined => {
@@ -62,72 +58,56 @@ export default function CertificateForm({
       case 'recipientAddress':
         if (!value.trim()) {
           return 'Recipient address is required';
-        }
         if (!ethers.isAddress(value)) {
           return 'Please enter a valid Ethereum address';
-        }
         if (value.toLowerCase() === walletAddress?.toLowerCase()) {
           return 'Cannot issue certificate to yourself';
-        }
         break;
 
       case 'recipientName':
         if (!value.trim()) {
           return 'Recipient name is required';
-        }
         if (value.trim().length < 2) {
           return 'Name must be at least 2 characters long';
-        }
         if (value.trim().length > 100) {
           return 'Name must be less than 100 characters';
-        }
         break;
 
       case 'courseName':
         if (!value.trim()) {
           return 'Course/Achievement name is required';
-        }
         if (value.trim().length < 3) {
           return 'Course name must be at least 3 characters long';
-        }
         if (value.trim().length > 200) {
           return 'Course name must be less than 200 characters';
-        }
         break;
 
       case 'institutionName':
         if (!value.trim()) {
           return 'Institution name is required';
-        }
         if (value.trim().length < 2) {
           return 'Institution name must be at least 2 characters long';
-        }
         if (value.trim().length > 100) {
           return 'Institution name must be less than 100 characters';
-        }
         break;
 
       case 'issueDate':
         if (!value) {
           return 'Issue date is required';
-        }
         const selectedDate = new Date(value);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         if (selectedDate > today) {
           return 'Issue date cannot be in the future';
-        }
         break;
 
       case 'description':
         if (value && value.length > 500) {
           return 'Description must be less than 500 characters';
-        }
         break;
 
       default:
         break;
-    }
     return undefined;
   };
 
@@ -145,7 +125,6 @@ export default function CertificateForm({
         ...prev,
         [name]: undefined,
       }));
-    }
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -170,8 +149,6 @@ export default function CertificateForm({
         if (error) {
           newErrors[key as keyof FormErrors] = error;
           isValid = false;
-        }
-      }
     });
 
     setErrors(newErrors);
@@ -184,12 +161,10 @@ export default function CertificateForm({
     if (!isConnected) {
       toast.error('Please connect your wallet first');
       return;
-    }
 
     if (!validateForm()) {
       toast.error('Please fix the errors in the form');
       return;
-    }
 
     try {
       await onSubmit(formData);
@@ -209,7 +184,6 @@ export default function CertificateForm({
     } catch (error) {
       console.error('Form submission error:', error);
       // Error handling is done in the parent component
-    }
   };
 
   const isFieldInvalid = (fieldName: string) => {
@@ -448,4 +422,3 @@ export default function CertificateForm({
       </div>
     </div>
   );
-}

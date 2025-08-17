@@ -28,7 +28,6 @@ export interface ThemeConfig {
   colors: ThemeColors;
   shadows: ThemeShadows;
   cssVariables: CSSVariables;
-}
 
 // Color utility types
 export type ColorVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'error' | 'warning' | 'info';
@@ -43,7 +42,6 @@ export function getThemeTokens(theme: Theme): ThemeConfig {
     shadows: jsTokens.boxShadow[theme] || jsTokens.boxShadow.light,
     cssVariables: jsTokens.cssVariables[theme] || jsTokens.cssVariables.light
   };
-}
 
 // Export with proper TypeScript typing
 export const designTokens = jsTokens;

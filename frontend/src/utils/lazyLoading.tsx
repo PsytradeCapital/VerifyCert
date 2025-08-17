@@ -23,9 +23,7 @@ export const createLazyComponent = <T extends ComponentType<any>>(
       // Return a fallback component if loading fails
       if (fallback) {
         return { default: fallback as T };
-      }
       throw error;
-    }
   });
 };
 
@@ -43,18 +41,15 @@ export const useLazyImage = (src: string, options?: IntersectionObserverInit) =>
         if (entry.isIntersecting) {
           setIsInView(true);
           observer.disconnect();
-        }
       },
       {
         threshold: 0.1,
         rootMargin: '50px',
         ...options,
-      }
     );
 
     if (imgRef.current) {
       observer.observe(imgRef.current);
-    }
 
     return () => observer.disconnect();
   }, [options]);
@@ -64,7 +59,6 @@ export const useLazyImage = (src: string, options?: IntersectionObserverInit) =>
       const img = new Image();
       img.onload = () => setIsLoaded(true);
       img.src = src;
-    }
   }, [isInView, isLoaded, src]);
 
   return {
@@ -84,7 +78,6 @@ interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   className?: string;
   loadingComponent?: ComponentType;
   errorComponent?: ComponentType<{ retry: () => void }>;
-}
 
 export const LazyImage: React.FC<LazyImageProps> = ({
   src,
@@ -135,7 +128,6 @@ export const LazyImage: React.FC<LazyImageProps> = ({
         )}
       </div>
     );
-  }
 
   if (!isLoaded && currentSrc) {
     return (
@@ -162,7 +154,6 @@ export const LazyImage: React.FC<LazyImageProps> = ({
         )}
       </div>
     );
-  }
 
   return (
     <img
@@ -183,7 +174,6 @@ interface LazyComponentWrapperProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
   errorFallback?: ComponentType<{ error: Error; retry: () => void }>;
-}
 
 export const LazyComponentWrapper: React.FC<LazyComponentWrapperProps> = ({
   children,
@@ -200,7 +190,6 @@ export const LazyComponentWrapper: React.FC<LazyComponentWrapperProps> = ({
 
   if (hasError && error && ErrorFallback) {
     return <ErrorFallback error={error} retry={retry} />;
-  }
 
   return (
     <React.Suspense
@@ -210,7 +199,6 @@ export const LazyComponentWrapper: React.FC<LazyComponentWrapperProps> = ({
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         )
-      }
     >
       <ErrorBoundary onError={(error) => {
         setError(error);
@@ -228,34 +216,26 @@ export const LazyComponentWrapper: React.FC<LazyComponentWrapperProps> = ({
 interface ErrorBoundaryProps {
   children: React.ReactNode;
   onError?: (error: Error) => void;
-}
 
 interface ErrorBoundaryState {
   hasError: boolean;
-}
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
-  }
 
   static getDerivedStateFromError(): ErrorBoundaryState {
     return { hasError: true };
-  }
 
   componentDidCatch(error: Error) {
     this.props.onError?.(error);
-  }
 
   render() {
     if (this.state.hasError) {
       return null; // Let parent handle error display
-    }
 
     return this.props.children;
-  }
-}
 
 /**
  * Preload components for better performance
@@ -272,7 +252,6 @@ export const preloadComponent = <T extends ComponentType<any>>(
       // Trigger the lazy loading
       React.createElement(lazyComponent);
       resolve();
-    }
   });
 };
 
@@ -303,14 +282,12 @@ export const usePreloadOnHover = (
   const handleMouseLeave = React.useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
-    }
   }, []);
 
   React.useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-      }
     };
   }, []);
 

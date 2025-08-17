@@ -7,7 +7,6 @@ interface FocusTrapProps {
   restoreFocus?: boolean;
   className?: string;
   as?: keyof JSX.IntrinsicElements;
-}
 
 const FocusTrap: React.FC<FocusTrapProps> = ({
   children,

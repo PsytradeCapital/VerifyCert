@@ -16,7 +16,7 @@ describe('Lazy Loading Utilities', () => {
   describe('createLazyComponent', () => {
     it('should create a lazy component that loads successfully', async () => {
       render(
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<div>Loading...</div>>
           <LazyMockComponent message="Hello World" />
         </React.Suspense>
       );
@@ -77,7 +77,7 @@ describe('Lazy Loading Utilities', () => {
   describe('LazyComponentWrapper', () => {
     it('should render children with suspense boundary', async () => {
       render(
-        <LazyComponentWrapper fallback={<div>Loading wrapper...</div>}>
+        <LazyComponentWrapper fallback={<div>Loading wrapper...</div>>
           <LazyMockComponent message="Wrapped Component" />
         </LazyComponentWrapper>
       );

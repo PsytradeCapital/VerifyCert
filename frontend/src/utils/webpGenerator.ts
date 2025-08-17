@@ -16,7 +16,6 @@ export const convertToWebP = (
     if (!ctx) {
       reject(new Error('Canvas not supported'));
       return;
-    }
     
     canvas.width = imageElement.naturalWidth;
     canvas.height = imageElement.naturalHeight;
@@ -29,7 +28,6 @@ export const convertToWebP = (
           resolve(blob);
         } else {
           reject(new Error('Failed to convert to WebP'));
-        }
       },
       'image/webp',
       quality
@@ -50,7 +48,6 @@ export const canConvertToWebP = (): boolean => {
     return dataUrl.startsWith('data:image/webp');
   } catch {
     return false;
-  }
 };
 
 /**
@@ -95,8 +92,6 @@ export const generateResponsiveWebP = async (
       results.push({ size, blob, url });
     } catch (error) {
       console.warn(`Failed to generate WebP for size ${size}:`, error);
-    }
-  }
   
   return results;
 };
@@ -112,7 +107,6 @@ export const preloadAndConvertImages = async (
   if (!canConvertToWebP()) {
     console.warn('WebP conversion not supported in this browser');
     return webpUrls;
-  }
   
   for (const imagePath of imagePaths) {
     try {
@@ -132,8 +126,6 @@ export const preloadAndConvertImages = async (
       console.log(`✓ Converted to WebP: ${imagePath}`);
     } catch (error) {
       console.warn(`Failed to convert ${imagePath}:`, error);
-    }
-  }
   
   return webpUrls;
 };
@@ -149,17 +141,14 @@ class WebPCache {
     // Return cached version if available
     if (this.cache.has(originalUrl)) {
       return this.cache.get(originalUrl)!;
-    }
     
     // Return original if already converting
     if (this.converting.has(originalUrl)) {
       return originalUrl;
-    }
     
     // Check if WebP conversion is supported
     if (!canConvertToWebP()) {
       return originalUrl;
-    }
     
     try {
       this.converting.add(originalUrl);
@@ -183,19 +172,14 @@ class WebPCache {
       return originalUrl;
     } finally {
       this.converting.delete(originalUrl);
-    }
-  }
   
   clear() {
     // Revoke all object URLs to free memory
     this.cache.forEach(url => URL.revokeObjectURL(url));
     this.cache.clear();
-  }
   
   size() {
     return this.cache.size;
-  }
-}
 
 export const webpCache = new WebPCache();
 
@@ -221,8 +205,6 @@ export const initializeWebPOptimization = async () => {
       await webpCache.getWebPUrl(imagePath);
     } catch (error) {
       console.warn(`Failed to pre-convert ${imagePath}:`, error);
-    }
-  }
   
   console.log(`WebP optimization initialized. Cached ${webpCache.size()} images.`);
 };
@@ -234,4 +216,3 @@ if (typeof window !== 'undefined') {
   window.addEventListener('beforeunload', () => {
     webpCache.clear();
   });
-}

@@ -22,7 +22,6 @@ interface NavigationProps {
   isWalletConnected?: boolean;
   onWalletConnect?: (address: string, provider: any) => void;
   onWalletDisconnect?: () => void;
-}
 
 export const Navigation: React.FC<NavigationProps> = ({
   walletAddress,

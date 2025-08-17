@@ -13,7 +13,6 @@ export interface UseInteractionAnimationsOptions {
   preset?: 'subtle' | 'pronounced' | 'playful' | 'minimal';
   customAnimations?: any;
   respectReducedMotion?: boolean;
-}
 
 export const useInteractionAnimations = ({
   component,
@@ -28,17 +27,14 @@ export const useInteractionAnimations = ({
   // If user prefers reduced motion and we should respect it, return empty animations
   if (respectReducedMotion && shouldReduceMotion) {
     return {};
-  }
   
   // If component is disabled, return empty animations
   if (disabled) {
     return {};
-  }
   
   // Use custom animations if provided
   if (customAnimations) {
     return customAnimations;
-  }
   
   // Use preset if specified
   if (preset) {
@@ -46,10 +42,8 @@ export const useInteractionAnimations = ({
       whileHover: interactionPresets[preset],
       whileTap: { 
         scale: 0.98,
-        transition: { duration: 0.1 }
-      }
+        transition: { duration: 0.1
     };
-  }
   
   // Get component-specific animations
   return getInteractionAnimation(component, variant);
@@ -121,21 +115,17 @@ export const useStaggeredAnimations = (itemCount: number, delay: number = 0.1) =
       container: {},
       item: {}
     };
-  }
   
   return {
     container: {
       animate: {
         transition: {
           staggerChildren: delay
-        }
-      }
     },
     item: {
       initial: { opacity: 0, y: 20 },
       animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.3 }
-    }
+      transition: { duration: 0.3
   };
 };
 
@@ -148,14 +138,12 @@ export const useFocusAnimations = () => {
       focusProps: {},
       focusRingClass: 'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
     };
-  }
   
   return {
     focusProps: {
       whileFocus: {
         scale: 1.02,
-        transition: { duration: 0.2 }
-      }
+        transition: { duration: 0.2
     },
     focusRingClass: 'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none'
   };

@@ -7,7 +7,6 @@ import PWAInstallTest from '../components/PWAInstallTest';
 interface HomeProps {
   isWalletConnected: boolean;
   walletAddress?: string | null;
-}
 
 export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
   const location = useLocation();
@@ -23,10 +22,8 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
         });
       } else {
         toast.error(location.state.message);
-      }
       // Clear the state to prevent showing the message again
       window.history.replaceState({}, document.title);
-    }
   }, [location.state]);
 
   // Sample certificate for demonstration
@@ -267,4 +264,3 @@ export default function Home({ isWalletConnected, walletAddress }: HomeProps) {
       </div>
     </div>
   );
-}

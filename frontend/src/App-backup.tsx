@@ -89,13 +89,11 @@ const APP_VERSION = Date.now();
 if (typeof document !== 'undefined') {
   document.documentElement.setAttribute('data-version', APP_VERSION.toString());
   console.log('🔄 App Version:', APP_VERSION);
-}
 
 interface WalletState {
   isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
-}
 
 function App() {
   const [walletState, setWalletState] = useState<WalletState>({
@@ -134,7 +132,6 @@ function App() {
     // Initialize performance metrics reporting
     if (process.env.REACT_APP_PERFORMANCE_ENDPOINT) {
       performanceMetrics.setReportingEndpoint(process.env.REACT_APP_PERFORMANCE_ENDPOINT);
-    }
   }, []);
 
   // Show iOS instructions when appropriate
@@ -146,7 +143,6 @@ function App() {
       }, 5000); // 5 second delay
 
       return () => clearTimeout(timer);
-    }
   }, [showIOSInstructions, showIOSModal]);
 
   // Handle wallet connection
@@ -208,8 +204,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LoginPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -217,8 +212,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <SignupPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -226,8 +220,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <SignupPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -235,8 +228,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <OTPVerificationPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -244,8 +236,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <ForgotPasswordPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -253,8 +244,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <ResetPasswordPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -262,8 +252,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <UnauthorizedPage />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
 
                 {/* Public Routes */}
@@ -275,8 +264,7 @@ function App() {
                         isWalletConnected={walletState.isConnected}
                         walletAddress={walletState.address}
                       />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -284,8 +272,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <Verify />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -293,13 +280,12 @@ function App() {
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyVerificationPage />
                       </LazyComponentWrapper>
-                    </BlockchainErrorBoundary>
-                  } 
+                    </BlockchainErrorBoundary> 
                 />
                 
                 <Route 
@@ -307,13 +293,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyLayoutDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -321,13 +306,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyBreadcrumbsDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -335,13 +319,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyNavigationDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -349,13 +332,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyNavigationStateDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -363,13 +345,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyFeedbackAnimationsDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -378,12 +359,11 @@ function App() {
                     <ErrorBoundary onError={handleGlobalError}>
                       <div className="container mx-auto px-4 py-8">
                         <h1 className="text-2xl font-bold text-gray-900 mb-6">Push Notification Settings</h1>
-                        <Suspense fallback={<ComponentLoading />}>
+                        <Suspense fallback={<ComponentLoading />>
                           <PushNotificationSettings userId={walletState.address || 'demo-user'} />
                         </Suspense>
                       </div>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -391,13 +371,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyPushNotificationDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -405,13 +384,12 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyPWATestPage />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -419,35 +397,32 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyThemeDemo />
                       </LazyComponentWrapper>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
                   path="/feedback-dashboard" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <Suspense fallback={<ComponentLoading />}>
+                      <Suspense fallback={<ComponentLoading />>
                         <LazyFeedbackDashboard />
                       </Suspense>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
                   path="/feedback-demo" 
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
-                      <Suspense fallback={<ComponentLoading />}>
+                      <Suspense fallback={<ComponentLoading />>
                         <LazyFeedbackDemo />
                       </Suspense>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
                 
                 <Route 
@@ -455,13 +430,12 @@ function App() {
                   element={
                     <BlockchainErrorBoundary onError={handleGlobalError}>
                       <LazyComponentWrapper 
-                        fallback={<ComponentLoading />}
+                        fallback={<ComponentLoading />
                         errorFallback={ComponentLoadError}
                       >
                         <LazyCertificateViewer />
                       </LazyComponentWrapper>
-                    </BlockchainErrorBoundary>
-                  } 
+                    </BlockchainErrorBoundary> 
                 />
 
                 {/* Dashboard Route - Supports both authenticated users and demo mode with wallet connection */}
@@ -475,14 +449,13 @@ function App() {
                         allowDemoMode={true}
                       >
                         <LazyComponentWrapper 
-                          fallback={<ComponentLoading />}
+                          fallback={<ComponentLoading />
                           errorFallback={ComponentLoadError}
                         >
                           <LazyIssuerDashboard />
                         </LazyComponentWrapper>
                       </ProtectedRoute>
-                    </BlockchainErrorBoundary>
-                  } 
+                    </BlockchainErrorBoundary> 
                 />
                 
                 <Route 
@@ -499,15 +472,14 @@ function App() {
                           requireWallet={true}
                         >
                           <LazyComponentWrapper 
-                            fallback={<ComponentLoading />}
+                            fallback={<ComponentLoading />
                             errorFallback={ComponentLoadError}
                           >
                             <LazyIssuerDashboard />
                           </LazyComponentWrapper>
                         </ProtectedRoute>
                       </AuthProtectedRoute>
-                    </BlockchainErrorBoundary>
-                  } 
+                    </BlockchainErrorBoundary> 
                 />
                 
                 <Route 
@@ -516,7 +488,7 @@ function App() {
                     <ErrorBoundary onError={handleGlobalError}>
                       <AuthProtectedRoute requireAuth={true} requireVerification={true}>
                         <LazyComponentWrapper 
-                          fallback={<ComponentLoading />}
+                          fallback={<ComponentLoading />
                           errorFallback={ComponentLoadError}
                         >
                           <div className="container mx-auto px-4 py-8">
@@ -525,8 +497,7 @@ function App() {
                           </div>
                         </LazyComponentWrapper>
                       </AuthProtectedRoute>
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
 
                 {/* 404 Not Found */}
@@ -535,8 +506,7 @@ function App() {
                   element={
                     <ErrorBoundary onError={handleGlobalError}>
                       <NotFound />
-                    </ErrorBoundary>
-                  } 
+                    </ErrorBoundary> 
                 />
               </Routes>
             </RouteErrorBoundary>
@@ -609,9 +579,9 @@ function App() {
                   </button>
                 </div>
                 <div className="p-4">
-                  <Suspense fallback={<div className="p-8 text-center">Loading performance dashboard...</div>}>
+                  <Suspense fallback={<div className="p-8 text-center">Loading performance dashboard...</div>>
                     <LazyComponentWrapper 
-                      fallback={<ComponentLoading />}
+                      fallback={<ComponentLoading />
                       errorFallback={ComponentLoadError}
                     >
                       <LazyPerformanceDashboard />
@@ -635,6 +605,5 @@ function App() {
     </ThemeProvider>
     </ErrorBoundary>
   );
-}
 
 export default App;

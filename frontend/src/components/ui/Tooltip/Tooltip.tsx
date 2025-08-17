@@ -11,7 +11,6 @@ export interface TooltipProps {
   tooltipClassName?: string;
   arrow?: boolean;
   disabled?: boolean;
-}
 
 const Tooltip: React.FC<TooltipProps> = ({
   children,
@@ -35,7 +34,6 @@ const Tooltip: React.FC<TooltipProps> = ({
     
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
-    }
     
     timeoutRef.current = setTimeout(() => {
       setIsVisible(true);
@@ -45,7 +43,6 @@ const Tooltip: React.FC<TooltipProps> = ({
   const hideTooltip = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
-    }
     setIsVisible(false);
   };
 
@@ -77,7 +74,6 @@ const Tooltip: React.FC<TooltipProps> = ({
         x = triggerRect.right + scrollX + 8;
         y = triggerRect.top + scrollY + (triggerRect.height / 2) - (tooltipRect.height / 2);
         break;
-    }
 
     // Keep tooltip within viewport
     const padding = 8;
@@ -90,14 +86,12 @@ const Tooltip: React.FC<TooltipProps> = ({
   useEffect(() => {
     if (isVisible) {
       calculatePosition();
-    }
   }, [isVisible, position]);
 
   useEffect(() => {
     const handleResize = () => {
       if (isVisible) {
         calculatePosition();
-      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -108,7 +102,6 @@ const Tooltip: React.FC<TooltipProps> = ({
       window.removeEventListener('scroll', handleResize);
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-      }
     };
   }, [isVisible]);
 
@@ -124,12 +117,10 @@ const Tooltip: React.FC<TooltipProps> = ({
           hideTooltip();
         } else {
           showTooltip();
-        }
       };
     } else if (trigger === 'focus') {
       events.onFocus = showTooltip;
       events.onBlur = hideTooltip;
-    }
 
     return events;
   };
@@ -148,7 +139,6 @@ const Tooltip: React.FC<TooltipProps> = ({
         return `${arrowBase} -left-1 top-1/2 -translate-y-1/2`;
       default:
         return arrowBase;
-    }
   };
 
   const tooltipVariants = {
@@ -167,8 +157,6 @@ const Tooltip: React.FC<TooltipProps> = ({
         type: 'spring',
         damping: 25,
         stiffness: 300
-      }
-    }
   };
 
   return (
@@ -203,7 +191,7 @@ const Tooltip: React.FC<TooltipProps> = ({
               role="tooltip"
             >
               {content}
-              {arrow && <div className={getArrowClasses()} />}
+              {arrow && <div className={getArrowClasses()} />
             </div>
           </motion.div>
         )}

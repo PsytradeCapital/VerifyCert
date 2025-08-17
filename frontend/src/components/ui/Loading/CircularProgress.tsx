@@ -8,7 +8,6 @@ interface CircularProgressProps {
   strokeWidth?: number;
   showLabel?: boolean;
   className?: string;
-}
 
 const CircularProgress: React.FC<CircularProgressProps> = ({
   progress,

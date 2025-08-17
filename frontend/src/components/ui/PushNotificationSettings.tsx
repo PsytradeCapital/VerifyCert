@@ -5,7 +5,6 @@ import { usePushNotifications } from '../../hooks/usePushNotifications';
 interface PushNotificationSettingsProps {
   userId?: string;
   className?: string;
-}
 
 const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
   userId = 'demo-user',
@@ -31,14 +30,12 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
     const success = await subscribe(userId);
     if (success) {
       console.log('Successfully subscribed to push notifications');
-    }
   };
 
   const handleUnsubscribe = async () => {
     const success = await unsubscribe();
     if (success) {
       console.log('Successfully unsubscribed from push notifications');
-    }
   };
 
   const handleTestNotification = async () => {
@@ -51,7 +48,6 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
     if (success) {
       setTestSuccess(true);
       setTimeout(() => setTestSuccess(false), 3000);
-    }
   };
 
   const handleRequestPermission = async () => {
@@ -66,7 +62,6 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
         return { text: 'Denied', color: 'text-red-600', icon: X };
       default:
         return { text: 'Not requested', color: 'text-yellow-600', icon: AlertCircle };
-    }
   };
 
   const permissionStatus = getPermissionStatus();
@@ -88,7 +83,6 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
         </div>
       </div>
     );
-  }
 
   return (
     <div className={`bg-white border border-gray-200 rounded-lg p-6 ${className}`}>
@@ -140,7 +134,6 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
                 : permission === 'denied'
                 ? 'Notifications are blocked'
                 : 'Permission not requested yet'
-              }
             </p>
           </div>
           {permission !== 'granted' && (
@@ -166,7 +159,6 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
               {isSubscribed 
                 ? 'You will receive push notifications' 
                 : 'You are not subscribed to notifications'
-              }
             </p>
           </div>
           <div className="flex items-center space-x-2">

@@ -45,7 +45,6 @@ export function TailwindShowcase() {
                 ${activeTab === tab.id
                   ? 'bg-white dark:bg-neutral-700 text-primary-600 dark:text-primary-400 shadow-sm'
                   : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'
-                }
               `}
             >
               {tab.label}
@@ -55,16 +54,15 @@ export function TailwindShowcase() {
 
         {/* Tab Content */}
         <div className="animate-fade-in">
-          {activeTab === 'colors' && <ColorsTab />}
-          {activeTab === 'typography' && <TypographyTab />}
-          {activeTab === 'spacing' && <SpacingTab />}
-          {activeTab === 'components' && <ComponentsTab />}
-          {activeTab === 'animations' && <AnimationsTab />}
+          {activeTab === 'colors' && <ColorsTab />
+          {activeTab === 'typography' && <TypographyTab />
+          {activeTab === 'spacing' && <SpacingTab />
+          {activeTab === 'components' && <ComponentsTab />
+          {activeTab === 'animations' && <AnimationsTab />
         </div>
       </div>
     </div>
   );
-}
 
 function ColorsTab() {
   const colorPalettes = [
@@ -127,7 +125,6 @@ function ColorsTab() {
       </div>
     </div>
   );
-}
 
 function TypographyTab() {
   return (
@@ -177,7 +174,6 @@ function TypographyTab() {
       </div>
     </div>
   );
-}
 
 function SpacingTab() {
   const spacingSizes = [1, 2, 3, 4, 6, 8, 12, 16, 20, 24, 32];
@@ -214,7 +210,6 @@ function SpacingTab() {
       </div>
     </div>
   );
-}
 
 function ComponentsTab() {
   return (
@@ -282,7 +277,6 @@ function ComponentsTab() {
       </div>
     </div>
   );
-}
 
 function AnimationsTab() {
   const [triggerAnimation, setTriggerAnimation] = useState(false);
@@ -357,4 +351,3 @@ function AnimationsTab() {
       </div>
     </div>
   );
-}

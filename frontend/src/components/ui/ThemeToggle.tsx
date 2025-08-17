@@ -13,7 +13,6 @@ interface ThemeToggleProps {
   showLabel?: boolean;
   variant?: 'button' | 'dropdown' | 'switch';
   size?: 'sm' | 'md' | 'lg';
-}
 
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className = '',
@@ -65,7 +64,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         )}
       </button>
     );
-  }
 
   if (variant === 'switch') {
     return (
@@ -103,7 +101,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         </button>
       </div>
     );
-  }
 
   if (variant === 'dropdown') {
     return (
@@ -129,7 +126,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         </div>
       </div>
     );
-  }
 
   return null;
 };
@@ -139,7 +135,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
  */
 interface ThemeToggleWithSystemProps extends ThemeToggleProps {
   includeSystem?: boolean;
-}
 
 export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
   includeSystem = true,
@@ -192,7 +187,6 @@ export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
             ${theme === value
               ? 'bg-primary text-primary-foreground shadow-sm'
               : 'bg-background hover:bg-muted text-muted-foreground hover:text-foreground'
-            }
           `}
           title={`Switch to ${label.toLowerCase()} theme`}
           aria-label={`Switch to ${label.toLowerCase()} theme`}

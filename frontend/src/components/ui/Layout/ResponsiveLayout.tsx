@@ -7,7 +7,6 @@ export interface ResponsiveLayoutProps {
   variant?: 'default' | 'centered' | 'wide' | 'narrow';
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   as?: keyof JSX.IntrinsicElements;
-}
 
 const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
   children,

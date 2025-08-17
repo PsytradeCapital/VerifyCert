@@ -154,7 +154,6 @@ export const BasicDialog: Story = {
                 Delete
               </Button>
             </>
-          }
         >
           <p className="text-gray-600">
             This item will be permanently removed from your account.
@@ -185,7 +184,6 @@ export const FormDialog: Story = {
                 Create
               </Button>
             </>
-          }
         >
           <div className="space-y-4">
             <div>

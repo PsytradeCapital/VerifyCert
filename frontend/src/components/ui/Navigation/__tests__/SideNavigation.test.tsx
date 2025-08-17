@@ -29,7 +29,6 @@ const mockNavigationItems: NavigationItem[] = [
         label: 'Preferences',
         path: '/settings/preferences',
         icon: Settings
-      }
     ]
   },
   {
@@ -38,7 +37,6 @@ const mockNavigationItems: NavigationItem[] = [
     path: '/disabled',
     icon: Settings,
     disabled: true
-  }
 ];
 
 const renderWithRouter = (component: React.ReactElement) => {
@@ -118,7 +116,6 @@ describe('SideNavigation', () => {
       // Child items should now be visible
       expect(screen.getByText('Profile')).toBeInTheDocument();
       expect(screen.getByText('Preferences')).toBeInTheDocument();
-    }
   });
 
   it('handles keyboard navigation', () => {
@@ -133,7 +130,6 @@ describe('SideNavigation', () => {
       
       const settingsButton = screen.getByText('Settings').closest('button');
       expect(document.activeElement).toBe(settingsButton);
-    }
   });
 
   it('shows branding when enabled', () => {

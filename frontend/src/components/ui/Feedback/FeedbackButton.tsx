@@ -8,7 +8,6 @@ interface FeedbackButtonProps {
   category?: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
   className?: string;
-}
 
 export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   position = 'bottom-right',

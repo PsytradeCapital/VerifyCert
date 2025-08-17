@@ -8,7 +8,7 @@ jest.mock('../../../../hooks/useBreadcrumbs', () => ({
   useBreadcrumbs: () => [
     { label: 'Home', href: '/' },
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Current Page', active: true }
+    { label: 'Current Page', active: true
   ]
 }));
 
@@ -24,7 +24,7 @@ describe('Breadcrumbs', () => {
   const mockItems = [
     { label: 'Home', href: '/' },
     { label: 'Products', href: '/products' },
-    { label: 'Current Product', active: true }
+    { label: 'Current Product', active: true
   ];
 
   it('renders breadcrumb items correctly', () => {
@@ -93,7 +93,7 @@ describe('Breadcrumbs', () => {
       { label: 'Level 1', href: '/level1' },
       { label: 'Level 2', href: '/level2' },
       { label: 'Level 3', href: '/level3' },
-      { label: 'Current', active: true }
+      { label: 'Current', active: true
     ];
 
     renderWithRouter(<Breadcrumbs items={manyItems} maxItems={3} />);
@@ -123,7 +123,7 @@ describe('Breadcrumbs', () => {
     const itemsWithEllipsis = [
       { label: 'Home', href: '/' },
       { label: '...', active: false },
-      { label: 'Current', active: true }
+      { label: 'Current', active: true
     ];
 
     renderWithRouter(<Breadcrumbs items={itemsWithEllipsis} />);

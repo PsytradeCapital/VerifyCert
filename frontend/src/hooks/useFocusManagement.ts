@@ -57,21 +57,17 @@ export const useFocusTrap = (isActive: boolean = true) => {
       // If no focusable elements, prevent tabbing
       event.preventDefault();
       return;
-    }
 
     if (event.shiftKey) {
       // Shift + Tab (backward)
       if (document.activeElement === firstFocusableRef.current) {
         event.preventDefault();
         lastFocusableRef.current.focus();
-      }
     } else {
       // Tab (forward)
       if (document.activeElement === lastFocusableRef.current) {
         event.preventDefault();
         firstFocusableRef.current.focus();
-      }
-    }
   }, [isActive, updateFocusableElements]);
 
   const focusFirst = useCallback(() => {
@@ -81,14 +77,12 @@ export const useFocusTrap = (isActive: boolean = true) => {
     } else if (containerRef.current) {
       // If no focusable elements, focus the container itself
       containerRef.current.focus();
-    }
   }, [updateFocusableElements]);
 
   const focusLast = useCallback(() => {
     updateFocusableElements();
     if (lastFocusableRef.current) {
       lastFocusableRef.current.focus();
-    }
   }, [updateFocusableElements]);
 
   // Store and restore focus
@@ -108,8 +102,6 @@ export const useFocusTrap = (isActive: boolean = true) => {
       if (previousFocusRef.current && document.contains(previousFocusRef.current)) {
         previousFocusRef.current.focus();
         previousFocusRef.current = null;
-      }
-    }
   }, [isActive, focusFirst]);
 
   // Add/remove event listener
@@ -117,7 +109,6 @@ export const useFocusTrap = (isActive: boolean = true) => {
     if (isActive) {
       document.addEventListener('keydown', handleKeyDown);
       return () => document.removeEventListener('keydown', handleKeyDown);
-    }
   }, [isActive, handleKeyDown]);
 
   return {
@@ -142,7 +133,6 @@ export const useFocusRestore = () => {
     if (previousFocusRef.current && document.contains(previousFocusRef.current)) {
       previousFocusRef.current.focus();
       previousFocusRef.current = null;
-    }
   }, []);
 
   return { saveFocus, restoreFocus };
@@ -156,7 +146,6 @@ export const useRovingTabIndex = (items: HTMLElement[], activeIndex: number = 0)
     items.forEach((item, index) => {
       if (item) {
         item.tabIndex = index === activeIndex ? 0 : -1;
-      }
     });
   }, [items, activeIndex]);
 
@@ -188,11 +177,9 @@ export const useRovingTabIndex = (items: HTMLElement[], activeIndex: number = 0)
         break;
       default:
         return currentIndex;
-    }
 
     if (items[newIndex]) {
       items[newIndex].focus();
-    }
 
     return newIndex;
   }, [items]);
@@ -216,7 +203,6 @@ export const useDropdownFocus = (isOpen: boolean) => {
     
     if (firstItem) {
       firstItem.focus();
-    }
   }, []);
 
   const focusLastMenuItem = useCallback(() => {
@@ -229,7 +215,6 @@ export const useDropdownFocus = (isOpen: boolean) => {
     
     if (lastItem) {
       lastItem.focus();
-    }
   }, []);
 
   const handleMenuKeyDown = useCallback((event: KeyboardEvent) => {
@@ -266,7 +251,6 @@ export const useDropdownFocus = (isOpen: boolean) => {
         event.preventDefault();
         triggerRef.current?.focus();
         break;
-    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -278,15 +262,12 @@ export const useDropdownFocus = (isOpen: boolean) => {
       // Return focus to trigger when dropdown closes
       if (triggerRef.current && document.contains(triggerRef.current)) {
         triggerRef.current.focus();
-      }
-    }
   }, [isOpen, focusFirstMenuItem]);
 
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleMenuKeyDown);
       return () => document.removeEventListener('keydown', handleMenuKeyDown);
-    }
   }, [isOpen, handleMenuKeyDown]);
 
   return {
@@ -306,7 +287,6 @@ export const useSkipLinks = () => {
     if (target) {
       target.focus();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   }, []);
 
   const createSkipLink = useCallback((targetId: string, label: string) => {

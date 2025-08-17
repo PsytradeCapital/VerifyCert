@@ -12,7 +12,6 @@ export interface ErrorReport {
   errorType: 'javascript' | 'react' | 'blockchain' | 'network' | 'validation';
   severity: 'low' | 'medium' | 'high' | 'critical';
   context?: Record<string, any>;
-}
 
 class ErrorLogger {
   private static instance: ErrorLogger;
@@ -37,7 +36,7 @@ class ErrorLogger {
         undefined,
         'javascript',
         'high',
-        { reason: event.reason }
+        { reason: event.reason
       );
     });
 
@@ -52,17 +51,13 @@ class ErrorLogger {
           filename: event.filename,
           lineno: event.lineno,
           colno: event.colno,
-        }
       );
     });
-  }
 
   public static getInstance(): ErrorLogger {
     if (!ErrorLogger.instance) {
       ErrorLogger.instance = new ErrorLogger();
-    }
     return ErrorLogger.instance;
-  }
 
   public logError(
     error: Error,
@@ -101,15 +96,11 @@ class ErrorLogger {
       console.log('Error Report:', errorReport);
       if (errorInfo) {
         console.log('Component Stack:', errorInfo.componentStack);
-      }
       console.groupEnd();
-    }
 
     // Send to external service if online
     if (this.isOnline) {
       this.sendErrorReport(errorReport);
-    }
-  }
 
   public logBlockchainError(
     error: Error,
@@ -129,9 +120,7 @@ class ErrorLogger {
         transactionHash,
         walletAddress,
         network: this.getNetworkInfo(),
-      }
     );
-  }
 
   public logNetworkError(
     error: Error,
@@ -149,9 +138,7 @@ class ErrorLogger {
         method,
         statusCode,
         networkStatus: navigator.onLine ? 'online' : 'offline',
-      }
     );
-  }
 
   public logValidationError(
     error: Error,
@@ -166,9 +153,7 @@ class ErrorLogger {
       {
         formData: this.sanitizeFormData(formData),
         fieldName,
-      }
     );
-  }
 
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {
@@ -184,25 +169,20 @@ class ErrorLogger {
           },
           body: JSON.stringify(errorReport),
         });
-      }
 
       // Remove from queue after successful send
       const index = this.errorQueue.indexOf(errorReport);
       if (index > -1) {
         this.errorQueue.splice(index, 1);
-      }
     } catch (sendError) {
       console.error('Failed to send error report:', sendError);
       // Keep in queue for retry when back online
-    }
-  }
 
   private flushErrorQueue(): void {
     const queueCopy = [...this.errorQueue];
     queueCopy.forEach(errorReport => {
       this.sendErrorReport(errorReport);
     });
-  }
 
   private getWalletContext(): any {
     try {
@@ -213,12 +193,9 @@ class ErrorLogger {
           chainId: (window as any).ethereum.chainId,
           networkVersion: (window as any).ethereum.networkVersion,
         };
-      }
     } catch (error) {
       // Ignore errors when getting wallet context
-    }
     return null;
-  }
 
   private getMemoryUsage(): any {
     try {
@@ -229,24 +206,18 @@ class ErrorLogger {
           totalJSHeapSize: memory.totalJSHeapSize,
           jsHeapSizeLimit: memory.jsHeapSizeLimit,
         };
-      }
     } catch (error) {
       // Ignore errors when getting memory usage
-    }
     return null;
-  }
 
   private getConnectionType(): string {
     try {
       if ('connection' in navigator) {
         const connection = (navigator as any).connection;
         return connection.effectiveType || connection.type || 'unknown';
-      }
     } catch (error) {
       // Ignore errors when getting connection type
-    }
     return 'unknown';
-  }
 
   private getNetworkInfo(): any {
     try {
@@ -255,12 +226,9 @@ class ErrorLogger {
           chainId: (window as any).ethereum.chainId,
           networkVersion: (window as any).ethereum.networkVersion,
         };
-      }
     } catch (error) {
       // Ignore errors when getting network info
-    }
     return null;
-  }
 
   private sanitizeFormData(formData: Record<string, any>): Record<string, any> {
     const sanitized = { ...formData };
@@ -270,13 +238,11 @@ class ErrorLogger {
     sensitiveFields.forEach(field => {
       if (field in sanitized) {
         sanitized[field] = '[REDACTED]';
-      }
     });
 
     return sanitized;
-  }
 
-  public getErrorStats(): { total: number; byType: Record<string, number>; bySeverity: Record<string, number> } {
+  public getErrorStats(): { total: number; byType: Record<string, number>; bySeverity: Record<string, number> {
     const stats = {
       total: this.errorQueue.length,
       byType: {} as Record<string, number>,
@@ -289,8 +255,6 @@ class ErrorLogger {
     });
 
     return stats;
-  }
-}
 
 // Export singleton instance
 export const errorLogger = ErrorLogger.getInstance();

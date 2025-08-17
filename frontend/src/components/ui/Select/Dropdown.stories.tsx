@@ -10,8 +10,6 @@ const meta: Meta<typeof Dropdown> = {
     docs: {
       description: {
         component: 'A flexible dropdown component for creating context menus, action menus, and other dropdown interfaces.'
-      }
-    }
   },
   argTypes: {
     placement: {
@@ -20,8 +18,6 @@ const meta: Meta<typeof Dropdown> = {
     },
     disabled: {
       control: 'boolean'
-    }
-  }
 };
 
 export default meta;
@@ -30,7 +26,7 @@ type Story = StoryObj<typeof Dropdown>;
 const basicItems: DropdownItem[] = [
   { id: 'edit', label: 'Edit', onClick: () => alert('Edit clicked') },
   { id: 'duplicate', label: 'Duplicate', onClick: () => alert('Duplicate clicked') },
-  { id: 'delete', label: 'Delete', onClick: () => alert('Delete clicked') }
+  { id: 'delete', label: 'Delete', onClick: () => alert('Delete clicked')
 ];
 
 const itemsWithIcons: DropdownItem[] = [
@@ -57,8 +53,7 @@ const itemsWithIcons: DropdownItem[] = [
     id: 'logout', 
     label: 'Sign Out', 
     icon: <span>🚪</span>,
-    onClick: () => alert('Logout clicked') 
-  }
+    onClick: () => alert('Logout clicked')
 ];
 
 const itemsWithDisabled: DropdownItem[] = [
@@ -67,7 +62,7 @@ const itemsWithDisabled: DropdownItem[] = [
   { id: 'save', label: 'Save', disabled: true, onClick: () => alert('Save clicked') },
   { id: 'divider1', label: '', divider: true },
   { id: 'export', label: 'Export', onClick: () => alert('Export clicked') },
-  { id: 'print', label: 'Print', disabled: true, onClick: () => alert('Print clicked') }
+  { id: 'print', label: 'Print', disabled: true, onClick: () => alert('Print clicked')
 ];
 
 const contextMenuItems: DropdownItem[] = [
@@ -93,8 +88,7 @@ const contextMenuItems: DropdownItem[] = [
   { 
     id: 'selectAll', 
     label: 'Select All', 
-    onClick: () => alert('Select All clicked') 
-  }
+    onClick: () => alert('Select All clicked')
 ];
 
 export const Default: Story = {
@@ -105,7 +99,6 @@ export const Default: Story = {
       </button>
     ),
     items: basicItems
-  }
 };
 
 export const WithIcons: Story = {
@@ -120,7 +113,6 @@ export const WithIcons: Story = {
       </button>
     ),
     items: itemsWithIcons
-  }
 };
 
 export const WithDisabledItems: Story = {
@@ -131,7 +123,6 @@ export const WithDisabledItems: Story = {
       </button>
     ),
     items: itemsWithDisabled
-  }
 };
 
 export const ContextMenu: Story = {
@@ -144,7 +135,6 @@ export const ContextMenu: Story = {
       </div>
     ),
     items: contextMenuItems
-  }
 };
 
 export const IconButton: Story = {
@@ -157,7 +147,6 @@ export const IconButton: Story = {
       </button>
     ),
     items: basicItems
-  }
 };
 
 // Placement variants
@@ -170,7 +159,6 @@ export const BottomEnd: Story = {
     ),
     items: basicItems,
     placement: 'bottom-end'
-  }
 };
 
 export const TopStart: Story = {
@@ -182,7 +170,6 @@ export const TopStart: Story = {
     ),
     items: basicItems,
     placement: 'top-start'
-  }
 };
 
 export const TopEnd: Story = {
@@ -194,7 +181,6 @@ export const TopEnd: Story = {
     ),
     items: basicItems,
     placement: 'top-end'
-  }
 };
 
 export const Disabled: Story = {
@@ -206,7 +192,6 @@ export const Disabled: Story = {
     ),
     items: basicItems,
     disabled: true
-  }
 };
 
 // Complex example with nested structure
@@ -259,10 +244,8 @@ export const ComplexMenu: Story = {
         label: 'Backup Data', 
         icon: <span>💾</span>,
         disabled: true,
-        onClick: () => alert('Backup clicked') 
-      }
+        onClick: () => alert('Backup clicked')
     ]
-  }
 };
 
 // Multiple dropdowns example
@@ -274,11 +257,10 @@ export const MultipleDropdowns: Story = {
           <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
             File
           </button>
-        }
         items={[
           { id: 'new', label: 'New', onClick: () => alert('New clicked') },
           { id: 'open', label: 'Open', onClick: () => alert('Open clicked') },
-          { id: 'save', label: 'Save', onClick: () => alert('Save clicked') }
+          { id: 'save', label: 'Save', onClick: () => alert('Save clicked')
         ]}
       />
       
@@ -287,14 +269,13 @@ export const MultipleDropdowns: Story = {
           <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
             Edit
           </button>
-        }
         items={[
           { id: 'undo', label: 'Undo', onClick: () => alert('Undo clicked') },
           { id: 'redo', label: 'Redo', onClick: () => alert('Redo clicked') },
           { id: 'divider', label: '', divider: true },
           { id: 'cut', label: 'Cut', onClick: () => alert('Cut clicked') },
           { id: 'copy', label: 'Copy', onClick: () => alert('Copy clicked') },
-          { id: 'paste', label: 'Paste', onClick: () => alert('Paste clicked') }
+          { id: 'paste', label: 'Paste', onClick: () => alert('Paste clicked')
         ]}
       />
       
@@ -303,11 +284,10 @@ export const MultipleDropdowns: Story = {
           <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
             View
           </button>
-        }
         items={[
           { id: 'zoom-in', label: 'Zoom In', onClick: () => alert('Zoom In clicked') },
           { id: 'zoom-out', label: 'Zoom Out', onClick: () => alert('Zoom Out clicked') },
-          { id: 'fullscreen', label: 'Full Screen', onClick: () => alert('Full Screen clicked') }
+          { id: 'fullscreen', label: 'Full Screen', onClick: () => alert('Full Screen clicked')
         ]}
       />
     </div>

@@ -102,6 +102,5 @@ console.warn = (...args) => {
     args[0].includes('React does not recognize')
   ) {
     return;
-  }
   originalWarn.call(console, ...args);
 };

@@ -8,7 +8,6 @@ export interface DemoStats {
   previousMonth: number;
   previousWeek: number;
   growthRate: number;
-}
 
 export interface DemoActivity {
   id: string;
@@ -18,13 +17,11 @@ export interface DemoActivity {
   timestamp: Date;
   recipient: string;
   certificateId: string;
-}
 
 export interface DemoQuickStats {
   verificationRate: number;
   averageProcessingTime: string;
   successRate: number;
-}
 
 export class DemoDataService {
   private static instance: DemoDataService;
@@ -38,9 +35,7 @@ export class DemoDataService {
   static getInstance(): DemoDataService {
     if (!DemoDataService.instance) {
       DemoDataService.instance = new DemoDataService();
-    }
     return DemoDataService.instance;
-  }
 
   generateSampleCertificates(): Certificate[] {
     const now = Date.now();
@@ -122,7 +117,6 @@ export class DemoDataService {
         verificationURL: '/verify/demo-006',
       },
     ];
-  }
 
   generateSampleStats(certificates: Certificate[]): DemoStats {
     const now = Date.now();
@@ -159,7 +153,6 @@ export class DemoDataService {
       previousWeek,
       growthRate: Math.round(growthRate),
     };
-  }
 
   generateSampleActivities(certificates: Certificate[]): DemoActivity[] {
     return certificates
@@ -196,7 +189,6 @@ export class DemoDataService {
       ])
       .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
       .slice(0, 10);
-  }
 
   generateQuickStats(): DemoQuickStats {
     return {
@@ -204,7 +196,6 @@ export class DemoDataService {
       averageProcessingTime: '1.8s',
       successRate: 99,
     };
-  }
 
   getDemoData() {
     if (!this.demoData) {
@@ -215,15 +206,12 @@ export class DemoDataService {
         activities: this.generateSampleActivities(certificates),
         quickStats: this.generateQuickStats(),
       };
-    }
     return this.demoData;
-  }
 
   isDemoMode(walletAddress: string | null): boolean {
     // Check if user is in demo mode (wallet connected but no authenticated account)
     // This is a simple check - in production you might want more sophisticated logic
     return walletAddress !== null && !this.hasAuthenticatedAccount();
-  }
 
   private hasAuthenticatedAccount(): boolean {
     // Check if user has a full authenticated account
@@ -233,12 +221,8 @@ export class DemoDataService {
       return authData !== null && JSON.parse(authData).isAuthenticated === true;
     } catch {
       return false;
-    }
-  }
 
   clearDemoData(): void {
     this.demoData = null;
-  }
-}
 
 export const demoDataService = DemoDataService.getInstance();

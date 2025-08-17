@@ -54,7 +54,6 @@ const InputDemo: React.FC = () => {
           <Input
             label="Email Address"
             placeholder="Enter your email..."
-            icon={<EmailIcon />}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +64,6 @@ const InputDemo: React.FC = () => {
           <Input
             label="Password"
             placeholder="Enter your password..."
-            icon={<LockIcon />}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -76,7 +74,6 @@ const InputDemo: React.FC = () => {
           <Input
             label="Confirm Password"
             placeholder="Confirm your password..."
-            icon={<LockIcon />}
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -172,17 +169,14 @@ const InputDemo: React.FC = () => {
           <Input
             label="Small Input"
             placeholder="Small size..."
-            icon={<SearchIcon />}
           />
           <Input
             label="Medium Input"
             placeholder="Medium size..."
-            icon={<SearchIcon />}
           />
           <Input
             label="Large Input"
             placeholder="Large size..."
-            icon={<SearchIcon />}
           />
         </div>
       </div>
@@ -195,13 +189,11 @@ const InputDemo: React.FC = () => {
             <Input
               label="Email Address"
               placeholder="Enter your email..."
-              icon={<EmailIcon />}
               type="email"
             />
             <Input
               label="Search"
               placeholder="Search..."
-              icon={<SearchIcon />}
             />
           </div>
           <div className="space-y-4">
@@ -209,13 +201,11 @@ const InputDemo: React.FC = () => {
             <Input
               label="Email Address"
               placeholder="Enter your email..."
-              icon={<EmailIcon />}
               type="email"
             />
             <Input
               label="Search"
               placeholder="Search..."
-              icon={<SearchIcon />}
             />
           </div>
         </div>

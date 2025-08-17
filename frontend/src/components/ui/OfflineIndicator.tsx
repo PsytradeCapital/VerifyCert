@@ -7,7 +7,6 @@ import { trackInstallPromptEvent } from '../../utils/pwaUtils';
 interface OfflineIndicatorProps {
   className?: string;
   showOnlineStatus?: boolean;
-}
 
 export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
   className = '',
@@ -34,7 +33,6 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
               ${isOffline 
                 ? 'bg-red-500 text-white' 
                 : 'bg-green-500 text-white'
-              }
             `}
           >
             <div className="flex items-center justify-center space-x-2">
@@ -61,7 +59,6 @@ interface ServiceWorkerUpdateProps {
   hasUpdate: boolean;
   onUpdate: () => void;
   className?: string;
-}
 
 export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
   hasUpdate,
@@ -113,7 +110,6 @@ interface PWAInstallPromptProps {
   canInstall: boolean;
   onInstall: () => Promise<boolean>;
   className?: string;
-}
 
 export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
   canInstall,
@@ -139,7 +135,6 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
       }, 3000); // 3 second delay
 
       return () => clearTimeout(timer);
-    }
   }, [canInstall, isDismissed]);
 
   const handleInstall = async () => {
@@ -149,12 +144,10 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
       if (success) {
         setIsDismissed(true);
         setShowPrompt(false);
-      }
     } catch (error) {
       console.error('Installation failed:', error);
     } finally {
       setIsInstalling(false);
-    }
   };
 
   const handleDismiss = () => {
@@ -189,7 +182,6 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
             ${isMobile 
               ? 'rounded-t-2xl p-6 pb-8' 
               : 'rounded-xl border border-gray-200 p-4'
-            }
           `}>
             {/* Mobile-specific header */}
             {isMobile && (
@@ -219,7 +211,6 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                   {isMobile 
                     ? 'Get quick access to certificate verification with our mobile app. Works offline too!'
                     : 'Install our app for a better experience with offline access.'
-                  }
                 </p>
 
                 {/* Mobile-specific benefits */}
@@ -255,7 +246,6 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                       ${isMobile 
                         ? 'py-3 px-6 text-base' 
                         : 'px-4 py-2 text-xs'
-                      }
                       ${isInstalling ? 'bg-gray-400' : 'hover:from-blue-600 hover:to-blue-700'}
                     `}
                   >
@@ -271,7 +261,6 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                         : isMobile 
                           ? 'Add to Home Screen' 
                           : 'Install'
-                      }
                     </span>
                   </button>
                   
@@ -283,7 +272,6 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                       ${isMobile 
                         ? 'py-3 px-6 text-base' 
                         : 'px-4 py-2 text-xs'
-                      }
                     `}
                   >
                     {isMobile ? 'Maybe Later' : 'Not now'}
@@ -302,7 +290,6 @@ interface IOSInstallInstructionsProps {
   isVisible: boolean;
   onDismiss: () => void;
   className?: string;
-}
 
 export const IOSInstallInstructions: React.FC<IOSInstallInstructionsProps> = ({
   isVisible,

@@ -6,7 +6,6 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   padding?: 'none' | 'sm' | 'md' | 'lg';
   hover?: boolean;
   enableAnimations?: boolean;
-}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', padding = 'md', hover = false, enableAnimations = true, ...props }, ref) => {
@@ -38,7 +37,6 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         {...props}
       />
     );
-  }
 );
 
 Card.displayName = 'Card';

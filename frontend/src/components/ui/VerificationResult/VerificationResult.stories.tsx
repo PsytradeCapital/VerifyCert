@@ -9,14 +9,11 @@ const meta: Meta<typeof VerificationResult> = {
     docs: {
       description: {
         component: 'Enhanced verification results display with better visual feedback, animations, and comprehensive information presentation.'
-      }
-    }
   },
   argTypes: {
     onDownload: { action: 'download' },
     onShare: { action: 'share' },
-    onViewOnBlockchain: { action: 'view-blockchain' }
-  }
+    onViewOnBlockchain: { action: 'view-blockchain'
 };
 
 export default meta;
@@ -44,7 +41,6 @@ export const ValidCertificate: Story = {
       confidence: 100
     },
     certificate: mockCertificate
-  }
 };
 
 export const RevokedCertificate: Story = {
@@ -60,7 +56,6 @@ export const RevokedCertificate: Story = {
       confidence: 0
     },
     certificate: mockCertificate
-  }
 };
 
 export const PendingVerification: Story = {
@@ -73,7 +68,6 @@ export const PendingVerification: Story = {
       confidence: 75
     },
     certificate: mockCertificate
-  }
 };
 
 export const InvalidCertificate: Story = {
@@ -84,8 +78,6 @@ export const InvalidCertificate: Story = {
       onChain: false,
       verificationDate: new Date().toISOString(),
       confidence: 0
-    }
-  }
 };
 
 export const HighConfidenceValid: Story = {
@@ -101,7 +93,6 @@ export const HighConfidenceValid: Story = {
       confidence: 95
     },
     certificate: mockCertificate
-  }
 };
 
 export const MediumConfidenceValid: Story = {
@@ -117,7 +108,6 @@ export const MediumConfidenceValid: Story = {
       confidence: 70
     },
     certificate: mockCertificate
-  }
 };
 
 export const WithoutActions: Story = {
@@ -136,5 +126,4 @@ export const WithoutActions: Story = {
     onDownload: undefined,
     onShare: undefined,
     onViewOnBlockchain: undefined
-  }
 };

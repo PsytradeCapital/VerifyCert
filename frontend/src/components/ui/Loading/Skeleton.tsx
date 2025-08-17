@@ -8,7 +8,6 @@ interface SkeletonProps {
   lines?: number;
   className?: string;
   animated?: boolean;
-}
 
 const Skeleton: React.FC<SkeletonProps> = ({
   variant = 'text',
@@ -32,7 +31,6 @@ const Skeleton: React.FC<SkeletonProps> = ({
         return 'rounded-lg';
       default:
         return 'h-4 rounded';
-    }
   };
 
   const getStyle = () => {
@@ -48,7 +46,6 @@ const Skeleton: React.FC<SkeletonProps> = ({
     },
     end: {
       backgroundPosition: 'calc(200px + 100%) 0'
-    }
   };
 
   const SkeletonElement = ({ isLast = false }: { isLast?: boolean }) => (
@@ -69,7 +66,6 @@ const Skeleton: React.FC<SkeletonProps> = ({
           duration: 1.5,
           repeat: Infinity,
           ease: "linear"
-        }
       })}
     />
   );
@@ -82,7 +78,6 @@ const Skeleton: React.FC<SkeletonProps> = ({
         ))}
       </div>
     );
-  }
 
   return <SkeletonElement />;
 };

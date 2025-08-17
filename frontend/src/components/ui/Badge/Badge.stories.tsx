@@ -34,7 +34,7 @@ export const BadgeSizes: Story = {
     <div className="flex flex-wrap items-center gap-4">
       <div className="flex items-center gap-2">
         <Badge size="sm">Small</Badge>
-        <Badge size="md">Medium</Badge>
+        <Badge size="default">Medium</Badge>
         <Badge size="lg">Large</Badge>
       </div>
     </div>
@@ -70,16 +70,16 @@ export const OutlineBadges: Story = {
 export const BadgesWithIcons: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge variant="success" icon={<Star className="w-3 h-3" />}>
+      <Badge variant="success">
         Featured
       </Badge>
-      <Badge variant="error" icon={<Heart className="w-3 h-3" />}>
+      <Badge variant="error">
         Favorite
       </Badge>
-      <Badge variant="warning" icon={<Zap className="w-3 h-3" />}>
+      <Badge variant="warning">
         Premium
       </Badge>
-      <Badge variant="info" icon={<User className="w-3 h-3" />}>
+      <Badge variant="info">
         Admin
       </Badge>
     </div>
@@ -95,7 +95,7 @@ export const ClickableBadges: Story = {
       <Badge variant="success" onClick={() => alert('Success clicked!')}>
         Click me
       </Badge>
-      <Badge variant="info" onClick={() => alert('Info clicked!')} icon={<Star className="w-3 h-3" />}>
+      <Badge variant="info" onClick={() => alert('Info clicked!')}>
         With Icon
       </Badge>
     </div>
@@ -156,7 +156,7 @@ export const StatusBadges: Story = {
       </div>
       <div className="flex items-center space-x-4">
         <span className="text-sm font-medium">Verification:</span>
-        <Badge variant="info" size="sm" icon={<Star className="w-3 h-3" />}>
+        <Badge variant="info" size="sm">
           Verified
         </Badge>
       </div>
@@ -189,7 +189,7 @@ export const BadgeShowcase: Story = {
       <div>
         <h3 className="text-lg font-semibold mb-3">Certificate Status</h3>
         <div className="flex flex-wrap gap-2">
-          <Badge variant="success" icon={<Star className="w-3 h-3" />}>Verified</Badge>
+          <Badge variant="success">Verified</Badge>
           <Badge variant="warning">Pending</Badge>
           <Badge variant="error">Revoked</Badge>
           <Badge variant="info">Draft</Badge>
@@ -211,8 +211,7 @@ export const BadgeShowcase: Story = {
         <div className="flex flex-wrap gap-2">
           <Badge 
             variant="info" 
-            onClick={() => alert('Profile clicked!')} 
-            icon={<User className="w-3 h-3" />}
+            onClick={() => alert('Profile clicked!')}
           >
             Profile
           </Badge>
@@ -220,7 +219,6 @@ export const BadgeShowcase: Story = {
             variant="success" 
             removable 
             onRemove={() => alert('Achievement removed!')}
-            icon={<Star className="w-3 h-3" />}
           >
             Achievement
           </Badge>

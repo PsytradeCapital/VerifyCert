@@ -14,7 +14,6 @@ export interface FilterOptions {
   sortOrder: 'asc' | 'desc';
   customDateStart?: Date;
   customDateEnd?: Date;
-}
 
 interface CertificateListProps {
   certificates: Certificate[];
@@ -22,7 +21,6 @@ interface CertificateListProps {
   onCertificateAction?: (action: string, certificate: Certificate) => void;
   showBulkActions?: boolean;
   className?: string;
-}
 
 const defaultFilters: FilterOptions = {
   search: '',
@@ -70,24 +68,20 @@ export default function CertificateList({
         cert.institutionName.toLowerCase().includes(searchTerm) ||
         cert.tokenId.toLowerCase().includes(searchTerm)
       );
-    }
 
     // Status filter
     if (filters.status !== 'all') {
       filtered = filtered.filter(cert => 
         filters.status === 'valid' ? cert.isValid : !cert.isValid
       );
-    }
 
     // Institution filter
     if (filters.institution) {
       filtered = filtered.filter(cert => cert.institutionName === filters.institution);
-    }
 
     // Course filter
     if (filters.course) {
       filtered = filtered.filter(cert => cert.courseName === filters.course);
-    }
 
     // Date range filter
     if (filters.dateRange !== 'all') {
@@ -113,18 +107,14 @@ export default function CertificateList({
               const certDate = new Date(cert.issueDate * 1000);
               return certDate >= filters.customDateStart! && certDate <= filters.customDateEnd!;
             });
-          }
           break;
         default:
           startDate = new Date(0);
-      }
 
       if (filters.dateRange !== 'custom') {
         filtered = filtered.filter(cert => 
           new Date(cert.issueDate * 1000) >= startDate
         );
-      }
-    }
 
     // Sort certificates
     filtered.sort((a, b) => {
@@ -149,13 +139,11 @@ export default function CertificateList({
           aValue = a.issueDate;
           bValue = b.issueDate;
           break;
-      }
 
       if (filters.sortOrder === 'asc') {
         return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
       } else {
         return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
-      }
     });
 
     return filtered;
@@ -174,7 +162,6 @@ export default function CertificateList({
         newSet.delete(tokenId);
       } else {
         newSet.add(tokenId);
-      }
       return newSet;
     });
   }, []);
@@ -226,7 +213,6 @@ export default function CertificateList({
         </div>
       </div>
     );
-  }
 
   return (
     <div className={`bg-white rounded-lg shadow ${className}`}>
@@ -476,13 +462,11 @@ export default function CertificateList({
               {filters.search || filters.status !== 'all' || filters.institution || filters.course || filters.dateRange !== 'all'
                 ? 'No certificates match your filters'
                 : 'No certificates found'
-              }
             </h3>
             <p className="mt-1 text-sm text-gray-500">
               {filters.search || filters.status !== 'all' || filters.institution || filters.course || filters.dateRange !== 'all'
                 ? 'Try adjusting your search terms or filters.'
                 : 'Certificates will appear here once they are issued.'
-              }
             </p>
           </div>
         ) : viewMode === 'grid' ? (
@@ -594,4 +578,3 @@ export default function CertificateList({
       </div>
     </div>
   );
-}

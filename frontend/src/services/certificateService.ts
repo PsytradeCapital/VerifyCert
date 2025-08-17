@@ -5,14 +5,12 @@ export interface ShareOptions {
   platform?: 'twitter' | 'linkedin' | 'facebook' | 'email' | 'copy';
   customMessage?: string;
   includeQR?: boolean;
-}
 
 export interface DownloadOptions {
   format?: 'png' | 'pdf' | 'json';
   quality?: number;
   includeQR?: boolean;
   includeVerificationInfo?: boolean;
-}
 
 export interface CertificateTemplate {
   width: number;
@@ -23,7 +21,6 @@ export interface CertificateTemplate {
   titleFont: string;
   bodyFont: string;
   accentColor: string;
-}
 
 const DEFAULT_TEMPLATE: CertificateTemplate = {
   width: 1200,
@@ -53,7 +50,6 @@ class CertificateService {
         
         if (!ctx) {
           throw new Error('Canvas not supported');
-        }
 
         // Set canvas size
         canvas.width = config.width;
@@ -124,8 +120,6 @@ class CertificateService {
             y += 45;
           } else {
             line = testLine;
-          }
-        }
         ctx.fillText(line, canvas.width / 2, y);
 
         // Institution
@@ -170,9 +164,7 @@ class CertificateService {
         resolve(canvas.toDataURL('image/png', 1.0));
       } catch (error) {
         reject(error);
-      }
     });
-  }
 
   /**
    * Download certificate in specified format
@@ -213,7 +205,6 @@ class CertificateService {
                 blockchain: 'Polygon Mumbai',
                 contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
                 verifiedAt: new Date().toISOString()
-              }
             })
           };
           downloadData = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(certificateData, null, 2))}`;
@@ -223,7 +214,6 @@ class CertificateService {
           
         default:
           throw new Error(`Unsupported format: ${format}`);
-      }
 
       // Create and trigger download
       const link = document.createElement('a');
@@ -238,8 +228,6 @@ class CertificateService {
     } catch (error) {
       console.error('Download failed:', error);
       throw new Error(`Failed to download certificate: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  }
 
   /**
    * Share certificate using various methods
@@ -261,12 +249,10 @@ class CertificateService {
       if (platform === 'copy') {
         await this.copyToClipboard(shareUrl);
         return shareUrl;
-      }
       
       if (platform === 'email' || platform === 'twitter' || platform === 'linkedin' || platform === 'facebook') {
         await this.shareToSocialPlatform(shareData, platform);
         return shareUrl;
-      }
       
       // Native sharing fallback
       if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
@@ -276,12 +262,9 @@ class CertificateService {
         // Fallback to clipboard
         await this.copyToClipboard(shareUrl);
         return shareUrl;
-      }
     } catch (error) {
       console.error('Share failed:', error);
       throw new Error(`Failed to share certificate: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  }
 
   /**
    * Copy text to clipboard
@@ -304,9 +287,6 @@ class CertificateService {
         document.execCommand('copy');
       } finally {
         document.body.removeChild(textArea);
-      }
-    }
-  }
 
   /**
    * Share to social media platforms
@@ -340,15 +320,12 @@ class CertificateService {
         
       default:
         throw new Error(`Unsupported platform: ${platform}`);
-    }
     
     // Open in new window/tab
     const popup = window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
     
     if (!popup) {
       throw new Error('Popup blocked. Please allow popups for this site to share on social media.');
-    }
-  }
 
   /**
    * Generate QR code for certificate verification
@@ -361,7 +338,6 @@ class CertificateService {
     const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(verificationUrl)}`;
     
     return qrApiUrl;
-  }
 
   /**
    * Create a shareable verification link with metadata
@@ -371,7 +347,6 @@ class CertificateService {
     
     if (!includeMetadata) {
       return baseUrl;
-    }
     
     const params = new URLSearchParams({
       recipient: certificate.recipientName,
@@ -381,7 +356,6 @@ class CertificateService {
     });
     
     return `${baseUrl}?${params.toString()}`;
-  }
 
   /**
    * Validate certificate data before operations
@@ -389,18 +363,12 @@ class CertificateService {
   private validateCertificate(certificate: CertificateData): void {
     if (!certificate.tokenId) {
       throw new Error('Certificate ID is required');
-    }
     if (!certificate.recipientName) {
       throw new Error('Recipient name is required');
-    }
     if (!certificate.courseName) {
       throw new Error('Course name is required');
-    }
     if (!certificate.institutionName) {
       throw new Error('Institution name is required');
-    }
-  }
-}
 
 // Singleton instance
 const certificateService = new CertificateService();

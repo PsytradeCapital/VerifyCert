@@ -3,7 +3,6 @@ import { pwaBrowserTester, PWATestSuite } from '../tests/pwa-browser-tests';
 
 interface TestRunnerProps {
   onTestComplete?: (results: PWATestSuite) => void;
-}
 
 const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete }) => {
   const [isRunning, setIsRunning] = useState(false);
@@ -22,7 +21,6 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete }) => {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setIsRunning(false);
-    }
   };
 
   const downloadReport = () => {

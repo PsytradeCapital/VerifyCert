@@ -16,7 +16,6 @@ import { feedbackService, FeedbackAnalytics, FeedbackData } from '../../../servi
 
 interface FeedbackDashboardProps {
   className?: string;
-}
 
 export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className = '' }) => {
   const [analytics, setAnalytics] = useState<FeedbackAnalytics | null>(null);
@@ -37,7 +36,6 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
       console.error('Failed to load analytics:', error);
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleExport = () => {
@@ -73,7 +71,6 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
         </div>
       </div>
     );
-  }
 
   if (!analytics || analytics.totalFeedback === 0) {
     return (
@@ -87,7 +84,6 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
         </Card>
       </div>
     );
-  }
 
   return (
     <div className={`space-y-6 ${className}`}>

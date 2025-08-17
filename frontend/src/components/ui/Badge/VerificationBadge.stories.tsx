@@ -142,7 +142,7 @@ export const Sizes: Story = {
           tokenId="12345"
           isValid={true}
           variant="minimal"
-          size="md"
+          size="default"
         />
       </div>
       <div className="space-y-2">
@@ -171,20 +171,20 @@ export const AllVariants: Story = {
             tokenId="12345"
             isValid={true}
             variant="minimal"
-            size="md"
+            size="default"
           />
           <VerificationBadge
             tokenId="12345"
             isValid={false}
             variant="minimal"
-            size="md"
+            size="default"
           />
           <VerificationBadge
             tokenId="12345"
             isValid={false}
             isRevoked={true}
             variant="minimal"
-            size="md"
+            size="default"
           />
         </div>
       </div>
@@ -197,14 +197,14 @@ export const AllVariants: Story = {
             isValid={true}
             variant="detailed"
             showDetails={true}
-            size="md"
+            size="default"
           />
           <VerificationBadge
             tokenId="12345"
             isValid={false}
             variant="detailed"
             showDetails={true}
-            size="md"
+            size="default"
           />
           <VerificationBadge
             tokenId="12345"
@@ -212,7 +212,7 @@ export const AllVariants: Story = {
             isRevoked={true}
             variant="detailed"
             showDetails={true}
-            size="md"
+            size="default"
           />
         </div>
       </div>

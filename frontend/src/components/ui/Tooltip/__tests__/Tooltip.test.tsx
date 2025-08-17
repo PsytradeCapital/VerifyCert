@@ -6,16 +6,14 @@ import Tooltip from '../Tooltip';
 // Mock framer-motion to avoid animation issues in tests
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>
-  },
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   AnimatePresence: ({ children }: any) => children
 }));
 
 describe('Tooltip Component', () => {
   const defaultProps = {
     content: 'Tooltip content',
-    children: <button>Hover me</button>
-  };
+    children: <button>Hover me</button>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -178,7 +176,7 @@ describe('Tooltip Component', () => {
       </div>
     );
     
-    render(<Tooltip content={complexContent} children={<button>Hover</button>} />);
+    render(<Tooltip content={complexContent} children={<button>Hover</button> />);
     
     const trigger = screen.getByRole('button');
     await userEvent.hover(trigger);
@@ -205,6 +203,5 @@ describe('Tooltip Component', () => {
       });
       
       unmount();
-    }
   });
 });

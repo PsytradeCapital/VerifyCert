@@ -5,13 +5,11 @@ import toast from 'react-hot-toast';
 interface Props {
   children: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-}
 
 interface State {
   hasError: boolean;
   error: Error | null;
   errorType: 'wallet' | 'network' | 'contract' | 'transaction' | 'unknown';
-}
 
 class BlockchainErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
@@ -21,7 +19,6 @@ class BlockchainErrorBoundary extends Component<Props, State> {
       error: null,
       errorType: 'unknown',
     };
-  }
 
   static getDerivedStateFromError(error: Error): State {
     const errorType = BlockchainErrorBoundary.categorizeError(error);
@@ -30,7 +27,6 @@ class BlockchainErrorBoundary extends Component<Props, State> {
       error,
       errorType,
     };
-  }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('BlockchainErrorBoundary caught an error:', error, errorInfo);
@@ -41,30 +37,23 @@ class BlockchainErrorBoundary extends Component<Props, State> {
     // Call custom error handler if provided
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
-    }
-  }
 
   private static categorizeError(error: Error): 'wallet' | 'network' | 'contract' | 'transaction' | 'unknown' {
     const message = error.message.toLowerCase();
     
     if (message.includes('user rejected') || message.includes('user denied')) {
       return 'wallet';
-    }
     
     if (message.includes('network') || message.includes('connection') || message.includes('rpc')) {
       return 'network';
-    }
     
     if (message.includes('contract') || message.includes('revert') || message.includes('execution reverted')) {
       return 'contract';
-    }
     
     if (message.includes('transaction') || message.includes('gas') || message.includes('nonce')) {
       return 'transaction';
-    }
     
     return 'unknown';
-  }
 
   private showErrorToast = (error: Error) => {
     const { errorType } = this.state;
@@ -84,7 +73,6 @@ class BlockchainErrorBoundary extends Component<Props, State> {
         break;
       default:
         toast.error('An unexpected blockchain error occurred');
-    }
   };
 
   private getErrorMessage = (): { title: string; description: string; action: string } => {
@@ -121,7 +109,6 @@ class BlockchainErrorBoundary extends Component<Props, State> {
           description: error?.message || 'An unexpected error occurred while interacting with the blockchain.',
           action: 'Please try again or contact support if the problem persists.',
         };
-    }
   };
 
   private handleRetry = () => {
@@ -204,10 +191,7 @@ class BlockchainErrorBoundary extends Component<Props, State> {
           </div>
         </div>
       );
-    }
 
     return this.props.children;
-  }
-}
 
 export default BlockchainErrorBoundary;

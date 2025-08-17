@@ -30,7 +30,6 @@ export interface BlockchainProofIndicatorProps {
   showCopyButtons?: boolean;
   autoExpand?: boolean;
   className?: string;
-}
 
 const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   tokenId,
@@ -61,7 +60,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   useEffect(() => {
     if (tokenId && !transactionHash && !blockNumber) {
       fetchProofData();
-    }
   }, [tokenId]);
 
   const fetchProofData = async () => {
@@ -85,7 +83,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
       console.error('Failed to fetch proof data:', error);
     } finally {
       setIsLoading(false);
-    }
   };
 
   const copyToClipboard = async (text: string, field: string) => {
@@ -95,7 +92,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
       setTimeout(() => setCopiedField(null), 2000);
     } catch (error) {
       console.error('Failed to copy:', error);
-    }
   };
 
   const formatAddress = (address: string) => {
@@ -172,7 +168,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
         <span>Loading blockchain proof...</span>
       </div>
     );
-  }
 
   if (variant === 'inline') {
     return (
@@ -196,7 +191,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
         )}
       </div>
     );
-  }
 
   if (variant === 'compact') {
     return (
@@ -232,7 +226,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
         )}
       </motion.div>
     );
-  }
 
   // Detailed variant
   return (
@@ -292,9 +285,9 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                     </code>
                     <div className="flex items-center space-x-1 ml-2">
                       {showCopyButtons && (
-                        <CopyButton text={proofData.transactionHash} field="transaction" size="md" />
+                        <CopyButton text={proofData.transactionHash} field="transaction" size="default" />
                       )}
-                      <ExplorerButton type="tx" value={proofData.transactionHash} size="md" />
+                      <ExplorerButton type="tx" value={proofData.transactionHash} size="default" />
                     </div>
                   </div>
                 </div>
@@ -328,9 +321,9 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                     </code>
                     <div className="flex items-center space-x-1 ml-2">
                       {showCopyButtons && (
-                        <CopyButton text={proofData.contractAddress} field="contract" size="md" />
+                        <CopyButton text={proofData.contractAddress} field="contract" size="default" />
                       )}
-                      <ExplorerButton type="address" value={proofData.contractAddress} size="md" />
+                      <ExplorerButton type="address" value={proofData.contractAddress} size="default" />
                     </div>
                   </div>
                 </div>

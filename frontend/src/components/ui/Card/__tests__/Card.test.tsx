@@ -9,13 +9,11 @@ jest.mock('framer-motion', () => ({
     div: ({ children, whileHover, whileTap, whileFocus, ...props }: any) => (
       <div {...props}>{children}</div>
     )
-  }
 }));
 
 describe('Card Component', () => {
   const defaultProps = {
-    children: <div>Test Content</div>
-  };
+    children: <div>Test Content</div>;
 
   it('renders children correctly', () => {
     render(<Card {...defaultProps} />);

@@ -7,7 +7,6 @@ interface PushNotificationState {
   permission: NotificationPermission;
   isLoading: boolean;
   error: string | null;
-}
 
 interface UsePushNotificationsReturn extends PushNotificationState {
   subscribe: (userId: string) => Promise<boolean>;
@@ -15,7 +14,6 @@ interface UsePushNotificationsReturn extends PushNotificationState {
   sendTestNotification: (userId: string) => Promise<boolean>;
   requestPermission: () => Promise<NotificationPermission>;
   clearError: () => void;
-}
 
 export const usePushNotifications = (): UsePushNotificationsReturn => {
   const [state, setState] = useState<PushNotificationState>({
@@ -43,7 +41,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
             error: 'Push notifications are not supported in this browser'
           }));
           return;
-        }
 
         // Initialize the notification manager
         await pushNotificationManager.initializeNotifications();
@@ -66,7 +63,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
           isLoading: false,
           error: error instanceof Error ? error.message : 'Failed to initialize push notifications'
         }));
-      }
     };
 
     initializeNotifications();
@@ -93,7 +89,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
           isLoading: false,
           error: 'Failed to subscribe to push notifications'
         }));
-      }
 
       return success;
     } catch (error) {
@@ -104,7 +99,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
         error: error instanceof Error ? error.message : 'Failed to subscribe to push notifications'
       }));
       return false;
-    }
   }, []);
 
   // Unsubscribe from push notifications
@@ -128,7 +122,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
           isLoading: false,
           error: 'Failed to unsubscribe from push notifications'
         }));
-      }
 
       return success;
     } catch (error) {
@@ -139,7 +132,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
         error: error instanceof Error ? error.message : 'Failed to unsubscribe from push notifications'
       }));
       return false;
-    }
   }, []);
 
   // Send test notification
@@ -154,7 +146,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
           ...prev,
           error: 'Failed to send test notification'
         }));
-      }
 
       return success;
     } catch (error) {
@@ -164,7 +155,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
         error: error instanceof Error ? error.message : 'Failed to send test notification'
       }));
       return false;
-    }
   }, []);
 
   // Request notification permission
@@ -187,7 +177,6 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
         error: error instanceof Error ? error.message : 'Failed to request notification permission'
       }));
       return 'denied';
-    }
   }, []);
 
   // Clear error

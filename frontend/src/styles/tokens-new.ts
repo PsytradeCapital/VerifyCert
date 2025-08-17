@@ -31,7 +31,6 @@ export const designTokens = {
         muted: '#f9fafb',
         mutedForeground: '#6b7280',
         border: '#e5e7eb'
-      }
     },
     dark: {
       primary: {
@@ -55,8 +54,6 @@ export const designTokens = {
         muted: '#334155',
         mutedForeground: '#94a3b8',
         border: '#334155'
-      }
-    }
   },
   boxShadow: {
     light: {
@@ -68,7 +65,6 @@ export const designTokens = {
       sm: '0 1px 2px 0 rgb(0 0 0 / 0.3)',
       DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)',
       md: '0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4)'
-    }
   },
   cssVariables: {
     light: {
@@ -80,8 +76,6 @@ export const designTokens = {
       '--color-background': '#0f172a',
       '--color-foreground': '#f1f5f9',
       '--color-primary': '#60a5fa'
-    }
-  }
 };
 
 // Type definitions
@@ -95,7 +89,6 @@ export interface ThemeConfig {
   colors: ThemeColors;
   shadows: ThemeShadows;
   cssVariables: CSSVariables;
-}
 
 // Helper function to get theme-specific tokens
 export function getThemeTokens(theme: Theme): ThemeConfig {
@@ -105,4 +98,3 @@ export function getThemeTokens(theme: Theme): ThemeConfig {
     shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
     cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
   };
-}

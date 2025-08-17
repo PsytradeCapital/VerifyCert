@@ -90,7 +90,6 @@ describe('UI Components', () => {
       if (firstItem) {
         fireEvent.keyDown(firstItem, { key: 'ArrowRight' });
         // Test that focus moves to next item
-      }
     });
   });
 
@@ -182,8 +181,8 @@ describe('UI Components', () => {
     it('renders header and footer when provided', () => {
       render(
         <Card 
-          header={<div>Card Header</div>}
-          footer={<div>Card Footer</div>}
+          header={<div>Card Header</div>
+          footer={<div>Card Footer</div>
         >
           Card Content
         </Card>
@@ -245,7 +244,6 @@ describe('UI Components', () => {
           institution: 'Tech Academy',
           issueDate: '2024-01-15',
           isValid: true
-        }
       };
 
       render(<VerificationResults result={result} />);
@@ -282,7 +280,6 @@ describe('UI Components', () => {
           institution: 'Tech Academy',
           issueDate: '2024-01-15',
           isValid: true
-        }
       };
 
       render(
@@ -469,7 +466,6 @@ describe('UI Components', () => {
       if (firstNavItem) {
         firstNavItem.focus();
         expect(document.activeElement).toBe(firstNavItem);
-      }
     });
 
     it('screen reader announcements work', () => {

@@ -11,7 +11,7 @@ jest.mock('../../config/routes', () => ({
     { path: '/verify', label: 'Verify Certificate' },
     { path: '/verify/:tokenId', label: 'Certificate Verification', parent: '/verify', dynamic: true, generateLabel: (params: any) => `Verify Certificate #${params.tokenId}` },
     { path: '/certificate/:tokenId', label: 'Certificate Details', dynamic: true, generateLabel: (params: any) => `Certificate #${params.tokenId}` },
-    { path: '/dashboard', label: 'Issuer Dashboard' }
+    { path: '/dashboard', label: 'Issuer Dashboard'
   ]
 }));
 
@@ -40,7 +40,7 @@ describe('useBreadcrumbs', () => {
     const { result } = renderHookWithRouter(['/']);
     
     expect(result.current).toEqual([
-      { label: 'Home', active: true }
+      { label: 'Home', active: true
     ]);
   });
 
@@ -55,7 +55,7 @@ describe('useBreadcrumbs', () => {
     
     expect(result.current).toEqual([
       { label: 'Home', href: '/' },
-      { label: 'Issuer Dashboard', active: true }
+      { label: 'Issuer Dashboard', active: true
     ]);
   });
 
@@ -69,7 +69,7 @@ describe('useBreadcrumbs', () => {
         dynamic: true, 
         generateLabel: (params: any) => `Verify Certificate #${params.tokenId}` 
       },
-      params: { tokenId: '123' }
+      params: { tokenId: '123'
     });
 
     const { result } = renderHookWithRouter(['/verify/123']);
@@ -77,7 +77,7 @@ describe('useBreadcrumbs', () => {
     expect(result.current).toEqual([
       { label: 'Home', href: '/' },
       { label: 'Verify Certificate', href: '/verify' },
-      { label: 'Verify Certificate #123', active: true }
+      { label: 'Verify Certificate #123', active: true
     ]);
   });
 
@@ -90,14 +90,14 @@ describe('useBreadcrumbs', () => {
         dynamic: true, 
         generateLabel: (params: any) => `Certificate #${params.tokenId}` 
       },
-      params: { tokenId: '456' }
+      params: { tokenId: '456'
     });
 
     const { result } = renderHookWithRouter(['/certificate/456']);
     
     expect(result.current).toEqual([
       { label: 'Home', href: '/' },
-      { label: 'Certificate #456', active: true }
+      { label: 'Certificate #456', active: true
     ]);
   });
 
@@ -109,7 +109,7 @@ describe('useBreadcrumbs', () => {
     
     expect(result.current).toEqual([
       { label: 'Home', href: '/' },
-      { label: 'Unknown Page', active: true }
+      { label: 'Unknown Page', active: true
     ]);
   });
 
@@ -126,7 +126,7 @@ describe('useBreadcrumbs', () => {
     
     expect(result.current).toEqual([
       { label: 'Home', href: '/' },
-      { label: 'Issuer Dashboard', active: true }
+      { label: 'Issuer Dashboard', active: true
     ]);
 
     // Second render - verify (simulate new hook call with different route)
@@ -139,7 +139,7 @@ describe('useBreadcrumbs', () => {
     
     expect(result2.current).toEqual([
       { label: 'Home', href: '/' },
-      { label: 'Verify Certificate', active: true }
+      { label: 'Verify Certificate', active: true
     ]);
   });
 });

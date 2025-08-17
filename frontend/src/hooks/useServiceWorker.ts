@@ -23,14 +23,12 @@ interface ServiceWorkerState {
   isStandalone: boolean;
   cacheSize: number;
   error: string | null;
-}
 
 interface ServiceWorkerActions {
   register: () => void;
   update: () => void;
   clearCache: () => Promise<void>;
   refreshCacheSize: () => Promise<void>;
-}
 
 export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
   const [state, setState] = useState<ServiceWorkerState>({
@@ -52,7 +50,6 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
         error: 'Service Worker is not supported in this browser' 
       }));
       return;
-    }
 
     registerSW({
       onSuccess: (registration) => {
@@ -86,7 +83,6 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
           ...prev, 
           error: error.message 
         }));
-      }
     });
   }, [state.isSupported]);
 
@@ -108,7 +104,6 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
         ...prev, 
         error: 'Failed to clear caches' 
       }));
-    }
   }, []);
 
   // Refresh cache size
@@ -118,7 +113,6 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
       setState(prev => ({ ...prev, cacheSize: size }));
     } catch (error) {
       console.error('Failed to get cache size:', error instanceof Error ? error.message : 'Unknown error');
-    }
   }, []);
 
   // Set up offline/online listeners
@@ -143,7 +137,6 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
   useEffect(() => {
     if (state.isSupported && !state.isRegistered) {
       register();
-    }
   }, [state.isSupported, state.isRegistered, register]);
 
   const actions: ServiceWorkerActions = {
@@ -154,7 +147,6 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
   };
 
   return [state, actions];
-}
 
 // Hook for offline status only
 export function useOfflineStatus(): boolean {
@@ -173,7 +165,6 @@ export function useOfflineStatus(): boolean {
   }, []);
 
   return isOffline;
-}
 
 // Hook for PWA installation status
 export function usePWAInstallation() {
@@ -199,7 +190,6 @@ export function usePWAInstallation() {
         setCanInstall(true);
         setInstallationState('prompted');
         trackInstallPromptEvent('prompt_available');
-      }
     };
 
     const handleAppInstalled = () => {
@@ -220,9 +210,7 @@ export function usePWAInstallation() {
             setIsInstalled(true);
             setInstallationState('installed');
             trackInstallPromptEvent('install_success', { method: 'ios_manual' });
-          }
         }, 1000);
-      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -233,7 +221,6 @@ export function usePWAInstallation() {
     if (pwaStatus.isInstalled) {
       setIsInstalled(true);
       setInstallationState('installed');
-    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -251,9 +238,7 @@ export function usePWAInstallation() {
         // iOS Safari doesn't support beforeinstallprompt
         // User needs to manually add to home screen
         return false;
-      }
       return false;
-    }
 
     setInstallationState('installing');
     trackInstallPromptEvent('install_attempt', { method: 'automatic' });
@@ -274,7 +259,6 @@ export function usePWAInstallation() {
         console.log('User dismissed the install prompt');
         setInstallationState('idle');
         trackInstallPromptEvent('install_declined');
-      }
 
       // Clear the deferredPrompt
       setDeferredPrompt(null);
@@ -286,7 +270,6 @@ export function usePWAInstallation() {
       setInstallationState('failed');
       trackInstallPromptEvent('install_error', { error: error.message });
       return false;
-    }
   }, [deferredPrompt, deviceInfo.isIOSSafari]);
 
   // Function to show iOS installation instructions
@@ -305,6 +288,5 @@ export function usePWAInstallation() {
     deviceInfo,
     pwaStatus
   };
-}
 
 export default useServiceWorker;

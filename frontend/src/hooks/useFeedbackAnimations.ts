@@ -6,7 +6,6 @@ interface FeedbackOptions {
   position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
   shake?: boolean;
   duration?: number;
-}
 
 export const useFeedbackAnimations = () => {
   const showSuccess = useCallback((message: string, options: FeedbackOptions = {}) => {
@@ -38,18 +37,15 @@ export const useFeedbackAnimations = () => {
         style.id = 'confetti-styles';
         style.textContent = `
           @keyframes confetti {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-          }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1;
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0;
         `;
         document.head.appendChild(style);
-      }
       
       document.body.appendChild(confettiElement);
       setTimeout(() => {
         document.body.removeChild(confettiElement);
       }, 2000);
-    }
   }, []);
 
   const showError = useCallback((message: string, options: FeedbackOptions = {}) => {
@@ -73,14 +69,11 @@ export const useFeedbackAnimations = () => {
         style.id = 'shake-styles';
         style.textContent = `
           @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-          }
+            0%, 100% { transform: translateX(0);
+            25% { transform: translateX(-5px);
+            75% { transform: translateX(5px);
         `;
         document.head.appendChild(style);
-      }
-    }
   }, []);
 
   const showWarning = useCallback((message: string, options: FeedbackOptions = {}) => {

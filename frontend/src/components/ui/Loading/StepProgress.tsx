@@ -6,7 +6,6 @@ interface Step {
   id: string;
   title: string;
   description?: string;
-}
 
 interface StepProgressProps {
   steps: Step[];
@@ -15,7 +14,6 @@ interface StepProgressProps {
   className?: string;
   orientation?: 'horizontal' | 'vertical';
   size?: 'sm' | 'md' | 'lg';
-}
 
 const StepProgress: React.FC<StepProgressProps> = ({
   steps,
@@ -42,12 +40,12 @@ const StepProgress: React.FC<StepProgressProps> = ({
   const stepVariants = {
     pending: { scale: 1, opacity: 0.6 },
     current: { scale: 1.1, opacity: 1 },
-    completed: { scale: 1, opacity: 1 }
+    completed: { scale: 1, opacity: 1
   };
 
   const lineVariants = {
     incomplete: { scaleX: 0 },
-    complete: { scaleX: 1 }
+    complete: { scaleX: 1
   };
 
   if (orientation === 'vertical') {
@@ -69,7 +67,6 @@ const StepProgress: React.FC<StepProgressProps> = ({
                       : status === 'current'
                       ? 'bg-blue-500 border-blue-500 text-white'
                       : 'bg-white border-gray-300 text-gray-500'
-                    }
                   `}
                   variants={stepVariants}
                   animate={status}
@@ -109,7 +106,6 @@ const StepProgress: React.FC<StepProgressProps> = ({
                       : status === 'completed'
                       ? 'text-green-600'
                       : 'text-gray-500'
-                    }
                   `}
                 >
                   {step.title}
@@ -125,7 +121,6 @@ const StepProgress: React.FC<StepProgressProps> = ({
         })}
       </div>
     );
-  }
 
   // Horizontal orientation
   return (
@@ -147,7 +142,6 @@ const StepProgress: React.FC<StepProgressProps> = ({
                       : status === 'current'
                       ? 'bg-blue-500 border-blue-500 text-white'
                       : 'bg-white border-gray-300 text-gray-500'
-                    }
                   `}
                   variants={stepVariants}
                   animate={status}
@@ -172,7 +166,6 @@ const StepProgress: React.FC<StepProgressProps> = ({
                         : status === 'completed'
                         ? 'text-green-600'
                         : 'text-gray-500'
-                      }
                     `}
                   >
                     {step.title}

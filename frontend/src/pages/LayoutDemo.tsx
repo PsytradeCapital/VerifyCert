@@ -28,8 +28,7 @@ const LayoutDemo: React.FC = () => {
       id: 'verify',
       label: 'Verify Certificate',
       href: '/verify',
-      icon: <Shield className="w-5 h-5" />
-    },
+      icon: <Shield className="w-5 h-5" />,
     {
       id: 'dashboard',
       label: 'Dashboard',
@@ -40,34 +39,29 @@ const LayoutDemo: React.FC = () => {
           id: 'overview',
           label: 'Overview',
           href: '/dashboard/overview',
-          icon: <BarChart3 className="w-4 h-4" />
-        },
+          icon: <BarChart3 className="w-4 h-4" />,
         {
           id: 'certificates',
           label: 'Certificates',
           href: '/dashboard/certificates',
           icon: <FileText className="w-4 h-4" />
-        }
       ]
     },
     {
       id: 'profile',
       label: 'Profile',
       href: '/profile',
-      icon: <User className="w-5 h-5" />
-    },
+      icon: <User className="w-5 h-5" />,
     {
       id: 'settings',
       label: 'Settings',
       href: '/settings',
-      icon: <Settings className="w-5 h-5" />
-    },
+      icon: <Settings className="w-5 h-5" />,
     {
       id: 'help',
       label: 'Help & Support',
       href: '/help',
       icon: <HelpCircle className="w-5 h-5" />
-    }
   ];
 
   // Sample bottom navigation items for mobile
@@ -83,8 +77,7 @@ const LayoutDemo: React.FC = () => {
       id: 'verify',
       label: 'Verify',
       href: '/verify',
-      icon: <Shield className="w-6 h-6" />
-    },
+      icon: <Shield className="w-6 h-6" />,
     {
       id: 'dashboard',
       label: 'Dashboard',
@@ -97,7 +90,6 @@ const LayoutDemo: React.FC = () => {
       label: 'Profile',
       href: '/profile',
       icon: <User className="w-6 h-6" />
-    }
   ];
 
   return (

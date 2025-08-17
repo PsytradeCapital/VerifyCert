@@ -11,7 +11,6 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   fluid?: boolean;
   className?: string;
   as?: keyof JSX.IntrinsicElements;
-}
 
 const Container: React.FC<ContainerProps> = ({
   children,
@@ -78,7 +77,6 @@ const Container: React.FC<ContainerProps> = ({
     );
   } else if (padding) {
     finalPaddingClasses = paddingClasses[padding];
-  }
 
   const combinedClasses = cn(
     baseClasses,

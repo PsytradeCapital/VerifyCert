@@ -17,7 +17,6 @@ export interface ThemeContextType {
   tokens: any;
   isDark: boolean;
   isLight: boolean;
-}
 
 /**
  * Custom hook for theme management
@@ -31,7 +30,6 @@ export const useTheme = (): ThemeContextType => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
     if (stored && (stored === 'light' || stored === 'dark')) {
       return stored;
-    }
     
     // Check system preference, but default to dark if no preference
     try {
@@ -39,12 +37,9 @@ export const useTheme = (): ThemeContextType => {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
         if (mediaQuery && mediaQuery.matches) {
           return 'light';
-        }
-      }
     } catch (error) {
       // Fallback for environments where matchMedia is not available or throws
       console.warn('matchMedia not available, defaulting to dark theme');
-    }
     
     return 'dark'; // Default to dark theme always
   };
@@ -66,7 +61,6 @@ export const useTheme = (): ThemeContextType => {
     } else {
       // Ensure light theme is explicitly set
       root.setAttribute('data-theme', 'light');
-    }
     
     // Force CSS variables to be recalculated
     root.style.colorScheme = newTheme;
@@ -78,7 +72,6 @@ export const useTheme = (): ThemeContextType => {
         'content', 
         newTheme === 'dark' ? '#0f172a' : '#ffffff'
       );
-    }
   }, []);
 
   // Set theme with persistence
@@ -107,7 +100,6 @@ export const useTheme = (): ThemeContextType => {
           const newTheme = e.matches ? 'dark' : 'light';
           setThemeState(newTheme);
           applyTheme(newTheme);
-        }
       };
 
       if (mediaQuery && mediaQuery.addEventListener) {
@@ -116,11 +108,9 @@ export const useTheme = (): ThemeContextType => {
         return () => {
           mediaQuery.removeEventListener('change', handleChange);
         };
-      }
     } catch (error) {
       // Fallback for environments where matchMedia is not available
       console.warn('matchMedia not available for theme change detection');
-    }
   }, [applyTheme]);
 
   // Apply theme on mount and when theme changes
@@ -161,10 +151,8 @@ export const isSystemDarkMode = (): boolean => {
     if (window.matchMedia) {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       return mediaQuery && mediaQuery.matches;
-    }
   } catch (error) {
     console.warn('matchMedia not available for system theme detection');
-  }
   
   return false;
 };

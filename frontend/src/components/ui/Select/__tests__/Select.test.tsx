@@ -12,7 +12,6 @@ const mockOptions: SelectOption[] = [
     label: 'Option 4', 
     description: 'This is option 4',
     icon: <span data-testid="option4-icon">🔥</span>
-  }
 ];
 
 describe('Select Component', () => {

@@ -18,7 +18,6 @@ export interface FeedbackItem {
   shake?: boolean;
   confetti?: boolean;
   progress?: number;
-}
 
 interface FeedbackContextType {
   feedbacks: FeedbackItem[];
@@ -34,7 +33,6 @@ interface FeedbackContextType {
   updateProgress: (id: string, progress: number) => void;
   dismissFeedback: (id: string) => void;
   dismissAll: () => void;
-}
 
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
@@ -42,7 +40,6 @@ export const useFeedback = () => {
   const context = useContext(FeedbackContext);
   if (!context) {
     throw new Error('useFeedback must be used within a FeedbackProvider');
-  }
   return context;
 };
 
@@ -73,7 +70,6 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setTimeout(() => {
         dismissFeedback(id);
       }, newFeedback.duration);
-    }
 
     return id;
   }, [dismissFeedback]);
@@ -160,7 +156,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setFeedbacks(prev => 
       prev.map(feedback => 
         feedback.id === id 
-          ? { ...feedback, progress }
+          ? { ...feedback, progress
           : feedback
       )
     );
@@ -203,7 +199,6 @@ const FeedbackRenderer: React.FC<{
     const position = feedback.position || 'top-right';
     if (!acc[position]) {
       acc[position] = [];
-    }
     acc[position].push(feedback);
     return acc;
   }, {} as Record<string, FeedbackItem[]>);
@@ -227,7 +222,6 @@ const FeedbackRenderer: React.FC<{
                     showConfetti={true}
                   />
                 );
-              }
 
               if (feedback.shake && feedback.type === 'error') {
                 return (
@@ -239,7 +233,6 @@ const FeedbackRenderer: React.FC<{
                     shake={true}
                   />
                 );
-              }
 
               if (feedback.progress !== undefined && feedback.type === 'loading') {
                 return (
@@ -250,7 +243,6 @@ const FeedbackRenderer: React.FC<{
                     progress={feedback.progress}
                   />
                 );
-              }
 
               // Default feedback animation
               return (

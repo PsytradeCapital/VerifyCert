@@ -27,7 +27,6 @@ export interface CertificateActionsProps {
   showLabels?: boolean;
   variant?: 'horizontal' | 'vertical' | 'grid';
   size?: 'sm' | 'md' | 'lg';
-}
 
 const CertificateActions: React.FC<CertificateActionsProps> = ({
   certificate,
@@ -60,7 +59,6 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
       feedback.showError('Failed to download certificate');
     } finally {
       setIsLoading(null);
-    }
   };
 
   const handleShare = async (platform: 'twitter' | 'linkedin' | 'facebook' | 'email' | 'copy' = 'copy') => {
@@ -80,20 +78,17 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         feedback.showSuccess('Certificate link copied to clipboard');
       } else {
         feedback.showSuccess(`Shared on ${platform}`);
-      }
     } catch (error) {
       console.error('Share error:', error);
       feedback.showError('Failed to share certificate');
     } finally {
       setIsLoading(null);
-    }
   };
 
   const handleViewOnBlockchain = () => {
     if (certificate.transactionHash) {
       const explorerUrl = `https://mumbai.polygonscan.com/tx/${certificate.transactionHash}`;
       window.open(explorerUrl, '_blank');
-    }
   };
 
   const handleGenerateQR = async () => {
@@ -108,7 +103,6 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
       feedback.showError('Failed to generate QR code');
     } finally {
       setIsLoading(null);
-    }
   };
 
   const getVariantClasses = () => {
@@ -119,7 +113,6 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         return 'grid grid-cols-2 gap-2';
       default:
         return 'flex flex-wrap gap-2';
-    }
   };
 
   const getSizeClasses = () => {
@@ -130,7 +123,6 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         return 'text-base';
       default:
         return 'text-sm';
-    }
   };
 
   const buttonSize = size === 'lg' ? 'md' : size;
@@ -181,7 +173,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         isOpen={showDownloadModal}
         onClose={() => setShowDownloadModal(false)}
         title="Download Certificate"
-        size="md"
+        size="default"
       >
         <div className="p-6 space-y-4">
           <p className="text-gray-600 mb-4">
@@ -239,7 +231,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
         title="Share Certificate"
-        size="md"
+        size="default"
       >
         <div className="p-6 space-y-4">
           <p className="text-gray-600 mb-4">

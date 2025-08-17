@@ -16,7 +16,6 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
   fallback?: string;
   onLoad?: () => void;
   onError?: () => void;
-}
 
 const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   src,
@@ -71,7 +70,6 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     if (fallback && currentSrc !== fallback) {
       setCurrentSrc(fallback);
       setImageError(false);
-    }
     onError?.();
   };
 

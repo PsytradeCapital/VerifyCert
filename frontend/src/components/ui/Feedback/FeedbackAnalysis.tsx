@@ -7,4 +7,3 @@ export default function FeedbackAnalysis() {
       <p className="text-gray-600">Feedback analysis component placeholder.</p>
     </div>
   );
-}

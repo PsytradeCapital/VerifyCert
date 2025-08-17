@@ -6,7 +6,6 @@ export interface BreadcrumbItem {
   label: string;
   href?: string;
   active?: boolean;
-}
 
 export const useBreadcrumbs = (): BreadcrumbItem[] => {
   const location = useLocation();
@@ -22,9 +21,8 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
       // If no route config found, create a simple breadcrumb
       return [
         { label: 'Home', href: '/' },
-        { label: 'Unknown Page', active: true }
+        { label: 'Unknown Page', active: true
       ];
-    }
 
     const { config, params } = routeMatch;
 
@@ -37,8 +35,6 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
         const parentConfig = routeConfig.find(r => r.path === routeConfigItem.parent);
         if (parentConfig) {
           trail.push(...buildBreadcrumbTrail(parentConfig, {}));
-        }
-      }
 
       // Add current breadcrumb
       const label = routeConfigItem.generateLabel ? routeConfigItem.generateLabel(params) : routeConfigItem.label;
@@ -57,7 +53,6 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
         label: 'Home',
         href: '/'
       });
-    }
 
     // Add the route-specific breadcrumbs
     if (config.parent) {
@@ -68,8 +63,6 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
           label: parentConfig.label,
           href: parentConfig.path
         });
-      }
-    }
 
     // Add current page
     const currentLabel = config.generateLabel ? config.generateLabel(params) : config.label;

@@ -13,7 +13,6 @@ export interface ModalProps {
   closeOnBackdropClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
-}
 
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
@@ -30,13 +29,11 @@ export const Modal: React.FC<ModalProps> = ({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && closeOnEscape) {
         onClose();
-      }
     };
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
-    }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
@@ -55,7 +52,6 @@ export const Modal: React.FC<ModalProps> = ({
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget && closeOnBackdropClick) {
       onClose();
-    }
   };
 
   return (
@@ -114,7 +110,6 @@ export interface DialogProps extends Omit<ModalProps, 'children'> {
   description?: string;
   actions?: React.ReactNode;
   children?: React.ReactNode;
-}
 
 export const Dialog: React.FC<DialogProps> = ({
   description,

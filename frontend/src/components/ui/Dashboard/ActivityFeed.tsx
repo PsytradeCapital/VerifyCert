@@ -10,14 +10,12 @@ export interface ActivityItem {
   timestamp: Date;
   recipient?: string;
   certificateId?: string;
-}
 
 export interface ActivityFeedProps {
   activities: ActivityItem[];
   maxItems?: number;
   isLoading?: boolean;
   className?: string;
-}
 
 const ActivityFeed: React.FC<ActivityFeedProps> = ({
   activities,
@@ -59,7 +57,6 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
             </svg>
           </div>
         );
-    }
   };
 
   const formatTimeAgo = (date: Date) => {
@@ -95,7 +92,6 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
         </div>
       </Card>
     );
-  }
 
   return (
     <Card variant="elevated" padding="lg" className={className}>

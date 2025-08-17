@@ -5,7 +5,6 @@ interface PerformanceAlertProps {
   threshold?: number;
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
   showInProduction?: boolean;
-}
 
 interface Alert {
   id: string;
@@ -13,7 +12,6 @@ interface Alert {
   message: string;
   timestamp: number;
   metric?: any;
-}
 
 export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
   threshold = 1000,
@@ -48,12 +46,10 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
             timestamp: Date.now(),
             metric
           });
-        }
       });
 
       if (newAlerts.length > 0) {
         setAlerts(prev => [...prev, ...newAlerts].slice(-5)); // Keep only last 5 alerts
-      }
     };
 
     const interval = setInterval(checkPerformance, 2000);
@@ -88,13 +84,11 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
         return 'bottom-4 right-4';
       default:
         return 'top-4 right-4';
-    }
   };
 
   // Don't show in production unless explicitly enabled
   if (!shouldShow || !isVisible || alerts.length === 0) {
     return null;
-  }
 
   return (
     <div className={`fixed ${getPositionClasses()} z-50 space-y-2 max-w-sm`}>
@@ -171,7 +165,6 @@ export const PerformanceIndicator: React.FC<{
         setStatus('warning');
       } else {
         setStatus('good');
-      }
     };
 
     const interval = setInterval(updateStatus, 3000);
@@ -185,7 +178,6 @@ export const PerformanceIndicator: React.FC<{
       case 'good': return 'bg-green-500';
       case 'warning': return 'bg-yellow-500';
       case 'poor': return 'bg-red-500';
-    }
   };
 
   const getStatusIcon = () => {
@@ -193,13 +185,11 @@ export const PerformanceIndicator: React.FC<{
       case 'good': return '✓';
       case 'warning': return '⚠';
       case 'poor': return '✗';
-    }
   };
 
   // Only show in development
   if (process.env.NODE_ENV !== 'development') {
     return null;
-  }
 
   return (
     <button

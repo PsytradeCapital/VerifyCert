@@ -14,7 +14,6 @@ export interface MetricCardProps {
   color?: 'blue' | 'green' | 'yellow' | 'purple' | 'red' | 'indigo';
   description?: string;
   className?: string;
-}
 
 const MetricCard: React.FC<MetricCardProps> = ({
   title,
@@ -67,7 +66,6 @@ const MetricCard: React.FC<MetricCardProps> = ({
       lightBg: 'bg-indigo-50',
       trendPositive: 'text-indigo-600',
       trendNegative: 'text-indigo-400'
-    }
   };
 
   const colors = colorClasses[color];

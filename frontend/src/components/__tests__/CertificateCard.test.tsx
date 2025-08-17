@@ -261,7 +261,6 @@ describe('CertificateCard Component', () => {
         await waitFor(() => {
           expect(navigator.clipboard.writeText).toHaveBeenCalledWith(mockCertificate.verificationURL);
         });
-      }
     });
   });
 

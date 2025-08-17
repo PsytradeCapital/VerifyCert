@@ -9,7 +9,6 @@ interface ProgressBarProps {
   label?: string;
   animated?: boolean;
   className?: string;
-}
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   progress,

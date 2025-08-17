@@ -7,7 +7,6 @@ export interface ValidationAnimationConfig {
   duration?: number;
   easing?: string;
   delay?: number;
-}
 
 export const defaultAnimationConfig: ValidationAnimationConfig = {
   duration: 300,
@@ -65,7 +64,6 @@ export const validationStateAnimations = {
     field: '',
     message: 'animate-fade-in',
     icon: 'animate-fade-in'
-  }
 };
 
 /**
@@ -90,13 +88,10 @@ export const triggerValidationAnimation = (
     // Set custom animation properties if provided
     if (config.duration !== defaultAnimationConfig.duration) {
       element.style.animationDuration = `${config.duration}ms`;
-    }
     if (config.easing !== defaultAnimationConfig.easing) {
       element.style.animationTimingFunction = config.easing;
-    }
     if (config.delay !== defaultAnimationConfig.delay) {
       element.style.animationDelay = `${config.delay}ms`;
-    }
     
     // Listen for animation end
     const handleAnimationEnd = () => {
@@ -150,16 +145,16 @@ export const validationSequences = {
   errorSequence: [
     { element: 'field', animation: 'errorShake', delay: 0 },
     { element: 'message', animation: 'errorSlideIn', delay: 100 },
-    { element: 'icon', animation: 'errorPulse', delay: 150 }
+    { element: 'icon', animation: 'errorPulse', delay: 150
   ],
   successSequence: [
     { element: 'field', animation: 'successBounce', delay: 0 },
     { element: 'icon', animation: 'successBounce', delay: 50 },
-    { element: 'message', animation: 'successFadeIn', delay: 100 }
+    { element: 'message', animation: 'successFadeIn', delay: 100
   ],
   warningSequence: [
     { element: 'field', animation: 'warningWiggle', delay: 0 },
     { element: 'message', animation: 'warningFadeIn', delay: 100 },
-    { element: 'icon', animation: 'warningWiggle', delay: 150 }
+    { element: 'icon', animation: 'warningWiggle', delay: 150
   ]
 };

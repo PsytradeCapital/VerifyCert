@@ -19,7 +19,6 @@ interface CertificateViewerState {
     blockNumber?: string;
     contractAddress?: string;
   } | null;
-}
 
 export default function CertificateViewer() {
   const { tokenId } = useParams<{ tokenId: string }>();
@@ -42,7 +41,6 @@ export default function CertificateViewer() {
         isLoading: false,
       }));
       return;
-    }
 
     setState(prev => ({ ...prev, isLoading: true, error: null }));
 
@@ -52,7 +50,6 @@ export default function CertificateViewer() {
 
       if (!response.ok) {
         throw new Error(data.error?.message || 'Failed to fetch certificate');
-      }
 
       if (data.success && data.data.certificate) {
         setState(prev => ({
@@ -62,7 +59,6 @@ export default function CertificateViewer() {
         }));
       } else {
         throw new Error('Certificate not found');
-      }
     } catch (error) {
       console.error('Failed to fetch certificate:', error);
       setState(prev => ({
@@ -70,7 +66,6 @@ export default function CertificateViewer() {
         error: error instanceof Error ? error.message : 'Failed to load certificate',
         isLoading: false,
       }));
-    }
   }, [tokenId]);
 
   // Verify certificate on blockchain
@@ -106,12 +101,9 @@ export default function CertificateViewer() {
             toast.success('Certificate verified successfully on blockchain!');
           } else {
             toast.error('Certificate verification failed');
-          }
           return;
-        }
       } catch (blockchainError) {
         console.warn('Blockchain verification failed, falling back to API:', blockchainError);
-      }
 
       // Fallback to API verification
       const response = await fetch(`/api/v1/certificates/verify/${tokenId}`, {
@@ -125,7 +117,6 @@ export default function CertificateViewer() {
 
       if (!response.ok) {
         throw new Error(data.error?.message || 'Verification failed');
-      }
 
       if (data.success) {
         setState(prev => ({
@@ -143,10 +134,8 @@ export default function CertificateViewer() {
           toast.success('Certificate verified successfully!');
         } else {
           toast.error('Certificate verification failed');
-        }
       } else {
         throw new Error('Verification failed');
-      }
     } catch (error) {
       console.error('Verification error:', error);
       setState(prev => ({
@@ -160,7 +149,6 @@ export default function CertificateViewer() {
         isVerifying: false,
       }));
       toast.error('Failed to verify certificate');
-    }
   };
 
   // Handle certificate download
@@ -174,7 +162,6 @@ export default function CertificateViewer() {
       
       if (!ctx) {
         throw new Error('Canvas not supported');
-      }
 
       // Set canvas size for high quality
       canvas.width = 1200;
@@ -259,7 +246,6 @@ export default function CertificateViewer() {
           canvas.width / 2,
           680
         );
-      }
 
       // Footer
       ctx.fillStyle = '#9ca3af';
@@ -276,7 +262,6 @@ export default function CertificateViewer() {
     } catch (error) {
       console.error('Download failed:', error);
       toast.error('Failed to download certificate');
-    }
   };
 
   // Handle certificate sharing
@@ -297,13 +282,10 @@ export default function CertificateViewer() {
         // Fallback to clipboard
         await navigator.clipboard.writeText(shareData.url || window.location.href);
         toast.success('Certificate link copied to clipboard!');
-      }
     } catch (error) {
       if ((error as Error).name !== 'AbortError') {
         console.error('Share failed:', error);
         toast.error('Failed to share certificate');
-      }
-    }
   };
 
   // Retry loading certificate
@@ -338,7 +320,6 @@ export default function CertificateViewer() {
     } catch (error) {
       console.error('Download failed:', error);
       toast.error('Failed to download certificate');
-    }
   };
 
   const handleShareCertificate = async () => {
@@ -362,7 +343,6 @@ export default function CertificateViewer() {
     } catch (error) {
       console.error('Share failed:', error);
       toast.error('Failed to share certificate');
-    }
   };
 
   const handleViewOnBlockchain = () => {
@@ -382,7 +362,6 @@ export default function CertificateViewer() {
   useEffect(() => {
     if (state.certificate && !state.verificationResult && !state.isVerifying) {
       verifyCertificate();
-    }
   }, [state.certificate, state.verificationResult, state.isVerifying]);
 
   if (state.isLoading) {
@@ -408,7 +387,6 @@ export default function CertificateViewer() {
         </div>
       </div>
     );
-  }
 
   if (state.error) {
     return (
@@ -456,11 +434,9 @@ export default function CertificateViewer() {
         </div>
       </div>
     );
-  }
 
   if (!state.certificate) {
     return null;
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -679,4 +655,3 @@ export default function CertificateViewer() {
       </div>
     </div>
   );
-}

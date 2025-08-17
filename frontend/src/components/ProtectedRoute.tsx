@@ -6,7 +6,6 @@ interface ProtectedRouteProps {
   isWalletConnected: boolean;
   requireWallet?: boolean;
   allowDemoMode?: boolean;
-}
 
 export default function ProtectedRoute({ 
   children, 
@@ -34,7 +33,5 @@ export default function ProtectedRoute({
         replace 
       />
     );
-  }
 
   return <>{children}</>;
-}

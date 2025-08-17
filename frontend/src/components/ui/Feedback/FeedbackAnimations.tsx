@@ -9,13 +9,11 @@ export interface ToastProps {
   message?: string;
   duration?: number;
   onClose?: () => void;
-}
 
 export interface FeedbackAnimationProps {
   type: 'success' | 'error' | 'warning' | 'info';
   children: React.ReactNode;
   className?: string;
-}
 
 const toastIcons = {
   success: CheckCircle,
@@ -113,31 +111,26 @@ export const FeedbackAnimation: React.FC<FeedbackAnimationProps> = ({
       animate: { 
         scale: [0.8, 1.1, 1], 
         opacity: 1,
-        transition: { duration: 0.5, ease: 'easeOut' }
-      }
+        transition: { duration: 0.5, ease: 'easeOut'
     },
     error: {
       initial: { x: 0 },
       animate: { 
         x: [-10, 10, -10, 10, 0],
-        transition: { duration: 0.5, ease: 'easeInOut' }
-      }
+        transition: { duration: 0.5, ease: 'easeInOut'
     },
     warning: {
       initial: { y: 0 },
       animate: { 
         y: [-5, 0, -5, 0],
-        transition: { duration: 0.6, ease: 'easeInOut' }
-      }
+        transition: { duration: 0.6, ease: 'easeInOut'
     },
     info: {
       initial: { opacity: 0, y: 20 },
       animate: { 
         opacity: 1, 
         y: 0,
-        transition: { duration: 0.4, ease: 'easeOut' }
-      }
-    }
+        transition: { duration: 0.4, ease: 'easeOut'
   };
 
   return (
@@ -162,11 +155,9 @@ class ToastManager {
     return () => {
       this.listeners = this.listeners.filter(l => l !== listener);
     };
-  }
 
   private notify() {
     this.listeners.forEach(listener => listener([...this.toasts]));
-  }
 
   show(toast: Omit<ToastProps, 'id'>) {
     const id = Math.random().toString(36).substr(2, 9);
@@ -180,18 +171,14 @@ class ToastManager {
     this.notify();
     
     return id;
-  }
 
   remove(id: string) {
     this.toasts = this.toasts.filter(toast => toast.id !== id);
     this.notify();
-  }
 
   clear() {
     this.toasts = [];
     this.notify();
-  }
-}
 
 export const toastManager = new ToastManager();
 

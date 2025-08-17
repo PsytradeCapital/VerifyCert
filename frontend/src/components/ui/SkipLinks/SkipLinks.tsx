@@ -4,12 +4,10 @@ import { focusUtils } from '../../../utils/focusManagement';
 interface SkipLink {
   targetId: string;
   label: string;
-}
 
 interface SkipLinksProps {
   links?: SkipLink[];
   className?: string;
-}
 
 const defaultSkipLinks: SkipLink[] = [
   { targetId: 'main-content', label: 'Skip to main content' },
@@ -29,7 +27,6 @@ const SkipLinks: React.FC<SkipLinksProps> = ({
       // Make target focusable if it isn't already
       if (target.tabIndex === -1) {
         target.tabIndex = -1;
-      }
       
       target.focus();
       target.scrollIntoView({ 
@@ -39,7 +36,6 @@ const SkipLinks: React.FC<SkipLinksProps> = ({
       
       // Announce to screen readers
       focusUtils.announce(`Skipped to ${target.getAttribute('aria-label') || targetId}`, 'polite');
-    }
   };
 
   return (

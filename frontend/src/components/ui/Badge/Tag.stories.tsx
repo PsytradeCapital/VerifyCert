@@ -34,7 +34,7 @@ export const TagSizes: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-4">
       <Tag size="sm" color="blue">Small</Tag>
-      <Tag size="md" color="green">Medium</Tag>
+      <Tag size="default" color="green">Medium</Tag>
       <Tag size="lg" color="purple">Large</Tag>
     </div>
   ),
@@ -43,16 +43,16 @@ export const TagSizes: Story = {
 export const TagsWithIcons: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Tag color="blue" icon={<User />}>
+      <Tag color="blue">
         User
       </Tag>
-      <Tag color="green" icon={<Mail />}>
+      <Tag color="green">
         Email
       </Tag>
-      <Tag color="purple" icon={<Phone />}>
+      <Tag color="purple">
         Phone
       </Tag>
-      <Tag color="red" icon={<Heart />}>
+      <Tag color="red">
         Favorite
       </Tag>
     </div>
@@ -68,7 +68,7 @@ export const ClickableTags: Story = {
       <Tag color="green" onClick={() => alert('Green tag clicked!')}>
         Clickable Green
       </Tag>
-      <Tag color="purple" onClick={() => alert('Purple tag clicked!')} icon={<Star />}>
+      <Tag color="purple" onClick={() => alert('Purple tag clicked!')}>
         With Icon
       </Tag>
     </div>
@@ -119,7 +119,7 @@ export const TagShowcase: Story = {
       <div>
         <h3 className="text-lg font-semibold mb-3">Skills</h3>
         <div className="flex flex-wrap gap-2">
-          <Tag color="blue" icon={<Star />}>React</Tag>
+          <Tag color="blue">React</Tag>
           <Tag color="green">TypeScript</Tag>
           <Tag color="purple">Node.js</Tag>
           <Tag color="yellow">JavaScript</Tag>
@@ -141,10 +141,10 @@ export const TagShowcase: Story = {
       <div>
         <h3 className="text-lg font-semibold mb-3">Interactive Tags</h3>
         <div className="flex flex-wrap gap-2">
-          <Tag color="blue" onClick={() => alert('Frontend clicked!')} icon={<User />}>
+          <Tag color="blue" onClick={() => alert('Frontend clicked!')}>
             Frontend
           </Tag>
-          <Tag color="green" onClick={() => alert('Backend clicked!')} icon={<Mail />}>
+          <Tag color="green" onClick={() => alert('Backend clicked!')}>
             Backend
           </Tag>
           <Tag color="purple" removable onRemove={() => alert('Design removed!')}>

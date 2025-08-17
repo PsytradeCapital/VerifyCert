@@ -10,15 +10,15 @@ const SelectDemo: React.FC = () => {
     { value: 'option1', label: 'Option 1' },
     { value: 'option2', label: 'Option 2' },
     { value: 'option3', label: 'Option 3' },
-    { value: 'option4', label: 'Option 4' }
+    { value: 'option4', label: 'Option 4'
   ];
 
   const skillsOptions: SelectOption[] = [
-    { value: 'javascript', label: 'JavaScript', icon: <span>🟨</span> },
-    { value: 'typescript', label: 'TypeScript', icon: <span>🔷</span> },
-    { value: 'react', label: 'React', icon: <span>⚛️</span> },
-    { value: 'vue', label: 'Vue.js', icon: <span>💚</span> },
-    { value: 'angular', label: 'Angular', icon: <span>🅰️</span> }
+    { value: 'javascript', label: 'JavaScript', icon: <span>🟨</span>,
+    { value: 'typescript', label: 'TypeScript', icon: <span>🔷</span>,
+    { value: 'react', label: 'React', icon: <span>⚛️</span>,
+    { value: 'vue', label: 'Vue.js', icon: <span>💚</span>,
+    { value: 'angular', label: 'Angular', icon: <span>🅰️</span>
   ];
 
   const planOptions: SelectOption[] = [
@@ -26,20 +26,17 @@ const SelectDemo: React.FC = () => {
       value: 'basic', 
       label: 'Basic Plan', 
       description: 'Perfect for individuals getting started',
-      icon: <span>📦</span>
-    },
+      icon: <span>📦</span>,
     { 
       value: 'pro', 
       label: 'Pro Plan', 
       description: 'Great for growing teams and businesses',
-      icon: <span>🚀</span>
-    },
+      icon: <span>🚀</span>,
     { 
       value: 'enterprise', 
       label: 'Enterprise Plan', 
       description: 'Advanced features for large organizations',
       icon: <span>🏢</span>
-    }
   ];
 
   const dropdownItems: DropdownItem[] = [
@@ -66,8 +63,7 @@ const SelectDemo: React.FC = () => {
       id: 'logout', 
       label: 'Sign Out', 
       icon: <span>🚪</span>,
-      onClick: () => alert('Logout clicked') 
-    }
+      onClick: () => alert('Logout clicked')
   ];
 
   return (
@@ -154,7 +150,7 @@ const SelectDemo: React.FC = () => {
             placeholder="Outlined variant"
             label="Outlined"
             variant="outlined"
-            size="md"
+            size="default"
           />
           
           <Select
@@ -207,7 +203,6 @@ const SelectDemo: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-            }
             items={dropdownItems}
           />
           
@@ -218,11 +213,10 @@ const SelectDemo: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                 </svg>
               </button>
-            }
             items={[
               { id: 'edit', label: 'Edit', onClick: () => alert('Edit clicked') },
               { id: 'duplicate', label: 'Duplicate', onClick: () => alert('Duplicate clicked') },
-              { id: 'delete', label: 'Delete', onClick: () => alert('Delete clicked') }
+              { id: 'delete', label: 'Delete', onClick: () => alert('Delete clicked')
             ]}
             placement="bottom-end"
           />

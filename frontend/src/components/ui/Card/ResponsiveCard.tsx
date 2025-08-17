@@ -9,7 +9,6 @@ export interface ResponsiveCardProps {
   hover?: boolean;
   interactive?: boolean;
   as?: keyof JSX.IntrinsicElements;
-}
 
 const ResponsiveCard: React.FC<ResponsiveCardProps> = ({
   children,

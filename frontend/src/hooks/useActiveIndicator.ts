@@ -6,7 +6,6 @@ export interface ActiveIndicatorStyles {
   indicatorClasses: string;
   itemClasses: string;
   transitionClasses: string;
-}
 
 export const useActiveIndicator = (itemId: string, isActive: boolean = false): ActiveIndicatorStyles => {
   const { state } = useNavigation();
@@ -66,7 +65,6 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
               indicatorClasses = `absolute bottom-0 left-0 right-0 h-1 bg-primary-500 rounded-t-full ${transitionClasses}`;
               itemClasses = 'pb-2';
               break;
-          }
           break;
 
         case 'dot':
@@ -87,7 +85,6 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
               indicatorClasses = `absolute bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-primary-500 rounded-full ${transitionClasses}`;
               itemClasses = 'pb-4';
               break;
-          }
           break;
 
         case 'background':
@@ -99,8 +96,6 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
           indicatorClasses = `absolute inset-0 border-2 border-primary-500 rounded-lg ${transitionClasses}`;
           itemClasses = 'relative z-10';
           break;
-      }
-    }
 
     // Add enhanced transition effects if transitioning
     if (isTransitioning && animateTransitions) {
@@ -115,19 +110,16 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
         transitionEffect = isActive 
           ? '-translate-x-2 opacity-80 scale-98 blur-[0.5px]' 
           : '-translate-x-1 opacity-85 scale-99';
-      }
       
       containerClasses += ` ${transitionEffect}`;
       
       // Add staggered animation delay for better visual flow
       const staggerDelay = `delay-${Math.min(500, transitionDuration * 0.1)}`;
       containerClasses += ` ${staggerDelay}`;
-    }
 
     // Add hover effects for better interactivity
     if (!isActive) {
       itemClasses += ' hover:bg-neutral-50 hover:text-neutral-900';
-    }
 
     return {
       containerClasses: `${containerClasses} ${smoothTransitionClasses}`,

@@ -5,10 +5,10 @@ import Dropdown, { DropdownItem } from '../Dropdown';
 
 const mockItems: DropdownItem[] = [
   { id: 'item1', label: 'Item 1', onClick: jest.fn() },
-  { id: 'item2', label: 'Item 2', onClick: jest.fn(), icon: <span data-testid="item2-icon">📄</span> },
+  { id: 'item2', label: 'Item 2', onClick: jest.fn(), icon: <span data-testid="item2-icon">📄</span>,
   { id: 'divider', label: '', divider: true },
   { id: 'item3', label: 'Item 3', onClick: jest.fn(), disabled: true },
-  { id: 'item4', label: 'Item 4', onClick: jest.fn() }
+  { id: 'item4', label: 'Item 4', onClick: jest.fn()
 ];
 
 describe('Dropdown Component', () => {

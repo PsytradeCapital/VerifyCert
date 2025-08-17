@@ -8,7 +8,6 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon?: React.ReactNode;
   removable?: boolean;
   onRemove?: () => void;
-}
 
 export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
   ({ 
@@ -56,7 +55,7 @@ export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
         onClick={onClick}
         {...props}
       >
-        {icon && <span className="mr-1 flex-shrink-0">{icon}</span>}
+        {icon && <span className="mr-1 flex-shrink-0">{icon}</span>
         {children}
         {removable && onRemove && (
           <button
@@ -71,7 +70,6 @@ export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
         )}
       </span>
     );
-  }
 );
 
 Tag.displayName = 'Tag';

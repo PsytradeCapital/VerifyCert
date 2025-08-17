@@ -9,7 +9,6 @@ interface LoginFormData {
   emailOrPhone: string;
   password: string;
   rememberMe: boolean;
-}
 
 export const LoginForm: React.FC = () => {
   const { login } = useAuth();
@@ -35,12 +34,10 @@ export const LoginForm: React.FC = () => {
     if (!formData.emailOrPhone.trim()) {
       toast.error('Please enter your email or phone number');
       return;
-    }
     
     if (!formData.password) {
       toast.error('Please enter your password');
       return;
-    }
 
     setIsLoading(true);
     try {
@@ -51,7 +48,6 @@ export const LoginForm: React.FC = () => {
       toast.error(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setIsLoading(false);
-    }
   };
 
   return (
@@ -96,7 +92,7 @@ export const LoginForm: React.FC = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
             >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />
             </button>
           </div>
         </div>

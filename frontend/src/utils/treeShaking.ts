@@ -24,7 +24,6 @@ export const createTreeShakableUtils = () => {
       const chunks: T[][] = [];
       for (let i = 0; i < arr.length; i += size) {
         chunks.push(arr.slice(i, i + size));
-      }
       return chunks;
     },
     
@@ -34,7 +33,6 @@ export const createTreeShakableUtils = () => {
       keys.forEach(key => {
         if (key in obj) {
           result[key] = obj[key];
-        }
       });
       return result;
     },
@@ -45,7 +43,6 @@ export const createTreeShakableUtils = () => {
         delete result[key];
       });
       return result;
-    }
   };
 };
 
@@ -85,7 +82,6 @@ export const createReactUtils = () => {
           return item ? JSON.parse(item) : initialValue;
         } catch (error) {
           return initialValue;
-        }
       });
       
       const setValue = (value: T | ((val: T) => T)) => {
@@ -95,11 +91,9 @@ export const createReactUtils = () => {
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
         } catch (error) {
           console.error('Error saving to localStorage:', error);
-        }
       };
       
       return [storedValue, setValue] as const;
-    }
   };
 };
 
@@ -140,7 +134,6 @@ export const monitorBundleSize = () => {
         if (script.src.includes('static/js/')) {
           // This is a rough estimation
           totalSize += 100; // KB estimate per chunk
-        }
       });
       
       console.log('Estimated JS bundle size:', totalSize, 'KB');
@@ -152,8 +145,6 @@ export const monitorBundleSize = () => {
       logBundleInfo();
     } else {
       window.addEventListener('load', logBundleInfo);
-    }
-  }
 };
 
 import * as React from 'react';

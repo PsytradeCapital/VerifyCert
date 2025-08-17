@@ -14,19 +14,18 @@ jest.mock('../../utils/validationAnimations', () => ({
     errorSequence: [
       { element: 'field', animation: 'errorShake', delay: 0 },
       { element: 'message', animation: 'errorSlideIn', delay: 100 },
-      { element: 'icon', animation: 'errorPulse', delay: 150 }
+      { element: 'icon', animation: 'errorPulse', delay: 150
     ],
     successSequence: [
       { element: 'field', animation: 'successBounce', delay: 0 },
       { element: 'icon', animation: 'successBounce', delay: 50 },
-      { element: 'message', animation: 'successFadeIn', delay: 100 }
+      { element: 'message', animation: 'successFadeIn', delay: 100
     ],
     warningSequence: [
       { element: 'field', animation: 'warningWiggle', delay: 0 },
       { element: 'message', animation: 'warningFadeIn', delay: 100 },
-      { element: 'icon', animation: 'warningWiggle', delay: 150 }
+      { element: 'icon', animation: 'warningWiggle', delay: 150
     ]
-  }
 }));
 
 describe('useValidationAnimation', () => {
@@ -109,7 +108,7 @@ describe('useValidationAnimation', () => {
   it('auto-triggers animations on validation state change', async () => {
     const { result, rerender } = renderHook(
       ({ validationState }) => useValidationAnimation(validationState),
-      { initialProps: { validationState: 'default' as const } }
+      { initialProps: { validationState: 'default' as const }
     );
 
     // Mock DOM elements
@@ -139,8 +138,7 @@ describe('useValidationMessageAnimation', () => {
         initialProps: { 
           message: undefined as string | undefined, 
           validationState: 'default' as const 
-        } 
-      }
+        }
     );
 
     expect(result.current.displayMessage).toBeUndefined();
@@ -163,8 +161,7 @@ describe('useValidationMessageAnimation', () => {
         initialProps: { 
           message: 'Initial message', 
           validationState: 'error' as const 
-        } 
-      }
+        }
     );
 
     expect(result.current.isVisible).toBe(true);
@@ -187,8 +184,7 @@ describe('useValidationIconAnimation', () => {
         initialProps: { 
           validationState: 'default' as const, 
           showIcon: true 
-        } 
-      }
+        }
     );
 
     expect(result.current.currentState).toBe('default');
@@ -210,8 +206,7 @@ describe('useValidationIconAnimation', () => {
         initialProps: { 
           validationState: 'success' as const, 
           showIcon: false 
-        } 
-      }
+        }
     );
 
     expect(result.current.shouldShowIcon).toBe(false);
@@ -227,7 +222,7 @@ describe('useValidationIconAnimation', () => {
   it('manages state change animations', async () => {
     const { result, rerender } = renderHook(
       ({ validationState }) => useValidationIconAnimation(validationState, true),
-      { initialProps: { validationState: 'success' as const } }
+      { initialProps: { validationState: 'success' as const }
     );
 
     expect(result.current.isChanging).toBe(false);

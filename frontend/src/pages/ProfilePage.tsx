@@ -31,18 +31,15 @@ export const ProfilePage: React.FC = () => {
       toast.error(error.message || 'Failed to update profile');
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleDeleteAccount = async () => {
     if (!deletePassword) {
       toast.error('Please enter your password to delete account');
       return;
-    }
 
     if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
       return;
-    }
 
     setIsLoading(true);
     try {
@@ -60,7 +57,6 @@ export const ProfilePage: React.FC = () => {
 
       if (!response.ok) {
         throw new Error(data.error?.message || 'Failed to delete account');
-      }
 
       toast.success('Account deleted successfully');
       logout();
@@ -68,7 +64,6 @@ export const ProfilePage: React.FC = () => {
       toast.error(error.message || 'Failed to delete account');
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -82,7 +77,6 @@ export const ProfilePage: React.FC = () => {
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">

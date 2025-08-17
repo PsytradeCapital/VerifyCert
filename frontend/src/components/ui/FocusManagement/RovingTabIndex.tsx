@@ -8,7 +8,6 @@ interface RovingTabIndexProps {
   defaultIndex?: number;
   onIndexChange?: (index: number) => void;
   className?: string;
-}
 
 const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
   children,
@@ -29,7 +28,6 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
         containerRef.current.querySelectorAll('[data-roving-tab-item]')
       ) as HTMLElement[];
       itemRefs.current = items;
-    }
   }, [children]);
 
   const { handleKeyDown } = useRovingTabIndex(itemRefs.current, currentIndexRef.current);
@@ -39,7 +37,6 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
     if (newIndex !== currentIndexRef.current) {
       currentIndexRef.current = newIndex;
       onIndexChange?.(newIndex);
-    }
   };
 
   const enhancedChildren = Children.map(children, (child, index) => {
@@ -54,7 +51,6 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
           child.props.onFocus?.(event);
         },
       });
-    }
     return child;
   });
 

@@ -14,7 +14,6 @@ const FileUploadDemo: React.FC = () => {
     if (selectedFiles.length === 0) {
       setUploadStatus('No files selected');
       return;
-    }
 
     setUploadStatus('Uploading...');
     

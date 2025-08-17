@@ -5,7 +5,6 @@ interface DotsSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   color?: 'primary' | 'secondary' | 'white' | 'gray' | 'success' | 'warning' | 'error';
   className?: string;
-}
 
 const DotsSpinner: React.FC<DotsSpinnerProps> = ({ 
   size = 'md', 
@@ -34,7 +33,6 @@ const DotsSpinner: React.FC<DotsSpinnerProps> = ({
     },
     end: {
       y: "100%"
-    }
   };
 
   const bounceTransition = {

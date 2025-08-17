@@ -18,7 +18,6 @@ export interface GridProps extends React.HTMLAttributes<HTMLElement> {
   placeContent?: 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly' | 'stretch';
   className?: string;
   as?: keyof JSX.IntrinsicElements;
-}
 
 const Grid: React.FC<GridProps> = ({
   children,
@@ -148,7 +147,6 @@ const Grid: React.FC<GridProps> = ({
     );
   } else {
     gapClassNames = gapClasses[gap];
-  }
 
   // Combine all classes
   const combinedClasses = cn(
@@ -187,7 +185,6 @@ export interface GridItemProps extends React.HTMLAttributes<HTMLElement> {
   alignSelf?: 'auto' | 'start' | 'end' | 'center' | 'stretch';
   className?: string;
   as?: keyof JSX.IntrinsicElements;
-}
 
 export const GridItem: React.FC<GridItemProps> = ({
   children,

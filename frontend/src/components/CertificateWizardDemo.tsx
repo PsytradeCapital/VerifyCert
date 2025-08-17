@@ -69,4 +69,3 @@ export default function CertificateWizardDemo() {
       </div>
     </div>
   );
-}

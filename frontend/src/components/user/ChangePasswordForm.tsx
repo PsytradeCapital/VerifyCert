@@ -26,7 +26,6 @@ export const ChangePasswordForm: React.FC = () => {
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
-    }
   };
 
   const togglePasswordVisibility = (field: 'current' | 'new' | 'confirm') => {
@@ -52,23 +51,19 @@ export const ChangePasswordForm: React.FC = () => {
 
     if (!formData.currentPassword) {
       newErrors.currentPassword = 'Current password is required';
-    }
 
     if (!formData.newPassword) {
       newErrors.newPassword = 'New password is required';
     } else if (!isPasswordValid) {
       newErrors.newPassword = 'Password does not meet requirements';
-    }
 
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your new password';
     } else if (formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
-    }
 
     if (formData.currentPassword === formData.newPassword) {
       newErrors.newPassword = 'New password must be different from current password';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -79,7 +74,6 @@ export const ChangePasswordForm: React.FC = () => {
     
     if (!validateForm()) {
       return;
-    }
 
     setIsLoading(true);
 
@@ -92,7 +86,6 @@ export const ChangePasswordForm: React.FC = () => {
       toast.error(error.message || 'Failed to change password');
     } finally {
       setIsLoading(false);
-    }
   };
 
   const PasswordInput = ({ 
@@ -131,7 +124,7 @@ export const ChangePasswordForm: React.FC = () => {
           onClick={onToggle}
           className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
         >
-          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />
         </button>
       </div>
       {error && (

@@ -41,7 +41,6 @@ const mockNavigationItems: NavigationItem[] = [
     label: 'Settings',
     href: '/settings',
     icon: <Settings className="w-5 h-5" />
-  }
 ];
 
 const mockBottomNavItems: BottomNavItem[] = [
@@ -57,7 +56,6 @@ const mockBottomNavItems: BottomNavItem[] = [
     label: 'Profile',
     href: '/profile',
     icon: <User className="w-6 h-6" />
-  }
 ];
 
 const renderWithRouter = (component: React.ReactElement) => {

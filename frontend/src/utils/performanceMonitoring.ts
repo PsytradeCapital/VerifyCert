@@ -8,7 +8,6 @@ interface PerformanceMetric {
   endTime?: number;
   duration?: number;
   metadata?: Record<string, any>;
-}
 
 class PerformanceMonitor {
   private metrics: Map<string, PerformanceMetric> = new Map();
@@ -16,7 +15,6 @@ class PerformanceMonitor {
 
   constructor() {
     this.initializeObservers();
-  }
 
   private initializeObservers() {
     // Monitor resource loading (images, scripts, etc.)
@@ -25,7 +23,6 @@ class PerformanceMonitor {
         list.getEntries().forEach((entry) => {
           if (entry.entryType === 'resource') {
             this.recordResourceLoad(entry as PerformanceResourceTiming);
-          }
         });
       });
 
@@ -34,14 +31,12 @@ class PerformanceMonitor {
         this.observers.push(resourceObserver);
       } catch (error) {
         console.warn('Resource performance observer not supported:', error);
-      }
 
       // Monitor navigation timing
       const navigationObserver = new PerformanceObserver((list) => {
         list.getEntries().forEach((entry) => {
           if (entry.entryType === 'navigation') {
             this.recordNavigationTiming(entry as PerformanceNavigationTiming);
-          }
         });
       });
 
@@ -50,9 +45,6 @@ class PerformanceMonitor {
         this.observers.push(navigationObserver);
       } catch (error) {
         console.warn('Navigation performance observer not supported:', error);
-      }
-    }
-  }
 
   private recordResourceLoad(entry: PerformanceResourceTiming) {
     const isLazyResource = entry.name.includes('lazy') || 
@@ -71,8 +63,6 @@ class PerformanceMonitor {
           cached: entry.transferSize === 0,
         },
       });
-    }
-  }
 
   private recordNavigationTiming(entry: PerformanceNavigationTiming) {
     this.metrics.set('navigation', {
@@ -86,19 +76,16 @@ class PerformanceMonitor {
         firstContentfulPaint: this.getFirstContentfulPaint(),
       },
     });
-  }
 
   private getFirstPaint(): number | undefined {
     const paintEntries = performance.getEntriesByType('paint');
     const firstPaint = paintEntries.find(entry => entry.name === 'first-paint');
     return firstPaint?.startTime;
-  }
 
   private getFirstContentfulPaint(): number | undefined {
     const paintEntries = performance.getEntriesByType('paint');
     const firstContentfulPaint = paintEntries.find(entry => entry.name === 'first-contentful-paint');
     return firstContentfulPaint?.startTime;
-  }
 
   // Manual timing methods
   startTiming(name: string, metadata?: Record<string, any>) {
@@ -107,7 +94,6 @@ class PerformanceMonitor {
       startTime: performance.now(),
       metadata,
     });
-  }
 
   endTiming(name: string, additionalMetadata?: Record<string, any>) {
     const metric = this.metrics.get(name);
@@ -118,53 +104,41 @@ class PerformanceMonitor {
       
       if (additionalMetadata) {
         metric.metadata = { ...metric.metadata, ...additionalMetadata };
-      }
-    }
-  }
 
   // Component lazy loading timing
   startComponentLoad(componentName: string) {
     this.startTiming(`component_${componentName}`, { type: 'component' });
-  }
 
   endComponentLoad(componentName: string, success: boolean = true) {
     this.endTiming(`component_${componentName}`, { success });
-  }
 
   // Image lazy loading timing
   startImageLoad(imageSrc: string) {
     this.startTiming(`image_${imageSrc}`, { type: 'image' });
-  }
 
   endImageLoad(imageSrc: string, success: boolean = true, size?: number) {
     this.endTiming(`image_${imageSrc}`, { success, size });
-  }
 
   // Bundle loading timing
   startBundleLoad(bundleName: string) {
     this.startTiming(`bundle_${bundleName}`, { type: 'bundle' });
-  }
 
   endBundleLoad(bundleName: string, success: boolean = true) {
     this.endTiming(`bundle_${bundleName}`, { success });
-  }
 
   // Get performance statistics
   getMetrics(): PerformanceMetric[] {
     return Array.from(this.metrics.values());
-  }
 
   getMetricsByType(type: string): PerformanceMetric[] {
     return this.getMetrics().filter(metric => 
       metric.metadata?.type === type || metric.name.startsWith(type)
     );
-  }
 
   getSlowMetrics(threshold: number = 1000): PerformanceMetric[] {
     return this.getMetrics().filter(metric => 
       metric.duration && metric.duration > threshold
     );
-  }
 
   // Performance summary
   getSummary() {
@@ -192,7 +166,6 @@ class PerformanceMonitor {
       },
       navigation: this.metrics.get('navigation'),
     };
-  }
 
   private calculateAverage(metrics: PerformanceMetric[]): number {
     const validMetrics = metrics.filter(m => m.duration);
@@ -200,13 +173,11 @@ class PerformanceMonitor {
     
     const sum = validMetrics.reduce((acc, m) => acc + (m.duration || 0), 0);
     return sum / validMetrics.length;
-  }
 
   private getSlowest(metrics: PerformanceMetric[]): PerformanceMetric | undefined {
     return metrics
       .filter(m => m.duration)
       .sort((a, b) => (b.duration || 0) - (a.duration || 0))[0];
-  }
 
   // Export data for analysis
   exportData(): string {
@@ -216,19 +187,15 @@ class PerformanceMonitor {
       metrics: this.getMetrics(),
       summary: this.getSummary(),
     }, null, 2);
-  }
 
   // Clear metrics
   clear() {
     this.metrics.clear();
-  }
 
   // Cleanup observers
   disconnect() {
     this.observers.forEach(observer => observer.disconnect());
     this.observers = [];
-  }
-}
 
 // Global performance monitor instance
 export const performanceMonitor = new PerformanceMonitor();
@@ -254,7 +221,6 @@ export const withPerformanceMonitoring = <T extends (...args: any[]) => any>(
             performanceMonitor.endTiming(name, { success: false, error: error.message });
             throw error;
           });
-      }
       
       performanceMonitor.endTiming(name, { success: true });
       return result;
@@ -264,7 +230,6 @@ export const withPerformanceMonitoring = <T extends (...args: any[]) => any>(
         error: error instanceof Error ? error.message : 'Unknown error' 
       });
       throw error;
-    }
   }) as T;
 };
 
@@ -297,10 +262,8 @@ export const logPerformanceStats = () => {
     const slowMetrics = performanceMonitor.getSlowMetrics();
     if (slowMetrics.length > 0) {
       console.warn('⚠️ Slow loading resources:', slowMetrics);
-    }
     
     console.groupEnd();
-  }
 };
 
 // Auto-log performance stats in development
@@ -309,5 +272,4 @@ if (process.env.NODE_ENV === 'development') {
   window.addEventListener('load', () => {
     setTimeout(logPerformanceStats, 2000);
   });
-}
 

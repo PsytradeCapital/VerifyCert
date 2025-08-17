@@ -8,7 +8,6 @@ export interface DropdownItem {
   disabled?: boolean;
   divider?: boolean;
   onClick?: () => void;
-}
 
 export interface DropdownProps {
   trigger: React.ReactNode;
@@ -17,7 +16,6 @@ export interface DropdownProps {
   disabled?: boolean;
   className?: string;
   'data-testid'?: string;
-}
 
 const Dropdown: React.FC<DropdownProps> = ({
   trigger,
@@ -34,19 +32,16 @@ const Dropdown: React.FC<DropdownProps> = ({
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
-      }
     };
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false);
-      }
     };
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('keydown', handleEscape);
-    }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -57,14 +52,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   const handleToggle = () => {
     if (!disabled) {
       setIsOpen(!isOpen);
-    }
   };
 
   const handleItemClick = (item: DropdownItem) => {
     if (!item.disabled && item.onClick) {
       item.onClick();
       setIsOpen(false);
-    }
   };
 
   const placementStyles = {
@@ -104,7 +97,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                     ${item.disabled
                       ? 'text-neutral-400 cursor-not-allowed'
                       : 'text-neutral-900 hover:bg-primary-50 hover:text-primary-900 cursor-pointer'
-                    }
                   `}
                   onClick={() => handleItemClick(item)}
                   disabled={item.disabled}

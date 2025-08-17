@@ -68,7 +68,7 @@ describe('useActiveIndicator', () => {
   it('should return correct styles for active item with line indicator', () => {
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.containerClasses).toContain('relative');
@@ -81,7 +81,7 @@ describe('useActiveIndicator', () => {
   it('should return correct styles for inactive item', () => {
     const { result } = renderHook(
       () => useActiveIndicator('test-item', false),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.indicatorClasses).toBe('');
@@ -94,7 +94,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.indicatorClasses).toContain('absolute right-0');
@@ -107,7 +107,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.indicatorClasses).toContain('w-2 h-2');
@@ -119,7 +119,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.indicatorClasses).toContain('absolute inset-0');
@@ -132,7 +132,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.indicatorClasses).toContain('border-2 border-primary-500');
@@ -144,7 +144,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.containerClasses).toContain('translate-x-1');
@@ -155,7 +155,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.indicatorClasses).toBe('');
@@ -167,7 +167,7 @@ describe('useActiveIndicator', () => {
     
     const { result } = renderHook(
       () => useActiveIndicator('test-item', true),
-      { wrapper }
+      { wrapper
     );
 
     expect(result.current.transitionClasses).toBe('');

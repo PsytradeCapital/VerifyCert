@@ -23,7 +23,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
       />
     );
     
@@ -43,7 +42,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         trend={trend}
       />
     );
@@ -63,7 +61,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         trend={trend}
       />
     );
@@ -83,7 +80,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         trend={trend}
       />
     );
@@ -97,7 +93,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         color="green"
       />
     );
@@ -109,7 +104,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         color="purple"
       />
     );
@@ -123,7 +117,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         description="This is a test description"
       />
     );
@@ -136,7 +129,6 @@ describe('MetricCard', () => {
       <MetricCard
         title="Test Metric"
         value="100"
-        icon={mockIcon}
         className="custom-class"
       />
     );

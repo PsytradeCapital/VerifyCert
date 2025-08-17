@@ -12,7 +12,6 @@ export interface NetworkConfig {
     decimals: number;
   };
   contractAddress: string;
-}
 
 // Amoy Testnet Configuration
 export const AMOY_NETWORK: NetworkConfig = {
@@ -59,7 +58,6 @@ export const SUPPORTED_NETWORKS: Record<number, NetworkConfig> = {
 export const switchToAmoyNetwork = async () => {
   if (!window.ethereum) {
     throw new Error('MetaMask is not installed');
-  }
 
   try {
     // Try to switch to Amoy network
@@ -84,8 +82,6 @@ export const switchToAmoyNetwork = async () => {
       });
     } else {
       throw switchError;
-    }
-  }
 };
 
 // Get network configuration by chain ID
@@ -102,7 +98,6 @@ export const isSupportedNetwork = (chainId: number): boolean => {
 export const getCurrentNetwork = async (): Promise<NetworkConfig | null> => {
   if (!window.ethereum) {
     return null;
-  }
 
   try {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
@@ -111,7 +106,6 @@ export const getCurrentNetwork = async (): Promise<NetworkConfig | null> => {
   } catch (error) {
     console.error('Failed to get current network:', error);
     return null;
-  }
 };
 
 // Network display utilities
@@ -124,7 +118,6 @@ export const getBlockExplorerUrl = (chainId: number, type: 'tx' | 'address' | 't
   const network = getNetworkConfig(chainId);
   if (!network) {
     return '#';
-  }
 
   switch (type) {
     case 'tx':
@@ -135,7 +128,6 @@ export const getBlockExplorerUrl = (chainId: number, type: 'tx' | 'address' | 't
       return `${network.blockExplorer}/token/${value}`;
     default:
       return network.blockExplorer;
-  }
 };
 
 // Contract interaction utilities

@@ -20,7 +20,6 @@ export interface NotificationProps {
   icon?: React.ReactNode;
   showIcon?: boolean;
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center';
-}
 
 const Notification: React.FC<NotificationProps> = ({
   id,
@@ -44,7 +43,6 @@ const Notification: React.FC<NotificationProps> = ({
       }, duration);
 
       return () => clearTimeout(timer);
-    }
   }, [duration]);
 
   const handleClose = () => {
@@ -78,7 +76,6 @@ const Notification: React.FC<NotificationProps> = ({
       icon: 'text-blue-400',
       title: 'text-gray-900',
       content: 'text-gray-600'
-    }
   };
 
   const positionClasses = {
@@ -94,33 +91,32 @@ const Notification: React.FC<NotificationProps> = ({
     'top-right': {
       initial: { opacity: 0, x: 100, y: -50 },
       animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: 100, y: -50 }
+      exit: { opacity: 0, x: 100, y: -50
     },
     'top-left': {
       initial: { opacity: 0, x: -100, y: -50 },
       animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: -100, y: -50 }
+      exit: { opacity: 0, x: -100, y: -50
     },
     'bottom-right': {
       initial: { opacity: 0, x: 100, y: 50 },
       animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: 100, y: 50 }
+      exit: { opacity: 0, x: 100, y: 50
     },
     'bottom-left': {
       initial: { opacity: 0, x: -100, y: 50 },
       animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: -100, y: 50 }
+      exit: { opacity: 0, x: -100, y: 50
     },
     'top-center': {
       initial: { opacity: 0, y: -100 },
       animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -100 }
+      exit: { opacity: 0, y: -100
     },
     'bottom-center': {
       initial: { opacity: 0, y: 100 },
       animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: 100 }
-    }
+      exit: { opacity: 0, y: 100
   };
 
   const defaultIcons = {

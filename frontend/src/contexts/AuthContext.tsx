@@ -9,20 +9,18 @@ interface User {
   region: string;
   role: 'user' | 'issuer' | 'admin';
   isVerified: boolean;
-}
 
 interface AuthState {
   user: User | null;
   token: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-}
 
 type AuthAction =
-  | { type: 'AUTH_START' }
-  | { type: 'AUTH_SUCCESS'; payload: { user: User; token: string } }
-  | { type: 'AUTH_FAILURE' }
-  | { type: 'LOGOUT' }
+  | { type: 'AUTH_START'
+  | { type: 'AUTH_SUCCESS'; payload: { user: User; token: string }
+  | { type: 'AUTH_FAILURE'
+  | { type: 'LOGOUT'
   | { type: 'UPDATE_USER'; payload: User };
 
 const initialState: AuthState = {
@@ -67,7 +65,6 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       };
     default:
       return state;
-  }
 };
 
 interface AuthContextType extends AuthState {
@@ -80,7 +77,6 @@ interface AuthContextType extends AuthState {
   resendOTP: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
-}
 
 interface RegisterData {
   name: string;
@@ -88,7 +84,6 @@ interface RegisterData {
   phone?: string;
   password: string;
   region?: string;
-}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -96,13 +91,11 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
-  }
   return context;
 };
 
 interface AuthProviderProps {
   children: ReactNode;
-}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -122,10 +115,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         } catch (error) {
           localStorage.removeItem('authToken');
           dispatch({ type: 'AUTH_FAILURE' });
-        }
       } else {
         dispatch({ type: 'AUTH_FAILURE' });
-      }
     };
 
     initializeAuth();
@@ -141,8 +132,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         } catch (error) {
           console.error('Auto token refresh failed:', error);
           logout();
-        }
-      }
     }, 5 * 60 * 1000); // Check every 5 minutes
 
     // Clear interval on unmount
@@ -158,7 +147,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       dispatch({ type: 'AUTH_FAILURE' });
       throw error;
-    }
   };
 
   const register = async (data: RegisterData) => {
@@ -170,7 +158,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       dispatch({ type: 'AUTH_FAILURE' });
       throw error;
-    }
   };
 
   const verifyOTP = async (code: string) => {
@@ -182,7 +169,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       dispatch({ type: 'AUTH_FAILURE' });
       throw error;
-    }
   };
 
   const logout = () => {
@@ -209,7 +195,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       dispatch({ type: 'UPDATE_USER', payload: updatedUser });
     } catch (error) {
       throw error;
-    }
   };
 
   const changePassword = async (currentPassword: string, newPassword: string) => {
@@ -217,7 +202,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await authService.changePassword({ currentPassword, newPassword });
     } catch (error) {
       throw error;
-    }
   };
 
   const value: AuthContextType = {

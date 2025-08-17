@@ -9,7 +9,6 @@ interface ProtectedRouteProps {
   requireAuth?: boolean;
   requireVerification?: boolean;
   allowedRoles?: string[];
-}
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
@@ -29,17 +28,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     );
-  }
 
   // Redirect to login if not authenticated and auth is required
   if (requireAuth && (!isAuthenticated || !user)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  }
 
   // Redirect to verification if account is not verified and verification is required
   if ((requireVerified || requireVerification) && user && !user.isVerified) {
     return <Navigate to="/verify-otp" replace />;
-  }
 
   // Check role requirements
   if (requiredRole) {
@@ -54,15 +50,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
     if (userLevel < requiredLevel) {
       return <Navigate to="/unauthorized" replace />;
-    }
-  }
 
   // Check allowed roles
   if (allowedRoles && user) {
     if (!allowedRoles.includes(user.role)) {
       return <Navigate to="/unauthorized" replace />;
-    }
-  }
 
   return <>{children}</>;
 };

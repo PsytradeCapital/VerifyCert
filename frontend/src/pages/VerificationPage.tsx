@@ -16,7 +16,6 @@ interface VerificationPageState {
     chainId: number;
     isCorrectNetwork: boolean;
   } | null;
-}
 
 export default function VerificationPage() {
   const { tokenId } = useParams<{ tokenId: string }>();
@@ -43,7 +42,6 @@ export default function VerificationPage() {
       // Check if blockchain service is configured
       if (!blockchainService.isConfigured()) {
         throw new Error('Blockchain service not properly configured');
-      }
 
       // Get certificate data directly from blockchain
       const certificate = await blockchainService.getCertificate(tokenId);
@@ -81,7 +79,6 @@ export default function VerificationPage() {
         toast.success('Certificate verified successfully on blockchain!');
       } else {
         toast.error('Certificate verification failed');
-      }
 
     } catch (error) {
       console.error('Verification error:', error);
@@ -94,7 +91,6 @@ export default function VerificationPage() {
       }));
       
       toast.error(errorMessage);
-    }
   }, [tokenId]);
 
   useEffect(() => {
@@ -106,7 +102,6 @@ export default function VerificationPage() {
         error: 'No certificate ID provided',
         isLoading: false,
       }));
-    }
   }, [tokenId, verifyCertificate]);
 
   const handleRetry = () => {
@@ -146,7 +141,6 @@ export default function VerificationPage() {
     } catch (error) {
       console.error('Download failed:', error);
       toast.error('Failed to download certificate');
-    }
   };
 
   const handleShareCertificate = async () => {
@@ -170,7 +164,6 @@ export default function VerificationPage() {
     } catch (error) {
       console.error('Share failed:', error);
       toast.error('Failed to share certificate');
-    }
   };
 
   const handleViewOnBlockchain = () => {
@@ -204,7 +197,6 @@ export default function VerificationPage() {
         </div>
       </div>
     );
-  }
 
   // Error state
   if (state.error) {
@@ -250,7 +242,6 @@ export default function VerificationPage() {
         </div>
       </div>
     );
-  }
 
   // Main verification page
   return (
@@ -465,4 +456,3 @@ export default function VerificationPage() {
       </footer>
     </div>
   );
-}

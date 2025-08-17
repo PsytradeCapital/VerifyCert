@@ -138,14 +138,12 @@ describe('FileUpload', () => {
     fireEvent.dragOver(dropZone, {
       dataTransfer: {
         files: [file]
-      }
     });
     
     // Simulate drop
     fireEvent.drop(dropZone, {
       dataTransfer: {
         files: [file]
-      }
     });
     
     expect(mockOnFileSelect).toHaveBeenCalledWith([file]);
@@ -220,7 +218,6 @@ describe('FileUpload', () => {
     fireEvent.dragOver(dropZone, {
       dataTransfer: {
         files: [file]
-      }
     });
     
     expect(dropZone).not.toHaveClass('border-blue-400', 'bg-blue-50');
@@ -228,7 +225,6 @@ describe('FileUpload', () => {
     fireEvent.drop(dropZone, {
       dataTransfer: {
         files: [file]
-      }
     });
     
     expect(mockOnFileSelect).not.toHaveBeenCalled();

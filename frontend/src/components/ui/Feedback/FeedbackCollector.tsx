@@ -9,14 +9,12 @@ interface FeedbackData {
   rating: number;
   comment: string;
   context?: string;
-}
 
 interface FeedbackCollectorProps {
   isOpen: boolean;
   onClose: () => void;
   category?: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
-}
 
 export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
   isOpen,
@@ -34,7 +32,7 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
   const categories = [
     { value: 'navigation', label: 'Navigation & User Flow', icon: '🧭' },
     { value: 'visual-design', label: 'Visual Design & Layout', icon: '🎨' },
-    { value: 'overall-experience', label: 'Overall Experience', icon: '⭐' }
+    { value: 'overall-experience', label: 'Overall Experience', icon: '⭐'
   ];
 
   const ratingLabels = [
@@ -52,7 +50,6 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
       setHoveredRating(0);
       setFeedback('');
       setIsSubmitting(false);
-    }
   }, [isOpen, category]);
 
   const handleSubmit = async () => {
@@ -82,7 +79,6 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
       console.error('Failed to submit feedback:', error);
     } finally {
       setIsSubmitting(false);
-    }
   };
 
   const StarRating = () => (

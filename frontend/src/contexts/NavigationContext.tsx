@@ -12,7 +12,6 @@ export interface NavigationItem {
   badge?: string | number;
   disabled?: boolean;
   public?: boolean;
-}
 
 export interface NavigationState {
   // Current navigation state
@@ -46,7 +45,6 @@ export interface NavigationState {
   transitionDuration: number;
   transitionEasing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
   pendingNavigation: string | null;
-}
 
 export interface NavigationActions {
   // Navigation actions
@@ -79,12 +77,10 @@ export interface NavigationActions {
   endTransition: () => void;
   setTransitionDuration: (duration: number) => void;
   setTransitionEasing: (easing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear') => void;
-}
 
 export interface NavigationContextType {
   state: NavigationState;
   actions: NavigationActions;
-}
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
 
@@ -92,7 +88,6 @@ export interface NavigationProviderProps {
   children: ReactNode;
   initialItems?: NavigationItem[];
   isWalletConnected?: boolean;
-}
 
 export const NavigationProvider: React.FC<NavigationProviderProps> = ({
   children,
@@ -136,7 +131,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z" />
         </svg>
       )
-    }
   ];
 
   const [state, setState] = useState<NavigationState>({
@@ -176,7 +170,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
       visibleItems.forEach(item => {
         if (isItemActive(item.href, location.pathname)) {
           newActiveItems.add(item.id);
-        }
         
         // Check children for active state
         if (item.children) {
@@ -184,9 +177,7 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
             if (isItemActive(child.href, location.pathname)) {
               newActiveItems.add(child.id);
               newActiveItems.add(item.id); // Also mark parent as active
-            }
           });
-        }
       });
 
       // Only update state if active items have actually changed
@@ -202,7 +193,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
             currentRoute: location.pathname,
             activeItems: newActiveItems
           };
-        }
         return prev;
       });
     };
@@ -214,7 +204,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
   const isItemActive = (itemPath: string, currentPath: string): boolean => {
     if (itemPath === '/') {
       return currentPath === '/';
-    }
     return currentPath.startsWith(itemPath);
   };
 
@@ -224,7 +213,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
       // Don't navigate if already on the same path or if currently transitioning
       if (location.pathname === path || state.isTransitioning) {
         return;
-      }
 
       // Check if animations are enabled
       const shouldAnimate = state.activeIndicators.animateTransitions;
@@ -256,7 +244,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
             const newHistory = [...prev.navigationHistory];
             if (newHistory[newHistory.length - 1] !== path) {
               newHistory.push(path);
-            }
             
             return {
               ...prev,
@@ -277,7 +264,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
           const newHistory = [...prev.navigationHistory];
           if (newHistory[newHistory.length - 1] !== path) {
             newHistory.push(path);
-          }
           
           return {
             ...prev,
@@ -286,7 +272,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
             canGoForward: false
           };
         });
-      }
     },
 
     goBack: () => {
@@ -303,7 +288,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
             canGoBack: currentIndex > 1,
             canGoForward: true
           };
-        }
         return prev;
       });
     },
@@ -386,13 +370,12 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         ...prev,
         navigationItems: prev.navigationItems.map(item => 
           item.id === itemId 
-            ? { ...item, badge }
+            ? { ...item, badge
             : {
                 ...item,
                 children: item.children?.map(child =>
                   child.id === itemId ? { ...child, badge } : child
                 )
-              }
         )
       }));
     },
@@ -404,7 +387,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         activeIndicators: {
           ...prev.activeIndicators,
           indicatorStyle: style
-        }
       }));
     },
 
@@ -414,7 +396,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         activeIndicators: {
           ...prev.activeIndicators,
           indicatorPosition: position
-        }
       }));
     },
 
@@ -424,7 +405,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         activeIndicators: {
           ...prev.activeIndicators,
           showActiveIndicator: show
-        }
       }));
     },
 
@@ -434,7 +414,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         activeIndicators: {
           ...prev.activeIndicators,
           animateTransitions: animate
-        }
       }));
     },
 
@@ -469,7 +448,6 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({
         ...prev,
         transitionEasing: easing
       }));
-    }
   };
 
   const contextValue: NavigationContextType = {
@@ -488,7 +466,6 @@ export const useNavigation = (): NavigationContextType => {
   const context = useContext(NavigationContext);
   if (context === undefined) {
     throw new Error('useNavigation must be used within a NavigationProvider');
-  }
   return context;
 };
 

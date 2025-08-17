@@ -122,7 +122,6 @@ describe('Focus Management Implementation', () => {
               onFocus: () => setActiveIndex(index),
               'data-index': index,
             });
-          }
           return child;
         });
         
@@ -165,7 +164,6 @@ describe('Focus Management Implementation', () => {
           onKeyDown={(e) => {
             if (e.key.startsWith('Arrow')) {
               handleArrowKey(e.key);
-            }
           }}
           data-testid="arrow-nav"
         >

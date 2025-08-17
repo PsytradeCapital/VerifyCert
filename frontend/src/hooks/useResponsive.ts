@@ -7,7 +7,6 @@ export interface BreakpointConfig {
   lg: number;
   xl: number;
   '2xl': number;
-}
 
 export const defaultBreakpoints: BreakpointConfig = {
   xs: 475,
@@ -31,7 +30,6 @@ export interface ResponsiveState {
   isBreakpoint: (breakpoint: BreakpointKey) => boolean;
   isAboveBreakpoint: (breakpoint: BreakpointKey) => boolean;
   isBelowBreakpoint: (breakpoint: BreakpointKey) => boolean;
-}
 
 export function useResponsive(breakpoints: BreakpointConfig = defaultBreakpoints): ResponsiveState {
   const [windowSize, setWindowSize] = useState({
@@ -104,37 +102,31 @@ export function useResponsive(breakpoints: BreakpointConfig = defaultBreakpoints
     isAboveBreakpoint,
     isBelowBreakpoint,
   };
-}
 
 // Hook for specific breakpoint checks
 export function useBreakpoint(breakpoint: BreakpointKey, breakpoints?: BreakpointConfig): boolean {
   const { isAboveBreakpoint } = useResponsive(breakpoints);
   return isAboveBreakpoint(breakpoint);
-}
 
 // Hook for mobile detection
 export function useIsMobile(breakpoints?: BreakpointConfig): boolean {
   const { isMobile } = useResponsive(breakpoints);
   return isMobile;
-}
 
 // Hook for desktop detection
 export function useIsDesktop(breakpoints?: BreakpointConfig): boolean {
   const { isDesktop } = useResponsive(breakpoints);
   return isDesktop;
-}
 
 // Hook for touch device detection
 export function useIsTouch(breakpoints?: BreakpointConfig): boolean {
   const { isTouch } = useResponsive(breakpoints);
   return isTouch;
-}
 
 // Hook for getting current breakpoint
 export function useCurrentBreakpoint(breakpoints?: BreakpointConfig): BreakpointKey {
   const { currentBreakpoint } = useResponsive(breakpoints);
   return currentBreakpoint;
-}
 
 // Hook for responsive values based on breakpoints
 export function useResponsiveValue<T>(
@@ -152,7 +144,6 @@ export function useResponsiveValue<T>(
   // Return the value for the largest applicable breakpoint, or fallback
   const applicableBreakpoint = applicableBreakpoints[0] as BreakpointKey;
   return applicableBreakpoint ? values[applicableBreakpoint] ?? fallback : fallback;
-}
 
 // Hook for responsive spacing
 export function useResponsiveSpacing(
@@ -167,7 +158,6 @@ export function useResponsiveSpacing(
   if (isTablet && tablet !== undefined) return tablet;
   if (desktop !== undefined) return desktop;
   return tablet || mobile;
-}
 
 // Hook for responsive font sizes
 export function useResponsiveFontSize(
@@ -177,7 +167,6 @@ export function useResponsiveFontSize(
   breakpoints?: BreakpointConfig
 ): string {
   return useResponsiveSpacing(mobile, tablet, desktop, breakpoints) as string;
-}
 
 // Hook for responsive grid columns
 export function useResponsiveColumns(
@@ -187,6 +176,5 @@ export function useResponsiveColumns(
   breakpoints?: BreakpointConfig
 ): number {
   return useResponsiveSpacing(mobile, tablet, desktop, breakpoints) as number;
-}
 
 export default useResponsive;

@@ -36,7 +36,7 @@ describe('Badge Component', () => {
     const { rerender } = render(<Badge size="sm">Small</Badge>);
     expect(screen.getByText('Small')).toHaveClass('px-2', 'py-0.5', 'text-xs');
 
-    rerender(<Badge size="md">Medium</Badge>);
+    rerender(<Badge size="default">Medium</Badge>);
     expect(screen.getByText('Medium')).toHaveClass('px-2.5', 'py-0.5', 'text-sm');
 
     rerender(<Badge size="lg">Large</Badge>);
@@ -71,7 +71,7 @@ describe('Badge Component', () => {
 
   it('renders icon when provided', () => {
     const TestIcon = () => <span data-testid="test-icon">Icon</span>;
-    render(<Badge icon={<TestIcon />}>Badge with Icon</Badge>);
+    render(<Badge>Badge with Icon</Badge>);
     expect(screen.getByTestId('test-icon')).toBeInTheDocument();
   });
 
@@ -109,7 +109,7 @@ describe('Badge Component', () => {
 
   it('renders icon without children', () => {
     const TestIcon = () => <span data-testid="test-icon">Icon</span>;
-    render(<Badge icon={<TestIcon />} />);
+    render(<Badge />);
     expect(screen.getByTestId('test-icon')).toBeInTheDocument();
   });
 });

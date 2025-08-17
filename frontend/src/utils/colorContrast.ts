@@ -26,7 +26,6 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
     g: parseInt(result[2], 16),
     b: parseInt(result[3], 16)
   } : null;
-}
 
 /**
  * Calculate relative luminance of a color
@@ -46,7 +45,6 @@ function getRelativeLuminance(hex: string): number {
 
   // Calculate luminance using WCAG formula
   return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
 
 /**
  * Calculate contrast ratio between two colors
@@ -59,7 +57,6 @@ export function getContrastRatio(foreground: string, background: string): number
   const darker = Math.min(l1, l2);
   
   return (lighter + 0.05) / (darker + 0.05);
-}
 
 /**
  * Check if contrast ratio meets WCAG requirements
@@ -71,7 +68,6 @@ export function meetsWCAGRequirement(
 ): boolean {
   const ratio = getContrastRatio(foreground, background);
   return ratio >= WCAG_LEVELS[level];
-}
 
 /**
  * Get contrast grade for a color combination
@@ -100,10 +96,8 @@ export function getContrastGrade(foreground: string, background: string): {
     grade = 'AAA';
   } else if (passes.AA_NORMAL) {
     grade = 'AA';
-  }
 
   return { ratio, grade, passes };
-}
 
 /**
  * Color combination interface
@@ -114,7 +108,6 @@ export interface ColorCombination {
   background: string;
   usage: string;
   theme: Theme;
-}
 
 /**
  * Get all critical color combinations for validation
@@ -293,7 +286,6 @@ export function getCriticalColorCombinations(theme: Theme = 'light'): ColorCombi
       theme,
     },
   ];
-}
 
 /**
  * Validate all color combinations for a theme
@@ -303,7 +295,7 @@ export function validateThemeContrast(theme: Theme = 'light'): {
   totalCombinations: number;
   passed: number;
   failed: number;
-  results: Array<ColorCombination & { contrast: ReturnType<typeof getContrastGrade> }>;
+  results: Array<ColorCombination & { contrast: ReturnType<typeof getContrastGrade>>;
 } {
   const combinations = getCriticalColorCombinations(theme);
   const results = combinations.map(combo => ({
@@ -321,7 +313,6 @@ export function validateThemeContrast(theme: Theme = 'light'): {
     failed,
     results,
   };
-}
 
 /**
  * Generate contrast report for both themes
@@ -354,7 +345,6 @@ export function generateContrastReport(): {
       overallGrade,
     },
   };
-}
 
 /**
  * Find the closest accessible color
@@ -375,14 +365,12 @@ export function findAccessibleColor(
   // If already meets requirement, return as is
   if (bestRatio >= requiredRatio) {
     return targetColor;
-  }
 
   // Determine direction if auto
   let adjustDirection = direction;
   if (direction === 'auto') {
     const bgLuminance = getRelativeLuminance(backgroundColor);
     adjustDirection = bgLuminance > 0.5 ? 'darker' : 'lighter';
-  }
 
   // Adjust color in steps
   for (let step = 1; step <= 100; step++) {
@@ -401,23 +389,18 @@ export function findAccessibleColor(
         g: Math.max(0, Math.round(targetRgb.g * (1 - factor))),
         b: Math.max(0, Math.round(targetRgb.b * (1 - factor))),
       };
-    }
 
     const newHex = `#${newRgb.r.toString(16).padStart(2, '0')}${newRgb.g.toString(16).padStart(2, '0')}${newRgb.b.toString(16).padStart(2, '0')}`;
     const newRatio = getContrastRatio(newHex, backgroundColor);
 
     if (newRatio >= requiredRatio) {
       return newHex;
-    }
 
     if (newRatio > bestRatio) {
       bestColor = newHex;
       bestRatio = newRatio;
-    }
-  }
 
   return bestColor;
-}
 
 /**
  * Suggest color improvements for failed combinations
@@ -455,7 +438,6 @@ export function suggestColorImprovements(
           },
           newContrast: foregroundImprovement,
         };
-      }
 
       // If foreground improvement isn't enough, try background
       const improvedBackground = findAccessibleColor(
@@ -477,7 +459,6 @@ export function suggestColorImprovements(
         newContrast: backgroundImprovement,
       };
     });
-}
 
 /**
  * Export utility for runtime contrast checking

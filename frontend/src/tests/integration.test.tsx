@@ -49,7 +49,7 @@ const FeedbackWrapper = ({ children }: { children: React.ReactNode }) => {
   const mockFeedbackValue = {
     showFeedback: jest.fn(),
     hideFeedback: jest.fn(),
-    feedbackState: { isVisible: false, type: 'info', message: '' }
+    feedbackState: { isVisible: false, type: 'info', message: ''
   };
 
   return (
@@ -71,7 +71,6 @@ describe('Integration Tests', () => {
           institution: 'Tech Academy',
           issueDate: '2024-01-15',
           isValid: true
-        }
       });
 
       const TestApp = () => {
@@ -91,7 +90,7 @@ describe('Integration Tests', () => {
                   showQRScanner
                   onScan={handleVerify}
                 />
-                {result && <VerificationResults result={result} />}
+                {result && <VerificationResults result={result} />
                 <BottomNavigation />
               </div>
             </FeedbackWrapper>
@@ -105,7 +104,6 @@ describe('Integration Tests', () => {
       const scanButton = screen.getByTestId('qr-icon').closest('button');
       if (scanButton) {
         fireEvent.click(scanButton);
-      }
 
       // Wait for verification result
       await waitFor(() => {
@@ -131,7 +129,6 @@ describe('Integration Tests', () => {
               status: 'error',
               message: 'Verification failed. Please try again.'
             });
-          }
         };
 
         return (
@@ -143,7 +140,7 @@ describe('Integration Tests', () => {
                   showQRScanner
                   onScan={handleVerify}
                 />
-                {result && <VerificationResults result={result} />}
+                {result && <VerificationResults result={result} />
               </div>
             </FeedbackWrapper>
           </RouterWrapper>
@@ -155,7 +152,6 @@ describe('Integration Tests', () => {
       const scanButton = screen.getByTestId('qr-icon').closest('button');
       if (scanButton) {
         fireEvent.click(scanButton);
-      }
 
       await waitFor(() => {
         expect(screen.getByText('Verification Failed')).toBeInTheDocument();
@@ -182,7 +178,6 @@ describe('Integration Tests', () => {
           institution: 'Code School',
           issueDate: '2024-01-10',
           isValid: true
-        }
       ];
 
       const mockShare = jest.fn();
@@ -209,7 +204,6 @@ describe('Integration Tests', () => {
                     label: 'Add Certificate',
                     icon: <div data-testid="plus-icon">Plus</div>,
                     onClick: jest.fn()
-                  }
                 ]}
               />
               <BottomNavigation />
@@ -287,7 +281,6 @@ describe('Integration Tests', () => {
         // Focus should move to next item
         const verifyLink = screen.getByText('Verify').closest('a');
         // Note: In real implementation, focus would move to verify link
-      }
     });
   });
 
@@ -379,7 +372,6 @@ describe('Integration Tests', () => {
             setStatus('success');
           } catch (error) {
             setStatus('error');
-          }
         };
 
         return (

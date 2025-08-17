@@ -1,14 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Modal from '../Modal';
+import { Modal } from "../Modal";
 
 describe('Modal Component', () => {
   const defaultProps = {
     isOpen: true,
     onClose: jest.fn(),
-    children: <div>Modal content</div>
-  };
+    children: <div>Modal content</div>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -60,7 +59,6 @@ describe('Modal Component', () => {
     if (backdrop) {
       await userEvent.click(backdrop as Element);
       expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
-    }
   });
 
   it('does not call onClose when backdrop is clicked and closeOnBackdropClick is false', async () => {
@@ -70,7 +68,6 @@ describe('Modal Component', () => {
     if (backdrop) {
       await userEvent.click(backdrop as Element);
       expect(defaultProps.onClose).not.toHaveBeenCalled();
-    }
   });
 
   it('calls onClose when Escape key is pressed', () => {
@@ -91,7 +88,7 @@ describe('Modal Component', () => {
     const { rerender } = render(<Modal {...defaultProps} size="sm" />);
     expect(screen.getByRole('dialog')).toHaveClass('max-w-sm');
 
-    rerender(<Modal {...defaultProps} size="md" />);
+    rerender(<Modal {...defaultProps} size="default" />);
     expect(screen.getByRole('dialog')).toHaveClass('max-w-md');
 
     rerender(<Modal {...defaultProps} size="lg" />);

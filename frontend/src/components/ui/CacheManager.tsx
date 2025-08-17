@@ -14,7 +14,6 @@ import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWork
 
 interface CacheManagerProps {
   className?: string;
-}
 
 export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) => {
   const [swState, swActions] = useServiceWorker();
@@ -28,7 +27,6 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) =>
       await swActions.clearCache();
     } finally {
       setIsClearing(false);
-    }
   };
 
   const handleRefreshCacheSize = async () => {
@@ -37,7 +35,6 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) =>
       await swActions.refreshCacheSize();
     } finally {
       setIsRefreshing(false);
-    }
   };
 
   const formatBytes = (bytes: number): string => {
@@ -85,7 +82,6 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) =>
                   {isInstalled 
                     ? 'You can access VerifyCert from your home screen'
                     : 'Get faster access and offline capabilities'
-                  }
                 </p>
               </div>
               

@@ -12,7 +12,6 @@ export const conditionalImport = async <T>(
 ): Promise<T | null> => {
   if (condition) {
     return await importFn();
-  }
   return null;
 };
 
@@ -26,7 +25,6 @@ export const safeImport = async <T>(
   } catch (error) {
     console.warn('Dynamic import failed:', error);
     return fallback;
-  }
 };
 
 // Lazy load utility with preloading
@@ -41,7 +39,6 @@ export const createLazyComponent = <T extends React.ComponentType<any>>(
     importFn().catch(() => {
       // Ignore preload errors
     });
-  }
   
   return LazyComponent;
 };
@@ -59,8 +56,6 @@ export const logBundleInfo = () => {
         encodedBodySize: entry.encodedBodySize,
         decodedBodySize: entry.decodedBodySize
       });
-    }
-  }
 };
 
 // Tree shaking verification
@@ -72,8 +67,6 @@ export const verifyTreeShaking = () => {
     // This would be populated by a build-time analysis
     if (unusedExports.length > 0) {
       console.warn('Potential tree shaking issues detected:', unusedExports);
-    }
-  }
 };
 
 // Bundle size monitoring
@@ -81,5 +74,4 @@ export const monitorBundleSize = () => {
   if (process.env.NODE_ENV === 'development') {
     logBundleInfo();
     verifyTreeShaking();
-  }
 };

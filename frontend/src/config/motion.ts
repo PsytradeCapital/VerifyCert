@@ -18,7 +18,6 @@ export const motionConfig = {
   layoutTransition: {
     duration: 0.3,
     ease: "easeInOut"
-  }
 };
 
 // Easing functions
@@ -53,7 +52,6 @@ export const springs = {
     type: "spring",
     stiffness: 210,
     damping: 20
-  }
 };
 
 // Viewport settings for scroll-triggered animations

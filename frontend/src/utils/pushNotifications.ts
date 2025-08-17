@@ -8,7 +8,6 @@ interface PushSubscriptionData {
     auth: string;
   };
   expirationTime?: number | null;
-}
 
 interface NotificationPayload {
   title: string;
@@ -22,7 +21,6 @@ interface NotificationPayload {
     title: string;
     icon?: string;
   }>;
-}
 
 class PushNotificationManager {
   private vapidPublicKey: string | null = null;
@@ -31,7 +29,6 @@ class PushNotificationManager {
 
   constructor() {
     this.initializeNotifications();
-  }
 
   // Initialize push notifications
   async initializeNotifications(): Promise<void> {
@@ -40,7 +37,6 @@ class PushNotificationManager {
       if (!this.isSupported()) {
         console.log('Push notifications are not supported');
         return;
-      }
 
       // Get VAPID public key from backend
       await this.fetchVapidPublicKey();
@@ -50,8 +46,6 @@ class PushNotificationManager {
 
     } catch (error) {
       console.error('Failed to initialize push notifications:', error);
-    }
-  }
 
   // Check if push notifications are supported
   isSupported(): boolean {
@@ -60,7 +54,6 @@ class PushNotificationManager {
       'PushManager' in window &&
       'Notification' in window
     );
-  }
 
   // Get VAPID public key from backend
   async fetchVapidPublicKey(): Promise<void> {
@@ -72,12 +65,9 @@ class PushNotificationManager {
         this.vapidPublicKey = data.data.publicKey;
       } else {
         throw new Error('Failed to get VAPID public key');
-      }
     } catch (error) {
       console.error('Error fetching VAPID public key:', error);
       throw error;
-    }
-  }
 
   // Check for existing subscription
   async checkExistingSubscription(): Promise<void> {
@@ -88,26 +78,20 @@ class PushNotificationManager {
       if (subscription) {
         this.subscription = subscription;
         console.log('Existing push subscription found');
-      }
     } catch (error) {
       console.error('Error checking existing subscription:', error);
-    }
-  }
 
   // Request notification permission
   async requestPermission(): Promise<NotificationPermission> {
     if (!('Notification' in window)) {
       throw new Error('Notifications not supported');
-    }
 
     let permission = Notification.permission;
 
     if (permission === 'default') {
       permission = await Notification.requestPermission();
-    }
 
     return permission;
-  }
 
   // Subscribe to push notifications
   async subscribe(userId: string): Promise<boolean> {
@@ -118,13 +102,11 @@ class PushNotificationManager {
       if (permission !== 'granted') {
         console.log('Notification permission denied');
         return false;
-      }
 
       // Check if already subscribed
       if (this.subscription && this.userId === userId) {
         console.log('Already subscribed to push notifications');
         return true;
-      }
 
       // Get service worker registration
       const registration = await navigator.serviceWorker.ready;
@@ -156,13 +138,10 @@ class PushNotificationManager {
         return true;
       } else {
         throw new Error(data.error || 'Failed to subscribe');
-      }
 
     } catch (error) {
       console.error('Error subscribing to push notifications:', error);
       return false;
-    }
-  }
 
   // Unsubscribe from push notifications
   async unsubscribe(): Promise<boolean> {
@@ -170,7 +149,6 @@ class PushNotificationManager {
       if (!this.subscription || !this.userId) {
         console.log('No active subscription to unsubscribe');
         return true;
-      }
 
       // Unsubscribe from push manager
       await this.subscription.unsubscribe();
@@ -195,13 +173,10 @@ class PushNotificationManager {
         return true;
       } else {
         throw new Error(data.error || 'Failed to unsubscribe');
-      }
 
     } catch (error) {
       console.error('Error unsubscribing from push notifications:', error);
       return false;
-    }
-  }
 
   // Send test notification
   async sendTestNotification(userId: string): Promise<boolean> {
@@ -220,8 +195,6 @@ class PushNotificationManager {
     } catch (error) {
       console.error('Error sending test notification:', error);
       return false;
-    }
-  }
 
   // Get subscription status
   getSubscriptionStatus(): {
@@ -234,7 +207,6 @@ class PushNotificationManager {
       userId: this.userId,
       permission: Notification.permission
     };
-  }
 
   // Convert VAPID key to Uint8Array
   private urlBase64ToUint8Array(base64String: string): Uint8Array {
@@ -248,9 +220,7 @@ class PushNotificationManager {
 
     for (let i = 0; i < rawData.length; ++i) {
       outputArray[i] = rawData.charCodeAt(i);
-    }
     return outputArray;
-  }
 
   // Show local notification (fallback)
   showLocalNotification(title: string, options: NotificationOptions = {}): void {
@@ -260,9 +230,6 @@ class PushNotificationManager {
         badge: '/icon-192.png',
         ...options
       });
-    }
-  }
-}
 
 // Notification event handlers for service worker communication
 export class NotificationEventHandler {
@@ -281,7 +248,6 @@ export class NotificationEventHandler {
           event.waitUntil(
             (globalThis as any).clients.openWindow(data.url)
           );
-        }
         break;
       case 'share':
         // Handle share action
@@ -289,7 +255,6 @@ export class NotificationEventHandler {
           event.waitUntil(
             (globalThis as any).clients.openWindow(`/certificate/${data.certificateId}/share`)
           );
-        }
         break;
       case 'dismiss':
         // Just close the notification
@@ -305,16 +270,10 @@ export class NotificationEventHandler {
             event.waitUntil(
               (globalThis as any).clients.openWindow('/')
             );
-          }
-        }
-    }
-  }
 
   static handleNotificationClose(event: any): void {
     console.log('Notification closed:', event);
     // Track notification dismissal if needed
-  }
-}
 
 // Create singleton instance
 const pushNotificationManager = new PushNotificationManager();

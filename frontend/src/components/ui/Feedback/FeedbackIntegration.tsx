@@ -23,7 +23,6 @@ interface FeedbackIntegrationProps {
   
   // Callbacks
   onFeedbackSubmitted?: (feedback: any) => void;
-}
 
 export const FeedbackIntegration: React.FC<FeedbackIntegrationProps> = ({
   showFloatingButton = true,
@@ -64,7 +63,6 @@ export const FeedbackIntegration: React.FC<FeedbackIntegrationProps> = ({
       setIsCollectorOpen(true);
       setCurrentCategory(autoTrigger.category);
       setCurrentContext(autoTrigger.context);
-    }
   }, [showAutoTrigger, autoTrigger.shouldShow, isCollectorOpen]);
 
   // Handle specific triggers
@@ -73,7 +71,6 @@ export const FeedbackIntegration: React.FC<FeedbackIntegrationProps> = ({
       setIsCollectorOpen(true);
       setCurrentCategory('navigation');
       setCurrentContext(navigationFeedback.context);
-    }
   }, [navigationFeedback.shouldShow, isCollectorOpen]);
 
   useEffect(() => {
@@ -81,7 +78,6 @@ export const FeedbackIntegration: React.FC<FeedbackIntegrationProps> = ({
       setIsCollectorOpen(true);
       setCurrentCategory('visual-design');
       setCurrentContext(visualDesignFeedback.context);
-    }
   }, [visualDesignFeedback.shouldShow, isCollectorOpen]);
 
   const handleFeedbackClose = () => {
@@ -94,7 +90,6 @@ export const FeedbackIntegration: React.FC<FeedbackIntegrationProps> = ({
   const handleFeedbackSubmitted = (feedback: any) => {
     if (onFeedbackSubmitted) {
       onFeedbackSubmitted(feedback);
-    }
     handleFeedbackClose();
   };
 
@@ -133,17 +128,13 @@ function getPageContext(pathname: string): string {
   // Find exact match first
   if (pageContextMap[pathname]) {
     return pageContextMap[pathname];
-  }
 
   // Find partial match
   for (const [path, context] of Object.entries(pageContextMap)) {
     if (pathname.startsWith(path) && path !== '/') {
       return context;
-    }
-  }
 
   return `Page: ${pathname}`;
-}
 
 // Specialized feedback components for specific use cases
 export const NavigationFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (

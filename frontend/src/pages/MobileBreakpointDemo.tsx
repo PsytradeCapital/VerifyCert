@@ -81,21 +81,18 @@ const MobileBreakpointDemo: React.FC = () => {
                     <h3 className="text-lg font-semibold mb-2">Mobile View</h3>
                     <p className="text-sm text-neutral-600">Optimized for mobile</p>
                   </div>
-                }
                 tablet={
                   <div>
                     <Tablet className="h-12 w-12 mx-auto text-primary-600 mb-4" />
                     <h3 className="text-lg font-semibold mb-2">Tablet View</h3>
                     <p className="text-sm text-neutral-600">Optimized for tablet</p>
                   </div>
-                }
                 desktop={
                   <div>
                     <Monitor className="h-12 w-12 mx-auto text-primary-600 mb-4" />
                     <h3 className="text-lg font-semibold mb-2">Desktop View</h3>
                     <p className="text-sm text-neutral-600">Optimized for desktop</p>
                   </div>
-                }
               />
             </Card>
           </Grid>
@@ -146,7 +143,7 @@ const MobileBreakpointDemo: React.FC = () => {
                 <TouchTarget size="sm" className="bg-primary-500 text-white rounded-lg">
                   Small (40px)
                 </TouchTarget>
-                <TouchTarget size="md" className="bg-primary-500 text-white rounded-lg">
+                <TouchTarget size="default" className="bg-primary-500 text-white rounded-lg">
                   Medium (44px)
                 </TouchTarget>
                 <TouchTarget size="lg" className="bg-primary-500 text-white rounded-lg">

@@ -15,7 +15,6 @@ interface FeedbackTriggerConfig {
   // Context
   category?: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
-}
 
 interface FeedbackTriggerState {
   shouldShow: boolean;
@@ -24,7 +23,6 @@ interface FeedbackTriggerState {
   trigger: () => void;
   dismiss: () => void;
   reset: () => void;
-}
 
 export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): FeedbackTriggerState => {
   const location = useLocation();
@@ -73,7 +71,6 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
       if (e.clientY <= 0 && !hasTriggered) {
         setShouldShow(true);
         setHasTriggered(true);
-      }
     };
 
     document.addEventListener('mouseleave', handleMouseLeave);
@@ -89,21 +86,18 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
       setShouldShow(true);
       setHasTriggered(true);
       return;
-    }
 
     // Scroll-based trigger
     if (triggerScroll && scrollPercentage >= triggerScroll) {
       setShouldShow(true);
       setHasTriggered(true);
       return;
-    }
 
     // Error-based trigger
     if (errorOccurred) {
       setShouldShow(true);
       setHasTriggered(true);
       return;
-    }
   }, [timeOnPage, scrollPercentage, errorOccurred, triggerTime, triggerScroll, hasTriggered]);
 
   // Reset on page change

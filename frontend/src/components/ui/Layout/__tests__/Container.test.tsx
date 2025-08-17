@@ -143,7 +143,6 @@ describe('Container', () => {
       } else {
         // Should have some padding class
         expect(containerElement.className).toMatch(/px-\d+/);
-      }
     });
   });
 });

@@ -9,7 +9,6 @@ interface BrowserInfo {
   engine: string;
   platform: string;
   isMobile: boolean;
-}
 
 interface PWATestResult {
   feature: string;
@@ -17,19 +16,16 @@ interface PWATestResult {
   working: boolean;
   error?: string;
   details?: any;
-}
 
 export interface PWATestSuite {
   browser: BrowserInfo;
   timestamp: number;
   results: PWATestResult[];
   overallScore: number;
-}
 
 export class PWABrowserTester {
   constructor() {
     // Initialize tester
-  }
 
   /**
    * Get detailed browser information
@@ -67,7 +63,6 @@ export class PWABrowserTester {
       const match = ua.match(/Edg\/(\d+\.\d+)/);
       version = match ? match[1] : 'Unknown';
       engine = 'Blink';
-    }
 
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
 
@@ -78,7 +73,6 @@ export class PWABrowserTester {
       platform: navigator.platform,
       isMobile
     };
-  }
 
   /**
    * Test Service Worker support and functionality
@@ -97,7 +91,6 @@ export class PWABrowserTester {
       if (!result.supported) {
         result.error = 'Service Worker not supported';
         return result;
-      }
 
       // Test registration
       const registration = await navigator.serviceWorker.register('/sw.js', {
@@ -110,14 +103,11 @@ export class PWABrowserTester {
           scope: registration.scope,
           state: registration.installing?.state || registration.waiting?.state || registration.active?.state
         };
-      }
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Test Web App Manifest support
@@ -137,7 +127,6 @@ export class PWABrowserTester {
       if (!result.supported) {
         result.error = 'Manifest link not found';
         return result;
-      }
 
       // Try to fetch and parse manifest
       const response = await fetch(manifestLink.href);
@@ -152,14 +141,11 @@ export class PWABrowserTester {
           themeColor: manifest.theme_color,
           icons: manifest.icons?.length || 0
         };
-      }
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Test Install Prompt (beforeinstallprompt)
@@ -179,7 +165,6 @@ export class PWABrowserTester {
         result.error = 'BeforeInstallPromptEvent not supported';
         resolve(result);
         return;
-      }
 
       // Listen for beforeinstallprompt event
       const timeout = setTimeout(() => {
@@ -200,7 +185,6 @@ export class PWABrowserTester {
 
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     });
-  }
 
   /**
    * Test Standalone Mode Detection
@@ -225,10 +209,8 @@ export class PWABrowserTester {
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Test Cache API
@@ -246,7 +228,6 @@ export class PWABrowserTester {
       if (!result.supported) {
         result.error = 'Cache API not supported';
         return result;
-      }
 
       // Test cache operations
       const testCacheName = 'pwa-test-cache';
@@ -264,17 +245,14 @@ export class PWABrowserTester {
           canPut: true,
           canMatch: true
         };
-      }
 
       // Clean up
       await caches.delete(testCacheName);
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Test Push Notifications
@@ -292,7 +270,6 @@ export class PWABrowserTester {
       if (!result.supported) {
         result.error = 'Push notifications not supported';
         return result;
-      }
 
       // Check permission
       const permission = Notification.permission;
@@ -307,14 +284,11 @@ export class PWABrowserTester {
       } else if (permission === 'default') {
         result.working = true; // Can request permission
         result.details.canRequest = true;
-      }
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Test Background Sync
@@ -333,7 +307,6 @@ export class PWABrowserTester {
       if (!result.supported) {
         result.error = 'Background Sync not supported';
         return result;
-      }
 
       // Test sync registration
       await (registration as any).sync.register('test-sync');
@@ -341,10 +314,8 @@ export class PWABrowserTester {
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Test Offline Functionality
@@ -364,7 +335,6 @@ export class PWABrowserTester {
       if (!isActive) {
         result.error = 'Service worker not active';
         return result;
-      }
 
       // Test cache availability
       const cacheNames = await caches.keys();
@@ -379,14 +349,11 @@ export class PWABrowserTester {
 
       if (!hasCache) {
         result.error = 'No caches found for offline support';
-      }
 
     } catch (error) {
       result.error = error instanceof Error ? error.message : 'Unknown error';
-    }
 
     return result;
-  }
 
   /**
    * Run all PWA tests
@@ -427,7 +394,6 @@ export class PWABrowserTester {
     console.log('PWA Test Results:', testSuite);
     
     return testSuite;
-  }
 
   /**
    * Generate test report
@@ -452,18 +418,14 @@ export class PWABrowserTester {
       
       if (result.error) {
         report += `   Error: ${result.error}\n`;
-      }
       
       if (result.details) {
         report += `   Details: ${JSON.stringify(result.details, null, 2)}\n`;
-      }
       
       report += `\n`;
     });
     
     return report;
-  }
-}
 
 // Export singleton instance
 export const pwaBrowserTester = new PWABrowserTester();

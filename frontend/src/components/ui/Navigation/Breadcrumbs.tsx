@@ -9,7 +9,6 @@ export interface BreadcrumbItem {
   label: string;
   href?: string;
   active?: boolean;
-}
 
 export interface BreadcrumbsProps {
   items?: BreadcrumbItem[];
@@ -18,7 +17,6 @@ export interface BreadcrumbsProps {
   showHomeIcon?: boolean;
   maxItems?: number;
   enableAnimations?: boolean;
-}
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   items,
@@ -42,7 +40,6 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   if (displayItems.length === 0) {
     return null;
-  }
 
   return (
     <nav className={`flex ${className}`} aria-label="Breadcrumb">

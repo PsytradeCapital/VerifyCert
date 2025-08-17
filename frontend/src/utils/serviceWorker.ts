@@ -14,7 +14,6 @@ interface ServiceWorkerConfig {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
   onOfflineReady?: () => void;
   onError?: (error: Error) => void;
-}
 
 // Register service worker
 export function registerSW(config?: ServiceWorkerConfig) {
@@ -24,7 +23,6 @@ export function registerSW(config?: ServiceWorkerConfig) {
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       return;
-    }
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
@@ -44,10 +42,7 @@ export function registerSW(config?: ServiceWorkerConfig) {
       } else {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
-      }
     });
-  }
-}
 
 function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
   navigator.serviceWorker
@@ -59,7 +54,6 @@ function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
           return;
-        }
         
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
@@ -75,7 +69,6 @@ function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
-              }
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
@@ -85,13 +78,9 @@ function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
               // Execute callback
               if (config && config.onSuccess) {
                 config.onSuccess(registration);
-              }
               
               if (config && config.onOfflineReady) {
                 config.onOfflineReady();
-              }
-            }
-          }
         };
       };
     })
@@ -99,9 +88,7 @@ function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
       console.error('Error during service worker registration:', error);
       if (config && config.onError) {
         config.onError(error);
-      }
     });
-}
 
 function checkValidServiceWorker(swUrl: string, config?: ServiceWorkerConfig) {
   // Check if the service worker can be found. If it can't reload the page.
@@ -124,14 +111,12 @@ function checkValidServiceWorker(swUrl: string, config?: ServiceWorkerConfig) {
       } else {
         // Service worker found. Proceed as normal.
         registerValidSW(swUrl, config);
-      }
     })
     .catch(() => {
       console.log(
         'No internet connection found. App is running in offline mode.'
       );
     });
-}
 
 // Unregister service worker
 export function unregisterSW() {
@@ -144,8 +129,6 @@ export function unregisterSW() {
       .catch((error) => {
         console.error(error.message);
       });
-  }
-}
 
 // Update service worker
 export function updateSW() {
@@ -158,8 +141,6 @@ export function updateSW() {
       .catch((error) => {
         console.error('Service worker update failed:', error);
       });
-  }
-}
 
 // Check if app is running in standalone mode (installed as PWA)
 export function isStandalone(): boolean {
@@ -167,12 +148,10 @@ export function isStandalone(): boolean {
     window.matchMedia('(display-mode: standalone)').matches ||
     (window.navigator as any).standalone === true
   );
-}
 
 // Check if service worker is supported
 export function isServiceWorkerSupported(): boolean {
   return 'serviceWorker' in navigator;
-}
 
 // Get service worker registration
 export async function getServiceWorkerRegistration(): Promise<ServiceWorkerRegistration | null> {
@@ -182,10 +161,7 @@ export async function getServiceWorkerRegistration(): Promise<ServiceWorkerRegis
     } catch (error) {
       console.error('Failed to get service worker registration:', error);
       return null;
-    }
-  }
   return null;
-}
 
 // Send message to service worker
 export function sendMessageToSW(message: any): Promise<any> {
@@ -193,7 +169,6 @@ export function sendMessageToSW(message: any): Promise<any> {
     if (!navigator.serviceWorker.controller) {
       reject(new Error('No service worker controller available'));
       return;
-    }
 
     const messageChannel = new MessageChannel();
     messageChannel.port1.onmessage = (event) => {
@@ -202,7 +177,6 @@ export function sendMessageToSW(message: any): Promise<any> {
 
     navigator.serviceWorker.controller.postMessage(message, [messageChannel.port2]);
   });
-}
 
 // Listen for service worker updates
 export function listenForSWUpdates(callback: (hasUpdate: boolean) => void) {
@@ -210,8 +184,6 @@ export function listenForSWUpdates(callback: (hasUpdate: boolean) => void) {
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       callback(true);
     });
-  }
-}
 
 // Cache management utilities
 export class CacheManager {
@@ -222,24 +194,17 @@ export class CacheManager {
         cacheNames.map(cacheName => caches.delete(cacheName))
       );
       console.log('All caches cleared');
-    }
-  }
 
   static async getCacheSize(): Promise<number> {
     if ('caches' in window && 'storage' in navigator && 'estimate' in navigator.storage) {
       const estimate = await navigator.storage.estimate();
       return estimate.usage || 0;
-    }
     return 0;
-  }
 
   static async getCacheNames(): Promise<string[]> {
     if ('caches' in window) {
       return await caches.keys();
-    }
     return [];
-  }
-}
 
 // Offline detection utilities
 export class OfflineManager {
@@ -247,7 +212,6 @@ export class OfflineManager {
 
   static isOnline(): boolean {
     return navigator.onLine;
-  }
 
   static addListener(callback: (isOnline: boolean) => void): void {
     this.listeners.push(callback);
@@ -256,21 +220,16 @@ export class OfflineManager {
     if (this.listeners.length === 1) {
       window.addEventListener('online', this.handleOnline);
       window.addEventListener('offline', this.handleOffline);
-    }
-  }
 
   static removeListener(callback: (isOnline: boolean) => void): void {
     const index = this.listeners.indexOf(callback);
     if (index > -1) {
       this.listeners.splice(index, 1);
-    }
 
     // Remove event listeners if no more listeners
     if (this.listeners.length === 0) {
       window.removeEventListener('online', this.handleOnline);
       window.removeEventListener('offline', this.handleOffline);
-    }
-  }
 
   private static handleOnline = (): void => {
     this.listeners.forEach(callback => callback(true));
@@ -279,7 +238,6 @@ export class OfflineManager {
   private static handleOffline = (): void => {
     this.listeners.forEach(callback => callback(false));
   };
-}
 
 // Background sync utilities
 export class BackgroundSync {
@@ -291,17 +249,12 @@ export class BackgroundSync {
         console.log(`Background sync registered: ${tag}`);
       } catch (error) {
         console.error('Background sync registration failed:', error);
-      }
-    }
-  }
 
   static async storePendingRequest(tag: string, data: any): Promise<void> {
     // Store in IndexedDB or localStorage for background sync
     const pendingRequests = JSON.parse(localStorage.getItem('pendingRequests') || '[]');
     pendingRequests.push({ tag, data, timestamp: Date.now() });
     localStorage.setItem('pendingRequests', JSON.stringify(pendingRequests));
-  }
-}
 
 const serviceWorkerUtils = {
   registerSW,

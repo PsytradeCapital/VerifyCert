@@ -37,7 +37,6 @@ describe('validationAnimations', () => {
       mockAddEventListener.mockImplementation((event, callback) => {
         if (event === 'animationend') {
           setTimeout(callback, 10);
-        }
       });
 
       await triggerValidationAnimation(mockElement, 'errorShake');
@@ -52,7 +51,6 @@ describe('validationAnimations', () => {
       mockAddEventListener.mockImplementation((event, callback) => {
         if (event === 'animationend') {
           setTimeout(callback, 10);
-        }
       });
 
       await triggerValidationAnimation(mockElement, 'errorShake');
@@ -75,7 +73,6 @@ describe('validationAnimations', () => {
       mockAddEventListener.mockImplementation((event, callback) => {
         if (event === 'animationend') {
           setTimeout(callback, 10);
-        }
       });
 
       await triggerValidationAnimation(mockElement, 'errorShake', customConfig);
@@ -92,7 +89,6 @@ describe('validationAnimations', () => {
       mockAddEventListener.mockImplementation((event, callback) => {
         if (event === 'animationend') {
           setTimeout(callback, 10);
-        }
       });
 
       await triggerValidationAnimation(mockElement, 'errorShake', customConfig);
@@ -174,19 +170,19 @@ describe('validationAnimations', () => {
       expect(validationSequences.errorSequence).toEqual([
         { element: 'field', animation: 'errorShake', delay: 0 },
         { element: 'message', animation: 'errorSlideIn', delay: 100 },
-        { element: 'icon', animation: 'errorPulse', delay: 150 }
+        { element: 'icon', animation: 'errorPulse', delay: 150
       ]);
 
       expect(validationSequences.successSequence).toEqual([
         { element: 'field', animation: 'successBounce', delay: 0 },
         { element: 'icon', animation: 'successBounce', delay: 50 },
-        { element: 'message', animation: 'successFadeIn', delay: 100 }
+        { element: 'message', animation: 'successFadeIn', delay: 100
       ]);
 
       expect(validationSequences.warningSequence).toEqual([
         { element: 'field', animation: 'warningWiggle', delay: 0 },
         { element: 'message', animation: 'warningFadeIn', delay: 100 },
-        { element: 'icon', animation: 'warningWiggle', delay: 150 }
+        { element: 'icon', animation: 'warningWiggle', delay: 150
       ]);
     });
   });

@@ -56,7 +56,6 @@ const NavigationStateDemo: React.FC = () => {
           href: '/dashboard/settings',
           public: false,
           badge: 'New'
-        }
       ]
     },
     {
@@ -70,7 +69,6 @@ const NavigationStateDemo: React.FC = () => {
       ),
       disabled: true,
       public: true
-    }
   ];
 
   const handleUpdateItems = () => {
@@ -222,7 +220,6 @@ const NavigationStateDemo: React.FC = () => {
                     {Array.from(state.activeItems).length > 0 
                       ? Array.from(state.activeItems).join(', ')
                       : 'None'
-                    }
                   </div>
                 </div>
                 <div>
@@ -237,7 +234,6 @@ const NavigationStateDemo: React.FC = () => {
                     {state.isTransitioning 
                       ? `Transitioning (${state.transitionDirection})`
                       : 'Idle'
-                    }
                   </div>
                 </div>
                 <div>

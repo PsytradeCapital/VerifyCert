@@ -13,7 +13,6 @@ export interface PageTransitionProps {
    * Custom transition configuration
    */
   transition?: typeof pageTransition;
-}
 
 const PageTransition: React.FC<PageTransitionProps> = ({
   children,

@@ -49,7 +49,6 @@ describe('routes configuration', () => {
         },
         params: {
           tokenId: '123'
-        }
       });
     });
 
@@ -74,7 +73,6 @@ describe('routes configuration', () => {
         params: {
           userId: '456',
           postId: '789'
-        }
       });
 
       // Restore original config
@@ -106,7 +104,6 @@ describe('routes configuration', () => {
       if (match && match.config.generateLabel) {
         const label = match.config.generateLabel(match.params);
         expect(label).toBe('Certificate #123');
-      }
     });
 
     it('generates labels for verify routes', () => {
@@ -114,7 +111,6 @@ describe('routes configuration', () => {
       if (match && match.config.generateLabel) {
         const label = match.config.generateLabel(match.params);
         expect(label).toBe('Verify Certificate #456');
-      }
     });
   });
 

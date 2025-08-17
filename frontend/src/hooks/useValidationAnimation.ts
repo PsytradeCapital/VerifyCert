@@ -16,13 +16,11 @@ export interface UseValidationAnimationOptions {
   animationConfig?: ValidationAnimationConfig;
   enableSequence?: boolean;
   debounceMs?: number;
-}
 
 export interface ValidationAnimationRefs {
   fieldRef: React.RefObject<HTMLElement>;
   messageRef: React.RefObject<HTMLElement>;
   iconRef: React.RefObject<HTMLElement>;
-}
 
 export interface ValidationAnimationControls {
   triggerFieldAnimation: (animationType: string) => Promise<void>;
@@ -31,7 +29,6 @@ export interface ValidationAnimationControls {
   triggerSequence: (validationState: 'error' | 'success' | 'warning') => Promise<void>;
   getAnimationClasses: (element: 'field' | 'message' | 'icon') => string;
   isAnimating: boolean;
-}
 
 export const useValidationAnimation = (
   validationState: 'default' | 'success' | 'error' | 'warning',
@@ -66,7 +63,6 @@ export const useValidationAnimation = (
       );
     } finally {
       setIsAnimating(false);
-    }
   }, [animationConfig]);
 
   const triggerMessageAnimation = useCallback(async (animationType: string) => {
@@ -80,7 +76,6 @@ export const useValidationAnimation = (
       );
     } finally {
       setIsAnimating(false);
-    }
   }, [animationConfig]);
 
   const triggerIconAnimation = useCallback(async (animationType: string) => {
@@ -94,7 +89,6 @@ export const useValidationAnimation = (
       );
     } finally {
       setIsAnimating(false);
-    }
   }, [animationConfig]);
 
   // Trigger animation sequence for validation state
@@ -120,7 +114,6 @@ export const useValidationAnimation = (
                 animation as any,
                 animationConfig
               );
-            }
             resolve();
           }, delay);
         });
@@ -129,7 +122,6 @@ export const useValidationAnimation = (
       await Promise.all(animationPromises);
     } finally {
       setIsAnimating(false);
-    }
   }, [enableSequence, animationConfig]);
 
   // Get animation classes for current validation state
@@ -144,20 +136,17 @@ export const useValidationAnimation = (
     // Clear existing debounce timeout
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
-    }
 
     // Debounce animation triggers to prevent excessive animations
     debounceTimeoutRef.current = setTimeout(() => {
       if (validationState !== 'default' && validationState !== previousState) {
         triggerSequence(validationState as 'error' | 'success' | 'warning');
-      }
       setPreviousState(validationState);
     }, debounceMs);
 
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
-      }
     };
   }, [validationState, previousState, animateOnChange, debounceMs, triggerSequence]);
 
@@ -166,7 +155,6 @@ export const useValidationAnimation = (
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
-      }
     };
   }, []);
 
@@ -200,7 +188,6 @@ export const useValidationMessageAnimation = (
   useEffect(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
-    }
 
     if (message) {
       // Show new message immediately
@@ -212,12 +199,10 @@ export const useValidationMessageAnimation = (
       timeoutRef.current = setTimeout(() => {
         setDisplayMessage(undefined);
       }, 300); // Match animation duration
-    }
 
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-      }
     };
   }, [message]);
 
@@ -251,7 +236,6 @@ export const useValidationIconAnimation = (
       return () => clearTimeout(timeout);
     } else {
       setCurrentState(validationState);
-    }
   }, [validationState, currentState, showIcon]);
 
   const getIconAnimationClass = () => {
@@ -259,7 +243,6 @@ export const useValidationIconAnimation = (
     
     if (isChanging) {
       return 'animate-scale-out';
-    }
     
     return 'animate-icon-pop-in';
   };

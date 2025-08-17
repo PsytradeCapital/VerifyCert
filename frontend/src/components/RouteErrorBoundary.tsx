@@ -5,12 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 interface Props {
   children: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-}
 
 interface State {
   hasError: boolean;
   error: Error | null;
-}
 
 // HOC to provide navigation hooks to class component
 const withNavigation = (Component: React.ComponentType<any>) => {
@@ -28,14 +26,12 @@ class RouteErrorBoundaryBase extends Component<Props & { navigate: any; location
       hasError: false,
       error: null,
     };
-  }
 
   static getDerivedStateFromError(error: Error): State {
     return {
       hasError: true,
       error,
     };
-  }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('RouteErrorBoundary caught an error:', error, errorInfo);
@@ -43,7 +39,6 @@ class RouteErrorBoundaryBase extends Component<Props & { navigate: any; location
     // Call custom error handler if provided
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
-    }
 
     // Log route-specific error information
     console.error('Route Error Context:', {
@@ -52,7 +47,6 @@ class RouteErrorBoundaryBase extends Component<Props & { navigate: any; location
       hash: this.props.location.hash,
       state: this.props.location.state,
     });
-  }
 
   private handleGoBack = () => {
     this.props.navigate(-1);
@@ -140,11 +134,8 @@ class RouteErrorBoundaryBase extends Component<Props & { navigate: any; location
           </div>
         </div>
       );
-    }
 
     return this.props.children;
-  }
-}
 
 const RouteErrorBoundary = withNavigation(RouteErrorBoundaryBase);
 

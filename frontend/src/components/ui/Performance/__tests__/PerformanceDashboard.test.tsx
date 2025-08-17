@@ -34,7 +34,6 @@ const mockAnchorElement = {
 jest.spyOn(document, 'createElement').mockImplementation((tagName) => {
   if (tagName === 'a') {
     return mockAnchorElement as any;
-  }
   return document.createElement(tagName);
 });
 

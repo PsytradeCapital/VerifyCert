@@ -8,7 +8,6 @@ import { OptimizedImage } from './OptimizedImage';
 interface LazyLogoProps {
   className?: string;
   alt?: string;
-}
 
 export const LazyLogo: React.FC<LazyLogoProps> = ({ 
   className = "h-8 w-auto", 
@@ -48,7 +47,6 @@ export const LazyLogo: React.FC<LazyLogoProps> = ({
 interface LazyScreenshotProps {
   type: 'narrow' | 'wide';
   className?: string;
-}
 
 export const LazyScreenshot: React.FC<LazyScreenshotProps> = ({ 
   type, 
@@ -103,7 +101,6 @@ export const LazyScreenshot: React.FC<LazyScreenshotProps> = ({
 interface LazyIconProps {
   size: 192 | 512;
   className?: string;
-}
 
 export const LazyIcon: React.FC<LazyIconProps> = ({ 
   size, 
@@ -155,7 +152,6 @@ interface LazyImageWithPlaceholderProps {
   className?: string;
   aspectRatio?: 'square' | 'video' | 'photo';
   showRetry?: boolean;
-}
 
 export const LazyImageWithPlaceholder: React.FC<LazyImageWithPlaceholderProps> = ({
   src,

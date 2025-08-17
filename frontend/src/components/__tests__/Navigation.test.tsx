@@ -198,7 +198,6 @@ describe('Navigation Component', () => {
         await waitFor(() => {
           expect(screen.getByRole('button', { name: /open main menu/i })).toBeInTheDocument();
         });
-      }
     });
 
     it('should show mobile wallet connection in mobile menu', async () => {

@@ -53,7 +53,6 @@ export class FocusTrap {
   constructor(container: HTMLElement) {
     this.container = container;
     this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
 
   activate(): void {
     if (this.isActive) return;
@@ -70,7 +69,6 @@ export class FocusTrap {
     // Add event listener
     document.addEventListener('keydown', this.handleKeyDown);
     this.isActive = true;
-  }
 
   deactivate(): void {
     if (!this.isActive) return;
@@ -81,17 +79,14 @@ export class FocusTrap {
     // Restore focus to the previously focused element
     if (this.previousFocus && document.contains(this.previousFocus)) {
       this.previousFocus.focus();
-    }
     
     this.isActive = false;
     this.previousFocus = null;
-  }
 
   private updateFocusableElements(): void {
     const focusableElements = getFocusableElements(this.container);
     this.firstFocusable = focusableElements[0] || null;
     this.lastFocusable = focusableElements[focusableElements.length - 1] || null;
-  }
 
   private focusFirst(): void {
     this.updateFocusableElements();
@@ -101,15 +96,11 @@ export class FocusTrap {
       // If no focusable elements, make the container focusable and focus it
       this.container.tabIndex = -1;
       this.container.focus();
-    }
-  }
 
   private focusLast(): void {
     this.updateFocusableElements();
     if (this.lastFocusable) {
       this.lastFocusable.focus();
-    }
-  }
 
   private handleKeyDown(event: KeyboardEvent): void {
     if (event.key !== 'Tab') return;
@@ -120,23 +111,17 @@ export class FocusTrap {
       // If no focusable elements, prevent tabbing
       event.preventDefault();
       return;
-    }
 
     if (event.shiftKey) {
       // Shift + Tab (backward)
       if (document.activeElement === this.firstFocusable) {
         event.preventDefault();
         this.lastFocusable.focus();
-      }
     } else {
       // Tab (forward)
       if (document.activeElement === this.lastFocusable) {
         event.preventDefault();
         this.firstFocusable.focus();
-      }
-    }
-  }
-}
 
 /**
  * Navigation focus manager for handling keyboard navigation in menus
@@ -161,21 +146,17 @@ export class NavigationFocusManager {
     this.currentIndex = options.initialIndex || 0;
     
     this.setupRovingTabIndex();
-  }
 
   private setupRovingTabIndex(): void {
     this.items.forEach((item, index) => {
       item.tabIndex = index === this.currentIndex ? 0 : -1;
     });
-  }
 
   updateItems(items: HTMLElement[], newIndex?: number): void {
     this.items = items;
     if (newIndex !== undefined) {
       this.currentIndex = Math.max(0, Math.min(newIndex, items.length - 1));
-    }
     this.setupRovingTabIndex();
-  }
 
   handleKeyDown(event: KeyboardEvent): boolean {
     const { key } = event;
@@ -196,7 +177,6 @@ export class NavigationFocusManager {
             ? this.currentIndex === 0 ? this.items.length - 1 : this.currentIndex - 1
             : Math.max(this.currentIndex - 1, 0);
           break;
-      }
     } else {
       switch (key) {
         case 'ArrowRight':
@@ -211,8 +191,6 @@ export class NavigationFocusManager {
             ? this.currentIndex === 0 ? this.items.length - 1 : this.currentIndex - 1
             : Math.max(this.currentIndex - 1, 0);
           break;
-      }
-    }
 
     // Common navigation keys
     switch (key) {
@@ -224,15 +202,12 @@ export class NavigationFocusManager {
         handled = true;
         newIndex = this.items.length - 1;
         break;
-    }
 
     if (handled && newIndex !== this.currentIndex) {
       event.preventDefault();
       this.focusItem(newIndex);
-    }
 
     return handled;
-  }
 
   focusItem(index: number): void {
     if (index < 0 || index >= this.items.length) return;
@@ -246,16 +221,12 @@ export class NavigationFocusManager {
     
     // Update current index
     this.currentIndex = index;
-  }
 
   getCurrentIndex(): number {
     return this.currentIndex;
-  }
 
   getCurrentItem(): HTMLElement | null {
     return this.items[this.currentIndex] || null;
-  }
-}
 
 /**
  * Modal focus manager with enhanced features
@@ -275,7 +246,6 @@ export class ModalFocusManager extends FocusTrap {
     this.onEscape = options.onEscape;
     this.restoreFocusOnClose = options.restoreFocusOnClose !== false;
     this.handleModalKeyDown = this.handleModalKeyDown.bind(this);
-  }
 
   activate(): void {
     super.activate();
@@ -285,7 +255,6 @@ export class ModalFocusManager extends FocusTrap {
     
     // Prevent body scroll
     document.body.style.overflow = 'hidden';
-  }
 
   deactivate(): void {
     // Remove modal-specific event listener
@@ -296,16 +265,11 @@ export class ModalFocusManager extends FocusTrap {
     
     if (this.restoreFocusOnClose) {
       super.deactivate();
-    }
-  }
 
   private handleModalKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Escape' && this.onEscape) {
       event.preventDefault();
       this.onEscape();
-    }
-  }
-}
 
 /**
  * Dropdown focus manager
@@ -321,7 +285,6 @@ export class DropdownFocusManager {
     this.trigger = trigger;
     this.menu = menu;
     this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
 
   open(): void {
     if (this.isOpen) return;
@@ -336,7 +299,6 @@ export class DropdownFocusManager {
     
     // Add event listener
     document.addEventListener('keydown', this.handleKeyDown);
-  }
 
   close(): void {
     if (!this.isOpen) return;
@@ -349,7 +311,6 @@ export class DropdownFocusManager {
     
     // Return focus to trigger
     this.trigger.focus();
-  }
 
   private updateItems(): void {
     this.items = getFocusableElements(this.menu).filter(item => 
@@ -357,28 +318,21 @@ export class DropdownFocusManager {
       item.tagName === 'BUTTON' ||
       item.tagName === 'A'
     );
-  }
 
   private focusFirstItem(): void {
     if (this.items.length > 0) {
       this.currentIndex = 0;
       this.items[0].focus();
-    }
-  }
 
   private focusLastItem(): void {
     if (this.items.length > 0) {
       this.currentIndex = this.items.length - 1;
       this.items[this.currentIndex].focus();
-    }
-  }
 
   private focusItem(index: number): void {
     if (index >= 0 && index < this.items.length) {
       this.currentIndex = index;
       this.items[index].focus();
-    }
-  }
 
   private handleKeyDown(event: KeyboardEvent): void {
     if (!this.isOpen) return;
@@ -390,7 +344,6 @@ export class DropdownFocusManager {
           this.focusItem(this.currentIndex + 1);
         } else {
           this.focusItem(0); // Wrap to first
-        }
         break;
       case 'ArrowUp':
         event.preventDefault();
@@ -398,7 +351,6 @@ export class DropdownFocusManager {
           this.focusItem(this.currentIndex - 1);
         } else {
           this.focusItem(this.items.length - 1); // Wrap to last
-        }
         break;
       case 'Home':
         event.preventDefault();
@@ -416,9 +368,6 @@ export class DropdownFocusManager {
         // Allow tab to close dropdown and continue normal tab flow
         this.close();
         break;
-    }
-  }
-}
 
 /**
  * Utility functions for focus management
@@ -466,7 +415,6 @@ export const focusUtils = {
     setTimeout(() => {
       if (document.body.contains(announcement)) {
         document.body.removeChild(announcement);
-      }
     }, 1000);
   },
 
@@ -485,7 +433,6 @@ export const focusUtils = {
       if (target) {
         target.focus();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
     });
     
     return skipLink;

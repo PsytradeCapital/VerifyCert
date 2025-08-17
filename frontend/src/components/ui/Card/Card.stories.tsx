@@ -10,8 +10,6 @@ const meta: Meta<typeof Card> = {
     docs: {
       description: {
         component: 'A versatile Card component with multiple variants, padding options, and interactive animations.'
-      }
-    }
   },
   argTypes: {
     variant: {
@@ -35,8 +33,6 @@ const meta: Meta<typeof Card> = {
     onClick: {
       action: 'clicked',
       description: 'Click handler function'
-    }
-  }
 };
 
 export default meta;
@@ -55,7 +51,6 @@ export const Default: Story = {
         </p>
       </div>
     )
-  }
 };
 
 export const Elevated: Story = {
@@ -70,7 +65,6 @@ export const Elevated: Story = {
         </p>
       </div>
     )
-  }
 };
 
 export const Outlined: Story = {
@@ -85,7 +79,6 @@ export const Outlined: Story = {
         </p>
       </div>
     )
-  }
 };
 
 // Padding variations
@@ -138,7 +131,6 @@ export const Interactive: Story = {
         </p>
       </div>
     )
-  }
 };
 
 // Real-world examples
@@ -172,7 +164,6 @@ export const UserProfile: Story = {
         </div>
       </div>
     )
-  }
 };
 
 export const ProductCard: Story = {
@@ -208,7 +199,6 @@ export const ProductCard: Story = {
         </div>
       </div>
     )
-  }
 };
 
 export const StatCard: Story = {
@@ -225,7 +215,6 @@ export const StatCard: Story = {
         </div>
       </div>
     )
-  }
 };
 
 // Variant comparison
@@ -296,5 +285,4 @@ export const NoAnimations: Story = {
         </p>
       </div>
     )
-  }
 };

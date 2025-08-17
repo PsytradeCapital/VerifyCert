@@ -163,7 +163,7 @@ describe('BlockchainErrorBoundary', () => {
   it('resets error state when Try Again is clicked', () => {
     const TestComponent = ({ hasError, key }: { hasError: boolean; key: string }) => (
       <BlockchainErrorBoundary key={key}>
-        {hasError ? <ThrowError errorType="contract" /> : <NoError />}
+        {hasError ? <ThrowError errorType="contract" /> : <NoError />
       </BlockchainErrorBoundary>
     );
 

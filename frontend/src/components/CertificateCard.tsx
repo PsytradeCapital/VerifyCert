@@ -188,7 +188,6 @@ export default function CertificateCard({
     <article 
       id={cardId}
       className={`bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden ${className}`}
-      role="article"
       aria-labelledby={`${cardId}-title`}
       aria-describedby={detailsId}
     >

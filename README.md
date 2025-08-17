@@ -1,6 +1,6 @@
 # VerifyCert - Blockchain Certificate Verification System
 
-A decentralized certificate verification system built on Polygon Mumbai that enables institutions to issue tamper-proof digital certificates as non-transferable NFTs.
+A decentralized certificate verification system built on Polygon Amoy that enables institutions to issue tamper-proof digital certificates as non-transferable NFTs.
 
 ## Project Structure
 
@@ -21,6 +21,10 @@ verify-cert/
 │   └── deploy.js          # Contract deployment script
 ├── test/                  # Smart contract tests
 │   └── Certificate.test.js
+├── docs/                  # Documentation
+│   ├── EULA.md           # End User License Agreement
+│   ├── specifications.md # Complete testing specifications
+│   └── demo-guide.md     # Judge evaluation guide
 ├── hardhat.config.js      # Hardhat configuration
 ├── package.json           # Root package.json
 └── .env.example           # Root environment template
@@ -33,7 +37,7 @@ verify-cert/
 - Node.js (v16 or higher)
 - npm or yarn
 - MetaMask wallet
-- Polygon Mumbai testnet MATIC tokens
+- Polygon Amoy testnet MATIC tokens
 
 ### Installation
 
@@ -76,7 +80,7 @@ verify-cert/
 
 ### Deployment
 
-1. Deploy to Polygon Mumbai:
+1. Deploy to Polygon Amoy:
    ```bash
    npm run deploy
    ```
@@ -92,15 +96,33 @@ verify-cert/
 - **Public Verification**: Anyone can verify certificate authenticity via QR codes or links
 - **Issuer Dashboard**: Manage certificate issuance and view issued certificates
 - **Responsive Design**: Works on desktop and mobile devices
-- **Blockchain Security**: Immutable certificate storage on Polygon Mumbai
+- **Blockchain Security**: Immutable certificate storage on Polygon Amoy
+- **Demo Mode**: Immediate access for judges without full account creation
+- **Authentication System**: Secure user registration with email/phone verification
 
 ## Technology Stack
 
 - **Smart Contracts**: Solidity, Hardhat, OpenZeppelin
 - **Backend**: Node.js, Express, Ethers.js
 - **Frontend**: React, TypeScript, TailwindCSS
-- **Blockchain**: Polygon Mumbai Testnet
+- **Blockchain**: Polygon Amoy Testnet
 - **Testing**: Jest, Chai, React Testing Library
+
+## Documentation
+
+- **[EULA](docs/EULA.md)**: End User License Agreement with blockchain-specific terms
+- **[Specifications](docs/specifications.md)**: Comprehensive testing and validation guide
+- **[Demo Guide](docs/demo-guide.md)**: Quick evaluation guide for judges
+
+## Quick Demo for Judges
+
+1. Visit the VerifyCert platform
+2. Connect your MetaMask wallet (any network)
+3. Access the dashboard immediately after wallet connection
+4. Explore all features with sample data
+5. Test certificate creation and verification
+
+See the [Demo Guide](docs/demo-guide.md) for detailed evaluation instructions.
 
 ## License
 

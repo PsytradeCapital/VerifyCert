@@ -1,18 +1,13 @@
 {
   "version": 2,
-  "name": "verifycert",
-  "buildCommand": "npm run build",
+  "buildCommand": "node build.js",
   "outputDirectory": "frontend/build",
   "installCommand": "npm install",
   "framework": null,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

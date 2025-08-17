@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Blockchain-based digital certificate verification system",
   "scripts": {
+    "build": "node build.js",
+    "start": "cd frontend && npm start",
+    "install": "npm install && cd frontend && npm install && cd ../backend && npm install",
     "compile": "hardhat compile",
     "test": "hardhat test",
     "test:integration": "hardhat test test/integration/*.test.js",
@@ -64,6 +67,7 @@
     "csurf": "^1.11.0",
     "express-validator": "^7.2.1",
     "framer-motion": "^12.23.12",
+    "react-scripts": "^5.0.1",
     "tailwind-merge": "^3.3.1"
   },
   "keywords": [

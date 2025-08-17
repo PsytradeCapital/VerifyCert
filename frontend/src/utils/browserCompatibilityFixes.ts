@@ -11,17 +11,7 @@ export interface BrowserCompatibilityConfig {
 /**
  * Initialize browser compatibility fixes
  */
-interface BrowserCompatibilityConfig {
-  enablePolyfills?: boolean;
-  enableFallbacks?: boolean;
-  logCompatibilityIssues?: boolean;
-}
-
-export function initializeBrowserCompatibility(config: BrowserCompatibilityConfig = {
-  enablePolyfills: true,
-  enableFallbacks: true,
-  logCompatibilityIssues: process.env.NODE_ENV === 'development'
-}): void {
+export function initializeBrowserCompatibility(): void {
   if (typeof window === 'undefined') return;
 
   // Apply CSS fixes

@@ -2,6 +2,7 @@
   "name": "verify-cert-frontend",
   "version": "1.0.0",
   "description": "Frontend for VerifyCert blockchain certificate verification system",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "@types/node": "^16.18.39",

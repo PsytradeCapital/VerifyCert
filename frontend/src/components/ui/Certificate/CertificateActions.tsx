@@ -139,12 +139,10 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
     <div className={`certificate-actions ${getVariantClasses()} ${getSizeClasses()} ${className}`}>
       {/* Download Button */}
       <Button
-        variant="primary"
+        variant="default"
         size={buttonSize}
         onClick={() => setShowDownloadModal(true)}
-        loading={isLoading?.startsWith('download')}
-        icon={<Download className="w-4 h-4" />}
-        className="flex-1"
+        loading={isLoading?.startsWith('download')}        className="flex-1"
       >
         {showLabels && 'Download'}
       </Button>
@@ -154,32 +152,26 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         variant="secondary"
         size={buttonSize}
         onClick={() => setShowShareModal(true)}
-        loading={isLoading?.startsWith('share')}
-        icon={<Share2 className="w-4 h-4" />}
-        className="flex-1"
+        loading={isLoading?.startsWith('share')}        className="flex-1"
       >
         {showLabels && 'Share'}
       </Button>
 
       {/* QR Code Button */}
       <Button
-        variant="tertiary"
+        variant="outline"
         size={buttonSize}
         onClick={handleGenerateQR}
-        loading={isLoading === 'qr'}
-        icon={<QrCode className="w-4 h-4" />}
-      >
+        loading={isLoading === 'qr'}      >
         {showLabels && 'QR Code'}
       </Button>
 
       {/* View on Blockchain Button */}
       {certificate.transactionHash && (
         <Button
-          variant="tertiary"
+          variant="outline"
           size={buttonSize}
-          onClick={handleViewOnBlockchain}
-          icon={<ExternalLink className="w-4 h-4" />}
-        >
+          onClick={handleViewOnBlockchain}        >
           {showLabels && 'Blockchain'}
         </Button>
       )}
@@ -203,9 +195,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleDownload('png');
                 setShowDownloadModal(false);
               }}
-              loading={isLoading === 'download-png'}
-              icon={<FileImage className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'download-png'}              className="justify-start"
             >
               <div className="text-left">
                 <div className="font-medium">PNG Image</div>
@@ -219,9 +209,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleDownload('pdf');
                 setShowDownloadModal(false);
               }}
-              loading={isLoading === 'download-pdf'}
-              icon={<FileText className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'download-pdf'}              className="justify-start"
             >
               <div className="text-left">
                 <div className="font-medium">PDF Document</div>
@@ -235,9 +223,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleDownload('json');
                 setShowDownloadModal(false);
               }}
-              loading={isLoading === 'download-json'}
-              icon={<Database className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'download-json'}              className="justify-start"
             >
               <div className="text-left">
                 <div className="font-medium">JSON Data</div>
@@ -267,9 +253,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleShare('copy');
                 setShowShareModal(false);
               }}
-              loading={isLoading === 'share-copy'}
-              icon={<Copy className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'share-copy'}              className="justify-start"
             >
               Copy Link
             </Button>
@@ -280,9 +264,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleShare('twitter');
                 setShowShareModal(false);
               }}
-              loading={isLoading === 'share-twitter'}
-              icon={<Twitter className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'share-twitter'}              className="justify-start"
             >
               Twitter
             </Button>
@@ -293,9 +275,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleShare('linkedin');
                 setShowShareModal(false);
               }}
-              loading={isLoading === 'share-linkedin'}
-              icon={<Linkedin className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'share-linkedin'}              className="justify-start"
             >
               LinkedIn
             </Button>
@@ -306,9 +286,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleShare('facebook');
                 setShowShareModal(false);
               }}
-              loading={isLoading === 'share-facebook'}
-              icon={<Facebook className="w-4 h-4" />}
-              className="justify-start"
+              loading={isLoading === 'share-facebook'}              className="justify-start"
             >
               Facebook
             </Button>
@@ -319,9 +297,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
                 handleShare('email');
                 setShowShareModal(false);
               }}
-              loading={isLoading === 'share-email'}
-              icon={<Mail className="w-4 h-4" />}
-              className="justify-start col-span-2"
+              loading={isLoading === 'share-email'}              className="justify-start col-span-2"
             >
               Email
             </Button>

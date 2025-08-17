@@ -286,8 +286,8 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                 
                 <div className="grid grid-cols-1 gap-2">
                   <Button
-                    variant="primary"
-                    size="md"
+                    variant="default"
+                    size="default"
                     onClick={handleDownload}
                     loading={isLoading}
                     icon={<Download />}
@@ -298,7 +298,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
                   <Button
                     variant="outline"
-                    size="md"
+                    size="default"
                     onClick={handleShare}
                     icon={<Share2 />}
                     fullWidth
@@ -308,7 +308,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
                   <Button
                     variant="ghost"
-                    size="md"
+                    size="default"
                     onClick={handleCopyLink}
                     icon={<Copy />}
                     fullWidth
@@ -318,7 +318,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
                   <Button
                     variant="ghost"
-                    size="md"
+                    size="default"
                     onClick={handlePrint}
                     className="print:hidden"
                     fullWidth

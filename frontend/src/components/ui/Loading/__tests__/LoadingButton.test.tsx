@@ -50,7 +50,7 @@ describe('LoadingButton', () => {
   });
 
   it('applies correct variant classes', () => {
-    const { rerender } = render(<LoadingButton variant="primary">Click me</LoadingButton>);
+    const { rerender } = render(<LoadingButton variant="default">Click me</LoadingButton>);
     let button = screen.getByRole('button');
     expect(button).toHaveClass('bg-blue-600');
 

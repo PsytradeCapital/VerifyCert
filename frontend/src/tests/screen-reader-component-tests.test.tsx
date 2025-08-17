@@ -6,8 +6,8 @@
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ScreenReaderTester, MockScreenReader } from './screen-reader-testing';
-import Button from '../components/ui/Button/Button';
-import Modal from '../components/ui/Modal/Modal';
+import { Button } from '../components/ui/Button/Button';
+import { Modal } from '../components/ui/Modal/Modal';
 import Select from '../components/ui/Select/Select';
 import Input from '../components/ui/Input/Input';
 import Card from '../components/ui/Card/Card';

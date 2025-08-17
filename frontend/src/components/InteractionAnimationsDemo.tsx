@@ -22,11 +22,11 @@ import {
 } from 'lucide-react';
 
 // Import enhanced components
-import Button from './ui/Button/Button';
+import { Button } from './ui/Button/Button';
 import Card from './ui/Card/Card';
 import Input from './ui/Input/Input';
 import Select from './ui/Select/Select';
-import Modal from './ui/Modal/Modal';
+import { Modal } from './ui/Modal/Modal';
 import FloatingActionButton from './ui/Navigation/FloatingActionButton';
 import Breadcrumbs from './ui/Navigation/Breadcrumbs';
 
@@ -152,10 +152,10 @@ const InteractionAnimationsDemo: React.FC = () => {
             <Card className="p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Primary</h3>
               <div className="space-y-3">
-                <Button variant="primary" size="sm">Small Button</Button>
-                <Button variant="primary" size="md">Medium Button</Button>
-                <Button variant="primary" size="lg">Large Button</Button>
-                <Button variant="primary" loading>Loading...</Button>
+                <Button variant="default" size="sm">Small Button</Button>
+                <Button variant="default" size="default">Medium Button</Button>
+                <Button variant="default" size="lg">Large Button</Button>
+                <Button variant="default" loading>Loading...</Button>
               </div>
             </Card>
 
@@ -163,7 +163,7 @@ const InteractionAnimationsDemo: React.FC = () => {
               <h3 className="text-lg font-medium text-gray-900 mb-4">Secondary</h3>
               <div className="space-y-3">
                 <Button variant="secondary" size="sm">Small Button</Button>
-                <Button variant="secondary" size="md">Medium Button</Button>
+                <Button variant="secondary" size="default">Medium Button</Button>
                 <Button variant="secondary" size="lg">Large Button</Button>
                 <Button variant="secondary" disabled>Disabled</Button>
               </div>
@@ -172,10 +172,11 @@ const InteractionAnimationsDemo: React.FC = () => {
             <Card className="p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Tertiary</h3>
               <div className="space-y-3">
-                <Button variant="tertiary" size="sm">Small Button</Button>
-                <Button variant="tertiary" size="md">Medium Button</Button>
-                <Button variant="tertiary" size="lg">Large Button</Button>
-                <Button variant="tertiary" icon={<Settings className="w-4 h-4" />}>
+                <Button variant="outline" size="sm">Small Button</Button>
+                <Button variant="outline" size="default">Medium Button</Button>
+                <Button variant="outline" size="lg">Large Button</Button>
+                <Button variant="outline">
+                  <Settings className="w-4 h-4 mr-2" />
                   With Icon
                 </Button>
               </div>
@@ -184,10 +185,11 @@ const InteractionAnimationsDemo: React.FC = () => {
             <Card className="p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Danger</h3>
               <div className="space-y-3">
-                <Button variant="danger" size="sm">Delete</Button>
-                <Button variant="danger" size="md">Remove</Button>
-                <Button variant="danger" size="lg">Destroy</Button>
-                <Button variant="danger" icon={<X className="w-4 h-4" />}>
+                <Button variant="destructive" size="sm">Delete</Button>
+                <Button variant="destructive" size="default">Remove</Button>
+                <Button variant="destructive" size="lg">Destroy</Button>
+                <Button variant="destructive">
+                  <X className="w-4 h-4 mr-2" />
                   Cancel
                 </Button>
               </div>
@@ -378,7 +380,7 @@ const InteractionAnimationsDemo: React.FC = () => {
           <Card className="p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Animated Modal</h3>
             <Button 
-              variant="primary" 
+              variant="default" 
               onClick={() => setIsModalOpen(true)}
             >
               Open Modal
@@ -395,7 +397,7 @@ const InteractionAnimationsDemo: React.FC = () => {
                 </p>
                 <div className="flex gap-3">
                   <Button 
-                    variant="primary" 
+                    variant="default" 
                     onClick={() => setIsModalOpen(false)}
                   >
                     Confirm

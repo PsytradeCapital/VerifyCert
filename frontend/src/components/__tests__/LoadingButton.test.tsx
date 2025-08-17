@@ -78,7 +78,7 @@ describe('LoadingButton', () => {
   });
 
   it('applies danger variant styles', () => {
-    render(<LoadingButton variant="danger">Click me</LoadingButton>);
+    render(<LoadingButton variant="destructive">Click me</LoadingButton>);
     
     const button = screen.getByRole('button');
     expect(button).toHaveClass('bg-red-600', 'text-white');

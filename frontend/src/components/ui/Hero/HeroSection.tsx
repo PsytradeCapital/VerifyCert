@@ -117,7 +117,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
           >
             <Button
-              variant="primary"
+              variant="default"
               size="lg"
               onClick={primaryAction.onClick}
               loading={primaryAction.loading}

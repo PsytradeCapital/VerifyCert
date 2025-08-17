@@ -191,7 +191,7 @@ const LoadingAnimationsDemo: React.FC = () => {
                 loading={isButtonLoading}
                 loadingText="Processing..."
                 onClick={handleButtonDemo}
-                variant="primary"
+                variant="default"
               >
                 Issue Certificate
               </LoadingButton>

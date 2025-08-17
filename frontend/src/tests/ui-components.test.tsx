@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 // Import all components
 import { BottomNavigation } from '../components/ui/Navigation/BottomNavigation';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton/FloatingActionButton';
-import Button from '../components/ui/Button/Button';
+import { Button } from '../components/ui/Button/Button';
 import { FeedbackAnimation, toast } from '../components/ui/Feedback/FeedbackAnimations';
 import { Card } from '../components/ui/Card/Card';
 import { HeroSection } from '../components/ui/Hero/HeroSection';
@@ -129,10 +129,10 @@ describe('UI Components', () => {
 
   describe('Button', () => {
     it('renders with different variants', () => {
-      const { rerender } = render(<Button variant="primary">Primary</Button>);
+      const { rerender } = render(<Button variant="default">Primary</Button>);
       expect(screen.getByRole('button')).toHaveClass('bg-blue-600');
 
-      rerender(<Button variant="danger">Danger</Button>);
+      rerender(<Button variant="destructive">Danger</Button>);
       expect(screen.getByRole('button')).toHaveClass('bg-red-600');
 
       rerender(<Button variant="success">Success</Button>);
@@ -154,7 +154,7 @@ describe('UI Components', () => {
     });
 
     it('renders with icons', () => {
-      render(<Button icon={<div data-testid="test-icon">Icon</div>}>With Icon</Button>);
+      render(<Button><div data-testid="test-icon">Icon</div>With Icon</Button>);
       expect(screen.getByTestId('test-icon')).toBeInTheDocument();
     });
 

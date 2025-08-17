@@ -231,9 +231,8 @@ const Settings: React.FC = () => {
             <p className="text-sm text-gray-500">Enable API key for programmatic access</p>
           </div>
           <Button
-            variant={security.apiKeyEnabled ? 'danger' : 'primary'}
+            variant={security.apiKeyEnabled ? 'destructive' : 'default'}
             size="sm"
-            icon={<Key className="w-4 h-4" />}
             onClick={() => setSecurity({ ...security, apiKeyEnabled: !security.apiKeyEnabled })}
           >
             {security.apiKeyEnabled ? 'Revoke' : 'Generate'}
@@ -338,8 +337,7 @@ const Settings: React.FC = () => {
         <div className="space-y-4">
           <Button
             variant="secondary"
-            icon={<Download className="w-4 h-4" />}
-            onClick={() => toast.success('Data export initiated')}
+            onClick={() => toast.success('Data expo}nitiated')rt i
           >
             Export Data
           </Button>
@@ -357,8 +355,7 @@ const Settings: React.FC = () => {
               </p>
             </div>
             <Button
-              variant="danger"
-              icon={<Trash2 className="w-4 h-4" />}
+              variant="destructive"
               onClick={() => setShowDeleteModal(true)}
             >
               Delete Account
@@ -416,7 +413,7 @@ const Settings: React.FC = () => {
               <div className="mt-8 pt-6 border-t">
                 <div className="flex justify-end">
                   <Button
-                    variant="primary"
+                    variant="default"
                     onClick={handleSave}
                     loading={isLoading}
                     disabled={isLoading}
@@ -458,7 +455,7 @@ const Settings: React.FC = () => {
                 Cancel
               </Button>
               <Button
-                variant="danger"
+                variant="destructive"
                 onClick={handleDeleteAccount}
                 loading={isLoading}
               >

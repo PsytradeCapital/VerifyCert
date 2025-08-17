@@ -374,16 +374,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               <div className="flex items-center justify-between">
                 <div className="flex space-x-3">
                   <Button
-                    variant="outline"
-                    icon={<Download className="w-4 h-4" />}
-                    size="sm"
+                    variant="outline"                    size="sm"
                   >
                     Export Data
                   </Button>
                   <Button
-                    variant="danger"
-                    icon={<Trash2 className="w-4 h-4" />}
-                    size="sm"
+                    variant="destructive"                    size="sm"
                   >
                     Delete Account
                   </Button>
@@ -402,11 +398,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     Reset
                   </Button>
                   <Button
-                    variant="primary"
+                    variant="default"
                     onClick={handleSave}
-                    disabled={!hasChanges}
-                    icon={<Save className="w-4 h-4" />}
-                  >
+                    disabled={!hasChanges}                  >
                     Save Changes
                   </Button>
                 </div>

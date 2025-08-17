@@ -131,7 +131,6 @@ const InputDemo: React.FC = () => {
                 label="Shake Animation"
                 placeholder="Type something invalid..."
                 error="Invalid input - watch the shake!"
-                }
               />
             </div>
             <div className="space-y-4">
@@ -143,7 +142,6 @@ const InputDemo: React.FC = () => {
                 helperText="Success with bounce effect!"
                 value="success@example.com"
                 readOnly
-                }
               />
             </div>
             <div className="space-y-4">
@@ -155,7 +153,6 @@ const InputDemo: React.FC = () => {
                 helperText="Warning with wiggle effect!"
                 value="warning@incomplete"
                 readOnly
-                }
               />
             </div>
           </div>

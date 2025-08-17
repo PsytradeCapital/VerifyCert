@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "node build.js",
+  "buildCommand": "node build-simple.js",
   "outputDirectory": "frontend/build",
-  "installCommand": "npm install",
+  "installCommand": "echo 'Skipping root install'",
   "framework": null,
   "rewrites": [
     {

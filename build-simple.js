@@ -20,17 +20,26 @@ try {
   // Change to frontend directory and build
   process.chdir('frontend');
   
-  console.log('📦 Installing frontend dependencies...');
-  execSync('npm install --legacy-peer-deps', { 
+  console.log('📦 Installing frontend dependencies (including dev dependencies)...');
+  execSync('npm install --legacy-peer-deps --include=dev', { 
     stdio: 'inherit',
     env: { ...process.env, NODE_ENV: 'production' }
   });
 
   console.log('🔨 Building frontend...');
-  execSync('npm run build', { 
-    stdio: 'inherit',
-    env: { ...process.env, NODE_ENV: 'production' }
-  });
+  // Try craco build first, fallback to react-scripts
+  try {
+    execSync('npx craco build', { 
+      stdio: 'inherit',
+      env: { ...process.env, NODE_ENV: 'production' }
+    });
+  } catch (error) {
+    console.log('⚠️ CRACO build failed, trying react-scripts...');
+    execSync('npx react-scripts build', { 
+      stdio: 'inherit',
+      env: { ...process.env, NODE_ENV: 'production' }
+    });
+  }
 
   // Check if build was successful
   if (!fs.existsSync('build')) {

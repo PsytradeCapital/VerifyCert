@@ -59,12 +59,12 @@ function App() {
                   
                   {/* Protected Routes */}
                   <Route path="/dashboard" element={
-                    <ProtectedRoute>
+                    <ProtectedRoute isWalletConnected={isWalletConnected}>
                       <IssuerDashboard />
                     </ProtectedRoute>
                   } />
                   <Route path="/profile" element={
-                    <ProtectedRoute>
+                    <ProtectedRoute isWalletConnected={isWalletConnected}>
                       <ProfilePage />
                     </ProtectedRoute>
                   } />

@@ -156,13 +156,32 @@
 - [ ] Verify Storybook builds successfully
 - [ ] Test that all fixed components render correctly
 
-**Dependencies:** All previous tasks
+**Dependencies:** Task 11, Task 12
 
 **Estimated Effort:** Small
 
 ---
 
-## Task 11: Clean Up Remaining Export Issues
+## Task 11: Fix ErrorBoundary Component
+
+**Description:** Fix the corrupted ErrorBoundary component that has syntax errors and incomplete code causing TypeScript compilation failures.
+
+**Acceptance Criteria:**
+- [ ] Fix corrupted Props interface definition
+- [ ] Complete the State interface and class implementation
+- [ ] Fix broken getDerivedStateFromError static method
+- [ ] Repair componentDidCatch method implementation
+- [ ] Fix malformed JSX in render method
+- [ ] Ensure proper TypeScript class component structure
+- [ ] Verify ErrorBoundary can be used as JSX component in App.tsx
+
+**Dependencies:** All previous tasks
+
+**Estimated Effort:** Medium
+
+---
+
+## Task 12: Clean Up Remaining Export Issues
 
 **Description:** Address remaining export issues in Feedback components and other modules.
 
@@ -172,7 +191,7 @@
 - [ ] Fix any remaining utility function type errors
 - [ ] Ensure all exports match actual component exports
 
-**Dependencies:** Task 9
+**Dependencies:** Task 11
 
 **Estimated Effort:** Small
 
@@ -194,6 +213,8 @@
 
 ### Phase 3: Final Cleanup (In Progress)
 - Task 9: Clean Up Remaining Type Errors
+- Task 11: Fix ErrorBoundary Component
+- Task 12: Clean Up Remaining Export Issues
 - Task 10: Verify Build Success
 
 ## Success Criteria

@@ -1,187 +1,131 @@
-import React, { useState } from 'react';
-import { useAuth } from '../cont';
+import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
-interface Certificate {
-  id: string;
-  recipientName: string;
-  courseName: string;
-  institutionName: string;
+const IssuerDashboard: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
 
-  status: 'active' | 'revoked';
-}
-
-const IssuerDashboard{
-
-  const [certificates] e[]>([
-    {
-      id: '1',
-      recipientName: 'John Doe',
-
-      institutionName: 'Tech Academy',
-      issueDate: '2024-01-15',
-      status: 'active'
-    },
-    {
-      id: '2',
-     h',
-
-      institutionName: 'Crypto Univety',
-      issueDate: '2024-01-10',
-'
-    }
-  ]);
-
-  if (!isAuthenti {
+  if (!isAuthenticated) {
     return (
-      <div className="ma
-        <div classNam>
-          <h1 classN
-          <p class>
-     d.
-/p>
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4 dark:text-white">Access Denied</h1>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Please log in to access the issuer dashboard.
+          </p>
           <a 
             href="/login" 
-            className="bg"
+            className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700"
           >
             Sign In
-     
-
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="
-      <div className="mb
-        <h1 cl
-          Issuerd
-       
-        <p className="text-gray-600 dark:text-gray-3
-         ere.
->
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          Issuer Dashboard
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          Welcome back, {user?.name}! Manage your certificates here.
+        </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="gri>
-        <div classNamd">
-          <div classN">
-       div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div className="flex items-center">
+            <div className="text-3xl mr-4">📜</div>
             <div>
-              /h3>
-              <p clasth}</p>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Certificates</h3>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">1,234</p>
             </div>
           </div>
         </div>
 
-        <div className
-          <div class>
-       ">✅</div>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div className="flex items-center">
+            <div className="text-3xl mr-4">✅</div>
             <div>
-         ve</h3>
-
-                {certificates.filter(c => c.status === 'active').length}
-              </p>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Verified Today</h3>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">56</p>
             </div>
-v>
+          </div>
         </div>
 
-        <div className=>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <div className="flex items-center">
             <div className="text-3xl mr-4">👥</div>
             <div>
-              <h3 className="texts</h3>
-              <p className="text-2xl font-be">
-                {new Set(certificates.map(c}
-             </p>
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Issuers</h3>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">12</p>
             </div>
           </div>
         </div>
 
-        <did">
-          <div
-            <div className="text-3xl mr-4">📊</div>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div className="flex items-center">
+            <div className="text-3xl mr-4">⏳</div>
             <div>
-              <h3 className="text-sm font-mh3>
-
+              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Pending</h3>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">8</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-
-        <h2 className="t
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-xl font-semibold mb-4 dark:text-white">Quick Actions</h2>
         <div className="flex flex-wrap gap-4">
-          <button className="bg-bl0">
-            Issficate
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+            Issue New Certificate
           </button>
-          <button className="bg-gray-600 text-white px-6 py-3 rou700">
-oad
+          <button className="bg-gray-600 text-white px-6 py-3 rounded-md hover:bg-gray-700">
+            Batch Upload
           </button>
-          <button className="bg-green-600 text-white px-6 p700">
+          <button className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700">
             Export Reports
           </button>
         </div>
       </div>
 
-/}
-      <div className="bg-white dark:bg-gray-800 r
-        <div className="px-6 py-4 border-b border-g>
-          <h2es</h2>
-v>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <00">
- <tr>
-                <th className="px-6 py-3 text-left tex
-                  Recipient
-                </th>
-              ">
-  Course
-                </th>
-                <th className="px-6 py-3 text-left r">
-                  Institution
-              /th>
-
-                  Issue Date
-                </th>
-
-              
-                </th>
-              </
-            </t>
-            <tbody className="bg-white da">
-              {certi=> (
-                <trt.id}>
-                  <td className="px-6 py-">
-       }
- </td>
-                  <td className="px-6 py-4 whitespace-0">
-                    {cert.courseName}
-                  </td>
-                  <">
-                    {}
-                  </td>
-                  <td className=y-300">
-                    {cert.issueDate}
-                  </td>
-                  <td className="px-6 py-4 whitespap">
-                    <span className={`ll ${
-                      cert.status ==' 
-          00' 
-'
-                    }`}>
-    tatus}
-an>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </tble>
-
+      {/* Recent Activity */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold dark:text-white">Recent Activity</h2>
+        </div>
+        <div className="p-6">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-700">
+              <div>
+                <p className="font-medium dark:text-white">Certificate #1234 issued</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">2 hours ago</p>
+              </div>
+              <span className="text-green-600 text-sm">✅ Completed</span>
+            </div>
+            <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-700">
+              <div>
+                <p className="font-medium dark:text-white">Batch upload completed</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">4 hours ago</p>
+              </div>
+              <span className="text-green-600 text-sm">✅ Completed</span>
+            </div>
+            <div className="flex items-center justify-between py-3">
+              <div>
+                <p className="font-medium dark:text-white">Certificate verified</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">6 hours ago</p>
+              </div>
+              <span className="text-blue-600 text-sm">🔍 Verified</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export dboard;uerDashefault Iss
+export default IssuerDashboard;

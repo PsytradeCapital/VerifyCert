@@ -1,0 +1,212 @@
+/**
+ * Minimal Theme Fixes - Only for specific issues
+ * Preserves original design while fixing visibility problems
+ * Ensures cross-browser consistency
+ */
+
+/* Cross-browser consistency */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure consistent button styling across browsers */
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Consistent input styling */
+input, textarea, select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Prevent zoom on mobile inputs */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea {
+  font-size: 16px;
+}
+
+/* Consistent scrollbar across browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Feedback button fixes only */
+.feedback-button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  z-index: 9999 !important;
+  border: 2px solid #2563eb !important;
+}
+
+.feedback-button svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+.feedback-button span {
+  color: #ffffff !important;
+}
+
+/* Wallet connect button fixes only */
+.connect-wallet-btn {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 2px solid #059669 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.connect-wallet-btn svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+.connect-wallet-btn span {
+  color: #ffffff !important;
+}
+
+/* Z-index layering system - minimal */
+.feedback-button {
+  z-index: 9999 !important;
+}
+
+.modal-overlay {
+  z-index: 9998 !important;
+}
+
+.modal-content {
+  z-index: 9999 !important;
+}
+
+/* Only fix invisible text issues - preserve original colors */
+[data-theme="light"] .text-invisible,
+[data-theme="light"] .hidden-text {
+  color: inherit !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="dark"] .text-invisible,
+[data-theme="dark"] .hidden-text {
+  color: inherit !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure send button is visible */
+.feedback-modal .btn-primary,
+.feedback-modal button[type="submit"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+  z-index: 10 !important;
+}
+
+.feedback-modal .btn-primary svg,
+.feedback-modal button[type="submit"] svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+/* Certif
+icate card styling - always light golden */
+.certificate-card,
+[class*="certificate"] {
+  background: linear-gradient(135deg, #fef7cd, #fef3c7) !important;
+  border: 2px solid #f59e0b !important;
+  color: #92400e !important;
+}
+
+/* Dark mode default styling */
+[data-theme="dark"] {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] body {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Light mode styling */
+[data-theme="light"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] body {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+/* Ensure all text is visible in both modes */
+[data-theme="dark"] * {
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] * {
+  color: #1f2937 !important;
+}
+
+/* Override for buttons and special elements */
+[data-theme="dark"] button,
+[data-theme="light"] button {
+  color: inherit !important;
+}
+
+/* Feedback send button - make icon huge and clear */
+.feedback-modal button[type="submit"] svg {
+  width: 24px !important;
+  height: 24px !important;
+  stroke-width: 3 !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Navigation icons visibility */
+nav svg,
+.navigation svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+/* Ensure wallet connect is always visible */
+.connect-wallet-btn svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+.connect-wallet-btn span {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}

@@ -1,0 +1,720 @@
+/**
+ * Comprehensive Theme Fixes
+ * Ensures all text is visible in both light and dark modes
+ */
+
+/* Root theme setup */
+:root {
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Base body styles */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] body {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Universal text color fixes */
+[data-theme="light"] * {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] * {
+  color: #f8fafc !important;
+}
+
+/* Override for elements that should keep their specific colors */
+[data-theme="light"] .text-white,
+[data-theme="light"] [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .text-black,
+[data-theme="dark"] [class*="text-black"] {
+  color: #000000 !important;
+}
+
+/* Button text fixes */
+[data-theme="light"] button,
+[data-theme="dark"] button {
+  color: inherit !important;
+}
+
+/* Colored buttons should have contrasting text */
+[data-theme="light"] button[class*="bg-blue"],
+[data-theme="light"] button[class*="bg-green"],
+[data-theme="light"] button[class*="bg-red"],
+[data-theme="light"] button[class*="bg-yellow"],
+[data-theme="dark"] button[class*="bg-blue"],
+[data-theme="dark"] button[class*="bg-green"],
+[data-theme="dark"] button[class*="bg-red"],
+[data-theme="dark"] button[class*="bg-yellow"] {
+  color: #ffffff !important;
+}
+
+/* Input and form element fixes */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+/* Placeholder text */
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Label fixes */
+[data-theme="light"] label {
+  color: #374151 !important;
+}
+
+[data-theme="dark"] label {
+  color: #d1d5db !important;
+}
+
+/* Heading fixes */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: #111827 !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #ffffff !important;
+}
+
+/* Link fixes */
+[data-theme="light"] a {
+  color: #2563eb !important;
+}
+
+[data-theme="dark"] a {
+  color: #60a5fa !important;
+}
+
+/* Card and container fixes */
+[data-theme="light"] .bg-white,
+[data-theme="light"] [class*="bg-white"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] [class*="bg-white"] {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .bg-gray-50,
+[data-theme="light"] .bg-gray-100 {
+  background-color: #f9fafb !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .bg-gray-50,
+[data-theme="dark"] .bg-gray-100 {
+  background-color: #374151 !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .bg-gray-800,
+[data-theme="light"] .bg-gray-900 {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .bg-gray-800,
+[data-theme="dark"] .bg-gray-900 {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+/* Error text fixes */
+[data-theme="light"] .text-red-600,
+[data-theme="light"] .text-red-500 {
+  color: #dc2626 !important;
+}
+
+[data-theme="dark"] .text-red-600,
+[data-theme="dark"] .text-red-500 {
+  color: #f87171 !important;
+}
+
+/* Success text fixes */
+[data-theme="light"] .text-green-600,
+[data-theme="light"] .text-green-500 {
+  color: #059669 !important;
+}
+
+[data-theme="dark"] .text-green-600,
+[data-theme="dark"] .text-green-500 {
+  color: #34d399 !important;
+}
+
+/* Warning text fixes */
+[data-theme="light"] .text-yellow-600,
+[data-theme="light"] .text-yellow-500 {
+  color: #d97706 !important;
+}
+
+[data-theme="dark"] .text-yellow-600,
+[data-theme="dark"] .text-yellow-500 {
+  color: #fbbf24 !important;
+}
+
+/* Gray text variations */
+[data-theme="light"] .text-gray-300,
+[data-theme="light"] .text-gray-400,
+[data-theme="light"] .text-gray-500,
+[data-theme="light"] .text-gray-600,
+[data-theme="light"] .text-gray-700 {
+  color: #6b7280 !important;
+}
+
+[data-theme="dark"] .text-gray-300,
+[data-theme="dark"] .text-gray-400,
+[data-theme="dark"] .text-gray-500,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700 {
+  color: #9ca3af !important;
+}
+
+/* Border fixes */
+[data-theme="light"] .border-gray-300,
+[data-theme="light"] .border-gray-200 {
+  border-color: #d1d5db !important;
+}
+
+[data-theme="dark"] .border-gray-300,
+[data-theme="dark"] .border-gray-200 {
+  border-color: #374151 !important;
+}
+
+[data-theme="light"] .border-gray-600,
+[data-theme="light"] .border-gray-700 {
+  border-color: #4b5563 !important;
+}
+
+[data-theme="dark"] .border-gray-600,
+[data-theme="dark"] .border-gray-700 {
+  border-color: #4b5563 !important;
+}
+
+/* Icon fixes */
+[data-theme="light"] svg {
+  color: inherit !important;
+}
+
+[data-theme="dark"] svg {
+  color: inherit !important;
+}
+
+/* Feedback button specific fixes */
+.feedback-button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  z-index: 9999 !important;
+  border: 2px solid #2563eb !important;
+}
+
+.feedback-button svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+.feedback-button span {
+  color: #ffffff !important;
+}
+
+/* Modal and overlay fixes */
+[data-theme="light"] .modal,
+[data-theme="light"] [class*="modal"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .modal,
+[data-theme="dark"] [class*="modal"] {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+/* Table fixes */
+[data-theme="light"] table,
+[data-theme="light"] th,
+[data-theme="light"] td {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] table,
+[data-theme="dark"] th,
+[data-theme="dark"] td {
+  color: #f8fafc !important;
+}
+
+/* Navigation fixes */
+[data-theme="light"] nav,
+[data-theme="light"] .nav {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] nav,
+[data-theme="dark"] .nav {
+  color: #f8fafc !important;
+}
+
+/* Ensure all text sizes are visible */
+[data-theme="light"] .text-xs,
+[data-theme="light"] .text-sm,
+[data-theme="light"] .text-base,
+[data-theme="light"] .text-lg,
+[data-theme="light"] .text-xl,
+[data-theme="light"] .text-2xl,
+[data-theme="light"] .text-3xl {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .text-xs,
+[data-theme="dark"] .text-sm,
+[data-theme="dark"] .text-base,
+[data-theme="dark"] .text-lg,
+[data-theme="dark"] .text-xl,
+[data-theme="dark"] .text-2xl,
+[data-theme="dark"] .text-3xl {
+  color: #f8fafc !important;
+}
+
+/* Font weight variations */
+[data-theme="light"] .font-light,
+[data-theme="light"] .font-normal,
+[data-theme="light"] .font-medium,
+[data-theme="light"] .font-semibold,
+[data-theme="light"] .font-bold {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .font-light,
+[data-theme="dark"] .font-normal,
+[data-theme="dark"] .font-medium,
+[data-theme="dark"] .font-semibold,
+[data-theme="dark"] .font-bold {
+  color: #f8fafc !important;
+}
+
+/* List fixes */
+[data-theme="light"] ul,
+[data-theme="light"] ol,
+[data-theme="light"] li {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] ul,
+[data-theme="dark"] ol,
+[data-theme="dark"] li {
+  color: #f8fafc !important;
+}
+
+/* Code and pre fixes */
+[data-theme="light"] code,
+[data-theme="light"] pre {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] code,
+[data-theme="dark"] pre {
+  background-color: #374151 !important;
+  color: #f8fafc !important;
+}
+
+/* Blockquote fixes */
+[data-theme="light"] blockquote {
+  color: #6b7280 !important;
+  border-left-color: #d1d5db !important;
+}
+
+[data-theme="dark"] blockquote {
+  color: #9ca3af !important;
+  border-left-color: #4b5563 !important;
+}
+
+/* Hero section and main content fixes */
+[data-theme="light"] .hero-section,
+[data-theme="light"] .main-content,
+[data-theme="light"] .landing-page {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .hero-section,
+[data-theme="dark"] .main-content,
+[data-theme="dark"] .landing-page {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Feature cards and content sections */
+[data-theme="light"] .feature-card,
+[data-theme="light"] .content-section,
+[data-theme="light"] .info-card {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .content-section,
+[data-theme="dark"] .info-card {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #374151 !important;
+}
+
+/* Call-to-action buttons and primary actions */
+[data-theme="light"] .cta-button,
+[data-theme="light"] .primary-button,
+[data-theme="light"] .get-started-btn {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+[data-theme="dark"] .cta-button,
+[data-theme="dark"] .primary-button,
+[data-theme="dark"] .get-started-btn {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 2px solid #3b82f6 !important;
+}
+
+/* Connect wallet button specific fixes */
+[data-theme="light"] .connect-wallet-btn,
+[data-theme="light"] [class*="connect-wallet"],
+[data-theme="light"] button[class*="wallet"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+[data-theme="dark"] .connect-wallet-btn,
+[data-theme="dark"] [class*="connect-wallet"],
+[data-theme="dark"] button[class*="wallet"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+.connect-wallet-btn svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+.connect-wallet-btn span {
+  color: #ffffff !important;
+}
+
+/* Logo and brand text */
+[data-theme="light"] .logo,
+[data-theme="light"] .brand-text,
+[data-theme="light"] .app-title {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .logo,
+[data-theme="dark"] .brand-text,
+[data-theme="dark"] .app-title {
+  color: #ffffff !important;
+}
+
+/* Main page content sections */
+[data-theme="light"] .page-content,
+[data-theme="light"] .main-section,
+[data-theme="light"] .content-wrapper {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .page-content,
+[data-theme="dark"] .main-section,
+[data-theme="dark"] .content-wrapper {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Feature list items and descriptions */
+[data-theme="light"] .feature-item,
+[data-theme="light"] .feature-description,
+[data-theme="light"] .benefit-text {
+  color: #374151 !important;
+}
+
+[data-theme="dark"] .feature-item,
+[data-theme="dark"] .feature-description,
+[data-theme="dark"] .benefit-text {
+  color: #d1d5db !important;
+}
+
+/* Ensure all text elements are visible */
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] div:not([class*="bg-"]),
+[data-theme="light"] section,
+[data-theme="light"] article {
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div:not([class*="bg-"]),
+[data-theme="dark"] section,
+[data-theme="dark"] article {
+  color: #f8fafc !important;
+}
+
+/* Specific fixes for invisible elements */
+[data-theme="light"] .text-invisible,
+[data-theme="light"] .hidden-text {
+  color: #1f2937 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="dark"] .text-invisible,
+[data-theme="dark"] .hidden-text {
+  color: #f8fafc !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Frame and border visibility */
+[data-theme="light"] .frame,
+[data-theme="light"] .border-frame,
+[data-theme="light"] .card-frame {
+  border: 2px solid #e5e7eb !important;
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] .frame,
+[data-theme="dark"] .border-frame,
+[data-theme="dark"] .card-frame {
+  border: 2px solid #374151 !important;
+  background-color: #1e293b !important;
+}
+
+/* Ensure transitions work smoothly */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+}/*
+ Frame consistency and layering fixes */
+[data-theme="light"] .modal,
+[data-theme="light"] .dialog,
+[data-theme="light"] .popup,
+[data-theme="light"] .overlay {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="dark"] .modal,
+[data-theme="dark"] .dialog,
+[data-theme="dark"] .popup,
+[data-theme="dark"] .overlay {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 2px solid #374151 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Consistent card frames */
+[data-theme="light"] .card,
+[data-theme="light"] .panel,
+[data-theme="light"] .container {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .panel,
+[data-theme="dark"] .container {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #374151 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Z-index layering system */
+.feedback-button {
+  z-index: 9999 !important;
+}
+
+.modal-overlay {
+  z-index: 9998 !important;
+}
+
+.modal-content {
+  z-index: 9999 !important;
+}
+
+.dropdown {
+  z-index: 1000 !important;
+}
+
+.tooltip {
+  z-index: 1001 !important;
+}
+
+.navigation {
+  z-index: 100 !important;
+}
+
+/* Button consistency */
+[data-theme="light"] button:not(.feedback-button):not(.connect-wallet-btn) {
+  color: #1f2937 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+[data-theme="dark"] button:not(.feedback-button):not(.connect-wallet-btn) {
+  color: #f8fafc !important;
+  border: 1px solid #374151 !important;
+}
+
+/* Primary buttons */
+[data-theme="light"] .btn-primary,
+[data-theme="light"] button[class*="bg-blue"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] button[class*="bg-blue"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+/* Success buttons */
+[data-theme="light"] .btn-success,
+[data-theme="light"] button[class*="bg-green"] {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 2px solid #059669 !important;
+}
+
+[data-theme="dark"] .btn-success,
+[data-theme="dark"] button[class*="bg-green"] {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 2px solid #059669 !important;
+}
+
+/* Danger buttons */
+[data-theme="light"] .btn-danger,
+[data-theme="light"] button[class*="bg-red"] {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  border: 2px solid #dc2626 !important;
+}
+
+[data-theme="dark"] .btn-danger,
+[data-theme="dark"] button[class*="bg-red"] {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  border: 2px solid #dc2626 !important;
+}
+
+/* Ensure all button text is visible */
+button span {
+  color: inherit !important;
+}
+
+button svg {
+  color: inherit !important;
+}
+
+/* Fix for invisible elements */
+[data-theme="light"] * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="dark"] * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Override any hidden classes that might be causing issues */
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.opacity-0 {
+  opacity: 0 !important;
+}
+
+/* Ensure proper contrast for all text */
+[data-theme="light"] {
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --border-primary: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --border-primary: #374151;
+}

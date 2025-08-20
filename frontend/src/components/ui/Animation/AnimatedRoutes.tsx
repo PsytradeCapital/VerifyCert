@@ -35,3 +35,4 @@ const AnimatedRoutes: React.FC<AnimatedRoutesProps> = ({
 };
 
 export default AnimatedRoutes;
+}

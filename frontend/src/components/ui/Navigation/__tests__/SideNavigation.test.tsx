@@ -154,3 +154,4 @@ describe('SideNavigation', () => {
     expect(screen.queryByText('VerifyCert')).not.toBeInTheDocument();
   });
 });
+}}}}

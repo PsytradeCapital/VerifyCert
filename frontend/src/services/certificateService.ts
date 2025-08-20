@@ -1,3 +1,4 @@
+import React from 'react';
 import { CertificateData } from './blockchainService';
 
 export interface ShareOptions {
@@ -374,3 +375,4 @@ class CertificateService {
 const certificateService = new CertificateService();
 
 export default certificateService;
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

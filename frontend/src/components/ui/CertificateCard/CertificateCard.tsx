@@ -352,3 +352,4 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
     </motion.div>
   );
 };
+}}}}}}}}}

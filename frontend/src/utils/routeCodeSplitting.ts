@@ -1,3 +1,4 @@
+import React from 'react';
 import { lazy } from 'react';
 import { createLazyComponent } from './lazyLoading';
 
@@ -159,3 +160,4 @@ export const bundlePerformanceMonitor = {
     return stats;
   },
 };
+}}}}}}

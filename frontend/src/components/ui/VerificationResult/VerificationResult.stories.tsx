@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { VerificationResult } from './';
 
@@ -127,3 +128,4 @@ export const WithoutActions: Story = {
     onShare: undefined,
     onViewOnBlockchain: undefined
 };
+}}}}}}}}}}}}

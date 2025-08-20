@@ -129,3 +129,4 @@ export const VerificationResults: React.FC<VerificationResultsProps> = ({
     </motion.div>
   );
 };
+}}}

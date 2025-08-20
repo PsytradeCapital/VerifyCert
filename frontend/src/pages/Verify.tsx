@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-export default function Verify() {
+export default function Verify(): JSX.Element {
   const navigate = useNavigate();
   const [certificateId, setCertificateId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -147,3 +147,4 @@ export default function Verify() {
       </div>
     </div>
   );
+}}}

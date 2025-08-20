@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
 import { User, Mail, Phone, MapPin, Star, Heart, Share2 } from 'lucide-react';
@@ -286,3 +287,4 @@ export const NoAnimations: Story = {
       </div>
     )
 };
+}}}}}}}}}}}}

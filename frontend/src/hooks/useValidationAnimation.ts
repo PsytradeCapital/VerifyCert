@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * useValidationAnimation Hook
  * Manages smooth animations for form validation feedback
@@ -8,7 +9,7 @@ import {
   triggerValidationAnimation, 
   getValidationAnimationClasses,
   validationSequences,
-  ValidationAnimationConfig
+  ValidationAnimationConfig;
 } from '../utils/validationAnimations';
 
 export interface UseValidationAnimationOptions {
@@ -254,3 +255,4 @@ export const useValidationIconAnimation = (
     shouldShowIcon: showIcon && currentState !== 'default'
   };
 };
+}}}}}}}}}}}}}}}}}

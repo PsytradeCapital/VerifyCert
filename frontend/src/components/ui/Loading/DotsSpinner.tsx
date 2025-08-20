@@ -62,3 +62,4 @@ const DotsSpinner: React.FC<DotsSpinnerProps> = ({
 };
 
 export default DotsSpinner;
+}}

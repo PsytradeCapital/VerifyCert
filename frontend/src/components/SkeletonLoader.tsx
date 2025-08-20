@@ -110,3 +110,4 @@ export const DashboardSkeleton: React.FC = () => (
 );
 
 export default SkeletonLoader;
+}}}

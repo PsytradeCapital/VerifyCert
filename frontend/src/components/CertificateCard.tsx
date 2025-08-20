@@ -23,14 +23,7 @@ interface CertificateCardProps {
   onDownload?: () => void;
   onShare?: () => void;
 
-export default function CertificateCard({
-  certificate,
-  showQR = true,
-  isPublicView = false,
-  className = '',
-  onDownload,
-  onShare,
-}: CertificateCardProps) {
+export default function CertificateCard(): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
   const feedback = useFeedbackAnimations();
   
@@ -398,3 +391,4 @@ export default function CertificateCard({
       </div>
     </article>
   );
+}}}}}}}}}}

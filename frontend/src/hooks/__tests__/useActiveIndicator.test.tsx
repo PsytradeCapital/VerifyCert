@@ -1,3 +1,4 @@
+import React from 'react';
 import { renderHook } from '@testing-library/react';
 import { useActiveIndicator } from '../useActiveIndicator';
 import { NavigationProvider } from '../../contexts/NavigationContext';
@@ -173,3 +174,4 @@ describe('useActiveIndicator', () => {
     expect(result.current.transitionClasses).toBe('');
   });
 });
+}}}}}}}}}

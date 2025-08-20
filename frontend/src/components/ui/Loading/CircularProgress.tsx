@@ -86,3 +86,4 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 };
 
 export default CircularProgress;
+}

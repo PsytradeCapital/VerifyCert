@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -161,3 +162,4 @@ export const useErrorFeedback = (error: Error | null) => {
     context: error ? `Error occurred: ${error.message}` : 'Error experience feedback'
   });
 };
+}}}}}}

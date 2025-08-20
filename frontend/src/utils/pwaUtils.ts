@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * PWA Installation Utilities
  * Provides helper functions for PWA installation and mobile device detection
@@ -164,3 +165,4 @@ export function getPWAStatus(): {
     installMethod: support.installPrompt ? 'automatic' : 
                    deviceInfo.isIOSSafari ? 'manual' : 'none'
   };
+}}}}}}}}}}}}}}}}}}}}

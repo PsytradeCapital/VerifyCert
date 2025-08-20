@@ -140,3 +140,4 @@ class RouteErrorBoundaryBase extends Component<Props & { navigate: any; location
 const RouteErrorBoundary = withNavigation(RouteErrorBoundaryBase);
 
 export default RouteErrorBoundary;
+}}}}}}}}}

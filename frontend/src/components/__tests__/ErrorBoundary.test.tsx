@@ -153,3 +153,4 @@ describe('ErrorBoundary', () => {
     expect(window.location.href).toBe('/');
   });
 });
+}

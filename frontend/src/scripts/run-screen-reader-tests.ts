@@ -1,3 +1,4 @@
+import React from 'react';
 #!/usr/bin/env node
 
 /**
@@ -476,3 +477,4 @@ if (require.main === module) {
   main();
 
 export { runScreenReaderTests, createTestComponents };
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Optimized Imports Configuration
  * Ensures tree shaking works properly for all dependencies
@@ -121,3 +122,4 @@ export interface BundleOptimization {
   chunkName: string;
   priority: number;
   test: RegExp;
+}}}}}}}

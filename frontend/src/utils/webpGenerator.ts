@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * WebP generation utilities for client-side image optimization
  */
@@ -216,3 +217,4 @@ if (typeof window !== 'undefined') {
   window.addEventListener('beforeunload', () => {
     webpCache.clear();
   });
+}}}}}}}}}}}}}}}}}}}

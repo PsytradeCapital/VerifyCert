@@ -1,3 +1,4 @@
+import React from 'react';
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WifiOff, Wifi, Download, RefreshCw, Share, Plus, Home } from 'lucide-react';
@@ -381,3 +382,4 @@ export const IOSInstallInstructions: React.FC<IOSInstallInstructionsProps> = ({
 };
 
 export default OfflineIndicator;
+}}}}}}}}}}}}}

@@ -48,3 +48,4 @@ export const designTokens = jsTokens;
 
 // Also export a default to ensure module compatibility
 export default designTokens;
+}}

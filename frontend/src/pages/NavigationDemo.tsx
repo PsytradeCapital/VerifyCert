@@ -247,3 +247,4 @@ const NavigationDemo: React.FC = () => {
 };
 
 export default NavigationDemo;
+}}

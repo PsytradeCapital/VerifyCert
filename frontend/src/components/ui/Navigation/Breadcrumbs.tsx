@@ -98,3 +98,4 @@ export const AutoBreadcrumbs: React.FC<Omit<BreadcrumbsProps, 'items'>> = (props
 };
 
 export default Breadcrumbs;
+}}}

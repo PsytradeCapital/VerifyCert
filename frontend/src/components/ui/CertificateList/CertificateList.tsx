@@ -32,13 +32,7 @@ const defaultFilters: FilterOptions = {
   sortOrder: 'desc',
 };
 
-export default function CertificateList({
-  certificates,
-  isLoading = false,
-  onCertificateAction,
-  showBulkActions = false,
-  className = '',
-}: CertificateListProps) {
+export default function CertificateList(): JSX.Element {
   const [filters, setFilters] = useState<FilterOptions>(defaultFilters);
   const [selectedCertificates, setSelectedCertificates] = useState<Set<string>>(new Set());
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
@@ -578,3 +572,4 @@ export default function CertificateList({
       </div>
     </div>
   );
+}}}}}}}}}}}}}}}}}

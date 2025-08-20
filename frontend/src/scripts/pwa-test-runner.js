@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * PWA Test Runner Script
  * Automated testing script for PWA functionality across browsers

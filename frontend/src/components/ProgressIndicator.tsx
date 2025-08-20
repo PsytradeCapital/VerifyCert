@@ -100,3 +100,4 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 };
 
 export default ProgressIndicator;
+}}}}}

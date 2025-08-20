@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useCallback, useRef } from 'react';
 import { performanceMonitor } from '../utils/performanceMonitoring';
 
@@ -213,3 +214,4 @@ export const useRouteMonitoring = () => {
 };
 
 export default usePerformanceMonitoring;
+}}}}}}}}}

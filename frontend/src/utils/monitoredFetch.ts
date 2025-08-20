@@ -1,3 +1,4 @@
+import React from 'react';
 import { performanceMonitor } from './performanceMonitoring';
 
 interface MonitoredFetchOptions extends RequestInit {
@@ -245,3 +246,4 @@ if (process.env.NODE_ENV === 'development') {
   console.log('🔍 API performance monitoring enabled');
 
 export default monitoredFetch;
+}}}}}}}}}}}}}}}}}}}}}

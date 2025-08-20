@@ -1,3 +1,4 @@
+import React from 'react';
 import { ethers } from 'ethers';
 
 // Contract ABI - only the functions we need for verification
@@ -269,3 +270,4 @@ export const getBlockchainService = (): BlockchainService => {
 
 // Export the getter function as default
 export default getBlockchainService;
+}}}}}}}}}}}}}}}}}}}}}}}}}}}

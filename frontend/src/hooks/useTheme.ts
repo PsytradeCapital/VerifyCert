@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Theme Hook
  * Provides theme management functionality for React components
@@ -180,3 +181,4 @@ export const getThemeClasses = (theme: Theme) => ({
   ring: theme === 'dark' ? 'ring-blue-400' : 'ring-blue-600',
   shadow: theme === 'dark' ? 'shadow-2xl shadow-black/50' : 'shadow-lg'
 });
+}}}}}}}}}}}}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CertificateWizard, CertificateFormData } from './ui';
 import toast from 'react-hot-toast';
 
-export default function CertificateWizardDemo() {
+export default function CertificateWizardDemo(): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(true);
   const [walletAddress] = useState('0x742d35Cc6634C0532925a3b8D4C9db96590c6C87');
@@ -69,3 +69,4 @@ export default function CertificateWizardDemo() {
       </div>
     </div>
   );
+}

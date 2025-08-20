@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useRef, useCallback } from 'react';
 
 /**
@@ -303,3 +304,4 @@ export const useSkipLinks = () => {
 
   return { skipToContent, createSkipLink };
 };
+}}}}}}}}}}}}}}}}}}}}

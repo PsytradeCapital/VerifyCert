@@ -148,3 +148,4 @@ describe('Card Component', () => {
     });
   });
 });
+}}

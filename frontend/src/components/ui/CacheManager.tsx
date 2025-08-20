@@ -8,7 +8,7 @@ import {
   WifiOff, 
   Download,
   Smartphone,
-  Monitor
+  Monitor;
 } from 'lucide-react';
 import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWorker';
 
@@ -214,3 +214,4 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) =>
 };
 
 export default CacheManager;
+}}}}

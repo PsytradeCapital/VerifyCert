@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { 
   registerSW, 
@@ -5,13 +6,13 @@ import {
   isServiceWorkerSupported, 
   isStandalone,
   OfflineManager,
-  CacheManager
+  CacheManager;
 } from '../utils/serviceWorker';
 import { 
   getDeviceInfo, 
   shouldShowInstallPrompt, 
   trackInstallPromptEvent,
-  getPWAStatus 
+  getPWAStatus ;
 } from '../utils/pwaUtils';
 
 interface ServiceWorkerState {
@@ -290,3 +291,4 @@ export function usePWAInstallation() {
   };
 
 export default useServiceWorker;
+}}}}}}}}}}}}}}}}}}

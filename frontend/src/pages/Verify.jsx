@@ -71,3 +71,4 @@ const Verify = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl
+}})

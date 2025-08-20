@@ -1,3 +1,4 @@
+import React from 'react';
 interface FeedbackData {
   category: 'navigation' | 'visual-design' | 'overall-experience';
   rating: number;
@@ -331,3 +332,4 @@ export const feedbackService = new FeedbackService();
 
 // Type exports
 export type { FeedbackData, FeedbackAnalytics };
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

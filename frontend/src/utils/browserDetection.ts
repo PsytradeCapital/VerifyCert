@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Browser Detection and Compatibility Utilities
  * Helps identify browser-specific features and compatibility issues
@@ -392,3 +393,4 @@ export function initializeBrowserDetection(): BrowserInfo {
   );
   
   return browserInfo;
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

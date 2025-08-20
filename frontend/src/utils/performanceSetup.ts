@@ -1,3 +1,4 @@
+import React from 'react';
 import { performanceMonitor, logPerformanceStats } from './performanceMonitoring';
 import { performanceMetrics } from '../services/performanceMetrics';
 
@@ -295,3 +296,4 @@ if (process.env.NODE_ENV === 'development') {
   console.log('🔧 Performance debugging tools available at window.performanceDebug');
 
 export default initializePerformanceMonitoring;
+}}}}}}}}}}}}}}}}}

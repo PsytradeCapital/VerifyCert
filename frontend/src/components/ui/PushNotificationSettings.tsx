@@ -258,3 +258,4 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
 };
 
 export default PushNotificationSettings;
+}}}}}}}}

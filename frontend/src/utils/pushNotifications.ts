@@ -1,3 +1,4 @@
+import React from 'react';
 // Push Notification Utilities
 // Handles push notification subscription, management, and interaction
 
@@ -281,3 +282,4 @@ const pushNotificationManager = new PushNotificationManager();
 export default pushNotificationManager;
 export { PushNotificationManager };
 export type { PushSubscriptionData, NotificationPayload };
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

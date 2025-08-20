@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Bundle Optimization Utilities
  * Provides utilities for tree shaking and dynamic imports
@@ -75,3 +76,4 @@ export const monitorBundleSize = () => {
     logBundleInfo();
     verifyTreeShaking();
 };
+}}}}}}}}

@@ -31,3 +31,4 @@ export const RouteTracker: React.FC = () => {
 };
 
 export default RouteTracker;
+}}

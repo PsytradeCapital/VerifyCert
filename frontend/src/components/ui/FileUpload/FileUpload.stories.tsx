@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import FileUpload from './FileUpload';
@@ -152,3 +153,4 @@ export const WithValidation: Story = {
       description: {
         story: 'This example demonstrates file validation. Try uploading files larger than 1MB or with unsupported formats to see validation errors in the browser console.'
 };
+}}}}}}}}}}}}}}}}}}}

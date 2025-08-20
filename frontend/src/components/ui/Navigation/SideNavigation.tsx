@@ -9,7 +9,7 @@ import {
   Users, 
   BarChart3,
   Shield,
-  Plus
+  Plus;
 } from 'lucide-react';
 
 export interface NavigationItem {
@@ -40,14 +40,7 @@ const defaultNavigationItems: NavigationItem[] = [
   { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
 ];
 
-export default function SideNavigation({ 
-  items = defaultNavigationItems,
-  collapsed = false, 
-  onToggle,
-  className = '',
-  showToggleButton = true,
-  showBranding = true
-}: SideNavigationProps) {
+export default function SideNavigation(): JSX.Element {
   const location = useLocation();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [, setFocusedIndex] = useState(-1);
@@ -332,3 +325,4 @@ export default function SideNavigation({
       )}
     </nav>
   );
+}}}}}}}}}}}}

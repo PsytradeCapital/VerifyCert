@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import pushNotificationManager from '../utils/pushNotifications';
 
@@ -195,3 +196,4 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
 };
 
 export default usePushNotifications;
+}}}}}}}}}}}

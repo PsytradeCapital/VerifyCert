@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Validation Animation Utilities
  * Provides smooth animations for form validation feedback
@@ -158,3 +159,4 @@ export const validationSequences = {
     { element: 'icon', animation: 'warningWiggle', delay: 150
   ]
 };
+}}}}}}}}

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Tree Shaking Configuration and Utilities
  * Ensures optimal tree shaking for the application
@@ -148,3 +149,4 @@ export const monitorBundleSize = () => {
 };
 
 import * as React from 'react';
+}}}}}}}}}

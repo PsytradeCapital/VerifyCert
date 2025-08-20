@@ -161,3 +161,4 @@ describe('AutoBreadcrumbs', () => {
     expect(nav).toHaveClass('auto-breadcrumbs');
   });
 });
+}}}}

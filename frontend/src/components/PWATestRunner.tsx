@@ -224,3 +224,4 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete }) => {
 };
 
 export default PWATestRunner;
+}}

@@ -97,3 +97,4 @@ const QuickStats: React.FC<QuickStatsProps> = ({
 };
 
 export default QuickStats;
+}}}

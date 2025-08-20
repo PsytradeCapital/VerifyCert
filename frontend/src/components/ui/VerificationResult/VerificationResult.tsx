@@ -11,7 +11,7 @@ import {
   Share2,
   Copy,
   Eye,
-  Zap
+  Zap;
 } from 'lucide-react';
 import { Card, Button, Badge } from '../';
 
@@ -448,3 +448,4 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
 };
 
 export default VerificationResult;
+}}}}}}

@@ -211,3 +211,4 @@ export const createThemeGradient = (
   
   return `linear-gradient(${direction}, ${gradientColors.join(', ')})`;
 };
+}}}}}

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Image optimization utilities for lazy loading and performance
  */
@@ -362,3 +363,4 @@ export const imagePerformanceMonitor = {
     return stats;
   },
 };
+}}}}}}}}}}}}}}}}}}}}}}}}}}

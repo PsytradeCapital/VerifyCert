@@ -205,3 +205,4 @@ describe('Tooltip Component', () => {
       unmount();
   });
 });
+}}}}

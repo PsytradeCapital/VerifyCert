@@ -17,7 +17,7 @@ import {
   Info,
   CheckCircle,
   AlertTriangle,
-  X
+  X;
 } from 'lucide-react';
 
 const UIComponentsDemo: React.FC = () => {
@@ -428,3 +428,4 @@ const UIComponentsDemo: React.FC = () => {
 };
 
 export default UIComponentsDemo;
+}}

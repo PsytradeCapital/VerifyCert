@@ -39,3 +39,4 @@ const Dialog: React.FC<DialogProps> = ({
 };
 
 export default Dialog;
+}

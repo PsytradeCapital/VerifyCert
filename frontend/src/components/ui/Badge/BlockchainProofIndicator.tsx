@@ -14,7 +14,7 @@ import {
   Calendar,
   Info,
   ChevronDown,
-  ChevronUp
+  ChevronUp;
 } from 'lucide-react';
 import { getBlockchainService } from '../../../services/blockchainService';
 
@@ -376,3 +376,4 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
 };
 
 export default BlockchainProofIndicator;
+}}}}}}}

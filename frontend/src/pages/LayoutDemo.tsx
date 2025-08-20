@@ -7,7 +7,7 @@ import {
   Shield, 
   BarChart3,
   HelpCircle,
-  Bell
+  Bell;
 } from 'lucide-react';
 import AppLayout from '../components/ui/Layout/AppLayout';
 import { NavigationItem } from '../components/ui/Navigation/SideNavigation';
@@ -219,3 +219,4 @@ const LayoutDemo: React.FC = () => {
 };
 
 export default LayoutDemo;
+}}}}}}}}

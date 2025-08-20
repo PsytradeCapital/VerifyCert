@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CertificateMetadataDemo() {
+export default function CertificateMetadataDemo(): JSX.Element {
   return (
     <div className="space-y-6">
       <div>
@@ -18,3 +18,4 @@ export default function CertificateMetadataDemo() {
       </div>
     </div>
   );
+}

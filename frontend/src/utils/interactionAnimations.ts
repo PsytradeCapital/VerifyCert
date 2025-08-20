@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Interactive Element Animation Utilities
  * Enhanced hover and focus animations for all interactive elements
@@ -593,3 +594,4 @@ export const interactionPresets = {
     opacity: 0.8,
     transition: { duration: durations.fast, ease: easings.easeOut
 };
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

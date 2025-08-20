@@ -62,3 +62,4 @@ const PulseSpinner: React.FC<PulseSpinnerProps> = ({
 };
 
 export default PulseSpinner;
+}}

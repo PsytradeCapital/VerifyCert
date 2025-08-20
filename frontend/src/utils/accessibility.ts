@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Accessibility utilities for keyboard navigation and ARIA support
  */
@@ -417,3 +418,4 @@ export class RovingTabindexManager {
 
 // Global live region announcer instance
 export const liveAnnouncer = new LiveRegionAnnouncer();
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

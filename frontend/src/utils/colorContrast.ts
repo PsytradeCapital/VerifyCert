@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Color Contrast Validation Utilities
  * Ensures all color combinations meet WCAG accessibility standards
@@ -472,3 +473,4 @@ export const contrastChecker = {
   findAccessibleColor,
   suggestColorImprovements,
 };
+}}}}}}}}}}}}}}}}}}}}

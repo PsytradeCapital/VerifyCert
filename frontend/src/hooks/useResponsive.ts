@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 
 export interface BreakpointConfig {
@@ -178,3 +179,4 @@ export function useResponsiveColumns(
   return useResponsiveSpacing(mobile, tablet, desktop, breakpoints) as number;
 
 export default useResponsive;
+}}}}}}}}}}}}

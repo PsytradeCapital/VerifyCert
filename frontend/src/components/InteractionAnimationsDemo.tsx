@@ -18,7 +18,7 @@ import {
   AlertCircle,
   Home,
   FileText,
-  Mail
+  Mail;
 } from 'lucide-react';
 
 // Import enhanced components
@@ -437,3 +437,4 @@ const InteractionAnimationsDemo: React.FC = () => {
 };
 
 export default InteractionAnimationsDemo;
+}}}}

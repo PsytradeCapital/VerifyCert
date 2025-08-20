@@ -239,3 +239,4 @@ export const NavigationStateManager: React.FC<NavigationStateManagerProps> = ({
 };
 
 export default NavigationStateManager;
+}}

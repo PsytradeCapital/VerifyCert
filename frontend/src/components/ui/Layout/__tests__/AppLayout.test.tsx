@@ -188,3 +188,4 @@ describe('AppLayout', () => {
     expect(screen.queryByText('Navigation')).not.toBeInTheDocument();
   });
 });
+}}

@@ -1,3 +1,4 @@
+import React from 'react';
 // Network configuration for VerifyCert
 export interface NetworkConfig {
   chainId: number;
@@ -142,3 +143,4 @@ export const getRpcUrl = (chainId?: number): string => {
   const network = getNetworkConfig(targetChainId);
   return network?.rpcUrl || DEFAULT_NETWORK.rpcUrl;
 };
+}}}}}}}}

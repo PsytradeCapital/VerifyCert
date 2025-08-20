@@ -56,3 +56,4 @@ export const withTheme = <P extends object>(
   
   return WrappedComponent;
 };
+}

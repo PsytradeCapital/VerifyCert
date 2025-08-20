@@ -5,7 +5,7 @@ import {
   AlertCircle, 
   AlertTriangle, 
   Info, 
-  X 
+  X ;
 } from 'lucide-react';
 
 export interface NotificationProps {
@@ -210,3 +210,4 @@ const Notification: React.FC<NotificationProps> = ({
 };
 
 export default Notification;
+}}}}}}}}}}

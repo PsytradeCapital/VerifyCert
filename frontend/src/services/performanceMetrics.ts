@@ -1,3 +1,4 @@
+import React from 'react';
 import { performanceMonitor } from '../utils/performanceMonitoring';
 
 export interface WebVitalsMetrics {
@@ -316,3 +317,4 @@ export const trackFormSubmission = async <T>(
 };
 
 export default performanceMetrics;
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

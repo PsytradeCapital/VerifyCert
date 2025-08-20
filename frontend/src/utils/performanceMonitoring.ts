@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Performance monitoring utilities for lazy loading and bundle optimization
  */
@@ -273,3 +274,5 @@ if (process.env.NODE_ENV === 'development') {
     setTimeout(logPerformanceStats, 2000);
   });
 
+
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Certificate } from '../components/CertificateCard';
 
 export interface DemoStats {
@@ -226,3 +227,4 @@ export class DemoDataService {
     this.demoData = null;
 
 export const demoDataService = DemoDataService.getInstance();
+}}}}}}}}}}}}}}}}

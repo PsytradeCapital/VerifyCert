@@ -14,7 +14,7 @@ import {
   TouchTarget,
   MobilePadding,
   ResponsiveGrid,
-  ResponsiveText
+  ResponsiveText;
 } from '../components/ui';
 import { Smartphone, Tablet, Monitor, Hand, Mouse } from 'lucide-react';
 
@@ -325,3 +325,4 @@ const MobileBreakpointDemo: React.FC = () => {
 };
 
 export default MobileBreakpointDemo;
+}}}

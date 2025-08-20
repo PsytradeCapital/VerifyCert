@@ -1,3 +1,4 @@
+import React from 'react';
 // Service Worker Registration and Management
 // Handles PWA service worker registration, updates, and offline capabilities
 
@@ -271,3 +272,4 @@ const serviceWorkerUtils = {
 };
 
 export default serviceWorkerUtils;
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

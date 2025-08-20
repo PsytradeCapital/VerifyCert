@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useCallback, useRef } from 'react';
 import { useNavigation } from '../contexts/NavigationContext';
 
@@ -173,3 +174,4 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
 };
 
 export default useNavigationTransitions;
+}}}}}}}}}}}}}}}}}

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Region utilities for handling country codes and regional preferences
  */
@@ -186,3 +187,4 @@ export function getCurrencySymbol(regionCode: string): string {
   };
 
   return currencySymbols[region?.currency || 'USD'] || '$';
+}}}}}}}}}}}}}}}}}}

@@ -9,7 +9,7 @@ import {
   CertificateCardSkeleton,
   LoadingOverlay,
   LoadingButton,
-  StepProgress
+  StepProgress;
 } from './ui/Loading';
 
 const LoadingAnimationsDemo: React.FC = () => {
@@ -302,3 +302,4 @@ const LoadingAnimationsDemo: React.FC = () => {
 };
 
 export default LoadingAnimationsDemo;
+}}

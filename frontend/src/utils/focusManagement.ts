@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Focus management utilities for navigation and modal components
  */
@@ -438,3 +439,4 @@ export const focusUtils = {
     return skipLink;
   },
 };
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

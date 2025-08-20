@@ -203,3 +203,4 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
 };
 
 export default BrowserCompatibility;
+}}}

@@ -65,14 +65,7 @@ const wizardSteps: WizardStep[] = [
     icon: <Send className="w-5 h-5" />
 ];
 
-export default function CertificateWizard({
-  onSubmit,
-  isLoading = false,
-  walletAddress = null,
-  isConnected = false,
-  className = '',
-  onCancel
-}: CertificateWizardProps) {
+export default function CertificateWizard(): JSX.Element {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
   const [formData, setFormData] = useState<CertificateFormData>({
@@ -720,3 +713,4 @@ export default function CertificateWizard({
       </div>
     </div>
   );
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

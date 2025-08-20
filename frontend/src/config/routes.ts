@@ -1,3 +1,4 @@
+import React from 'react';
 export interface RouteConfig {
   path: string;
   label: string;
@@ -76,3 +77,4 @@ export const matchRoute = (path: string): { config: RouteConfig; params: Record<
   
   return null;
 };
+}}}}}}}

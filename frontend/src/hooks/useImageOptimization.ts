@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { initializeWebPOptimization, webpCache } from '../utils/webpGenerator';
 import { isWebPSupported } from '../utils/imageOptimization';
@@ -160,3 +161,4 @@ export const useImagePerformance = () => {
 };
 
 export default useImageOptimization;
+}}}}}}

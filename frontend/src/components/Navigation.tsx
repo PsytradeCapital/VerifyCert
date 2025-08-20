@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Navigation() {
+export default function Navigation(): JSX.Element {
   const location = useLocation();
   
   const isActive = (path: string) => location.pathname === path;

@@ -25,13 +25,7 @@ interface FormErrors {
   issueDate?: string;
   description?: string;
 
-export default function CertificateForm({
-  onSubmit,
-  isLoading = false,
-  walletAddress = null,
-  isConnected = false,
-  className = '',
-}: CertificateFormProps) {
+export default function CertificateForm(): JSX.Element {
   const [formData, setFormData] = useState<CertificateFormData>({
     recipientAddress: '',
     recipientName: '',
@@ -422,3 +416,4 @@ export default function CertificateForm({
       </div>
     </div>
   );
+}}}}}}}}}}}}}}}}}}}}}}}}}}}

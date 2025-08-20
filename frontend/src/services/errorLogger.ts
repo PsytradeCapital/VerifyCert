@@ -1,3 +1,4 @@
+import React from 'react';
 import { ErrorInfo } from 'react';
 
 export interface ErrorReport {
@@ -281,3 +282,4 @@ export const logNetworkError = (error: Error, endpoint: string, method: string, 
 export const logValidationError = (error: Error, formData: Record<string, any>, fieldName?: string) => {
   errorLogger.logValidationError(error, formData, fieldName);
 };
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

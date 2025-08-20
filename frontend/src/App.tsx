@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 // Pages
 import Home from './pages/Home';
 import IssuerDashboard from './pages/IssuerDashboard';
-import CertificateViewer from './pages/CertificateViewer';
+// import CertificateViewer from './pages/CertificateViewer';
 import NotFound from './pages/NotFound';
 
 // Components
@@ -25,7 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<IssuerDashboard />} />
-              <Route path="/verify/:tokenId" element={<CertificateViewer />} />
+              {/* <Route path="/verify/:tokenId" element={<CertificateViewer />} /> */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

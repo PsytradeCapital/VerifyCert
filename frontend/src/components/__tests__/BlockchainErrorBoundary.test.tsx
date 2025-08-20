@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import BlockchainErrorBoundary from '../BlockchainErrorBoundary';
+// import BlockchainErrorBoundary from '../BlockchainErrorBoundary';
 
 // Mock react-hot-toast
 jest.mock('react-hot-toast', () => ({

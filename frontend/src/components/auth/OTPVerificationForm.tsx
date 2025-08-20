@@ -15,7 +15,8 @@ export const OTPVerificationForm: React.FC = () => {
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-  }, [timeLeft]);
+    }
+ft]);[timeLe  }, 
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthLayout } from './AuthLayout';
-import { ResetPasswordForm } from './ResetPasswordForm';
+import ResetPasswordForm from './ResetPasswordForm';
 import LoadingButton from '../LoadingButton';
 import { toast } from 'react-hot-toast';
 

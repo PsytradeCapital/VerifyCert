@@ -3,7 +3,7 @@ import { renderHook, act } from '@testing-library/react';
 import { 
   useValidationAnimation, 
   useValidationMessageAnimation, 
-  useValidationIconAnimation ;
+  useValidationIconAnimation ;;
 } from '../useValidationAnimation';
 
 // Mock the validation animation utilities

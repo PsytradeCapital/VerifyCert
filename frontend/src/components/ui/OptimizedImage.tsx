@@ -5,7 +5,7 @@ import {
   optimizeImageUrl,
   imagePerformanceMonitor,
   createBlurPlaceholder,
-  ImageOptimizationOptions;
+  ImageOptimizationOptions;;
 } from '../../utils/imageOptimization';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {

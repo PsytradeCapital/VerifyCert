@@ -8,7 +8,7 @@ import {
   WifiOff, 
   Download,
   Smartphone,
-  Monitor;
+  Monitor;;
 } from 'lucide-react';
 import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWorker';
 

@@ -2,7 +2,7 @@ import {
   generateImageSrcSet,
   optimizeImageUrl,
   getResponsiveImagePropsSync,
-  ImageOptimizationOptions;
+  ImageOptimizationOptions;;
 } from '../imageOptimization';
 
 describe('Image Optimization Utils', () => {

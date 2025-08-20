@@ -10,7 +10,7 @@ import {
   Info,
   Zap,
   Link as LinkIcon,
-  Eye;
+  Eye;;
 } from 'lucide-react';
 import { Badge } from './Badge';
 import { getBlockchainService, VerificationResult } from '../../../services/blockchainService';

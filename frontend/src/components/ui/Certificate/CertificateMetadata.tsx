@@ -15,7 +15,7 @@ import {
   ChevronUp,
   Copy,
   ExternalLink,
-  Info;
+  Info;;
 } from 'lucide-react';
 import Tooltip from '../Tooltip/Tooltip';
 

@@ -12,7 +12,7 @@ import {
   TouchTarget,
   MobilePadding,
   ResponsiveGrid,
-  ResponsiveText;
+  ResponsiveText;;
 } from '../ResponsiveUtility';
 
 // Mock window.innerWidth for responsive tests

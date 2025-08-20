@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 interface ResetPasswordFormProps {
@@ -7,21 +6,40 @@ interface ResetPasswordFormProps {
   onBack?: () => void;
 }
 
-export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
-  onSuccess,
-  onBack,
-}) => {
-  const { resetPassword } = useAuth();
-  const [formData, setFormData] = useState({
+interface FormData {
+  code: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+interface FormErrors {
+  code?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+}
+
+export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFormProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
     code: '',
     newPassword: '',
     confirmPassword: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
 
     if (!formData.code.trim()) {
       newErrors.code = 'Verification code is required';
@@ -33,8 +51,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       newErrors.newPassword = 'New password is required';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'Password must be at least 8 characters';
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(formData.newPassword)) {
-      newErrors.newPassword = 'Password must contain uppercase, lowercase, number, and special character';
     }
 
     if (!formData.confirmPassword) {
@@ -50,27 +66,37 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      return;
+    }
 
     setIsLoading(true);
+
     try {
-      await resetPassword(formData.code, formData.newPassword);
-      toast.success('Password reset successfully! Please log in with your new password.');
-      onSuccess?.();
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to reset password');
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: formData.code,
+          newPassword: formData.newPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success('Password reset successfully!');
+        onSuccess?.();
+      } else {
+        throw new Error(data.message || 'Failed to reset password');
+      }
+    } catch (error) {
+      console.error('Reset password error:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to reset password');
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -103,7 +129,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           />
           {errors.code && <p className="mt-1 text-sm text-red-600">{errors.code}</p>}
         </div>
-        </div>
 
         <div>
           <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-2">
@@ -122,7 +147,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
             disabled={isLoading}
           />
           {errors.newPassword && <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>}
-        </div>
         </div>
 
         <div>
@@ -143,7 +167,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           />
           {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
         </div>
-        </div>
 
         <button
           type="submit"
@@ -157,7 +180,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           <button
             type="button"
             onClick={onBack}
-            className="w-full text-gray-600 hover:text-gray-800 py-2 px-4 rounded-lg border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+            className="w-full text-blue-600 hover:text-blue-700 py-2 px-4 rounded-lg border border-blue-600 hover:border-blue-700 transition-colors"
           >
             Back to Login
           </button>
@@ -165,4 +188,4 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       </form>
     </div>
   );
-};
+}

@@ -5,7 +5,7 @@ import {
   validationStateAnimations,
   validationSequences,
   createStaggeredDelay,
-  defaultAnimationConfig;
+  defaultAnimationConfig;;
 } from '../validationAnimations';
 
 // Mock DOM methods

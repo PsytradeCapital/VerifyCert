@@ -14,7 +14,7 @@ import {
   FileText,
   Database,
   Check,
-  AlertCircle;
+  AlertCircle;;
 } from 'lucide-react';
 import { Button, Modal, Alert } from '../';
 import { CertificateData } from '../../../services/blockchainService';

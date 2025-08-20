@@ -5,7 +5,7 @@ import {
   AlertCircle, 
   AlertTriangle, 
   Info, 
-  X ;
+  X ;;
 } from 'lucide-react';
 
 export interface AlertProps {

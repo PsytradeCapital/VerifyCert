@@ -14,7 +14,7 @@ import {
   Calendar,
   Info,
   ChevronDown,
-  ChevronUp;
+  ChevronUp;;
 } from 'lucide-react';
 import { getBlockchainService } from '../../../services/blockchainService';
 

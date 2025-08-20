@@ -10,7 +10,7 @@ import {
   VisualDesignFeedback,
   OverallExperienceFeedback,
   useFeedbackIntegration,
-  feedbackService;
+  feedbackService;;
 } from '../components/ui/Feedback';
 
 const FeedbackDemo: React.FC = () => {

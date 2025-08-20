@@ -8,7 +8,7 @@ import {
   safeImport, 
   createLazyComponent,
   logBundleInfo,
-  verifyTreeShaking ;
+  verifyTreeShaking ;;
 } from '../bundleOptimization';
 
 // Mock React for testing

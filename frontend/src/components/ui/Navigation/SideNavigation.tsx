@@ -9,7 +9,7 @@ import {
   Users, 
   BarChart3,
   Shield,
-  Plus;
+  Plus;;
 } from 'lucide-react';
 
 export interface NavigationItem {

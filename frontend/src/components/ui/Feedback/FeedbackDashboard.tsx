@@ -8,7 +8,7 @@ import {
   AlertTriangle,
   Download,
   RefreshCw,
-  Filter;
+  Filter;;
 } from 'lucide-react';
 import Card from '../Card/Card';
 import { Button } from '../Button/Button';

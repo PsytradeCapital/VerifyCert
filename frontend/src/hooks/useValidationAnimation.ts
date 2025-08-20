@@ -9,7 +9,7 @@ import {
   triggerValidationAnimation, 
   getValidationAnimationClasses,
   validationSequences,
-  ValidationAnimationConfig;
+  ValidationAnimationConfig;;
 } from '../utils/validationAnimations';
 
 export interface UseValidationAnimationOptions {

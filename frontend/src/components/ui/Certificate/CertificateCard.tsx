@@ -11,7 +11,7 @@ import {
   ExternalLink,
   QrCode,
   Copy,
-  Printer;
+  Printer;;
 } from 'lucide-react';
 import { useFeedbackAnimations } from '../../../hooks/useFeedbackAnimations';
 import { VerificationBadge } from '../Badge';

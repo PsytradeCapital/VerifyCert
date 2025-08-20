@@ -1,39 +1,27 @@
-import React, { ReactNode } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps {
-  children: ReactNode;
-  isWalletConnected: boolean;
-  requireWallet?: boolean;
-  allowDemoMode?: boolean;
+  children: React.ReactNode;
 }
 
-export default function ProtectedRoute({ 
-  children, 
-  isWalletConnected, 
-  requireWallet = true,
-  allowDemoMode = false
-}: ProtectedRouteProps) {
-  const location = useLocation();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
 
-  // If wallet is required but not connected, redirect to home with state
-  // Exception: if demo mode is allowed, we still redirect but with a different message
-  if (requireWallet && !isWalletConnected) {
-    const message = allowDemoMode 
-      ? 'Connect your wallet to access the dashboard and explore all features!'
-      : 'Please connect your wallet to access this page.';
-      
+  if (isLoading) {
     return (
-      <Navigate 
-        to="/" 
-        state={{ 
-          from: location,
-          message,
-          showDemoPrompt: allowDemoMode
-        }} 
-        replace 
-      />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
     );
   }
 
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
   return <>{children}</>;
+};
+
+export default ProtectedRoute;

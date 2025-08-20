@@ -12,6 +12,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // Theme provider props
 interface ThemeProviderProps {
   children: ReactNode;
+}
 
 /**
  * Theme Provider Component

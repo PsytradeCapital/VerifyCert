@@ -16,11 +16,13 @@ interface FeedbackContextType {
   getFeedbackAnalytics: () => ReturnType<typeof feedbackService.getAnalytics>;
   exportFeedback: () => string;
   clearFeedback: () => void;
+}
 
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
   children: ReactNode;
+}
 
 export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) => {
   const [isCollectorOpen, setIsCollectorOpen] = useState(false);

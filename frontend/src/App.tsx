@@ -25,7 +25,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
 
-  const handleWalletConnect = (address: string, provider: any) => {
+  const handleWalletConnect = (address: string, _provider: any) => {
     setWalletAddress(address);
     setIsWalletConnected(true);
   };

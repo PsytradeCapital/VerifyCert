@@ -16,7 +16,7 @@ export const OTPVerificationForm: React.FC = () => {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     }
-ft]);[timeLe  }, 
+  }, [timeLeft]);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -30,6 +30,7 @@ ft]);[timeLe  },
     if (otp.length !== 6) {
       toast.error('Please enter a 6-digit verification code');
       return;
+    }
 
     setIsLoading(true);
     try {
@@ -40,6 +41,7 @@ ft]);[timeLe  },
       toast.error(error instanceof Error ? error.message : 'Verification failed');
     } finally {
       setIsLoading(false);
+    }
   };
 
   const handleResendOTP = async () => {
@@ -52,6 +54,7 @@ ft]);[timeLe  },
       toast.error(error instanceof Error ? error.message : 'Failed to resend code');
     } finally {
       setIsResending(false);
+    }
   };
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {

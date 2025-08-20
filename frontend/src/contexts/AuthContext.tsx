@@ -73,6 +73,10 @@ interface AuthContextType extends AuthState {
   login: (emailOrPhone: string, password: string) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => void;
+  verifyOTP: (code: string) => Promise<void>;
+  resendOTP: () => Promise<void>;
+  forgotPassword: (emailOrPhone: string) => Promise<void>;
+  resetPassword: (code: string, newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

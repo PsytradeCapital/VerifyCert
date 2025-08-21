@@ -77,4 +77,3 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
     </>
   );
 };
-}

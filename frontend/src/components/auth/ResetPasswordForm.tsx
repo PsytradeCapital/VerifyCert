@@ -4,19 +4,16 @@ import toast from 'react-hot-toast';
 interface ResetPasswordFormProps {
   onSuccess?: () => void;
   onBack?: () => void;
-}
 
 interface FormData {
   code: string;
   newPassword: string;
   confirmPassword: string;
-}
 
 interface FormErrors {
   code?: string;
   newPassword?: string;
   confirmPassword?: string;
-}
 
 export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFormProps): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
@@ -35,7 +32,6 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
     // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
-    }
   };
 
   const validateForm = (): boolean => {
@@ -45,19 +41,16 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
       newErrors.code = 'Verification code is required';
     } else if (formData.code.length !== 6) {
       newErrors.code = 'Verification code must be 6 digits';
-    }
 
     if (!formData.newPassword) {
       newErrors.newPassword = 'New password is required';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'Password must be at least 8 characters';
-    }
 
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -68,7 +61,6 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
     
     if (!validateForm()) {
       return;
-    }
 
     setIsLoading(true);
 
@@ -91,13 +83,11 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
         onSuccess?.();
       } else {
         throw new Error(data.message || 'Failed to reset password');
-      }
     } catch (error) {
       console.error('Reset password error:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to reset password');
     } finally {
       setIsLoading(false);
-    }
   };
 
   return (
@@ -127,7 +117,7 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
             }`}
             disabled={isLoading}
           />
-          {errors.code && <p className="mt-1 text-sm text-red-600">{errors.code}</p>}
+          {errors.code && <p className="mt-1 text-sm text-red-600">{errors.code}</p>
         </div>
 
         <div>
@@ -146,7 +136,7 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
             }`}
             disabled={isLoading}
           />
-          {errors.newPassword && <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>}
+          {errors.newPassword && <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>
         </div>
 
         <div>
@@ -165,7 +155,7 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
             }`}
             disabled={isLoading}
           />
-          {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
         </div>
 
         <button
@@ -188,4 +178,3 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
       </form>
     </div>
   );
-}

@@ -4,14 +4,12 @@ interface ThemeContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   setTheme: (theme: 'light' | 'dark') => void;
-}
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
   children: ReactNode;
   defaultTheme?: 'light' | 'dark';
-}
 
 export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<'light' | 'dark'>(defaultTheme);
@@ -21,7 +19,6 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     if (savedTheme) {
       setThemeState(savedTheme);
-    }
   }, []);
 
   useEffect(() => {
@@ -50,12 +47,10 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
       {children}
     </ThemeContext.Provider>
   );
-}
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
-  }
   return context;
 };

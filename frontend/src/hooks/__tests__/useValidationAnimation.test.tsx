@@ -108,7 +108,7 @@ describe('useValidationAnimation', () => {
   it('auto-triggers animations on validation state change', async () => {
     const { result, rerender } = renderHook(
       ({ validationState }) => useValidationAnimation(validationState),
-      { initialProps: { validationState: 'default' as const }
+      { initialProps: { validationState: 'default' as const
     );
 
     // Mock DOM elements
@@ -137,8 +137,7 @@ describe('useValidationMessageAnimation', () => {
       { 
         initialProps: { 
           message: undefined as string | undefined, 
-          validationState: 'default' as const 
-        }
+          validationState: 'default' as const
     );
 
     expect(result.current.displayMessage).toBeUndefined();
@@ -160,8 +159,7 @@ describe('useValidationMessageAnimation', () => {
       { 
         initialProps: { 
           message: 'Initial message', 
-          validationState: 'error' as const 
-        }
+          validationState: 'error' as const
     );
 
     expect(result.current.isVisible).toBe(true);
@@ -183,8 +181,7 @@ describe('useValidationIconAnimation', () => {
       { 
         initialProps: { 
           validationState: 'default' as const, 
-          showIcon: true 
-        }
+          showIcon: true
     );
 
     expect(result.current.currentState).toBe('default');
@@ -205,8 +202,7 @@ describe('useValidationIconAnimation', () => {
       { 
         initialProps: { 
           validationState: 'success' as const, 
-          showIcon: false 
-        }
+          showIcon: false
     );
 
     expect(result.current.shouldShowIcon).toBe(false);
@@ -222,7 +218,7 @@ describe('useValidationIconAnimation', () => {
   it('manages state change animations', async () => {
     const { result, rerender } = renderHook(
       ({ validationState }) => useValidationIconAnimation(validationState, true),
-      { initialProps: { validationState: 'success' as const }
+      { initialProps: { validationState: 'success' as const
     );
 
     expect(result.current.isChanging).toBe(false);

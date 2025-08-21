@@ -45,4 +45,3 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
 };
 
 export default ResponsiveLayout;
-}

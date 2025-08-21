@@ -332,4 +332,3 @@ describe('PerformanceDashboard', () => {
     expect(poorBadges.length).toBeGreaterThan(0);
   });
 });
-}

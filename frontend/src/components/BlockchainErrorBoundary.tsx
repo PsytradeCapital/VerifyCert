@@ -2,25 +2,20 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
-}
 
 interface State {
   hasError: boolean;
-}
 
 export default class BlockchainErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
-  }
 
   static getDerivedStateFromError(): State {
     return { hasError: true };
-  }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('BlockchainErrorBoundary caught an error:', error, errorInfo);
-  }
 
   render() {
     if (this.state.hasError) {
@@ -37,8 +32,5 @@ export default class BlockchainErrorBoundary extends Component<Props, State> {
           </div>
         </div>
       );
-    }
 
     return this.props.children;
-  }
-}

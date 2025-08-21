@@ -1,51 +1,32 @@
-/**
- * Design Tokens (TypeScript version)
- * Central configuration for all design values used throughout the application
- */
-
-// Import the JavaScript version to ensure consistency
-import { designTokens as jsTokens } from './tokens.js';
-
-// Theme-specific types
-export type Theme = 'light' | 'dark';
-
-// Type definitions for better TypeScript support
-export type ColorScale = typeof jsTokens.colors.primary;
-export type SpacingValue = keyof typeof jsTokens.spacing;
-export type FontSize = keyof typeof jsTokens.typography.fontSize;
-export type FontWeight = keyof typeof jsTokens.typography.fontWeight;
-export type BorderRadius = keyof typeof jsTokens.borderRadius;
-export type BoxShadow = keyof typeof jsTokens.boxShadow;
-
-// Theme-specific types
-export type ThemeColors = typeof jsTokens.colors.light;
-export type ThemeShadows = typeof jsTokens.boxShadow.light;
-export type CSSVariables = typeof jsTokens.cssVariables.light;
-
-// Utility types for theme-aware components
-export interface ThemeConfig {
-  theme: Theme;
-  colors: ThemeColors;
-  shadows: ThemeShadows;
-  cssVariables: CSSVariables;
-
-// Color utility types
-export type ColorVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'error' | 'warning' | 'info';
-export type ColorShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
-export type SurfaceColor = keyof typeof jsTokens.colors.light.surface;
-
-// Helper function to get theme-specific tokens
-export function getThemeTokens(theme: Theme): ThemeConfig {
-  return {
-    theme,
-    colors: jsTokens.colors[theme] || jsTokens.colors.light,
-    shadows: jsTokens.boxShadow[theme] || jsTokens.boxShadow.light,
-    cssVariables: jsTokens.cssVariables[theme] || jsTokens.cssVariables.light
-  };
-
-// Export with proper TypeScript typing
-export const designTokens = jsTokens;
-
-// Also export a default to ensure module compatibility
-export default designTokens;
-}}
+export const designTokens = {
+  colors: {
+    primary: '#2563eb',
+    secondary: '#64748b',
+    success: '#10b981',
+    warning: '#f59e0b',
+    error: '#ef4444',
+    background: '#ffffff',
+    surface: '#f8fafc',
+    text: '#1f2937',
+    textSecondary: '#6b7280'
+  },
+  spacing: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+    xxl: '3rem'
+  },
+  borderRadius: {
+    sm: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    xl: '0.75rem'
+  },
+  shadows: {
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+  }
+};

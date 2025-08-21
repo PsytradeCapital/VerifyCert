@@ -22,4 +22,3 @@ export default function NotFound(): JSX.Element {
       </div>
     </div>
   );
-}

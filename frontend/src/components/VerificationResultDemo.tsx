@@ -174,4 +174,3 @@ const VerificationResultDemo: React.FC = () => {
 };
 
 export default VerificationResultDemo;
-}

@@ -73,10 +73,6 @@ interface AuthContextType extends AuthState {
   login: (emailOrPhone: string, password: string) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => void;
-  verifyOTP: (code: string) => Promise<void>;
-  resendOTP: () => Promise<void>;
-  forgotPassword: (emailOrPhone: string) => Promise<void>;
-  resetPassword: (code: string, newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -135,54 +131,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     dispatch({ type: 'LOGOUT' });
   };
 
-  const verifyOTP = async (code: string) => {
-    dispatch({ type: 'AUTH_START' });
-    try {
-      // Mock implementation - replace with actual API call
-      setTimeout(() => {
-        const mockUser: User = {
-          id: 1,
-          name: 'Demo User',
-          email: 'demo@example.com',
-          region: 'US',
-          role: 'user',
-          isVerified: true,
-        };
-        dispatch({ 
-          type: 'AUTH_SUCCESS', 
-          payload: { user: mockUser, token: 'demo-token' } 
-        });
-      }, 1000);
-    } catch (error) {
-      dispatch({ type: 'AUTH_FAILURE' });
-      throw error;
-    }
-  };
-
-  const resendOTP = async () => {
-    // Mock implementation
-    return Promise.resolve();
-  };
-
-  const forgotPassword = async (emailOrPhone: string) => {
-    // Mock implementation
-    return Promise.resolve();
-  };
-
-  const resetPassword = async (code: string, newPassword: string) => {
-    // Mock implementation
-    return Promise.resolve();
-  };
-
   const value: AuthContextType = {
     ...state,
     login,
     register,
     logout,
-    verifyOTP,
-    resendOTP,
-    forgotPassword,
-    resetPassword,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

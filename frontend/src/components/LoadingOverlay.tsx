@@ -30,4 +30,3 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
 };
 
 export default LoadingOverlay;
-}

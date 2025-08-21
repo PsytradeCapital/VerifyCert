@@ -16,13 +16,11 @@ interface FeedbackContextType {
   getFeedbackAnalytics: () => ReturnType<typeof feedbackService.getAnalytics>;
   exportFeedback: () => string;
   clearFeedback: () => void;
-}
 
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
   children: ReactNode;
-}
 
 export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) => {
   const [isCollectorOpen, setIsCollectorOpen] = useState(false);
@@ -95,4 +93,3 @@ export const useFeedback = (): FeedbackContextType => {
     throw new Error('useFeedback must be used within a FeedbackProvider');
   return context;
 };
-}

@@ -14,7 +14,6 @@ export interface Certificate {
   isValid: boolean;
   qrCodeURL?: string;
   verificationURL?: string;
-}
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -23,7 +22,6 @@ interface CertificateCardProps {
   className?: string;
   onDownload?: () => void;
   onShare?: () => void;
-}
 
 export default function CertificateCard({ 
   certificate, 
@@ -67,7 +65,6 @@ export default function CertificateCard({
       
       if (!ctx) {
         throw new Error('Canvas not supported');
-      }
 
       // Set canvas size
       canvas.width = 800;
@@ -136,14 +133,12 @@ export default function CertificateCard({
       });
     } finally {
       setIsLoading(false);
-    }
   };
 
   const handleShare = async () => {
     if (onShare) {
       onShare();
       return;
-    }
 
     const shareData = {
       title: `Certificate: ${certificate.courseName}`,
@@ -161,13 +156,11 @@ export default function CertificateCard({
         // Fallback to clipboard
         await navigator.clipboard.writeText(shareData.url || window.location.href);
         feedback.showSuccess('Certificate link copied to clipboard!');
-      }
     } catch (error) {
       console.error('Share failed:', error);
       feedback.showError('Failed to share certificate', {
         shake: true
       });
-    }
   };
 
   const handleCopyLink = async () => {
@@ -180,7 +173,6 @@ export default function CertificateCard({
       feedback.showError('Failed to copy link', {
         shake: true
       });
-    }
   };
 
   return (
@@ -406,4 +398,3 @@ export default function CertificateCard({
       </div>
     </article>
   );
-}

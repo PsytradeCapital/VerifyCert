@@ -60,4 +60,3 @@ export const NetworkDisplay: React.FC<NetworkDisplayProps> = ({
     </div>
   );
 };
-}

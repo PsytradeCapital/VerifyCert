@@ -5,12 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 interface Props {
   children: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-}
 
 interface State {
   hasError: boolean;
   error: Error | null;
-}
 
 // HOC to provide navigation hooks to class component
 const withNavigation = (Component: React.ComponentType<any>) => {

@@ -4,7 +4,6 @@ interface AuthLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
-}
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) => {
   return (

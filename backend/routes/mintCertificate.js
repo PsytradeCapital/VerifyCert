@@ -1,12 +1,12 @@
 const express = require('express');
 const { ethers } = require('ethers');
 const Joi = require('joi');
-const { authenticateToken } = require('../src/middleware/auth');
+const { authenticateToken, requireVerified } = require('../src/middleware/auth');
 const router = express.Router();
 
 // Load contract ABI and address
 const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
-const contractAddresses = require('../contract-addresses.json');
+const contractAddresses = require('../../contract-addresses.json');
 
 // Validation schema
 const mintCertificateSchema = Joi.object({
@@ -17,7 +17,7 @@ const mintCertificateSchema = Joi.object({
 });
 
 // POST /api/mint-certificate
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, requireVerified, async (req, res) => {
   try {
     // Validate request body
     const { error, value } = mintCertificateSchema.validate(req.body);
@@ -214,6 +214,43 @@ router.get('/status/:txHash', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to check transaction status'
+    });
+  }
+});
+
+// GET /api/mint-certificate/user-certificates - Get certificates issued by current user
+router.get('/user-certificates', authenticateToken, requireVerified, async (req, res) => {
+  try {
+    const db = require('../src/models/database');
+    const certificates = await db.all(`
+      SELECT * FROM certificate_issuances 
+      WHERE user_id = ? 
+      ORDER BY created_at DESC
+    `, [req.user.id]);
+
+    res.json({
+      success: true,
+      data: {
+        certificates: certificates.map(cert => ({
+          id: cert.id,
+          tokenId: cert.token_id,
+          transactionHash: cert.transaction_hash,
+          recipientAddress: cert.recipient_address,
+          recipientName: cert.recipient_name,
+          courseName: cert.course_name,
+          institutionName: cert.institution_name,
+          issuerAddress: cert.issuer_address,
+          blockNumber: cert.block_number,
+          createdAt: cert.created_at
+        }))
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching user certificates:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch certificates'
     });
   }
 });

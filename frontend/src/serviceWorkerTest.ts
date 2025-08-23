@@ -18,9 +18,11 @@ export function testServiceWorker() {
       },
       onError: (error) => {
         console.error('❌ Service worker registration failed:', error);
+      }
     });
   } else {
     console.warn('⚠️ Service workers are not supported in this browser');
+  }
 
 // Test cache functionality
 export async function testCache() {
@@ -36,8 +38,10 @@ export async function testCache() {
       await caches.delete('test-cache');
     } catch (error) {
       console.error('❌ Cache test failed:', error);
+    }
   } else {
     console.warn('⚠️ Cache API is not supported in this browser');
+  }
 
 // Test offline detection
 export function testOfflineDetection() {
@@ -63,5 +67,3 @@ export default {
   testCache,
   testOfflineDetection
 };
-}
-}

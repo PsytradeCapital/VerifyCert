@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, User, GraduationCap, Building, Shield, AlertTriangle } from 'lucide-react';
+import { Calendar, User, GraduationCap, Building, Shield, AlertTriangle, ExternalLink } from 'lucide-react';
 
 const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }) => {
   const formatDate = (timestamp) => {
@@ -96,8 +96,8 @@ const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }
         </div>
       )}
 
-      {/* Verification Link */}
-      <div className="mt-4 pt-4 border-t border-gray-200">
+      {/* Links */}
+      <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
         <a
           href={`/verify/${tokenId}`}
           target="_blank"
@@ -107,6 +107,18 @@ const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }
           <Shield className="h-4 w-4" />
           <span>Verify Certificate</span>
         </a>
+        
+        <div className="mt-2">
+          <a
+            href={`https://amoy.polygonscan.com/token/0x6c9D554C721dA0CEA1b975982eAEe1f924271F50?a=${tokenId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-800 text-xs"
+          >
+            <ExternalLink className="h-3 w-3" />
+            <span>View on Blockchain Explorer</span>
+          </a>
+        </div>
       </div>
     </div>
   );

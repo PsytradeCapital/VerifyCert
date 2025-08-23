@@ -1,284 +1,256 @@
 const express = require('express');
 const { ethers } = require('ethers');
-const QRCode = require('qrcode');
+const Joi = require('joi');
+const { authenticateToken, requireVerified } = require('../middleware/auth');
 const router = express.Router();
 
-// Import contract ABI and address
-const certificateABI = require('../contracts/Certificate.json');
-const { CERTIFICATE_CONTRACT_ADDRESS, PRIVATE_KEY, RPC_URL } = process.env;
+// Load contract ABI and address
+const contractABI = require('../../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractAddresses = require('../../contract-addresses.json');
 
-// Initialize provider and contract
-const provider = new ethers.JsonRpcProvider(RPC_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-const certificateContract = new ethers.Contract(
-  CERTIFICATE_CONTRACT_ADDRESS,
-  certificateABI.abi,
-  wallet
-);
+// Validation schema
+const mintCertificateSchema = Joi.object({
+  recipientAddress: Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/).required(),
+  recipientName: Joi.string().min(1).max(100).required(),
+  courseName: Joi.string().min(1).max(200).required(),
+  institutionName: Joi.string().min(1).max(100).required()
+});
 
-// Validation middleware
-const validateCertificateData = (req, res, next) => {
-  const { recipient, recipientName, courseName, institutionName } = req.body;
-  
-  const errors = [];
-  
-  if (!recipient || !ethers.isAddress(recipient)) {
-    errors.push('Valid recipient address is required');
-  }
-  
-  if (!recipientName || recipientName.trim().length < 2) {
-    errors.push('Recipient name must be at least 2 characters');
-  }
-  
-  if (!courseName || courseName.trim().length < 2) {
-    errors.push('Course name must be at least 2 characters');
-  }
-  
-  if (!institutionName || institutionName.trim().length < 2) {
-    errors.push('Institution name must be at least 2 characters');
-  }
-  
-  if (errors.length > 0) {
-    return res.status(400).json({
-      success: false,
-      error: {
-        code: 'VALIDATION_ERROR',
-        message: 'Invalid certificate data',
-        details: errors
-      }
-    });
-  }
-  
-  next();
-};
-
-// Generate QR Code
-const generateQRCode = async (tokenId) => {
+// POST /api/mint-certificate
+router.post('/', authenticateToken, requireVerified, async (req, res) => {
   try {
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify/${tokenId}`;
-    const qrCodeDataURL = await QRCode.toDataURL(verificationUrl, {
-      width: 300,
-      margin: 2,
-      color: {
-        dark: '#000000',
-        light: '#FFFFFF'
-      }
-    });
-    
-    return {
-      qrCodeDataURL,
-      verificationUrl
-    };
-  } catch (error) {
-    console.error('QR Code generation failed:', error);
-    throw new Error('Failed to generate QR code');
-  }
-};
+    // Validate request body
+    const { error, value } = mintCertificateSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        error: 'Validation error',
+        details: error.details[0].message
+      });
+    }
 
-// POST /api/v1/certificates/mint
-router.post('/mint', validateCertificateData, async (req, res) => {
-  try {
-    const { recipient, recipientName, courseName, institutionName, metadataURI = '' } = req.body;
-    
-    console.log('Minting certificate for:', {
-      recipient,
-      recipientName,
-      courseName,
-      institutionName
-    });
-    
-    // Check if the issuer is authorized
-    const issuerAddress = wallet.address;
-    const isAuthorized = await certificateContract.authorizedIssuers(issuerAddress);
-    const isOwner = await certificateContract.owner() === issuerAddress;
+    const { recipientAddress, recipientName, courseName, institutionName } = value;
+
+    // Initialize provider and signer
+    const provider = new ethers.JsonRpcProvider(process.env.AMOY_RPC_URL);
+    const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+
+    // Get contract instance
+    const contractAddress = contractAddresses.amoy?.Certificate;
+    if (!contractAddress) {
+      return res.status(500).json({
+        success: false,
+        error: 'Contract not deployed on Amoy network'
+      });
+    }
+
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+    // Check if signer is authorized issuer
+    const isAuthorized = await contract.isAuthorizedIssuer(signer.address);
+    const isOwner = (await contract.owner()) === signer.address;
     
     if (!isAuthorized && !isOwner) {
       return res.status(403).json({
         success: false,
-        error: {
-          code: 'AUTHORIZATION_ERROR',
-          message: 'Unauthorized issuer',
-          details: 'Your address is not authorized to mint certificates'
-        }
+        error: 'Not authorized to issue certificates'
       });
     }
-    
+
     // Estimate gas for the transaction
-    const gasEstimate = await certificateContract.mintCertificate.estimateGas(
-      recipient,
-      recipientName.trim(),
-      courseName.trim(),
-      institutionName.trim(),
-      metadataURI
+    const gasEstimate = await contract.issueCertificateBasic.estimateGas(
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName
     );
-    
+
     // Add 20% buffer to gas estimate
     const gasLimit = Math.floor(Number(gasEstimate) * 1.2);
-    
-    // Execute the minting transaction
-    const tx = await certificateContract.mintCertificate(
-      recipient,
-      recipientName.trim(),
-      courseName.trim(),
-      institutionName.trim(),
-      metadataURI,
-      {
-        gasLimit: gasLimit
-      }
+
+    // Issue the certificate
+    const tx = await contract.issueCertificateBasic(
+      recipientAddress,
+      recipientName,
+      courseName,
+      institutionName,
+      { gasLimit }
     );
-    
-    console.log('Transaction submitted:', tx.hash);
-    
+
     // Wait for transaction confirmation
     const receipt = await tx.wait();
-    
-    if (receipt.status !== 1) {
-      throw new Error('Transaction failed');
-    }
-    
-    // Extract token ID from the event logs
-    const mintEvent = receipt.logs.find(log => {
+
+    // Extract token ID from the event
+    const event = receipt.logs.find(log => {
       try {
-        const parsedLog = certificateContract.interface.parseLog(log);
-        return parsedLog.name === 'CertificateMinted';
+        const parsedLog = contract.interface.parseLog(log);
+        return parsedLog.name === 'CertificateIssued';
       } catch (e) {
         return false;
       }
     });
-    
-    if (!mintEvent) {
-      throw new Error('Certificate minted but token ID not found in events');
-    }
-    
-    const parsedEvent = certificateContract.interface.parseLog(mintEvent);
-    const tokenId = parsedEvent.args.tokenId.toString();
-    
-    console.log('Certificate minted with token ID:', tokenId);
-    
-    // Generate QR code
-    const { qrCodeDataURL, verificationUrl } = await generateQRCode(tokenId);
-    
-    // Get the complete certificate data
-    const certificateData = await certificateContract.getCertificate(tokenId);
-    
-    const response = {
-      success: true,
-      data: {
-        tokenId,
-        transactionHash: tx.hash,
-        blockNumber: receipt.blockNumber,
-        certificate: {
-          tokenId,
-          issuer: certificateData.issuer,
-          recipient: certificateData.recipient,
-          recipientName: certificateData.recipientName,
-          courseName: certificateData.courseName,
-          institutionName: certificateData.institutionName,
-          issueDate: Number(certificateData.issueDate),
-          metadataURI: certificateData.metadataURI,
-          isValid: certificateData.isValid
-        },
-        qrCode: qrCodeDataURL,
-        verificationUrl,
-        gasUsed: receipt.gasUsed.toString()
-      }
-    };
-    
-    res.status(201).json(response);
-    
-  } catch (error) {
-    console.error('Certificate minting failed:', error);
-    
-    let errorResponse = {
-      success: false,
-      error: {
-        code: 'MINT_FAILED',
-        message: 'Failed to mint certificate',
-        details: error.message
-      }
-    };
-    
-    // Handle specific error types
-    if (error.code === 'INSUFFICIENT_FUNDS') {
-      errorResponse.error.code = 'INSUFFICIENT_FUNDS';
-      errorResponse.error.message = 'Insufficient funds for gas';
-    } else if (error.code === 'NETWORK_ERROR') {
-      errorResponse.error.code = 'NETWORK_ERROR';
-      errorResponse.error.message = 'Network connection failed';
-    } else if (error.message.includes('UnauthorizedIssuer')) {
-      errorResponse.error.code = 'AUTHORIZATION_ERROR';
-      errorResponse.error.message = 'Unauthorized to mint certificates';
-    }
-    
-    res.status(500).json(errorResponse);
-  }
-});
 
-// GET /api/v1/certificates/issuer/:address - Get certificates by issuer
-router.get('/issuer/:address', async (req, res) => {
-  try {
-    const { address } = req.params;
-    
-    if (!ethers.isAddress(address)) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: 'VALIDATION_ERROR',
-          message: 'Invalid address format'
-        }
-      });
+    let tokenId = null;
+    if (event) {
+      const parsedLog = contract.interface.parseLog(event);
+      tokenId = parsedLog.args.tokenId.toString();
     }
-    
-    // Get all CertificateMinted events for this issuer
-    const filter = certificateContract.filters.CertificateMinted(null, address, null);
-    const events = await certificateContract.queryFilter(filter);
-    
-    const certificates = await Promise.all(
-      events.map(async (event) => {
-        const tokenId = event.args.tokenId.toString();
-        try {
-          const certData = await certificateContract.getCertificate(tokenId);
-          return {
-            tokenId,
-            issuer: certData.issuer,
-            recipient: certData.recipient,
-            recipientName: certData.recipientName,
-            courseName: certData.courseName,
-            institutionName: certData.institutionName,
-            issueDate: Number(certData.issueDate),
-            metadataURI: certData.metadataURI,
-            isValid: certData.isValid,
-            transactionHash: event.transactionHash,
-            blockNumber: event.blockNumber
-          };
-        } catch (error) {
-          console.error(`Failed to get certificate ${tokenId}:`, error);
-          return null;
-        }
-      })
-    );
-    
-    // Filter out failed certificate retrievals
-    const validCertificates = certificates.filter(cert => cert !== null);
-    
+
+    // Store certificate issuance record in database
+    try {
+      const db = require('../models/database');
+      await db.run(`
+        INSERT INTO certificate_issuances (
+          user_id, token_id, transaction_hash, recipient_address, 
+          recipient_name, course_name, institution_name, 
+          issuer_address, block_number, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `, [
+        req.user.id, tokenId, tx.hash, recipientAddress,
+        recipientName, courseName, institutionName,
+        signer.address, receipt.blockNumber, new Date().toISOString()
+      ]);
+    } catch (dbError) {
+      console.warn('Failed to store certificate record:', dbError);
+      // Don't fail the request if database storage fails
+    }
+
     res.json({
       success: true,
       data: {
-        issuer: address,
-        totalCertificates: validCertificates.length,
-        certificates: validCertificates
+        transactionHash: tx.hash,
+        tokenId: tokenId,
+        blockNumber: receipt.blockNumber,
+        gasUsed: receipt.gasUsed.toString(),
+        certificate: {
+          recipientAddress,
+          recipientName,
+          courseName,
+          institutionName,
+          issuer: signer.address,
+          issuedBy: req.user.name || req.user.email
+        }
       }
     });
-    
+
   } catch (error) {
-    console.error('Failed to get issuer certificates:', error);
+    console.error('Error minting certificate:', error);
+
+    // Handle specific contract errors
+    if (error.reason) {
+      return res.status(400).json({
+        success: false,
+        error: 'Contract error',
+        details: error.reason
+      });
+    }
+
+    // Handle network errors
+    if (error.code === 'NETWORK_ERROR') {
+      return res.status(503).json({
+        success: false,
+        error: 'Network error',
+        details: 'Unable to connect to blockchain network'
+      });
+    }
+
+    // Handle insufficient funds
+    if (error.code === 'INSUFFICIENT_FUNDS') {
+      return res.status(400).json({
+        success: false,
+        error: 'Insufficient funds',
+        details: 'Not enough MATIC to complete transaction'
+      });
+    }
+
     res.status(500).json({
       success: false,
-      error: {
-        code: 'QUERY_FAILED',
-        message: 'Failed to retrieve certificates',
-        details: error.message
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : 'An unexpected error occurred'
+    });
+  }
+});
+
+// GET /api/mint-certificate/status/:txHash
+router.get('/status/:txHash', async (req, res) => {
+  try {
+    const { txHash } = req.params;
+
+    if (!txHash.match(/^0x[a-fA-F0-9]{64}$/)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid transaction hash format'
+      });
+    }
+
+    const provider = new ethers.JsonRpcProvider(process.env.AMOY_RPC_URL);
+    const receipt = await provider.getTransactionReceipt(txHash);
+
+    if (!receipt) {
+      return res.json({
+        success: true,
+        data: {
+          status: 'pending',
+          confirmations: 0
+        }
+      });
+    }
+
+    const currentBlock = await provider.getBlockNumber();
+    const confirmations = currentBlock - receipt.blockNumber + 1;
+
+    res.json({
+      success: true,
+      data: {
+        status: receipt.status === 1 ? 'confirmed' : 'failed',
+        confirmations,
+        blockNumber: receipt.blockNumber,
+        gasUsed: receipt.gasUsed.toString()
       }
+    });
+
+  } catch (error) {
+    console.error('Error checking transaction status:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to check transaction status'
+    });
+  }
+});
+
+// GET /api/mint-certificate/user-certificates - Get certificates issued by current user
+router.get('/user-certificates', authenticateToken, requireVerified, async (req, res) => {
+  try {
+    const db = require('../models/database');
+    const certificates = await db.all(`
+      SELECT * FROM certificate_issuances 
+      WHERE user_id = ? 
+      ORDER BY created_at DESC
+    `, [req.user.id]);
+
+    res.json({
+      success: true,
+      data: {
+        certificates: certificates.map(cert => ({
+          id: cert.id,
+          tokenId: cert.token_id,
+          transactionHash: cert.transaction_hash,
+          recipientAddress: cert.recipient_address,
+          recipientName: cert.recipient_name,
+          courseName: cert.course_name,
+          institutionName: cert.institution_name,
+          issuerAddress: cert.issuer_address,
+          blockNumber: cert.block_number,
+          createdAt: cert.created_at
+        }))
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching user certificates:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch certificates'
     });
   }
 });

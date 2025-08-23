@@ -1,51 +1,42 @@
-import React from 'react';
-import { motion, HTMLMotionProps } from 'framer-motion';
-import { pageTransition, fadeIn, fadeInUp, scaleIn } from '../../utils/animations';
+import React, { ReactNode } from 'react';
 
-interface AnimatedWrapperProps extends HTMLMotionProps<"div"> {
-}
-}
-}
-}
-}
-  children: React.ReactNode;
-  animation?: 'page' | 'fade' | 'fadeUp' | 'scale';
+interface AnimatedWrapperProps {
+  children: ReactNode;
+  animation?: 'fadeIn' | 'slideIn' | 'scaleIn';
+  duration?: number;
+  delay?: number;
   className?: string;
+}
 
-/**
- * AnimatedWrapper Component
- * A reusable wrapper component that applies Framer Motion animations
- */
 const AnimatedWrapper: React.FC<AnimatedWrapperProps> = ({
   children,
-  animation = 'fade',
-  className = '',
-  ...motionProps
+  animation = 'fadeIn',
+  duration = 300,
+  delay = 0,
+  className = ''
 }) => {
-  const getAnimationProps = () => {
+  const getAnimationClass = () => {
     switch (animation) {
-      case 'page':
-        return pageTransition;
-      case 'fade':
-        return fadeIn;
-      case 'fadeUp':
-        return fadeInUp;
-      case 'scale':
-        return scaleIn;
+      case 'slideIn':
+        return 'animate-slide-in';
+      case 'scaleIn':
+        return 'animate-scale-in';
       default:
-        return fadeIn;
+        return 'animate-fade-in';
+    }
   };
 
   return (
-    <motion.div
-      className={className}
-      {...getAnimationProps()}
-      {...motionProps}
+    <div 
+      className={`${getAnimationClass()} ${className}`}
+      style={{
+        animationDuration: `${duration}ms`,
+        animationDelay: `${delay}ms`
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
 export default AnimatedWrapper;
-}

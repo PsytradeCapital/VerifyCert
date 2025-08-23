@@ -4,7 +4,7 @@
  */
 
 interface User {
-id: number;
+  id: numbe
   name: string;
   email?: string;
   phone?: string;
@@ -12,261 +12,200 @@ id: number;
   role: 'user' | 'issuer' | 'admin';
   isVerified: boolean;
 }
-interface RegisterData {
-name: string;
+
+interface Reg
+  name: string;
   email?: string;
   phone?: string;
   password: string;
-  region?: string;
+ ng;
 }
-interface LoginResponse {
-user: User;
+
+interface LoginRnse {
+ ;
   token: string;
 }
-interface ApiResponse<T = any> {
-}
-}
+
+interface ApiRespon
   success: boolean;
   data?: T;
   error?: {
     code: string;
     message: string;
-    details?: string[];
-  };
+    [];
+ 
 }
-class AuthService {
-  private baseURL: string;
 
-  constructor() {
-    this.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
+  private baseURLg;
+
+  c
+    this.baseURL = process.env.4000';
   }
-  private async makeRequest<T>(
+
+  private async mt<T>(
     endpoint: string,
-    options: RequestInit = {}
+    it = {}
   ): Promise<T> {
-    const url = ${this.baseURL}/api/auth${endpoint};
+    const url = `${this.baseURL}/api/authnt}`;
     
-    const defaultHeaders: Record<string, string> = {
-      'Content-Type': 'application/json',
+ring> = {
+      'Content-Type': 'application
     };
 
-    // Add auth token if available
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      defaultHeaders['Authorization'] = Bearer ${token};
+    const token = localStorage.getItem('auth_token');
+    i{
+      defaultHeaders.Authorizatioken}`;
     }
-    const config: RequestInit = {
+
+    const config: RequestI
       ...options,
-      headers: {
-        ...defaultHeaders,
-        ...options.headers,
+      he: {
+      Headers,
+s,
       },
     };
 
     try {
-      const response = await fetch(url, config);
-      const data: ApiResponse<T> = await response.json();
+      const response = awg);
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || HTTP ${response.status});
-      }
-      if (!data.success) {
         throw new Error(data.error?.message || 'Request failed');
       }
-      return data.data as T;
+
+      return data;
     } catch (error) {
-      console.error(Auth API Error (${endpoint}):, error);
-      throw error;
-    }
+      console.erroor);
+     rror;
+   }
   }
-  private async makeUserRequest<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
-    const url = ${this.baseURL}/api/user${endpoint};
-    
-    const defaultHeaders: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
 
-    // Add auth token if available
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      defaultHeaders['Authorization'] = Bearer ${token};
-    }
-    const config: RequestInit = {
-      ...options,
-      headers: {
-        ...defaultHeaders,
-        ...options.headers,
-      },
-    };
+  async register(userData: Re
+    const respons {
+      method: 'POST',
+    
+    });
 
-    try {
-      const response = await fetch(url, config);
-      const data: ApiResponse<T> = await response.json();
+    if{
 
-      if (!response.ok) {
-        throw new Error(data.error?.message || HTTP ${response.status});
-      }
-      if (!data.success) {
-        throw new Error(data.error?.message || 'Request failed');
-      }
-      return data.data as T;
-    } catch (error) {
-      console.error(User API Error (${endpoint}):, error);
-      throw error;
+      localStorage.setItem('user',er));
+      return response.data;
     }
+
+    t
   }
-  async register(data: RegisterData): Promise<{ userId: number; verificationType: string }> {
-    return this.makeRequest('/register', {
+
+  async login(emnse> {
+    const response = awaitn', {
       method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-  async login(emailOrPhone: string, password: string): Promise<LoginResponse> {
-    return this.makeRequest('/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        identifier: emailOrPhone,
-        password,
-      }),
-    });
-  }
-  async verifyOTP(code: string, userId?: number, type: string = 'email'): Promise<LoginResponse> {
-    const storedUserId = userId || localStorage.getItem('pendingUserId');
-    
-    return this.makeRequest('/verify-otp', {
-      method: 'POST',
-      body: JSON.stringify({
-        userId: storedUserId ? parseInt(storedUserId.toString()) : undefined,
-        code,
-        type,
-      }),
-    });
-  }
-  async resendOTP(userId?: number, type: string = 'email'): Promise<void> {
-    const storedUserId = userId || localStorage.getItem('pendingUserId');
-    
-    return this.makeRequest('/resend-otp', {
-      method: 'POST',
-      body: JSON.stringify({
-        userId: storedUserId ? parseInt(storedUserId.toString()) : undefined,
-        type,
-      }),
-    });
-  }
-  async forgotPassword(emailOrPhone: string): Promise<{ userId: number }> {
-    return this.makeRequest('/forgot-password', {
-      method: 'POST',
-      body: JSON.stringify({
-        identifier: emailOrPhone,
-      }),
-    });
-  }
-  async resetPassword(code: string, newPassword: string, userId?: number): Promise<void> {
-    const storedUserId = userId || localStorage.getItem('resetUserId');
-    
-    return this.makeRequest('/reset-password', {
-      method: 'POST',
-      body: JSON.stringify({
-        userId: storedUserId ? parseInt(storedUserId.toString()) : undefined,
-        code,
-        newPassword,
-      }),
-    });
-  }
-  async validateToken(token: string): Promise<User> {
-    const originalToken = localStorage.getItem('authToken');
-    localStorage.setItem('authToken', token);
-    
-    try {
-      const response = await this.makeRequest<{ user: User }>('/profile');
-      return response.user;
-    } finally {
-      if (originalToken) {
-        localStorage.setItem('authToken', originalToken);
-      } else {
-        localStorage.removeItem('authToken');
-      }
+      bord }),
+    })
+
+    if (r
+      localStorage.setItem('auth_token', respons
+      localStorage.setItem('user', JSON.stringify(responsr));
+data;
     }
+
+    thr
   }
-  async getProfile(): Promise<User> {
-    const response = await this.makeRequest<{ user: User }>('/profile');
-    return response.user;
-  }
-  async updateProfile(data: Partial<User>): Promise<User> {
-    const response = await this.makeRequest<{ user: User }>('/profile', {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
-    return response.user;
-  }
-  async changePassword(data: { currentPassword: string; newPassword: string }): Promise<void> {
-    return this.makeUserRequest('/change-password', {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
-  }
-  async deleteAccount(password: string): Promise<void> {
+
+  async
     try {
-      await this.makeUserRequest('/account', {
-        method: 'DELETE',
-        body: JSON.stringify({ password }),
-      });
-    } finally {
-      // Clear local storage after successful account deletion
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
-    }
-  }
-  async logout(): Promise<void> {
-    try {
-      await this.makeRequest('/logout', {
+      await this.make
         method: 'POST',
       });
-    } catch (error) {
-      console.warn('Logout API call failed:', error);
+    } (error) {
+   rror);
     } finally {
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
+      localStorage.removeItem('auth_token');
+      localStorage.re
     }
   }
-  // Utility methods
-  isTokenExpired(token: string): boolean {
+
+  async getCurrentUser(): Promise<User | null> {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp * 1000 < Date.now();
-    } catch (error) {
-      return true;
+      const response ('/me');
+      
+      if (response.success && res
+        localStor;
+        r
+      }
+    {
+      console.error('Failed to get current user:', error);
+      this.logout();
     }
+
+    return null;
   }
-  getTokenPayload(token: string): any {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch (error) {
-      return null;
-    }
-  }
-  async refreshToken(): Promise<string> {
-    const response = await this.makeRequest<{ token: string }>('/refresh-token', {
-      method: 'POST',
+
+  async reque{
+    const resd', {
+      met,
+      b
     });
-    return response.token;
+
+    if (!response.success) {
+    ed');
+    }
   }
-  async ensureValidToken(): Promise<string> {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      throw new Error('No authentication token');
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const res', {
+      met
+      brd }),
+    });
+
+    if (!response.success) {
+      throw new Error;
     }
-    // Check if token expires in the next 5 minutes
-    const payload = this.getTokenPayload(token);
-    if (payload && payload.exp * 1000 - Date.now() < 5 * 60 * 1000) {
-      return await this.refreshToken();
+  }
+
+  async{
+   
+      method: 'POST',
+      body: JSON.stringify({ phone, otp }),
+    
+
+    if (response.succa) {
+      localStorage.setItem('oken);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      return a;
     }
-    return token;
+
+    thriled');
+  }
+
+  async changePassword(currentPassword: string, newPassword:oid> {
+    const response = await this.makeRequest<Ad', {
+     'POST',
+      bod }),
+    });
+
+    if (!respon
+      throw new Error(resp;
+    }
+  }
+
+  getSt{
+    t{
+   ser');
+      return userStr ? JSON.parse(use;
+    } catch (error) {
+      console.error('Failor);
+   n null;
+    }
+  }
+
+  getStoredToken(): string | null {
+    ret
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getStoredToken();
   }
 }
-// Create singleton instance
-export const authService = new AuthService();
-export default authService;
+
+exp
+export type { User, RegisterData, LoginResponse, ApiResponse };

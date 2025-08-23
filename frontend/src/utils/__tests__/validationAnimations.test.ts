@@ -1,11 +1,11 @@
 import {
   triggerValidationAnimation,
-  getValidationAnimationClasses,;
-  validationAnimationClasses,;
-  validationStateAnimations,;
-  validationSequences,;
-  createStaggeredDelay,;
-  defaultAnimationConfig;
+  getValidationAnimationClasses,
+  validationAnimationClasses,
+  validationStateAnimations,
+  validationSequences,
+  createStaggeredDelay,
+  defaultAnimationConfig
 } from '../validationAnimations';
 
 // Mock DOM methods

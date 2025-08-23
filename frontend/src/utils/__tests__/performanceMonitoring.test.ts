@@ -100,7 +100,7 @@ describe('PerformanceMonitor', () => {
       const metrics = performanceMonitor.getMetrics();
       expect(metrics).toHaveLength(1);
       expect(metrics[0]).toMatchObject({
-        name: image_${imageSrc},
+        name: `image_${imageSrc}`,
         duration: 800,
         metadata: { type: 'image', success: true, size: 1024 },
       });

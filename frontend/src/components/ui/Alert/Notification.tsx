@@ -1,213 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ;
-  CheckCircle, ;
-  AlertCircle, ;
-  AlertTriangle, ;
-  Info, ;
-  X ;
-} from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-react';
 
-export interface NotificationProps {
-id?: string;
-  variant?: 'success' | 'error' | 'warning' | 'info';
+interface NotificationProps {
+  type: 'success' | 'error' | 'warning' | 'info';
   title?: string;
   message: string;
-  duration?: number; // in milliseconds, 0 means no auto-dismiss
-  onClose?: (id?: string) => void;
-  closable?: boolean;
-  className?: string;
-  icon?: React.ReactNode;
-  showIcon?: boolean;
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center';
+  duration?: number;
+  onClose?: () => void;
+  autoClose?: boolean;
+}
 
-const Notification: React.FC<NotificationProps> = ({
-  id,
-  variant = 'info',
+const notificationStyles = {
+  success: 'bg-green-50 border-green-200 text-green-800',
+  error: 'bg-red-50 border-red-200 text-red-800',
+  warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+  info: 'bg-blue-50 border-blue-200 text-blue-800'
+};
+
+const iconMap = {
+  success: CheckCircle,
+  error: XCircle,
+  warning: AlertCircle,
+  info: Info
+};
+
+export default function Notification({
+  type,
   title,
   message,
   duration = 5000,
   onClose,
-  closable = true,
-  className = '',
-  icon,
-  showIcon = true,
-  position = 'top-right'
-}) => {
+  autoClose = true
+}: NotificationProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const Icon = iconMap[type];
 
   useEffect(() => {
-    if (duration > 0) {
+    if (autoClose && duration > 0) {
       const timer = setTimeout(() => {
-        handleClose();
+        setIsVisible(false);
+        if (onClose) {
+          onClose();
+        }
       }, duration);
 
       return () => clearTimeout(timer);
-  }, [duration]);
+    }
+  }, [autoClose, duration, onClose]);
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(() => {
-      onClose?.(id);
-    }, 200); // Wait for exit animation
+    if (onClose) {
+      onClose();
+    }
   };
 
-  const variantStyles = {
-    success: {
-      container: 'bg-white border-l-4 border-green-400 shadow-lg',
-      icon: 'text-green-400',
-      title: 'text-gray-900',
-      content: 'text-gray-600'
-    },
-    error: {
-      container: 'bg-white border-l-4 border-red-400 shadow-lg',
-      icon: 'text-red-400',
-      title: 'text-gray-900',
-      content: 'text-gray-600'
-    },
-    warning: {
-      container: 'bg-white border-l-4 border-yellow-400 shadow-lg',
-      icon: 'text-yellow-400',
-      title: 'text-gray-900',
-      content: 'text-gray-600'
-    },
-    info: {
-      container: 'bg-white border-l-4 border-blue-400 shadow-lg',
-      icon: 'text-blue-400',
-      title: 'text-gray-900',
-      content: 'text-gray-600'
-  };
-
-  const positionClasses = {
-    'top-right': 'top-4 right-4',
-    'top-left': 'top-4 left-4',
-    'bottom-right': 'bottom-4 right-4',
-    'bottom-left': 'bottom-4 left-4',
-    'top-center': 'top-4 left-1/2 transform -translate-x-1/2',
-    'bottom-center': 'bottom-4 left-1/2 transform -translate-x-1/2'
-  };
-
-  const slideVariants = {
-    'top-right': {
-      initial: { opacity: 0, x: 100, y: -50 },
-      animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: 100, y: -50
-    },
-    'top-left': {
-      initial: { opacity: 0, x: -100, y: -50 },
-      animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: -100, y: -50
-    },
-    'bottom-right': {
-      initial: { opacity: 0, x: 100, y: 50 },
-      animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: 100, y: 50
-    },
-    'bottom-left': {
-      initial: { opacity: 0, x: -100, y: 50 },
-      animate: { opacity: 1, x: 0, y: 0 },
-      exit: { opacity: 0, x: -100, y: 50
-    },
-    'top-center': {
-      initial: { opacity: 0, y: -100 },
-      animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -100
-    },
-    'bottom-center': {
-      initial: { opacity: 0, y: 100 },
-      animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: 100
-  };
-
-  const defaultIcons = {
-    success: CheckCircle,
-    error: AlertCircle,
-    warning: AlertTriangle,
-    info: Info
-  };
-
-  const IconComponent = icon || defaultIcons[variant];
-  const styles = variantStyles[variant];
-  const variants = slideVariants[position];
+  if (!isVisible) {
+    return null;
+  }
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className={fixed z-50 ${positionClasses[position]}}
-          initial={variants.initial}
-          animate={variants.animate}
-          exit={variants.exit}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }
+    <div className={`fixed top-4 right-4 max-w-sm w-full border rounded-lg p-4 shadow-lg z-50 ${notificationStyles[type]}`}>
+      <div className="flex items-start">
+        <Icon className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+        <div className="flex-1">
+          {title && (
+            <h4 className="font-medium mb-1">{title}</h4>
+          )}
+          <p className="text-sm">{message}</p>
+        </div>
+        <button
+          onClick={handleClose}
+          className="ml-3 flex-shrink-0 text-gray-400 hover:text-gray-600"
         >
-          <div
-            className={
-              max-w-sm w-full rounded-lg p-4 ${styles.container} ${className}
-            }
-            role="alert"
-          >
-            <div className="flex">
-              {showIcon && (
-                <div className="flex-shrink-0">
-                  {React.isValidElement(IconComponent) ? (
-                    IconComponent
-                  ) : (
-                    React.createElement(IconComponent as React.ComponentType<any>, { 
-                      className: h-5 w-5 ${styles.icon} 
-                    })
-                  )}
-                </div>
-              )}
-              <div className={${showIcon ? 'ml-3' : ''} flex-1 pt-0.5}>
-                {title && (
-                  <p className={text-sm font-medium ${styles.title}}>
-                    {title}
-                  </p>
-                )}
-                <p className={text-sm ${styles.content} ${title ? 'mt-1' : ''}}>
-                  {message}
-                </p>
-              </div>
-
-              {closable && (
-                <div className="ml-4 flex-shrink-0 flex">
-                  <button
-                    className="inline-flex text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors"
-                    onClick={handleClose}
-                    aria-label="Close notification"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Progress bar for auto-dismiss */}
-            {duration > 0 && (
-              <motion.div
-                className="absolute bottom-0 left-0 h-1 bg-gray-200 rounded-b-lg overflow-hidden"
-                style={{ width: '100%' }
-              >
-                <motion.div
-                  className={h-full ${
-                    variant === 'success' ? 'bg-green-400' :
-                    variant === 'error' ? 'bg-red-400' :
-                    variant === 'warning' ? 'bg-yellow-400' :
-                    'bg-blue-400'
-                  }}
-                  initial={{ width: '100%' }
-                  animate={{ width: '0%' }
-                  transition={{ duration: duration / 1000, ease: 'linear' }
-                />
-              </motion.div>
-            )}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
   );
-};
-
-export default Notification;
-}
 }

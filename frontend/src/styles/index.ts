@@ -10,7 +10,7 @@ import './tokens.css';
 export { designTokens, getThemeTokens, type Theme, type ThemeConfig } from './tokens-new';
 
 // Export utility functions and types
-export {;
+export {
   getColor,
   getSpacing,
   getFontSize,

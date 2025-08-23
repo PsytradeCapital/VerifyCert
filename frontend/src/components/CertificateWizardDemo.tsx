@@ -1,72 +1,82 @@
 import React, { useState } from 'react';
-import { CertificateWizard, CertificateFormData } from './ui';
-import toast from 'react-hot-toast';
 
-export default function CertificateWizardDemo(): JSX.Element {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isConnected, setIsConnected] = useState(true);
-  const [walletAddress] = useState('0x742d35Cc6634C0532925a3b8D4C9db96590c6C87');
+interface Step {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
-  const handleSubmit = async (data: CertificateFormData) => {
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    console.log('Certificate data:', data);
-    toast.success('Certificate issued successfully!');
-    
-    setIsLoading(false);
+const CertificateWizardDemo: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [steps, setSteps] = useState<Step[]>([
+    { id: 1, title: 'Basic Info', completed: false },
+    { id: 2, title: 'Certificate Details', completed: false },
+    { id: 3, title: 'Review', completed: false }
+  ]);
+
+  const nextStep = () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+      setSteps(prev => prev.map(step => 
+        step.id === currentStep ? { ...step, completed: true } : step
+      ));
+    }
   };
 
-  const handleCancel = () => {
-    toast('Certificate issuance cancelled');
-  };
-
-  const toggleConnection = () => {
-    setIsConnected(!isConnected);
-    toast(isConnected ? 'Wallet disconnected' : 'Wallet connected');
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Certificate Wizard Demo
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Experience the step-by-step certificate issuance process
-          </p>
-          
-          {/* Demo Controls */}
-          <div className="flex justify-center space-x-4 mb-8">
-            <button
-              onClick={toggleConnection}
-              className={px-4 py-2 rounded-lg font-medium transition-colors ${
-                isConnected
-                  ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                  : 'bg-red-100 text-red-800 hover:bg-red-200'
-              }}
-            >
-              {isConnected ? '🟢 Wallet Connected' : '🔴 Wallet Disconnected'}
-            </button>
-            
-            <div className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg">
-              Loading: {isLoading ? 'ON' : 'OFF'}
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-6">Certificate Wizard</h2>
+      
+      <div className="flex justify-between mb-8">
+        {steps.map((step) => (
+          <div key={step.id} className="flex flex-col items-center">
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+              step.completed ? 'bg-green-500 text-white' : 
+              step.id === currentStep ? 'bg-blue-500 text-white' : 'bg-gray-300'
+            }`}>
+              {step.id}
             </div>
+            <span className="text-sm mt-2">{step.title}</span>
           </div>
+        ))}
+      </div>
+
+      <div className="bg-white p-6 rounded-lg shadow">
+        <h3 className="text-lg font-semibold mb-4">
+          Step {currentStep}: {steps[currentStep - 1]?.title}
+        </h3>
+        
+        <div className="mb-6">
+          {currentStep === 1 && <div>Basic information form would go here</div>}
+          {currentStep === 2 && <div>Certificate details form would go here</div>}
+          {currentStep === 3 && <div>Review and confirmation would go here</div>}
         </div>
 
-        <CertificateWizard
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-          isLoading={isLoading}
-          isConnected={isConnected}
-          walletAddress={isConnected ? walletAddress : null}
-          className="max-w-3xl mx-auto"
-        />
+        <div className="flex justify-between">
+          <button
+            onClick={prevStep}
+            disabled={currentStep === 1}
+            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button
+            onClick={nextStep}
+            disabled={currentStep === steps.length}
+            className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          >
+            {currentStep === steps.length ? 'Complete' : 'Next'}
+          </button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default CertificateWizardDemo;

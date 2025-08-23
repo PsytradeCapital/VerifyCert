@@ -3,7 +3,7 @@ const { ethers } = require('ethers');
 const router = express.Router();
 
 // Load contract ABI and address
-const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractABI = require('../../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
 const contractAddresses = require('../../contract-addresses.json');
 
 // GET /api/verify-certificate/:tokenId

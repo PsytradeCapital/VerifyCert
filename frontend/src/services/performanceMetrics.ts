@@ -2,24 +2,23 @@ import React from 'react';
 import { performanceMonitor } from '../utils/performanceMonitoring';
 
 export interface WebVitalsMetrics {
-FCP?: number; // First Contentful Paint
+  FCP?: number; // First Contentful Paint
   LCP?: number; // Largest Contentful Paint
   FID?: number; // First Input Delay
   CLS?: number; // Cumulative Layout Shift
   TTFB?: number; // Time to First Byte
+}
 
 export interface CustomMetrics {
-}
-}
-}
   bundleLoadTime: number;
   componentLoadTime: number;
   imageLoadTime: number;
   apiResponseTime: number;
   routeChangeTime: number;
+}
 
 export interface PerformanceReport {
-timestamp: string;
+  timestamp: string;
   url: string;
   userAgent: string;
   webVitals: WebVitalsMetrics;
@@ -28,11 +27,12 @@ timestamp: string;
     name: string;
     duration: number;
     type: string;
-}>;
+  }>;
   errors: Array<{
     message: string;
     timestamp: number;
   }>;
+}
 
 class PerformanceMetricsService {
   private webVitals: WebVitalsMetrics = {};
@@ -42,6 +42,7 @@ class PerformanceMetricsService {
   constructor() {
     this.initializeWebVitals();
     this.setupErrorTracking();
+  }
 
   private initializeWebVitals() {
     // Measure Web Vitals using the Performance Observer API
@@ -51,6 +52,7 @@ class PerformanceMetricsService {
         const fcpEntry = entries.find(entry => entry.name === 'first-contentful-paint');
         if (fcpEntry) {
           this.webVitals.FCP = fcpEntry.startTime;
+        }
       });
 
       // Largest Contentful Paint
@@ -58,21 +60,24 @@ class PerformanceMetricsService {
         const lcpEntry = entries[entries.length - 1];
         if (lcpEntry) {
           this.webVitals.LCP = lcpEntry.startTime;
+        }
       });
 
       // First Input Delay
       this.observeMetric('first-input', (entries) => {
         const fidEntry = entries[0];
         if (fidEntry) {
-          this.webVitals.FID = fidEntry.processingStart - fidEntry.startTime;
+          this.webVitals.FID = (fidEntry as any).processingStart - fidEntry.startTime;
+        }
       });
 
       // Cumulative Layout Shift
       this.observeMetric('layout-shift', (entries) => {
         let clsValue = 0;
         entries.forEach(entry => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value;
+          if (!(entry as any).hadRecentInput) {
+            clsValue += (entry as any).value;
+          }
         });
         this.webVitals.CLS = clsValue;
       });
@@ -82,6 +87,7 @@ class PerformanceMetricsService {
         const navEntry = entries[0] as PerformanceNavigationTiming;
         if (navEntry) {
           this.webVitals.TTFB = navEntry.responseStart - navEntry.requestStart;
+        }
       });
 
   private observeMetric(type: string, callback: (entries: PerformanceEntry[]) => void) {
@@ -91,13 +97,15 @@ class PerformanceMetricsService {
       });
       observer.observe({ entryTypes: [type] });
     } catch (error) {
-      console.warn(Failed to observe ${type} metrics:, error);
+      console.warn(`Failed to observe ${type} metrics:`, error);
+    }
+  }
 
   private setupErrorTracking() {
     // Track JavaScript errors
     window.addEventListener('error', (event) => {
       this.errors.push({
-        message: ${event.error?.name}: ${event.error?.message},
+        message: `${event.error?.name}: ${event.error?.message}`,
         timestamp: Date.now()
       });
     });
@@ -105,13 +113,14 @@ class PerformanceMetricsService {
     // Track unhandled promise rejections
     window.addEventListener('unhandledrejection', (event) => {
       this.errors.push({
-        message: Unhandled Promise Rejection: ${event.reason},
+        message: `Unhandled Promise Rejection: ${event.reason}`,
         timestamp: Date.now()
       });
     });
 
   public getWebVitals(): WebVitalsMetrics {
     return { ...this.webVitals };
+  }
 
   public getCustomMetrics(): CustomMetrics {
     const summary = performanceMonitor.getSummary();
@@ -123,6 +132,7 @@ class PerformanceMetricsService {
       apiResponseTime: this.calculateApiResponseTime(),
       routeChangeTime: this.calculateRouteChangeTime()
     };
+  }
 
   private calculateApiResponseTime(): number {
     const apiMetrics = performanceMonitor.getMetrics()
@@ -132,6 +142,7 @@ class PerformanceMetricsService {
     
     const totalTime = apiMetrics.reduce((sum, metric) => sum + (metric.duration || 0), 0);
     return totalTime / apiMetrics.length;
+  }
 
   private calculateRouteChangeTime(): number {
     const routeMetrics = performanceMonitor.getMetrics()
@@ -141,6 +152,7 @@ class PerformanceMetricsService {
     
     const totalTime = routeMetrics.reduce((sum, metric) => sum + (metric.duration || 0), 0);
     return totalTime / routeMetrics.length;
+  }
 
   public generateReport(): PerformanceReport {
     const slowResources = performanceMonitor.getSlowMetrics(500)
@@ -159,12 +171,14 @@ class PerformanceMetricsService {
       slowResources,
       errors: [...this.errors]
     };
+  }
 
   public async sendReport(endpoint?: string): Promise<void> {
     const reportEndpoint = endpoint || this.reportingEndpoint;
     if (!reportEndpoint) {
       console.warn('No reporting endpoint configured for performance metrics');
       return;
+    }
 
     try {
       const report = this.generateReport();
@@ -180,9 +194,12 @@ class PerformanceMetricsService {
       console.log('Performance report sent successfully');
     } catch (error) {
       console.error('Failed to send performance report:', error);
+    }
+  }
 
   public setReportingEndpoint(endpoint: string) {
     this.reportingEndpoint = endpoint;
+  }
 
   public getPerformanceScore(): number {
     const vitals = this.getWebVitals();
@@ -210,6 +227,7 @@ class PerformanceMetricsService {
     score -= Math.min(recentErrors.length * 5, 20);
     
     return Math.max(score, 0);
+  }
 
   public getPerformanceGrade(): 'A' | 'B' | 'C' | 'D' | 'F' {
     const score = this.getPerformanceScore();
@@ -219,9 +237,11 @@ class PerformanceMetricsService {
     if (score >= 70) return 'C';
     if (score >= 60) return 'D';
     return 'F';
+  }
 
   public clearErrors() {
     this.errors = [];
+  }
 
   public getRecommendations(): string[] {
     const recommendations: string[] = [];
@@ -232,48 +252,58 @@ class PerformanceMetricsService {
     // Web Vitals recommendations
     if (vitals.FCP && vitals.FCP > 3000) {
       recommendations.push('Optimize First Contentful Paint by reducing server response time and eliminating render-blocking resources');
+    }
     
     if (vitals.LCP && vitals.LCP > 4000) {
       recommendations.push('Improve Largest Contentful Paint by optimizing images and critical resource loading');
+    }
     
     if (vitals.FID && vitals.FID > 300) {
       recommendations.push('Reduce First Input Delay by minimizing JavaScript execution time and using web workers');
+    }
     
     if (vitals.CLS && vitals.CLS > 0.25) {
       recommendations.push('Minimize Cumulative Layout Shift by setting dimensions for images and avoiding dynamic content insertion');
+    }
 
     // Custom metrics recommendations
     if (custom.bundleLoadTime > 1000) {
       recommendations.push('Optimize bundle loading with code splitting and lazy loading');
+    }
     
     if (custom.componentLoadTime > 500) {
       recommendations.push('Optimize component rendering with React.memo and useMemo');
+    }
     
     if (custom.imageLoadTime > 1000) {
       recommendations.push('Optimize images with WebP format, compression, and responsive sizing');
+    }
     
     if (custom.apiResponseTime > 1000) {
       recommendations.push('Optimize API performance with caching, pagination, and request optimization');
+    }
 
     // Slow resources recommendations
     if (slowResources.length > 0) {
-      recommendations.push(Address ${slowResources.length} slow-loading resources identified in the performance dashboard);
+      recommendations.push(`Address ${slowResources.length} slow-loading resources identified in the performance dashboard`);
 
     return recommendations;
+  }
+}
 
 // Global instance
 export const performanceMetrics = new PerformanceMetricsService();
 
 // Utility functions
 export const trackPageView = (pageName: string) => {
-  performanceMonitor.startTiming(page_view_${pageName}, {
+  performanceMonitor.startTiming(`page_view_${pageName}`, {
     type: 'page_view',
     page: pageName
   });
 };
 
 export const trackUserInteraction = (action: string, element: string) => {
-  performanceMonitor.startTiming(interaction_${action}_${element}, {
+  performanceMonitor.startTiming(`interaction_${action}_${element}`, {
     type: 'user_interaction',
     action,
     element
@@ -281,7 +311,7 @@ export const trackUserInteraction = (action: string, element: string) => {
   
   // End timing after a short delay
   setTimeout(() => {
-    performanceMonitor.endTiming(interaction_${action}_${element}, {
+    performanceMonitor.endTiming(`interaction_${action}_${element}`, {
       type: 'user_interaction',
       action,
       element,
@@ -290,11 +320,11 @@ export const trackUserInteraction = (action: string, element: string) => {
   }, 50);
 };
 
-export const trackFormSubmission = async <T>(;
-  formName: string,;
-  submitFunction: () => Promise<T>;
+export const trackFormSubmission = async <T>(
+  formName: string,
+  submitFunction: () => Promise<T>
 ): Promise<T> => {
-  const operationName = form_submit_${formName};
+  const operationName = `form_submit_${formName}`;
   
   performanceMonitor.startTiming(operationName, {
     type: 'form_submission',
@@ -317,8 +347,7 @@ export const trackFormSubmission = async <T>(;
       error: error instanceof Error ? error.message : 'Unknown error'
     });
     throw error;
+  }
 };
 
 export default performanceMetrics;
-}
-}

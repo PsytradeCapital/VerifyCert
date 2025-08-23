@@ -1,48 +1,48 @@
 import React from 'react';
 import { performanceMonitor, logPerformanceStats } from './performanceMonitoring';
-import { performanceMetrics } from '../services/performanceMetrics';
 
 /**
- * Initialize comprehensive performance monitoring
+ * toring
  */
-export const initializePerformanceMonitoring = () => {
+exp => {
   // Set up automatic performance reporting
   setupAutomaticReporting();
   
-  // Set up performance alerts
+  ts
   setupPerformanceAlerts();
   
-  // Set up memory monitoring
+  ring
   setupMemoryMonitoring();
   
-  // Set up user interaction monitoring
+  
   setupUserInteractionMonitoring();
   
-  // Set up error monitoring integration
+  on
   setupErrorMonitoring();
   
-  // Set up page visibility monitoring
+  
   setupPageVisibilityMonitoring();
   
-  console.log('🚀 Performance monitoring initialized');
+  ialized');
 };
 
 /**
- * Set up automatic performance reporting
+ * 
  */
-function setupAutomaticReporting() {
-  // Send performance report every 5 minutes in production
-  if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_PERFORMANCE_ENDPOINT) {
+funng() {
+  // Send performance report every 5oduction
+  if (process.env.NODE_ENV === 'production' && process.env
     setInterval(() => {
-      performanceMetrics.sendReport().catch(error => {
-        console.warn('Failed to send performance report:', error);
-      });
+      // Note: performad
+      console.log('Performance report would be sent he');
     }, 5 * 60 * 1000); // 5 minutes
+  }
   
-  // Send report on page unload
-  window.addEventListener('beforeunload', () => {
+  unload
+  window.addEventListener('befo
     try {
-      const report = performanceMetrics.generateReport();
+      // d
+      const report = { timestamp: Date.now(), metrics: pe;
       
       // Use sendBeacon for reliable delivery
       if (navigator.sendBeacon && process.env.REACT_APP_PERFORMANCE_ENDPOINT) {
@@ -50,73 +50,81 @@ function setupAutomaticReporting() {
           process.env.REACT_APP_PERFORMANCE_ENDPOINT,
           JSON.stringify(report)
         );
+      }
     } catch (error) {
-      console.warn('Failed to send final performance report:', error);
-  });
+     ;
+    }
+);
+}
 
 /**
- * Set up performance alerts for critical issues
+ * Set up performance alerts for cral issues
  */
 function setupPerformanceAlerts() {
-  let lastAlertTime = 0;
-  const alertCooldown = 30000; // 30 seconds
+  ime = 0;
+  const alertCooldowneconds
   
   setInterval(() => {
-    const now = Date.now();
+    ate.now();
     if (now - lastAlertTime < alertCooldown) return;
     
-    const slowMetrics = performanceMonitor.getSlowMetrics(2000); // 2 second threshold
-    const criticalMetrics = slowMetrics.filter(metric => 
-      metric.duration && metric.duration > 5000 // 5 second threshold
+    const slowMetrics = performanceMonitor.getSlowMetrics(2000); // 2
+    co => 
+    
     );
     
-    if (criticalMetrics.length > 0) {
+    if) {
       lastAlertTime = now;
       
-      console.error('🚨 Critical performance issues detected:', criticalMetrics);
+      console.error('🚨 Critical performance issues det
       
-      // In development, show more detailed information
-      if (process.env.NODE_ENV === 'development') {
+      // In development, show more detailed infor
+      if (process.env.NODE_ENV === 'dev{
         console.group('🔍 Performance Analysis');
-        console.table(criticalMetrics);
-        console.log('Recommendations:', performanceMetrics.getRecommendations());
-        console.groupEnd();
-  }, 10000); // Check every 10 seconds
+        console.table(critiMetrics);
+       ;
+     ;
+      }
+ 
+onds
+}
 
 /**
  * Set up memory monitoring
  */
-function setupMemoryMonitoring() {
-  if (!('memory' in performance)) return;
+futoring() {
+  if (!('memory' in performancen;
   
-  const memoryMonitor = () => {
-    const memory = (performance as any).memory;
+  const memoryMonitor =  {
+    ory;
     if (!memory) return;
     
     const memoryInfo = {
       usedJSHeapSize: memory.usedJSHeapSize,
       totalJSHeapSize: memory.totalJSHeapSize,
-      jsHeapSizeLimit: memory.jsHeapSizeLimit,
-      usagePercentage: (memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100
+      ,
+     100
     };
     
     // Log memory usage
-    performanceMonitor.startTiming('memory_usage');
-    performanceMonitor.endTiming('memory_usage', {
-      type: 'memory',
-      ...memoryInfo
+    performanceMonito
+    performanceMoni, {
+      t'memory',
+    moryInfo
     });
     
     // Alert on high memory usage
-    if (memoryInfo.usagePercentage > 80) {
-      console.warn('⚠️ High memory usage detected:', memoryInfo);
+    i
+    yInfo);
+    }
   };
   
-  // Monitor memory every 30 seconds
-  setInterval(memoryMonitor, 30000);
+  econds
+  setInterval(memoryMonit00);
   
-  // Initial memory check
-  memoryMonitor();
+ y check
+;
+}
 
 /**
  * Set up user interaction monitoring
@@ -124,135 +132,144 @@ function setupMemoryMonitoring() {
 function setupUserInteractionMonitoring() {
   // Track click interactions
   document.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    const tagName = target.tagName.toLowerCase();
-    const className = target.className;
+    const target = event.target as HTML;
+    const tagName = targease();
+    me;
     const id = target.id;
     
     const identifier = id || className || tagName;
     
-    performanceMonitor.startTiming(`interaction_click_${identifier}`, {
-      type: 'user_interaction',
-      action: 'click',
-      element: tagName,
-      identifier
+    performanceMonitor
+      type: 'user_inter',
+      action: 'ck',
+      e
+    ntifier
     });
     
     // End timing after a short delay to capture any immediate effects
     setTimeout(() => {
-      performanceMonitor.endTiming(`interaction_click_${identifier}`, {
-        type: 'user_interaction',
-        action: 'click',
-        element: tagName,
-        identifier,
-        success: true
+      performanceMonitor, {
+        type: 'user_interction',
+        action: 'clk',
+        element: tagNe,
+        i
+        succue
       });
-    }, 100);
+  
   });
   
   // Track form submissions
   document.addEventListener('submit', (event) => {
-    const form = event.target as HTMLFormElement;
+    t;
     const formId = form.id || form.className || 'unknown_form';
     
-    performanceMonitor.startTiming(`form_submit_${formId}`, {
-      type: 'form_interaction',
-      action: 'submit',
-      formId
-    });
+    performanceMonitor.}`, {
+      type: n',
+      a
+     mId
+  });
   });
   
   // Track input focus (for form performance)
   document.addEventListener('focusin', (event) => {
     const target = event.target as HTMLElement;
-    if (target.tagName.toLowerCase() === 'input' || target.tagName.toLowerCase() === 'textarea') {
+    if
       const inputType = (target as HTMLInputElement).type || 'text';
       
-      performanceMonitor.startTiming(`input_focus_${inputType}`, {
-        type: 'input_interaction',
-        action: 'focus',
-        inputType
+      performanceMonitor {
+        type: 'inon',
+        a',
+      tType
       });
       
       setTimeout(() => {
-        performanceMonitor.endTiming(`input_focus_${inputType}`, {
-          type: 'input_interaction',
+        performanceMonitor {
+          type: 'inpn',
           action: 'focus',
-          inputType,
-          success: true
-        });
+          i
+          suc
+      });
       }, 50);
+   }
   });
+}
 
 /**
  * Set up error monitoring integration
  */
 function setupErrorMonitoring() {
   // Track JavaScript errors with performance context
-  window.addEventListener('error', (event) => {
+  wi
     const performanceSummary = performanceMonitor.getSummary();
-    const recentSlowMetrics = performanceMonitor.getSlowMetrics(1000);
+    const recentSlowMetri
     
     console.error('💥 JavaScript error with performance context:', {
-      error: event.error,
-      performanceSummary,
-      recentSlowMetrics: recentSlowMetrics.slice(0, 5) // Last 5 slow metrics
+      et.error,
+     ,
+  rics
     });
   });
   
-  // Track unhandled promise rejections with performance context
+  //t
   window.addEventListener('unhandledrejection', (event) => {
-    const performanceSummary = performanceMonitor.getSummary();
+    const performanceSummary();
     
-    console.error('💥 Unhandled promise rejection with performance context:', {
-      reason: event.reason,
-      performanceSummary
-    });
+    con
+     
+mmary
+   );
   });
+}
 
 /**
- * Set up page visibility monitoring
+ *
  */
-function setupPageVisibilityMonitoring() {
+function setupPageVisibili{
   let pageHiddenTime: number | null = null;
   
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      pageHiddenTime = performance.now();
-      performanceMonitor.startTiming('page_hidden', {
+  document.addEventListener('vis
+    if (document.hidden)
+      pag
+      perfor {
         type: 'page_visibility',
         action: 'hidden'
       });
     } else {
       if (pageHiddenTime !== null) {
-        performanceMonitor.endTiming('page_hidden', {
-          type: 'page_visibility',
-          action: 'visible',
+        perden', {
+          type: 'page_visibiliy',
+      
           hiddenDuration: performance.now() - pageHiddenTime
         });
         pageHiddenTime = null;
+      }
       
-      // Log performance stats when page becomes visible again
-      if (process.env.NODE_ENV === 'development') {
-        setTimeout(logPerformanceStats, 1000);
+     in
+) {
+   000);
+      }
+    }
   });
+}
 
 /**
  * Get current performance health status
- */
-export const getPerformanceHealth = () => {
-  const score = performanceMetrics.getPerformanceScore();
-  const grade = performanceMetrics.getPerformanceGrade();
-  const slowMetrics = performanceMonitor.getSlowMetrics(1000);
-  const summary = performanceMonitor.getSummary();
+ *
+export con
+  const sl1000);
+  const su;
   
-  return {
-    score,
-    grade,
-    status: score >= 80 ? 'good' : score >= 60 ? 'warning' : 'poor',
-    slowMetricsCount: slowMetrics.length,
+  // Simple scoring based on slow metrics
+  const score = Math.max(0, 100 );
+  const grade = score >= 80 ? 'A' : score >= 60 ? 'B' : scor'D';
+  
+  n {
+re,
+   e,
+    status: score >= 80 ? 'good' : score',
+   s.length,
     totalMetrics: summary.total,
-    recommendations: performanceMetrics.getRecommendations()
+    recommendatis']
   };
 };
 
@@ -260,41 +277,36 @@ export const getPerformanceHealth = () => {
  * Export performance data for debugging
  */
 export const exportPerformanceData = () => {
-  const data = {
-    timestamp: new Date().toISOString(),
+  coa = {
+  OString(),
     health: getPerformanceHealth(),
-    metrics: performanceMonitor.getMetrics(),
-    summary: performanceMonitor.getSummary(),
-    webVitals: performanceMetrics.getWebVitals(),
-    customMetrics: performanceMetrics.getCustomMetrics(),
-    report: performanceMetrics.generateReport()
+  
+
+   
   };
   
   return JSON.stringify(data, null, 2);
 };
 
 /**
- * Clear all performance data
- */
+ *
+*/
 export const clearPerformanceData = () => {
   performanceMonitor.clear();
-  performanceMetrics.clearErrors();
-  console.log('🧹 Performance data cleared');
+  console.log('🧹 Performance data cle);
 };
 
-// Make functions available globally in development
-if (process.env.NODE_ENV === 'development') {
-  (window as any).performanceDebug = {
-    getHealth: getPerformanceHealth,
-    exportData: exportPerformanceData,
-    clearData: clearPerformanceData,
+// Make functions available globally
+if (process.env.NODE_ENV === 'deve) {
+  (window as any).performanceDebg = {
+    getHealth: getPerformanceHeth,
+    nceData,
+  a,
     logStats: logPerformanceStats,
-    monitor: performanceMonitor,
-    metrics: performanceMetrics
+ or
   };
-  
-  console.log('🔧 Performance debugging tools available at window.performanceDebug');
-
-export default initializePerformanceMonitoring;
+  log('🔧 Performance debugging tools availableitoring;rmanceMonizePerfoalfault initi
+export debug');
 }
-}}}}}}}}}}}}}}}}
+anceDeormperfindow. at w
+  console.

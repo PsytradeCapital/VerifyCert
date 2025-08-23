@@ -29,6 +29,7 @@ export default function Home(): JSX.Element {
       icon: QrCodeIcon,
       title: 'QR code verification',
       description: 'Quick and easy verification using QR codes for instant authentication.'
+    }
   ];
 
   return (
@@ -164,4 +165,4 @@ export default function Home(): JSX.Element {
       </div>
     </div>
   );
-}}
+};

@@ -2,24 +2,23 @@ import React from 'react';
 import { performanceMonitor } from './performanceMonitoring';
 
 interface MonitoredFetchOptions extends RequestInit {
-}
-}
-}
   skipMonitoring?: boolean;
   operationName?: string;
+}
 
 /**
  * Enhanced fetch function with automatic performance monitoring
  */
 export const monitoredFetch = async (
-  input: RequestInfo | URL,;
-  init?: MonitoredFetchOptions;;
+  input: RequestInfo | URL,
+  init?: MonitoredFetchOptions
 ): Promise<Response> => {
   const { skipMonitoring = false, operationName, ...fetchOptions } = init || {};
 
   // Skip monitoring if explicitly requested
   if (skipMonitoring) {
     return fetch(input, fetchOptions);
+  }
 
   // Extract URL and method for monitoring
   const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
@@ -57,6 +56,8 @@ export const monitoredFetch = async (
       
       if (currentMetric && currentMetric.duration && currentMetric.duration > 1000) {
         console.warn(`🐌 Slow API call detected: ${operation} (${currentMetric.duration.toFixed(0)}ms)`);
+      }
+    }
 
     return response;
   } catch (error) {
@@ -70,6 +71,7 @@ export const monitoredFetch = async (
     });
 
     throw error;
+  }
 };
 
 /**
@@ -92,13 +94,15 @@ function generateOperationName(url: string, method: string): string {
   } catch {
     // Fallback for invalid URLs
     return `api_${method.toLowerCase()}_unknown`;
+  }
+}
 
 /**
  * Monitored fetch with automatic retry logic
  */
-export const monitoredFetchWithRetry = async (;
-  input: RequestInfo | URL,;;
-  init?: MonitoredFetchOptions & { maxRetries?: number; retryDelay?: number
+export const monitoredFetchWithRetry = async (
+  input: RequestInfo | URL,
+  init?: MonitoredFetchOptions & { maxRetries?: number; retryDelay?: number }
 ): Promise<Response> => {
   const { maxRetries = 3, retryDelay = 1000, ...fetchOptions } = init || {};
   
@@ -116,15 +120,18 @@ export const monitoredFetchWithRetry = async (;
       // Return successful response
       if (response.ok) {
         return response;
+      }
       
       // Don't retry client errors (4xx)
       if (response.status >= 400 && response.status < 500) {
         return response;
+      }
       
       // Retry server errors (5xx) and network issues
       if (attempt < maxRetries) {
         await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
         continue;
+      }
       
       return response;
     } catch (error) {
@@ -133,8 +140,11 @@ export const monitoredFetchWithRetry = async (;
       if (attempt < maxRetries) {
         await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
         continue;
+      }
       
       throw lastError;
+    }
+  }
   
   throw lastError || new Error('Max retries exceeded');
 };
@@ -142,7 +152,7 @@ export const monitoredFetchWithRetry = async (;
 /**
  * Batch API calls with performance monitoring
  */
-export const monitoredBatchFetch = async <T>(;;
+export const monitoredBatchFetch = async <T>(
   requests: Array<{
     input: RequestInfo | URL;
     init?: MonitoredFetchOptions;
@@ -151,6 +161,7 @@ export const monitoredBatchFetch = async <T>(;;
   options?: {
     concurrency?: number;
     operationName?: string;
+  }
 ): Promise<Array<T | Error>> => {
   const { concurrency = 5, operationName = 'batch_api_calls' } = options || {};
   
@@ -173,14 +184,17 @@ export const monitoredBatchFetch = async <T>(;;
           
           if (parser) {
             return await parser(response);
+          }
           
           return response.json() as T;
         } catch (error) {
           return error instanceof Error ? error : new Error('Unknown error');
+        }
       });
       
       const batchResults = await Promise.all(batchPromises);
       results.push(...batchResults);
+    }
     
     const successCount = results.filter(result => !(result instanceof Error)).length;
     const errorCount = results.length - successCount;
@@ -203,14 +217,15 @@ export const monitoredBatchFetch = async <T>(;;
     });
     
     throw error;
+  }
 };
 
 /**
  * Create a monitored version of any async function
  */
 export const withApiMonitoring = <T extends (...args: any[]) => Promise<any>>(
-  fn: T,;
-  operationName: string;;
+  fn: T,
+  operationName: string
 ): T => {
   return (async (...args: any[]) => {
     performanceMonitor.startTiming(operationName, {
@@ -232,6 +247,7 @@ export const withApiMonitoring = <T extends (...args: any[]) => Promise<any>>(
         error: error instanceof Error ? error.message : 'Unknown error'
       });
       throw error;
+    }
   }) as T;
 };
 
@@ -247,7 +263,6 @@ if (process.env.NODE_ENV === 'development') {
   window.fetch = monitoredFetch as any;
   
   console.log('🔍 API performance monitoring enabled');
+}
 
 export default monitoredFetch;
-}
-}}}}}}}}}}}}}}}}}

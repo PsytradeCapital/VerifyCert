@@ -29,7 +29,6 @@ interface CertificateViewerState {
     blockNumber?: string;
     contractAddress?: string;
   } | null;
-} | null;
 }
 
 const CertificateViewer: React.FC = () => {

@@ -1,77 +1,15 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface User {
-  id: number;
+  id: string;
   name: string;
-  email?: string;
-  phone?: string;
-  region: string;
-  role: 'user' | 'issuer' | 'admin';
-  isVerified: boolean;
+  email: string;
 }
 
-interface AuthState {
-  user: User | null;
-  token: string | null;
-  isLoading: boolean;
+interface AuthContextType {
   isAuthenticated: boolean;
-}
-
-type AuthAction =
-  | { type: 'AUTH_START' }
-  | { type: 'AUTH_SUCCESS'; payload: { user: User; token: string } }
-  | { type: 'AUTH_FAILURE' }
-  | { type: 'LOGOUT' }
-  | { type: 'UPDATE_USER'; payload: User };
-
-const initialState: AuthState = {
-  user: null,
-  token: null,
-  isLoading: false,
-  isAuthenticated: false,
-};
-
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case 'AUTH_START':
-      return { ...state, isLoading: true };
-    case 'AUTH_SUCCESS':
-      return {
-        ...state,
-        user: action.payload.user,
-        token: action.payload.token,
-        isLoading: false,
-        isAuthenticated: true,
-      };
-    case 'AUTH_FAILURE':
-      return {
-        ...state,
-        user: null,
-        token: null,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'LOGOUT':
-      return {
-        ...state,
-        user: null,
-        token: null,
-        isLoading: false,
-        isAuthenticated: false,
-      };
-    case 'UPDATE_USER':
-      return {
-        ...state,
-        user: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-interface AuthContextType extends AuthState {
-  login: (emailOrPhone: string, password: string) => Promise<void>;
-  register: (data: any) => Promise<void>;
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -90,53 +28,30 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
-  const login = async (emailOrPhone: string, password: string) => {
-    dispatch({ type: 'AUTH_START' });
-    try {
-      setTimeout(() => {
-        const mockUser: User = {
-          id: 1,
-          name: 'Demo User',
-          email: emailOrPhone,
-          region: 'Kenya',
-          role: 'user',
-          isVerified: true,
-        };
-        dispatch({ 
-          type: 'AUTH_SUCCESS', 
-          payload: { user: mockUser, token: 'demo-token' } 
-        });
-      }, 1000);
-    } catch (error) {
-      dispatch({ type: 'AUTH_FAILURE' });
-      throw error;
-    }
-  };
-
-  const register = async (data: any) => {
-    dispatch({ type: 'AUTH_START' });
-    try {
-      setTimeout(() => {
-        dispatch({ type: 'AUTH_FAILURE' });
-      }, 1000);
-    } catch (error) {
-      dispatch({ type: 'AUTH_FAILURE' });
-      throw error;
-    }
+  const login = async (email: string, password: string) => {
+    // Mock login - replace with actual authentication
+    setIsAuthenticated(true);
+    setUser({ id: '1', name: 'Demo User', email });
   };
 
   const logout = () => {
-    dispatch({ type: 'LOGOUT' });
+    setIsAuthenticated(false);
+    setUser(null);
   };
 
-  const value: AuthContextType = {
-    ...state,
+  const value = {
+    isAuthenticated,
+    user,
     login,
-    register,
-    logout,
+    logout
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

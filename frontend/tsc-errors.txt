@@ -4,119 +4,6 @@ src/components/ui/Badge/__tests__/BlockchainProofIndicator.test.tsx(321,14): err
 src/components/ui/Badge/__tests__/VerificationBadge.test.tsx(280,6): error TS1128: Declaration or statement expected.
 src/components/ui/Badge/__tests__/VerificationBadge.test.tsx(311,8): error TS1128: Declaration or statement expected.
 src/components/ui/Badge/__tests__/VerificationBadge.test.tsx(315,1): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(15,14): error TS1005: ';' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(55,43): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(55,45): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(55,55): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(55,56): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(57,12): error TS1005: ';' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(57,24): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(57,27): error TS1005: ';' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(57,38): error TS1005: ';' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(57,45): error TS1434: Unexpected keyword or identifier.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(57,87): error TS1005: ';' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(68,39): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(68,41): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(68,75): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(68,76): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(83,9): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(86,14): error TS1005: ';' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(88,13): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(88,18): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,15): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,20): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,28): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,31): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,37): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,48): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(92,53): error TS1005: ':' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(93,13): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(93,18): error TS1005: ',' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(94,11): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(94,13): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(101,12): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(102,9): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(103,7): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(107,9): error TS2657: JSX expressions must have one parent element.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(110,13): error TS2657: JSX expressions must have one parent element.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(125,41): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(125,43): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(125,114): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(125,115): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(127,21): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(131,41): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(131,43): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(131,105): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(131,106): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(133,21): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(137,41): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(137,43): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(137,109): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(137,110): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(139,21): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(140,17): error TS1005: ')' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(143,41): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(143,43): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(143,113): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(143,114): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(145,21): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(146,17): error TS1005: ')' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(147,15): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(148,13): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(149,11): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(177,38): error TS1005: '}' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(177,39): error TS1005: '...' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(177,50): error TS1003: Identifier expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(178,25): error TS2657: JSX expressions must have one parent element.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(182,23): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(193,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(193,19): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(195,13): error TS1005: ')' expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(196,11): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(197,9): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(198,7): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(198,8): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(199,5): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(200,3): error TS1109: Expression expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(201,1): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(204,1): error TS1128: Declaration or statement expected.
-src/components/ui/BrowserCompatibility/BrowserCompatibility.tsx(205,1): error TS1128: Declaration or statement expected.
-src/components/ui/Button/Button.tsx(4,85): error TS1131: Property or signature expected.
-src/components/ui/Button/Button.tsx(6,1): error TS1128: Declaration or statement expected.
-src/components/ui/Button/Button.tsx(7,1): error TS1128: Declaration or statement expected.
-src/components/ui/Button/Button.tsx(8,1): error TS1128: Declaration or statement expected.
-src/components/ui/Button/Button.tsx(9,1): error TS1128: Declaration or statement expected.
-src/components/ui/Button/Button.tsx(10,11): error TS1109: Expression expected.
-src/components/ui/Button/Button.tsx(11,8): error TS1109: Expression expected.
-src/components/ui/Button/Button.tsx(12,11): error TS1109: Expression expected.
-src/components/ui/Button/Button.tsx(52,1): error TS1128: Declaration or statement expected.
-src/components/ui/Button/Button.tsx(57,1): error TS1128: Declaration or statement expected.
-src/components/ui/CacheManager.tsx(6,14): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(7,9): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(8,12): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(9,12): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(10,14): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(11,10): error TS1005: ',' expected.
-src/components/ui/CacheManager.tsx(18,14): error TS1005: ';' expected.
-src/components/ui/CacheManager.tsx(50,30): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(50,80): error TS1005: '...' expected.
-src/components/ui/CacheManager.tsx(50,90): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(50,91): error TS1005: ',' expected.
-src/components/ui/CacheManager.tsx(51,7): error TS2657: JSX expressions must have one parent element.
-src/components/ui/CacheManager.tsx(86,17): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(116,37): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(117,19): error TS1005: '...' expected.
-src/components/ui/CacheManager.tsx(118,18): error TS1003: Identifier expected.
-src/components/ui/CacheManager.tsx(118,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/CacheManager.tsx(141,15): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(142,15): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(204,13): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(205,13): error TS1005: '}' expected.
-src/components/ui/CacheManager.tsx(212,5): error TS1128: Declaration or statement expected.
-src/components/ui/CacheManager.tsx(213,3): error TS1109: Expression expected.
-src/components/ui/CacheManager.tsx(216,8): error TS1005: ';' expected.
-src/components/ui/CacheManager.tsx(216,16): error TS1005: ';' expected.
-src/components/ui/CacheManager.tsx(218,1): error TS1128: Declaration or statement expected.
 src/components/ui/Card/__tests__/Card.test.tsx(12,2): error TS1005: ',' expected.
 src/components/ui/Card/__tests__/Card.test.tsx(16,38): error TS1005: ',' expected.
 src/components/ui/Card/__tests__/Card.test.tsx(18,6): error TS1003: Identifier expected.
@@ -170,232 +57,11 @@ src/components/ui/Card/Card.stories.tsx(274,14): error TS1005: ':' expected.
 src/components/ui/Card/Card.stories.tsx(274,26): error TS1005: ',' expected.
 src/components/ui/Card/Card.stories.tsx(289,2): error TS1005: ',' expected.
 src/components/ui/Card/Card.stories.tsx(291,2): error TS1005: '}' expected.
-src/components/ui/Card/Card.tsx(6,1): error TS1128: Declaration or statement expected.
-src/components/ui/Card/Card.tsx(7,1): error TS1128: Declaration or statement expected.
-src/components/ui/Card/Card.tsx(8,1): error TS1128: Declaration or statement expected.
-src/components/ui/Card/Card.tsx(9,1): error TS1128: Declaration or statement expected.
-src/components/ui/Card/Card.tsx(10,11): error TS1109: Expression expected.
-src/components/ui/Card/Card.tsx(11,11): error TS1109: Expression expected.
-src/components/ui/Card/Card.tsx(12,9): error TS1109: Expression expected.
-src/components/ui/Card/Card.tsx(13,20): error TS1109: Expression expected.
-src/components/ui/Card/Card.tsx(45,1): error TS1128: Declaration or statement expected.
-src/components/ui/Card/Card.tsx(50,1): error TS1128: Declaration or statement expected.
 src/components/ui/Card/ResponsiveCard.tsx(13,7): error TS1005: ';' expected.
 src/components/ui/Card/ResponsiveCard.tsx(55,8): error TS1005: ';' expected.
 src/components/ui/Card/ResponsiveCard.tsx(55,16): error TS1005: ';' expected.
 src/components/ui/Certificate/__tests__/CertificateMetadata.test.tsx(179,6): error TS1128: Declaration or statement expected.
 src/components/ui/Certificate/__tests__/CertificateMetadata.test.tsx(273,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(12,10): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(13,13): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(14,12): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(15,12): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(16,9): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(17,14): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(31,7): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateActions.tsx(45,28): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(56,40): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(56,55): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(56,62): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(65,25): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,30): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,37): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,38): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,50): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,63): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,75): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,80): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,81): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,93): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(71,110): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(72,7): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateActions.tsx(72,8): error TS1472: 'catch' or 'finally' expected.
-src/components/ui/Certificate/CertificateActions.tsx(80,37): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(80,40): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(80,41): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(81,7): error TS1005: 'try' expected.
-src/components/ui/Certificate/CertificateActions.tsx(90,32): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(91,13): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(91,18): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(131,41): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(131,43): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateActions.tsx(131,66): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateActions.tsx(131,86): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateActions.tsx(131,96): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(131,97): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(136,18): error TS1136: Property assignment expected.
-src/components/ui/Certificate/CertificateActions.tsx(136,21): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateActions.tsx(137,9): error TS1131: Property or signature expected.
-src/components/ui/Certificate/CertificateActions.tsx(137,27): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(137,40): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(137,60): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateActions.tsx(139,21): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(139,34): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(140,7): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(146,18): error TS1136: Property assignment expected.
-src/components/ui/Certificate/CertificateActions.tsx(146,21): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateActions.tsx(146,47): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(147,27): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(147,40): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateActions.tsx(147,57): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateActions.tsx(149,21): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(149,31): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(150,7): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(157,28): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(157,36): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(157,43): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateActions.tsx(158,21): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateActions.tsx(158,33): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(159,7): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(189,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(203,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(217,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(247,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(258,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(269,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(280,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(291,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateActions.tsx(308,5): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(309,3): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateActions.tsx(310,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(313,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateActions.tsx(314,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(9,13): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(10,11): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(11,16): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(12,10): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(13,8): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(14,10): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(39,1): error TS1131: Property or signature expected.
-src/components/ui/Certificate/CertificateCard.tsx(41,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(42,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(44,11): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(45,10): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(46,15): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(47,16): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(48,13): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(49,14): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(49,26): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(50,11): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(50,23): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(51,11): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(51,23): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(52,12): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(52,24): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(79,13): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateCard.tsx(79,34): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(79,37): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Certificate/CertificateCard.tsx(134,27): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(134,30): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(134,31): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(134,43): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(159,24): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(159,27): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(159,50): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(159,60): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(159,62): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(159,85): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateCard.tsx(160,32): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(160,34): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(160,37): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(160,49): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(166,26): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(166,29): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(166,55): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(166,62): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(166,64): error TS1472: 'catch' or 'finally' expected.
-src/components/ui/Certificate/CertificateCard.tsx(166,87): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateCard.tsx(181,36): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateCard.tsx(181,57): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(189,7): error TS1005: 'try' expected.
-src/components/ui/Certificate/CertificateCard.tsx(204,25): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(204,28): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(204,40): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,14): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,26): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,42): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,46): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,56): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,57): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,69): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,82): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,87): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,88): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(205,100): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(206,40): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateCard.tsx(207,5): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(218,7): error TS1005: 'try' expected.
-src/components/ui/Certificate/CertificateCard.tsx(261,9): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(262,9): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(262,29): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(262,84): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateCard.tsx(262,94): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(263,7): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(264,9): error TS2657: JSX expressions must have one parent element.
-src/components/ui/Certificate/CertificateCard.tsx(315,7): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(316,5): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateCard.tsx(321,7): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(322,7): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(322,27): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(322,150): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateCard.tsx(322,160): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateCard.tsx(399,15): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateCard.tsx(535,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(538,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateCard.tsx(539,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(13,8): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(14,15): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(15,13): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(16,8): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(17,16): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(18,7): error TS1005: ',' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(54,1): error TS1131: Property or signature expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(56,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(57,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(59,11): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(60,22): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(61,20): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(62,15): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(63,13): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(85,13): error TS1005: ';' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(85,34): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(85,37): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Certificate/CertificateMetadata.tsx(142,27): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(142,29): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(142,35): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(143,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(147,19): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(148,19): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(155,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/Certificate/CertificateMetadata.tsx(156,12): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(162,5): error TS1005: ')' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(163,3): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(172,18): error TS2657: JSX expressions must have one parent element.
-src/components/ui/Certificate/CertificateMetadata.tsx(174,7): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(199,37): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(199,54): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(199,64): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(199,65): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(221,7): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(222,5): error TS1109: Expression expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(225,30): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(225,69): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(225,79): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(246,13): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(247,13): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(248,13): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(249,13): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(295,37): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(295,38): error TS1005: '...' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(295,63): error TS1003: Identifier expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(296,28): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(297,26): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(401,36): error TS1005: '}' expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(401,92): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(402,24): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(403,22): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Certificate/CertificateMetadata.tsx(413,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(416,1): error TS1128: Declaration or statement expected.
-src/components/ui/Certificate/CertificateMetadata.tsx(417,1): error TS1128: Declaration or statement expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(105,24): error TS1005: ',' expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(105,27): error TS1005: ',' expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(105,50): error TS1005: ',' expected.
@@ -421,68 +87,6 @@ src/components/ui/CertificateCard/CertificateCard.tsx(156,7): error TS1005: '}' 
 src/components/ui/CertificateCard/CertificateCard.tsx(157,7): error TS1005: '}' expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(158,7): error TS1005: '}' expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(358,2): error TS1472: 'catch' or 'finally' expected.
-src/components/ui/CertificateList/CertificateList.tsx(18,1): error TS1131: Property or signature expected.
-src/components/ui/CertificateList/CertificateList.tsx(20,1): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(21,1): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(22,29): error TS1011: An element access expression should take an argument.
-src/components/ui/CertificateList/CertificateList.tsx(23,13): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(24,23): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(24,75): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(25,19): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(26,13): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(108,9): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(144,6): error TS1129: Statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(147,4): error TS1129: Statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(147,29): error TS1005: ';' expected.
-src/components/ui/CertificateList/CertificateList.tsx(163,6): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(189,32): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(189,52): error TS1005: '...' expected.
-src/components/ui/CertificateList/CertificateList.tsx(189,62): error TS1003: Identifier expected.
-src/components/ui/CertificateList/CertificateList.tsx(189,63): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(191,14): error TS1005: ';' expected.
-src/components/ui/CertificateList/CertificateList.tsx(200,9): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(211,7): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(212,5): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(215,30): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(215,50): error TS1005: '...' expected.
-src/components/ui/CertificateList/CertificateList.tsx(215,60): error TS1003: Identifier expected.
-src/components/ui/CertificateList/CertificateList.tsx(215,61): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(217,12): error TS1005: ';' expected.
-src/components/ui/CertificateList/CertificateList.tsx(238,35): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(239,21): error TS1005: '...' expected.
-src/components/ui/CertificateList/CertificateList.tsx(242,20): error TS1003: Identifier expected.
-src/components/ui/CertificateList/CertificateList.tsx(243,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/CertificateList/CertificateList.tsx(247,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/CertificateList/CertificateList.tsx(250,35): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(251,21): error TS1005: '...' expected.
-src/components/ui/CertificateList/CertificateList.tsx(254,20): error TS1003: Identifier expected.
-src/components/ui/CertificateList/CertificateList.tsx(255,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/CertificateList/CertificateList.tsx(259,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/CertificateList/CertificateList.tsx(273,11): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(276,16): error TS1005: ';' expected.
-src/components/ui/CertificateList/CertificateList.tsx(277,13): error TS2657: JSX expressions must have one parent element.
-src/components/ui/CertificateList/CertificateList.tsx(289,11): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(446,9): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(447,7): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(450,12): error TS1005: ';' expected.
-src/components/ui/CertificateList/CertificateList.tsx(451,30): error TS1005: ',' expected.
-src/components/ui/CertificateList/CertificateList.tsx(460,13): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(465,13): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(528,54): error TS1005: '}' expected.
-src/components/ui/CertificateList/CertificateList.tsx(528,71): error TS1003: Identifier expected.
-src/components/ui/CertificateList/CertificateList.tsx(532,26): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/CertificateList/CertificateList.tsx(532,27): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/CertificateList/CertificateList.tsx(534,27): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/CertificateList/CertificateList.tsx(567,15): error TS1005: ')' expected.
-src/components/ui/CertificateList/CertificateList.tsx(568,14): error TS1005: ',' expected.
-src/components/ui/CertificateList/CertificateList.tsx(569,11): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(570,9): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(570,10): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(571,7): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(572,5): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(573,3): error TS1109: Expression expected.
-src/components/ui/CertificateList/CertificateList.tsx(574,1): error TS1128: Declaration or statement expected.
-src/components/ui/CertificateList/CertificateList.tsx(575,1): error TS1128: Declaration or statement expected.
 src/components/ui/Dashboard/ActivityFeed.tsx(14,1): error TS1131: Property or signature expected.
 src/components/ui/Dashboard/ActivityFeed.tsx(16,1): error TS1128: Declaration or statement expected.
 src/components/ui/Dashboard/ActivityFeed.tsx(17,1): error TS1128: Declaration or statement expected.
@@ -602,69 +206,6 @@ src/components/ui/Dashboard/QuickStats.tsx(96,3): error TS1109: Expression expec
 src/components/ui/Dashboard/QuickStats.tsx(101,1): error TS1128: Declaration or statement expected.
 src/components/ui/Feedback/__tests__/FeedbackAnimations.test.tsx(166,8): error TS1109: Expression expected.
 src/components/ui/Feedback/__tests__/FeedbackAnimations.test.tsx(167,5): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackButton.tsx(12,14): error TS1005: ';' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(34,26): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(34,28): error TS1005: '...' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(34,57): error TS1003: Identifier expected.
-src/components/ui/Feedback/FeedbackButton.tsx(34,286): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Feedback/FeedbackButton.tsx(36,9): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(37,9): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(56,12): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackButton.tsx(59,13): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(63,13): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(67,11): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(67,13): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/Feedback/FeedbackButton.tsx(68,9): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(68,11): error TS17015: Expected corresponding closing tag for JSX fragment.
-src/components/ui/Feedback/FeedbackButton.tsx(69,7): error TS1005: ')' expected.
-src/components/ui/Feedback/FeedbackButton.tsx(77,5): error TS1128: Declaration or statement expected.
-src/components/ui/Feedback/FeedbackButton.tsx(77,7): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackButton.tsx(78,3): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(13,1): error TS1131: Property or signature expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(15,1): error TS1128: Declaration or statement expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(16,1): error TS1128: Declaration or statement expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(18,22): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(19,12): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(20,11): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(39,3): error TS1005: ',' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(56,4): error TS1128: Declaration or statement expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(56,24): error TS1005: ';' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(104,44): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(105,17): error TS1005: '...' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(108,16): error TS1003: Identifier expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(109,14): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/Feedback/FeedbackCollector.tsx(132,29): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(133,15): error TS1005: '...' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(136,14): error TS1003: Identifier expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(137,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/Feedback/FeedbackCollector.tsx(143,13): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/Feedback/FeedbackCollector.tsx(144,11): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Feedback/FeedbackCollector.tsx(146,5): error TS1005: ')' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(147,3): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(155,9): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(156,9): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(157,9): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(162,11): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(163,11): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(164,11): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(165,11): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(230,17): error TS1003: Identifier expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(230,18): error TS1138: Parameter declaration expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(231,19): error TS2657: JSX expressions must have one parent element.
-src/components/ui/Feedback/FeedbackCollector.tsx(233,17): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(233,19): error TS1003: Identifier expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(247,20): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(249,17): error TS1005: '}' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(250,16): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/Feedback/FeedbackCollector.tsx(251,15): error TS17002: Expected corresponding JSX closing tag for 'motion.div'.
-src/components/ui/Feedback/FeedbackCollector.tsx(252,13): error TS17002: Expected corresponding JSX closing tag for 'motion.div'.
-src/components/ui/Feedback/FeedbackCollector.tsx(253,11): error TS17002: Expected corresponding JSX closing tag for 'AnimatePresence'.
-src/components/ui/Feedback/FeedbackCollector.tsx(254,7): error TS1005: ')' expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(255,5): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(256,3): error TS1109: Expression expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(257,1): error TS1128: Declaration or statement expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(260,1): error TS1128: Declaration or statement expected.
-src/components/ui/Feedback/FeedbackCollector.tsx(261,1): error TS1128: Declaration or statement expected.
 src/components/ui/Feedback/FeedbackDashboard.tsx(6,10): error TS1003: Identifier expected.
 src/components/ui/Feedback/FeedbackDashboard.tsx(7,9): error TS1003: Identifier expected.
 src/components/ui/Feedback/FeedbackDashboard.tsx(8,17): error TS1003: Identifier expected.
@@ -820,76 +361,6 @@ src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(221,6): error TS1005:
 src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(228,6): error TS1005: ',' expected.
 src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(246,1): error TS1128: Declaration or statement expected.
 src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(247,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(17,1): error TS1131: Property or signature expected.
-src/components/ui/FileUpload/FileUpload.tsx(19,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(20,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(21,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(22,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(23,11): error TS1109: Expression expected.
-src/components/ui/FileUpload/FileUpload.tsx(44,19): error TS1005: ';' expected.
-src/components/ui/FileUpload/FileUpload.tsx(44,24): error TS1434: Unexpected keyword or identifier.
-src/components/ui/FileUpload/FileUpload.tsx(44,29): error TS1434: Unexpected keyword or identifier.
-src/components/ui/FileUpload/FileUpload.tsx(44,32): error TS1434: Unexpected keyword or identifier.
-src/components/ui/FileUpload/FileUpload.tsx(44,37): error TS1434: Unexpected keyword or identifier.
-src/components/ui/FileUpload/FileUpload.tsx(44,42): error TS1434: Unexpected keyword or identifier.
-src/components/ui/FileUpload/FileUpload.tsx(61,6): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(98,22): error TS1005: ',' expected.
-src/components/ui/FileUpload/FileUpload.tsx(98,27): error TS1005: ',' expected.
-src/components/ui/FileUpload/FileUpload.tsx(98,33): error TS1005: ',' expected.
-src/components/ui/FileUpload/FileUpload.tsx(98,36): error TS1005: ',' expected.
-src/components/ui/FileUpload/FileUpload.tsx(110,4): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(110,42): error TS1005: ';' expected.
-src/components/ui/FileUpload/FileUpload.tsx(116,4): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(116,16): error TS1005: ';' expected.
-src/components/ui/FileUpload/FileUpload.tsx(129,4): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(129,29): error TS1005: ';' expected.
-src/components/ui/FileUpload/FileUpload.tsx(155,8): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(164,5): error TS2657: JSX expressions must have one parent element.
-src/components/ui/FileUpload/FileUpload.tsx(177,20): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(178,13): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(183,11): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(183,13): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(184,13): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(185,9): error TS1003: Identifier expected.
-src/components/ui/FileUpload/FileUpload.tsx(193,28): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(193,61): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/FileUpload/FileUpload.tsx(199,7): error TS1109: Expression expected.
-src/components/ui/FileUpload/FileUpload.tsx(201,14): error TS1005: ';' expected.
-src/components/ui/FileUpload/FileUpload.tsx(201,33): error TS1005: ';' expected.
-src/components/ui/FileUpload/FileUpload.tsx(202,28): error TS1005: ',' expected.
-src/components/ui/FileUpload/FileUpload.tsx(203,9): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(218,35): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(219,13): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(220,12): error TS1003: Identifier expected.
-src/components/ui/FileUpload/FileUpload.tsx(220,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/FileUpload/FileUpload.tsx(233,36): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(234,19): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(239,18): error TS1003: Identifier expected.
-src/components/ui/FileUpload/FileUpload.tsx(243,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/FileUpload/FileUpload.tsx(250,17): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/FileUpload/FileUpload.tsx(252,11): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(300,9): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(301,7): error TS1109: Expression expected.
-src/components/ui/FileUpload/FileUpload.tsx(322,44): error TS1005: ',' expected.
-src/components/ui/FileUpload/FileUpload.tsx(322,45): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(322,62): error TS1003: Identifier expected.
-src/components/ui/FileUpload/FileUpload.tsx(323,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/FileUpload/FileUpload.tsx(328,20): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/FileUpload/FileUpload.tsx(350,54): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(351,27): error TS1005: '...' expected.
-src/components/ui/FileUpload/FileUpload.tsx(358,26): error TS1003: Identifier expected.
-src/components/ui/FileUpload/FileUpload.tsx(358,27): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/FileUpload/FileUpload.tsx(362,27): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/FileUpload/FileUpload.tsx(373,23): error TS1005: '}' expected.
-src/components/ui/FileUpload/FileUpload.tsx(386,15): error TS1005: ')' expected.
-src/components/ui/FileUpload/FileUpload.tsx(387,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/ui/FileUpload/FileUpload.tsx(389,9): error TS1005: ')' expected.
-src/components/ui/FileUpload/FileUpload.tsx(390,7): error TS1109: Expression expected.
-src/components/ui/FileUpload/FileUpload.tsx(397,5): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(398,3): error TS1109: Expression expected.
-src/components/ui/FileUpload/FileUpload.tsx(399,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(402,1): error TS1128: Declaration or statement expected.
-src/components/ui/FileUpload/FileUpload.tsx(403,1): error TS1128: Declaration or statement expected.
 src/components/ui/FloatingActionButton/FloatingActionButton.tsx(12,1): error TS1131: Property or signature expected.
 src/components/ui/FloatingActionButton/FloatingActionButton.tsx(14,1): error TS1128: Declaration or statement expected.
 src/components/ui/FloatingActionButton/FloatingActionButton.tsx(15,1): error TS1128: Declaration or statement expected.
@@ -1815,46 +1286,6 @@ src/components/ui/Navigation/Breadcrumbs.tsx(93,5): error TS1109: Expression exp
 src/components/ui/Navigation/Breadcrumbs.tsx(94,3): error TS1109: Expression expected.
 src/components/ui/Navigation/Breadcrumbs.tsx(95,1): error TS1128: Declaration or statement expected.
 src/components/ui/Navigation/Breadcrumbs.tsx(103,1): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(22,7): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(62,17): error TS1005: ',' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(62,22): error TS1005: ',' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(62,30): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(63,18): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(64,24): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(64,37): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(65,10): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(66,5): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Navigation/FloatingActionButton.tsx(67,5): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Navigation/FloatingActionButton.tsx(68,5): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Navigation/FloatingActionButton.tsx(69,5): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Navigation/FloatingActionButton.tsx(70,5): error TS1434: Unexpected keyword or identifier.
-src/components/ui/Navigation/FloatingActionButton.tsx(114,21): error TS1005: '}' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(114,22): error TS1005: '...' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(114,40): error TS1003: Identifier expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(115,19): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(116,10): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(117,7): error TS1109: Expression expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(119,7): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(120,5): error TS1109: Expression expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(127,21): error TS1005: '}' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(127,22): error TS1005: '...' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(127,43): error TS1005: '...' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(127,81): error TS1003: Identifier expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(128,18): error TS1136: Property assignment expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(128,22): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(137,19): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(138,10): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(139,7): error TS1109: Expression expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(141,7): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(142,5): error TS1109: Expression expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(146,19): error TS1005: '}' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(146,20): error TS1005: '...' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(146,38): error TS1003: Identifier expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(147,17): error TS1005: ';' expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(148,8): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(149,5): error TS1109: Expression expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(151,5): error TS1128: Declaration or statement expected.
-src/components/ui/Navigation/FloatingActionButton.tsx(152,3): error TS1109: Expression expected.
 src/components/ui/Navigation/NavigationStateManager.tsx(8,1): error TS1131: Property or signature expected.
 src/components/ui/Navigation/NavigationStateManager.tsx(10,1): error TS1128: Declaration or statement expected.
 src/components/ui/Navigation/NavigationStateManager.tsx(11,1): error TS1128: Declaration or statement expected.
@@ -1955,118 +1386,6 @@ src/components/ui/Navigation/SideNavigation.tsx(261,11): error TS1005: '...' exp
 src/components/ui/Navigation/SideNavigation.tsx(262,7): error TS1003: Identifier expected.
 src/components/ui/Navigation/SideNavigation.tsx(328,1): error TS1128: Declaration or statement expected.
 src/components/ui/Navigation/SideNavigation.tsx(329,1): error TS1128: Declaration or statement expected.
-src/components/ui/NetworkDisplay.tsx(9,14): error TS1005: ';' expected.
-src/components/ui/NetworkDisplay.tsx(18,32): error TS1005: '}' expected.
-src/components/ui/NetworkDisplay.tsx(18,72): error TS1005: '...' expected.
-src/components/ui/NetworkDisplay.tsx(18,82): error TS1003: Identifier expected.
-src/components/ui/NetworkDisplay.tsx(18,83): error TS1005: ';' expected.
-src/components/ui/NetworkDisplay.tsx(19,7): error TS2657: JSX expressions must have one parent element.
-src/components/ui/NetworkDisplay.tsx(60,5): error TS1128: Declaration or statement expected.
-src/components/ui/NetworkDisplay.tsx(61,3): error TS1109: Expression expected.
-src/components/ui/NetworkDisplay.tsx(62,1): error TS1128: Declaration or statement expected.
-src/components/ui/NetworkDisplay.tsx(63,1): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(12,14): error TS1005: ';' expected.
-src/components/ui/OfflineIndicator.tsx(26,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(27,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(28,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(29,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(29,28): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(29,56): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(29,66): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(30,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(33,20): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(34,17): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(53,11): error TS17002: Expected corresponding JSX closing tag for 'AnimatePresence'.
-src/components/ui/OfflineIndicator.tsx(55,5): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(55,7): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(56,3): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(57,1): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(64,14): error TS1005: ';' expected.
-src/components/ui/OfflineIndicator.tsx(74,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(75,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(76,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(77,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(77,28): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(77,52): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(77,62): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(78,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(96,21): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(104,11): error TS17002: Expected corresponding JSX closing tag for 'AnimatePresence'.
-src/components/ui/OfflineIndicator.tsx(106,5): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(106,7): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(107,3): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(108,1): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(115,14): error TS1005: ';' expected.
-src/components/ui/OfflineIndicator.tsx(139,4): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(139,31): error TS1005: ';' expected.
-src/components/ui/OfflineIndicator.tsx(148,7): error TS1005: 'try' expected.
-src/components/ui/OfflineIndicator.tsx(163,5): error TS2657: JSX expressions must have one parent element.
-src/components/ui/OfflineIndicator.tsx(167,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(168,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(169,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(175,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(175,28): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(175,35): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(176,13): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(179,12): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(180,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(182,22): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(183,15): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(193,35): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(194,19): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(195,15): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(195,16): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(201,33): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(202,21): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(203,17): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(203,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(205,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/OfflineIndicator.tsx(208,33): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(209,21): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(210,17): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(210,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(214,17): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(214,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/ui/OfflineIndicator.tsx(234,24): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(235,21): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(236,17): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(236,18): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(241,40): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(245,25): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(248,23): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(248,25): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(249,21): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(250,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(263,21): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(264,21): error TS17002: Expected corresponding JSX closing tag for 'AnimatePresence'.
-src/components/ui/OfflineIndicator.tsx(269,37): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(271,25): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(278,17): error TS1005: ')' expected.
-src/components/ui/OfflineIndicator.tsx(279,15): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(280,13): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(281,11): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(282,9): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(283,7): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(284,5): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(284,7): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(285,3): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(286,1): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(293,14): error TS1005: ';' expected.
-src/components/ui/OfflineIndicator.tsx(303,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(304,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(305,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(306,11): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(306,28): error TS1005: '}' expected.
-src/components/ui/OfflineIndicator.tsx(306,59): error TS1005: '...' expected.
-src/components/ui/OfflineIndicator.tsx(306,69): error TS1003: Identifier expected.
-src/components/ui/OfflineIndicator.tsx(307,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/OfflineIndicator.tsx(376,11): error TS17002: Expected corresponding JSX closing tag for 'AnimatePresence'.
-src/components/ui/OfflineIndicator.tsx(378,5): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(378,7): error TS1131: Property or signature expected.
-src/components/ui/OfflineIndicator.tsx(379,3): error TS1109: Expression expected.
-src/components/ui/OfflineIndicator.tsx(380,1): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(383,1): error TS1128: Declaration or statement expected.
-src/components/ui/OfflineIndicator.tsx(384,1): error TS1128: Declaration or statement expected.
 src/components/ui/OptimizedImage.tsx(3,26): error TS1003: Identifier expected.
 src/components/ui/OptimizedImage.tsx(4,24): error TS1003: Identifier expected.
 src/components/ui/OptimizedImage.tsx(5,20): error TS1003: Identifier expected.
@@ -2386,96 +1705,6 @@ src/components/ui/SkipLinks/SkipLinks.tsx(79,5): error TS1128: Declaration or st
 src/components/ui/SkipLinks/SkipLinks.tsx(80,3): error TS1109: Expression expected.
 src/components/ui/SkipLinks/SkipLinks.tsx(81,1): error TS1128: Declaration or statement expected.
 src/components/ui/SkipLinks/SkipLinks.tsx(84,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(17,14): error TS1005: ';' expected.
-src/components/ui/ThemeToggle.tsx(42,12): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(42,13): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(50,13): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(51,9): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(52,23): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(52,26): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(52,27): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(53,9): error TS1131: Property or signature expected.
-src/components/ui/ThemeToggle.tsx(53,19): error TS1005: ';' expected.
-src/components/ui/ThemeToggle.tsx(53,21): error TS1435: Unknown keyword or identifier. Did you mean 'switch'?
-src/components/ui/ThemeToggle.tsx(53,28): error TS1434: Unexpected keyword or identifier.
-src/components/ui/ThemeToggle.tsx(53,31): error TS1434: Unexpected keyword or identifier.
-src/components/ui/ThemeToggle.tsx(54,7): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(56,11): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(56,16): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(56,31): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(56,37): error TS1005: ':' expected.
-src/components/ui/ThemeToggle.tsx(56,39): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(56,68): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(57,9): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(58,17): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(58,23): error TS1131: Property or signature expected.
-src/components/ui/ThemeToggle.tsx(58,32): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(58,38): error TS1005: ')' expected.
-src/components/ui/ThemeToggle.tsx(58,40): error TS1005: ';' expected.
-src/components/ui/ThemeToggle.tsx(58,67): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(59,9): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(59,10): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(65,7): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(66,5): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(70,28): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(70,53): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(70,63): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(70,64): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(71,20): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(75,10): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(79,22): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(82,15): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(83,11): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(86,30): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(86,35): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(86,67): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(90,28): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(92,17): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(93,13): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(94,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/ui/ThemeToggle.tsx(100,13): error TS17002: Expected corresponding JSX closing tag for 'button'.
-src/components/ui/ThemeToggle.tsx(101,9): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(102,7): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(103,5): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(107,32): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(107,34): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(107,44): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(107,45): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(108,9): error TS2657: JSX expressions must have one parent element.
-src/components/ui/ThemeToggle.tsx(112,14): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(112,15): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(118,11): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(127,7): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(128,5): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(131,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(138,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(139,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(140,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(141,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(142,17): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(181,26): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(181,51): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(181,61): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(181,62): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(182,14): error TS1005: ',' expected.
-src/components/ui/ThemeToggle.tsx(187,25): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(192,15): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(196,25): error TS1005: '}' expected.
-src/components/ui/ThemeToggle.tsx(196,30): error TS1005: '...' expected.
-src/components/ui/ThemeToggle.tsx(196,56): error TS1003: Identifier expected.
-src/components/ui/ThemeToggle.tsx(197,21): error TS1005: ';' expected.
-src/components/ui/ThemeToggle.tsx(197,23): error TS1435: Unknown keyword or identifier. Did you mean 'switch'?
-src/components/ui/ThemeToggle.tsx(197,30): error TS1434: Unexpected keyword or identifier.
-src/components/ui/ThemeToggle.tsx(197,33): error TS1434: Unexpected keyword or identifier.
-src/components/ui/ThemeToggle.tsx(198,9): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(201,9): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(202,7): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(202,8): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(202,9): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(203,5): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(204,3): error TS1109: Expression expected.
-src/components/ui/ThemeToggle.tsx(205,1): error TS1128: Declaration or statement expected.
-src/components/ui/ThemeToggle.tsx(208,1): error TS1128: Declaration or statement expected.
 src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(11,2): error TS1005: ',' expected.
 src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(16,40): error TS1005: ',' expected.
 src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(18,14): error TS1138: Parameter declaration expected.
@@ -2769,16 +1998,16 @@ src/components/UIComponentsDemo.tsx(426,5): error TS1109: Expression expected.
 src/components/UIComponentsDemo.tsx(427,3): error TS1109: Expression expected.
 src/components/UIComponentsDemo.tsx(428,1): error TS1128: Declaration or statement expected.
 src/components/UIComponentsDemo.tsx(431,1): error TS1128: Declaration or statement expected.
-src/components/user/ChangePasswordForm.tsx(117,29): error TS1005: '}' expected.
-src/components/user/ChangePasswordForm.tsx(118,13): error TS1005: '...' expected.
-src/components/user/ChangePasswordForm.tsx(119,12): error TS1003: Identifier expected.
-src/components/user/ChangePasswordForm.tsx(121,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/user/ChangePasswordForm.tsx(128,9): error TS1005: '}' expected.
-src/components/user/ChangePasswordForm.tsx(174,37): error TS1005: '}' expected.
-src/components/user/ChangePasswordForm.tsx(175,23): error TS1005: '...' expected.
-src/components/user/ChangePasswordForm.tsx(178,22): error TS1003: Identifier expected.
-src/components/user/ChangePasswordForm.tsx(179,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/user/ChangePasswordForm.tsx(216,2): error TS1005: '}' expected.
+src/components/user/ChangePasswordForm.tsx(118,29): error TS1005: '}' expected.
+src/components/user/ChangePasswordForm.tsx(119,13): error TS1005: '...' expected.
+src/components/user/ChangePasswordForm.tsx(120,12): error TS1003: Identifier expected.
+src/components/user/ChangePasswordForm.tsx(122,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/user/ChangePasswordForm.tsx(129,9): error TS1005: '}' expected.
+src/components/user/ChangePasswordForm.tsx(175,37): error TS1005: '}' expected.
+src/components/user/ChangePasswordForm.tsx(176,23): error TS1005: '...' expected.
+src/components/user/ChangePasswordForm.tsx(179,22): error TS1003: Identifier expected.
+src/components/user/ChangePasswordForm.tsx(180,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/user/ChangePasswordForm.tsx(217,2): error TS1005: '}' expected.
 src/components/VerificationResultDemo.tsx(51,4): error TS1005: ',' expected.
 src/components/VerificationResultDemo.tsx(53,9): error TS1005: ':' expected.
 src/components/VerificationResultDemo.tsx(55,4): error TS1005: ',' expected.
@@ -2809,86 +2038,19 @@ src/components/VerificationResultDemo.tsx(172,5): error TS1109: Expression expec
 src/components/VerificationResultDemo.tsx(173,3): error TS1109: Expression expected.
 src/components/VerificationResultDemo.tsx(174,1): error TS1128: Declaration or statement expected.
 src/components/VerificationResultDemo.tsx(177,1): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(12,1): error TS1131: Property or signature expected.
-src/components/WalletConnect.tsx(14,1): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(15,1): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(71,4): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(71,8): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(97,9): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(101,4): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(101,8): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(127,25): error TS1125: Hexadecimal digit expected.
-src/components/WalletConnect.tsx(127,26): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(127,34): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(127,42): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(127,51): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(138,30): error TS1125: Hexadecimal digit expected.
-src/components/WalletConnect.tsx(138,31): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(138,42): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(138,50): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(138,59): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(171,7): error TS1005: 'try' expected.
-src/components/WalletConnect.tsx(179,4): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(179,92): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(208,4): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(208,78): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(218,4): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(218,39): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(232,70): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(247,29): error TS1125: Hexadecimal digit expected.
-src/components/WalletConnect.tsx(247,30): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(247,38): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(247,46): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(247,55): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(271,54): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(274,13): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(274,34): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(274,37): error TS1434: Unexpected keyword or identifier.
-src/components/WalletConnect.tsx(282,33): error TS1005: '}' expected.
-src/components/WalletConnect.tsx(282,75): error TS1005: '...' expected.
-src/components/WalletConnect.tsx(282,85): error TS1003: Identifier expected.
-src/components/WalletConnect.tsx(284,24): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(284,26): error TS1434: Unexpected keyword or identifier.
-src/components/WalletConnect.tsx(285,25): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(285,27): error TS1434: Unexpected keyword or identifier.
-src/components/WalletConnect.tsx(286,7): error TS1109: Expression expected.
-src/components/WalletConnect.tsx(287,9): error TS2657: JSX expressions must have one parent element.
-src/components/WalletConnect.tsx(294,22): error TS1005: '}' expected.
-src/components/WalletConnect.tsx(294,23): error TS1005: '...' expected.
-src/components/WalletConnect.tsx(294,33): error TS1003: Identifier expected.
-src/components/WalletConnect.tsx(294,39): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/WalletConnect.tsx(294,88): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/WalletConnect.tsx(296,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/WalletConnect.tsx(297,21): error TS1005: '}' expected.
-src/components/WalletConnect.tsx(297,22): error TS1005: '...' expected.
-src/components/WalletConnect.tsx(297,32): error TS1003: Identifier expected.
-src/components/WalletConnect.tsx(297,44): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/WalletConnect.tsx(297,86): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-src/components/WalletConnect.tsx(299,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
-src/components/WalletConnect.tsx(307,11): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(308,9): error TS1109: Expression expected.
-src/components/WalletConnect.tsx(309,7): error TS1109: Expression expected.
-src/components/WalletConnect.tsx(310,5): error TS1109: Expression expected.
-src/components/WalletConnect.tsx(313,22): error TS1005: '}' expected.
-src/components/WalletConnect.tsx(313,23): error TS1005: '...' expected.
-src/components/WalletConnect.tsx(313,33): error TS1003: Identifier expected.
-src/components/WalletConnect.tsx(313,34): error TS1109: Expression expected.
-src/components/WalletConnect.tsx(314,8): error TS1136: Property assignment expected.
-src/components/WalletConnect.tsx(314,9): error TS1005: ';' expected.
-src/components/WalletConnect.tsx(326,23): error TS1005: ',' expected.
-src/components/WalletConnect.tsx(335,13): error TS2657: JSX expressions must have one parent element.
-src/components/WalletConnect.tsx(343,15): error TS1005: '}' expected.
-src/components/WalletConnect.tsx(343,17): error TS17015: Expected corresponding closing tag for JSX fragment.
-src/components/WalletConnect.tsx(345,13): error TS1005: ')' expected.
-src/components/WalletConnect.tsx(345,15): error TS1136: Property assignment expected.
-src/components/WalletConnect.tsx(346,11): error TS1109: Expression expected.
-src/components/WalletConnect.tsx(346,12): error TS1003: Identifier expected.
-src/components/WalletConnect.tsx(347,9): error TS1003: Identifier expected.
-src/components/WalletConnect.tsx(387,8): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-src/components/WalletConnect.tsx(388,7): error TS17002: Expected corresponding JSX closing tag for 'button'.
-src/components/WalletConnect.tsx(389,4): error TS1005: ':' expected.
-src/components/WalletConnect.tsx(390,1): error TS1128: Declaration or statement expected.
-src/components/WalletConnect.tsx(391,1): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(343,23): error TS1005: ',' expected.
+src/components/WalletConnect.tsx(352,13): error TS2657: JSX expressions must have one parent element.
+src/components/WalletConnect.tsx(360,15): error TS1005: '}' expected.
+src/components/WalletConnect.tsx(360,17): error TS17015: Expected corresponding closing tag for JSX fragment.
+src/components/WalletConnect.tsx(362,13): error TS1005: ')' expected.
+src/components/WalletConnect.tsx(362,15): error TS1003: Identifier expected.
+src/components/WalletConnect.tsx(364,9): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(365,7): error TS1109: Expression expected.
+src/components/WalletConnect.tsx(365,9): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(404,8): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(405,5): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(406,3): error TS1109: Expression expected.
+src/components/WalletConnect.tsx(407,1): error TS1128: Declaration or statement expected.
 src/config/__tests__/routes.test.ts(52,8): error TS1005: ',' expected.
 src/config/__tests__/routes.test.ts(62,41): error TS1005: ',' expected.
 src/config/__tests__/routes.test.ts(62,42): error TS1005: ',' expected.

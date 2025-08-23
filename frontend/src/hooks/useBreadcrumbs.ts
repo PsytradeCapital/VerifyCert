@@ -22,7 +22,7 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
       // If no route config found, create a simple breadcrumb
       return [
         { label: 'Home', href: '/'
-}},
+}}},
         { label: 'Unknown Page', active: true
       ];
 
@@ -79,4 +79,4 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
 
 export default useBreadcrumbs;
 }
-}}}}}}
+}}}}}

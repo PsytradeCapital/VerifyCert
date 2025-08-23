@@ -15,6 +15,8 @@ name: string;
   location?: string;
 
 interface NotificationSettings {
+}}
+}
 
 }}}
   emailNotifications: boolean;
@@ -30,6 +32,8 @@ twoFactorEnabled: boolean;
   apiKeyEnabled: boolean;
 
 interface AppearanceSettings {
+}}
+}
 
 }}}
   theme: 'light' | 'dark' | 'system';
@@ -469,4 +473,4 @@ const Settings: React.FC = () => {
 
 export default Settings;
 }
-}}}}}
+}

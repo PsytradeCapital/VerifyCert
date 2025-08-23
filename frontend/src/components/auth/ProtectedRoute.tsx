@@ -3,13 +3,13 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+children: React.ReactNode;
   requireVerified?: boolean;
   requiredRole?: 'user' | 'issuer' | 'admin';
   requireAuth?: boolean;
   requireVerification?: boolean;
   allowedRoles?: string[];
-}
+}}
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,

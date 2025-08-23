@@ -14,6 +14,8 @@ id: string;
   public?: boolean;
 
 export interface NavigationState {
+}}
+}
   // Current navigation state
   currentPath: string;
   currentRoute: string;
@@ -79,6 +81,8 @@ export interface NavigationActions {
   setTransitionEasing: (easing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear') => void;
 
 export interface NavigationContextType {
+}}
+}
   state: NavigationState;
   actions: NavigationActions;
 
@@ -470,3 +474,5 @@ export const useNavigation = (): NavigationContextType => {
 };
 
 export default NavigationContext;
+}
+}}}}}}}}}}}}}}}}}

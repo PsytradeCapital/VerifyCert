@@ -5,7 +5,7 @@ import {
   CheckCircle, 
   XCircle, 
   AlertTriangle, 
-  Clock, 
+  Clock, ;;
   ExternalLink,;;
   Info,;;
   Zap,;;
@@ -26,6 +26,8 @@ tokenId: string;
   className?: string;
 
 interface BlockchainProof {
+}}
+}
 }}}
   transactionHash?: string;
   blockNumber?: string;
@@ -425,4 +427,4 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
 
 export default VerificationBadge;
 }
-}}}}}}}}}
+}}}}}}

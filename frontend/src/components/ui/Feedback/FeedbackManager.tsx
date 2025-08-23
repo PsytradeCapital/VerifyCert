@@ -13,7 +13,7 @@ id: string;
   action?: {
     label: string;
     onClick: () => void;
-}};
+}}};
   // Special animation options
   shake?: boolean;
   confetti?: boolean;
@@ -41,7 +41,7 @@ export const useFeedback = () => {
   if (!context) {
     throw new Error('useFeedback must be used within a FeedbackProvider');
   return context;
-}};
+}}};
 
 export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
@@ -276,4 +276,4 @@ const FeedbackRenderer: React.FC<{
 
 export default FeedbackProvider;
 }
-}}}}}}
+}}}}

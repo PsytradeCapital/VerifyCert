@@ -10,6 +10,8 @@ name: string;
   metadata?: Record<string, any>;
 
 interface PerformanceSummary {
+}}
+}
 }}}
   total: number;
   components: {

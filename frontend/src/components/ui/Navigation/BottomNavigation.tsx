@@ -13,6 +13,8 @@ id: string;
   onClick?: () => void;
 
 export interface BottomNavigationProps {
+}}
+}
 }}}
   items?: BottomNavItem[];
   variant?: 'default' | 'floating';
@@ -160,4 +162,4 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   );
 };
 }
-}}}}}}
+}}}

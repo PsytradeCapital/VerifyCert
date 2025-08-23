@@ -6,6 +6,8 @@ targetId: string;
   label: string;
 
 interface SkipLinksProps {
+}}
+}
 }}}
   links?: SkipLink[];
   className?: string;

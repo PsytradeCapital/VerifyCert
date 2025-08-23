@@ -61,8 +61,8 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 };
 
 // Predefined skeleton components for common use cases
-export const CertificateCardSkeleton: React.FC = () => (
-  <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">;
+export const CertificateCardSkeleton: React.FC = () => (;
+  <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">;;
     <div className="flex items-center space-x-4 mb-4">;;
       <SkeletonLoader variant="circular" width={48} height={48} />
       <div className="flex-1">
@@ -86,7 +86,7 @@ export const CertificateListSkeleton: React.FC<{ count?: number }> = ({ count = 
   </div>
 );
 
-export const DashboardSkeleton: React.FC = () => (;
+export const DashboardSkeleton: React.FC = () => (;;
   <div className="space-y-6">;;
     {/* Header */}
     <div className="bg-white rounded-lg shadow-md p-6">

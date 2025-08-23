@@ -1,4 +1,11 @@
-import React from 'react';
+const fs = require('fs');
+const path = require('path');
+
+console.log('🔧 Starting comprehensive TypeScript fixes...');
+
+// Fix performanceSetup.ts
+const performanceSetupPath = 'frontend/src/utils/performanceSetup.ts';
+const performanceSetupContent = `import React from 'react';
 import { performanceMonitor, logPerformanceStats } from './performanceMonitoring';
 
 /**
@@ -139,7 +146,7 @@ function setupUserInteractionMonitoring() {
     
     const identifier = id || className || tagName;
     
-    performanceMonitor.startTiming(`interaction_click_${identifier}`, {
+    performanceMonitor.startTiming(\`interaction_click_$\{identifier}\`, {
       type: 'user_interaction',
       action: 'click',
       element: tagName,
@@ -148,7 +155,7 @@ function setupUserInteractionMonitoring() {
     
     // End timing after a short delay to capture any immediate effects
     setTimeout(() => {
-      performanceMonitor.endTiming(`interaction_click_${identifier}`, {
+      performanceMonitor.endTiming(\`interaction_click_$\{identifier}\`, {
         type: 'user_interaction',
         action: 'click',
         element: tagName,
@@ -163,7 +170,7 @@ function setupUserInteractionMonitoring() {
     const form = event.target as HTMLFormElement;
     const formId = form.id || form.className || 'unknown_form';
     
-    performanceMonitor.startTiming(`form_submit_${formId}`, {
+    performanceMonitor.startTiming(\`form_submit_$\{formId}\`, {
       type: 'form_interaction',
       action: 'submit',
       formId
@@ -176,14 +183,14 @@ function setupUserInteractionMonitoring() {
     if (target.tagName.toLowerCase() === 'input' || target.tagName.toLowerCase() === 'textarea') {
       const inputType = (target as HTMLInputElement).type || 'text';
       
-      performanceMonitor.startTiming(`input_focus_${inputType}`, {
+      performanceMonitor.startTiming(\`input_focus_$\{inputType}\`, {
         type: 'input_interaction',
         action: 'focus',
         inputType
       });
       
       setTimeout(() => {
-        performanceMonitor.endTiming(`input_focus_${inputType}`, {
+        performanceMonitor.endTiming(\`input_focus_$\{inputType}\`, {
           type: 'input_interaction',
           action: 'focus',
           inputType,
@@ -309,4 +316,60 @@ if (process.env.NODE_ENV === 'development') {
   console.log('🔧 Performance debugging tools available at window.performanceDebug');
 }
 
-export default initializePerformanceMonitoring;
+export default initializePerformanceMonitoring;`;
+
+try {
+  fs.writeFileSync(performanceSetupPath, performanceSetupContent);
+  console.log('✅ Fixed performanceSetup.ts');
+} catch (error) {
+  console.error('❌ Failed to fix performanceSetup.ts:', error.message);
+}
+
+// Check for any remaining syntax issues in key files
+const filesToCheck = [
+  'frontend/src/utils/monitoredFetch.ts',
+  'frontend/src/utils/optimizedImports.ts', 
+  'frontend/src/utils/performanceMonitoring.ts',
+  'frontend/src/utils/performanceSetup.ts'
+];
+
+filesToCheck.forEach(filePath => {
+  if (fs.existsSync(filePath)) {
+    const content = fs.readFileSync(filePath, 'utf8');
+    
+    // Check for common syntax issues
+    const issues = [];
+    
+    // Check for unmatched braces
+    const openBraces = (content.match(/{/g) || []).length;
+    const closeBraces = (content.match(/}/g) || []).length;
+    if (openBraces !== closeBraces) {
+      issues.push(`Unmatched braces: ${openBraces} open, ${closeBraces} close`);
+    }
+    
+    // Check for unmatched parentheses
+    const openParens = (content.match(/\(/g) || []).length;
+    const closeParens = (content.match(/\)/g) || []).length;
+    if (openParens !== closeParens) {
+      issues.push(`Unmatched parentheses: ${openParens} open, ${closeParens} close`);
+    }
+    
+    // Check for malformed function signatures
+    if (content.includes(';\n  ') || content.includes(';\n;')) {
+      issues.push('Malformed function signatures detected');
+    }
+    
+    if (issues.length > 0) {
+      console.log(`⚠️  Issues found in ${filePath}:`);
+      issues.forEach(issue => console.log(`   - ${issue}`));
+    } else {
+      console.log(`✅ ${filePath} looks good`);
+    }
+  }
+});
+
+console.log('\\n🎯 Comprehensive TypeScript fixes completed!');
+console.log('\\nNext steps:');
+console.log('1. Run: cd frontend && npx tsc --noEmit');
+console.log('2. Run: cd frontend && npm run build');
+console.log('3. Check for any remaining compilation errors');

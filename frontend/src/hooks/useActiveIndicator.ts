@@ -9,7 +9,7 @@ containerClasses: string;
 
 export const useActiveIndicator = (itemId: string, isActive: boolean = false): ActiveIndicatorStyles => {
   const { state
-}} = useNavigation();
+}}} = useNavigation();
   const { 
     activeIndicators, 
     isTransitioning, 
@@ -144,4 +144,4 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
 
 export default useActiveIndicator;
 }
-}}}}}}
+}}}}}

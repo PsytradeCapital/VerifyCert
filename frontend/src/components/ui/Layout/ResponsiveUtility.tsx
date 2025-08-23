@@ -107,6 +107,8 @@ export interface TouchTargetProps extends React.ButtonHTMLAttributes<HTMLButtonE
 }
 }
 }
+}
+}
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   as?: 'button' | 'div' | 'a';
@@ -259,4 +261,5 @@ export const ResponsiveText: React.FC<ResponsiveTextProps> = ({
   );
 };
 }
-}}}}}}}}
+}
+}}}}}

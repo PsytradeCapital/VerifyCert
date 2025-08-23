@@ -7,6 +7,8 @@ threshold?: number;
   showInProduction?: boolean;
 
 interface Alert {
+}}
+}
 }}}
   id: string;
   type: 'warning' | 'error';
@@ -205,4 +207,4 @@ export const PerformanceIndicator: React.FC<{
 
 export default PerformanceAlert;
 }
-}}}}}}
+}}}

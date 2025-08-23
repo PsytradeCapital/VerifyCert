@@ -12,6 +12,8 @@ id: string;
   certificateId?: string;
 
 export interface ActivityFeedProps {
+}}
+}
 }}}
   activities: ActivityItem[];
   maxItems?: number;

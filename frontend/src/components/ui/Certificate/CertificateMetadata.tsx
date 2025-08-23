@@ -10,7 +10,7 @@ import {
   Clock,
   MapPin,
   BookOpen,
-  Star,
+  Star,;;
   ChevronDown,;;
   ChevronUp,;;
   Copy,;;
@@ -52,6 +52,8 @@ export interface CertificateMetadata {
   assessmentMethods?: string[];
 
 interface CertificateMetadataProps {
+}}
+}
 }}}
   metadata: CertificateMetadata;
   variant?: 'default' | 'compact' | 'detailed';

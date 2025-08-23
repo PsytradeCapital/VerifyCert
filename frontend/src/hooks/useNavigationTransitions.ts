@@ -9,6 +9,8 @@ enablePreloading?: boolean;
   customEasing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
 
 export interface NavigationTransitionState {
+}}
+}
 }}}
   isTransitioning: boolean;
   transitionDirection: 'forward' | 'backward' | 'none';
@@ -176,4 +178,4 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
 
 export default useNavigationTransitions;
 }
-}}}}}}}}}}}}}
+}}}}}}}}}}

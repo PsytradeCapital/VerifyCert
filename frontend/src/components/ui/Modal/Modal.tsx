@@ -110,6 +110,8 @@ export interface DialogProps extends Omit<ModalProps, 'children'> {
 }
 }
 }
+}
+}
   description?: string;
   actions?: React.ReactNode;
   children?: React.ReactNode;

@@ -6,6 +6,8 @@ children?: React.ReactNode;
   className?: string;
 
 export interface NavigationControlsProps {
+}}
+}
 }}}
   showIndicatorControls?: boolean;
   showTransitionControls?: boolean;

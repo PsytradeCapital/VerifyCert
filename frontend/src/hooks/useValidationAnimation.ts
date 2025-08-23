@@ -19,6 +19,8 @@ animateOnChange?: boolean;
   debounceMs?: number;
 
 export interface ValidationAnimationRefs {
+}}
+}
 }}}
   fieldRef: React.RefObject<HTMLElement>;
   messageRef: React.RefObject<HTMLElement>;
@@ -32,10 +34,10 @@ triggerFieldAnimation: (animationType: string) => Promise<void>;
   getAnimationClasses: (element: 'field' | 'message' | 'icon') => string;
   isAnimating: boolean;
 
-export const useValidationAnimation = (;
+export const useValidationAnimation = (;;
   validationState: 'default' | 'success' | 'error' | 'warning',;;
   options: UseValidationAnimationOptions = {
-}}
+}}}
 ): ValidationAnimationRefs & ValidationAnimationControls => {
   const {
     animateOnChange = true,
@@ -180,8 +182,8 @@ export const useValidationAnimation = (;
 /**
  * Hook for managing validation message animations specifically
  */
-export const useValidationMessageAnimation = (
-  message: string | undefined,;
+export const useValidationMessageAnimation = (;
+  message: string | undefined,;;
   validationState: 'default' | 'success' | 'error' | 'warning';;
 ) => {
   const [displayMessage, setDisplayMessage] = useState(message);
@@ -219,8 +221,8 @@ export const useValidationMessageAnimation = (
 /**
  * Hook for managing validation icon animations
  */
-export const useValidationIconAnimation = (
-  validationState: 'default' | 'success' | 'error' | 'warning',;
+export const useValidationIconAnimation = (;
+  validationState: 'default' | 'success' | 'error' | 'warning',;;
   showIcon: boolean = true;;
 ) => {
   const [currentState, setCurrentState] = useState(validationState);
@@ -258,4 +260,4 @@ export const useValidationIconAnimation = (
   };
 };
 }
-}}}}}}}}}}}}
+}}}}}}}}

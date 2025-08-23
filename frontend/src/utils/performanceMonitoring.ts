@@ -5,12 +5,12 @@ import React from 'react';
  */
 
 interface PerformanceMetric {
-  name: string;
+name: string;
   startTime: number;
   endTime?: number;
   duration?: number;
   metadata?: Record<string, any>;
-}
+}}
 
 class PerformanceMonitor {
   private metrics: Map<string, PerformanceMetric> = new Map();
@@ -238,7 +238,7 @@ export const performanceMonitor = new PerformanceMonitor();
 // Utility functions for common performance monitoring patterns
 export const withPerformanceMonitoring = <T extends (...args: any[]) => any>(
   fn: T,
-  name: string
+  name: string;;
 ): T => {
   return ((...args: any[]) => {
     performanceMonitor.startTiming(name);

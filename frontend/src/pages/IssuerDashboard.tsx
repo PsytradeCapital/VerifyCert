@@ -8,16 +8,18 @@ import { demoDataService } from '../services/demoDataService';
 import { useAuth } from '../contexts/AuthContext';
 
 interface ExtendedDashboardStats extends DashboardStats {
+}
+}
   previousMonth: number;
   previousWeek: number;
   growthRate: number;
 }
 
 interface WalletState {
-  isConnected: boolean;
+isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
-}
+}}
 
 export default function IssuerDashboard(): JSX.Element {
   const { user, isAuthenticated } = useAuth();
@@ -110,13 +112,16 @@ export default function IssuerDashboard(): JSX.Element {
           calculateStats(data.data.certificates || []);
         } else {
           throw new Error(data.error?.message || 'Failed to fetch certificates');
+        }
       } catch (error) {
         console.error('Failed to fetch certificates:', error);
         if (!isDemoMode) {
           toast.error('Failed to load issued certificates');
+        }
         setIssuedCertificates([]);
       } finally {
         setIsLoading(false);
+      }
     }, [walletState.isConnected, walletState.address, isDemoMode]);
 
   // Calculate dashboard statistics
@@ -419,3 +424,4 @@ export default function IssuerDashboard(): JSX.Element {
     </div>
   );
 }
+}}}}}}}}

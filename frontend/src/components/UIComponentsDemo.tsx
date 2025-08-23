@@ -12,7 +12,7 @@ import {
   MapPin, 
   Star, 
   Heart, 
-  Zap, 
+  Zap, ;;
   Settings, ;;
   Info,;;
   CheckCircle,;;

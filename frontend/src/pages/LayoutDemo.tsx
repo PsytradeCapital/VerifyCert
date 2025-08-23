@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Home, 
   FileText, 
-  Settings, 
+  Settings, ;;
   User, ;;
   Shield, ;;
   BarChart3,;;

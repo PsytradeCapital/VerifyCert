@@ -10,7 +10,7 @@ export const routeConfig: RouteConfig[] = [;;
   {
     path: '/',
     label: 'Home'
-}},
+}}},
   {
     path: '/verify',
     label: 'Verify Certificate'
@@ -78,4 +78,4 @@ export const matchRoute = (path: string): { config: RouteConfig; params: Record<
   return null;
 };
 }
-}}}}}
+}}}}

@@ -17,6 +17,8 @@ onFileSelect: (files: File[]) => void;
 interface FileWithPreview extends File {
 }}
 }
+}}
+}
 }
   preview?: string;
 
@@ -402,4 +404,4 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
 export default FileUpload;
 }
-}}}}}}}}}}}
+}}}}}}}}

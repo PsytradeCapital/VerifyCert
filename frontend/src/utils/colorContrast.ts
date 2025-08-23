@@ -63,8 +63,8 @@ export function getContrastRatio(foreground: string, background: string): number
  * Check if contrast ratio meets WCAG requirements
  */
 export function meetsWCAGRequirement(
-  foreground: string,
-  background: string,;
+  foreground: string,;
+  background: string,;;
   level: WCAGLevel = 'AA_NORMAL';;
 ): boolean {
   const ratio = getContrastRatio(foreground, background);
@@ -124,7 +124,7 @@ export function getCriticalColorCombinations(theme: Theme = 'light'): ColorCombi
       background: colors.primary[500],
       usage: 'Primary button text on primary background',
       theme,
-}},
+}}},
     {
       name: 'Primary Button Hover',
       foreground: colors.primary[50],
@@ -352,8 +352,8 @@ export function generateContrastReport(): {
  */
 export function findAccessibleColor(
   targetColor: string,
-  backgroundColor: string,
-  level: WCAGLevel = 'AA_NORMAL',;
+  backgroundColor: string,;
+  level: WCAGLevel = 'AA_NORMAL',;;
   direction: 'lighter' | 'darker' | 'auto' = 'auto';;
 ): string {
   const targetRgb = hexToRgb(targetColor);
@@ -406,7 +406,7 @@ export function findAccessibleColor(
 /**
  * Suggest color improvements for failed combinations
  */
-export function suggestColorImprovements(;
+export function suggestColorImprovements(;;
   results: ReturnType<typeof validateThemeContrast>['results'];;
 ): Array<{
   original: ColorCombination;
@@ -474,4 +474,4 @@ export const contrastChecker = {
   suggestColorImprovements,
 };
 }
-}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}

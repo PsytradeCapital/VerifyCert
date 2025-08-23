@@ -6,6 +6,8 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 }
 }
+}
+}
   variant?: 'default' | 'success' | 'error' | 'warning' | 'info' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
   rounded?: boolean;

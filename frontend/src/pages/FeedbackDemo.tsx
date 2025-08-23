@@ -5,7 +5,7 @@ import Card from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { 
   FeedbackButton, 
-  FeedbackCollector, 
+  FeedbackCollector, ;;
   NavigationFeedback,;;
   VisualDesignFeedback,;;
   OverallExperienceFeedback,;;

@@ -12,7 +12,7 @@ children: React.ReactNode;
     md?: 1 | 2 | 3 | 4 | 6 | 12;
     lg?: 1 | 2 | 3 | 4 | 6 | 12;
     xl?: 1 | 2 | 3 | 4 | 6 | 12;
-}};
+}}};
 
 const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   children,

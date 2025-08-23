@@ -15,6 +15,8 @@ name: string;
   features: BrowserFeatures;
 
 export interface BrowserFeatures {
+}}
+}
 }}}
   serviceWorker: boolean;
   webp: boolean;
@@ -395,4 +397,4 @@ export function initializeBrowserDetection(): BrowserInfo {
   
   return browserInfo;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

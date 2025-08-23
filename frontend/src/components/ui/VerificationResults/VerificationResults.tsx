@@ -14,7 +14,7 @@ id: string;
     institution: string;
     issueDate: string;
     isValid: boolean;
-}};
+}}};
 
 export interface VerificationResultsProps {
 result: VerificationResult;

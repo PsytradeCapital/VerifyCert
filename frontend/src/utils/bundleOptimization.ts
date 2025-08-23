@@ -7,8 +7,8 @@ import React from 'react';
 import * as React from 'react';
 
 // Tree shaking helper for conditional imports
-export const conditionalImport = async <T>(
-  condition: boolean,;
+export const conditionalImport = async <T>(;
+  condition: boolean,;;
   importFn: () => Promise<T>;;
 ): Promise<T | null> => {
   if (condition) {
@@ -17,8 +17,8 @@ export const conditionalImport = async <T>(
 };
 
 // Dynamic import with error handling
-export const safeImport = async <T>(
-  importFn: () => Promise<T>,;
+export const safeImport = async <T>(;
+  importFn: () => Promise<T>,;;
   fallback?: T;;
 ): Promise<T | undefined> => {
   try {

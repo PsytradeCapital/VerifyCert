@@ -6,6 +6,8 @@ interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 }
 }
+}
+}
   loading?: boolean;
   loadingText?: string;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';

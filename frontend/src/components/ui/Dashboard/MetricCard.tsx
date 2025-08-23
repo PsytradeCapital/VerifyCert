@@ -10,7 +10,7 @@ title: string;
     value: number;
     isPositive: boolean;
     label: string;
-}};
+}}};
   color?: 'blue' | 'green' | 'yellow' | 'purple' | 'red' | 'indigo';
   description?: string;
   className?: string;

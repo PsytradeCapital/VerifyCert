@@ -13,7 +13,7 @@ import {
   User, 
   Search,
   ChevronDown,
-  X,
+  X,;;
   Check,;;
   AlertCircle,;;
   Home,;;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  getOptimalImageFormat, 
+  getOptimalImageFormat, ;;
   generateImageSrcSet, ;;
   optimizeImageUrl,;;
   imagePerformanceMonitor,;;
@@ -9,6 +9,8 @@ import {
 } from '../../utils/imageOptimization';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+}
+}
 }
 }
 }
@@ -261,7 +263,7 @@ src: string;
     media: string;
     src: string;
     sizes?: string;
-}}>;
+}}}>;
   webpSources?: boolean;
 
 export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
@@ -352,4 +354,4 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
 
 export default OptimizedImage;
 }
-}}}}}}}}
+}}}}}

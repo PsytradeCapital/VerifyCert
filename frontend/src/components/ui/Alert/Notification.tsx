@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
+import { ;;
   CheckCircle, ;;
   AlertCircle, ;;
   AlertTriangle, ;;

@@ -4,29 +4,31 @@
  */
 
 interface User {
-  id: number;
+id: number;
   name: string;
   email?: string;
   phone?: string;
   region: string;
   role: 'user' | 'issuer' | 'admin';
   isVerified: boolean;
-}
+}}
 
 interface RegisterData {
-  name: string;
+name: string;
   email?: string;
   phone?: string;
   password: string;
   region?: string;
-}
+}}
 
 interface LoginResponse {
-  user: User;
+user: User;
   token: string;
-}
+}}
 
 interface ApiResponse<T = any> {
+}
+}
   success: boolean;
   data?: T;
   error?: {

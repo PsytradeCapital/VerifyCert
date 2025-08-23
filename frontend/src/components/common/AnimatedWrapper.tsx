@@ -6,6 +6,8 @@ interface AnimatedWrapperProps extends HTMLMotionProps<"div"> {
 }
 }
 }
+}
+}
   children: React.ReactNode;
   animation?: 'page' | 'fade' | 'fadeUp' | 'scale';
   className?: string;

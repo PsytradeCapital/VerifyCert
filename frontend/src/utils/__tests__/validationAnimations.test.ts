@@ -1,6 +1,6 @@
 import {
   triggerValidationAnimation,
-  getValidationAnimationClasses,
+  getValidationAnimationClasses,;;
   validationAnimationClasses,;;
   validationStateAnimations,;;
   validationSequences,;;

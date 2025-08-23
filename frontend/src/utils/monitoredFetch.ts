@@ -2,6 +2,8 @@ import React from 'react';
 import { performanceMonitor } from './performanceMonitoring';
 
 interface MonitoredFetchOptions extends RequestInit {
+}
+}
   skipMonitoring?: boolean;
   operationName?: string;
 }
@@ -11,7 +13,7 @@ interface MonitoredFetchOptions extends RequestInit {
  */
 export const monitoredFetch = async (
   input: RequestInfo | URL,
-  init?: MonitoredFetchOptions
+  init?: MonitoredFetchOptions;;
 ): Promise<Response> => {
   const { skipMonitoring = false, operationName, ...fetchOptions } = init || {};
 
@@ -101,7 +103,7 @@ function generateOperationName(url: string, method: string): string {
  * Monitored fetch with automatic retry logic
  */
 export const monitoredFetchWithRetry = async (
-  input: RequestInfo | URL,
+  input: RequestInfo | URL,;;
   init?: MonitoredFetchOptions & { maxRetries?: number; retryDelay?: number }
 ): Promise<Response> => {
   const { maxRetries = 3, retryDelay = 1000, ...fetchOptions } = init || {};
@@ -152,7 +154,7 @@ export const monitoredFetchWithRetry = async (
 /**
  * Batch API calls with performance monitoring
  */
-export const monitoredBatchFetch = async <T>(
+export const monitoredBatchFetch = async <T>(;;
   requests: Array<{
     input: RequestInfo | URL;
     init?: MonitoredFetchOptions;
@@ -225,7 +227,7 @@ export const monitoredBatchFetch = async <T>(
  */
 export const withApiMonitoring = <T extends (...args: any[]) => Promise<any>>(
   fn: T,
-  operationName: string
+  operationName: string;;
 ): T => {
   return (async (...args: any[]) => {
     performanceMonitor.startTiming(operationName, {

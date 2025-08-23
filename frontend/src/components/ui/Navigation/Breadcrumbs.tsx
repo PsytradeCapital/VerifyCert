@@ -11,6 +11,8 @@ label: string;
   active?: boolean;
 
 export interface BreadcrumbsProps {
+}}
+}
 }}}
   items?: BreadcrumbItem[];
   separator?: React.ReactNode;

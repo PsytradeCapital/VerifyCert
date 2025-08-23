@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { 
-  registerSW, 
+  registerSW, ;;
   updateSW, ;;
   isServiceWorkerSupported, ;;
   isStandalone,;;
@@ -26,6 +26,8 @@ isSupported: boolean;
   error: string | null;
 
 interface ServiceWorkerActions {
+}}
+}
 }}}
   register: () => void;
   update: () => void;
@@ -293,4 +295,4 @@ export function usePWAInstallation() {
 
 export default useServiceWorker;
 }
-}}}}}}}}}}}}}}
+}}}}}}}}}}}

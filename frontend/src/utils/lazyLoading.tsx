@@ -4,6 +4,8 @@ export interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement
 }
 }
 }
+}
+}
   src: string;
   alt: string;
   placeholder?: string;

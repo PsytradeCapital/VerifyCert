@@ -137,6 +137,8 @@ interface ThemeToggleWithSystemProps extends ThemeToggleProps {
 }
 }
 }
+}
+}
   includeSystem?: boolean;
 
 export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
@@ -204,4 +206,3 @@ export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
 
 export default ThemeToggle;
 }
-}}

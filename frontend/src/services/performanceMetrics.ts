@@ -9,6 +9,8 @@ FCP?: number; // First Contentful Paint
   TTFB?: number; // Time to First Byte
 
 export interface CustomMetrics {
+}}
+}
 }}}
   bundleLoadTime: number;
   componentLoadTime: number;
@@ -26,7 +28,7 @@ timestamp: string;
     name: string;
     duration: number;
     type: string;
-}}>;
+}}}>;
   errors: Array<{
     message: string;
     timestamp: number;
@@ -288,8 +290,8 @@ export const trackUserInteraction = (action: string, element: string) => {
   }, 50);
 };
 
-export const trackFormSubmission = async <T>(
-  formName: string,;
+export const trackFormSubmission = async <T>(;
+  formName: string,;;
   submitFunction: () => Promise<T>;;
 ): Promise<T> => {
   const operationName = `form_submit_${formName}`;
@@ -319,4 +321,4 @@ export const trackFormSubmission = async <T>(
 
 export default performanceMetrics;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

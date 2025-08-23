@@ -8,6 +8,8 @@ id: string;
   description?: string;
 
 interface StepProgressProps {
+}}
+}
 }}}
   steps: Step[];
   currentStep: string;
@@ -201,4 +203,4 @@ const StepProgress: React.FC<StepProgressProps> = ({
 
 export default StepProgress;
 }
-}}}}}
+}}

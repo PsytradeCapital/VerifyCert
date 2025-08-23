@@ -10,6 +10,8 @@ category: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
 
 interface FeedbackAnalytics {
+}}
+}
 }}}
   totalFeedback: number;
   averageRating: number;
@@ -334,4 +336,4 @@ export const feedbackService = new FeedbackService();
 // Type exports
 export type { FeedbackData, FeedbackAnalytics };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}

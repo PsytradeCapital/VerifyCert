@@ -6,6 +6,8 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
 }
 }
 }
+}
+}
   src: string;
   alt: string;
   className?: string;

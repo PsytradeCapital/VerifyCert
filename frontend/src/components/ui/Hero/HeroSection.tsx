@@ -11,7 +11,7 @@ title?: string;
     label: string;
     onClick: () => void;
     loading?: boolean;
-}};
+}}};
   secondaryAction?: {
     label: string;
     onClick: () => void;

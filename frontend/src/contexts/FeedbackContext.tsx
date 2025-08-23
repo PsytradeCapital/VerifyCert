@@ -20,6 +20,8 @@ interface FeedbackContextType {
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
+}}
+}
   children: ReactNode;
 
 export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) => {

@@ -4,7 +4,7 @@ import {
   DotsSpinner,
   PulseSpinner,
   ProgressBar,
-  CircularProgress,
+  CircularProgress,;;
   Skeleton,;;
   CertificateCardSkeleton,;;
   LoadingOverlay,;;

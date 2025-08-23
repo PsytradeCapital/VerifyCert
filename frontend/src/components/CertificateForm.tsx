@@ -11,6 +11,8 @@ recipientAddress: string;
   description?: string;
 
 interface CertificateFormProps {
+}}
+}
 }}}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
@@ -34,7 +36,7 @@ export default function CertificateForm(): JSX.Element {
     institutionName: '',
     issueDate: new Date().toISOString().split('T')[0], // Today's date
     description: '',
-}});
+}}});
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -418,4 +420,4 @@ export default function CertificateForm(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}

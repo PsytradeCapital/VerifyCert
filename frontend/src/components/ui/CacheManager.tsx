@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   Trash2, 
   RefreshCw, 
-  HardDrive, 
+  HardDrive, ;;
   Wifi, ;;
   WifiOff, ;;
   Download,;;

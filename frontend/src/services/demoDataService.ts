@@ -11,6 +11,8 @@ totalIssued: number;
   growthRate: number;
 
 export interface DemoActivity {
+}}
+}
 }}}
   id: string;
   type: 'issued' | 'verified' | 'revoked';
@@ -32,7 +34,7 @@ export class DemoDataService {
     stats: DemoStats;
     activities: DemoActivity[];
     quickStats: DemoQuickStats;
-}} | null = null;
+}}} | null = null;
 
   static getInstance(): DemoDataService {
     if (!DemoDataService.instance) {
@@ -229,4 +231,4 @@ export class DemoDataService {
 
 export const demoDataService = DemoDataService.getInstance();
 }
-}}}}}}}}}}}
+}}}}}}}

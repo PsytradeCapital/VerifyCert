@@ -18,6 +18,8 @@ interface FeedbackTriggerConfig {
   context?: string;
 
 interface FeedbackTriggerState {
+}}
+}
 }}}
   shouldShow: boolean;
   category: 'navigation' | 'visual-design' | 'overall-experience';
@@ -164,4 +166,3 @@ export const useErrorFeedback = (error: Error | null) => {
   });
 };
 }
-}}

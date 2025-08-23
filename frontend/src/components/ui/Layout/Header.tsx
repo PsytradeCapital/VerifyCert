@@ -8,7 +8,7 @@ user?: {
     name: string;
     email: string;
     avatar?: string;
-}};
+}}};
   onSignOut?: () => void;
   onProfile?: () => void;
 

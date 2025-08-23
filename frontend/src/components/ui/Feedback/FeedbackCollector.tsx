@@ -11,6 +11,8 @@ category: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
 
 interface FeedbackCollectorProps {
+}}
+}
 }}}
   isOpen: boolean;
   onClose: () => void;

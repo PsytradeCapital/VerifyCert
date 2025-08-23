@@ -11,7 +11,7 @@ totalCertificates: number;
   monthlyIssuance: Array<{
     month: string;
     count: number;
-}}>;
+}}}>;
   topInstitutions: Array<{
     name: string;
     count: number;

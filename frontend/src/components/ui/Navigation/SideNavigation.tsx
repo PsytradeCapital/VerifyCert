@@ -4,7 +4,7 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Home, 
-  FileText, 
+  FileText, ;;
   Settings, ;;
   Users, ;;
   BarChart3,;;
@@ -16,7 +16,7 @@ export interface NavigationItem {
 id: string;
   label: string;
   icon: ComponentType<{ className?: string
-}}>;
+}}}>;
   path: string;
   badge?: string;
   children?: NavigationItem[];
@@ -33,7 +33,7 @@ items?: NavigationItem[];
 
 const defaultNavigationItems: NavigationItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard'
-}},
+}}},
   { id: 'verify', label: 'Verify Certificate', icon: Shield, path: '/verify' },
   { id: 'certificates', label: 'My Certificates', icon: FileText, path: '/certificates' },
   { id: 'issue', label: 'Issue Certificate', icon: Plus, path: '/issue' },
@@ -328,4 +328,4 @@ export default function SideNavigation(): JSX.Element {
     </nav>
   );
 }
-}}}}}}}}}
+}}}}}}}

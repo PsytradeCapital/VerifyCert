@@ -16,6 +16,8 @@ search: string;
   customDateEnd?: Date;
 
 interface CertificateListProps {
+}}
+}
 }}}
   certificates: Certificate[];
   isLoading?: boolean;
@@ -574,4 +576,4 @@ export default function CertificateList(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}
+}}}}}}}}}}

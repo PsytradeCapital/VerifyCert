@@ -6,6 +6,8 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 }
 }
+}
+}
   color?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;

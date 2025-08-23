@@ -10,6 +10,8 @@ onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
   className?: string;
 
 interface WalletState {
+}}
+}
 }}}
   isConnected: boolean;
   address: string | null;
@@ -386,4 +388,4 @@ export default function WalletConnect(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}

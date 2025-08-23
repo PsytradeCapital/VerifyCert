@@ -6,7 +6,7 @@ import {
   Calendar, 
   Building, 
   User, 
-  Download, 
+  Download, ;;
   Share2, ;;
   ExternalLink,;;
   QrCode,;;
@@ -37,6 +37,8 @@ tokenId: string;
   description?: string;
 
 interface CertificateCardProps {
+}}
+}
 }}}
   certificate: Certificate;
   variant?: 'default' | 'premium' | 'compact';
@@ -537,4 +539,4 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
 export default CertificateCard;
 }
-}}}}}}}}
+}}}}}

@@ -6,7 +6,7 @@ import {
   AlertTriangle, 
   Shield, 
   Clock,
-  ExternalLink,
+  ExternalLink,;;
   Download,;;
   Share2,;;
   Copy,;;
@@ -25,7 +25,7 @@ result: {
     blockNumber?: string;
     contractAddress?: string;
     confidence?: number;
-}};
+}}};
   certificate?: {
     tokenId: string;
     recipientName: string;
@@ -449,4 +449,4 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
 
 export default VerificationResult;
 }
-}}}}
+}}}

@@ -16,7 +16,7 @@ name: string;
 
 export const SignupForm: React.FC = () => {
   const { register
-}} = useAuth();
+}}} = useAuth();
   const [formData, setFormData] = useState<SignupFormData>({
     name: '',
     email: '',
@@ -258,4 +258,4 @@ export const SignupForm: React.FC = () => {
   );
 };
 }
-}}}}}}}}}}
+}}}}}}}}}

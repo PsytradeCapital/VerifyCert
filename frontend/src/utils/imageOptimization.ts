@@ -15,14 +15,14 @@ quality?: number;
  * Generate optimized image URLs with different formats and sizes
  */
 export const generateImageSrcSet = (
-  baseSrc: string,
-  sizes: number[] = [320, 640, 1024, 1280],;
+  baseSrc: string,;
+  sizes: number[] = [320, 640, 1024, 1280],;;
   format: 'webp' | 'jpeg' | 'png' = 'webp';;
 ): string => {
   return sizes
     .map(size => {
       const optimizedSrc = optimizeImageUrl(baseSrc, { width: size, format
-}});
+}}});
       return `${optimizedSrc} ${size}w`;
     })
     .join(', ');
@@ -31,7 +31,7 @@ export const generateImageSrcSet = (
 /**
  * Generate responsive breakpoints for different screen sizes
  */
-export const generateResponsiveBreakpoints = (;
+export const generateResponsiveBreakpoints = (;;
   baseSrc: string,;;
   breakpoints: Array<{ width: number; media: string }> = [
     { width: 320, media: '(max-width: 640px)' },
@@ -50,7 +50,7 @@ export const generateResponsiveBreakpoints = (;
 /**
  * Optimize image URL with parameters
  */
-export const optimizeImageUrl = (;
+export const optimizeImageUrl = (;;
   src: string,;;
   options: ImageOptimizationOptions = {}
 ): string => {
@@ -126,8 +126,8 @@ export const getOptimalImageFormat = async (originalSrc: string): Promise<string
 /**
  * Generate responsive image props with WebP support
  */
-export const getResponsiveImageProps = async (
-  src: string,;
+export const getResponsiveImageProps = async (;
+  src: string,;;
   alt: string,;;
   options: ImageOptimizationOptions = {}
 ) => {
@@ -149,8 +149,8 @@ export const getResponsiveImageProps = async (
 /**
  * Generate responsive image props synchronously (for React components)
  */
-export const getResponsiveImagePropsSync = (
-  src: string,;
+export const getResponsiveImagePropsSync = (;
+  src: string,;;
   alt: string,;;
   options: ImageOptimizationOptions = {}
 ) => {
@@ -274,7 +274,7 @@ export const globalLazyImageObserver = new LazyImageObserver();
 /**
  * Image compression utility
  */
-export const compressImage = (;
+export const compressImage = (;;
   file: File,;;
   options: {
     maxWidth?: number;
@@ -365,4 +365,4 @@ export const imagePerformanceMonitor = {
   },
 };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}

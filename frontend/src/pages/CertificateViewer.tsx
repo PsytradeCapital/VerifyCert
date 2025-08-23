@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export interface Certificate {
-  tokenId: string;
+tokenId: string;
   recipientName: string;
   courseName: string;
   institutionName: string;
@@ -14,10 +14,10 @@ export interface Certificate {
   metadataURI?: string;
   qrCodeURL?: string;
   verificationURL?: string;
-}
+}}
 
 interface CertificateViewerState {
-  certificate: Certificate | null;
+certificate: Certificate | null;
   isLoading: boolean;
   error: string | null;
   isVerifying: boolean;
@@ -28,7 +28,7 @@ interface CertificateViewerState {
     verificationTimestamp?: number;
     blockNumber?: string;
     contractAddress?: string;
-  } | null;
+}} | null;
 }
 
 const CertificateViewer: React.FC = () => {

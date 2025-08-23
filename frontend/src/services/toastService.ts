@@ -6,6 +6,8 @@ export interface CustomToastOptions extends ToastOptions {
 }
 }
 }
+}
+}
   action?: {
     label: string;
     onClick: () => void;
@@ -280,4 +282,4 @@ export const dismissToast = (toastId?: string) => ;;
 export const dismissAllToasts = () => ;;
   toastService.dismissAll();
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}

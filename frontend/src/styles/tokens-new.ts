@@ -97,6 +97,6 @@ export function getThemeTokens(theme: Theme): ThemeConfig {
     colors: designTokens.colors[theme] || designTokens.colors.light,
     shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
     cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
-}};
+}}};
 }
-}}}}}}
+}}}}}

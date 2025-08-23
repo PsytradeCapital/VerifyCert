@@ -21,7 +21,7 @@ export const useInteractionAnimations = ({
   preset,
   customAnimations,
   respectReducedMotion = true
-}}: UseInteractionAnimationsOptions) => {
+}}}: UseInteractionAnimationsOptions) => {
   const shouldReduceMotion = useReducedMotion();
   
   // If user prefers reduced motion and we should respect it, return empty animations
@@ -161,4 +161,4 @@ export const useHoverState = () => {
 
 export default useInteractionAnimations;
 }
-}}}}}}}}}}}}}
+}}}}}}}}}}}}

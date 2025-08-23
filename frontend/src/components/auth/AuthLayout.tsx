@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
 interface AuthLayoutProps {
-  children: ReactNode;
+children: ReactNode;
   title: string;
   subtitle?: string;
-}
+}}
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) => {
   return (

@@ -12,6 +12,8 @@ name: string;
   avatar?: string;
 
 interface NotificationSettings {
+}}
+}
 }}}
   emailNotifications: boolean;
   pushNotifications: boolean;
@@ -26,6 +28,8 @@ profileVisibility: 'public' | 'private' | 'institution';
   dataSharing: boolean;
 
 interface AppearanceSettings {
+}}
+}
 }}}
   theme: 'light' | 'dark' | 'system';
   language: string;

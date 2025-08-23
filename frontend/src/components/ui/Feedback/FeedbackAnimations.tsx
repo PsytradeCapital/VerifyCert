@@ -11,6 +11,8 @@ id: string;
   onClose?: () => void;
 
 export interface FeedbackAnimationProps {
+}}
+}
 }}}
   type: 'success' | 'error' | 'warning' | 'info';
   children: React.ReactNode;
@@ -218,4 +220,4 @@ export const toast = {
     toastManager.show({ type: 'info', title, message, duration }),
 };
 }
-}}}}}}}}}}}}}
+}}}}}}}}}}

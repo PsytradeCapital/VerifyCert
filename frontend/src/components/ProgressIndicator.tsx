@@ -7,6 +7,8 @@ id: string;
   description?: string;
 
 interface ProgressIndicatorProps {
+}}
+}
 }}}
   steps: Step[];
   currentStep: string;

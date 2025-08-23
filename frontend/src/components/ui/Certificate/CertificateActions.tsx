@@ -9,7 +9,7 @@ import {
   Linkedin,
   Facebook,
   Mail,
-  QrCode,
+  QrCode,;;
   FileImage,;;
   FileText,;;
   Database,;;

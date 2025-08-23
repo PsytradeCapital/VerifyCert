@@ -116,6 +116,8 @@ tokenId: string;
   transactionHash?: string;
 
 export interface VerificationResult {
+}}
+}
 }}}
   isValid: boolean;
   onChain: boolean;
@@ -272,4 +274,4 @@ export const getBlockchainService = (): BlockchainService => {
 // Export the getter function as default
 export default getBlockchainService;
 }
-}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}

@@ -10,6 +10,8 @@ id: string;
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 
 export interface FloatingActionButtonProps {
+}}
+}
 }}}
   actions?: FABAction[];
   mainIcon?: React.ReactNode;

@@ -8,6 +8,8 @@ method?: 'native' | 'clipboard' | 'social';
   includeQR?: boolean;
 
 export interface DownloadOptions {
+}}
+}
 }}}
   format?: 'png' | 'pdf' | 'json';
   quality?: number;
@@ -33,7 +35,7 @@ const DEFAULT_TEMPLATE: CertificateTemplate = {
   titleFont: 'bold 48px Inter, Arial, sans-serif',
   bodyFont: '24px Inter, Arial, sans-serif',
   accentColor: '#1d4ed8'
-}};
+}}};
 
 class CertificateService {
   /**
@@ -377,4 +379,4 @@ const certificateService = new CertificateService();
 
 export default certificateService;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}

@@ -18,6 +18,8 @@ tokenId: string;
   grade?: string;
 
 interface CertificateCardProps {
+}}
+}
 }}}
   certificate: Certificate;
   showQR?: boolean;
@@ -354,4 +356,4 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   );
 };
 }
-}}}}}
+}}

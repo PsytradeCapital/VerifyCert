@@ -11,7 +11,7 @@ chainId: number;
     name: string;
     symbol: string;
     decimals: number;
-}};
+}}};
   contractAddress: string;
 
 // Amoy Testnet Configuration
@@ -144,4 +144,4 @@ export const getRpcUrl = (chainId?: number): string => {
   return network?.rpcUrl || DEFAULT_NETWORK.rpcUrl;
 };
 }
-}}}}}}
+}}}}}

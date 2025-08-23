@@ -24,7 +24,7 @@ class ErrorLogger {
     window.addEventListener('online', () => {
       this.isOnline = true;
       this.flushErrorQueue();
-}});
+}}});
     
     window.addEventListener('offline', () => {
       this.isOnline = false;
@@ -268,8 +268,8 @@ export const logError = (error: Error, errorInfo?: ErrorInfo, context?: Record<s
 export const logBlockchainError = (
   error: Error,
   operation: string,
-  contractAddress?: string,
-  transactionHash?: string,;
+  contractAddress?: string,;
+  transactionHash?: string,;;
   walletAddress?: string;;
 ) => {
   errorLogger.logBlockchainError(error, operation, contractAddress, transactionHash, walletAddress);
@@ -283,4 +283,4 @@ export const logValidationError = (error: Error, formData: Record<string, any>, 
   errorLogger.logValidationError(error, formData, fieldName);
 };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

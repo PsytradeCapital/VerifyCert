@@ -12,6 +12,8 @@ totalIssued: number;
   growthRate?: number;
 
 export interface DashboardOverviewProps {
+}}
+}
 }}}
   stats: DashboardStats;
   isLoading?: boolean;
@@ -126,4 +128,4 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 
 export default DashboardOverview;
 }
-}}}}}
+}}

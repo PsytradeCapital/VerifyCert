@@ -16,6 +16,8 @@ recipientAddress: string;
   description?: string;
 
 interface CertificateWizardProps {
+}}
+}
 }}}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
@@ -33,6 +35,8 @@ recipientAddress?: string;
   description?: string;
 
 interface WizardStep {
+}}
+}
 }}}
   id: string;
   title: string;
@@ -716,4 +720,4 @@ export default function CertificateWizard(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}

@@ -10,7 +10,7 @@ import { designTokens } from './tokens-new';
  * Utility function for combining class names
  * Similar to clsx but simplified for our needs
  */
-export function cn(...classes: (string | undefined | null | false)[]): string {
+export function cn(...classes: (string | undefined | null | false)[]): string {;
   return classes.filter(Boolean).join(' ');
 
 // Type definitions for better TypeScript support
@@ -30,7 +30,7 @@ export type ZIndex = keyof typeof designTokens.zIndex;
  * @param shade - The color shade (e.g., 50, 100, 500, 900)
  * @returns The hex color value
  */
-export function getColor(colorName: ColorName, shade: ColorShade): string {
+export function getColor(colorName: ColorName, shade: ColorShade): string {;
   return designTokens.colors[colorName][shade];
 
 /**
@@ -38,7 +38,7 @@ export function getColor(colorName: ColorName, shade: ColorShade): string {
  * @param size - The spacing size key
  * @returns The spacing value in rem/px
  */
-export function getSpacing(size: SpacingValue): string {
+export function getSpacing(size: SpacingValue): string {;
   return designTokens.spacing[size];
 
 /**
@@ -46,7 +46,7 @@ export function getSpacing(size: SpacingValue): string {
  * @param size - The font size key
  * @returns The font size configuration [size, { lineHeight }]
  */
-export function getFontSize(size: FontSize): [string, { lineHeight: string }] | string {
+export function getFontSize(size: FontSize): [string, { lineHeight: string }] | string {;
   return designTokens.typography.fontSize[size];
 
 /**
@@ -54,7 +54,7 @@ export function getFontSize(size: FontSize): [string, { lineHeight: string }] | 
  * @param weight - The font weight key
  * @returns The font weight value
  */
-export function getFontWeight(weight: FontWeight): string {
+export function getFontWeight(weight: FontWeight): string {;
   return designTokens.typography.fontWeight[weight];
 
 /**
@@ -62,7 +62,7 @@ export function getFontWeight(weight: FontWeight): string {
  * @param radius - The border radius key
  * @returns The border radius value
  */
-export function getBorderRadius(radius: BorderRadius): string {
+export function getBorderRadius(radius: BorderRadius): string {;
   return designTokens.borderRadius[radius];
 
 /**
@@ -70,7 +70,7 @@ export function getBorderRadius(radius: BorderRadius): string {
  * @param shadow - The box shadow key
  * @returns The box shadow value
  */
-export function getBoxShadow(shadow: BoxShadow): string {
+export function getBoxShadow(shadow: BoxShadow): string {;
   return designTokens.boxShadow[shadow];
 
 /**
@@ -78,7 +78,7 @@ export function getBoxShadow(shadow: BoxShadow): string {
  * @param layer - The z-index layer key
  * @returns The z-index value
  */
-export function getZIndex(layer: ZIndex): string {
+export function getZIndex(layer: ZIndex): string {;
   return designTokens.zIndex[layer];
 
 /**
@@ -87,7 +87,7 @@ export function getZIndex(layer: ZIndex): string {
  * @param shade - The color shade
  * @returns The CSS custom property name
  */
-export function getColorCSSVar(colorName: ColorName, shade: ColorShade): string {
+export function getColorCSSVar(colorName: ColorName, shade: ColorShade): string {;
   return `--color-${colorName}-${shade}`;
 
 /**
@@ -95,7 +95,7 @@ export function getColorCSSVar(colorName: ColorName, shade: ColorShade): string 
  * @param size - The spacing size
  * @returns The CSS custom property name
  */
-export function getSpacingCSSVar(size: SpacingValue): string {
+export function getSpacingCSSVar(size: SpacingValue): string {;
   return `--spacing-${size.toString().replace('.', '-')}`;
 
 /**
@@ -103,13 +103,13 @@ export function getSpacingCSSVar(size: SpacingValue): string {
  * @param styles - Style object with token references
  * @returns Resolved CSS-in-JS styles
  */
-export function createStyles<T extends Record<string, any>>(styles: T): T {
+export function createStyles<T extends Record<string, any>>(styles: T): T {;
   return styles;
 
 /**
  * Enhanced responsive breakpoint utilities
  */
-export const breakpoints = {
+export const breakpoints = {;
   xs: `@media (min-width: ${designTokens.breakpoints.xs})`,
   sm: `@media (min-width: ${designTokens.breakpoints.sm})`,
   md: `@media (min-width: ${designTokens.breakpoints.md})`,
@@ -148,7 +148,7 @@ export const breakpoints = {
 /**
  * Animation utilities
  */
-export const animations = {
+export const animations = {;
   duration: designTokens.animation.duration,
   easing: designTokens.animation.easing,
   
@@ -161,7 +161,7 @@ export const animations = {
 /**
  * Common color combinations for different UI states
  */
-export const colorCombinations = {
+export const colorCombinations = {;
   primary: {
     background: getColor('primary', 500),
     backgroundHover: getColor('primary', 600),
@@ -207,20 +207,20 @@ export const colorCombinations = {
  * Check if dark mode is currently active
  * @returns Boolean indicating if dark mode is active
  */
-export function isDarkMode(): boolean {
+export function isDarkMode(): boolean {;
   return document.documentElement.getAttribute('data-theme') === 'dark';
 
 /**
  * Get the current theme
  * @returns Current theme ('light' or 'dark')
  */
-export function getCurrentTheme(): 'light' | 'dark' {
+export function getCurrentTheme(): 'light' | 'dark' {;
   return document.documentElement.getAttribute('data-theme') as 'light' | 'dark' || 'light';
 
 /**
  * Toggle between light and dark themes
  */
-export function toggleTheme(): void {
+export function toggleTheme(): void {;
   const currentTheme = getCurrentTheme();
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', newTheme);
@@ -234,7 +234,7 @@ export function toggleTheme(): void {
 /**
  * Initialize theme based on user preference or system preference
  */
-export function initializeTheme(): void {
+export function initializeTheme(): void {;
   const storedTheme = localStorage.getItem('theme-preference');
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
@@ -258,7 +258,7 @@ export function initializeTheme(): void {
  * @param property - CSS custom property name (with or without --)
  * @returns The computed value of the CSS custom property
  */
-export function getCSSCustomProperty(property: string): string {
+export function getCSSCustomProperty(property: string): string {;
   const propName = property.startsWith('--') ? property : `--${property}`;
   return getComputedStyle(document.documentElement).getPropertyValue(propName).trim();
 
@@ -267,7 +267,7 @@ export function getCSSCustomProperty(property: string): string {
  * @param property - CSS custom property name (with or without --)
  * @param value - The value to set
  */
-export function setCSSCustomProperty(property: string, value: string): void {
+export function setCSSCustomProperty(property: string, value: string): void {;
   const propName = property.startsWith('--') ? property : `--${property}`;
   document.documentElement.style.setProperty(propName, value);
 
@@ -281,7 +281,7 @@ export function setCSSCustomProperty(property: string, value: string): void {
  * @param prefix - Tailwind utility prefix (e.g., 'bg', 'text', 'border')
  * @returns Tailwind class name
  */
-export function generateTailwindClass(tokenPath: string, prefix: string): string {
+export function generateTailwindClass(tokenPath: string, prefix: string): string {;
   const parts = tokenPath.split('.');
   if (parts.length >= 2) {
     const [category, variant] = parts;
@@ -294,7 +294,7 @@ export function generateTailwindClass(tokenPath: string, prefix: string): string
  * @param breakpoints - Object with breakpoint keys and class values
  * @returns Space-separated string of responsive classes
  */
-export function createResponsiveClasses(
+export function createResponsiveClasses(;
   baseClass: string,
   breakpoints: Record<string, string>
 ): string {
@@ -316,7 +316,7 @@ export function createResponsiveClasses(
  * @param level - WCAG level ('AA' or 'AAA')
  * @returns Boolean indicating if contrast is sufficient
  */
-export function validateContrast(
+export function validateContrast(;
   foreground: string,
   background: string,
   level: 'AA' | 'AAA' = 'AA'
@@ -355,7 +355,7 @@ export function validateContrast(
  * @param defaultVariant - Default variant name
  * @returns Function that returns styles for a given variant
  */
-export function createVariants<T extends Record<string, any>>(
+export function createVariants<T extends Record<string, any>>(;
   baseStyles: T,
   variants: Record<string, Partial<T>>,
   defaultVariant: string
@@ -373,7 +373,7 @@ export function createVariants<T extends Record<string, any>>(
  * @param defaultSize - Default size name
  * @returns Function that returns styles for a given size
  */
-export function createSizes<T extends Record<string, any>>(
+export function createSizes<T extends Record<string, any>>(;
   sizes: Record<string, T>,
   defaultSize: string
 ) {
@@ -389,42 +389,42 @@ export function createSizes<T extends Record<string, any>>(
  * Check if the current device is likely a mobile device
  * @returns Boolean indicating if device is mobile
  */
-export function isMobileDevice(): boolean {
+export function isMobileDevice(): boolean {;
   return window.innerWidth < 768;
 
 /**
  * Check if the current device is likely a tablet
  * @returns Boolean indicating if device is tablet
  */
-export function isTabletDevice(): boolean {
+export function isTabletDevice(): boolean {;
   return window.innerWidth >= 768 && window.innerWidth < 1024;
 
 /**
  * Check if the current device is likely a desktop
  * @returns Boolean indicating if device is desktop
  */
-export function isDesktopDevice(): boolean {
+export function isDesktopDevice(): boolean {;
   return window.innerWidth >= 1024;
 
 /**
  * Check if the current device supports touch
  * @returns Boolean indicating if device supports touch
  */
-export function isTouchDevice(): boolean {
+export function isTouchDevice(): boolean {;
   return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 /**
  * Check if the current device supports hover
  * @returns Boolean indicating if device supports hover
  */
-export function isHoverDevice(): boolean {
+export function isHoverDevice(): boolean {;
   return window.matchMedia('(hover: hover)').matches;
 
 /**
  * Get the current viewport size category
  * @returns Viewport size category
  */
-export function getViewportSize(): 'mobile' | 'tablet' | 'desktop' {
+export function getViewportSize(): 'mobile' | 'tablet' | 'desktop' {;
   const width = window.innerWidth;
   if (width < 768) return 'mobile';
   if (width < 1024) return 'tablet';
@@ -437,7 +437,7 @@ export function getViewportSize(): 'mobile' | 'tablet' | 'desktop' {
  * @param desktopClass - Class for desktop devices
  * @returns Responsive class string
  */
-export function createResponsiveClass(
+export function createResponsiveClass(;
   mobileClass: string,
   desktopClass: string,
   tabletClass?: string
@@ -459,7 +459,7 @@ export function createResponsiveClass(
  * @param tablet - Optional tablet spacing value
  * @returns Responsive spacing classes
  */
-export function createResponsiveSpacing(
+export function createResponsiveSpacing(;
   mobile: string,
   desktop: string,
   tablet?: string
@@ -473,7 +473,7 @@ export function createResponsiveSpacing(
  * @param tablet - Optional tablet text size
  * @returns Responsive text size classes
  */
-export function createResponsiveText(
+export function createResponsiveText(;
   mobile: string,
   desktop: string,
   tablet?: string
@@ -485,7 +485,7 @@ export function createResponsiveText(
  * @param size - Touch target size ('sm' | 'md' | 'lg' | 'xl')
  * @returns Touch-friendly class names
  */
-export function createTouchTarget(size: 'sm' | 'md' | 'lg' | 'xl' = 'md'): string {
+export function createTouchTarget(size: 'sm' | 'md' | 'lg' | 'xl' = 'md'): string {;
   const sizeClasses = {
     sm: 'min-h-10 min-w-10', // 40px
     md: 'min-h-11 min-w-11', // 44px
@@ -500,7 +500,7 @@ export function createTouchTarget(size: 'sm' | 'md' | 'lg' | 'xl' = 'md'): strin
  * @param sides - Which sides to apply safe area padding ('all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right')
  * @returns Safe area padding classes
  */
-export function createSafeAreaPadding(
+export function createSafeAreaPadding(;
   sides: 'all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right' = 'all'
 ): string {
   const sideClasses = {
@@ -522,7 +522,7 @@ export function createSafeAreaPadding(
  * @param tabletCols - Optional number of columns on tablet
  * @returns Responsive grid classes
  */
-export function createResponsiveGrid(
+export function createResponsiveGrid(;
   mobileCols: number,
   desktopCols: number,
   tabletCols?: number
@@ -536,7 +536,7 @@ export function createResponsiveGrid(
 /**
  * Viewport change listener utility
  */
-export class ViewportListener {
+export class ViewportListener {;
   private listeners: Array<(size: 'mobile' | 'tablet' | 'desktop') => void> = [];
   private currentSize: 'mobile' | 'tablet' | 'desktop';
   
@@ -569,7 +569,7 @@ export class ViewportListener {
 /**
  * React hook for viewport size (if using React)
  */
-export function useViewportSize() {
+export function useViewportSize() {;
   const [viewportSize, setViewportSize] = React.useState<'mobile' | 'tablet' | 'desktop'>(getViewportSize());
   
   React.useEffect(() => {

@@ -8,7 +8,7 @@ import React from 'react';
 export { debounce, throttle, cloneDeep, isEqual } from 'lodash-es';
 
 // Tree-shakable utility functions
-export const createTreeShakableUtils = () => {
+export const createTreeShakableUtils = () => {;
   // Only export functions that are actually used
   return {
     // Date utilities
@@ -48,7 +48,7 @@ export const createTreeShakableUtils = () => {
 };
 
 // Tree-shakable React utilities
-export const createReactUtils = () => {
+export const createReactUtils = () => {;
   return {
     // Only import what we need from React
     memo: React.memo,
@@ -99,7 +99,7 @@ export const createReactUtils = () => {
 };
 
 // Tree-shakable icon imports
-export const createIconUtils = () => {
+export const createIconUtils = () => {;
   // Import only the icons we actually use
   return {
     // Lucide React icons - tree-shakable by default
@@ -118,7 +118,7 @@ export const createIconUtils = () => {
 };
 
 // Bundle size monitoring
-export const monitorBundleSize = () => {
+export const monitorBundleSize = () => {;
   if (process.env.NODE_ENV === 'development') {
     // Log bundle information for development
     const logBundleInfo = () => {

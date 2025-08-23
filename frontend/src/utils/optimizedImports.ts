@@ -5,7 +5,7 @@ import React from 'react';
  */
 
 // Tree-shakable React imports
-export {
+export {;
   memo,
   useCallback,
   useMemo,
@@ -20,7 +20,7 @@ export {
 } from 'react';
 
 // Tree-shakable React Router imports
-export {
+export {;
   BrowserRouter,
   Routes,
   Route,
@@ -33,7 +33,7 @@ export {
 } from 'react-router-dom';
 
 // Tree-shakable Framer Motion imports
-export {
+export {;
   motion,
   AnimatePresence,
   useAnimation,
@@ -43,7 +43,7 @@ export {
 } from 'framer-motion';
 
 // Tree-shakable Ethers imports
-export {
+export {;
   ethers,
   Contract,
   BrowserProvider,
@@ -53,7 +53,7 @@ export {
 } from 'ethers';
 
 // Tree-shakable utility functions
-export const optimizedUtils = {
+export const optimizedUtils = {;
   // Date utilities
   formatDate: (date: Date, options?: Intl.DateTimeFormatOptions) => 
     new Intl.DateTimeFormat('en-US', options).format(date),
@@ -94,7 +94,7 @@ export const optimizedUtils = {
 };
 
 // Tree-shakable constants
-export const APP_CONSTANTS = {
+export const APP_CONSTANTS = {;
   NETWORK: {
     CHAIN_ID: 80001,
     NAME: 'Polygon Mumbai',
@@ -112,13 +112,13 @@ export const APP_CONSTANTS = {
 } as const;
 
 // Tree-shakable type definitions
-export interface OptimizedComponent {
+export interface OptimizedComponent {;
   displayName?: string;
   defaultProps?: Record<string, any>;
 
 export type TreeShakableHook<T = any> = () => T;
 
-export interface BundleOptimization {
+export interface BundleOptimization {;
   chunkName: string;
   priority: number;
   test: RegExp;

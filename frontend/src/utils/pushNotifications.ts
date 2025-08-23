@@ -233,7 +233,7 @@ class PushNotificationManager {
       });
 
 // Notification event handlers for service worker communication
-export class NotificationEventHandler {
+export class NotificationEventHandler {;
   static handleNotificationClick(event: any): void {
     console.log('Notification clicked:', event);
     

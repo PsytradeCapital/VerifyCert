@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface ResetPasswordFormProps {
-onSuccess?: () => void;
+  onSuccess?: () => void;
   onBack?: () => void;
 }
+
 interface FormData {
-code: string;
+  code: string;
   newPassword: string;
   confirmPassword: string;
 }
+
 interface FormErrors {
-code?: string;
+  code?: string;
   newPassword?: string;
   confirmPassword?: string;
 }
+
 export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFormProps): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     code: '',
@@ -43,16 +46,19 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
     } else if (formData.code.length !== 6) {
       newErrors.code = 'Verification code must be 6 digits';
     }
+
     if (!formData.newPassword) {
       newErrors.newPassword = 'New password is required';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'Password must be at least 8 characters';
     }
+
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -63,6 +69,7 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
     if (!validateForm()) {
       return;
     }
+
     setIsLoading(true);
 
     try {
@@ -181,3 +188,4 @@ export default function ResetPasswordForm({ onSuccess, onBack }: ResetPasswordFo
       </form>
     </div>
   );
+}

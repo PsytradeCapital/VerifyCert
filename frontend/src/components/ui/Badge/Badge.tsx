@@ -1,13 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import { cn } from '../../../utils/cn';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-}
-}
-}
-}
-}
   variant?: 'default' | 'success' | 'error' | 'warning' | 'info' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
   rounded?: boolean;
@@ -15,8 +9,9 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon?: React.ReactNode;
   removable?: boolean;
   onRemove?: () => void;
+}
 
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ 
     className, 
     variant = 'default', 
@@ -49,28 +44,30 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;
 
     const isClickable = onClick || removable;
 
+    const classNames = [
+      baseStyles,
+      variants[variant],
+      sizes[size],
+      rounded ? 'rounded-full' : 'rounded-md',
+      isClickable && 'cursor-pointer',
+      className
+    ].filter(Boolean).join(' ');
+
     return (
       <span
         ref={ref}
-        className={cn(
-          baseStyles,
-          variants[variant],
-          sizes[size],
-          rounded ? 'rounded-full' : 'rounded-md',
-          isClickable && 'cursor-pointer',
-          className
-        )}
+        className={classNames}
         onClick={onClick}
         {...props}
       >
-        {icon && <span className="mr-1">{icon}</span>
+        {icon && <span className="mr-1">{icon}</span>}
         {children}
         {removable && onRemove && (
           <button
             onClick={(e) => {
               e.stopPropagation();
               onRemove();
-            }
+            }}
             className="ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors"
           >
             <X className="h-3 w-3" />
@@ -78,7 +75,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;
         )}
       </span>
     );
+  }
 );
 
 Badge.displayName = 'Badge';
-}

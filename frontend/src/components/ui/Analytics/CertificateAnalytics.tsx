@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Users, Award, Calendar } from 'lucide-react';
-import Card from '../Card/Card';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { TrendingUp, Users, Award, CheckCircle } from 'lucide-react';
 
-export interface AnalyticsData {
-totalCertificates: number;
+interface AnalyticsData {
+  totalCertificates: number;
   totalInstitutions: number;
   totalRecipients: number;
   verificationRate: number;
   monthlyIssuance: Array<{
     month: string;
     count: number;
-}>;
+  }>;
   topInstitutions: Array<{
     name: string;
     count: number;
     percentage: number;
   }>;
+}
 
 interface CertificateAnalyticsProps {
-data: AnalyticsData;
+  data: AnalyticsData;
   className?: string;
+}
 
 export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
   data,
@@ -34,150 +35,153 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
   });
 
   useEffect(() => {
-    const duration = 2000;
-    const steps = 60;
-    const stepDuration = duration / steps;
+    const animateNumbers = () => {
+      const duration = 2000;
+      const steps = 60;
+      const stepDuration = duration / steps;
 
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      let currentStep = 0;
+      const interval = setInterval(() => {
+        currentStep++;
+        const progress = currentStep / steps;
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
 
-      setAnimatedNumbers({
-        totalCertificates: Math.floor(data.totalCertificates * easeOutQuart),
-        totalInstitutions: Math.floor(data.totalInstitutions * easeOutQuart),
-        totalRecipients: Math.floor(data.totalRecipients * easeOutQuart),
-        verificationRate: Math.floor(data.verificationRate * easeOutQuart)
-      });
-
-      if (currentStep >= steps) {
-        clearInterval(interval);
         setAnimatedNumbers({
-          totalCertificates: data.totalCertificates,
-          totalInstitutions: data.totalInstitutions,
-          totalRecipients: data.totalRecipients,
-          verificationRate: data.verificationRate
+          totalCertificates: Math.floor(data.totalCertificates * easeOutQuart),
+          totalInstitutions: Math.floor(data.totalInstitutions * easeOutQuart),
+          totalRecipients: Math.floor(data.totalRecipients * easeOutQuart),
+          verificationRate: Math.floor(data.verificationRate * easeOutQuart)
         });
-    }, stepDuration);
 
-    return () => clearInterval(interval);
+        if (currentStep >= steps) {
+          clearInterval(interval);
+          setAnimatedNumbers({
+            totalCertificates: data.totalCertificates,
+            totalInstitutions: data.totalInstitutions,
+            totalRecipients: data.totalRecipients,
+            verificationRate: data.verificationRate
+          });
+        }
+      }, stepDuration);
+    };
+
+    animateNumbers();
   }, [data]);
 
-  const StatCard: React.FC<{
-    title: string;
-    value: number;
-    icon: React.ReactNode;
-    color: string;
-    suffix?: string;
-  }> = ({ title, value, icon, color, suffix = '' }) => (
-    <Card variant="elevated" padding="lg" hover className="text-center">
-      <div className={inline-flex items-center justify-center w-12 h-12 rounded-full ${color} mb-4}>
-        {icon}
-      </div>
-      <div className="text-3xl font-bold text-gray-900 mb-1">
-        {value.toLocaleString()}{suffix}
-      </div>
-      <div className="text-sm text-gray-600">{title}</div>
-    </Card>
-  );
+  const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
 
   return (
-    <div className={space-y-6 ${className}}>
+    <div className={`space-y-6 ${className}`}>
+      {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Total Certificates"
-          value={animatedNumbers.totalCertificates}
-          color="bg-blue-500"
-        />
-        <StatCard
-          title="Institutions"
-          value={animatedNumbers.totalInstitutions}
-          color="bg-green-500"
-        />
-        <StatCard
-          title="Recipients"
-          value={animatedNumbers.totalRecipients}
-          color="bg-purple-500"
-        />
-        <StatCard
-          title="Verification Rate"
-          value={animatedNumbers.verificationRate}
-          color="bg-orange-500"
-          suffix="%"
-        />
+        <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Total Certificates</p>
+              <p className="text-2xl font-bold text-gray-900">{animatedNumbers.totalCertificates.toLocaleString()}</p>
+            </div>
+            <Award className="h-8 w-8 text-blue-600" />
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Institutions</p>
+              <p className="text-2xl font-bold text-gray-900">{animatedNumbers.totalInstitutions.toLocaleString()}</p>
+            </div>
+            <TrendingUp className="h-8 w-8 text-green-600" />
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Recipients</p>
+              <p className="text-2xl font-bold text-gray-900">{animatedNumbers.totalRecipients.toLocaleString()}</p>
+            </div>
+            <Users className="h-8 w-8 text-purple-600" />
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Verification Rate</p>
+              <p className="text-2xl font-bold text-gray-900">{animatedNumbers.verificationRate}%</p>
+            </div>
+            <CheckCircle className="h-8 w-8 text-emerald-600" />
+          </div>
+        </div>
       </div>
 
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card variant="elevated" padding="lg">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
-            <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
-            Monthly Issuance
-          </h3>
-          <div className="space-y-3">
-            {data.monthlyIssuance.map((item, index) => {
-              const maxValue = Math.max(...data.monthlyIssuance.map(d => d.count));
-              return (
-                <div key={item.month} className="flex items-center space-x-3">
-                  <div className="w-16 text-sm text-gray-600">{item.month}</div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-6 relative overflow-hidden">
-                    <motion.div
-                      className="h-full bg-blue-500 rounded-full"
-                      initial={{ width: 0 }
-                      animate={{ width: ${(item.count / maxValue) * 100}% }
-                      transition={{ duration: 1, delay: index * 0.1 }
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
-                      {item.count}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </Card>
+        {/* Monthly Issuance Chart */}
+        <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Certificate Issuance</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data.monthlyIssuance}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#3B82F6" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-        <Card variant="elevated" padding="lg">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
-            <Award className="w-5 h-5 mr-2 text-purple-600" />
-            Top Institutions
-          </h3>
-          <div className="space-y-4">
-            {data.topInstitutions.map((institution, index) => (
-              <motion.div
-                key={institution.name}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                initial={{ opacity: 0, x: -20 }
-                animate={{ opacity: 1, x: 0 }
-                transition={{ duration: 0.5, delay: index * 0.1 }
+        {/* Top Institutions Chart */}
+        <div className="bg-white p-6 rounded-lg shadow-sm border">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Institutions</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={data.topInstitutions}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percentage }) => `${name} (${percentage}%)`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="count"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-bold text-blue-600">#{index + 1}</span>
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">{institution.name}</div>
-                    <div className="text-sm text-gray-600">{institution.count} certificates</div>
+                {data.topInstitutions.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Top Institutions List */}
+      <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Institution Rankings</h3>
+        <div className="space-y-3">
+          {data.topInstitutions.map((institution, index) => (
+            <div key={institution.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center space-x-3">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                    {index + 1}
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-lg font-bold text-gray-900">{institution.percentage}%</div>
-                  <div className="w-20 bg-gray-200 rounded-full h-2">
-                    <motion.div
-                      className="bg-blue-500 h-2 rounded-full"
-                      initial={{ width: 0 }
-                      animate={{ width: ${institution.percentage}% }
-                      transition={{ duration: 1, delay: index * 0.1 }
-                    />
-                  </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">{institution.name}</p>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </Card>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-900">{institution.count.toLocaleString()}</p>
+                <p className="text-xs text-gray-500">{institution.percentage}%</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
-}
-}
+
+export default CertificateAnalytics;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Shield, CheckCircle, XCircle, Search, AlertTriangle, ExternalLink } from 'lucide-react';
-import CertificateCard from '../components/CertificateCard';
+import CertificateCard from '../components/CertificateCard.jsx';
 
 const VerifyPage = () => {
   const { tokenId: urlTokenId } = useParams();

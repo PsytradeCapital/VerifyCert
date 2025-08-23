@@ -13,12 +13,12 @@ import {
   User, 
   Search,
   ChevronDown,
-  X,;
-  Check,;
-  AlertCircle,;
-  Home,;
-  FileText,;
-  Mail;
+  X,
+  Check,
+  AlertCircle,
+  Home,
+  FileText,
+  Mail
 } from 'lucide-react';
 
 // Import enhanced components
@@ -41,54 +41,60 @@ const InteractionAnimationsDemo: React.FC = () => {
 
   // Demo data
   const selectOptions = [
-    { value: 'option1', label: 'Option 1', icon: <Star className="w-4 h-4" />,
-    { value: 'option2', label: 'Option 2', icon: <Heart className="w-4 h-4" />,
-    { value: 'option3', label: 'Option 3', icon: <Download className="w-4 h-4" />,
+    { value: 'option1', label: 'Option 1', icon: <Star className="w-4 h-4" /> 
+    { value: 'option2', label: 'Option 2', icon: <Heart className="w-4 h-4" /> 
+    { value: 'option3', label: 'Option 3', icon: <Download className="w-4 h-4" /> 
   ];
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Components', href: '/components' },
-    { label: 'Animations', active: true
+    { label: 'Animations', href: '/comp
   ];
 
   // Animated icon component
   const AnimatedIcon: React.FC<{ 
-    icon: React.ReactNode; 
-    variant?: 'default' | 'spin' | 'bounce';
-    className?: string;
-  }> = ({ icon, variant = 'default', className = '' }) => {
+    children: React.ReactNo
+    variant?: 'hover' | 'pulse' | 'bounce';
+    size?: 'sm' | 'md' lg';
+  }> = ({ children, variant = 'hover', size = 'md' }) => {
     const animations = useInteractionAnimations({
       component: 'icon',
       variant
     });
 
+    const sis = {
+      sm: 'w-4 h-4',
+      md: 'w-6 h-6',
+      lg: 'w-8 h-8'
+    };
+
     return (
-      <motion.div
-        className={inline-flex items-center justify-center ${className}}
-        {...animations}
+      div
+    `}
+ons}
       >
-        {icon}
+        {children}
       </motion.div>
     );
   };
 
   // Animated link component
-  const AnimatedLink: React.FC<{ 
-    href: string; 
-    children: React.ReactNode;
-    variant?: 'default' | 'underline';
-  }> = ({ href, children, variant = 'default' }) => {
-    const animations = useInteractionAnimations({
-      component: 'link',
+  const AnimatedLink: Re
+    children:;
+    hrering;
+
+  }> = ({ ch}) => {
+    const animamations({
+      component: 'lnk',
       variant
     });
 
     return (
       <motion.a
-        href={href}
-        className="text-blue-600 hover:text-blue-800 cursor-pointer"
-        {...animations}
+      f}
+    "
+}
       >
         {children}
       </motion.a>
@@ -96,27 +102,27 @@ const InteractionAnimationsDemo: React.FC = () => {
   };
 
   // Animated badge component
-  const AnimatedBadge: React.FC<{ 
-    children: React.ReactNode;
-    variant?: 'default' | 'pulse';
-    color?: 'blue' | 'green' | 'red' | 'yellow';
-  }> = ({ children, variant = 'default', color = 'blue' }) => {
-    const animations = useInteractionAnimations({
+  const AnimatedBadge: Re<{ 
+    children:de;
+    varse';
+ellow';
+  }> = ({ children, varian{
+    const animations = useInteractionAnis({
       component: 'badge',
       variant
     });
 
-    const colorClasses = {
-      blue: 'bg-blue-100 text-blue-800',
-      green: 'bg-green-100 text-green-800',
+{
+      blue: e-800',
+      green: 'bg-g0',
       red: 'bg-red-100 text-red-800',
-      yellow: 'bg-yellow-100 text-yellow-800'
+      yellow: 'bg-yello-800'
     };
 
     return (
-      <motion.span
-        className={inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colorClasses[color]}}
-        {...animations}
+      ion.span
+    r]}`}
+s}
       >
         {children}
       </motion.span>
@@ -124,318 +130,299 @@ const InteractionAnimationsDemo: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="p-8 space-y-12 bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Interactive Animations Demo
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience enhanced hover and focus animations across all interactive elements.
-            All animations respect user preferences for reduced motion.
+          <h1 ">
+            InDemo
+
+          <p className="text-xl 
+            Experience enhanced hovents.
+            Every component responds to user interaction with smooth, purposeful ans.
           </p>
         </div>
 
-        {/* Breadcrumbs Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Navigation</h2>
-          <Card className="p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Breadcrumbs</h3>
-            <Breadcrumbs items={breadcrumbItems} enableAnimations={true} />
-          </Card>
-        </section>
-
-        {/* Buttons Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Buttons</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Primary</h3>
-              <div className="space-y-3">
-                <Button variant="default" size="sm">Small Button</Button>
-                <Button variant="default" size="default">Medium Button</Button>
-                <Button variant="default" size="lg">Large Button</Button>
-                <Button variant="default" loading>Loading...</Button>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Secondary</h3>
-              <div className="space-y-3">
-                <Button variant="secondary" size="sm">Small Button</Button>
-                <Button variant="secondary" size="default">Medium Button</Button>
-                <Button variant="secondary" size="lg">Large Button</Button>
-                <Button variant="secondary" disabled>Disabled</Button>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Tertiary</h3>
-              <div className="space-y-3">
-                <Button variant="outline" size="sm">Small Button</Button>
-                <Button variant="outline" size="default">Medium Button</Button>
-                <Button variant="outline" size="lg">Large Button</Button>
-                <Button variant="outline">
-                  <Settings className="w-4 h-4 mr-2" />
-                  With Icon
-                </Button>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Danger</h3>
-              <div className="space-y-3">
-                <Button variant="destructive" size="sm">Delete</Button>
-                <Button variant="destructive" size="default">Remove</Button>
-                <Button variant="destructive" size="lg">Destroy</Button>
-                <Button variant="destructive">
-                  <X className="w-4 h-4 mr-2" />
-                  Cancel
-                </Button>
-              </div>
-            </Card>
-          </div>
-        </section>
-
-        {/* Cards Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Cards</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card variant="default" hover className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Default Card</h3>
-              <p className="text-gray-600">
-                This card has subtle hover animations that lift it slightly and add shadow.
-              </p>
-            </Card>
-
-            <Card variant="elevated" hover className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Elevated Card</h3>
-              <p className="text-gray-600">
-                This elevated card has more pronounced hover effects with enhanced shadows.
-              </p>
-            </Card>
-
-            <Card variant="outlined" hover className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Outlined Card</h3>
-              <p className="text-gray-600">
-                This outlined card changes border color and adds subtle shadow on hover.
-              </p>
-            </Card>
-          </div>
-        </section>
-
-        {/* Form Elements Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Form Elements</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Input Fields</h3>
+        {/* Enhan/}
+        <Card clas-12">
+-6">
+            <h2 className="t
+            <div className="grid grap-6">
               <div className="space-y-4">
-                <Input
-                  label="Default Input"
-                  placeholder="Type something..."
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                />
-                <Input
-                  label="Input with Icon"
-                  placeholder="Search..."
-                />
-                <Input
-                  label="Success State"
-                  placeholder="Valid input"
-                  validationState="success"
-                  helperText="This looks good!"
-                />
-                <Input
-                  label="Error State"
-                  placeholder="Invalid input"
-                  error="This field is required"
-                />
+                <h3 className="text-lg font-medium text-gray-700">Primary Buttons</h3>
+                <div className="sp3">
+                  <Button variant="primary" size="sm">
+                    <Star className="w-4 />
+                    Small Primary
+                  </Button>
+                  <Button variant="primary" size="md">
+                    <Download className="w-4 h-4 mr-2" />
+                    y
+                  <
+>
+                    <Settings clas" />
+                    Large Primary
+                  </Button>
+                </div>
               </div>
-            </Card>
 
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Select Dropdown</h3>
               <div className="space-y-4">
-                <Select
-                  label="Basic Select"
-                  options={selectOptions}
-                  value={selectValue}
-                  onChange={setSelectValue}
-                  placeholder="Choose an option..."
-                />
-                <Select
-                  label="Searchable Select"
-                  options={selectOptions}
-                  value={selectValue}
-                  onChange={setSelectValue}
-                  searchable
-                  placeholder="Search options..."
-                />
-                <Select
-                  label="Clearable Select"
-                  options={selectOptions}
-                  value={selectValue}
-                  onChange={setSelectValue}
-                  clearable
-                  placeholder="Select with clear..."
-                />
+                <h3 
+                <di3">
+>
+                    <User classNam
+                    Small Secondary
+                  </Button>
+                  <Button variant="secondary" size="md">
+                    <Search className="w-4 h-4 mr-2" />
+                    Medium Secondary
+                  </Button>
+                  <Button variant="secondary" size="lg">
+                    <Mail c />
+                    Largedary
+                  </n>
+                </d
+
+
+              <div className="space-y-4">
+                <h3 className="text-lg fo>
+                <div className="space-y-3">
+                  <Button variant="outline" size="sm">
+                    <Check className="w-4 h-4 mr-2" />
+                    Small Outline
+                  </Button>
+                  <Buttod">
+                    <Aler" />
+                    tline
+                  <
+                ">
+                  2" />
+
+                  </Button
+                </div>
               </div>
-            </Card>
+            </div>
           </div>
-        </section>
+        </Card>
 
-        {/* Icons and Links Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Icons & Links</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Animated Icons</h3>
-              <div className="flex flex-wrap gap-4">
-                <AnimatedIcon
-                  variant="default"
-                />
-                <AnimatedIcon
-                  variant="bounce"
-                />
-                <AnimatedIcon
-                  variant="spin"
-                />
-                <AnimatedIcon
-                  variant="default"
-                />
-                <AnimatedIcon
-                  variant="bounce"
-                />
-                <AnimatedIcon
-                  variant="default"
-                />
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Animated Links</h3>
-              <div className="space-y-3">
+        {/* Enhanced Form Elements */}
+        <Card clas
+          <div clas6">
+</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="space-y-6">
                 <div>
-                  <AnimatedLink href="#" variant="default">
-                    Default Link Animation
-                  </AnimatedLink>
-                </div>
-                <div>
-                  <AnimatedLink href="#" variant="underline">
-                    Underline Link Animation
-                  </AnimatedLink>
-                </div>
-                <div className="flex items-center gap-2">
-                  <AnimatedIcon
-                    variant="default"
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  d
+                  <l>
+Input
+                    type="text"
+                    placeholder="Type something..."
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                  ull"
                   />
-                  <AnimatedLink href="#" variant="default">
-                    Link with Icon
-                  </AnimatedLink>
+                
+
+
+                  <label className">
+                    Enhanced Select
+                  </label>
+                  <Select
+                    options={selec
+                    value={selectValue}
+                    onChange={setSelectVa
+                    pl"
+                    className="w-full"
+                  />
                 </div>
               </div>
-            </Card>
+
+              <div cla6">
+                <div>
+                  <label className="blockb-2">
+                  n
+                  </la
+                  <div className="relate">
+                    <Input
+                      type="text"
+                      placeholder="Search..."
+                  0"
+                    />
+                    <AnimatedIcon var
+                      <Search className="abso>
+                    </AnimatedIcon>
+                  </div>
+                </div>
+
+
+                  <label className">
+                    Input with Validation States
+                  </label>
+                  <div >
+                    <Input
+                      type="text"
+                      placeholder="Va input"
+                      className="w-full bor0"
+                    />
+                  put
+                      t
+                      placeholder="Invalid 
+                      className="w-full b00"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
+        </Card>
 
-        {/* Badges Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Badges</h2>
-          <Card className="p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Interactive Badges</h3>
-            <div className="flex flex-wrap gap-3">
-              <AnimatedBadge variant="default" color="blue">
-                Default Badge
-              </AnimatedBadge>
-              <AnimatedBadge variant="pulse" color="green">
-                Pulsing Badge
-              </AnimatedBadge>
-              <AnimatedBadge variant="default" color="red">
-                Error Badge
-              </AnimatedBadge>
-              <AnimatedBadge variant="pulse" color="yellow">
-                Warning Badge
-              </AnimatedBadge>
-              <AnimatedBadge variant="default" color="blue">
-                <Check className="w-3 h-3 mr-1" />
-                With Icon
-              </AnimatedBadge>
-            </div>
-          </Card>
-        </section>
-
-        {/* Modal Demo */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Modal</h2>
-          <Card className="p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Animated Modal</h3>
-            <Button 
-              variant="default" 
-              onClick={() => setIsModalOpen(true)}
-            >
-              Open Modal
-            </Button>
-            
-            <Modal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              title="Animated Modal"
-            >
-              <div className="space-y-4">
-                <p className="text-gray-600">
-                  This modal demonstrates smooth entrance and exit animations with backdrop blur.
-                </p>
-                <div className="flex gap-3">
-                  <Button 
-                    variant="default" 
-                    onClick={() => setIsModalOpen(false)}
+        {/* Enhanced Interactive Elem
+        <Card className="mb-12">
+          <div className="p
+            <h2 className="text-2xl font-semibold te2>
+            <div c>
+              <div c4">
+                <h3Icons</h3>
+                 gap-4">
                   >
-                    Confirm
-                  </Button>
-                  <Button 
-                    variant="secondary" 
-                    onClick={() => setIsModalOpen(false)}
-                  >
-                    Cancel
-                  </Button>
+>
+                  </AnimatedIcon>
+                  <AnimatedIcon varze="lg">
+                    <Star className="text-yellow-500" />
+                  </AnimatedIcon>
+                  <AnimatedIcon vag">
+                    <Download className="text-blue-500" />
+                  </AnimatedIcon>
+                  <AnimatedIc>
+                    <Settings class>
+                  
                 </div>
               </div>
-            </Modal>
-          </Card>
-        </section>
 
-        {/* Floating Action Button Demo */}
-        <FloatingActionButton
-          variant="primary"
-          position="bottom-right"
-          tooltip="Like this demo"
-          enableAnimations={true}
-        />
+              <div className=
+                <h3 className="t
+                <d3">
+                  <div>
+                    <AnimatedLink ve">
+                  
+                    </Animatek>
+                  </div>
+                  
+                    <Animated
+                      Scale Animatik
+                  
+                  </v>
+                  <>
+">
+                      Color Transiion Link
+                    </AnimatedLink>
+                  </div>
+                </div
+              </div>
 
-        {/* Performance Note */}
-        <section className="mt-12">
-          <Card className="p-6 bg-blue-50 border-blue-200">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="text-lg font-medium text-blue-900 mb-2">
-                  Performance & Accessibility
-                </h3>
-                <p className="text-blue-800">
-                  All animations respect user preferences for reduced motion and are optimized for performance.
-                  Focus states are enhanced for keyboard navigation, and all interactive elements meet WCAG accessibility guidelines.
-                </p>
+              <div className="spa
+                <h3 cl3>
+                <div -3">
+                  <div>
+                    <AnimatedBadge color="bl">
+                      Default Badge
+                    </dBadge>
+                  </div>
+                  <div>
+                    <AnimatedBadge co
+                    adge
+                    </AnimatedBadge>
+                  </div>
+                  <div>
+                    <A">
+                    Badge
+                   dge>
+                
+                  
+ulse">
+                      Warniadge
+                    </AnimatedBadge
+                  </div>
+                </div>
               </div>
             </div>
-          </Card>
-        </section>
+          </div>
+        </Card>
+
+        {/* Enhanced Navigation Elements */}
+        <Card className="mb-12">
+          <div className="p-6">
+            <h2 className="text-2xl font-semibold text-gray</h2>
+            <div className=
+              <div>
+                <h3 className="text-lg font-medium text-grays</h3>
+                <Breadcrumbs } />
+              </div>
+
+              <div>
+                <h3 class>
+                <div className>
+                  ton
+                 
+                  tings />}
+ings"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Enhanced Modal */}
+        <Card
+          <div className"p-6">
+            <h2 class2>
+            ">
+              <But
+                variant="primary"
+                onClick={() => setIsModalOpen(true)}
+              >
+             dal
+              </Button>
+            </div>
+          </div>
+        </Card>
+
+        {/* Modal Componen*/}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={se)}
+          title="Enhanced Memo"
+        >
+          <div className=">
+            <p className="text-gray-600"
+              This modal demonstrates enhanced animations
+            </p>
+            <ul className=
+              <li>Smooth fa
+              <li>Scalntent</li>
+              <li>Bali>
+              <li>Ent</li>
+            </ul>
+            <div ct-4">
+ <Button
+                variant="outline"
+                onClick={() =lse)}
+              >
+                Cancel
+              </Button>
+              <Button
+          "
+
+              >
+                Confirm
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
   );
 };
 
 export default InteractionAnimationsDemo;
-}
-}

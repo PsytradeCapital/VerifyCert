@@ -1,11 +1,12 @@
 import React from 'react';
 
 export interface SkeletonLoaderProps {
-variant?: 'text' | 'rectangular' | 'circular';
+  variant?: 'text' | 'rectangular' | 'circular';
   width?: string | number;
   height?: string | number;
   lines?: number;
   className?: string;
+}
 
 const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   variant = 'text',
@@ -25,41 +26,36 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
       case 'text':
       default:
         return 'rounded h-4';
+    }
   };
 
   const getStyle = () => {
     const style: React.CSSProperties = {};
-    if (width) style.width = typeof width === 'number' ? ${width}px : width;
-    if (height) style.height = typeof height === 'number' ? ${height}px : height;
+    if (width) style.width = width;
+    if (height) style.height = height;
     return style;
   };
 
   if (variant === 'text' && lines > 1) {
     return (
-      <div className={className}>
-        {Array.from({ length: lines }, (_, index) => (
+      <div className={`space-y-2 ${className}`}>
+        {Array.from({ length: lines }).map((_, index) => (
           <div
             key={index}
-            className={${baseClasses} ${getVariantClasses()} ${
-              index < lines - 1 ? 'mb-2' : ''
-            }}
-            style={{
-              ...getStyle(),
-              width: index === lines - 1 ? '75%' : '100%'
-            }
+            className={`${baseClasses} ${getVariantClasses()}`}
+            style={getStyle()}
           />
         ))}
       </div>
     );
+  }
 
   return (
     <div
-      className={${baseClasses} ${getVariantClasses()} ${className}}
+      className={`${baseClasses} ${getVariantClasses()} ${className}`}
       style={getStyle()}
     />
   );
 };
 
 export default SkeletonLoader;
-}
-}

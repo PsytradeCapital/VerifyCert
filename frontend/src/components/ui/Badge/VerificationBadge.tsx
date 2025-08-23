@@ -5,418 +5,319 @@ import {
   CheckCircle, 
   XCircle, 
   AlertTriangle, 
-  Clock, ;
-  ExternalLink,;
-  Info,;
-  Zap,;
-  Link as LinkIcon,;
-  Eye;
+  Clock, 
+  ExternalLink,
+  Info,
+  Zap,
+  Link as LinkIcon,
+  Eye
 } from 'lucide-react';
 import { Badge } from './Badge';
-import { getBlockchainService, VerificationResult } from '../../../services/blockchainService';
+
+ult {
+  isValid: boolean;
+  isRevoked: boolean;
+  transactionHash?: ng;
+  blockNumber?: string
+  timestamp?: number;
+}
 
 export interface VerificationBadgeProps {
-tokenId: string;
-  isValid?: boolean;
+  tokenId: string;
+lean;
   isRevoked?: boolean;
-  showDetails?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'minimal' | 'detailed' | 'premium';
-  onVerificationComplete?: (result: VerificationResult) => void;
+ an;
+ 
+ ;
+  onVerificationComplete?: oid;
   className?: string;
+}
 
-interface BlockchainProof {
+interface BlockchainProf {
+  transactionHash: tring;
+;
+  timestamp: number;
+  networkNg;
+  explorerUrl: string;
 }
-}
-}
-  transactionHash?: string;
-  blockNumber?: string;
-  contractAddress?: string;
-  verificationTimestamp: number;
-  networkName?: string;
-  chainId?: number;
 
-const VerificationBadge: React.FC<VerificationBadgeProps> = ({
+const Verifica({
   tokenId,
-  isValid = false,
-  isRevoked = false,
-  showDetails = false,
+  isValid,
+  isRevoked = fa
+  showD
   size = 'md',
-  variant = 'detailed',
+  variant = 'minimal',
   onVerificationComplete,
   className = ''
 }) => {
-  const [verificationResult, setVerificationResult] = useState<VerificationResult | null>(null);
-  const [blockchainProof, setBlockchainProof] = useState<BlockchainProof | null>(null);
+g');
+  const [blockchainProof, setBlockchainProof] = );
+  const [isExpanded;
   const [isVerifying, setIsVerifying] = useState(false);
-  const [showProofDetails, setShowProofDetails] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  // Auto-verify on mount if tokenId is provided
   useEffect(() => {
-    if (tokenId && variant !== 'minimal' && !process.env.NODE_ENV?.includes('test')) {
-      handleVerification();
-  }, [tokenId, variant]);
+) {
+      if (isRevoked) {
+        setVerificationStoked');
+ {
+        setVerificationSt
+      } else {
 
-  const handleVerification = async () => {
-    if (!tokenId) return;
+      }
+    } else {
+      verifyOnBlockchain();
+    }
+  }, [isValid, isRevoked, tokenId]);
 
+  const verifyOnBlockchain = async () => {
     setIsVerifying(true);
-    setError(null);
+    setVerificationStatus('pending');
 
     try {
-      const blockchainService = getBlockchainService();
-      const result = await blockchainService.verifyCertificate(tokenId);
+      // Simulate blockchain verification
+      await new Promise(resolve => setTimeout(reso
       
-      setVerificationResult(result);
-      
-      // Get additional blockchain proof data
-      if (result.onChain) {
-        const networkInfo = await blockchainService.getNetworkInfo();
-        setBlockchainProof({
-          transactionHash: result.transactionHash,
-          blockNumber: result.blockNumber,
-          contractAddress: result.contractAddress,
-          verificationTimestamp: result.verificationTimestamp,
-          networkName: networkInfo.name,
-          chainId: networkInfo.chainId
-        });
+      const mockResult: VerificationResu
+        isValid: true,
+        isR,
+78',
+        blockNumber: '12345678',
+        timestamp: Date.now() / 1000
+      };
 
-      if (onVerificationComplete) {
-        onVerificationComplete(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Verification failed';
-      setError(errorMessage);
-      setVerificationResult({
-        isValid: false,
-        onChain: false,
-        message: errorMessage,
-        verificationTimestamp: Date.now()
-      });
+      const mockProof: Blockc {
+        transactionHash: mock,
+        blockNumber: mor!,
+        timestamp: mockp!,
+        networkName: 'Polygon ',
+        explorerUrl: `https://amoy.polygoh}`
+      };
+
+      setBlockchainProof(moc
+    );
+ult);
+    } catch (error) {
+      console.error(
+      setVerif
     } finally {
-      setIsVerifying(false);
+      setIsVerifying(fe);
+    }
   };
 
-  const getVerificationStatus = () => {
-    if (isRevoked) {
-      return {
-        status: 'revoked',
-        icon: XCircle,
-        color: 'error',
-        label: 'Revoked',
-        description: 'This certificate has been revoked'
-      };
+  const > {
+{
+      case 'verified':
+        return{
+          icon: CheckCircle,
+          text: 'Vered',
+          color: 'text600',
+          bgColor: 'bg-green-50',
+          borderColor: 'border-green-200',
+        
 
-    if (isVerifying) {
-      return {
-        status: 'verifying',
-        icon: Clock,
-        color: 'info',
-        label: 'Verifying...',
-        description: 'Checking blockchain verification'
-      };
-
-    if (error) {
-      return {
-        status: 'error',
-        icon: AlertTriangle,
-        color: 'warning',
-        label: 'Verification Error',
-        description: error
-      };
-
-    if (verificationResult) {
-      if (verificationResult.isValid && verificationResult.onChain) {
+      case 'inva
         return {
-          status: 'verified',
-          icon: Shield,
-          color: 'success',
-          label: 'Blockchain Verified',
-          description: 'Verified on Polygon blockchain'
-        };
-      } else if (verificationResult.onChain) {
-        return {
-          status: 'invalid',
           icon: XCircle,
-          color: 'error',
-          label: 'Invalid',
-          description: verificationResult.message
-        };
-      } else {
+          text: 'Invalid',
+          color: 'text-re',
+          bgColor: 'bg-red-50',
+          borderColor: 'bo0',
+        st
+   };
+      case 'revoked':
         return {
-          status: 'not-found',
-          icon: AlertTriangle,
-          color: 'warning',
-          label: 'Not Found',
-          description: 'Certificate not found on blockchain'
+          icon: ,
+          text: 'Revoked',
+          color: 'text-',
+          bgColor: 'bg-oran50',
+          borderColor: 'border-orange-200',
+          badgeVariant: 'warning' as const
         };
-
-    // Fallback to props
-    if (isValid) {
-      return {
-        status: 'valid',
-        icon: CheckCircle,
-        color: 'success',
-        label: 'Valid',
-        description: 'Certificate is valid'
-      };
-
-    return {
-      status: 'unknown',
-      icon: AlertTriangle,
-      color: 'warning',
-      label: 'Unknown',
-      description: 'Verification status unknown'
-    };
+      case 'error':
+        return {
+          icon: XCircle,
+          text: 'Error',
+          color: 'text-re',
+          bgColor: 'bg-red-50',
+          borderColor: 'border-red-200',
+          
+        };
+      case 'pend
+      default:
+        return {
+          icon: Clock,
+          text: 'Verifying...',
+          color: 'text-yellow-600',
+          
+',
+          badgeVariant: 
+        };
+    }
   };
 
-  const formatAddress = (address: string) => {
-    return ${address.slice(0, 6)}...${address.slice(-4)};
-  };
+  const statusConfig = ge
+  const IconComponent =
 
-  const formatTimestamp = (timestamp: number) => {
-    return new Date(timestamp).toLocaleString();
-  };
-
-  const openBlockExplorer = (hash: string) => {
-    const baseUrl = blockchainProof?.chainId === 80001 
-      ? 'https://mumbai.polygonscan.com'
-      : 'https://polygonscan.com';
-    window.open(${baseUrl}/tx/${hash}, '_blank');
-  };
-
-  const verification = getVerificationStatus();
-  const IconComponent = verification.icon;
-
-  if (variant === 'minimal') {
-    return (
-      <Badge
-        variant={verification.color as any}
-        size={size}
-        className={className}
-      >
-        {verification.label}
-      </Badge>
-    );
-
-  if (variant === 'detailed') {
-    return (
-      <div className={space-y-2 ${className}}>
-        {/* Main Verification Badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }
-          animate={{ opacity: 1, scale: 1 }
-          className="flex items-center space-x-2"
-        >
-          <Badge
-            variant={verification.color as any}
-            size={size}
-                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }
-                >
-                  <Clock className="h-4 w-4" />
-                </motion.div>
-              ) : (
-                <IconComponent className="h-4 w-4" />
-              )
-            onClick={showDetails ? () => setShowProofDetails(!showProofDetails) : undefined}
-            className={showDetails ? 'cursor-pointer hover:shadow-md' : ''}
-          >
-            {verification.label}
-          </Badge>
-
-          {/* Blockchain Proof Indicator */}
-          {verificationResult?.onChain && (
-            <motion.div
-              initial={{ opacity: 0, x: -10 }
-              animate={{ opacity: 1, x: 0 }
-              className="flex items-center space-x-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-200"
-            >
-              <Zap className="h-3 w-3" />
-              <span className="font-medium">On-Chain</span>
-            </motion.div>
-          )}
-          {/* Manual Verification Button */}
-          {!isVerifying && !verificationResult && tokenId && (
-            <button
-              onClick={handleVerification}
-              className="text-xs text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded-full border border-blue-200 transition-colors"
-            >
-              <Eye className="h-3 w-3 inline mr-1" />
-              Verify
-            </button>
-          )}
-        </motion.div>
-
-        {/* Expandable Proof Details */}
-        <AnimatePresence>
-          {showProofDetails && blockchainProof && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }
-              animate={{ opacity: 1, height: 'auto' }
-              exit={{ opacity: 0, height: 0 }
-              className="bg-neutral-50 border border-neutral-200 rounded-lg p-3 space-y-2"
-            >
-              <div className="flex items-center space-x-2 text-sm font-medium text-neutral-700">
-                <Shield className="h-4 w-4 text-green-600" />
-                <span>Blockchain Proof</span>
-              </div>
-
-              <div className="space-y-2 text-xs">
-                {blockchainProof.transactionHash && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-neutral-500">Transaction:</span>
-                    <button
-                      onClick={() => openBlockExplorer(blockchainProof.transactionHash!)}
-                      className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 font-mono"
-                    >
-                      <span>{formatAddress(blockchainProof.transactionHash)}</span>
-                      <ExternalLink className="h-3 w-3" />
-                    </button>
-                  </div>
-                )}
-                {blockchainProof.blockNumber && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-neutral-500">Block:</span>
-                    <span className="font-mono text-neutral-700">#{blockchainProof.blockNumber}</span>
-                  </div>
-                )}
-                {blockchainProof.contractAddress && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-neutral-500">Contract:</span>
-                    <span className="font-mono text-neutral-700">
-                      {formatAddress(blockchainProof.contractAddress)}
-                    </span>
-                  </div>
-                )}
-                {blockchainProof.networkName && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-neutral-500">Network:</span>
-                    <span className="text-neutral-700">
-                      {blockchainProof.networkName} ({blockchainProof.chainId})
-                    </span>
-                  </div>
-                )}
-                <div className="flex items-center justify-between">
-                  <span className="text-neutral-500">Verified:</span>
-                  <span className="text-neutral-700">
-                    {formatTimestamp(blockchainProof.verificationTimestamp)}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Description */}
-        {verification.description && (
-          <p className="text-xs text-neutral-500">{verification.description}</p>
-        )}
-      </div>
-    );
-
-  // Premium variant with enhanced styling
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }
-      animate={{ opacity: 1, y: 0 }
-      className={bg-white rounded-xl shadow-soft border border-neutral-200 p-4 ${className}}
+  const 
+  <Badge
+      varian}
+      size={size}
+      className={className}
+      icon={
+        verificationSta? (
+          <motion.div
+      0 }}
+    
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center space-x-2">
-          <div className={p-2 rounded-lg ${
-            verification.color === 'success' ? 'bg-green-100' :
-            verification.color === 'error' ? 'bg-red-100' :
-            verification.color === 'warning' ? 'bg-yellow-100' :
-            'bg-blue-100'
-          }}>
-            {isVerifying ? (
-              <motion.div
-                animate={{ rotate: 360 }
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }
-              >
-                <Clock className={h-5 w-5 ${
-                  verification.color === 'success' ? 'text-green-600' :
-                  verification.color === 'error' ? 'text-red-600' :
-                  verification.color === 'warning' ? 'text-yellow-600' :
-                  'text-blue-600'
-                }} />
-              </motion.div>
-            ) : (
-              <IconComponent className={h-5 w-5 ${
-                verification.color === 'success' ? 'text-green-600' :
-                verification.color === 'error' ? 'text-red-600' :
-                verification.color === 'warning' ? 'text-yellow-600' :
-                'text-blue-600'
-              }} />
-            )}
-          </div>
-          <div>
-            <h3 className="font-semibold text-neutral-900">{verification.label}</h3>
-            <p className="text-sm text-neutral-500">{verification.description}</p>
-          </div>
-        </div>
+            <IconComponent className="w-3 h-3" />
+          </motion.div>
+     (
+/>
+        )
+      }
+    >
+text}
+    </Badge>
+  );
 
-        {verificationResult?.onChain && (
-          <div className="flex items-center space-x-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-200">
-            <Zap className="h-3 w-3" />
-            <span className="font-medium">Blockchain</span>
-          </div>
-        )}
+  const renderDetailedBadge = () => (
+    <motion.div
+    
+
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+
+      <div className="flex iteace-x-2">
+        {verding' ? (
+          <m.div
+            animate={{ rotate: 360 }}
+            transit
+          >
+       } />
+          </motion.div>
+        ) : (
+      
+)}
+        <span className={`text->
+          {s
+        </span>
       </div>
 
-      {/* Blockchain Proof Details */}
-      {blockchainProof && (
-        <div className="space-y-2 pt-3 border-t border-neutral-200">
-          <div className="flex items-center space-x-2 text-sm font-medium text-neutral-700">
-            <LinkIcon className="h-4 w-4" />
-            <span>Blockchain Proof</span>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2 text-xs">
-            {blockchainProof.transactionHash && (
-              <div className="flex items-center justify-between bg-neutral-50 px-2 py-1 rounded">
-                <span className="text-neutral-500">Transaction:</span>
-                <button
-                  onClick={() => openBlockExplorer(blockchainProof.transactionHash!)}
-                  className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 font-mono"
-                >
-                  <span>{formatAddress(blockchainProof.transactionHash)}</span>
-                  <ExternalLink className="h-3 w-3" />
-                </button>
-              </div>
-            )}
-            {blockchainProof.blockNumber && (
-              <div className="flex items-center justify-between bg-neutral-50 px-2 py-1 rounded">
-                <span className="text-neutral-500">Block Number:</span>
-                <span className="font-mono text-neutral-700">#{blockchainProof.blockNumber}</span>
-              </div>
-            )}
-            <div className="flex items-center justify-between bg-neutral-50 px-2 py-1 rounded">
-              <span className="text-neutral-500">Verified:</span>
-              <span className="text-neutral-700">
-                {formatTimestamp(blockchainProof.verificationTimestamp)}
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Manual Verification */}
-      {!isVerifying && !verificationResult && tokenId && (
-        <div className="pt-3 border-t border-neutral-200">
+      {verificationStatus === 'verified' && bl(
+        <div className="flex items-center s>
           <button
-            onClick={handleVerification}
-            className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+         
+            clas
           >
-            <Eye className="h-4 w-4" />
-            <span>Verify on Blockchain</span>
+            Details
           </button>
-        </div>
+          <a
+            href={blockchainProof.explorerUrl}
+            target="_blank"
+            rel="no
+            className={`${statusConfig.color} hover:oity`}
+          >
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </dv>
       )}
     </motion.div>
   );
+
+  const renderPremiumBadge = () => (
+    <div className={`resName}`}>
+      <motion.div
+        className={`inline-flex items-cente
+        initial={{ opacity: 0, y: 10 }}
+        anima y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="f">
+          <d
+            {verificationStatus === 'pending
+              <motion.div
+                ani0 }}
+                transition={{ duration: 1,' }}
+              >
+             `} />
+              </motion.div>
+            ) : (
+              <IconCo />
+            
+          </div>
+ <div>
+            <div className={`text-sm fon
+              {statusConf.text}
+            </div>
+            <div classN>
+              Token #{tokenId}
+            </div>
+          </div>
+        </div>
+
+        {verificationStatus === 'verified' && blockchainProof && (
+          <div className="flex items-center space-x-2">
+            <button
+              onClic}
+
+            >
+              <Info className="w-3 h-3" />
+              <span>Proof</span>
+            </button>
+            <a
+              href={blockchainProof.explorerUrl}
+              target="_blank"
+              rel="nor"
+              className={`${statusConfig.color} hover:opacity-75 transition-opacity`}
+            >
+              <ExternalLink c>
+            </a>
+          </div>
+        )}
+      </motion.div>
+
+      <AnimatePresence>
+        {isExpanded && b (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="absolute top-full left-0 right-0 mt-2 p-4 
+          >
+            <div className=t-xs">
+              <div class
+                <s</span>
+                <span className="font-mono">{bloc.</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Block:<an>
+                <span className="font-mono">#{blockchainProof.blockNumber}</span>
+              </div>
+              <div class
+                <s/span>
+                <span>{blockchainProof.networkName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Verified:</span>
+                <span>{ne
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+  );
+
+  switch (variant) {
+    case 'd':
+      returnadge();
+    ca
+
+    case 'minimal':
+    defaul
+      return re;
+  }
 };
 
-export default VerificationBadge;
-}
-}
+exporge;ationBadt Verifict defaul

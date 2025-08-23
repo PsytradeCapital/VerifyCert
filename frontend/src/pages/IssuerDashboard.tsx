@@ -11,11 +11,13 @@ interface ExtendedDashboardStats extends DashboardStats {
   previousMonth: number;
   previousWeek: number;
   growthRate: number;
+}
 
 interface WalletState {
   isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
+}
 
 export default function IssuerDashboard() {
   const { user, isAuthenticated } = useAuth();

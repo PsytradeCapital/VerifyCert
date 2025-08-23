@@ -14,6 +14,7 @@ export interface Certificate {
   isValid: boolean;
   qrCodeURL?: string;
   verificationURL?: string;
+}
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -22,6 +23,7 @@ interface CertificateCardProps {
   className?: string;
   onDownload?: () => void;
   onShare?: () => void;
+}
 
 export default function CertificateCard({ 
   certificate, 

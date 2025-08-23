@@ -9,10 +9,7 @@ import { useThemeContext } from '../../contexts/ThemeContext';
 import { Theme } from '../../styles/tokens';
 
 interface ThemeToggleProps {
-}
-}
-}
-  className?: string;
+className?: string;
   showLabel?: boolean;
   variant?: 'button' | 'dropdown' | 'switch';
   size?: 'sm' | 'md' | 'lg';
@@ -207,4 +204,4 @@ export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
 
 export default ThemeToggle;
 }
-}}}
+}}

@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { pwaBrowserTester, PWATestSuite } from '../tests/pwa-browser-tests';
 
 interface TestRunnerProps {
-}
-}
-}
-  onTestComplete?: (results: PWATestSuite) => void;
+onTestComplete?: (results: PWATestSuite) => void;
 
-const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete }) => {
+const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
+}) => {
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState<PWATestSuite | null>(null);
   const [error, setError] = useState<string | null>(null);

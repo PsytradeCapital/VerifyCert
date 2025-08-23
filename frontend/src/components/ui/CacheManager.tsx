@@ -13,12 +13,10 @@ import {
 import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWorker';
 
 interface CacheManagerProps {
-}
-}
-}
-  className?: string;
+className?: string;
 
-export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) => {
+export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
+}) => {
   const [swState, swActions] = useServiceWorker();
   const { canInstall, isInstalled, installPWA } = usePWAInstallation();
   const [isClearing, setIsClearing] = useState(false);
@@ -217,4 +215,5 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) =>
 };
 
 export default CacheManager;
-}}}}
+}
+}}}

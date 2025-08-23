@@ -19,10 +19,7 @@ import {
 import { getBlockchainService } from '../../../services/blockchainService';
 
 export interface BlockchainProofIndicatorProps {
-}
-}
-}
-  tokenId: string;
+tokenId: string;
   transactionHash?: string;
   blockNumber?: string;
   contractAddress?: string;
@@ -380,4 +377,4 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
 
 export default BlockchainProofIndicator;
 }
-}}}
+}}}}}}

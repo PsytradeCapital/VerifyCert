@@ -2,17 +2,14 @@ import React from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface LoadingSpinnerProps {
-}
-}
-}
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'white' | 'gray';
   className?: string;
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   size = 'md', 
   color = 'primary',
-  className = '' 
+  className = ''
 }) => {
   const sizeClasses = {
     sm: 'h-4 w-4',
@@ -37,3 +34,4 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 };
 
 export default LoadingSpinner;
+}

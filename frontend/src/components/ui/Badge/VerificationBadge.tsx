@@ -16,10 +16,7 @@ import { Badge } from './Badge';
 import { getBlockchainService, VerificationResult } from '../../../services/blockchainService';
 
 export interface VerificationBadgeProps {
-}
-}
-}
-  tokenId: string;
+tokenId: string;
   isValid?: boolean;
   isRevoked?: boolean;
   showDetails?: boolean;
@@ -29,9 +26,7 @@ export interface VerificationBadgeProps {
   className?: string;
 
 interface BlockchainProof {
-}
-}
-}
+}}}
   transactionHash?: string;
   blockNumber?: string;
   contractAddress?: string;
@@ -430,4 +425,4 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
 
 export default VerificationBadge;
 }
-}}}}}}
+}}}}}}}}}

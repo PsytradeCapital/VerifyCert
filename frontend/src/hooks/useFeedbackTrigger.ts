@@ -3,10 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface FeedbackTriggerConfig {
-}
-}
-}
-  // Automatic triggers
+// Automatic triggers
   timeOnPage?: number; // milliseconds
   scrollPercentage?: number; // 0-100
   exitIntent?: boolean;
@@ -21,9 +18,7 @@ interface FeedbackTriggerConfig {
   context?: string;
 
 interface FeedbackTriggerState {
-}
-}
-}
+}}}
   shouldShow: boolean;
   category: 'navigation' | 'visual-design' | 'overall-experience';
   context: string;
@@ -169,4 +164,4 @@ export const useErrorFeedback = (error: Error | null) => {
   });
 };
 }
-}}}
+}}

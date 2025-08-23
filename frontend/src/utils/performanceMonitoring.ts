@@ -4,10 +4,7 @@ import React from 'react';
  */
 
 interface PerformanceMetric {
-}
-}
-}
-  name: string;
+name: string;
   startTime: number;
   endTime?: number;
   duration?: number;
@@ -27,7 +24,7 @@ class PerformanceMonitor {
         list.getEntries().forEach((entry) => {
           if (entry.entryType === 'resource') {
             this.recordResourceLoad(entry as PerformanceResourceTiming);
-        });
+}});
       });
 
       try {
@@ -279,4 +276,4 @@ if (process.env.NODE_ENV === 'development') {
 
 
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

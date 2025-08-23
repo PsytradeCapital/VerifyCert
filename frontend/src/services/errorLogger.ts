@@ -2,10 +2,7 @@ import React from 'react';
 import { ErrorInfo } from 'react';
 
 export interface ErrorReport {
-}
-}
-}
-  message: string;
+message: string;
   stack?: string;
   componentStack?: string;
   timestamp: string;
@@ -27,7 +24,7 @@ class ErrorLogger {
     window.addEventListener('online', () => {
       this.isOnline = true;
       this.flushErrorQueue();
-    });
+}});
     
     window.addEventListener('offline', () => {
       this.isOnline = false;
@@ -286,4 +283,4 @@ export const logValidationError = (error: Error, formData: Record<string, any>, 
   errorLogger.logValidationError(error, formData, fieldName);
 };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

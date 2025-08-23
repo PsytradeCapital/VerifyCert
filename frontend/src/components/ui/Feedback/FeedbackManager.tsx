@@ -3,10 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { FeedbackAnimation } from './FeedbackAnimations';
 
 export interface FeedbackItem {
-}
-}
-}
-  id: string;
+id: string;
   type: 'success' | 'error' | 'warning' | 'info' | 'loading';
   message: string;
   duration?: number;
@@ -16,17 +13,14 @@ export interface FeedbackItem {
   action?: {
     label: string;
     onClick: () => void;
-  };
+}};
   // Special animation options
   shake?: boolean;
   confetti?: boolean;
   progress?: number;
 
 interface FeedbackContextType {
-}
-}
-}
-  feedbacks: FeedbackItem[];
+feedbacks: FeedbackItem[];
   showFeedback: (feedback: Omit<FeedbackItem, 'id'>) => string;
   showSuccess: (message: string, options?: Partial<FeedbackItem>) => string;
   showError: (message: string, options?: Partial<FeedbackItem>) => string;
@@ -47,7 +41,7 @@ export const useFeedback = () => {
   if (!context) {
     throw new Error('useFeedback must be used within a FeedbackProvider');
   return context;
-};
+}};
 
 export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
@@ -282,4 +276,4 @@ const FeedbackRenderer: React.FC<{
 
 export default FeedbackProvider;
 }
-}}
+}}}}}}

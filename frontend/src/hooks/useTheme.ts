@@ -12,10 +12,7 @@ const THEME_STORAGE_KEY = 'verifycert-theme';
 
 // Theme context type
 export interface ThemeContextType {
-}
-}
-}
-  theme: Theme;
+theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   tokens: any;
@@ -41,7 +38,7 @@ export const useTheme = (): ThemeContextType => {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
         if (mediaQuery && mediaQuery.matches) {
           return 'light';
-    } catch (error) {
+}} catch (error) {
       // Fallback for environments where matchMedia is not available or throws
       console.warn('matchMedia not available, defaulting to dark theme');
     
@@ -185,4 +182,4 @@ export const getThemeClasses = (theme: Theme) => ({
   shadow: theme === 'dark' ? 'shadow-2xl shadow-black/50' : 'shadow-lg'
 });
 }
-}}}}}}}}
+}}}}}}}}}}

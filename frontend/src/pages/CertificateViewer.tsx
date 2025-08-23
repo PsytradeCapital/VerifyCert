@@ -4,10 +4,7 @@ import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
 
 interface CertificateViewerState {
-}
-}
-}
-  certificate: Certificate | null;
+certificate: Certificate | null;
   isLoading: boolean;
   error: string | null;
   isVerifying: boolean;
@@ -19,7 +16,7 @@ interface CertificateViewerState {
     transactionHash?: string;
     blockNumber?: string;
     contractAddress?: string;
-  } | null;
+}} | null;
 }
 
 export default function CertificateViewer(): JSX.Element {

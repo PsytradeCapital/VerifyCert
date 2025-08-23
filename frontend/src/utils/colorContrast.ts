@@ -104,10 +104,7 @@ export function getContrastGrade(foreground: string, background: string): {
  * Color combination interface
  */
 export interface ColorCombination {
-}
-}
-}
-  name: string;
+name: string;
   foreground: string;
   background: string;
   usage: string;
@@ -127,7 +124,7 @@ export function getCriticalColorCombinations(theme: Theme = 'light'): ColorCombi
       background: colors.primary[500],
       usage: 'Primary button text on primary background',
       theme,
-    },
+}},
     {
       name: 'Primary Button Hover',
       foreground: colors.primary[50],
@@ -477,4 +474,4 @@ export const contrastChecker = {
   suggestColorImprovements,
 };
 }
-}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}

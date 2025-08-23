@@ -11,16 +11,14 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Theme provider props
 interface ThemeProviderProps {
-}
-}
-}
-  children: ReactNode;
+children: ReactNode;
 
 /**
  * Theme Provider Component
  * Wraps the application to provide theme context
  */
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children
+}) => {
   const themeValue = useTheme();
 
   return (

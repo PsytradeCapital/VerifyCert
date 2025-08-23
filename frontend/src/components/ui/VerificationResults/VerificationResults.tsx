@@ -4,10 +4,7 @@ import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import Card from '../Card/Card';
 
 export interface VerificationResult {
-}
-}
-}
-  id: string;
+id: string;
   status: 'verified' | 'error' | 'pending';
   message?: string;
   certificate?: {
@@ -17,13 +14,10 @@ export interface VerificationResult {
     institution: string;
     issueDate: string;
     isValid: boolean;
-  };
+}};
 
 export interface VerificationResultsProps {
-}
-}
-}
-  result: VerificationResult;
+result: VerificationResult;
   onShare?: () => void;
   onDownload?: () => void;
   className?: string;
@@ -135,4 +129,5 @@ export const VerificationResults: React.FC<VerificationResultsProps> = ({
     </motion.div>
   );
 };
-}}}
+}
+}

@@ -1,10 +1,7 @@
 import React from 'react';
 // Validation animation utilities
 export interface ValidationAnimationConfig {
-}
-}
-}
-  duration: number;
+duration: number;
   easing: string;
   delay: number;
 
@@ -12,7 +9,7 @@ export const defaultAnimationConfig: ValidationAnimationConfig = {
   duration: 300,
   easing: 'ease-in-out',
   delay: 0
-};
+}};
 
 export const validationAnimationClasses = {
   errorShake: 'animate-shake',
@@ -90,4 +87,4 @@ export const validationSequences = {
 };
 
 }
-}}}
+}}}}

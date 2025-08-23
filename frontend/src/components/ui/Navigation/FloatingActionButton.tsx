@@ -5,10 +5,7 @@ import { useNavigation } from '../../../contexts/NavigationContext';
 import { fabInteractions } from '../../../utils/interactionAnimations';
 
 export interface FloatingActionButtonProps {
-}
-}
-}
-  icon: React.ReactNode;
+icon: React.ReactNode;
   label?: string;
   href?: string;
   onClick?: () => void;
@@ -159,4 +156,4 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
 
 export default FloatingActionButton;
 }
-}}}
+}}}}

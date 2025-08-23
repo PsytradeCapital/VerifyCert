@@ -3,19 +3,14 @@ import { performanceMonitor } from '../../../utils/performanceMonitoring';
 import Card from '../Card/Card';
 
 interface PerformanceMetric {
-}
-}
-}
-  name: string;
+name: string;
   startTime: number;
   endTime?: number;
   duration?: number;
   metadata?: Record<string, any>;
 
 interface PerformanceSummary {
-}
-}
-}
+}}}
   total: number;
   components: {
     count: number;
@@ -287,4 +282,4 @@ export const PerformanceDashboard: React.FC = () => {
 };
 
 export default PerformanceDashboard;
-}}}}
+}

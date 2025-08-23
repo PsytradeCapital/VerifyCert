@@ -3,18 +3,13 @@ import { useEffect, useCallback, useRef } from 'react';
 import { useNavigation } from '../contexts/NavigationContext';
 
 export interface NavigationTransitionOptions {
-}
-}
-}
-  enablePreloading?: boolean;
+enablePreloading?: boolean;
   enableStaggeredAnimations?: boolean;
   customDuration?: number;
   customEasing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
 
 export interface NavigationTransitionState {
-}
-}
-}
+}}}
   isTransitioning: boolean;
   transitionDirection: 'forward' | 'backward' | 'none';
   transitionProgress: number;
@@ -181,4 +176,4 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
 
 export default useNavigationTransitions;
 }
-}}}}}}}}}}
+}}}}}}}}}}}}}

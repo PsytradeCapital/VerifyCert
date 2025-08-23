@@ -1,15 +1,9 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
-}
-}
-}
-  children: ReactNode;
+children: ReactNode;
 
 interface State {
-}
-}
-}
   hasError: boolean;
 
 export default class BlockchainErrorBoundary extends Component<Props, State> {
@@ -41,4 +35,4 @@ export default class BlockchainErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
 }
-}}}
+}}}}

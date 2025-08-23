@@ -3,10 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { routeConfig, matchRoute } from '../config/routes';
 
 export interface NavigationItem {
-}
-}
-}
-  id: string;
+id: string;
   label: string;
   icon?: React.ReactNode;
   href: string;
@@ -17,9 +14,6 @@ export interface NavigationItem {
   public?: boolean;
 
 export interface NavigationState {
-}
-}
-}
   // Current navigation state
   currentPath: string;
   currentRoute: string;
@@ -53,10 +47,7 @@ export interface NavigationState {
   pendingNavigation: string | null;
 
 export interface NavigationActions {
-}
-}
-}
-  // Navigation actions
+// Navigation actions
   navigateTo: (path: string) => void;
   goBack: () => void;
   goForward: () => void;
@@ -88,19 +79,13 @@ export interface NavigationActions {
   setTransitionEasing: (easing: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear') => void;
 
 export interface NavigationContextType {
-}
-}
-}
   state: NavigationState;
   actions: NavigationActions;
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
 
 export interface NavigationProviderProps {
-}
-}
-}
-  children: ReactNode;
+children: ReactNode;
   initialItems?: NavigationItem[];
   isWalletConnected?: boolean;
 
@@ -485,5 +470,3 @@ export const useNavigation = (): NavigationContextType => {
 };
 
 export default NavigationContext;
-}
-}}}}}}}}

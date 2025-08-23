@@ -1,10 +1,7 @@
 import React from 'react';
 
 interface SkeletonLoaderProps {
-}
-}
-}
-  variant?: 'text' | 'rectangular' | 'circular' | 'card';
+variant?: 'text' | 'rectangular' | 'circular' | 'card';
   width?: string | number;
   height?: string | number;
   lines?: number;
@@ -113,4 +110,5 @@ export const DashboardSkeleton: React.FC = () => (;
 );
 
 export default SkeletonLoader;
-}}}
+}
+}}

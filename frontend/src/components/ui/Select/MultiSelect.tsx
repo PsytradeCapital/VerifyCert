@@ -3,10 +3,7 @@ import { designTokens } from '../../../styles/tokens';
 import { SelectOption } from './Select';
 
 export interface MultiSelectProps {
-}
-}
-}
-  options: SelectOption[];
+options: SelectOption[];
   value?: string[];
   onChange?: (value: string[]) => void;
   placeholder?: string;
@@ -334,4 +331,4 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
 export default MultiSelect;
 }
-}}}}}}}
+}}}}}}}}}}

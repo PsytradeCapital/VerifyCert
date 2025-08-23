@@ -1,20 +1,17 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface User {
-}
-}
-}
   id: string;
   name: string;
   email: string;
+  role: string;
+  isVerified: boolean;
 }
 
 interface AuthContextType {
-}
-}
-}
   isAuthenticated: boolean;
   user: User | null;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (data: any) => Promise<void>;
@@ -34,20 +31,29 @@ export const useAuth = () => {
 };
 
 interface AuthProviderProps {
-}
-}
-}
   children: ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = async (email: string, password: string) => {
-    // Mock login - replace with actual authentication
-    setIsAuthenticated(true);
-    setUser({ id: '1', name: 'Demo User', email });
+    setIsLoading(true);
+    try {
+      // Mock login - replace with actual authentication
+      setIsAuthenticated(true);
+      setUser({ 
+        id: '1', 
+        name: 'Demo User', 
+        email, 
+        role: 'user',
+        isVerified: true 
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logout = () => {
@@ -56,30 +62,57 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const register = async (data: any) => {
-    // Mock register - replace with actual implementation
-    console.log('Register:', data);
+    setIsLoading(true);
+    try {
+      // Mock register - replace with actual implementation
+      console.log('Register:', data);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const verifyOTP = async (code: string) => {
-    // Mock OTP verification - replace with actual implementation
-    console.log('Verify OTP:', code);
-    setIsAuthenticated(true);
-    setUser({ id: '1', name: 'Demo User', email: 'demo@example.com' });
+    setIsLoading(true);
+    try {
+      // Mock OTP verification - replace with actual implementation
+      console.log('Verify OTP:', code);
+      setIsAuthenticated(true);
+      setUser({ 
+        id: '1', 
+        name: 'Demo User', 
+        email: 'demo@example.com',
+        role: 'user',
+        isVerified: true 
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const resendOTP = async () => {
-    // Mock resend OTP - replace with actual implementation
-    console.log('Resend OTP');
+    setIsLoading(true);
+    try {
+      // Mock resend OTP - replace with actual implementation
+      console.log('Resend OTP');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const forgotPassword = async (emailOrPhone: string) => {
-    // Mock forgot password - replace with actual implementation
-    console.log('Forgot password:', emailOrPhone);
+    setIsLoading(true);
+    try {
+      // Mock forgot password - replace with actual implementation
+      console.log('Forgot password:', emailOrPhone);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const value = {
     isAuthenticated,
     user,
+    isLoading,
     login,
     logout,
     register,

@@ -2,16 +2,14 @@ import { useCallback } from 'react';
 import toast from 'react-hot-toast';
 
 interface FeedbackOptions {
-}
-}
-}
-  showConfetti?: boolean;
+showConfetti?: boolean;
   position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
   shake?: boolean;
   duration?: number;
 
 export const useFeedbackAnimations = () => {
-  const showSuccess = useCallback((message: string, options: FeedbackOptions = {}) => {
+  const showSuccess = useCallback((message: string, options: FeedbackOptions = {
+}) => {
     const { showConfetti = false, position = 'top-center', duration = 4000 } = options;
     
     toast.success(message, {
@@ -107,4 +105,4 @@ export const useFeedbackAnimations = () => {
   };
 };
 }
-}}}}}}}}
+}}}}}}}}}}}

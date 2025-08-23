@@ -3,10 +3,7 @@ import { motion } from 'framer-motion';
 import { pageVariants, pageTransition } from '../../../utils/motion';
 
 export interface PageTransitionProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   className?: string;
   /**
    * Custom animation variants to override default page transitions
@@ -38,3 +35,4 @@ const PageTransition: React.FC<PageTransitionProps> = ({
 };
 
 export default PageTransition;
+}

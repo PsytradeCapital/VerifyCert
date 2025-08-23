@@ -4,22 +4,16 @@ import { Button } from '../Button/Button';
 import { ThemeToggle } from '../ThemeToggle';
 
 export interface UserMenuProps {
-}
-}
-}
-  user?: {
+user?: {
     name: string;
     email: string;
     avatar?: string;
-  };
+}};
   onSignOut?: () => void;
   onProfile?: () => void;
 
 export interface HeaderProps {
-}
-}
-}
-  title?: string;
+title?: string;
   showSidebarToggle?: boolean;
   sidebarCollapsed?: boolean;
   isMobile?: boolean;

@@ -2,10 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface SkeletonProps {
-}
-}
-}
-  variant?: 'text' | 'rectangular' | 'circular' | 'rounded';
+variant?: 'text' | 'rectangular' | 'circular' | 'rounded';
   width?: string | number;
   height?: string | number;
   lines?: number;
@@ -151,4 +148,4 @@ export const FormSkeleton: React.FC = () => (;
 
 export default Skeleton;
 }
-}}}
+}}}}

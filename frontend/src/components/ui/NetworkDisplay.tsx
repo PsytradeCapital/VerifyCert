@@ -2,17 +2,14 @@ import React from 'react';
 import { AMOY_NETWORK, getBlockExplorerUrl } from '../../config/networks';
 
 interface NetworkDisplayProps {
-}
-}
-}
-  chainId?: number;
+chainId?: number;
   contractAddress?: string;
   className?: string;
 
 export const NetworkDisplay: React.FC<NetworkDisplayProps> = ({ 
   chainId = AMOY_NETWORK.chainId, 
   contractAddress = AMOY_NETWORK.contractAddress,
-  className = '' 
+  className = ''
 }) => {
   const explorerUrl = getBlockExplorerUrl(chainId, 'address', contractAddress);
   const faucetUrl = AMOY_NETWORK.faucetUrl;
@@ -63,3 +60,4 @@ export const NetworkDisplay: React.FC<NetworkDisplayProps> = ({
     </div>
   );
 };
+}

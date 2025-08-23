@@ -4,17 +4,14 @@ import { BarChart3, TrendingUp, Users, Award, Calendar } from 'lucide-react';
 import Card from '../Card/Card';
 
 export interface AnalyticsData {
-}
-}
-}
-  totalCertificates: number;
+totalCertificates: number;
   totalInstitutions: number;
   totalRecipients: number;
   verificationRate: number;
   monthlyIssuance: Array<{
     month: string;
     count: number;
-  }>;
+}}>;
   topInstitutions: Array<{
     name: string;
     count: number;
@@ -22,10 +19,7 @@ export interface AnalyticsData {
   }>;
 
 interface CertificateAnalyticsProps {
-}
-}
-}
-  data: AnalyticsData;
+data: AnalyticsData;
   className?: string;
 
 export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
@@ -185,4 +179,5 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
     </div>
   );
 };
-}}}
+}
+}

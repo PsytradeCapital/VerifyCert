@@ -6,15 +6,12 @@ import { OptimizedImage } from './OptimizedImage';
  * Lazy-loaded logo component
  */
 interface LazyLogoProps {
-}
-}
-}
-  className?: string;
+className?: string;
   alt?: string;
 
 export const LazyLogo: React.FC<LazyLogoProps> = ({ 
   className = "h-8 w-auto", 
-  alt = "VerifyCert Logo" 
+  alt = "VerifyCert Logo"
 }) => {
   return (
     <OptimizedImage
@@ -48,15 +45,12 @@ export const LazyLogo: React.FC<LazyLogoProps> = ({
  * Lazy-loaded screenshot component for PWA
  */
 interface LazyScreenshotProps {
-}
-}
-}
-  type: 'narrow' | 'wide';
+type: 'narrow' | 'wide';
   className?: string;
 
 export const LazyScreenshot: React.FC<LazyScreenshotProps> = ({ 
   type, 
-  className = "w-full h-auto rounded-lg shadow-lg" 
+  className = "w-full h-auto rounded-lg shadow-lg"
 }) => {
   const src = type === 'narrow' ? '/screenshot-narrow.png' : '/screenshot-wide.png';
   
@@ -105,15 +99,12 @@ export const LazyScreenshot: React.FC<LazyScreenshotProps> = ({
  * Lazy-loaded icon component for PWA icons
  */
 interface LazyIconProps {
-}
-}
-}
-  size: 192 | 512;
+size: 192 | 512;
   className?: string;
 
 export const LazyIcon: React.FC<LazyIconProps> = ({ 
   size, 
-  className = "w-16 h-16 rounded-lg" 
+  className = "w-16 h-16 rounded-lg"
 }) => {
   return (
     <OptimizedImage
@@ -156,10 +147,7 @@ export const LazyIcon: React.FC<LazyIconProps> = ({
  * Generic lazy image with common patterns
  */
 interface LazyImageWithPlaceholderProps {
-}
-}
-}
-  src: string;
+src: string;
   alt: string;
   className?: string;
   aspectRatio?: 'square' | 'video' | 'photo';
@@ -213,4 +201,5 @@ export const LazyImageWithPlaceholder: React.FC<LazyImageWithPlaceholderProps> =
     />
   );
 };
-}}}}
+}
+}}}

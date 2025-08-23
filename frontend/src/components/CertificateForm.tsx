@@ -3,10 +3,7 @@ import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
 
 export interface CertificateFormData {
-}
-}
-}
-  recipientAddress: string;
+recipientAddress: string;
   recipientName: string;
   courseName: string;
   institutionName: string;
@@ -14,9 +11,7 @@ export interface CertificateFormData {
   description?: string;
 
 interface CertificateFormProps {
-}
-}
-}
+}}}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
   walletAddress?: string | null;
@@ -24,10 +19,7 @@ interface CertificateFormProps {
   className?: string;
 
 interface FormErrors {
-}
-}
-}
-  recipientAddress?: string;
+recipientAddress?: string;
   recipientName?: string;
   courseName?: string;
   institutionName?: string;
@@ -42,7 +34,7 @@ export default function CertificateForm(): JSX.Element {
     institutionName: '',
     issueDate: new Date().toISOString().split('T')[0], // Today's date
     description: '',
-  });
+}});
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -426,4 +418,4 @@ export default function CertificateForm(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}

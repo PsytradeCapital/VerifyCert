@@ -2,10 +2,7 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveGridProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   columns?: 1 | 2 | 3 | 4 | 6 | 12;
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
@@ -15,7 +12,7 @@ export interface ResponsiveGridProps {
     md?: 1 | 2 | 3 | 4 | 6 | 12;
     lg?: 1 | 2 | 3 | 4 | 6 | 12;
     xl?: 1 | 2 | 3 | 4 | 6 | 12;
-  };
+}};
 
 const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   children,

@@ -2,28 +2,20 @@ import React from 'react';
 import { CertificateData } from './blockchainService';
 
 export interface ShareOptions {
-}
-}
-}
-  method?: 'native' | 'clipboard' | 'social';
+method?: 'native' | 'clipboard' | 'social';
   platform?: 'twitter' | 'linkedin' | 'facebook' | 'email' | 'copy';
   customMessage?: string;
   includeQR?: boolean;
 
 export interface DownloadOptions {
-}
-}
-}
+}}}
   format?: 'png' | 'pdf' | 'json';
   quality?: number;
   includeQR?: boolean;
   includeVerificationInfo?: boolean;
 
 export interface CertificateTemplate {
-}
-}
-}
-  width: number;
+width: number;
   height: number;
   backgroundColor: string;
   borderColor: string;
@@ -41,7 +33,7 @@ const DEFAULT_TEMPLATE: CertificateTemplate = {
   titleFont: 'bold 48px Inter, Arial, sans-serif',
   bodyFont: '24px Inter, Arial, sans-serif',
   accentColor: '#1d4ed8'
-};
+}};
 
 class CertificateService {
   /**
@@ -385,4 +377,4 @@ const certificateService = new CertificateService();
 
 export default certificateService;
 }
-}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}

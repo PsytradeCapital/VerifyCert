@@ -2,16 +2,14 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveUtilityProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   className?: string;
 
 /**
  * Mobile-only component - only renders on mobile devices
  */
-export const MobileOnly: React.FC<ResponsiveUtilityProps> = ({ children, className }) => (
+export const MobileOnly: React.FC<ResponsiveUtilityProps> = ({ children, className
+}) => (
   <div className={cn('mobile-only', className)}>
     {children}
   </div>
@@ -54,10 +52,7 @@ export const HoverOnly: React.FC<ResponsiveUtilityProps> = ({ children, classNam
 );
 
 export interface ResponsiveShowProps {
-}
-}
-}
-  mobile?: React.ReactNode;
+mobile?: React.ReactNode;
   tablet?: React.ReactNode;
   desktop?: React.ReactNode;
   className?: string;
@@ -79,10 +74,7 @@ export const ResponsiveShow: React.FC<ResponsiveShowProps> = ({
 );
 
 export interface SafeAreaProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   sides?: 'all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right';
   className?: string;
 
@@ -161,10 +153,7 @@ export const TouchTarget: React.FC<TouchTargetProps> = ({
 };
 
 export interface MobilePaddingProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   direction?: 'all' | 'x' | 'y';
   className?: string;
 
@@ -190,10 +179,7 @@ export const MobilePadding: React.FC<MobilePaddingProps> = ({
 };
 
 export interface ResponsiveGridProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   mobileCols?: number;
   tabletCols?: number;
   desktopCols?: number;
@@ -243,10 +229,7 @@ export const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
 };
 
 export interface ResponsiveTextProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   mobileSize?: string;
   tabletSize?: string;
   desktopSize?: string;
@@ -276,3 +259,4 @@ export const ResponsiveText: React.FC<ResponsiveTextProps> = ({
   );
 };
 }
+}}}}}}}}

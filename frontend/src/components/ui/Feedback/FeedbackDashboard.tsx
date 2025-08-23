@@ -15,12 +15,10 @@ import { Button } from '../Button/Button';
 import { feedbackService, FeedbackAnalytics, FeedbackData } from '../../../services/feedbackService';
 
 interface FeedbackDashboardProps {
-}
-}
-}
-  className?: string;
+className?: string;
 
-export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className = '' }) => {
+export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className = ''
+}) => {
   const [analytics, setAnalytics] = useState<FeedbackAnalytics | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedPage, setSelectedPage] = useState<string>('all');
@@ -320,4 +318,5 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
     </div>
   );
 };
-}}}}
+}
+}}}

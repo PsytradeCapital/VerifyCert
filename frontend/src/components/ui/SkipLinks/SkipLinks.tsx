@@ -2,16 +2,11 @@ import React from 'react';
 import { focusUtils } from '../../../utils/focusManagement';
 
 interface SkipLink {
-}
-}
-}
-  targetId: string;
+targetId: string;
   label: string;
 
 interface SkipLinksProps {
-}
-}
-}
+}}}
   links?: SkipLink[];
   className?: string;
 
@@ -84,4 +79,4 @@ const SkipLinks: React.FC<SkipLinksProps> = ({
 };
 
 export default SkipLinks;
-}}}}
+}

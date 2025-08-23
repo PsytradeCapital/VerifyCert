@@ -2,10 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface CircularProgressProps {
-}
-}
-}
-  progress: number; // 0-100
+progress: number; // 0-100
   size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   strokeWidth?: number;
@@ -89,3 +86,4 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 };
 
 export default CircularProgress;
+}

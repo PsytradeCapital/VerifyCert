@@ -3,10 +3,7 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface QuickStatsProps {
-}
-}
-}
-  verificationRate?: number;
+verificationRate?: number;
   averageProcessingTime?: string;
   successRate?: number;
   isLoading?: boolean;
@@ -100,4 +97,5 @@ const QuickStats: React.FC<QuickStatsProps> = ({
 };
 
 export default QuickStats;
-}}}
+}
+}}

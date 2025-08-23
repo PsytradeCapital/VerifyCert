@@ -1,9 +1,6 @@
 import React from 'react';
 
 interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-}
-}
-}
   isLoading?: boolean;
   children: React.ReactNode;
 }

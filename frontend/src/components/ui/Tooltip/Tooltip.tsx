@@ -2,10 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface TooltipProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   content: React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: 'hover' | 'click' | 'focus';
@@ -205,4 +202,4 @@ const Tooltip: React.FC<TooltipProps> = ({
 
 export default Tooltip;
 }
-}}}}}}}}}
+}}}}}}}}}}}}

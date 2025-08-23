@@ -4,10 +4,7 @@ import { BottomNavigation, BottomNavItem } from '../Navigation/BottomNavigation'
 import Header, { UserMenuProps } from './Header';
 
 export interface AppLayoutProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   showSidebar?: boolean;
   showBottomNav?: boolean;
   navigationItems?: NavigationItem[];
@@ -209,4 +206,4 @@ const AppLayout: React.FC<AppLayoutProps> = ({
 
 export default AppLayout;
 }
-}}}
+}}}}}

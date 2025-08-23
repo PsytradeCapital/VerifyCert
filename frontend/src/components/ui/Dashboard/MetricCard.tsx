@@ -3,17 +3,14 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface MetricCardProps {
-}
-}
-}
-  title: string;
+title: string;
   value: string | number;
   icon: React.ReactNode;
   trend?: {
     value: number;
     isPositive: boolean;
     label: string;
-  };
+}};
   color?: 'blue' | 'green' | 'yellow' | 'purple' | 'red' | 'indigo';
   description?: string;
   className?: string;

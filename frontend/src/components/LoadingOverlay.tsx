@@ -2,10 +2,7 @@ import React from 'react';
 import LoadingSpinner from './LoadingSpinner';
 
 interface LoadingOverlayProps {
-}
-}
-}
-  isLoading: boolean;
+isLoading: boolean;
   message?: string;
   children: React.ReactNode;
   className?: string;
@@ -33,3 +30,4 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
 };
 
 export default LoadingOverlay;
+}

@@ -2,10 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 export interface BreakpointConfig {
-}
-}
-}
-  xs: number;
+xs: number;
   sm: number;
   md: number;
   lg: number;
@@ -19,15 +16,12 @@ export const defaultBreakpoints: BreakpointConfig = {
   lg: 1024,
   xl: 1280,
   '2xl': 1536,
-};
+}};
 
 export type BreakpointKey = keyof BreakpointConfig;
 
 export interface ResponsiveState {
-}
-}
-}
-  width: number;
+width: number;
   height: number;
   isMobile: boolean;
   isTablet: boolean;
@@ -42,7 +36,7 @@ export function useResponsive(breakpoints: BreakpointConfig = defaultBreakpoints
   const [windowSize, setWindowSize] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 1024,
     height: typeof window !== 'undefined' ? window.innerHeight : 768,
-  });
+}});
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -186,4 +180,4 @@ export function useResponsiveColumns(
 
 export default useResponsive;
 }
-}}}}}
+}}}}}}}}}

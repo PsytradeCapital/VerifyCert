@@ -11,10 +11,7 @@ const isLocalhost = Boolean(
 );
 
 interface ServiceWorkerConfig {
-}
-}
-}
-  onSuccess?: (registration: ServiceWorkerRegistration) => void;
+onSuccess?: (registration: ServiceWorkerRegistration) => void;
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
   onOfflineReady?: () => void;
   onError?: (error: Error) => void;
@@ -29,7 +26,8 @@ export function registerSW(config?: ServiceWorkerConfig) {
       return;
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
+      const swUrl = `${process.env.PUBLIC_URL
+}}/sw.js`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -276,4 +274,4 @@ const serviceWorkerUtils = {
 
 export default serviceWorkerUtils;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

@@ -252,10 +252,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
  * Picture element with WebP and fallback support
  */
 interface ResponsivePictureProps {
-}
-}
-}
-  src: string;
+src: string;
   alt: string;
   className?: string;
   style?: React.CSSProperties;
@@ -264,7 +261,7 @@ interface ResponsivePictureProps {
     media: string;
     src: string;
     sizes?: string;
-  }>;
+}}>;
   webpSources?: boolean;
 
 export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
@@ -355,4 +352,4 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
 
 export default OptimizedImage;
 }
-}}}}}}
+}}}}}}}}

@@ -16,10 +16,7 @@ import { ;;
 } from '../utils/pwaUtils';
 
 interface ServiceWorkerState {
-}
-}
-}
-  isSupported: boolean;
+isSupported: boolean;
   isRegistered: boolean;
   isInstalled: boolean;
   hasUpdate: boolean;
@@ -29,9 +26,7 @@ interface ServiceWorkerState {
   error: string | null;
 
 interface ServiceWorkerActions {
-}
-}
-}
+}}}
   register: () => void;
   update: () => void;
   clearCache: () => Promise<void>;
@@ -298,4 +293,4 @@ export function usePWAInstallation() {
 
 export default useServiceWorker;
 }
-}}}}}}}}}}}
+}}}}}}}}}}}}}}

@@ -2,10 +2,7 @@ import React from 'react';
 import { Certificate } from '../components/CertificateCard';
 
 export interface DemoStats {
-}
-}
-}
-  totalIssued: number;
+totalIssued: number;
   thisMonth: number;
   thisWeek: number;
   activeRecipients: number;
@@ -14,9 +11,7 @@ export interface DemoStats {
   growthRate: number;
 
 export interface DemoActivity {
-}
-}
-}
+}}}
   id: string;
   type: 'issued' | 'verified' | 'revoked';
   title: string;
@@ -26,10 +21,7 @@ export interface DemoActivity {
   certificateId: string;
 
 export interface DemoQuickStats {
-}
-}
-}
-  verificationRate: number;
+verificationRate: number;
   averageProcessingTime: string;
   successRate: number;
 
@@ -40,7 +32,7 @@ export class DemoDataService {
     stats: DemoStats;
     activities: DemoActivity[];
     quickStats: DemoQuickStats;
-  } | null = null;
+}} | null = null;
 
   static getInstance(): DemoDataService {
     if (!DemoDataService.instance) {
@@ -237,4 +229,4 @@ export class DemoDataService {
 
 export const demoDataService = DemoDataService.getInstance();
 }
-}}}}}}
+}}}}}}}}}}}

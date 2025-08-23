@@ -2,10 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { designTokens } from '../../../styles/tokens';
 
 export interface DropdownItem {
-}
-}
-}
-  id: string;
+id: string;
   label: string;
   icon?: React.ReactNode;
   disabled?: boolean;
@@ -13,9 +10,7 @@ export interface DropdownItem {
   onClick?: () => void;
 
 export interface DropdownProps {
-}
-}
-}
+}}}
   trigger: React.ReactNode;
   items: DropdownItem[];
   placement?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
@@ -124,4 +119,4 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 export default Dropdown;
 }
-}}}
+}}}}

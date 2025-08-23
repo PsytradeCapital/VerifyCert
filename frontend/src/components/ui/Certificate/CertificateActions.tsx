@@ -22,10 +22,7 @@ import certificateService, { ShareOptions, DownloadOptions } from '../../../serv
 import { useFeedbackAnimations } from '../../../hooks/useFeedbackAnimations';
 
 export interface CertificateActionsProps {
-}
-}
-}
-  certificate: CertificateData;
+certificate: CertificateData;
   className?: string;
   showLabels?: boolean;
   variant?: 'horizontal' | 'vertical' | 'grid';
@@ -315,4 +312,4 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
 
 export default CertificateActions;
 }
-}}}}
+}}}}}}}

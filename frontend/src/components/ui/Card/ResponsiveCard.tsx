@@ -2,10 +2,7 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveCardProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   className?: string;
   variant?: 'default' | 'elevated' | 'outlined' | 'ghost';
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
@@ -56,3 +53,4 @@ const ResponsiveCard: React.FC<ResponsiveCardProps> = ({
 };
 
 export default ResponsiveCard;
+}

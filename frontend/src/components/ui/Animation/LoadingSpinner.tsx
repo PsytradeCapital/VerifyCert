@@ -1,10 +1,7 @@
 import React from 'react';
 
 export interface LoadingSpinnerProps {
-}
-}
-}
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'white';
   className?: string;
 
@@ -53,3 +50,4 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 };
 
 export default LoadingSpinner;
+}

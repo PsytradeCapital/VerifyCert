@@ -16,10 +16,7 @@ import {
 import { Card, Button, Badge } from '../';
 
 export interface VerificationResultProps {
-}
-}
-}
-  result: {
+result: {
     isValid: boolean;
     isRevoked: boolean;
     onChain: boolean;
@@ -28,7 +25,7 @@ export interface VerificationResultProps {
     blockNumber?: string;
     contractAddress?: string;
     confidence?: number;
-  };
+}};
   certificate?: {
     tokenId: string;
     recipientName: string;
@@ -452,4 +449,4 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
 
 export default VerificationResult;
 }
-}}}
+}}}}

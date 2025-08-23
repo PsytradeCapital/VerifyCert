@@ -4,10 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { matchRoute, routeConfig, RouteConfig } from '../config/routes';
 
 export interface BreadcrumbItem {
-}
-}
-}
-  label: string;
+label: string;
   href?: string;
   active?: boolean;
 
@@ -24,7 +21,8 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
     if (!routeMatch) {
       // If no route config found, create a simple breadcrumb
       return [
-        { label: 'Home', href: '/' },
+        { label: 'Home', href: '/'
+}},
         { label: 'Unknown Page', active: true
       ];
 
@@ -81,4 +79,4 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
 
 export default useBreadcrumbs;
 }
-}}}}
+}}}}}}

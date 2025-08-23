@@ -3,10 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigation } from '../contexts/NavigationContext';
 
 export interface NavigationSyncOptions {
-}
-}
-}
-  syncOnMount?: boolean;
+syncOnMount?: boolean;
   syncOnLocationChange?: boolean;
   autoUpdateActiveItems?: boolean;
 
@@ -15,7 +12,8 @@ export interface NavigationSyncOptions {
  * Useful for keeping navigation state in sync with route changes,
  * external state management, or other navigation systems
  */
-export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
+export const useNavigationSync = (options: NavigationSyncOptions = {
+}) => {
   const {
     syncOnMount = true,
     syncOnLocationChange = true,
@@ -152,4 +150,4 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
 
 export default useNavigationSync;
 }
-}}}}}}}}}}}
+}}}}}}}}}}}}}}

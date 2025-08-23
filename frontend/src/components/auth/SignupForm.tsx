@@ -6,10 +6,7 @@ import { toast } from 'react-hot-toast';
 import { OTPVerificationForm } from './OTPVerificationForm';
 
 interface SignupFormData {
-}
-}
-}
-  name: string;
+name: string;
   email: string;
   phone: string;
   password: string;
@@ -18,7 +15,8 @@ interface SignupFormData {
   region: string;
 
 export const SignupForm: React.FC = () => {
-  const { register } = useAuth();
+  const { register
+}} = useAuth();
   const [formData, setFormData] = useState<SignupFormData>({
     name: '',
     email: '',
@@ -260,4 +258,4 @@ export const SignupForm: React.FC = () => {
   );
 };
 }
-}}}}}}}}
+}}}}}}}}}}

@@ -4,10 +4,7 @@ import React from 'react';
  */
 
 export interface ImageOptimizationOptions {
-}
-}
-}
-  quality?: number;
+quality?: number;
   format?: 'webp' | 'jpeg' | 'png';
   width?: number;
   height?: number;
@@ -24,7 +21,8 @@ export const generateImageSrcSet = (
 ): string => {
   return sizes
     .map(size => {
-      const optimizedSrc = optimizeImageUrl(baseSrc, { width: size, format });
+      const optimizedSrc = optimizeImageUrl(baseSrc, { width: size, format
+}});
       return `${optimizedSrc} ${size}w`;
     })
     .join(', ');
@@ -367,4 +365,4 @@ export const imagePerformanceMonitor = {
   },
 };
 }
-}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}

@@ -4,18 +4,13 @@ import toast from 'react-hot-toast';
 import { generateAriaId } from '../utils/ariaUtils';
 
 interface WalletConnectProps {
-}
-}
-}
-  onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
+onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
   onDisconnect?: () => void;
   requiredNetwork?: string;
   className?: string;
 
 interface WalletState {
-}
-}
-}
+}}}
   isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
@@ -391,4 +386,4 @@ export default function WalletConnect(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}

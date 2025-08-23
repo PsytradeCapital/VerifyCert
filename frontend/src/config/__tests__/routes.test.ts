@@ -146,4 +146,5 @@ describe('routes configuration', () => {
     });
   });
 });
-}}}}
+}
+}}}

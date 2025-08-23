@@ -13,27 +13,19 @@ import { ;;
 } from '../utils/validationAnimations';
 
 export interface UseValidationAnimationOptions {
-}
-}
-}
-  animateOnChange?: boolean;
+animateOnChange?: boolean;
   animationConfig?: ValidationAnimationConfig;
   enableSequence?: boolean;
   debounceMs?: number;
 
 export interface ValidationAnimationRefs {
-}
-}
-}
+}}}
   fieldRef: React.RefObject<HTMLElement>;
   messageRef: React.RefObject<HTMLElement>;
   iconRef: React.RefObject<HTMLElement>;
 
 export interface ValidationAnimationControls {
-}
-}
-}
-  triggerFieldAnimation: (animationType: string) => Promise<void>;
+triggerFieldAnimation: (animationType: string) => Promise<void>;
   triggerMessageAnimation: (animationType: string) => Promise<void>;
   triggerIconAnimation: (animationType: string) => Promise<void>;
   triggerSequence: (validationState: 'error' | 'success' | 'warning') => Promise<void>;
@@ -42,7 +34,8 @@ export interface ValidationAnimationControls {
 
 export const useValidationAnimation = (;
   validationState: 'default' | 'success' | 'error' | 'warning',;;
-  options: UseValidationAnimationOptions = {}
+  options: UseValidationAnimationOptions = {
+}}
 ): ValidationAnimationRefs & ValidationAnimationControls => {
   const {
     animateOnChange = true,
@@ -265,4 +258,4 @@ export const useValidationIconAnimation = (
   };
 };
 }
-}}}}}}}
+}}}}}}}}}}}}

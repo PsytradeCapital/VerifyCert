@@ -1,10 +1,7 @@
 import React from 'react';
 // Region utilities for internationalization
 export interface RegionInfo {
-}
-}
-}
-  code: string;
+code: string;
   name: string;
   phonePrefix: string;
   preferredAuthMethod: 'email' | 'phone';
@@ -19,7 +16,7 @@ const REGIONS: Record<string, RegionInfo> = {
     preferredAuthMethod: 'email',
     timezone: 'America/New_York',
     currency: 'USD'
-  },
+}},
   UK: {
     code: 'UK',
     name: 'United Kingdom',
@@ -84,4 +81,4 @@ export function getCurrencySymbol(regionCode: string): string {
   return currencySymbols[region?.currency || 'USD'] || '$';
 
 }
-}}}}}}}}}}
+}}}}}}}}}}}}

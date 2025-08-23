@@ -243,4 +243,5 @@ describe('FileUpload', () => {
     expect(screen.getByText('Max file size: 1 GB')).toBeInTheDocument();
   });
 });
-}}}}
+}
+}}}

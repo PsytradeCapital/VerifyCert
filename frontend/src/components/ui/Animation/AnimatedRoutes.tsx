@@ -4,10 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import PageTransition from './PageTransition';
 
 export interface AnimatedRoutesProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   /**
    * Whether to enable exit animations when navigating away from routes
    */
@@ -38,3 +35,4 @@ const AnimatedRoutes: React.FC<AnimatedRoutesProps> = ({
 };
 
 export default AnimatedRoutes;
+}

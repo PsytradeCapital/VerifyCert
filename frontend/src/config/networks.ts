@@ -1,10 +1,7 @@
 import React from 'react';
 // Network configuration for VerifyCert
 export interface NetworkConfig {
-}
-}
-}
-  chainId: number;
+chainId: number;
   name: string;
   displayName: string;
   rpcUrl: string;
@@ -14,7 +11,7 @@ export interface NetworkConfig {
     name: string;
     symbol: string;
     decimals: number;
-  };
+}};
   contractAddress: string;
 
 // Amoy Testnet Configuration
@@ -147,4 +144,4 @@ export const getRpcUrl = (chainId?: number): string => {
   return network?.rpcUrl || DEFAULT_NETWORK.rpcUrl;
 };
 }
-}}}}
+}}}}}}

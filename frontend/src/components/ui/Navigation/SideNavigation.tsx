@@ -13,12 +13,10 @@ import {
 } from 'lucide-react';
 
 export interface NavigationItem {
-}
-}
-}
-  id: string;
+id: string;
   label: string;
-  icon: ComponentType<{ className?: string }>;
+  icon: ComponentType<{ className?: string
+}}>;
   path: string;
   badge?: string;
   children?: NavigationItem[];
@@ -26,10 +24,7 @@ export interface NavigationItem {
   active?: boolean;
 
 export interface SideNavigationProps {
-}
-}
-}
-  items?: NavigationItem[];
+items?: NavigationItem[];
   collapsed?: boolean;
   onToggle?: () => void;
   className?: string;
@@ -37,7 +32,8 @@ export interface SideNavigationProps {
   showBranding?: boolean;
 
 const defaultNavigationItems: NavigationItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard' },
+  { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard'
+}},
   { id: 'verify', label: 'Verify Certificate', icon: Shield, path: '/verify' },
   { id: 'certificates', label: 'My Certificates', icon: FileText, path: '/certificates' },
   { id: 'issue', label: 'Issue Certificate', icon: Plus, path: '/issue' },
@@ -332,4 +328,4 @@ export default function SideNavigation(): JSX.Element {
     </nav>
   );
 }
-}}}}}
+}}}}}}}}}

@@ -15,6 +15,7 @@ export const OTPVerificationForm: React.FC = () => {
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
+    }
   }, [timeLeft]);
 
   const formatTime = (seconds: number) => {
@@ -127,4 +128,3 @@ export const OTPVerificationForm: React.FC = () => {
     </AuthLayout>
   );
 };
-}

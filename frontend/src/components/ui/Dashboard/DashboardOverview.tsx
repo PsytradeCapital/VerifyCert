@@ -3,10 +3,7 @@ import { motion } from 'framer-motion';
 import MetricCard from './MetricCard';
 
 export interface DashboardStats {
-}
-}
-}
-  totalIssued: number;
+totalIssued: number;
   thisMonth: number;
   thisWeek: number;
   activeRecipients: number;
@@ -15,9 +12,7 @@ export interface DashboardStats {
   growthRate?: number;
 
 export interface DashboardOverviewProps {
-}
-}
-}
+}}}
   stats: DashboardStats;
   isLoading?: boolean;
   className?: string;
@@ -131,4 +126,4 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 
 export default DashboardOverview;
 }
-}}
+}}}}}

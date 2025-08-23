@@ -5,19 +5,14 @@ import { Button } from "../Button/Button";
 import { Card } from '../Card/Card';
 
 interface UserProfile {
-}
-}
-}
-  name: string;
+name: string;
   email: string;
   institution: string;
   role: string;
   avatar?: string;
 
 interface NotificationSettings {
-}
-}
-}
+}}}
   emailNotifications: boolean;
   pushNotifications: boolean;
   certificateIssued: boolean;
@@ -25,28 +20,20 @@ interface NotificationSettings {
   systemUpdates: boolean;
 
 interface PrivacySettings {
-}
-}
-}
-  profileVisibility: 'public' | 'private' | 'institution';
+profileVisibility: 'public' | 'private' | 'institution';
   showEmail: boolean;
   showInstitution: boolean;
   dataSharing: boolean;
 
 interface AppearanceSettings {
-}
-}
-}
+}}}
   theme: 'light' | 'dark' | 'system';
   language: string;
   dateFormat: string;
   timezone: string;
 
 interface SettingsPanelProps {
-}
-}
-}
-  userProfile: UserProfile;
+userProfile: UserProfile;
   notificationSettings: NotificationSettings;
   privacySettings: PrivacySettings;
   appearanceSettings: AppearanceSettings;
@@ -421,4 +408,4 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   );
 };
 }
-}}
+}

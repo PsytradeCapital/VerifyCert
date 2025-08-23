@@ -2,10 +2,7 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { feedbackService, FeedbackData } from '../services/feedbackService';
 
 interface FeedbackContextType {
-}
-}
-}
-  // State
+// State
   isCollectorOpen: boolean;
   currentCategory: 'navigation' | 'visual-design' | 'overall-experience';
   currentContext: string;
@@ -23,9 +20,6 @@ interface FeedbackContextType {
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
-}
-}
-}
   children: ReactNode;
 
 export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) => {
@@ -99,4 +93,4 @@ export const useFeedback = (): FeedbackContextType => {
     throw new Error('useFeedback must be used within a FeedbackProvider');
   return context;
 };
-}}}
+}

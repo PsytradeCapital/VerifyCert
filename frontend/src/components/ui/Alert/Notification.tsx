@@ -9,10 +9,7 @@ import {
 } from 'lucide-react';
 
 export interface NotificationProps {
-}
-}
-}
-  id?: string;
+id?: string;
   variant?: 'success' | 'error' | 'warning' | 'info';
   title?: string;
   message: string;
@@ -214,4 +211,4 @@ const Notification: React.FC<NotificationProps> = ({
 
 export default Notification;
 }
-}}}}}}
+}}}}}}}}}

@@ -17,12 +17,10 @@ interface ExtendedDashboardStats extends DashboardStats {
 }
 
 interface WalletState {
-}
-}
 isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
-}}
+}}}
 
 export default function IssuerDashboard(): JSX.Element {
   const { user, isAuthenticated } = useAuth();
@@ -424,4 +422,4 @@ export default function IssuerDashboard(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}
+}}}}}}}}}

@@ -2,10 +2,7 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveLayoutProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   className?: string;
   variant?: 'default' | 'centered' | 'wide' | 'narrow';
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
@@ -48,3 +45,4 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
 };
 
 export default ResponsiveLayout;
+}

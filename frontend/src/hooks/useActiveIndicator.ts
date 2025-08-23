@@ -2,16 +2,14 @@ import { useMemo } from 'react';
 import { useNavigation } from '../contexts/NavigationContext';
 
 export interface ActiveIndicatorStyles {
-}
-}
-}
-  containerClasses: string;
+containerClasses: string;
   indicatorClasses: string;
   itemClasses: string;
   transitionClasses: string;
 
 export const useActiveIndicator = (itemId: string, isActive: boolean = false): ActiveIndicatorStyles => {
-  const { state } = useNavigation();
+  const { state
+}} = useNavigation();
   const { 
     activeIndicators, 
     isTransitioning, 
@@ -146,4 +144,4 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
 
 export default useActiveIndicator;
 }
-}}}}
+}}}}}}

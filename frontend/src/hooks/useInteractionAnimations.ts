@@ -7,10 +7,7 @@ import { useReducedMotion } from 'framer-motion';
 import { getInteractionAnimation, interactionPresets } from '../utils/interactionAnimations';
 
 export interface UseInteractionAnimationsOptions {
-}
-}
-}
-  component: string;
+component: string;
   variant?: string;
   disabled?: boolean;
   preset?: 'subtle' | 'pronounced' | 'playful' | 'minimal';
@@ -24,7 +21,7 @@ export const useInteractionAnimations = ({
   preset,
   customAnimations,
   respectReducedMotion = true
-}: UseInteractionAnimationsOptions) => {
+}}: UseInteractionAnimationsOptions) => {
   const shouldReduceMotion = useReducedMotion();
   
   // If user prefers reduced motion and we should respect it, return empty animations
@@ -164,4 +161,4 @@ export const useHoverState = () => {
 
 export default useInteractionAnimations;
 }
-}}}}}}}}}}}
+}}}}}}}}}}}}}

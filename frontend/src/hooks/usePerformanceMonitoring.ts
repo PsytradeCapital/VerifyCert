@@ -3,15 +3,13 @@ import { useEffect, useCallback, useRef } from 'react';
 import { performanceMonitor } from '../utils/performanceMonitoring';
 
 interface UsePerformanceMonitoringOptions {
-}
-}
-}
-  componentName?: string;
+componentName?: string;
   trackRenders?: boolean;
   trackEffects?: boolean;
   warnThreshold?: number;
 
-export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOptions = {}) => {
+export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOptions = {
+}) => {
   const {
     componentName = 'UnknownComponent',
     trackRenders = true,
@@ -218,4 +216,4 @@ export const useRouteMonitoring = () => {
 
 export default usePerformanceMonitoring;
 }
-}}}}}
+}}}}}}}}

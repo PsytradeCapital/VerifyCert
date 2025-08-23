@@ -129,4 +129,3 @@ export interface BundleOptimization {;
   priority: number;
   test: RegExp;
 }
-}}

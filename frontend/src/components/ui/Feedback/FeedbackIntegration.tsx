@@ -6,10 +6,7 @@ import { useFeedbackTrigger, useNavigationFeedback, useVisualDesignFeedback } fr
 import { feedbackService } from '../../../services/feedbackService';
 
 interface FeedbackIntegrationProps {
-}
-}
-}
-  // Display options
+// Display options
   showFloatingButton?: boolean;
   showAutoTrigger?: boolean;
   
@@ -188,4 +185,4 @@ export const useFeedbackIntegration = () => {
   };
 };
 }
-}}}}}
+}}}}}}}}

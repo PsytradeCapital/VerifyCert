@@ -142,4 +142,5 @@ describe('Modal Component', () => {
     });
   });
 });
-}}}
+}
+}}

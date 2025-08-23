@@ -2,26 +2,17 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface ResetPasswordFormProps {
-}
-}
-}
   onSuccess?: () => void;
   onBack?: () => void;
 }
 
 interface FormData {
-}
-}
-}
   code: string;
   newPassword: string;
   confirmPassword: string;
 }
 
 interface FormErrors {
-}
-}
-}
   code?: string;
   newPassword?: string;
   confirmPassword?: string;

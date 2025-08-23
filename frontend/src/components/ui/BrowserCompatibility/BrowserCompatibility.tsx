@@ -7,10 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { detectBrowser, getBrowserCompatibilityScore, getBrowserRecommendations, BrowserInfo } from '../../../utils/browserDetection';
 
 interface BrowserCompatibilityProps {
-}
-}
-}
-  showDetails?: boolean;
+showDetails?: boolean;
   showRecommendations?: boolean;
   minCompatibilityScore?: number;
   className?: string;
@@ -206,4 +203,5 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
 };
 
 export default BrowserCompatibility;
-}}}
+}
+}}

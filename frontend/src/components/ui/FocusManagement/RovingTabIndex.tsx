@@ -2,10 +2,7 @@ import React, { useRef, useEffect, Children, cloneElement, isValidElement } from
 import { useRovingTabIndex } from '../../../hooks/useFocusManagement';
 
 interface RovingTabIndexProps {
-}
-}
-}
-  children: React.ReactNode;
+children: React.ReactNode;
   orientation?: 'horizontal' | 'vertical';
   wrap?: boolean;
   defaultIndex?: number;
@@ -71,4 +68,5 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
 };
 
 export default RovingTabIndex;
-}}}}
+}
+}}}

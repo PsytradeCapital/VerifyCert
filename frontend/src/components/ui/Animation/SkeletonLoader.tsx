@@ -1,10 +1,7 @@
 import React from 'react';
 
 export interface SkeletonLoaderProps {
-}
-}
-}
-  variant?: 'text' | 'rectangular' | 'circular';
+variant?: 'text' | 'rectangular' | 'circular';
   width?: string | number;
   height?: string | number;
   lines?: number;
@@ -64,4 +61,5 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 };
 
 export default SkeletonLoader;
-}}}
+}
+}}

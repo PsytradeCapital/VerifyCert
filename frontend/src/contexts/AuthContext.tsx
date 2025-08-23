@@ -11,6 +11,10 @@ interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  register: (data: any) => Promise<void>;
+  verifyOTP: (code: string) => Promise<void>;
+  resendOTP: () => Promise<void>;
+  forgotPassword: (emailOrPhone: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,11 +46,37 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
   };
 
+  const register = async (data: any) => {
+    // Mock register - replace with actual implementation
+    console.log('Register:', data);
+  };
+
+  const verifyOTP = async (code: string) => {
+    // Mock OTP verification - replace with actual implementation
+    console.log('Verify OTP:', code);
+    setIsAuthenticated(true);
+    setUser({ id: '1', name: 'Demo User', email: 'demo@example.com' });
+  };
+
+  const resendOTP = async () => {
+    // Mock resend OTP - replace with actual implementation
+    console.log('Resend OTP');
+  };
+
+  const forgotPassword = async (emailOrPhone: string) => {
+    // Mock forgot password - replace with actual implementation
+    console.log('Forgot password:', emailOrPhone);
+  };
+
   const value = {
     isAuthenticated,
     user,
     login,
-    logout
+    logout,
+    register,
+    verifyOTP,
+    resendOTP,
+    forgotPassword
   };
 
   return (

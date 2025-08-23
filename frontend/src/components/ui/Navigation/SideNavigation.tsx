@@ -6,9 +6,9 @@ import {
   Home, 
   FileText, 
   Settings, 
-  Users, 
-  BarChart3,
-  Shield,
+  Users, ;
+  BarChart3,;;
+  Shield,;;
   Plus;;
 } from 'lucide-react';
 

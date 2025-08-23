@@ -15,9 +15,9 @@ import {
   ChevronDown,
   X,
   Check,
-  AlertCircle,
-  Home,
-  FileText,
+  AlertCircle,;
+  Home,;;
+  FileText,;;
   Mail;;
 } from 'lucide-react';
 

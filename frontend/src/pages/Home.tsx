@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircleIcon, ShieldCheckIcon, QrCodeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,6 @@ export default function Home() {
       icon: QrCodeIcon,
       title: 'QR code verification',
       description: 'Quick and easy verification using QR codes for instant authentication.'
-    }
   ];
 
   return (
@@ -165,4 +164,3 @@ export default function Home() {
       </div>
     </div>
   );
-}

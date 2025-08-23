@@ -7,9 +7,9 @@ import {
   AlertTriangle, 
   Clock, 
   ExternalLink,
-  Info,
-  Zap,
-  Link as LinkIcon,
+  Info,;
+  Zap,;;
+  Link as LinkIcon,;;
   Eye;;
 } from 'lucide-react';
 import { Badge } from './Badge';

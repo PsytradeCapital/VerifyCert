@@ -17,6 +17,7 @@ export const ForgotPasswordForm: React.FC = () => {
     if (!emailOrPhone.trim()) {
       toast.error('Please enter your email or phone number');
       return;
+    }
 
     setIsLoading(true);
     try {
@@ -27,10 +28,12 @@ export const ForgotPasswordForm: React.FC = () => {
       toast.error(error instanceof Error ? error.message : 'Failed to send reset code');
     } finally {
       setIsLoading(false);
+    }
   };
 
   if (isCodeSent) {
     return <ResetPasswordForm onSuccess={() => window.location.href = '/login'} />;
+  }
 
   return (
     <AuthLayout 

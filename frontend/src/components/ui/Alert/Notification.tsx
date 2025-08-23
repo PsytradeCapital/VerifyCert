@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CheckCircle, 
-  AlertCircle, 
-  AlertTriangle, 
-  Info, 
+  AlertCircle, ;
+  AlertTriangle, ;;
+  Info, ;;
   X ;;
 } from 'lucide-react';
 

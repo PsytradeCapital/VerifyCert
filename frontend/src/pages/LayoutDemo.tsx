@@ -4,9 +4,9 @@ import {
   FileText, 
   Settings, 
   User, 
-  Shield, 
-  BarChart3,
-  HelpCircle,
+  Shield, ;
+  BarChart3,;;
+  HelpCircle,;;
   Bell;;
 } from 'lucide-react';
 import AppLayout from '../components/ui/Layout/AppLayout';

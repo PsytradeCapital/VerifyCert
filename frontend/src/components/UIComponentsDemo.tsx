@@ -14,9 +14,9 @@ import {
   Heart, 
   Zap, 
   Settings, 
-  Info,
-  CheckCircle,
-  AlertTriangle,
+  Info,;
+  CheckCircle,;;
+  AlertTriangle,;;
   X;;
 } from 'lucide-react';
 

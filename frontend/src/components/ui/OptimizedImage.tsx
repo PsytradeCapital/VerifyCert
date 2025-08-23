@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   getOptimalImageFormat, 
   generateImageSrcSet, 
-  optimizeImageUrl,
-  imagePerformanceMonitor,
-  createBlurPlaceholder,
+  optimizeImageUrl,;
+  imagePerformanceMonitor,;;
+  createBlurPlaceholder,;;
   ImageOptimizationOptions;;
 } from '../../utils/imageOptimization';
 

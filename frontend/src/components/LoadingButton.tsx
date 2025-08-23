@@ -3,6 +3,7 @@ import React from 'react';
 interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   children: React.ReactNode;
+}
 
 const LoadingButton: React.FC<LoadingButtonProps> = ({ 
   isLoading = false, 

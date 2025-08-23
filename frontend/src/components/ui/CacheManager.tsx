@@ -5,9 +5,9 @@ import {
   RefreshCw, 
   HardDrive, 
   Wifi, 
-  WifiOff, 
-  Download,
-  Smartphone,
+  WifiOff, ;
+  Download,;;
+  Smartphone,;;
   Monitor;;
 } from 'lucide-react';
 import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWorker';

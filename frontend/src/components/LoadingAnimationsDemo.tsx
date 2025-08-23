@@ -6,9 +6,9 @@ import {
   ProgressBar,
   CircularProgress,
   Skeleton,
-  CertificateCardSkeleton,
-  LoadingOverlay,
-  LoadingButton,
+  CertificateCardSkeleton,;
+  LoadingOverlay,;;
+  LoadingButton,;;
   StepProgress;;
 } from './ui/Loading';
 

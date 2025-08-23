@@ -8,9 +8,9 @@ import {
   User, 
   Download, 
   Share2, 
-  ExternalLink,
-  QrCode,
-  Copy,
+  ExternalLink,;
+  QrCode,;;
+  Copy,;;
   Printer;;
 } from 'lucide-react';
 import { useFeedbackAnimations } from '../../../hooks/useFeedbackAnimations';

@@ -8,7 +8,6 @@ interface NavigationProps {
   isWalletConnected?: boolean;
   onWalletConnect?: (address: string, provider: any) => void;
   onWalletDisconnect?: () => void;
-}
 
 export const Navigation: React.FC<NavigationProps> = ({
   walletAddress,
@@ -24,7 +23,6 @@ export const Navigation: React.FC<NavigationProps> = ({
   const handleWalletConnect = () => {
     if (onWalletConnect) {
       onWalletConnect('0x1234...5678', null);
-    }
   };
 
   const isActive = (path: string) => location.pathname === path;

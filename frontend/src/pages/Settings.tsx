@@ -13,7 +13,6 @@ interface UserProfile {
   bio?: string;
   website?: string;
   location?: string;
-}
 
 interface NotificationSettings {
   emailNotifications: boolean;
@@ -21,21 +20,18 @@ interface NotificationSettings {
   certificateVerified: boolean;
   systemUpdates: boolean;
   marketingEmails: boolean;
-}
 
 interface SecuritySettings {
   twoFactorEnabled: boolean;
   sessionTimeout: number;
   loginNotifications: boolean;
   apiKeyEnabled: boolean;
-}
 
 interface AppearanceSettings {
   theme: 'light' | 'dark' | 'system';
   language: string;
   timezone: string;
   dateFormat: string;
-}
 
 const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -84,7 +80,7 @@ const Settings: React.FC = () => {
     { id: 'security', label: 'Security', icon: Shield },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'advanced', label: 'Advanced', icon: Globe }
+    { id: 'advanced', label: 'Advanced', icon: Globe
   ];
 
   const handleSave = async () => {

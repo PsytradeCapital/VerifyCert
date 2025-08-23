@@ -34,3 +34,4 @@ export default class BlockchainErrorBoundary extends Component<Props, State> {
       );
 
     return this.props.children;
+}}}}}}}}

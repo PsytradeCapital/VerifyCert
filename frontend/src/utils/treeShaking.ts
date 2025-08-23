@@ -7,7 +7,6 @@ export const utils = {
     const chunks: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
       chunks.push(array.slice(i, i + size));
-    }
     return chunks;
   },
 
@@ -17,7 +16,6 @@ export const utils = {
     keys.forEach(key => {
       if (key in obj) {
         result[key] = obj[key];
-      }
     });
     return result;
   },
@@ -28,7 +26,6 @@ export const utils = {
       delete result[key];
     });
     return result;
-  }
 };
 
 // Tree-shakable React utilities
@@ -57,5 +54,4 @@ export const monitorBundleSize = () => {
       console.log('Bundle monitoring active');
     };
     logBundleInfo();
-  }
 };

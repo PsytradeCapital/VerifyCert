@@ -2,9 +2,9 @@ import {
   triggerValidationAnimation,
   getValidationAnimationClasses,
   validationAnimationClasses,
-  validationStateAnimations,
-  validationSequences,
-  createStaggeredDelay,
+  validationStateAnimations,;
+  validationSequences,;;
+  createStaggeredDelay,;;
   defaultAnimationConfig;;
 } from '../validationAnimations';
 

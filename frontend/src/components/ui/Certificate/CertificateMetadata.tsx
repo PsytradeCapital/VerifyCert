@@ -12,9 +12,9 @@ import {
   BookOpen,
   Star,
   ChevronDown,
-  ChevronUp,
-  Copy,
-  ExternalLink,
+  ChevronUp,;
+  Copy,;;
+  ExternalLink,;;
   Info;;
 } from 'lucide-react';
 import Tooltip from '../Tooltip/Tooltip';

@@ -1,9 +1,9 @@
+import React from 'react';
 // Validation animation utilities
 export interface ValidationAnimationConfig {
   duration: number;
   easing: string;
   delay: number;
-}
 
 export const defaultAnimationConfig: ValidationAnimationConfig = {
   duration: 300,
@@ -31,13 +31,10 @@ export const triggerValidationAnimation = (
 
     if (config.duration !== defaultAnimationConfig.duration) {
       element.style.animationDuration = `${config.duration}ms`;
-    }
     if (config.easing !== defaultAnimationConfig.easing) {
       element.style.animationTimingFunction = config.easing;
-    }
     if (config.delay !== defaultAnimationConfig.delay) {
       element.style.animationDelay = `${config.delay}ms`;
-    }
 
     const handleAnimationEnd = () => {
       element.classList.remove(animationClass);
@@ -81,10 +78,10 @@ export const createStaggeredDelay = (index: number, baseDelay: number = 50): num
 export const validationSequences = {
   errorSequence: [
     { element: 'field', animation: 'errorShake', delay: 0 },
-    { element: 'message', animation: 'errorSlideIn', delay: 100 }
+    { element: 'message', animation: 'errorSlideIn', delay: 100
   ],
   successSequence: [
     { element: 'field', animation: 'successPulse', delay: 0 },
-    { element: 'message', animation: 'successFadeIn', delay: 150 }
+    { element: 'message', animation: 'successFadeIn', delay: 150
   ]
 };

@@ -9,6 +9,7 @@ interface LoginFormData {
   emailOrPhone: string;
   password: string;
   rememberMe: boolean;
+}
 
 export const LoginForm: React.FC = () => {
   const { login } = useAuth();
@@ -34,9 +35,11 @@ export const LoginForm: React.FC = () => {
     if (!formData.emailOrPhone.trim()) {
       toast.error('Please enter your email or phone number');
       return;
+    }
     if (!formData.password) {
       toast.error('Please enter your password');
       return;
+    }
 
     setIsLoading(true);
     try {
@@ -47,6 +50,7 @@ export const LoginForm: React.FC = () => {
       toast.error(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setIsLoading(false);
+    }
   };
 
   return (

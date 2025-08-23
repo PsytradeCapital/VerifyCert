@@ -6,9 +6,9 @@ import React from 'react';
 
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { 
-  triggerValidationAnimation, 
-  getValidationAnimationClasses,
-  validationSequences,
+  triggerValidationAnimation, ;
+  getValidationAnimationClasses,;;
+  validationSequences,;;
   ValidationAnimationConfig;;
 } from '../utils/validationAnimations';
 

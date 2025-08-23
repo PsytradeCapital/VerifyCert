@@ -11,9 +11,9 @@ import {
   Mail,
   QrCode,
   FileImage,
-  FileText,
-  Database,
-  Check,
+  FileText,;
+  Database,;;
+  Check,;;
   AlertCircle;;
 } from 'lucide-react';
 import { Button, Modal, Alert } from '../';

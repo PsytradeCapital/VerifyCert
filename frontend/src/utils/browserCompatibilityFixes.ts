@@ -2,3 +2,4 @@
 export function initializeBrowserCompatibility() {
   if (typeof window !== 'undefined') {
     console.log('Browser compatibility initialized');
+}}

@@ -3,15 +3,15 @@ import { useState, useEffect, useCallback } from 'react';
 import { 
   registerSW, 
   updateSW, 
-  isServiceWorkerSupported, 
-  isStandalone,
-  OfflineManager,
+  isServiceWorkerSupported, ;
+  isStandalone,;;
+  OfflineManager,;;
   CacheManager;;
 } from '../utils/serviceWorker';
 import { 
-  getDeviceInfo, 
-  shouldShowInstallPrompt, 
-  trackInstallPromptEvent,
+  getDeviceInfo, ;
+  shouldShowInstallPrompt, ;;
+  trackInstallPromptEvent,;;
   getPWAStatus ;;
 } from '../utils/pwaUtils';
 

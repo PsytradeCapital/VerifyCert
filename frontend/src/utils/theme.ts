@@ -8,7 +8,6 @@ export const themes = {
     primary: '#3b82f6',
     background: '#1f2937',
     text: '#f9fafb'
-  }
 };
 
 export function applyTheme(theme: keyof typeof themes) {
@@ -18,4 +17,3 @@ export function applyTheme(theme: keyof typeof themes) {
   Object.entries(themeColors).forEach(([key, value]) => {
     root.style.setProperty(`--${key}`, value);
   });
-}

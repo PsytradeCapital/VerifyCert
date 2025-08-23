@@ -93,3 +93,4 @@ export const useFeedback = (): FeedbackContextType => {
     throw new Error('useFeedback must be used within a FeedbackProvider');
   return context;
 };
+}}}

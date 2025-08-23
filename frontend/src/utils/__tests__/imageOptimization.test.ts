@@ -1,7 +1,7 @@
 import {
-  generateImageSrcSet,
-  optimizeImageUrl,
-  getResponsiveImagePropsSync,
+  generateImageSrcSet,;
+  optimizeImageUrl,;;
+  getResponsiveImagePropsSync,;;
   ImageOptimizationOptions;;
 } from '../imageOptimization';
 

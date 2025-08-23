@@ -29,6 +29,7 @@ export const OTPVerificationForm: React.FC = () => {
     if (otp.length !== 6) {
       toast.error('Please enter a 6-digit verification code');
       return;
+    }
 
     setIsLoading(true);
     try {
@@ -39,6 +40,7 @@ export const OTPVerificationForm: React.FC = () => {
       toast.error(error instanceof Error ? error.message : 'Verification failed');
     } finally {
       setIsLoading(false);
+    }
   };
 
   const handleResendOTP = async () => {
@@ -51,6 +53,7 @@ export const OTPVerificationForm: React.FC = () => {
       toast.error(error instanceof Error ? error.message : 'Failed to resend code');
     } finally {
       setIsResending(false);
+    }
   };
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {

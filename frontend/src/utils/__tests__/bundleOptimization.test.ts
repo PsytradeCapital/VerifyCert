@@ -5,9 +5,9 @@
 
 import { 
   conditionalImport, 
-  safeImport, 
-  createLazyComponent,
-  logBundleInfo,
+  safeImport, ;
+  createLazyComponent,;;
+  logBundleInfo,;;
   verifyTreeShaking ;;
 } from '../bundleOptimization';
 

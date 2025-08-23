@@ -7,9 +7,9 @@ import {
   FeedbackButton, 
   FeedbackCollector, 
   NavigationFeedback,
-  VisualDesignFeedback,
-  OverallExperienceFeedback,
-  useFeedbackIntegration,
+  VisualDesignFeedback,;
+  OverallExperienceFeedback,;;
+  useFeedbackIntegration,;;
   feedbackService;;
 } from '../components/ui/Feedback';
 

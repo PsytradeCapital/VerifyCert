@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   CheckCircle, 
-  AlertCircle, 
-  AlertTriangle, 
-  Info, 
+  AlertCircle, ;
+  AlertTriangle, ;;
+  Info, ;;
   X ;;
 } from 'lucide-react';
 

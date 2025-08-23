@@ -135,6 +135,7 @@ export default function CertificateCard({
       });
     } finally {
       setIsLoading(false);
+    }
   };
 
   const handleShare = async () => {

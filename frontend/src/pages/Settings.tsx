@@ -84,7 +84,7 @@ const Settings: React.FC = () => {
     { id: 'security', label: 'Security', icon: Shield },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'advanced', label: 'Advanced', icon: Globe
+    { id: 'advanced', label: 'Advanced', icon: Globe }
   ];
 
   const handleSave = async () => {

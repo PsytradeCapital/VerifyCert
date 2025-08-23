@@ -110,14 +110,17 @@ export default function IssuerDashboard() {
           calculateStats(data.data.certificates || []);
         } else {
           throw new Error(data.error?.message || 'Failed to fetch certificates');
-    } catch (error) {
-      console.error('Failed to fetch certificates:', error);
-      if (!isDemoMode) {
-        toast.error('Failed to load issued certificates');
+        }
+      } catch (error) {
+        console.error('Failed to fetch certificates:', error);
+        if (!isDemoMode) {
+          toast.error('Failed to load issued certificates');
+        }
         setIssuedCertificates([]);
-    } finally {
-      setIsLoading(false);
-  }, [walletState.isConnected, walletState.address, isDemoMode]);
+      } finally {
+        setIsLoading(false);
+      }
+    }, [walletState.isConnected, walletState.address, isDemoMode]);
 
   // Calculate dashboard statistics
   const calculateStats = (certificates: Certificate[]) => {

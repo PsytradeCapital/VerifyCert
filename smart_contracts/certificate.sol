@@ -6,13 +6,14 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
 /**
  * @title Certificate
  * @dev Non-transferable ERC721 certificate contract for issuing verifiable digital certificates
  * @notice This contract creates non-transferable certificate NFTs that can be issued by authorized entities
  */
-contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
+contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Pausable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -35,6 +36,9 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     
     // Mapping of authorized issuers
     mapping(address => bool) public authorizedIssuers;
+    
+    // Mapping to track issuer names for display purposes
+    mapping(address => string) public issuerNames;
 
     // Events
     event CertificateIssued(
@@ -47,7 +51,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     );
 
     event CertificateRevoked(uint256 indexed tokenId, address indexed revoker);
-    event IssuerAuthorized(address indexed issuer, address indexed authorizer);
+    event IssuerAuthorized(address indexed issuer, address indexed authorizer, string issuerName);
     event IssuerRevoked(address indexed issuer, address indexed revoker);
 
     constructor() ERC721("VerifyCert Certificate", "VCERT") {}
@@ -64,7 +68,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Issue a new certificate
+     * @dev Issue a basic certificate
      * @param recipient Address to receive the certificate
      * @param recipientName Name of the certificate recipient
      * @param courseName Name of the course/program
@@ -75,7 +79,60 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory recipientName,
         string memory courseName,
         string memory institutionName
-    ) public onlyAuthorizedIssuer nonReentrant returns (uint256) {
+    ) public onlyAuthorizedIssuer nonReentrant whenNotPaused returns (uint256) {
+        return _issueCertificate(
+            recipient,
+            recipientName,
+            courseName,
+            institutionName,
+            "",
+            0,
+            "Basic"
+        );
+    }
+
+    /**
+     * @dev Issue a detailed certificate with grade and credits
+     * @param recipient Address to receive the certificate
+     * @param recipientName Name of the certificate recipient
+     * @param courseName Name of the course/program
+     * @param institutionName Name of the issuing institution
+     * @param grade Grade achieved (optional)
+     * @param credits Number of credits (optional)
+     * @param certificateType Type of certificate
+     */
+    function issueCertificateDetailed(
+        address recipient,
+        string memory recipientName,
+        string memory courseName,
+        string memory institutionName,
+        string memory grade,
+        uint256 credits,
+        string memory certificateType
+    ) public onlyAuthorizedIssuer nonReentrant whenNotPaused returns (uint256) {
+        return _issueCertificate(
+            recipient,
+            recipientName,
+            courseName,
+            institutionName,
+            grade,
+            credits,
+            certificateType
+        );
+    }
+
+    /**
+     * @dev Internal function to issue certificates
+     */
+    function _issueCertificate(
+        address recipient,
+        string memory recipientName,
+        string memory courseName,
+        string memory institutionName,
+        string memory grade,
+        uint256 credits,
+        string memory certificateType
+    ) internal returns (uint256) {
         require(recipient != address(0), "Invalid recipient address");
         require(bytes(recipientName).length > 0, "Recipient name required");
         require(bytes(courseName).length > 0, "Course name required");
@@ -95,9 +152,9 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
             issueDate: block.timestamp,
             isRevoked: false,
             issuer: msg.sender,
-            grade: "",
-            credits: 0,
-            certificateType: "Basic"
+            grade: grade,
+            credits: credits,
+            certificateType: certificateType
         });
 
         emit CertificateIssued(
@@ -116,7 +173,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
      * @dev Revoke a certificate
      * @param tokenId ID of the certificate to revoke
      */
-    function revokeCertificate(uint256 tokenId) public {
+    function revokeCertificate(uint256 tokenId) public whenNotPaused {
         require(_exists(tokenId), "Certificate does not exist");
         
         CertificateData storage cert = _certificates[tokenId];
@@ -151,13 +208,17 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Authorize an issuer
+     * @dev Authorize an issuer with name
      * @param issuer Address to authorize
+     * @param issuerName Display name for the issuer
      */
-    function authorizeIssuer(address issuer) public onlyOwner {
+    function authorizeIssuer(address issuer, string memory issuerName) public onlyOwner {
         require(issuer != address(0), "Invalid issuer address");
+        require(bytes(issuerName).length > 0, "Issuer name required");
+        
         authorizedIssuers[issuer] = true;
-        emit IssuerAuthorized(issuer, msg.sender);
+        issuerNames[issuer] = issuerName;
+        emit IssuerAuthorized(issuer, msg.sender, issuerName);
     }
 
     /**
@@ -166,6 +227,7 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
      */
     function revokeIssuerAuthorization(address issuer) public onlyOwner {
         authorizedIssuers[issuer] = false;
+        delete issuerNames[issuer];
         emit IssuerRevoked(issuer, msg.sender);
     }
 
@@ -178,58 +240,14 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Issue a detailed certificate with additional metadata
-     * @param recipient Address to receive the certificate
-     * @param recipientName Name of the certificate recipient
-     * @param courseName Name of the course/program
-     * @param institutionName Name of the issuing institution
-     * @param grade Grade or score achieved
-     * @param credits Number of credits earned
-     * @param certificateType Type of certificate
+     * @dev Get issuer name
+     * @param issuer Address of the issuer
      */
-    function issueCertificateDetailed(
-        address recipient,
-        string memory recipientName,
-        string memory courseName,
-        string memory institutionName,
-        string memory grade,
-        uint256 credits,
-        string memory certificateType
-    ) public onlyAuthorizedIssuer nonReentrant returns (uint256) {
-        require(recipient != address(0), "Invalid recipient address");
-        require(bytes(recipientName).length > 0, "Recipient name required");
-        require(bytes(courseName).length > 0, "Course name required");
-        require(bytes(institutionName).length > 0, "Institution name required");
-
-        _tokenIdCounter.increment();
-        uint256 tokenId = _tokenIdCounter.current();
-
-        // Mint the certificate NFT
-        _safeMint(recipient, tokenId);
-
-        // Store certificate data
-        _certificates[tokenId] = CertificateData({
-            recipientName: recipientName,
-            courseName: courseName,
-            institutionName: institutionName,
-            issueDate: block.timestamp,
-            isRevoked: false,
-            issuer: msg.sender,
-            grade: grade,
-            credits: credits,
-            certificateType: bytes(certificateType).length > 0 ? certificateType : "Detailed"
-        });
-
-        emit CertificateIssued(
-            tokenId,
-            recipient,
-            recipientName,
-            courseName,
-            institutionName,
-            msg.sender
-        );
-
-        return tokenId;
+    function getIssuerName(address issuer) public view returns (string memory) {
+        if (issuer == owner()) {
+            return "Contract Owner";
+        }
+        return issuerNames[issuer];
     }
 
     /**
@@ -237,6 +255,56 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
      */
     function totalSupply() public view returns (uint256) {
         return _tokenIdCounter.current();
+    }
+
+    /**
+     * @dev Get certificates issued by a specific issuer
+     * @param issuer Address of the issuer
+     * @param offset Starting index
+     * @param limit Maximum number of results
+     */
+    function getCertificatesByIssuer(
+        address issuer,
+        uint256 offset,
+        uint256 limit
+    ) public view returns (uint256[] memory) {
+        require(limit > 0 && limit <= 100, "Invalid limit");
+        
+        uint256[] memory result = new uint256[](limit);
+        uint256 count = 0;
+        uint256 currentIndex = 0;
+        
+        for (uint256 i = 1; i <= _tokenIdCounter.current() && count < limit; i++) {
+            if (_certificates[i].issuer == issuer) {
+                if (currentIndex >= offset) {
+                    result[count] = i;
+                    count++;
+                }
+                currentIndex++;
+            }
+        }
+        
+        // Resize array to actual count
+        uint256[] memory finalResult = new uint256[](count);
+        for (uint256 i = 0; i < count; i++) {
+            finalResult[i] = result[i];
+        }
+        
+        return finalResult;
+    }
+
+    /**
+     * @dev Pause the contract (emergency function)
+     */
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    /**
+     * @dev Unpause the contract
+     */
+    function unpause() public onlyOwner {
+        _unpause();
     }
 
     /**
@@ -248,8 +316,8 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         uint256 tokenId,
         uint256 batchSize
     ) internal override {
-        require(from == address(0), "Certificates are non-transferable");
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
+        require(from == address(0), "Certificates are non-transferable");
     }
 
     /**

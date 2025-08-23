@@ -1,4 +1,13 @@
 // Utility functions for styling
+
+/**
+ * Combines class names conditionally
+ * Similar to clsx/classnames utility
+ */
+export const cn = (...classes: (string | undefined | null | false)[]): string => {
+  return classes.filter(Boolean).join(' ');
+};
+
 export const getColor = (color: string, shade: number) => {
   return `var(--color-${color}-${shade})`;
 };

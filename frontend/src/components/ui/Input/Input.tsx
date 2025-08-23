@@ -2,11 +2,6 @@ import React, { forwardRef } from 'react';
 import { createFieldRelationships, ariaLabels } from '../../../utils/ariaUtils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-}
-}
-}
-}
-}
   label?: string;
   error?: string;
   helperText?: string;
@@ -14,6 +9,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   validationState?: 'default' | 'success' | 'error';
   enableAnimations?: boolean;
   fieldName?: string;
+}
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,
@@ -39,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   
   // Create field relationships for accessibility
   const fieldRelationships = fieldName ? createFieldRelationships(fieldName) : null;
-  const inputId = props.id || fieldRelationships?.labelId || input-${Math.random().toString(36).substring(2, 11)};
+  const inputId = props.id || fieldRelationships?.labelId || `input-${Math.random().toString(36).substring(2, 11)}`;
 
   return (
     <div className="space-y-1">
@@ -68,13 +64,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         <input
           ref={ref}
           id={inputId}
-          className={
+          className={`
             ${baseClasses}
             ${stateClasses[currentState]}
             ${icon ? 'pl-10' : ''}
             ${enableAnimations ? 'transition-all duration-200 ease-in-out' : ''}
             ${className}
-          }
+          `}
           aria-required={required}
           {...(fieldRelationships ? fieldRelationships.getInputProps(!!error, !!helperText) : {})}
           {...props}

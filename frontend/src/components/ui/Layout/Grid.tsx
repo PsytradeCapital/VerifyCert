@@ -2,11 +2,6 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface GridProps extends React.HTMLAttributes<HTMLElement> {
-}
-}
-}
-}
-}
   children: React.ReactNode;
   cols?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
   colsSm?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
@@ -23,6 +18,7 @@ export interface GridProps extends React.HTMLAttributes<HTMLElement> {
   placeContent?: 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly' | 'stretch';
   className?: string;
   as?: keyof JSX.IntrinsicElements;
+}
 
 const Grid: React.FC<GridProps> = ({
   children,
@@ -45,18 +41,18 @@ const Grid: React.FC<GridProps> = ({
 }) => {
   // Column classes for different breakpoints
   const getColsClass = (columns: number, prefix = '') => {
-    const prefixStr = prefix ? ${prefix}: : '';
+    const prefixStr = prefix ? `${prefix}:` : '';
     const colsMap = {
-      1: ${prefixStr}grid-cols-1,
-      2: ${prefixStr}grid-cols-2,
-      3: ${prefixStr}grid-cols-3,
-      4: ${prefixStr}grid-cols-4,
-      5: ${prefixStr}grid-cols-5,
-      6: ${prefixStr}grid-cols-6,
-      8: ${prefixStr}grid-cols-8,
-      12: ${prefixStr}grid-cols-12
+      1: `${prefixStr}grid-cols-1`,
+      2: `${prefixStr}grid-cols-2`,
+      3: `${prefixStr}grid-cols-3`,
+      4: `${prefixStr}grid-cols-4`,
+      5: `${prefixStr}grid-cols-5`,
+      6: `${prefixStr}grid-cols-6`,
+      8: `${prefixStr}grid-cols-8`,
+      12: `${prefixStr}grid-cols-12`
     };
-    return colsMap[columns] || ${prefixStr}grid-cols-1;
+    return colsMap[columns] || `${prefixStr}grid-cols-1`;
   };
 
   // Enhanced gap classes with mobile-first responsive approach
@@ -152,6 +148,7 @@ const Grid: React.FC<GridProps> = ({
     );
   } else {
     gapClassNames = gapClasses[gap];
+  }
 
   // Combine all classes
   const combinedClasses = cn(
@@ -175,11 +172,6 @@ const Grid: React.FC<GridProps> = ({
 
 // Grid Item component for more control over individual grid items
 export interface GridItemProps extends React.HTMLAttributes<HTMLElement> {
-}
-}
-}
-}
-}
   children: React.ReactNode;
   colSpan?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
   colSpanSm?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
@@ -195,6 +187,7 @@ export interface GridItemProps extends React.HTMLAttributes<HTMLElement> {
   alignSelf?: 'auto' | 'start' | 'end' | 'center' | 'stretch';
   className?: string;
   as?: keyof JSX.IntrinsicElements;
+}
 
 export const GridItem: React.FC<GridItemProps> = ({
   children,
@@ -217,41 +210,41 @@ export const GridItem: React.FC<GridItemProps> = ({
   // Column span classes
   const getColSpanClass = (span: GridItemProps['colSpan'], prefix = '') => {
     if (!span) return '';
-    const prefixStr = prefix ? ${prefix}: : '';
-    if (span === 'full') return ${prefixStr}col-span-full;
-    return ${prefixStr}col-span-${span};
+    const prefixStr = prefix ? `${prefix}:` : '';
+    if (span === 'full') return `${prefixStr}col-span-full`;
+    return `${prefixStr}col-span-${span}`;
   };
 
   // Row span classes
   const getRowSpanClass = (span: GridItemProps['rowSpan']) => {
     if (!span) return '';
     if (span === 'full') return 'row-span-full';
-    return row-span-${span};
+    return `row-span-${span}`;
   };
 
   // Position classes
   const getColStartClass = (start: GridItemProps['colStart']) => {
     if (!start) return '';
     if (start === 'auto') return 'col-start-auto';
-    return col-start-${start};
+    return `col-start-${start}`;
   };
 
   const getColEndClass = (end: GridItemProps['colEnd']) => {
     if (!end) return '';
     if (end === 'auto') return 'col-end-auto';
-    return col-end-${end};
+    return `col-end-${end}`;
   };
 
   const getRowStartClass = (start: GridItemProps['rowStart']) => {
     if (!start) return '';
     if (start === 'auto') return 'row-start-auto';
-    return row-start-${start};
+    return `row-start-${start}`;
   };
 
   const getRowEndClass = (end: GridItemProps['rowEnd']) => {
     if (!end) return '';
     if (end === 'auto') return 'row-end-auto';
-    return row-end-${end};
+    return `row-end-${end}`;
   };
 
   // Alignment classes
@@ -301,4 +294,3 @@ export const GridItem: React.FC<GridItemProps> = ({
 };
 
 export default Grid;
-}

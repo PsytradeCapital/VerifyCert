@@ -22,6 +22,7 @@ export interface HeroSectionProps {
   onFileUpload?: (file: File) => void;
   className?: string;
   backgroundVariant?: 'default' | 'gradient' | 'pattern';
+}
 
 const features = [
   {
@@ -120,10 +121,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               size="lg"
               onClick={primaryAction.onClick}
               loading={primaryAction.loading}
-              iconPosition="right"
               className="min-w-[200px]"
             >
               {primaryAction.label}
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
 
             {secondaryAction && (
@@ -152,10 +153,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   size="lg"
                   onClick={handleQRScan}
                   loading={isScanning}
-                  loadingText="Scanning..."
                   className="w-32 h-32 flex-col rounded-2xl border-2 border-dashed border-gray-300 hover:border-blue-400"
                 >
-                  <span className="mt-2 text-sm font-medium">Scan QR Code</span>
+                  <QrCode className="w-6 h-6 text-gray-600" />
+                  <span className="mt-2 text-sm font-medium">
+                    {isScanning ? 'Scanning...' : 'Scan QR Code'}
+                  </span>
                 </Button>
               </div>
             )}

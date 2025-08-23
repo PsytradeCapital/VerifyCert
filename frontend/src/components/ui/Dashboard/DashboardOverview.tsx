@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Award, Calendar, Clock, Users } from 'lucide-react';
 import MetricCard from './MetricCard';
 
 export interface DashboardStats {
@@ -95,6 +96,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         <MetricCard
           title="Total Certificates"
           value={stats.totalIssued.toLocaleString()}
+          icon={<Award />}
           color="blue"
           description="All time certificates issued"
         />
@@ -104,6 +106,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         <MetricCard
           title="This Month"
           value={stats.thisMonth.toLocaleString()}
+          icon={<Calendar />}
           color="green"
           trend={monthlyTrend}
           description="Certificates issued this month"
@@ -114,6 +117,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         <MetricCard
           title="This Week"
           value={stats.thisWeek.toLocaleString()}
+          icon={<Clock />}
           color="yellow"
           trend={weeklyTrend}
           description="Certificates issued this week"
@@ -124,6 +128,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         <MetricCard
           title="Active Recipients"
           value={stats.activeRecipients.toLocaleString()}
+          icon={<Users />}
           color="purple"
           description="Unique certificate recipients"
         />

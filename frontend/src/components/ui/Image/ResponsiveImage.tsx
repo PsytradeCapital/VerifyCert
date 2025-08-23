@@ -3,11 +3,6 @@ import { cn } from '../../../styles/utils';
 import { useResponsive } from '../../../hooks/useResponsive';
 
 export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-}
-}
-}
-}
-}
   src: string;
   alt: string;
   className?: string;
@@ -21,6 +16,7 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
   fallback?: string;
   onLoad?: () => void;
   onError?: () => void;
+}
 
 const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   src,
@@ -75,6 +71,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     if (fallback && currentSrc !== fallback) {
       setCurrentSrc(fallback);
       setImageError(false);
+    }
     onError?.();
   };
 
@@ -138,4 +135,3 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
 };
 
 export default ResponsiveImage;
-}

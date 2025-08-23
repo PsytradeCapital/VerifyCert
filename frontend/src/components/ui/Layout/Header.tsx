@@ -4,16 +4,17 @@ import { Button } from '../Button/Button';
 import { ThemeToggle } from '../ThemeToggle';
 
 export interface UserMenuProps {
-user?: {
+  user?: {
     name: string;
     email: string;
     avatar?: string;
-};
+  };
   onSignOut?: () => void;
   onProfile?: () => void;
+}
 
 export interface HeaderProps {
-title?: string;
+  title?: string;
   showSidebarToggle?: boolean;
   sidebarCollapsed?: boolean;
   isMobile?: boolean;
@@ -25,6 +26,7 @@ title?: string;
   userMenu?: UserMenuProps;
   children?: React.ReactNode;
   className?: string;
+}
 
 const Header: React.FC<HeaderProps> = ({
   title = 'VerifyCert',
@@ -41,10 +43,10 @@ const Header: React.FC<HeaderProps> = ({
   className = ''
 }) => {
   return (
-    <header className={
+    <header className={`
       sticky top-0 z-40 bg-white border-b border-neutral-200 shadow-sm safe-top safe-area-x
       ${className}
-    }>
+    `}>
       <div className="flex items-center justify-between h-16 mobile-padding-x">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
@@ -177,4 +179,3 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
-}

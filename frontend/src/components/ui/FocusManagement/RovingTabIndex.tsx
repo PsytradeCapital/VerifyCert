@@ -8,6 +8,7 @@ interface RovingTabIndexProps {
   defaultIndex?: number;
   onIndexChange?: (index: number) => void;
   className?: string;
+}
 
 const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
   children,

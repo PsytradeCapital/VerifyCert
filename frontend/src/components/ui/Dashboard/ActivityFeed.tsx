@@ -94,6 +94,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
         </div>
       </Card>
     );
+  }
 
   return (
     <Card variant="elevated" padding="lg" className={className}>

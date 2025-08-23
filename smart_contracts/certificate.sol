@@ -25,6 +25,9 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         uint256 issueDate;
         bool isRevoked;
         address issuer;
+        string grade;
+        uint256 credits;
+        string certificateType;
     }
 
     // Mapping from token ID to certificate data
@@ -91,7 +94,10 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
             institutionName: institutionName,
             issueDate: block.timestamp,
             isRevoked: false,
-            issuer: msg.sender
+            issuer: msg.sender,
+            grade: "",
+            credits: 0,
+            certificateType: "Basic"
         });
 
         emit CertificateIssued(
@@ -169,6 +175,61 @@ contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
      */
     function isAuthorizedIssuer(address issuer) public view returns (bool) {
         return authorizedIssuers[issuer] || issuer == owner();
+    }
+
+    /**
+     * @dev Issue a detailed certificate with additional metadata
+     * @param recipient Address to receive the certificate
+     * @param recipientName Name of the certificate recipient
+     * @param courseName Name of the course/program
+     * @param institutionName Name of the issuing institution
+     * @param grade Grade or score achieved
+     * @param credits Number of credits earned
+     * @param certificateType Type of certificate
+     */
+    function issueCertificateDetailed(
+        address recipient,
+        string memory recipientName,
+        string memory courseName,
+        string memory institutionName,
+        string memory grade,
+        uint256 credits,
+        string memory certificateType
+    ) public onlyAuthorizedIssuer nonReentrant returns (uint256) {
+        require(recipient != address(0), "Invalid recipient address");
+        require(bytes(recipientName).length > 0, "Recipient name required");
+        require(bytes(courseName).length > 0, "Course name required");
+        require(bytes(institutionName).length > 0, "Institution name required");
+
+        _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter.current();
+
+        // Mint the certificate NFT
+        _safeMint(recipient, tokenId);
+
+        // Store certificate data
+        _certificates[tokenId] = CertificateData({
+            recipientName: recipientName,
+            courseName: courseName,
+            institutionName: institutionName,
+            issueDate: block.timestamp,
+            isRevoked: false,
+            issuer: msg.sender,
+            grade: grade,
+            credits: credits,
+            certificateType: bytes(certificateType).length > 0 ? certificateType : "Detailed"
+        });
+
+        emit CertificateIssued(
+            tokenId,
+            recipient,
+            recipientName,
+            courseName,
+            institutionName,
+            msg.sender
+        );
+
+        return tokenId;
     }
 
     /**

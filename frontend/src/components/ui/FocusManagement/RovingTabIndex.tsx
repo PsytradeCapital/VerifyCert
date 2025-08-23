@@ -2,7 +2,7 @@ import React, { useRef, useEffect, Children, cloneElement, isValidElement } from
 import { useRovingTabIndex } from '../../../hooks/useFocusManagement';
 
 interface RovingTabIndexProps {
-children: React.ReactNode;
+  children: React.ReactNode;
   orientation?: 'horizontal' | 'vertical';
   wrap?: boolean;
   defaultIndex?: number;
@@ -28,6 +28,7 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
         containerRef.current.querySelectorAll('[data-roving-tab-item]')
       ) as HTMLElement[];
       itemRefs.current = items;
+    }
   }, [children]);
 
   const { handleKeyDown } = useRovingTabIndex(itemRefs.current, currentIndexRef.current);
@@ -37,6 +38,7 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
     if (newIndex !== currentIndexRef.current) {
       currentIndexRef.current = newIndex;
       onIndexChange?.(newIndex);
+    }
   };
 
   const enhancedChildren = Children.map(children, (child, index) => {
@@ -51,6 +53,7 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
           child.props.onFocus?.(event);
         },
       });
+    }
     return child;
   });
 
@@ -68,5 +71,3 @@ const RovingTabIndex: React.FC<RovingTabIndexProps> = ({
 };
 
 export default RovingTabIndex;
-}
-}

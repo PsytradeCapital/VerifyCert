@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface QuickStatsProps {
-verificationRate?: number;
+  verificationRate?: number;
   averageProcessingTime?: string;
   successRate?: number;
   isLoading?: boolean;
   className?: string;
+}
 
 const QuickStats: React.FC<QuickStatsProps> = ({
   verificationRate = 0,
@@ -19,7 +20,7 @@ const QuickStats: React.FC<QuickStatsProps> = ({
   const stats = [
     {
       label: 'Verification Rate',
-      value: ${verificationRate}%,
+      value: `${verificationRate}%`,
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -39,13 +40,14 @@ const QuickStats: React.FC<QuickStatsProps> = ({
     },
     {
       label: 'Success Rate',
-      value: ${successRate}%,
+      value: `${successRate}%`,
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
         </svg>
       ),
       color: 'text-purple-600'
+    }
   ];
 
   if (isLoading) {
@@ -65,6 +67,7 @@ const QuickStats: React.FC<QuickStatsProps> = ({
         </div>
       </Card>
     );
+  }
 
   return (
     <Card variant="elevated" padding="lg" className={className}>
@@ -74,12 +77,12 @@ const QuickStats: React.FC<QuickStatsProps> = ({
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }
-              animate={{ opacity: 1, y: 0 }
-              transition={{ duration: 0.3, delay: index * 0.1 }
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
               className="text-center"
             >
-              <div className={inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-50 ${stat.color} mb-2}>
+              <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-50 ${stat.color} mb-2`}>
                 {stat.icon}
               </div>
               <div className="text-lg font-bold text-gray-900">
@@ -97,5 +100,3 @@ const QuickStats: React.FC<QuickStatsProps> = ({
 };
 
 export default QuickStats;
-}
-}

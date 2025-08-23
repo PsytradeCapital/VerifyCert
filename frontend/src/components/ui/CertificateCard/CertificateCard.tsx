@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Share2, Copy, CheckCircle, XCircle, Calendar, User, Building, Award, QrCode } from 'lucide-react';
-import { Button } from '../Button/Button';
+import { Copy, CheckCircle, XCircle, Calendar, User, Building, Award, QrCode } from 'lucide-react';
+import Button from '../Button/Button';
 import Card from '../Card/Card';
 
 export interface Certificate {
@@ -102,27 +102,29 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
       // Date
       ctx.font = '18px Arial';
-      ctx.fillText(Date: ${formatDate(certificate.issueDate)}, canvas.width / 2, 380);
+      ctx.fillText(`Date: ${formatDate(certificate.issueDate)}`, canvas.width / 2, 380);
 
       // Download
       const link = document.createElement('a');
-      link.download = certificate-${certificate.tokenId}.png;
+      link.download = `certificate-${certificate.tokenId}.png`;
       link.href = canvas.toDataURL();
       link.click();
     } catch (error) {
       console.error('Download failed:', error);
     } finally {
       setIsLoading(false);
+    }
   };
 
   const handleShare = async () => {
     if (onShare) {
       onShare();
       return;
+    }
 
     const shareData = {
-      title: Certificate: ${certificate.courseName},
-      text: ${certificate.recipientName} completed ${certificate.courseName},
+      title: `Certificate: ${certificate.courseName}`,
+      text: `${certificate.recipientName} completed ${certificate.courseName}`,
       url: certificate.verificationURL || window.location.href,
     };
 
@@ -131,8 +133,10 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(shareData.url || window.location.href);
+      }
     } catch (error) {
       console.error('Share failed:', error);
+    }
   };
 
   const handleCopyLink = async () => {
@@ -141,6 +145,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       await navigator.clipboard.writeText(url);
     } catch (error) {
       console.error('Copy failed:', error);
+    }
   };
 
   const handlePrint = () => {
@@ -148,13 +153,14 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       onPrint();
     } else {
       window.print();
+    }
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }
-      animate={{ opacity: 1, y: 0 }
-      transition={{ duration: 0.5 }
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       className={className}
     >
       <Card variant="elevated" padding="none" className="overflow-hidden">
@@ -354,5 +360,3 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
     </motion.div>
   );
 };
-}
-}

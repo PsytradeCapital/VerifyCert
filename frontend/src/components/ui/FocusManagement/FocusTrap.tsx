@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useFocusTrap } from '../../../hooks/useFocusManagement';
 
 interface FocusTrapProps {
-children: React.ReactNode;
+  children: React.ReactNode;
   isActive?: boolean;
   restoreFocus?: boolean;
   className?: string;
@@ -29,4 +29,3 @@ const FocusTrap: React.FC<FocusTrapProps> = ({
 };
 
 export default FocusTrap;
-}

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface MetricCardProps {
-title: string;
+  title: string;
   value: string | number;
   icon: React.ReactNode;
   trend?: {
@@ -14,6 +14,7 @@ title: string;
   color?: 'blue' | 'green' | 'yellow' | 'purple' | 'red' | 'indigo';
   description?: string;
   className?: string;
+}
 
 const MetricCard: React.FC<MetricCardProps> = ({
   title,
@@ -66,6 +67,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
       lightBg: 'bg-indigo-50',
       trendPositive: 'text-indigo-600',
       trendNegative: 'text-indigo-400'
+    }
   };
 
   const colors = colorClasses[color];
@@ -75,12 +77,12 @@ const MetricCard: React.FC<MetricCardProps> = ({
       variant="elevated" 
       padding="lg" 
       hover={true}
-      className={transition-all duration-200 hover:shadow-lg ${className}}
+      className={`transition-all duration-200 hover:shadow-lg ${className}`}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center">
-            <div className={flex-shrink-0 p-3 rounded-lg ${colors.bg}}>
+            <div className={`flex-shrink-0 p-3 rounded-lg ${colors.bg}`}>
               <div className="w-6 h-6 text-white">
                 {icon}
               </div>
@@ -92,22 +94,22 @@ const MetricCard: React.FC<MetricCardProps> = ({
               <div className="flex items-baseline">
                 <motion.p 
                   className="text-2xl font-bold text-gray-900"
-                  initial={{ scale: 0.8, opacity: 0 }
-                  animate={{ scale: 1, opacity: 1 }
-                  transition={{ duration: 0.3, delay: 0.1 }
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
                 >
                   {value}
                 </motion.p>
                 {trend && (
                   <motion.div 
                     className="ml-2 flex items-center"
-                    initial={{ x: -10, opacity: 0 }
-                    animate={{ x: 0, opacity: 1 }
-                    transition={{ duration: 0.3, delay: 0.2 }
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
                   >
-                    <div className={flex items-center text-sm font-medium ${
+                    <div className={`flex items-center text-sm font-medium ${
                       trend.isPositive ? colors.trendPositive : colors.trendNegative
-                    }}>
+                    }`}>
                       {trend.isPositive ? (
                         <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -141,4 +143,3 @@ const MetricCard: React.FC<MetricCardProps> = ({
 };
 
 export default MetricCard;
-}

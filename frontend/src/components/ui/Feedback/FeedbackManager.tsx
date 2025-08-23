@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { FeedbackAnimation } from './FeedbackAnimations';
 
 export interface FeedbackItem {
-id: string;
+  id: string;
   type: 'success' | 'error' | 'warning' | 'info' | 'loading';
   message: string;
   duration?: number;
@@ -13,26 +12,24 @@ id: string;
   action?: {
     label: string;
     onClick: () => void;
-};
-  // Special animation options
+  };
   shake?: boolean;
   confetti?: boolean;
   progress?: number;
+}
 
 interface FeedbackContextType {
-feedbacks: FeedbackItem[];
+  feedbacks: FeedbackItem[];
   showFeedback: (feedback: Omit<FeedbackItem, 'id'>) => string;
   showSuccess: (message: string, options?: Partial<FeedbackItem>) => string;
   showError: (message: string, options?: Partial<FeedbackItem>) => string;
   showWarning: (message: string, options?: Partial<FeedbackItem>) => string;
   showInfo: (message: string, options?: Partial<FeedbackItem>) => string;
   showLoading: (message: string, options?: Partial<FeedbackItem>) => string;
-  showSuccessWithConfetti: (message: string, options?: Partial<FeedbackItem>) => string;
-  showErrorWithShake: (message: string, options?: Partial<FeedbackItem>) => string;
-  showLoadingWithProgress: (message: string, progress: number, options?: Partial<FeedbackItem>) => string;
   updateProgress: (id: string, progress: number) => void;
   dismissFeedback: (id: string) => void;
   dismissAll: () => void;
+}
 
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
@@ -40,6 +37,7 @@ export const useFeedback = () => {
   const context = useContext(FeedbackContext);
   if (!context) {
     throw new Error('useFeedback must be used within a FeedbackProvider');
+  }
   return context;
 };
 
@@ -48,125 +46,63 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
 
-  const dismissFeedback = useCallback((id: string) => {
-    setFeedbacks(prev => prev.filter(feedback => feedback.id !== id));
-  }, []);
-
-  const showFeedback = useCallback((feedback: Omit<FeedbackItem, 'id'>): string => {
+  const showFeedback = useCallback((feedback: Omit<FeedbackItem, 'id'>) => {
     const id = generateId();
     const newFeedback: FeedbackItem = {
       id,
-      duration: 4000,
+      duration: 5000,
       position: 'top-right',
       showIcon: true,
       showCloseButton: true,
-      ...feedback,
+      ...feedback
     };
 
     setFeedbacks(prev => [...prev, newFeedback]);
 
-    // Auto-dismiss if duration is set
     if (newFeedback.duration && newFeedback.duration > 0) {
       setTimeout(() => {
         dismissFeedback(id);
       }, newFeedback.duration);
+    }
 
     return id;
-  }, [dismissFeedback]);
+  }, []);
 
-  const showSuccess = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'success',
-      message,
-      duration: 4000,
-      ...options,
-    });
+  const showSuccess = useCallback((message: string, options?: Partial<FeedbackItem>) => {
+    return showFeedback({ type: 'success', message, ...options });
   }, [showFeedback]);
 
-  const showError = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'error',
-      message,
-      duration: 6000,
-      ...options,
-    });
+  const showError = useCallback((message: string, options?: Partial<FeedbackItem>) => {
+    return showFeedback({ type: 'error', message, ...options });
   }, [showFeedback]);
 
-  const showWarning = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'warning',
-      message,
-      duration: 5000,
-      ...options,
-    });
+  const showWarning = useCallback((message: string, options?: Partial<FeedbackItem>) => {
+    return showFeedback({ type: 'warning', message, ...options });
   }, [showFeedback]);
 
-  const showInfo = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'info',
-      message,
-      duration: 4000,
-      ...options,
-    });
+  const showInfo = useCallback((message: string, options?: Partial<FeedbackItem>) => {
+    return showFeedback({ type: 'info', message, ...options });
   }, [showFeedback]);
 
-  const showLoading = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'loading',
-      message,
-      duration: 0, // Loading doesn't auto-dismiss
-      showCloseButton: false,
-      ...options,
-    });
-  }, [showFeedback]);
-
-  const showSuccessWithConfetti = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'success',
-      message,
-      confetti: true,
-      position: 'center',
-      duration: 3000,
-      ...options,
-    });
-  }, [showFeedback]);
-
-  const showErrorWithShake = useCallback((message: string, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'error',
-      message,
-      shake: true,
-      duration: 6000,
-      ...options,
-    });
-  }, [showFeedback]);
-
-  const showLoadingWithProgress = useCallback((message: string, progress: number, options?: Partial<FeedbackItem>): string => {
-    return showFeedback({
-      type: 'loading',
-      message,
-      progress,
-      duration: 0,
-      showCloseButton: false,
-      ...options,
-    });
+  const showLoading = useCallback((message: string, options?: Partial<FeedbackItem>) => {
+    return showFeedback({ type: 'loading', message, duration: 0, ...options });
   }, [showFeedback]);
 
   const updateProgress = useCallback((id: string, progress: number) => {
-    setFeedbacks(prev => 
-      prev.map(feedback => 
-        feedback.id === id 
-          ? { ...feedback, progress
-          : feedback
-      )
-    );
+    setFeedbacks(prev => prev.map(feedback => 
+      feedback.id === id ? { ...feedback, progress } : feedback
+    ));
+  }, []);
+
+  const dismissFeedback = useCallback((id: string) => {
+    setFeedbacks(prev => prev.filter(feedback => feedback.id !== id));
   }, []);
 
   const dismissAll = useCallback(() => {
     setFeedbacks([]);
   }, []);
 
-  const contextValue: FeedbackContextType = {
+  const value: FeedbackContextType = {
     feedbacks,
     showFeedback,
     showSuccess,
@@ -174,31 +110,25 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     showWarning,
     showInfo,
     showLoading,
-    showSuccessWithConfetti,
-    showErrorWithShake,
-    showLoadingWithProgress,
     updateProgress,
     dismissFeedback,
-    dismissAll,
+    dismissAll
   };
 
   return (
-    <FeedbackContext.Provider value={contextValue}>
+    <FeedbackContext.Provider value={value}>
       {children}
-      <FeedbackRenderer feedbacks={feedbacks} onDismiss={dismissFeedback} />
+      <FeedbackContainer />
     </FeedbackContext.Provider>
   );
 };
 
-const FeedbackRenderer: React.FC<{
-  feedbacks: FeedbackItem[];
-  onDismiss: (id: string) => void;
-}> = ({ feedbacks, onDismiss }) => {
-  // Group feedbacks by position to avoid overlapping
+const FeedbackContainer: React.FC = () => {
+  const { feedbacks, dismissFeedback } = useFeedback();
+
   const groupedFeedbacks = feedbacks.reduce((acc, feedback) => {
     const position = feedback.position || 'top-right';
-    if (!acc[position]) {
-      acc[position] = [];
+    if (!acc[position]) acc[position] = [];
     acc[position].push(feedback);
     return acc;
   }, {} as Record<string, FeedbackItem[]>);
@@ -206,67 +136,28 @@ const FeedbackRenderer: React.FC<{
   return (
     <>
       {Object.entries(groupedFeedbacks).map(([position, positionFeedbacks]) => (
-        <div key={position} className="fixed z-50">
-          <AnimatePresence mode="popLayout">
-            {positionFeedbacks.map((feedback, index) => {
-              const handleClose = () => onDismiss(feedback.id);
-
-              // Special animations for specific types
-              if (feedback.confetti && feedback.type === 'success') {
-                return (
-                  <SuccessAnimation
-                    key={feedback.id}
-                    message={feedback.message}
-                    isVisible={true}
-                    onClose={handleClose}
-                    showConfetti={true}
-                  />
-                );
-
-              if (feedback.shake && feedback.type === 'error') {
-                return (
-                  <ErrorAnimation
-                    key={feedback.id}
-                    message={feedback.message}
-                    isVisible={true}
-                    onClose={handleClose}
-                    shake={true}
-                  />
-                );
-
-              if (feedback.progress !== undefined && feedback.type === 'loading') {
-                return (
-                  <LoadingAnimation
-                    key={feedback.id}
-                    message={feedback.message}
-                    isVisible={true}
-                    progress={feedback.progress}
-                  />
-                );
-
-              // Default feedback animation
-              return (
-                <div
-                  key={feedback.id}
-                  style={{
-                    marginBottom: position.includes('bottom') ? ${index * 80}px : undefined,
-                    marginTop: position.includes('top') ? ${index * 80}px : undefined,
-                  }
-                >
-                  <FeedbackAnimation
-                    type={feedback.type as 'success' | 'error' | 'warning' | 'info'}
-                    message={feedback.message}
-                    isVisible={true}
-                    onClose={handleClose}
-                    duration={0} // Duration is handled by the provider
-                    position={feedback.position}
-                    showIcon={feedback.showIcon}
-                    showCloseButton={feedback.showCloseButton}
-                    action={feedback.action}
-                  />
+        <div
+          key={position}
+          className={`fixed z-50 pointer-events-none ${getPositionClasses(position)}`}
+        >
+          <AnimatePresence>
+            {positionFeedbacks.map(feedback => (
+              <div key={feedback.id} className="pointer-events-auto mb-2">
+                <div className="bg-white rounded-lg shadow-lg p-4 border">
+                  <div className="flex items-center justify-between">
+                    <span>{feedback.message}</span>
+                    {feedback.showCloseButton && (
+                      <button
+                        onClick={() => dismissFeedback(feedback.id)}
+                        className="ml-2 text-gray-400 hover:text-gray-600"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </AnimatePresence>
         </div>
       ))}
@@ -274,6 +165,21 @@ const FeedbackRenderer: React.FC<{
   );
 };
 
+const getPositionClasses = (position: string) => {
+  switch (position) {
+    case 'top-right':
+      return 'top-4 right-4';
+    case 'top-left':
+      return 'top-4 left-4';
+    case 'bottom-right':
+      return 'bottom-4 right-4';
+    case 'bottom-left':
+      return 'bottom-4 left-4';
+    case 'center':
+      return 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
+    default:
+      return 'top-4 right-4';
+  }
+};
+
 export default FeedbackProvider;
-}
-}

@@ -3,21 +3,23 @@ import { motion } from 'framer-motion';
 import { 
   BarChart3, 
   TrendingUp, 
-  Users, ;
-  Star, ;
-  AlertTriangle,;
-  Download,;
-  RefreshCw,;
-  Filter;
+  Users, 
+  Star, 
+  AlertTriangle,
+  Download,
+  RefreshCw,
+  Filter
 } from 'lucide-react';
 import Card from '../Card/Card';
-import { Button } from '../Button/Button';
+import Button from '../Button/Button';
 import { feedbackService, FeedbackAnalytics, FeedbackData } from '../../../services/feedbackService';
 
 interface FeedbackDashboardProps {
-className?: string;
+  className?: string;
+}
 
-export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className = ''
+export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ 
+  className = '' 
 }) => {
   const [analytics, setAnalytics] = useState<FeedbackAnalytics | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -37,6 +39,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
       console.error('Failed to load analytics:', error);
     } finally {
       setIsLoading(false);
+    }
   };
 
   const handleExport = () => {
@@ -45,84 +48,72 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = verifycert-feedback-${new Date().toISOString().split('T')[0]}.json;
+    a.download = `verifycert-feedback-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
-  const getRatingColor = (rating: number) => {
-    if (rating >= 4) return 'text-green-600';
-    if (rating >= 3) return 'text-yellow-600';
-    return 'text-red-600';
-  };
-
-  const getRatingBgColor = (rating: number) => {
-    if (rating >= 4) return 'bg-green-100';
-    if (rating >= 3) return 'bg-yellow-100';
-    return 'bg-red-100';
-  };
-
   if (isLoading) {
     return (
-      <div className={p-6 ${className}}>
-        <div className="flex items-center justify-center h-64">
-          <RefreshCw className="animate-spin text-blue-600" size={32} />
+      <div className={`space-y-6 ${className}`}>
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-48 mb-4"></div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-24 bg-gray-200 rounded"></div>
+            ))}
+          </div>
         </div>
       </div>
     );
+  }
 
-  if (!analytics || analytics.totalFeedback === 0) {
+  if (!analytics) {
     return (
-      <div className={p-6 ${className}}>
-        <Card className="text-center py-12">
-          <BarChart3 className="mx-auto text-gray-400 mb-4" size={48} />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No Feedback Yet</h3>
-          <p className="text-gray-600">
-            Start collecting user feedback to see analytics here.
-          </p>
-        </Card>
+      <div className={`text-center py-8 ${className}`}>
+        <p className="text-gray-500">No feedback data available</p>
       </div>
     );
+  }
 
   return (
-    <div className={space-y-6 ${className}}>
+    <div className={`space-y-6 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">Feedback Analytics</h2>
-          <p className="text-gray-600">User feedback insights and trends</p>
-        </div>
-        <div className="flex gap-3">
+        <h2 className="text-2xl font-bold text-gray-900">Feedback Dashboard</h2>
+        <div className="flex space-x-2">
           <Button
-            variant="secondary"
+            variant="outline"
+            size="sm"
             onClick={loadAnalytics}
-            className="flex items-center gap-2"
           >
-            <RefreshCw size={16} />
+            <RefreshCw className="w-4 h-4 mr-2" />
             Refresh
           </Button>
           <Button
-            variant="secondary"
+            variant="outline"
+            size="sm"
             onClick={handleExport}
-            className="flex items-center gap-2"
           >
-            <Download size={16} />
+            <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
         </div>
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Feedback</p>
-              <p className="text-2xl font-bold text-gray-900">{analytics.totalFeedback}</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {analytics.totalFeedback}
+              </p>
             </div>
-            <Users className="text-blue-600" size={24} />
+            <BarChart3 className="text-blue-600" size={24} />
           </div>
         </Card>
 
@@ -130,23 +121,23 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Average Rating</p>
-              <p className={text-2xl font-bold ${getRatingColor(analytics.averageRating)}}>
+              <p className="text-2xl font-bold text-gray-900">
                 {analytics.averageRating.toFixed(1)}
               </p>
             </div>
-            <Star className="text-yellow-500" size={24} />
+            <Star className="text-yellow-600" size={24} />
           </div>
         </Card>
 
         <Card className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Categories</p>
+              <p className="text-sm font-medium text-gray-600">Response Rate</p>
               <p className="text-2xl font-bold text-gray-900">
-                {Object.keys(analytics.categoryBreakdown).length}
+                {analytics.responseRate}%
               </p>
             </div>
-            <Filter className="text-green-600" size={24} />
+            <TrendingUp className="text-green-600" size={24} />
           </div>
         </Card>
 
@@ -168,149 +159,60 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Category Breakdown</h3>
         <div className="space-y-4">
           {Object.entries(analytics.categoryBreakdown).map(([category, data]) => (
-            <div key={category} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900 capitalize">
-                    {category.replace('-', ' ')}
-                  </h4>
-                  <div className="flex items-center gap-2">
-                    <span className={px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(data.averageRating)} ${getRatingColor(data.averageRating)}}>
-                      {data.averageRating.toFixed(1)} ⭐
-                    </span>
-                    <span className="text-sm text-gray-600">
-                      {data.count} responses
-                    </span>
-                  </div>
+            <div key={category} className="flex items-center justify-between">
+              <span className="text-sm font-medium text-gray-700 capitalize">
+                {category}
+              </span>
+              <div className="flex items-center space-x-2">
+                <div className="w-32 bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-blue-600 h-2 rounded-full" 
+                    style={{ width: `${(data.count / analytics.totalFeedback) * 100}%` }}
+                  ></div>
                 </div>
-                {data.commonIssues.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {data.commonIssues.map((issue, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded"
-                      >
-                        {issue}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
-
-      {/* Page Performance */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Page Performance</h3>
-        <div className="space-y-3">
-          {Object.entries(analytics.pageBreakdown)
-            .sort(([,a], [,b]) => b.count - a.count)
-            .map(([page, data]) => (
-            <div key={page} className="flex items-center justify-between p-3 border rounded-lg">
-              <div className="flex-1">
-                <span className="font-medium text-gray-900">{page}</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-600">
-                  {data.count} responses
-                </span>
-                <span className={px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(data.averageRating)} ${getRatingColor(data.averageRating)}}>
-                  {data.averageRating.toFixed(1)} ⭐
+                <span className="text-sm text-gray-500 w-8 text-right">
+                  {data.count}
                 </span>
               </div>
             </div>
           ))}
         </div>
       </Card>
-
-      {/* Trends Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Improvement Areas */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <TrendingUp className="text-red-600" size={20} />
-            Needs Improvement
-          </h3>
-          <div className="space-y-2">
-            {analytics.trends.improvementAreas.map((area, index) => (
-              <div key={index} className="px-3 py-2 bg-red-50 text-red-700 rounded-lg text-sm">
-                {area}
-              </div>
-            ))}
-            {analytics.trends.improvementAreas.length === 0 && (
-              <p className="text-gray-500 text-sm">No major issues identified</p>
-            )}
-          </div>
-        </Card>
-
-        {/* Positive Aspects */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Star className="text-green-600" size={20} />
-            Positive Feedback
-          </h3>
-          <div className="space-y-2">
-            {analytics.trends.positiveAspects.map((aspect, index) => (
-              <div key={index} className="px-3 py-2 bg-green-50 text-green-700 rounded-lg text-sm">
-                {aspect}
-              </div>
-            ))}
-            {analytics.trends.positiveAspects.length === 0 && (
-              <p className="text-gray-500 text-sm">No positive trends identified</p>
-            )}
-          </div>
-        </Card>
-
-        {/* Urgent Issues */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <AlertTriangle className="text-orange-600" size={20} />
-            Urgent Issues
-          </h3>
-          <div className="space-y-2">
-            {analytics.trends.urgentIssues.map((issue, index) => (
-              <div key={index} className="px-3 py-2 bg-orange-50 text-orange-700 rounded-lg text-sm">
-                {issue}
-              </div>
-            ))}
-            {analytics.trends.urgentIssues.length === 0 && (
-              <p className="text-gray-500 text-sm">No urgent issues</p>
-            )}
-          </div>
-        </Card>
-      </div>
 
       {/* Recent Feedback */}
       <Card className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Feedback</h3>
         <div className="space-y-4">
-          {analytics.recentFeedback.map((feedback, index) => (
+          {analytics.recentFeedback.slice(0, 5).map((feedback) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }
-              animate={{ opacity: 1, y: 0 }
-              transition={{ delay: index * 0.1 }
-              className="p-4 border rounded-lg"
+              key={feedback.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="border-l-4 border-blue-500 pl-4 py-2"
             >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <span className={px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(feedback.rating)} ${getRatingColor(feedback.rating)}}>
-                    {feedback.rating} ⭐
-                  </span>
-                  <span className="text-sm text-gray-600 capitalize">
-                    {feedback.category.replace('-', ' ')}
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    {feedback.page}
-                  </span>
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <p className="text-sm text-gray-900">{feedback.message}</p>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <span className="text-xs text-gray-500">
+                      {feedback.page}
+                    </span>
+                    <span className="text-xs text-gray-400">•</span>
+                    <span className="text-xs text-gray-500">
+                      {new Date(feedback.timestamp).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-xs text-gray-500">
-                  {new Date(feedback.timestamp).toLocaleDateString()}
-                </span>
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={12}
+                      className={i < feedback.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+                    />
+                  ))}
+                </div>
               </div>
-              <p className="text-gray-700 text-sm">{feedback.feedback}</p>
             </motion.div>
           ))}
         </div>
@@ -318,5 +220,5 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
     </div>
   );
 };
-}
-}
+
+export default FeedbackDashboard;

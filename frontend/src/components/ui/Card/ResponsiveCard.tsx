@@ -9,6 +9,7 @@ children: React.ReactNode;
   hover?: boolean;
   interactive?: boolean;
   as?: keyof JSX.IntrinsicElements;
+}
 
 const ResponsiveCard: React.FC<ResponsiveCardProps> = ({
   children,
@@ -53,4 +54,3 @@ const ResponsiveCard: React.FC<ResponsiveCardProps> = ({
 };
 
 export default ResponsiveCard;
-}

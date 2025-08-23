@@ -20,7 +20,6 @@ const CertificateCard = ({
   showActions = false, 
   onRevoke,
   onDownload,
-  onShare,
   variant = 'default',
   className = ''
 }) => {

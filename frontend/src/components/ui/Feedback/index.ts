@@ -1,7 +1,7 @@
 export { FeedbackCollector } from './FeedbackCollector';
 export { FeedbackButton } from './FeedbackButton';
 export { FeedbackDashboard } from './FeedbackDashboard';
-export { ;
+export { 
   FeedbackIntegration,
   NavigationFeedback,
   VisualDesignFeedback,
@@ -11,7 +11,7 @@ export { ;
 
 // Re-export service and hooks
 export { feedbackService } from '../../../services/feedbackService';
-export { ;
+export { 
   useFeedbackTrigger,
   useNavigationFeedback,
   useVisualDesignFeedback,

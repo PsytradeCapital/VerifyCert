@@ -59,6 +59,9 @@ router.get('/:tokenId', async (req, res) => {
         isRevoked: certificateData.isRevoked,
         issuer: certificateData.issuer,
         owner: owner,
+        grade: certificateData.grade || '',
+        credits: Number(certificateData.credits) || 0,
+        certificateType: certificateData.certificateType || 'Basic',
         tokenId: tokenId
       };
 
@@ -177,6 +180,9 @@ router.get('/batch/:tokenIds', async (req, res) => {
               isRevoked: certificateData.isRevoked,
               issuer: certificateData.issuer,
               owner: owner,
+              grade: certificateData.grade || '',
+              credits: Number(certificateData.credits) || 0,
+              certificateType: certificateData.certificateType || 'Basic',
               tokenId: tokenId
             }
           };

@@ -1,7 +1,67 @@
 src/components/auth/LoginForm.tsx(98,13): error TS1005: '}' expected.
+src/components/ui/Badge/__tests__/BlockchainProofIndicator.test.tsx(302,14): error TS1005: ',' expected.
+src/components/ui/Badge/__tests__/BlockchainProofIndicator.test.tsx(321,14): error TS1005: ',' expected.
+src/components/ui/Badge/__tests__/VerificationBadge.test.tsx(280,6): error TS1128: Declaration or statement expected.
+src/components/ui/Badge/__tests__/VerificationBadge.test.tsx(311,8): error TS1128: Declaration or statement expected.
+src/components/ui/Badge/__tests__/VerificationBadge.test.tsx(315,1): error TS1128: Declaration or statement expected.
+src/components/ui/Card/__tests__/Card.test.tsx(12,2): error TS1005: ',' expected.
+src/components/ui/Card/__tests__/Card.test.tsx(16,38): error TS1005: ',' expected.
+src/components/ui/Card/__tests__/Card.test.tsx(18,6): error TS1003: Identifier expected.
+src/components/ui/Card/__tests__/Card.test.tsx(18,34): error TS1138: Parameter declaration expected.
+src/components/ui/Card/__tests__/Card.test.tsx(18,36): error TS1138: Parameter declaration expected.
+src/components/ui/Card/__tests__/Card.test.tsx(18,39): error TS1005: ';' expected.
+src/components/ui/Card/__tests__/Card.test.tsx(21,4): error TS1128: Declaration or statement expected.
+src/components/ui/Card/__tests__/Card.test.tsx(150,1): error TS1128: Declaration or statement expected.
+src/components/ui/Card/__tests__/Card.test.tsx(150,2): error TS1128: Declaration or statement expected.
+src/components/ui/Card/__tests__/Card.test.tsx(151,1): error TS1128: Declaration or statement expected.
+src/components/ui/Card/Card.stories.tsx(37,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(39,8): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(39,16): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(39,20): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(40,6): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(40,35): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(43,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(43,21): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(55,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(57,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(57,22): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(69,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(71,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(71,22): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(83,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(86,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(86,31): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(115,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(118,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(118,25): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(135,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(138,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(138,25): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(168,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(170,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(170,25): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(203,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(205,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(205,22): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(219,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(222,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(222,25): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(245,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(248,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(248,31): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(251,74): error TS1005: '}' expected.
+src/components/ui/Card/Card.stories.tsx(257,75): error TS1005: '}' expected.
+src/components/ui/Card/Card.stories.tsx(263,75): error TS1005: '}' expected.
+src/components/ui/Card/Card.stories.tsx(271,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(274,14): error TS1005: ':' expected.
+src/components/ui/Card/Card.stories.tsx(274,26): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(289,2): error TS1005: ',' expected.
+src/components/ui/Card/Card.stories.tsx(291,2): error TS1005: '}' expected.
 src/components/ui/Card/ResponsiveCard.tsx(13,7): error TS1005: ';' expected.
 src/components/ui/Card/ResponsiveCard.tsx(55,8): error TS1005: ';' expected.
 src/components/ui/Card/ResponsiveCard.tsx(55,16): error TS1005: ';' expected.
+src/components/ui/Certificate/__tests__/CertificateMetadata.test.tsx(179,6): error TS1128: Declaration or statement expected.
+src/components/ui/Certificate/__tests__/CertificateMetadata.test.tsx(273,1): error TS1128: Declaration or statement expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(105,24): error TS1005: ',' expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(105,27): error TS1005: ',' expected.
 src/components/ui/CertificateCard/CertificateCard.tsx(105,50): error TS1005: ',' expected.
@@ -144,6 +204,8 @@ src/components/ui/Dashboard/QuickStats.tsx(94,9): error TS17002: Expected corres
 src/components/ui/Dashboard/QuickStats.tsx(95,5): error TS1005: ')' expected.
 src/components/ui/Dashboard/QuickStats.tsx(96,3): error TS1109: Expression expected.
 src/components/ui/Dashboard/QuickStats.tsx(101,1): error TS1128: Declaration or statement expected.
+src/components/ui/Feedback/__tests__/FeedbackAnimations.test.tsx(166,8): error TS1109: Expression expected.
+src/components/ui/Feedback/__tests__/FeedbackAnimations.test.tsx(167,5): error TS1109: Expression expected.
 src/components/ui/Feedback/FeedbackDashboard.tsx(6,10): error TS1003: Identifier expected.
 src/components/ui/Feedback/FeedbackDashboard.tsx(7,9): error TS1003: Identifier expected.
 src/components/ui/Feedback/FeedbackDashboard.tsx(8,17): error TS1003: Identifier expected.
@@ -293,6 +355,12 @@ src/components/ui/Feedback/FeedbackManager.tsx(278,1): error TS1128: Declaration
 src/components/ui/Feedback/FeedbackManager.tsx(279,1): error TS1128: Declaration or statement expected.
 src/components/ui/Feedback/index.ts(4,10): error TS1003: Identifier expected.
 src/components/ui/Feedback/index.ts(14,10): error TS1003: Identifier expected.
+src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(141,6): error TS1005: ',' expected.
+src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(147,6): error TS1005: ',' expected.
+src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(221,6): error TS1005: ',' expected.
+src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(228,6): error TS1005: ',' expected.
+src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(246,1): error TS1128: Declaration or statement expected.
+src/components/ui/FileUpload/__tests__/FileUpload.test.tsx(247,1): error TS1128: Declaration or statement expected.
 src/components/ui/FloatingActionButton/FloatingActionButton.tsx(12,1): error TS1131: Property or signature expected.
 src/components/ui/FloatingActionButton/FloatingActionButton.tsx(14,1): error TS1128: Declaration or statement expected.
 src/components/ui/FloatingActionButton/FloatingActionButton.tsx(15,1): error TS1128: Declaration or statement expected.
@@ -428,6 +496,8 @@ src/components/ui/index.ts(136,14): error TS1003: Identifier expected.
 src/components/ui/index.ts(149,14): error TS1003: Identifier expected.
 src/components/ui/index.ts(158,14): error TS1003: Identifier expected.
 src/components/ui/index.ts(172,14): error TS1003: Identifier expected.
+src/components/ui/Input/__tests__/Input.test.tsx(261,10): error TS1109: Expression expected.
+src/components/ui/Input/__tests__/Input.test.tsx(262,7): error TS1109: Expression expected.
 src/components/ui/Input/Input.tsx(6,1): error TS1128: Declaration or statement expected.
 src/components/ui/Input/Input.tsx(7,1): error TS1128: Declaration or statement expected.
 src/components/ui/Input/Input.tsx(8,1): error TS1128: Declaration or statement expected.
@@ -454,6 +524,27 @@ src/components/ui/Input/Input.tsx(77,11): error TS1003: Identifier expected.
 src/components/ui/Input/Input.tsx(81,10): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
 src/components/ui/Input/Input.tsx(112,1): error TS1128: Declaration or statement expected.
 src/components/ui/Input/Input.tsx(112,2): error TS1128: Declaration or statement expected.
+src/components/ui/Layout/__tests__/AppLayout.test.tsx(44,1): error TS1005: ',' expected.
+src/components/ui/Layout/__tests__/AppLayout.test.tsx(59,1): error TS1005: ',' expected.
+src/components/ui/Layout/__tests__/AppLayout.test.tsx(191,1): error TS1128: Declaration or statement expected.
+src/components/ui/Layout/__tests__/Container.test.tsx(146,6): error TS1128: Declaration or statement expected.
+src/components/ui/Layout/__tests__/Container.test.tsx(149,1): error TS1128: Declaration or statement expected.
+src/components/ui/Layout/__tests__/Grid.test.tsx(139,50): error TS1005: ',' expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(10,18): error TS1003: Identifier expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(11,12): error TS1003: Identifier expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(12,15): error TS1003: Identifier expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(13,17): error TS1003: Identifier expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(14,18): error TS1003: Identifier expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(15,17): error TS1005: ',' expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(110,11): error TS1005: '}' expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(111,11): error TS1005: '}' expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(112,10): error TS1109: Expression expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(113,7): error TS1109: Expression expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(124,11): error TS1005: '}' expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(125,10): error TS1109: Expression expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(126,7): error TS1109: Expression expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(325,1): error TS1128: Declaration or statement expected.
+src/components/ui/Layout/__tests__/ResponsiveUtility.test.tsx(326,1): error TS1128: Declaration or statement expected.
 src/components/ui/Layout/AppLayout.tsx(19,7): error TS1005: ';' expected.
 src/components/ui/Layout/AppLayout.tsx(59,4): error TS1128: Declaration or statement expected.
 src/components/ui/Layout/AppLayout.tsx(59,22): error TS1005: ';' expected.
@@ -1042,6 +1133,16 @@ src/components/ui/Loading/StepProgress.tsx(201,3): error TS1109: Expression expe
 src/components/ui/Loading/StepProgress.tsx(202,1): error TS1128: Declaration or statement expected.
 src/components/ui/Loading/StepProgress.tsx(205,1): error TS1128: Declaration or statement expected.
 src/components/ui/Loading/StepProgress.tsx(206,1): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(10,39): error TS1005: ',' expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(12,14): error TS1138: Parameter declaration expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(12,17): error TS1005: ';' expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(14,4): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(62,4): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(71,4): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(144,1): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(144,2): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(145,1): error TS1128: Declaration or statement expected.
+src/components/ui/Modal/__tests__/Modal.test.tsx(146,1): error TS1128: Declaration or statement expected.
 src/components/ui/Modal/Dialog.tsx(6,1): error TS1128: Declaration or statement expected.
 src/components/ui/Modal/Dialog.tsx(7,1): error TS1128: Declaration or statement expected.
 src/components/ui/Modal/Dialog.tsx(8,1): error TS1128: Declaration or statement expected.
@@ -1071,6 +1172,27 @@ src/components/ui/Modal/Modal.tsx(115,11): error TS1109: Expression expected.
 src/components/ui/Modal/Modal.tsx(116,12): error TS1109: Expression expected.
 src/components/ui/Modal/Modal.tsx(140,1): error TS1128: Declaration or statement expected.
 src/components/ui/Modal/Modal.tsx(141,1): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(35,3): error TS1136: Property assignment expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(40,3): error TS1136: Property assignment expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(53,1): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(93,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(116,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(134,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(152,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(254,1): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/BottomNavigation.test.tsx(255,1): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/Breadcrumbs.test.tsx(12,3): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/Breadcrumbs.test.tsx(28,3): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/Breadcrumbs.test.tsx(97,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/Breadcrumbs.test.tsx(127,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/Breadcrumbs.test.tsx(164,1): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/Breadcrumbs.test.tsx(165,1): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/SideNavigation.test.tsx(32,5): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/SideNavigation.test.tsx(40,1): error TS1005: ',' expected.
+src/components/ui/Navigation/__tests__/SideNavigation.test.tsx(119,4): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/SideNavigation.test.tsx(133,4): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/SideNavigation.test.tsx(157,1): error TS1128: Declaration or statement expected.
+src/components/ui/Navigation/__tests__/SideNavigation.test.tsx(158,1): error TS1128: Declaration or statement expected.
 src/components/ui/Navigation/BottomNavigation.tsx(15,1): error TS1131: Property or signature expected.
 src/components/ui/Navigation/BottomNavigation.tsx(17,1): error TS1128: Declaration or statement expected.
 src/components/ui/Navigation/BottomNavigation.tsx(18,1): error TS1128: Declaration or statement expected.
@@ -1369,6 +1491,8 @@ src/components/ui/OptimizedImage.tsx(335,9): error TS1381: Unexpected token. Did
 src/components/ui/OptimizedImage.tsx(352,8): error TS1005: ';' expected.
 src/components/ui/OptimizedImage.tsx(352,16): error TS1005: ';' expected.
 src/components/ui/OptimizedImage.tsx(354,1): error TS1128: Declaration or statement expected.
+src/components/ui/Performance/__tests__/PerformanceDashboard.test.tsx(38,2): error TS1128: Declaration or statement expected.
+src/components/ui/Performance/__tests__/PerformanceDashboard.test.tsx(335,1): error TS1128: Declaration or statement expected.
 src/components/ui/Performance/PerformanceAlert.tsx(9,1): error TS1131: Property or signature expected.
 src/components/ui/Performance/PerformanceAlert.tsx(11,1): error TS1128: Declaration or statement expected.
 src/components/ui/Performance/PerformanceAlert.tsx(12,1): error TS1128: Declaration or statement expected.
@@ -1508,6 +1632,13 @@ src/components/ui/PushNotificationSettings.tsx(256,3): error TS1109: Expression 
 src/components/ui/PushNotificationSettings.tsx(257,1): error TS1128: Declaration or statement expected.
 src/components/ui/PushNotificationSettings.tsx(260,1): error TS1128: Declaration or statement expected.
 src/components/ui/PushNotificationSettings.tsx(261,1): error TS1128: Declaration or statement expected.
+src/components/ui/Select/__tests__/Dropdown.test.tsx(9,3): error TS1136: Property assignment expected.
+src/components/ui/Select/__tests__/Dropdown.test.tsx(12,1): error TS1005: ',' expected.
+src/components/ui/Select/__tests__/Dropdown.test.tsx(146,1): error TS1128: Declaration or statement expected.
+src/components/ui/Select/__tests__/MultiSelect.test.tsx(16,1): error TS1005: ',' expected.
+src/components/ui/Select/__tests__/MultiSelect.test.tsx(124,1): error TS1128: Declaration or statement expected.
+src/components/ui/Select/__tests__/Select.test.tsx(15,1): error TS1005: ',' expected.
+src/components/ui/Select/__tests__/Select.test.tsx(227,1): error TS1128: Declaration or statement expected.
 src/components/ui/Settings/SettingsPanel.tsx(14,1): error TS1131: Property or signature expected.
 src/components/ui/Settings/SettingsPanel.tsx(16,1): error TS1128: Declaration or statement expected.
 src/components/ui/Settings/SettingsPanel.tsx(17,1): error TS1128: Declaration or statement expected.
@@ -1574,6 +1705,18 @@ src/components/ui/SkipLinks/SkipLinks.tsx(79,5): error TS1128: Declaration or st
 src/components/ui/SkipLinks/SkipLinks.tsx(80,3): error TS1109: Expression expected.
 src/components/ui/SkipLinks/SkipLinks.tsx(81,1): error TS1128: Declaration or statement expected.
 src/components/ui/SkipLinks/SkipLinks.tsx(84,1): error TS1128: Declaration or statement expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(11,2): error TS1005: ',' expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(16,40): error TS1005: ',' expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(18,14): error TS1138: Parameter declaration expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(18,17): error TS1005: ';' expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(20,4): error TS1128: Declaration or statement expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(179,80): error TS1109: Expression expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(179,81): error TS1109: Expression expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(206,4): error TS1128: Declaration or statement expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(207,1): error TS1128: Declaration or statement expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(207,2): error TS1128: Declaration or statement expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(208,1): error TS1128: Declaration or statement expected.
+src/components/ui/Tooltip/__tests__/Tooltip.test.tsx(209,1): error TS1128: Declaration or statement expected.
 src/components/ui/Tooltip/Tooltip.tsx(15,7): error TS1005: ';' expected.
 src/components/ui/Tooltip/Tooltip.tsx(89,4): error TS1128: Declaration or statement expected.
 src/components/ui/Tooltip/Tooltip.tsx(89,27): error TS1005: ';' expected.
@@ -1614,6 +1757,9 @@ src/components/ui/Tooltip/Tooltip.tsx(200,3): error TS1109: Expression expected.
 src/components/ui/Tooltip/Tooltip.tsx(201,1): error TS1128: Declaration or statement expected.
 src/components/ui/Tooltip/Tooltip.tsx(204,1): error TS1128: Declaration or statement expected.
 src/components/ui/Tooltip/Tooltip.tsx(205,1): error TS1128: Declaration or statement expected.
+src/components/ui/VerificationResult/__tests__/VerificationResult.test.tsx(203,9): error TS1005: '}' expected.
+src/components/ui/VerificationResult/__tests__/VerificationResult.test.tsx(213,9): error TS1005: '}' expected.
+src/components/ui/VerificationResult/__tests__/VerificationResult.test.tsx(223,9): error TS1005: '}' expected.
 src/components/ui/VerificationResult/VerificationResult.tsx(9,16): error TS1003: Identifier expected.
 src/components/ui/VerificationResult/VerificationResult.tsx(10,12): error TS1003: Identifier expected.
 src/components/ui/VerificationResult/VerificationResult.tsx(11,10): error TS1003: Identifier expected.

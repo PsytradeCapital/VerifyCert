@@ -3,22 +3,21 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface ActivityItem {
-id: string;
+  id: string;
   type: 'issued' | 'verified' | 'revoked';
   title: string;
   description: string;
   timestamp: Date;
   recipient?: string;
   certificateId?: string;
+}
 
 export interface ActivityFeedProps {
-}
-}
-}
   activities: ActivityItem[];
   maxItems?: number;
   isLoading?: boolean;
   className?: string;
+}
 
 const ActivityFeed: React.FC<ActivityFeedProps> = ({
   activities,
@@ -67,9 +66,9 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
     
     if (diffInSeconds < 60) return 'Just now';
-    if (diffInSeconds < 3600) return ${Math.floor(diffInSeconds / 60)}m ago;
-    if (diffInSeconds < 86400) return ${Math.floor(diffInSeconds / 3600)}h ago;
-    if (diffInSeconds < 604800) return ${Math.floor(diffInSeconds / 86400)}d ago;
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
     
     return date.toLocaleDateString();
   };
@@ -120,9 +119,9 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
             {displayActivities.map((activity, index) => (
               <motion.div
                 key={activity.id}
-                initial={{ opacity: 0, x: -20 }
-                animate={{ opacity: 1, x: 0 }
-                transition={{ duration: 0.3, delay: index * 0.1 }
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 {getActivityIcon(activity.type)}
@@ -154,4 +153,3 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
 };
 
 export default ActivityFeed;
-}

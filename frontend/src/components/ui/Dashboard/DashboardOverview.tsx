@@ -3,21 +3,20 @@ import { motion } from 'framer-motion';
 import MetricCard from './MetricCard';
 
 export interface DashboardStats {
-totalIssued: number;
+  totalIssued: number;
   thisMonth: number;
   thisWeek: number;
   activeRecipients: number;
   previousMonth?: number;
   previousWeek?: number;
   growthRate?: number;
+}
 
 export interface DashboardOverviewProps {
-}
-}
-}
   stats: DashboardStats;
   isLoading?: boolean;
   className?: string;
+}
 
 const DashboardOverview: React.FC<DashboardOverviewProps> = ({
   stats,
@@ -32,6 +31,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           : Math.round(((stats.thisMonth - stats.previousMonth) / stats.previousMonth) * 100),
         isPositive: stats.thisMonth >= (stats.previousMonth || 0),
         label: 'vs last month'
+      }
     : undefined;
 
   const weeklyTrend = stats.previousWeek !== undefined
@@ -41,6 +41,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           : Math.round(((stats.thisWeek - stats.previousWeek) / stats.previousWeek) * 100),
         isPositive: stats.thisWeek >= (stats.previousWeek || 0),
         label: 'vs last week'
+      }
     : undefined;
 
   const containerVariants = {
@@ -49,6 +50,8 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       opacity: 1,
       transition: {
         staggerChildren: 0.1
+      }
+    }
   };
 
   const itemVariants = {
@@ -59,11 +62,13 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       transition: {
         duration: 0.4,
         ease: "easeOut"
+      }
+    }
   };
 
   if (isLoading) {
     return (
-      <div className={grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}}>
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}`}>
         {[...Array(4)].map((_, index) => (
           <div key={index} className="bg-white rounded-lg shadow p-6 animate-pulse">
             <div className="flex items-center">
@@ -77,10 +82,11 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         ))}
       </div>
     );
+  }
 
   return (
     <motion.div 
-      className={grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}}
+      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -127,5 +133,3 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 };
 
 export default DashboardOverview;
-}
-}

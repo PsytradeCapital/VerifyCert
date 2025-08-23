@@ -179,4 +179,4 @@ describe('ProtectedRoute Component', () => {
   });
 });
 }
-}}}}}}
+}

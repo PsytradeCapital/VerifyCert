@@ -1,130 +1,84 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../components/ThemeProvider';
 
 interface NavigationProps {
-walletAddress?: string | null;
-  isWalletConnected?: boolean;
-  onWalletConnect?: (address: string, provider: any) => void;
-  onWalletDisconnect?: () => void;
-}}
+  className?: string;
+}
 
-export const Navigation: React.FC<NavigationProps> = ({
-  walletAddress,
-  isWalletConnected,
-  onWalletConnect,
-  onWalletDisconnect
-}) => {
-  const { isAuthenticated, user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+export const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleWalletConnect = () => {
-    if (onWalletConnect) {
-      onWalletConnect('0x1234...5678', null);
-  };
-
+  
+  const navItems = [
+    { path: '/', label: 'Home' },
+    { path: '/verify', label: 'Verify' },
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/settings', label: 'Settings' }
+  ];
+  
   const isActive = (path: string) => location.pathname === path;
-
+  
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
+    <nav className={`bg-white shadow-sm border-b border-gray-200 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="bg-blue-600 rounded-lg p-2">
-                <span className="text-white font-bold">🛡️</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">VerifyCert</span>
+            <Link to="/" className="flex-shrink-0 flex items-center">
+              <span className="text-xl font-bold text-blue-600">VerifyCert</span>
             </Link>
           </div>
-
+          
           <div className="hidden md:flex items-center space-x-8">
-            <div className="flex items-center space-x-6">
+            {navItems.map((item) => (
               <Link
-                to="/"
+                key={item.path}
+                to={item.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/') 
-                    ? 'text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-300' 
-                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  isActive(item.path)
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                 }`}
               >
-                🏠 Home
+                {item.label}
               </Link>
-              
-              <Link
-                to="/verify"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/verify') 
-                    ? 'text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-300' 
-                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-              >
-                🔍 Verify
-              </Link>
-
-              {isAuthenticated && (
-                <Link
-                  to="/dashboard"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive('/dashboard') 
-                      ? 'text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-300' 
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  📊 Dashboard
-                </Link>
-              )}
-            </div>
-
+            ))}
+          </div>
+          
+          <div className="md:hidden flex items-center">
             <button
-              onClick={handleWalletConnect}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-700 hover:text-blue-600 focus:outline-none"
             >
-              {isWalletConnected ? `Connected: ${walletAddress?.slice(0, 6)}...` : 'Connect Wallet'}
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
-
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              {theme === 'dark' ? '☀️' : '🌙'}
-            </button>
-
-            {isAuthenticated && user ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-700 dark:text-gray-300">
-                  👤 {user.name}
-                </span>
-                <button
-                  onClick={logout}
-                  className="text-gray-700 dark:text-gray-300 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/login"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/signup"
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Sign Up
-                </Link>
-              </div>
-            )}
           </div>
         </div>
+        
+        {isOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
 };
-}
+
+export default Navigation;

@@ -11,7 +11,7 @@ totalCertificates: number;
   monthlyIssuance: Array<{
     month: string;
     count: number;
-}}}>;
+}>;
   topInstitutions: Array<{
     name: string;
     count: number;
@@ -72,7 +72,7 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
     suffix?: string;
   }> = ({ title, value, icon, color, suffix = '' }) => (
     <Card variant="elevated" padding="lg" hover className="text-center">
-      <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${color} mb-4`}>
+      <div className={inline-flex items-center justify-center w-12 h-12 rounded-full ${color} mb-4}>
         {icon}
       </div>
       <div className="text-3xl font-bold text-gray-900 mb-1">
@@ -83,7 +83,7 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
   );
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={space-y-6 ${className}}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Total Certificates"
@@ -123,9 +123,9 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
                   <div className="flex-1 bg-gray-200 rounded-full h-6 relative overflow-hidden">
                     <motion.div
                       className="h-full bg-blue-500 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(item.count / maxValue) * 100}%` }}
-                      transition={{ duration: 1, delay: index * 0.1 }}
+                      initial={{ width: 0 }
+                      animate={{ width: ${(item.count / maxValue) * 100}% }
+                      transition={{ duration: 1, delay: index * 0.1 }
                     />
                     <div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
                       {item.count}
@@ -147,9 +147,9 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
               <motion.div
                 key={institution.name}
                 className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                initial={{ opacity: 0, x: -20 }
+                animate={{ opacity: 1, x: 0 }
+                transition={{ duration: 0.5, delay: index * 0.1 }
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -165,9 +165,9 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
                   <div className="w-20 bg-gray-200 rounded-full h-2">
                     <motion.div
                       className="bg-blue-500 h-2 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${institution.percentage}%` }}
-                      transition={{ duration: 1, delay: index * 0.1 }}
+                      initial={{ width: 0 }
+                      animate={{ width: ${institution.percentage}% }
+                      transition={{ duration: 1, delay: index * 0.1 }
                     />
                   </div>
                 </div>

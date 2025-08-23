@@ -2,7 +2,6 @@ export interface ValidationAnimationConfig {
   duration: number;
   easing: string;
 }
-
 export const defaultAnimationConfig: ValidationAnimationConfig = {
   duration: 300,
   easing: 'ease-in-out'

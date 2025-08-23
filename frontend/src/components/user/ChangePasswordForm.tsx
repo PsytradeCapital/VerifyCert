@@ -114,9 +114,9 @@ export const ChangePasswordForm: React.FC = () => {
           name={name}
           value={value}
           onChange={handleChange}
-          className={`w-full px-3 py-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
+          className={w-full px-3 py-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white ${
             error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-          }`}
+          }}
           disabled={isLoading}
         />
         <button
@@ -170,12 +170,12 @@ export const ChangePasswordForm: React.FC = () => {
               }).map(([key, text]) => (
                 <div key={key} className="flex items-center text-sm">
                   <Check 
-                    size={16} 
-                    className={`mr-2 ${
+                    size={16}
+                    className={mr-2 ${
                       passwordRequirements[key as keyof typeof passwordRequirements] 
                         ? 'text-green-500' 
                         : 'text-gray-400 dark:text-gray-600'
-                    }`}
+                    }}
                   />
                   <span className={
                     passwordRequirements[key as keyof typeof passwordRequirements]
@@ -189,7 +189,6 @@ export const ChangePasswordForm: React.FC = () => {
             </div>
           </div>
         )}
-
         <PasswordInput
           name="confirmPassword"
           label="Confirm New Password"
@@ -214,4 +213,4 @@ export const ChangePasswordForm: React.FC = () => {
 
 export default ChangePasswordForm;
 }
-}}}}}}}
+}

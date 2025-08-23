@@ -248,19 +248,19 @@ export const AllVariants: Story = {
 export const AnimationShowcase: Story = {
   render: () => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <Card variant="default" padding="md" hover={true} onClick={() => {}}>
+      <Card variant="default" padding="md" hover={true} onClick={() => {}>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">Default Animation</h3>
         <p className="text-gray-600 text-sm">
           Hover me to see the subtle lift and shadow effect.
         </p>
       </Card>
-      <Card variant="elevated" padding="md" hover={true} onClick={() => {}}>
+      <Card variant="elevated" padding="md" hover={true} onClick={() => {}>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">Elevated Animation</h3>
         <p className="text-gray-600 text-sm">
           Enhanced shadow and lift for a more dramatic effect.
         </p>
       </Card>
-      <Card variant="outlined" padding="md" hover={true} onClick={() => {}}>
+      <Card variant="outlined" padding="md" hover={true} onClick={() => {}>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">Outlined Animation</h3>
         <p className="text-gray-600 text-sm">
           Border color change with subtle lift animation.
@@ -288,4 +288,4 @@ export const NoAnimations: Story = {
     )
 };
 }
-}}}}}}}}}}}
+}

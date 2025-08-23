@@ -24,7 +24,7 @@ class ErrorLogger {
     window.addEventListener('online', () => {
       this.isOnline = true;
       this.flushErrorQueue();
-}}});
+});
     
     window.addEventListener('offline', () => {
       this.isOnline = false;
@@ -33,7 +33,7 @@ class ErrorLogger {
     // Listen for unhandled promise rejections
     window.addEventListener('unhandledrejection', (event) => {
       this.logError(
-        new Error(`Unhandled Promise Rejection: ${event.reason}`),
+        new Error(Unhandled Promise Rejection: ${event.reason}),
         undefined,
         'javascript',
         'high',
@@ -92,7 +92,7 @@ class ErrorLogger {
 
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.group(`🚨 Error Report [${severity.toUpperCase()}]`);
+      console.group(🚨 Error Report [${severity.toUpperCase()}]);
       console.error('Error:', error);
       console.log('Error Report:', errorReport);
       if (errorInfo) {
@@ -269,8 +269,8 @@ export const logBlockchainError = (
   error: Error,
   operation: string,
   contractAddress?: string,;
-  transactionHash?: string,;;
-  walletAddress?: string;;
+  transactionHash?: string,;
+  walletAddress?: string;
 ) => {
   errorLogger.logBlockchainError(error, operation, contractAddress, transactionHash, walletAddress);
 };
@@ -283,4 +283,4 @@ export const logValidationError = (error: Error, formData: Record<string, any>, 
   errorLogger.logValidationError(error, formData, fieldName);
 };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

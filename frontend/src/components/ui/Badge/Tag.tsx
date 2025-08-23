@@ -14,7 +14,7 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
   removable?: boolean;
   onRemove?: () => void;
 
-export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(;;
+export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(;
   ({ 
     className, 
     color = 'gray', 
@@ -67,7 +67,7 @@ export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(;;
             onClick={(e) => {
               e.stopPropagation();
               onRemove();
-            }}
+            }
             className="ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors flex-shrink-0"
           >
             <X className="h-3 w-3" />

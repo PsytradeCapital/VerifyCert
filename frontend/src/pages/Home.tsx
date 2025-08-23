@@ -1,164 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircleIcon, ShieldCheckIcon, QrCodeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
-export default function Home(): JSX.Element {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const features = [
-    {
-      icon: ShieldCheckIcon,
-      title: 'Issue tamper-proof certificates',
-      description: 'Create secure, blockchain-based certificates that cannot be forged or altered.'
-    },
-    {
-      icon: CheckCircleIcon,
-      title: 'Verify certificate authenticity',
-      description: 'Instantly verify any certificate using our decentralized verification system.'
-    },
-    {
-      icon: GlobeAltIcon,
-      title: 'Blockchain-based security',
-      description: 'Powered by Polygon blockchain for maximum security and transparency.'
-    },
-    {
-      icon: QrCodeIcon,
-      title: 'QR code verification',
-      description: 'Quick and easy verification using QR codes for instant authentication.'
-    }
-  ];
-
+export const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className={`text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              VerifyCert
-            </span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
+            <span className="block">Verify Certificates</span>
+            <span className="block text-blue-600">On the Blockchain</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Decentralized Certificate Verification System
-          </p>
-          <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
-            Issue, verify, and manage digital certificates on the blockchain with complete security and transparency.
+          
+          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+            VerifyCert provides tamper-proof digital certificate verification using blockchain technology.
+            Issue, verify, and manage certificates with complete transparency and security.
           </p>
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link
-              to="/issuer-dashboard"
-              className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Issue Certificates
-            </Link>
-            <Link
-              to="/verify"
-              className="inline-flex items-center px-8 py-4 border-2 border-blue-600 text-lg font-medium rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Verify Certificate
-            </Link>
-          </div>
-        </div>
-
-        {/* Features Section */}
-        <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-                style={{ transitionDelay: `${400 + index * 100}ms` }}
-              >
-                <div className="flex items-center mb-4">
-                  <CheckCircleIcon className="h-6 w-6 text-green-500 mr-2" />
-                  <feature.icon className="h-8 w-8 text-blue-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className={`mt-20 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold text-blue-600 mb-2">100%</div>
-                <div className="text-gray-600">Secure & Tamper-proof</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-purple-600 mb-2">Instant</div>
-                <div className="text-gray-600">Verification Process</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-green-600 mb-2">24/7</div>
-                <div className="text-gray-600">Global Accessibility</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* How It Works Section */}
-        <div className={`mt-20 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600">1</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Issue</h3>
-              <p className="text-gray-600">Create and issue certificates on the blockchain with complete security.</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-purple-600">2</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Share</h3>
-              <p className="text-gray-600">Share certificates with QR codes or direct links for easy access.</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-green-600">3</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Verify</h3>
-              <p className="text-gray-600">Instantly verify authenticity with our decentralized system.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer CTA */}
-        <div className={`mt-20 text-center transition-all duration-1000 delay-900 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="text-xl mb-6 opacity-90">Join the future of digital certificate verification</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/issuer-dashboard"
-                className="inline-flex items-center px-6 py-3 border-2 border-white text-lg font-medium rounded-lg text-white hover:bg-white hover:text-blue-600 transition-all duration-200"
-              >
-                Start Issuing
-              </Link>
+          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+            <div className="rounded-md shadow">
               <Link
                 to="/verify"
-                className="inline-flex items-center px-6 py-3 bg-white text-lg font-medium rounded-lg text-blue-600 hover:bg-gray-100 transition-all duration-200"
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-colors"
               >
-                Verify Now
+                Verify Certificate
               </Link>
+            </div>
+            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+              <Link
+                to="/dashboard"
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-colors"
+              >
+                Issue Certificate
+              </Link>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-16">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Secure Verification</h3>
+              <p className="text-gray-600">
+                All certificates are stored on the blockchain, ensuring they cannot be tampered with or forged.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-green-500 text-white mb-4">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Instant Verification</h3>
+              <p className="text-gray-600">
+                Verify any certificate instantly by scanning a QR code or entering the certificate ID.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white mb-4">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Easy Management</h3>
+              <p className="text-gray-600">
+                Institutions can easily issue and manage certificates through our intuitive dashboard.
+              </p>
             </div>
           </div>
         </div>
@@ -166,3 +79,5 @@ export default function Home(): JSX.Element {
     </div>
   );
 };
+
+export default Home;

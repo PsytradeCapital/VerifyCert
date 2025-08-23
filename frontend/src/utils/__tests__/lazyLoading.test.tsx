@@ -92,4 +92,4 @@ describe('Lazy Loading Utilities', () => {
     });
   });
 });
-}}
+}

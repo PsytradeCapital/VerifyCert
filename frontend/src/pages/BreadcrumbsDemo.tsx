@@ -76,7 +76,7 @@ const BreadcrumbsDemo: React.FC = () => {
           </p>
           <div className="bg-gray-50 p-4 rounded-lg">
             <Breadcrumbs 
-              items={manualBreadcrumbs} 
+              items={manualBreadcrumbs}
               separator={<span className="text-blue-500">→</span>
             />
           </div>
@@ -151,18 +151,18 @@ const BreadcrumbsDemo: React.FC = () => {
             <div>
               <h3 className="text-sm font-medium text-gray-700 mb-2">Auto-generated:</h3>
               <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">
-                <code>{`<AutoBreadcrumbs />`}</code>
+                <code>{<AutoBreadcrumbs />}</code>
               </pre>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-700 mb-2">Manual with options:</h3>
               <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">
-                <code>{`<Breadcrumbs 
+                <code>{<Breadcrumbs 
   items={breadcrumbItems}
   showHomeIcon={false}
   maxItems={4}
   separator={<span>→</span>
-/>`}</code>
+/>}</code>
               </pre>
             </div>
           </div>
@@ -174,4 +174,4 @@ const BreadcrumbsDemo: React.FC = () => {
 
 export default BreadcrumbsDemo;
 }
-}}}
+}

@@ -11,9 +11,9 @@ label: string;
   active?: boolean;
 
 export interface BreadcrumbsProps {
-}}
 }
-}}}
+}
+}
   items?: BreadcrumbItem[];
   separator?: React.ReactNode;
   className?: string;
@@ -45,16 +45,15 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     return null;
 
   return (
-    <nav className={`flex ${className}`} aria-label="Breadcrumb">
+    <nav className={flex ${className}} aria-label="Breadcrumb">
       <ol className="flex items-center space-x-1">
         {displayItems.map((item, index) => (
-          <li key={`${item.label}-${index}`} className="flex items-center">
+          <li key={${item.label}-${index}} className="flex items-center">
             {index > 0 && (
               <span className="mx-2 text-gray-400 select-none flex items-center">
                 {separator}
               </span>
             )}
-            
             {item.label === '...' ? (
               <span className="text-sm font-medium text-gray-400 px-1">
                 {item.label}
@@ -75,11 +74,11 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               </motion.div>
             ) : (
               <span
-                className={`text-sm font-medium px-1 py-1 rounded flex items-center gap-1 ${
+                className={text-sm font-medium px-1 py-1 rounded flex items-center gap-1 ${
                   item.active 
                     ? 'text-gray-900 bg-gray-100' 
                     : 'text-gray-500'
-                }`}
+                }}
                 aria-current={item.active ? 'page' : undefined}
               >
                 {index === 0 && showHomeIcon && item.label === 'Home' && (

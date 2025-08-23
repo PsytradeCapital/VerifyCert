@@ -40,16 +40,16 @@ const Spinner: React.FC<SpinnerProps> = ({
 
   return (
     <motion.div
-      animate={{ rotate: 360 }}
+      animate={{ rotate: 360 }
       transition={{
         duration: speedDuration[speed],
         repeat: Infinity,
         ease: "linear"
-      }}
-      className={`inline-block ${className}`}
+      }
+      className={inline-block ${className}}
     >
       <Loader2 
-        className={`${sizeClasses[size]} ${colorClasses[color]}`}
+        className={${sizeClasses[size]} ${colorClasses[color]}}
         aria-label="Loading"
       />
     </motion.div>

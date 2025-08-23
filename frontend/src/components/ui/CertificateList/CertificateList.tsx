@@ -16,9 +16,9 @@ search: string;
   customDateEnd?: Date;
 
 interface CertificateListProps {
-}}
 }
-}}}
+}
+}
   certificates: Certificate[];
   isLoading?: boolean;
   onCertificateAction?: (action: string, certificate: Certificate) => void;
@@ -186,7 +186,7 @@ export default function CertificateList(): JSX.Element {
 
   if (isLoading) {
     return (
-      <div className={`bg-white rounded-lg shadow ${className}`}>
+      <div className={bg-white rounded-lg shadow ${className}}>
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex flex-col space-y-4">
@@ -212,7 +212,7 @@ export default function CertificateList(): JSX.Element {
     );
 
   return (
-    <div className={`bg-white rounded-lg shadow ${className}`}>
+    <div className={bg-white rounded-lg shadow ${className}}>
       {/* Header with filters */}
       <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex flex-col space-y-4">
@@ -235,11 +235,11 @@ export default function CertificateList(): JSX.Element {
               <div className="flex rounded-md shadow-sm">
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`px-3 py-2 text-sm font-medium rounded-l-md border ${
+                  className={px-3 py-2 text-sm font-medium rounded-l-md border ${
                     viewMode === 'list'
                       ? 'bg-blue-50 border-blue-500 text-blue-700'
                       : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-                  }`}
+                  }}
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
@@ -247,11 +247,11 @@ export default function CertificateList(): JSX.Element {
                 </button>
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`px-3 py-2 text-sm font-medium rounded-r-md border-l-0 border ${
+                  className={px-3 py-2 text-sm font-medium rounded-r-md border-l-0 border ${
                     viewMode === 'grid'
                       ? 'bg-blue-50 border-blue-500 text-blue-700'
                       : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-                  }`}
+                  }}
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -377,7 +377,6 @@ export default function CertificateList(): JSX.Element {
                   </div>
                 </div>
               )}
-
               {/* Sort options */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
@@ -420,7 +419,6 @@ export default function CertificateList(): JSX.Element {
               </div>
             </div>
           )}
-
           {/* Bulk actions */}
           {showBulkActions && selectedCertificates.size > 0 && (
             <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
@@ -503,7 +501,6 @@ export default function CertificateList(): JSX.Element {
                 <span className="text-sm text-gray-700">Select all</span>
               </div>
             )}
-            
             {filteredCertificates.map((certificate) => (
               <div key={certificate.tokenId} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                 <div className="flex items-start space-x-4">
@@ -517,7 +514,6 @@ export default function CertificateList(): JSX.Element {
                       />
                     </div>
                   )}
-                  
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-2">
                       <div>
@@ -529,11 +525,11 @@ export default function CertificateList(): JSX.Element {
                         </p>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        <span className={inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           certificate.isValid 
                             ? 'bg-green-100 text-green-800' 
                             : 'bg-red-100 text-red-800'
-                        }`}>
+                        }}>
                           {certificate.isValid ? 'Valid' : 'Invalid'}
                         </span>
                         <span className="text-sm text-gray-500">#{certificate.tokenId}</span>
@@ -576,4 +572,4 @@ export default function CertificateList(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}
+}

@@ -104,12 +104,10 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
           )}
         </div>
       )}
-
       {/* Loading skeleton */}
       {!imageLoaded && !placeholder && (
         <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" />
       )}
-
       {/* Main image */}
       {!imageError && (
         <img
@@ -124,7 +122,6 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
           {...props}
         />
       )}
-
       {/* Error fallback */}
       {imageError && !fallback && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
@@ -141,4 +138,4 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
 };
 
 export default ResponsiveImage;
-}}
+}

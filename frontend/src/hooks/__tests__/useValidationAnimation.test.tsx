@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react';
-import { ;;
-  useValidationAnimation, ;;
-  useValidationMessageAnimation, ;;
-  useValidationIconAnimation ;;
+import { ;
+  useValidationAnimation, ;
+  useValidationMessageAnimation, ;
+  useValidationIconAnimation ;
 } from '../useValidationAnimation';
 
 // Mock the validation animation utilities
@@ -241,4 +241,4 @@ describe('useValidationIconAnimation', () => {
   });
 });
 }
-}}}}}}}}}}}}}}}
+}

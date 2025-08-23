@@ -6,9 +6,9 @@ targetId: string;
   label: string;
 
 interface SkipLinksProps {
-}}
 }
-}}}
+}
+}
   links?: SkipLink[];
   className?: string;
 
@@ -38,15 +38,15 @@ const SkipLinks: React.FC<SkipLinksProps> = ({
       });
       
       // Announce to screen readers
-      focusUtils.announce(`Skipped to ${target.getAttribute('aria-label') || targetId}`, 'polite');
+      focusUtils.announce(Skipped to ${target.getAttribute('aria-label') || targetId}, 'polite');
   };
 
   return (
-    <div className={`skip-links ${className}`}>
+    <div className={skip-links ${className}}>
       {links.map(({ targetId, label }) => (
         <a
           key={targetId}
-          href={`#${targetId}`}
+          href={#${targetId}}
           onClick={(e) => handleSkipClick(e, targetId)}
           className="
             sr-only 
@@ -68,10 +68,10 @@ const SkipLinks: React.FC<SkipLinksProps> = ({
             transition-all
             duration-200
           "
-          aria-describedby={`${targetId}-skip-description`}
+          aria-describedby={${targetId}-skip-description}
         >
           {label}
-          <span id={`${targetId}-skip-description`} className="sr-only">
+          <span id={${targetId}-skip-description} className="sr-only">
             Press Enter to jump to {label.toLowerCase()}
           </span>
         </a>

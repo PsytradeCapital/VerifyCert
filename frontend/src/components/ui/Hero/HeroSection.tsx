@@ -11,7 +11,7 @@ title?: string;
     label: string;
     onClick: () => void;
     loading?: boolean;
-}}};
+};
   secondaryAction?: {
     label: string;
     onClick: () => void;
@@ -80,7 +80,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section className={`relative py-20 px-4 sm:px-6 lg:px-8 ${backgroundClasses[backgroundVariant]} ${className}`}>
+    <section className={relative py-20 px-4 sm:px-6 lg:px-8 ${backgroundClasses[backgroundVariant]} ${className}}>
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-32 w-80 h-80 rounded-full bg-blue-100 opacity-20 blur-3xl"></div>
@@ -91,9 +91,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="text-center">
           {/* Main content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 20 }
+            animate={{ opacity: 1, y: 0 }
+            transition={{ duration: 0.6 }
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {title}
@@ -108,9 +108,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Action buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }
+            animate={{ opacity: 1, y: 0 }
+            transition={{ duration: 0.6, delay: 0.2 }
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
           >
             <Button
@@ -138,9 +138,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Quick actions */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0, y: 20 }
+            animate={{ opacity: 1, y: 0 }
+            transition={{ duration: 0.6, delay: 0.4 }
             className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
           >
             {showQRScanner && (
@@ -157,7 +157,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </Button>
               </div>
             )}
-
             {showUpload && (
               <div className="flex flex-col items-center">
                 <label className="cursor-pointer">
@@ -178,17 +177,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Features */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            initial={{ opacity: 0, y: 20 }
+            animate={{ opacity: 1, y: 0 }
+            transition={{ duration: 0.6, delay: 0.6 }
             className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           >
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                initial={{ opacity: 0, y: 20 }
+                animate={{ opacity: 1, y: 0 }
+                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }
                 className="flex flex-col items-center text-center p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20"
               >
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">

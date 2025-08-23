@@ -4,7 +4,7 @@ interface Props {
 children: ReactNode;
 
 interface State {
-}}
+}
 }
   hasError: boolean;
 
@@ -37,4 +37,4 @@ export default class BlockchainErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
 }
-}}}}
+}

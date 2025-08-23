@@ -200,8 +200,8 @@ export const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   className
 }) => {
   const getColsClass = (cols: number, prefix = '') => {
-    const prefixStr = prefix ? `${prefix}:` : '';
-    return `${prefixStr}grid-cols-${cols}`;
+    const prefixStr = prefix ? ${prefix}: : '';
+    return ${prefixStr}grid-cols-${cols};
   };
 
   const gapClasses = {
@@ -248,9 +248,9 @@ export const ResponsiveText: React.FC<ResponsiveTextProps> = ({
   className
 }) => {
   const textClasses = cn(
-    `text-${mobileSize}`,
-    tabletSize && `md:text-${tabletSize}`,
-    `lg:text-${desktopSize}`,
+    text-${mobileSize},
+    tabletSize && md:text-${tabletSize},
+    lg:text-${desktopSize},
     className
   );
 
@@ -262,4 +262,4 @@ export const ResponsiveText: React.FC<ResponsiveTextProps> = ({
 };
 }
 }
-}}}}}
+}

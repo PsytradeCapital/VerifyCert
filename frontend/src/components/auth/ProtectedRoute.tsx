@@ -9,8 +9,7 @@ children: React.ReactNode;
   requireAuth?: boolean;
   requireVerification?: boolean;
   allowedRoles?: string[];
-}}
-
+}
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireVerified = true,
@@ -30,17 +29,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       </div>
     );
   }
-
   // Redirect to login if not authenticated and auth is required
   if (requireAuth && (!isAuthenticated || !user)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-
   // Redirect to verification if account is not verified and verification is required
   if ((requireVerified || requireVerification) && user && !user.isVerified) {
     return <Navigate to="/verify-otp" replace />;
   }
-
   // Check role requirements
   if (requiredRole) {
     const roleHierarchy = {
@@ -56,13 +52,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       return <Navigate to="/unauthorized" replace />;
     }
   }
-
   // Check allowed roles
   if (allowedRoles && user) {
     if (!allowedRoles.includes(user.role)) {
       return <Navigate to="/unauthorized" replace />;
     }
   }
-
   return <>{children}</>;
 };

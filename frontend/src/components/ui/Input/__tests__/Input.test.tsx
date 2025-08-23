@@ -257,7 +257,7 @@ describe('Input Component', () => {
           animationConfig={{
             duration: 500,
             enableSequence: false
-          }}
+          }
         />
       );
       

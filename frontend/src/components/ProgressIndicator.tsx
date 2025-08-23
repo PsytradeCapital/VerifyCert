@@ -7,9 +7,9 @@ id: string;
   description?: string;
 
 interface ProgressIndicatorProps {
-}}
 }
-}}}
+}
+}
   steps: Step[];
   currentStep: string;
   completedSteps: string[];
@@ -32,7 +32,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   };
 
   return (
-    <div className={`w-full ${className}`}>
+    <div className={w-full ${className}}>
       <div className="flex items-center justify-between">
         {steps.map((step, index) => {
           const status = getStepStatus(step.id);
@@ -43,14 +43,14 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
               {/* Step Circle */}
               <div className="flex flex-col items-center">
                 <div
-                  className={`
+                  className={
                     flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors
                     ${status === 'completed' 
                       ? 'bg-green-500 border-green-500 text-white' 
                       : status === 'current'
                       ? 'bg-blue-500 border-blue-500 text-white'
                       : 'bg-white border-gray-300 text-gray-500'
-                  `}
+                  }
                 >
                   {status === 'completed' ? (
                     <Check className="w-5 h-5" />
@@ -64,14 +64,14 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                 {/* Step Label */}
                 <div className="mt-2 text-center">
                   <div
-                    className={`
+                    className={
                       text-sm font-medium
                       ${status === 'current' 
                         ? 'text-blue-600' 
                         : status === 'completed'
                         ? 'text-green-600'
                         : 'text-gray-500'
-                    `}
+                    }
                   >
                     {step.title}
                   </div>
@@ -86,12 +86,12 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
               {/* Connector Line */}
               {!isLast && (
                 <div
-                  className={`
+                  className={
                     flex-1 h-0.5 mx-4 transition-colors
                     ${completedSteps.includes(step.id) 
                       ? 'bg-green-500' 
                       : 'bg-gray-300'
-                  `}
+                  }
                 />
               )}
             </div>

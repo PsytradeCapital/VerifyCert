@@ -58,7 +58,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     accent: 'bg-accent-600 hover:bg-accent-700 text-white shadow-accent-500/25'
   };
 
-  const baseClasses = `
+  const baseClasses = 
     inline-flex items-center justify-center
     rounded-full shadow-lg
     focus:outline-none focus:ring-4 focus:ring-offset-2
@@ -68,7 +68,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     ${sizeClasses[size]}
     ${variantClasses[variant]}
     ${className}
-  `;
+  ;
 
   // Get animation props based on variant
   const animationProps = enableAnimations && !disabled 
@@ -87,7 +87,6 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           {typeof badge === 'number' && badge > 99 ? '99+' : badge}
         </span>
       )}
-
       {/* Tooltip */}
       {tooltip && (
         <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
@@ -97,7 +96,6 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           </div>
         </div>
       )}
-
       {/* Extended label for larger sizes */}
       {label && size === 'lg' && (
         <span className="ml-3 font-medium">
@@ -113,7 +111,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`${baseClasses} group`}
+        className={${baseClasses} group}
         aria-label={label || tooltip || 'Floating action button'}
         {...animationProps}
       >
@@ -126,7 +124,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     return (
       <MotionLink
         to={href}
-        className={`${baseClasses} group ${disabled ? 'pointer-events-none' : ''}`}
+        className={${baseClasses} group ${disabled ? 'pointer-events-none' : ''}}
         onClick={(e) => {
           if (disabled) {
             e.preventDefault();
@@ -135,7 +133,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           if (shouldUseContext) {
             e.preventDefault();
             navigationContext.actions.navigateTo(href);
-        }}
+        }
         aria-label={label || tooltip || 'Floating action button'}
         {...animationProps}
       >
@@ -145,7 +143,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
 
   return (
     <motion.div
-      className={`${baseClasses} group`}
+      className={${baseClasses} group}
       aria-label={label || tooltip || 'Floating action button'}
       {...animationProps}
     >
@@ -156,4 +154,4 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
 
 export default FloatingActionButton;
 }
-}}}}
+}

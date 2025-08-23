@@ -43,18 +43,18 @@ const DotsSpinner: React.FC<DotsSpinnerProps> = ({
   };
 
   return (
-    <div className={`flex space-x-1 ${className}`} aria-label="Loading">
+    <div className={flex space-x-1 ${className}} aria-label="Loading">
       {[0, 1, 2].map((index) => (
         <motion.div
           key={index}
-          className={`${sizeClasses[size]} ${colorClasses[color]} rounded-full`}
+          className={${sizeClasses[size]} ${colorClasses[color]} rounded-full}
           variants={bounceVariants}
           initial="start"
           animate="end"
           transition={{
             ...bounceTransition,
             delay: index * 0.1
-          }}
+          }
         />
       ))}
     </div>
@@ -62,4 +62,4 @@ const DotsSpinner: React.FC<DotsSpinnerProps> = ({
 };
 
 export default DotsSpinner;
-}}
+}

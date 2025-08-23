@@ -14,7 +14,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Setup DOM environment for testing
-const dom = new JSDOM(`
+const dom = new JSDOM(
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +46,7 @@ const dom = new JSDOM(`
   <div id="root"></div>
 </body>
 </html>
-`, {
+, {
   url: 'http://localhost:3000',
   pretendToBeVisual: true,
   resources: 'usable'
@@ -71,7 +71,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   // Button Component Tests
   const buttonContainer = document.createElement('div');
-  buttonContainer.innerHTML = `
+  buttonContainer.innerHTML = 
     <button id="basic-button" aria-label="Basic test button">Click me</button>
     <button id="disabled-button" disabled aria-label="Disabled button">Disabled</button>
     <button id="loading-button" aria-label="Loading button" aria-describedby="loading-desc">
@@ -85,7 +85,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
       <li><a href="#item1">Item 1</a></li>
       <li><a href="#item2">Item 2</a></li>
     </ul>
-  `;
+  ;
   root.appendChild(buttonContainer);
 
   components.push(
@@ -98,7 +98,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   // Form Component Tests
   const formContainer = document.createElement('div');
-  formContainer.innerHTML = `
+  formContainer.innerHTML = 
     <form id="test-form">
       <div>
         <label for="text-input" id="text-label">Full Name</label>
@@ -145,7 +145,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
         </div>
       </fieldset>
     </form>
-  `;
+  ;
   root.appendChild(formContainer);
 
   components.push(
@@ -160,7 +160,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   // Modal Component Test
   const modalContainer = document.createElement('div');
-  modalContainer.innerHTML = `
+  modalContainer.innerHTML = 
     <button id="modal-trigger" aria-controls="test-modal">Open Modal</button>
     <div id="test-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" style="display: block;">
       <h2 id="modal-title">Test Modal</h2>
@@ -169,7 +169,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
       <button id="modal-action">Action</button>
       <button id="modal-close" aria-label="Close modal">×</button>
     </div>
-  `;
+  ;
   root.appendChild(modalContainer);
 
   components.push(
@@ -179,7 +179,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   // Navigation Component Test
   const navContainer = document.createElement('div');
-  navContainer.innerHTML = `
+  navContainer.innerHTML = 
     <nav role="navigation" aria-label="Main navigation">
       <ul role="menubar">
         <li role="none">
@@ -209,7 +209,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
         <li aria-current="page">Current Page</li>
       </ol>
     </nav>
-  `;
+  ;
   root.appendChild(navContainer);
 
   components.push(
@@ -219,11 +219,11 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   // Live Region Test
   const liveRegionContainer = document.createElement('div');
-  liveRegionContainer.innerHTML = `
+  liveRegionContainer.innerHTML = 
     <button id="status-trigger">Update Status</button>
     <div id="status-region" aria-live="polite" aria-atomic="true"></div>
     <div id="alert-region" aria-live="assertive" role="alert"></div>
-  `;
+  ;
   root.appendChild(liveRegionContainer);
 
   // Simulate live region update
@@ -245,7 +245,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
 
   // Table Component Test
   const tableContainer = document.createElement('div');
-  tableContainer.innerHTML = `
+  tableContainer.innerHTML = 
     <table role="table" aria-label="Certificate list">
       <caption>List of issued certificates</caption>
       <thead>
@@ -284,7 +284,7 @@ function createTestComponents(): { name: string; element: HTMLElement; descripti
         </tr>
       </tbody>
     </table>
-  `;
+  ;
   root.appendChild(tableContainer);
 
   components.push(
@@ -302,35 +302,35 @@ async function runScreenReaderTests(): Promise<ScreenReaderTestReport> {
   const tester = new ScreenReaderTester();
   const components = createTestComponents();
   
-  console.log(`📋 Testing ${components.length} components:\n`);
+  console.log(📋 Testing ${components.length} components:\n);
   
   // Test each component
   for (const { name, element, description } of components) {
-    console.log(`  Testing: ${name}`);
-    console.log(`  Description: ${description}`);
+    console.log(  Testing: ${name});
+    console.log(  Description: ${description});
     
     try {
       const result = await tester.testComponent(element, name);
       
       if (result.passed) {
-        console.log(`  ✅ PASSED (${result.duration}ms)`);
+        console.log(  ✅ PASSED (${result.duration}ms));
       } else {
-        console.log(`  ❌ FAILED (${result.issues.length} issues, ${result.duration}ms)`);
+        console.log(  ❌ FAILED (${result.issues.length} issues, ${result.duration}ms));
         result.issues.forEach(issue => {
           const severity = issue.severity.toUpperCase();
-          console.log(`    ${severity}: ${issue.message}`);
+          console.log(    ${severity}: ${issue.message});
           if (issue.suggestion) {
-            console.log(`    💡 Suggestion: ${issue.suggestion}`);
+            console.log(    💡 Suggestion: ${issue.suggestion});
         });
       
       if (result.announcements.length > 0) {
-        console.log(`  📢 Announcements: ${result.announcements.length}`);
+        console.log(  📢 Announcements: ${result.announcements.length});
         result.announcements.forEach(announcement => {
-          console.log(`    ${announcement.priority.toUpperCase()}: "${announcement.text}"`);
+          console.log(    ${announcement.priority.toUpperCase()}: "${announcement.text}");
         });
       
     } catch (error) {
-      console.log(`  💥 ERROR: ${error}`);
+      console.log(  💥 ERROR: ${error});
     
     console.log('');
   
@@ -338,19 +338,19 @@ async function runScreenReaderTests(): Promise<ScreenReaderTestReport> {
   const report = tester.generateReport();
   
   console.log('📊 Test Summary:');
-  console.log(`  Total Tests: ${report.summary.totalTests}`);
-  console.log(`  Passed: ${report.summary.passedTests}`);
-  console.log(`  Failed: ${report.summary.failedTests}`);
-  console.log(`  Pass Rate: ${report.summary.passRate.toFixed(1)}%`);
-  console.log(`  Total Issues: ${report.summary.totalIssues}`);
-  console.log(`  High Priority: ${report.summary.issuesBySeverity.high}`);
-  console.log(`  Medium Priority: ${report.summary.issuesBySeverity.medium}`);
-  console.log(`  Low Priority: ${report.summary.issuesBySeverity.low}`);
+  console.log(  Total Tests: ${report.summary.totalTests});
+  console.log(  Passed: ${report.summary.passedTests});
+  console.log(  Failed: ${report.summary.failedTests});
+  console.log(  Pass Rate: ${report.summary.passRate.toFixed(1)}%);
+  console.log(  Total Issues: ${report.summary.totalIssues});
+  console.log(  High Priority: ${report.summary.issuesBySeverity.high});
+  console.log(  Medium Priority: ${report.summary.issuesBySeverity.medium});
+  console.log(  Low Priority: ${report.summary.issuesBySeverity.low});
   
   if (report.recommendations.length > 0) {
     console.log('\n💡 Recommendations:');
     report.recommendations.forEach((rec, index) => {
-      console.log(`  ${index + 1}. ${rec}`);
+      console.log(  ${index + 1}. ${rec});
     });
   
   return report;
@@ -366,16 +366,16 @@ function saveReport(report: ScreenReaderTestReport): void {
     fs.mkdirSync(reportsDir, { recursive: true });
   
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const reportPath = path.join(reportsDir, `screen-reader-test-report-${timestamp}.json`);
+  const reportPath = path.join(reportsDir, screen-reader-test-report-${timestamp}.json);
   
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-  console.log(`\n📄 Detailed report saved to: ${reportPath}`);
+  console.log(\n📄 Detailed report saved to: ${reportPath});
   
   // Also save a human-readable summary
-  const summaryPath = path.join(reportsDir, `screen-reader-test-summary-${timestamp}.md`);
+  const summaryPath = path.join(reportsDir, screen-reader-test-summary-${timestamp}.md);
   const summaryContent = generateMarkdownSummary(report);
   fs.writeFileSync(summaryPath, summaryContent);
-  console.log(`📄 Summary report saved to: ${summaryPath}`);
+  console.log(📄 Summary report saved to: ${summaryPath});
 
 /**
  * Generate markdown summary of test results
@@ -383,64 +383,64 @@ function saveReport(report: ScreenReaderTestReport): void {
 function generateMarkdownSummary(report: ScreenReaderTestReport): string {
   const { summary, testResults, recommendations } = report;
   
-  let markdown = `# Screen Reader Test Report\n\n`;
-  markdown += `**Generated:** ${new Date(report.timestamp).toLocaleString()}\n\n`;
+  let markdown = # Screen Reader Test Report\n\n;
+  markdown += **Generated:** ${new Date(report.timestamp).toLocaleString()}\n\n;
   
   // Summary section
-  markdown += `## Summary\n\n`;
-  markdown += `- **Total Tests:** ${summary.totalTests}\n`;
-  markdown += `- **Passed:** ${summary.passedTests}\n`;
-  markdown += `- **Failed:** ${summary.failedTests}\n`;
-  markdown += `- **Pass Rate:** ${summary.passRate.toFixed(1)}%\n`;
-  markdown += `- **Total Issues:** ${summary.totalIssues}\n\n`;
+  markdown += ## Summary\n\n;
+  markdown += - **Total Tests:** ${summary.totalTests}\n;
+  markdown += - **Passed:** ${summary.passedTests}\n;
+  markdown += - **Failed:** ${summary.failedTests}\n;
+  markdown += - **Pass Rate:** ${summary.passRate.toFixed(1)}%\n;
+  markdown += - **Total Issues:** ${summary.totalIssues}\n\n;
   
   // Issues by severity
-  markdown += `### Issues by Severity\n\n`;
-  markdown += `- **High:** ${summary.issuesBySeverity.high}\n`;
-  markdown += `- **Medium:** ${summary.issuesBySeverity.medium}\n`;
-  markdown += `- **Low:** ${summary.issuesBySeverity.low}\n\n`;
+  markdown += ### Issues by Severity\n\n;
+  markdown += - **High:** ${summary.issuesBySeverity.high}\n;
+  markdown += - **Medium:** ${summary.issuesBySeverity.medium}\n;
+  markdown += - **Low:** ${summary.issuesBySeverity.low}\n\n;
   
   // Issues by type
   if (Object.keys(summary.issuesByType).length > 0) {
-    markdown += `### Issues by Type\n\n`;
+    markdown += ### Issues by Type\n\n;
     Object.entries(summary.issuesByType).forEach(([type, count]) => {
-      markdown += `- **${type}:** ${count}\n`;
+      markdown += - **${type}:** ${count}\n;
     });
-    markdown += `\n`;
+    markdown += \n;
   
   // Test results
-  markdown += `## Test Results\n\n`;
+  markdown += ## Test Results\n\n;
   testResults.forEach(result => {
     const status = result.passed ? '✅ PASSED' : '❌ FAILED';
-    markdown += `### ${result.testName} - ${status}\n\n`;
-    markdown += `- **Component:** ${result.component}\n`;
-    markdown += `- **Duration:** ${result.duration}ms\n`;
+    markdown += ### ${result.testName} - ${status}\n\n;
+    markdown += - **Component:** ${result.component}\n;
+    markdown += - **Duration:** ${result.duration}ms\n;
     
     if (result.issues.length > 0) {
-      markdown += `- **Issues:** ${result.issues.length}\n\n`;
+      markdown += - **Issues:** ${result.issues.length}\n\n;
       result.issues.forEach(issue => {
-        markdown += `#### ${issue.severity.toUpperCase()}: ${issue.message}\n\n`;
-        markdown += `- **WCAG Criterion:** ${issue.wcagCriterion}\n`;
+        markdown += #### ${issue.severity.toUpperCase()}: ${issue.message}\n\n;
+        markdown += - **WCAG Criterion:** ${issue.wcagCriterion}\n;
         if (issue.suggestion) {
-          markdown += `- **Suggestion:** ${issue.suggestion}\n`;
-        markdown += `\n`;
+          markdown += - **Suggestion:** ${issue.suggestion}\n;
+        markdown += \n;
       });
     
     if (result.announcements.length > 0) {
-      markdown += `#### Screen Reader Announcements\n\n`;
+      markdown += #### Screen Reader Announcements\n\n;
       result.announcements.forEach(announcement => {
-        markdown += `- **${announcement.priority.toUpperCase()}:** "${announcement.text}"\n`;
+        markdown += - **${announcement.priority.toUpperCase()}:** "${announcement.text}"\n;
       });
-      markdown += `\n`;
+      markdown += \n;
   });
   
   // Recommendations
   if (recommendations.length > 0) {
-    markdown += `## Recommendations\n\n`;
+    markdown += ## Recommendations\n\n;
     recommendations.forEach((rec, index) => {
-      markdown += `${index + 1}. ${rec}\n`;
+      markdown += ${index + 1}. ${rec}\n;
     });
-    markdown += `\n`;
+    markdown += \n;
   
   return markdown;
 
@@ -478,4 +478,4 @@ if (require.main === module) {
 
 export { runScreenReaderTests, createTestComponents };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

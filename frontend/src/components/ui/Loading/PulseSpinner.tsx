@@ -39,12 +39,12 @@ const PulseSpinner: React.FC<PulseSpinnerProps> = ({
   };
 
   return (
-    <div className={`relative ${className}`} aria-label="Loading">
-      <div className={`${sizeClasses[size]} relative`}>
+    <div className={relative ${className}} aria-label="Loading">
+      <div className={${sizeClasses[size]} relative}>
         {[0, 1].map((index) => (
           <motion.div
             key={index}
-            className={`absolute inset-0 ${colorClasses[color]} rounded-full`}
+            className={absolute inset-0 ${colorClasses[color]} rounded-full}
             variants={pulseVariants}
             initial="start"
             animate="end"
@@ -53,7 +53,7 @@ const PulseSpinner: React.FC<PulseSpinnerProps> = ({
               repeat: Infinity,
               delay: index * 1,
               ease: "easeInOut"
-            }}
+            }
           />
         ))}
       </div>
@@ -62,4 +62,4 @@ const PulseSpinner: React.FC<PulseSpinnerProps> = ({
 };
 
 export default PulseSpinner;
-}}
+}

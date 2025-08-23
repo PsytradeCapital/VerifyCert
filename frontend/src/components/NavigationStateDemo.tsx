@@ -274,11 +274,11 @@ const NavigationStateDemo: React.FC = () => {
                     <h4 className="text-sm font-medium text-gray-700 mb-2 capitalize">{style}</h4>
                     <button
                       onClick={() => actions.setActiveIndicatorStyle(style as any)}
-                      className={`w-full px-3 py-2 text-sm rounded transition-colors ${
+                      className={w-full px-3 py-2 text-sm rounded transition-colors ${
                         state.activeIndicators.indicatorStyle === style
                           ? 'bg-blue-100 text-blue-700 border border-blue-300'
                           : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                      }`}
+                      }}
                     >
                       Apply {style} style
                     </button>
@@ -294,4 +294,4 @@ const NavigationStateDemo: React.FC = () => {
 };
 
 export default NavigationStateDemo;
-}}
+}

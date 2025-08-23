@@ -55,18 +55,17 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={relative ${className}}>
       {children}
-      
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            className={`absolute inset-0 ${backdropClasses[backdrop]} flex items-center justify-center z-50 rounded-md`}
+            className={absolute inset-0 ${backdropClasses[backdrop]} flex items-center justify-center z-50 rounded-md}
             variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2 }
           >
             <motion.div
               className="flex flex-col items-center space-y-3"
@@ -77,7 +76,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
             >
               {renderSpinner()}
               {message && (
-                <p className={`font-medium ${backdrop === 'dark' ? 'text-white' : 'text-gray-600'}`}>
+                <p className={font-medium ${backdrop === 'dark' ? 'text-white' : 'text-gray-600'}}>
                   {message}
                 </p>
               )}
@@ -91,4 +90,4 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
 
 export default LoadingOverlay;
 }
-}}}}
+}

@@ -18,9 +18,9 @@ tokenId: string;
   grade?: string;
 
 interface CertificateCardProps {
-}}
 }
-}}}
+}
+}
   certificate: Certificate;
   showQR?: boolean;
   isPublicView?: boolean;
@@ -49,7 +49,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   };
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return ${address.slice(0, 6)}...${address.slice(-4)};
   };
 
   const handleDownload = async () => {
@@ -86,27 +86,27 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       // Institution
       ctx.fillStyle = '#374151';
       ctx.font = '20px Arial';
-      ctx.fillText(`Issued by: ${certificate.institutionName}`, canvas.width / 2, 150);
+      ctx.fillText(Issued by: ${certificate.institutionName}, canvas.width / 2, 150);
 
       // Recipient
       ctx.fillStyle = '#111827';
       ctx.font = 'bold 28px Arial';
-      ctx.fillText(`${certificate.recipientName}`, canvas.width / 2, 220);
+      ctx.fillText(${certificate.recipientName}, canvas.width / 2, 220);
 
       // Course
       ctx.fillStyle = '#374151';
       ctx.font = '24px Arial';
-      ctx.fillText(`has successfully completed`, canvas.width / 2, 270);
+      ctx.fillText(has successfully completed, canvas.width / 2, 270);
       ctx.font = 'bold 26px Arial';
-      ctx.fillText(`${certificate.courseName}`, canvas.width / 2, 320);
+      ctx.fillText(${certificate.courseName}, canvas.width / 2, 320);
 
       // Date
       ctx.font = '18px Arial';
-      ctx.fillText(`Date: ${formatDate(certificate.issueDate)}`, canvas.width / 2, 380);
+      ctx.fillText(Date: ${formatDate(certificate.issueDate)}, canvas.width / 2, 380);
 
       // Download
       const link = document.createElement('a');
-      link.download = `certificate-${certificate.tokenId}.png`;
+      link.download = certificate-${certificate.tokenId}.png;
       link.href = canvas.toDataURL();
       link.click();
     } catch (error) {
@@ -121,8 +121,8 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       return;
 
     const shareData = {
-      title: `Certificate: ${certificate.courseName}`,
-      text: `${certificate.recipientName} completed ${certificate.courseName}`,
+      title: Certificate: ${certificate.courseName},
+      text: ${certificate.recipientName} completed ${certificate.courseName},
       url: certificate.verificationURL || window.location.href,
     };
 
@@ -152,9 +152,9 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, y: 20 }
+      animate={{ opacity: 1, y: 0 }
+      transition={{ duration: 0.5 }
       className={className}
     >
       <Card variant="elevated" padding="none" className="overflow-hidden">
@@ -273,7 +273,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                   </div>
                 </div>
               )}
-
               {/* Action Buttons */}
               <div className="space-y-3">
                 <h4 className="text-sm font-medium text-gray-500">Actions</h4>
@@ -356,4 +355,4 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   );
 };
 }
-}}
+}

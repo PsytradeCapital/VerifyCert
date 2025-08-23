@@ -7,9 +7,9 @@ children: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
 
 interface State {
-}}
 }
-}}}
+}
+}
   hasError: boolean;
   error: Error | null;
 
@@ -144,4 +144,4 @@ const RouteErrorBoundary = withNavigation(RouteErrorBoundaryBase);
 
 export default RouteErrorBoundary;
 }
-}}
+}

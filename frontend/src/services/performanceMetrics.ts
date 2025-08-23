@@ -9,9 +9,9 @@ FCP?: number; // First Contentful Paint
   TTFB?: number; // Time to First Byte
 
 export interface CustomMetrics {
-}}
 }
-}}}
+}
+}
   bundleLoadTime: number;
   componentLoadTime: number;
   imageLoadTime: number;
@@ -28,7 +28,7 @@ timestamp: string;
     name: string;
     duration: number;
     type: string;
-}}}>;
+}>;
   errors: Array<{
     message: string;
     timestamp: number;
@@ -91,13 +91,13 @@ class PerformanceMetricsService {
       });
       observer.observe({ entryTypes: [type] });
     } catch (error) {
-      console.warn(`Failed to observe ${type} metrics:`, error);
+      console.warn(Failed to observe ${type} metrics:, error);
 
   private setupErrorTracking() {
     // Track JavaScript errors
     window.addEventListener('error', (event) => {
       this.errors.push({
-        message: `${event.error?.name}: ${event.error?.message}`,
+        message: ${event.error?.name}: ${event.error?.message},
         timestamp: Date.now()
       });
     });
@@ -105,7 +105,7 @@ class PerformanceMetricsService {
     // Track unhandled promise rejections
     window.addEventListener('unhandledrejection', (event) => {
       this.errors.push({
-        message: `Unhandled Promise Rejection: ${event.reason}`,
+        message: Unhandled Promise Rejection: ${event.reason},
         timestamp: Date.now()
       });
     });
@@ -257,7 +257,7 @@ class PerformanceMetricsService {
 
     // Slow resources recommendations
     if (slowResources.length > 0) {
-      recommendations.push(`Address ${slowResources.length} slow-loading resources identified in the performance dashboard`);
+      recommendations.push(Address ${slowResources.length} slow-loading resources identified in the performance dashboard);
 
     return recommendations;
 
@@ -266,14 +266,14 @@ export const performanceMetrics = new PerformanceMetricsService();
 
 // Utility functions
 export const trackPageView = (pageName: string) => {
-  performanceMonitor.startTiming(`page_view_${pageName}`, {
+  performanceMonitor.startTiming(page_view_${pageName}, {
     type: 'page_view',
     page: pageName
   });
 };
 
 export const trackUserInteraction = (action: string, element: string) => {
-  performanceMonitor.startTiming(`interaction_${action}_${element}`, {
+  performanceMonitor.startTiming(interaction_${action}_${element}, {
     type: 'user_interaction',
     action,
     element
@@ -281,7 +281,7 @@ export const trackUserInteraction = (action: string, element: string) => {
   
   // End timing after a short delay
   setTimeout(() => {
-    performanceMonitor.endTiming(`interaction_${action}_${element}`, {
+    performanceMonitor.endTiming(interaction_${action}_${element}, {
       type: 'user_interaction',
       action,
       element,
@@ -291,10 +291,10 @@ export const trackUserInteraction = (action: string, element: string) => {
 };
 
 export const trackFormSubmission = async <T>(;
-  formName: string,;;
-  submitFunction: () => Promise<T>;;
+  formName: string,;
+  submitFunction: () => Promise<T>;
 ): Promise<T> => {
-  const operationName = `form_submit_${formName}`;
+  const operationName = form_submit_${formName};
   
   performanceMonitor.startTiming(operationName, {
     type: 'form_submission',
@@ -321,4 +321,4 @@ export const trackFormSubmission = async <T>(;
 
 export default performanceMetrics;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

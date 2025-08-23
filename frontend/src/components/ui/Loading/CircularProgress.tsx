@@ -40,7 +40,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   const strokeDashoffset = circumference - (clampedProgress / 100) * circumference;
 
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`}>
+    <div className={relative inline-flex items-center justify-center ${className}}>
       <svg
         width={dimension}
         height={dimension}
@@ -67,10 +67,10 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           fill="none"
           strokeLinecap="round"
           className={colorClasses[color]}
-          initial={{ strokeDasharray: circumference, strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          style={{ strokeDasharray: circumference }}
+          initial={{ strokeDasharray: circumference, strokeDashoffset: circumference }
+          animate={{ strokeDashoffset }
+          transition={{ duration: 0.5, ease: "easeOut" }
+          style={{ strokeDasharray: circumference }
         />
       </svg>
       

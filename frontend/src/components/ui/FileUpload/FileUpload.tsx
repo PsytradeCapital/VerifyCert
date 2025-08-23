@@ -15,9 +15,9 @@ onFileSelect: (files: File[]) => void;
   previewHeight?: number;
 
 interface FileWithPreview extends File {
-}}
 }
-}}
+}
+}
 }
 }
   preview?: string;
@@ -41,7 +41,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const validateFile = (file: File): string | null => {
     if (maxSize && file.size > maxSize) {
-      return `File size must be less than ${formatFileSize(maxSize)}`;
+      return File size must be less than ${formatFileSize(maxSize)};
     return null;
   };
 
@@ -95,7 +95,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     for (const file of fileArray) {
       const error = validateFile(file);
       if (error) {
-        errors.push(`${file.name}: ${error}`);
+        errors.push(${file.name}: ${error});
       } else {
         const preview = await generatePreview(file);
         const fileWithPreview: FileWithPreview = Object.assign(file, { preview: preview || undefined });
@@ -167,14 +167,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
           {label}
         </label>
       )}
-      
       {/* Screen reader instructions */}
       <div id={instructionsId} className="sr-only">
         {ariaDescriptions.forms.fileUpload}
       </div>
 
       <div
-        className={`
+        className={
           relative border-2 border-dashed rounded-lg p-8 transition-all duration-300 cursor-pointer
           ${isDragOver && !disabled
             ? 'border-blue-400 bg-blue-50 scale-[1.02] shadow-lg'
@@ -183,7 +182,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             : 'border-gray-300 hover:border-gray-400'
           ${disabled ? 'bg-gray-50 cursor-not-allowed opacity-60' : 'hover:bg-gray-50 hover:shadow-md'}
           ${selectedFiles.length > 0 ? 'border-green-300 bg-green-50' : ''}
-        `}
+        }
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -191,12 +190,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
         role="button"
         tabIndex={disabled ? -1 : 0}
         aria-label={ariaLabels.forms.fileUpload}
-        aria-describedby={`${instructionsId} ${descriptionId}`}
+        aria-describedby={${instructionsId} ${descriptionId}}
         onKeyDown={(e) => {
           if ((e.key === 'Enter' || e.key === ' ') && !disabled) {
             e.preventDefault();
             handleClick();
-        }}
+        }
       >
         {/* Description for screen readers */}
         <div id={descriptionId} className="sr-only">
@@ -216,9 +215,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
         <div className="text-center">
           {/* Upload Icon with Animation */}
-          <div className={`mx-auto mb-4 transition-transform duration-300 ${
+          <div className={mx-auto mb-4 transition-transform duration-300 ${
             isDragOver ? 'scale-110' : 'scale-100'
-          }`}>
+          }}>
             {selectedFiles.length > 0 ? (
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
                 <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
@@ -231,13 +230,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
               </div>
             ) : (
               <svg
-                className={`mx-auto h-16 w-16 transition-colors duration-300 ${
+                className={mx-auto h-16 w-16 transition-colors duration-300 ${
                   isDragOver 
                     ? 'text-blue-500' 
                     : disabled 
                     ? 'text-gray-300' 
                     : 'text-gray-400'
-                }`}
+                }}
                 stroke="currentColor"
                 fill="none"
                 viewBox="0 0 48 48"
@@ -284,7 +283,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 </p>
               </div>
             )}
-            
             {/* File Format and Size Info */}
             <div className="mt-3 space-y-1">
               {accept && (
@@ -321,7 +319,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                       src={file.preview}
                       alt={file.name}
                       className="w-12 h-12 object-cover rounded-md border border-gray-200"
-                      style={{ maxHeight: `${previewHeight}px` }}
+                      style={{ maxHeight: ${previewHeight}px }
                     />
                   ) : (
                     <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center border border-gray-200">
@@ -349,7 +347,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                       
                       {/* File Type Badge */}
                       <div className="mt-2">
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                        <span className={inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                           isImageFile(file)
                             ? 'bg-green-100 text-green-800'
                             : isPdfFile(file)
@@ -357,7 +355,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                             : file.type.includes('json')
                             ? 'bg-blue-100 text-blue-800'
                             : 'bg-gray-100 text-gray-800'
-                        }`}>
+                        }}>
                           {isImageFile(file) ? 'Image' : 
                            isPdfFile(file) ? 'PDF' :
                            file.type.includes('json') ? 'JSON' : 'Document'}
@@ -371,7 +369,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                       onClick={(e) => {
                         e.stopPropagation();
                         removeFile(index);
-                      }}
+                      }
                       className="ml-2 p-1 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50"
                       title="Remove file"
                     >
@@ -390,11 +388,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
           </div>
         </div>
       )}
-
       {error && (
         <p className="mt-1 text-sm text-red-600">{error}</p>
       )}
-      
       {helperText && !error && (
         <p className="mt-1 text-sm text-gray-500">{helperText}</p>
       )}
@@ -404,4 +400,4 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
 export default FileUpload;
 }
-}}}}}}}}
+}

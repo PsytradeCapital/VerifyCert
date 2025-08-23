@@ -18,9 +18,9 @@ interface FeedbackTriggerConfig {
   context?: string;
 
 interface FeedbackTriggerState {
-}}
 }
-}}}
+}
+}
   shouldShow: boolean;
   category: 'navigation' | 'visual-design' | 'overall-experience';
   context: string;
@@ -131,7 +131,7 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
   return {
     shouldShow,
     category,
-    context: context || `Page: ${location.pathname}, Time: ${Math.round(timeOnPage / 1000)}s, Scroll: ${Math.round(scrollPercentage)}%`,
+    context: context || Page: ${location.pathname}, Time: ${Math.round(timeOnPage / 1000)}s, Scroll: ${Math.round(scrollPercentage)}%,
     trigger,
     dismiss,
     reset
@@ -162,7 +162,7 @@ export const useErrorFeedback = (error: Error | null) => {
   return useFeedbackTrigger({
     category: 'overall-experience',
     errorOccurred: !!error,
-    context: error ? `Error occurred: ${error.message}` : 'Error experience feedback'
+    context: error ? Error occurred: ${error.message} : 'Error experience feedback'
   });
 };
 }

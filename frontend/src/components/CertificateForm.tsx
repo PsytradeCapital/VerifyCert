@@ -11,9 +11,9 @@ recipientAddress: string;
   description?: string;
 
 interface CertificateFormProps {
-}}
 }
-}}}
+}
+}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
   walletAddress?: string | null;
@@ -36,7 +36,7 @@ export default function CertificateForm(): JSX.Element {
     institutionName: '',
     issueDate: new Date().toISOString().split('T')[0], // Today's date
     description: '',
-}}});
+});
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -188,7 +188,7 @@ export default function CertificateForm(): JSX.Element {
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg p-6 ${className}`}>
+    <div className={bg-white rounded-lg shadow-lg p-6 ${className}}>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Issue New Certificate</h2>
         <p className="text-gray-600">
@@ -210,11 +210,11 @@ export default function CertificateForm(): JSX.Element {
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder="0x..."
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm ${
+            className={w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm ${
               isFieldInvalid('recipientAddress')
                 ? 'border-red-300 focus:ring-red-500'
                 : 'border-gray-300'
-            }`}
+            }}
             disabled={isLoading}
           />
           {isFieldInvalid('recipientAddress') && (
@@ -235,11 +235,11 @@ export default function CertificateForm(): JSX.Element {
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder="Enter recipient's full name"
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               isFieldInvalid('recipientName')
                 ? 'border-red-300 focus:ring-red-500'
                 : 'border-gray-300'
-            }`}
+            }}
             disabled={isLoading}
           />
           {isFieldInvalid('recipientName') && (
@@ -260,11 +260,11 @@ export default function CertificateForm(): JSX.Element {
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder="e.g., Blockchain Development Certification"
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               isFieldInvalid('courseName')
                 ? 'border-red-300 focus:ring-red-500'
                 : 'border-gray-300'
-            }`}
+            }}
             disabled={isLoading}
           />
           {isFieldInvalid('courseName') && (
@@ -285,11 +285,11 @@ export default function CertificateForm(): JSX.Element {
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder="Enter your institution name"
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               isFieldInvalid('institutionName')
                 ? 'border-red-300 focus:ring-red-500'
                 : 'border-gray-300'
-            }`}
+            }}
             disabled={isLoading}
           />
           {isFieldInvalid('institutionName') && (
@@ -310,11 +310,11 @@ export default function CertificateForm(): JSX.Element {
             onChange={handleInputChange}
             onBlur={handleBlur}
             max={new Date().toISOString().split('T')[0]}
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               isFieldInvalid('issueDate')
                 ? 'border-red-300 focus:ring-red-500'
                 : 'border-gray-300'
-            }`}
+            }}
             disabled={isLoading}
           />
           {isFieldInvalid('issueDate') && (
@@ -335,11 +335,11 @@ export default function CertificateForm(): JSX.Element {
             onBlur={handleBlur}
             placeholder="Additional details about the achievement..."
             rows={3}
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical ${
+            className={w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical ${
               isFieldInvalid('description')
                 ? 'border-red-300 focus:ring-red-500'
                 : 'border-gray-300'
-            }`}
+            }}
             disabled={isLoading}
           />
           {isFieldInvalid('description') && (
@@ -363,7 +363,6 @@ export default function CertificateForm(): JSX.Element {
             </div>
           </div>
         )}
-
         {/* Connected Wallet Info */}
         {isConnected && walletAddress && (
           <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -380,17 +379,16 @@ export default function CertificateForm(): JSX.Element {
             </div>
           </div>
         )}
-
         {/* Submit Button */}
         <div className="pt-4">
           <button
             type="submit"
             disabled={!isConnected || isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+            className={w-full py-3 px-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
               !isConnected || isLoading
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
-            }`}
+            }}
           >
             {isLoading ? (
               <div className="flex items-center justify-center">
@@ -420,4 +418,4 @@ export default function CertificateForm(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}}}}}
+}

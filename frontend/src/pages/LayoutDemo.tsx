@@ -2,12 +2,12 @@ import React from 'react';
 import { 
   Home, 
   FileText, 
-  Settings, ;;
-  User, ;;
-  Shield, ;;
-  BarChart3,;;
-  HelpCircle,;;
-  Bell;;
+  Settings, ;
+  User, ;
+  Shield, ;
+  BarChart3,;
+  HelpCircle,;
+  Bell;
 } from 'lucide-react';
 import AppLayout from '../components/ui/Layout/AppLayout';
 import { NavigationItem } from '../components/ui/Navigation/SideNavigation';
@@ -109,7 +109,7 @@ const LayoutDemo: React.FC = () => {
         onWalletDisconnect: () => alert('Disconnect wallet clicked!'),
         onProfileClick: () => alert('Profile clicked!'),
         onSettingsClick: () => alert('Settings clicked!')
-      }}
+      }
     >
       <div className="space-y-6">
         <div>
@@ -220,4 +220,4 @@ const LayoutDemo: React.FC = () => {
 
 export default LayoutDemo;
 }
-}}}}}}}
+}

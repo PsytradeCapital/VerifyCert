@@ -132,7 +132,6 @@ const PWATestPage: React.FC = () => {
                     {swState.error}
                   </div>
                 )}
-                
                 <div className="flex space-x-2 mt-4">
                   {swState.hasUpdate && (
                     <button
@@ -198,8 +197,8 @@ const PWATestPage: React.FC = () => {
                 <button
                   onClick={async () => {
                     const result = await testCacheStorage();
-                    alert(`Cache Storage Test: ${result ? 'PASSED' : 'FAILED'}`);
-                  }}
+                    alert(Cache Storage Test: ${result ? 'PASSED' : 'FAILED'});
+                  }
                   className="w-full px-3 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700"
                 >
                   Test Cache Storage
@@ -208,8 +207,8 @@ const PWATestPage: React.FC = () => {
                 <button
                   onClick={async () => {
                     const result = await testNotificationPermission();
-                    alert(`Notification Test: ${JSON.stringify(result, null, 2)}`);
-                  }}
+                    alert(Notification Test: ${JSON.stringify(result, null, 2)});
+                  }
                   className="w-full px-3 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700"
                 >
                   Test Notifications
@@ -229,7 +228,7 @@ const PWATestPage: React.FC = () => {
                       });
                     } else {
                       alert('Web Share API: NOT SUPPORTED');
-                  }}
+                  }
                   className="w-full px-3 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700"
                 >
                   Test Web Share
@@ -271,7 +270,7 @@ const PWATestPage: React.FC = () => {
 
               <div className="text-sm text-gray-600">
                 <p>
-                  <strong>Browser:</strong> {testResults.browser.name} {testResults.browser.version} 
+                  <strong>Browser:</strong> {testResults.browser.name} {testResults.browser.version}
                   ({testResults.browser.engine}) on {testResults.browser.platform}
                 </p>
                 <p>
@@ -284,7 +283,6 @@ const PWATestPage: React.FC = () => {
             </div>
           </div>
         )}
-
         {/* Instructions */}
         <div className="mt-8 bg-blue-50 p-6 rounded-lg">
           <h3 className="text-lg font-semibold text-blue-900 mb-3">Testing Instructions</h3>
@@ -304,4 +302,4 @@ const PWATestPage: React.FC = () => {
 
 export default PWATestPage;
 }
-}}}}}}}
+}

@@ -9,9 +9,9 @@ enablePreloading?: boolean;
   customEasing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
 
 export interface NavigationTransitionState {
-}}
 }
-}}}
+}
+}
   isTransitioning: boolean;
   transitionDirection: 'forward' | 'backward' | 'none';
   transitionProgress: number;
@@ -122,18 +122,18 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
     
     // Add base transition classes
     if (state.activeIndicators.animateTransitions) {
-      classes += ` transition-all duration-${transitionDuration} ${transitionEasing} transform will-change-transform`;
+      classes +=  transition-all duration-${transitionDuration} ${transitionEasing} transform will-change-transform;
 
     // Add stagger delay if provided
     if (staggerIndex !== undefined && totalItems !== undefined) {
       const delay = getStaggerDelay(staggerIndex, totalItems);
       if (delay > 0) {
-        classes += ` delay-${Math.round(delay)}`;
+        classes +=  delay-${Math.round(delay)};
 
     // Add transition state classes
     if (isTransitioning) {
       const intensity = transitionDirection === 'forward' ? 1 : -1;
-      classes += ` translate-x-${intensity} opacity-90 scale-98`;
+      classes +=  translate-x-${intensity} opacity-90 scale-98;
 
     return classes.trim();
   }, [state, getStaggerDelay]);
@@ -178,4 +178,4 @@ export const useNavigationTransitions = (options: NavigationTransitionOptions = 
 
 export default useNavigationTransitions;
 }
-}}}}}}}}}}
+}

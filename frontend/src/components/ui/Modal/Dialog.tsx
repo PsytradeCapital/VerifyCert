@@ -21,7 +21,7 @@ const Dialog: React.FC<DialogProps> = ({
   return (
     <Modal
       {...modalProps}
-      className={`${className}`}
+      className={${className}}
     >
       <div className="p-6">
         {/* Content */}

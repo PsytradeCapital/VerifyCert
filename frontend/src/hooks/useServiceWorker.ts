@@ -1,18 +1,18 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { 
-  registerSW, ;;
-  updateSW, ;;
-  isServiceWorkerSupported, ;;
-  isStandalone,;;
-  OfflineManager,;;
-  CacheManager;;
+  registerSW, ;
+  updateSW, ;
+  isServiceWorkerSupported, ;
+  isStandalone,;
+  OfflineManager,;
+  CacheManager;
 } from '../utils/serviceWorker';
-import { ;;
-  getDeviceInfo, ;;
-  shouldShowInstallPrompt, ;;
-  trackInstallPromptEvent,;;
-  getPWAStatus ;;
+import { ;
+  getDeviceInfo, ;
+  shouldShowInstallPrompt, ;
+  trackInstallPromptEvent,;
+  getPWAStatus ;
 } from '../utils/pwaUtils';
 
 interface ServiceWorkerState {
@@ -26,9 +26,9 @@ isSupported: boolean;
   error: string | null;
 
 interface ServiceWorkerActions {
-}}
 }
-}}}
+}
+}
   register: () => void;
   update: () => void;
   clearCache: () => Promise<void>;
@@ -295,4 +295,4 @@ export function usePWAInstallation() {
 
 export default useServiceWorker;
 }
-}}}}}}}}}}}
+}

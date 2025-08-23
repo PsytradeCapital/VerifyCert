@@ -10,9 +10,9 @@ id: string;
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 
 export interface FloatingActionButtonProps {
-}}
 }
-}}}
+}
+}
   actions?: FABAction[];
   mainIcon?: React.ReactNode;
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
@@ -76,7 +76,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
       setIsExpanded(false);
   };
 
-  const mainButtonClasses = `
+  const mainButtonClasses = 
     ${positionClasses[position]}
     ${sizeClasses[size]}
     ${colorClasses.primary}
@@ -89,7 +89,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
     ${variant === 'extended' && label ? 'px-6 rounded-full' : ''}
     ${className}
-  `;
+  ;
 
   return (
     <>
@@ -100,16 +100,15 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           onClick={() => setIsExpanded(false)}
         />
       )}
-
       {/* Action buttons */}
       {isExpanded && actions.length > 0 && (
-        <div className={`${positionClasses[position]} z-50`}>
+        <div className={${positionClasses[position]} z-50}>
           <div className="flex flex-col-reverse items-end space-y-reverse space-y-3 mb-3">
             {actions.map((action, index) => (
               <div
                 key={action.id}
                 className="flex items-center space-x-3 animate-in slide-in-from-bottom-2 duration-200"
-                style={{ animationDelay: `${index * 50}ms` }}
+                style={{ animationDelay: ${index * 50}ms }
               >
                 <span className="bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap shadow-lg">
                   {action.label}
@@ -117,14 +116,14 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
                 <button
                   onClick={() => handleActionClick(action)}
                   disabled={action.disabled}
-                  className={`
+                  className={
                     w-12 h-12 rounded-full shadow-lg
                     flex items-center justify-center
                     transition-all duration-200 transform hover:scale-105
                     focus:outline-none focus:ring-2 focus:ring-offset-2
                     ${action.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                     ${colorClasses[action.color || 'primary']}
-                  `}
+                  }
                   aria-label={action.label}
                 >
                   {action.icon}
@@ -134,7 +133,6 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           </div>
         </div>
       )}
-
       {/* Main FAB */}
       <button
         onClick={handleMainClick}
@@ -146,12 +144,12 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
         {variant === 'extended' && label ? (
           <div className="flex items-center space-x-2">
             <span className="text-sm font-medium">{label}</span>
-            <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-45' : ''}`}>
+            <div className={transition-transform duration-300 ${isExpanded ? 'rotate-45' : ''}}>
               {isExpanded && actions.length > 0 ? <X className={iconSizeClasses[size]} /> : mainIcon}
             </div>
           </div>
         ) : (
-          <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-45' : ''}`}>
+          <div className={transition-transform duration-300 ${isExpanded ? 'rotate-45' : ''}}>
             {isExpanded && actions.length > 0 ? <X className={iconSizeClasses[size]} /> : mainIcon}
           </div>
         )}

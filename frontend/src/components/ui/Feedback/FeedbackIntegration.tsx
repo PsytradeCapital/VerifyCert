@@ -103,7 +103,6 @@ export const FeedbackIntegration: React.FC<FeedbackIntegrationProps> = ({
           context={currentContext}
         />
       )}
-
       {/* Auto-triggered Feedback Collector */}
       <FeedbackCollector
         isOpen={isCollectorOpen}
@@ -134,18 +133,18 @@ function getPageContext(pathname: string): string {
     if (pathname.startsWith(path) && path !== '/') {
       return context;
 
-  return `Page: ${pathname}`;
+  return Page: ${pathname};
 
 // Specialized feedback components for specific use cases
-export const NavigationFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;;
+export const NavigationFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;
   <FeedbackIntegration {...props} category="navigation" />
 );
 
-export const VisualDesignFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;;
+export const VisualDesignFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;
   <FeedbackIntegration {...props} category="visual-design" />
 );
 
-export const OverallExperienceFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;;
+export const OverallExperienceFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;
   <FeedbackIntegration {...props} category="overall-experience" />
 );
 
@@ -185,4 +184,4 @@ export const useFeedbackIntegration = () => {
   };
 };
 }
-}}}}}}}}
+}

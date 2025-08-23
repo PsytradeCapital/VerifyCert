@@ -12,7 +12,7 @@ children: React.ReactNode;
     md?: 1 | 2 | 3 | 4 | 6 | 12;
     lg?: 1 | 2 | 3 | 4 | 6 | 12;
     xl?: 1 | 2 | 3 | 4 | 6 | 12;
-}}};
+};
 
 const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   children,
@@ -49,10 +49,10 @@ const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   );
 
   const breakpointClasses = [
-    breakpoints.sm && `sm:${getColumnClass(breakpoints.sm)}`,
-    breakpoints.md && `md:${getColumnClass(breakpoints.md)}`,
-    breakpoints.lg && `lg:${getColumnClass(breakpoints.lg)}`,
-    breakpoints.xl && `xl:${getColumnClass(breakpoints.xl)}`
+    breakpoints.sm && sm:${getColumnClass(breakpoints.sm)},
+    breakpoints.md && md:${getColumnClass(breakpoints.md)},
+    breakpoints.lg && lg:${getColumnClass(breakpoints.lg)},
+    breakpoints.xl && xl:${getColumnClass(breakpoints.xl)}
   ].filter(Boolean).join(' ');
 
   const combinedClasses = cn(

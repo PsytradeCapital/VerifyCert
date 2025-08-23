@@ -143,4 +143,4 @@ describe('Modal Component', () => {
   });
 });
 }
-}}
+}

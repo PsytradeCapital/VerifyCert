@@ -48,4 +48,4 @@ const AnimatedWrapper: React.FC<AnimatedWrapperProps> = ({
 };
 
 export default AnimatedWrapper;
-}}
+}

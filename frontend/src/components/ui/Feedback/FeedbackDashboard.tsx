@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { 
   BarChart3, 
   TrendingUp, 
-  Users, ;;
-  Star, ;;
-  AlertTriangle,;;
-  Download,;;
-  RefreshCw,;;
-  Filter;;
+  Users, ;
+  Star, ;
+  AlertTriangle,;
+  Download,;
+  RefreshCw,;
+  Filter;
 } from 'lucide-react';
 import Card from '../Card/Card';
 import { Button } from '../Button/Button';
@@ -45,7 +45,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `verifycert-feedback-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = verifycert-feedback-${new Date().toISOString().split('T')[0]}.json;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -66,7 +66,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
 
   if (isLoading) {
     return (
-      <div className={`p-6 ${className}`}>
+      <div className={p-6 ${className}}>
         <div className="flex items-center justify-center h-64">
           <RefreshCw className="animate-spin text-blue-600" size={32} />
         </div>
@@ -75,7 +75,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
 
   if (!analytics || analytics.totalFeedback === 0) {
     return (
-      <div className={`p-6 ${className}`}>
+      <div className={p-6 ${className}}>
         <Card className="text-center py-12">
           <BarChart3 className="mx-auto text-gray-400 mb-4" size={48} />
           <h3 className="text-lg font-medium text-gray-900 mb-2">No Feedback Yet</h3>
@@ -87,7 +87,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
     );
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={space-y-6 ${className}}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -130,7 +130,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Average Rating</p>
-              <p className={`text-2xl font-bold ${getRatingColor(analytics.averageRating)}`}>
+              <p className={text-2xl font-bold ${getRatingColor(analytics.averageRating)}}>
                 {analytics.averageRating.toFixed(1)}
               </p>
             </div>
@@ -175,7 +175,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
                     {category.replace('-', ' ')}
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(data.averageRating)} ${getRatingColor(data.averageRating)}`}>
+                    <span className={px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(data.averageRating)} ${getRatingColor(data.averageRating)}}>
                       {data.averageRating.toFixed(1)} ⭐
                     </span>
                     <span className="text-sm text-gray-600">
@@ -216,7 +216,7 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
                 <span className="text-sm text-gray-600">
                   {data.count} responses
                 </span>
-                <span className={`px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(data.averageRating)} ${getRatingColor(data.averageRating)}`}>
+                <span className={px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(data.averageRating)} ${getRatingColor(data.averageRating)}}>
                   {data.averageRating.toFixed(1)} ⭐
                 </span>
               </div>
@@ -289,14 +289,14 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
           {analytics.recentFeedback.map((feedback, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 20 }
+              animate={{ opacity: 1, y: 0 }
+              transition={{ delay: index * 0.1 }
               className="p-4 border rounded-lg"
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-3">
-                  <span className={`px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(feedback.rating)} ${getRatingColor(feedback.rating)}`}>
+                  <span className={px-2 py-1 rounded text-sm font-medium ${getRatingBgColor(feedback.rating)} ${getRatingColor(feedback.rating)}}>
                     {feedback.rating} ⭐
                   </span>
                   <span className="text-sm text-gray-600 capitalize">
@@ -319,4 +319,4 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className 
   );
 };
 }
-}}}
+}

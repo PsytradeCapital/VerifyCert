@@ -74,8 +74,8 @@ describe('SideNavigation', () => {
     const mockToggle = jest.fn();
     renderWithRouter(
       <SideNavigation 
-        items={mockNavigationItems} 
-        collapsed={false} 
+        items={mockNavigationItems}
+        collapsed={false}
         onToggle={mockToggle}
         showToggleButton={true}
       />
@@ -135,7 +135,7 @@ describe('SideNavigation', () => {
   it('shows branding when enabled', () => {
     renderWithRouter(
       <SideNavigation 
-        items={mockNavigationItems} 
+        items={mockNavigationItems}
         showBranding={true}
       />
     );
@@ -146,7 +146,7 @@ describe('SideNavigation', () => {
   it('hides branding when disabled', () => {
     renderWithRouter(
       <SideNavigation 
-        items={mockNavigationItems} 
+        items={mockNavigationItems}
         showBranding={false}
       />
     );
@@ -155,4 +155,4 @@ describe('SideNavigation', () => {
   });
 });
 }
-}}}
+}

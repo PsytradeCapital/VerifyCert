@@ -299,7 +299,7 @@ describe('BlockchainProofIndicator', () => {
       fireEvent.click(explorerButton);
 
       expect(global.open).toHaveBeenCalledWith(
-        `https://mumbai.polygonscan.com/tx/${mockProofData.transactionHash}`,
+        https://mumbai.polygonscan.com/tx/${mockProofData.transactionHash},
         '_blank'
       );
     });
@@ -318,7 +318,7 @@ describe('BlockchainProofIndicator', () => {
       fireEvent.click(explorerButton);
 
       expect(global.open).toHaveBeenCalledWith(
-        `https://polygonscan.com/tx/${mockProofData.transactionHash}`,
+        https://polygonscan.com/tx/${mockProofData.transactionHash},
         '_blank'
       );
     });

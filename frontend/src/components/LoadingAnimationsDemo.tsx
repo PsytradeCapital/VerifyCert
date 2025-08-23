@@ -4,12 +4,12 @@ import {
   DotsSpinner,
   PulseSpinner,
   ProgressBar,
-  CircularProgress,;;
-  Skeleton,;;
-  CertificateCardSkeleton,;;
-  LoadingOverlay,;;
-  LoadingButton,;;
-  StepProgress;;
+  CircularProgress,;
+  Skeleton,;
+  CertificateCardSkeleton,;
+  LoadingOverlay,;
+  LoadingButton,;
+  StepProgress;
 } from './ui/Loading';
 
 const LoadingAnimationsDemo: React.FC = () => {
@@ -276,22 +276,22 @@ const LoadingAnimationsDemo: React.FC = () => {
           <div className="space-y-4 text-sm">
             <div className="bg-white p-4 rounded border">
               <code className="text-gray-800">
-                {`<Spinner size="lg" color="primary" />`}
+                {<Spinner size="lg" color="primary" />}
               </code>
             </div>
             <div className="bg-white p-4 rounded border">
               <code className="text-gray-800">
-                {`<ProgressBar progress={75} showLabel color="success" />`}
+                {<ProgressBar progress={75} showLabel color="success" />}
               </code>
             </div>
             <div className="bg-white p-4 rounded border">
               <code className="text-gray-800">
-                {`<LoadingButton loading={isLoading} loadingText="Processing...">Submit</LoadingButton>`}
+                {<LoadingButton loading={isLoading} loadingText="Processing...">Submit</LoadingButton>}
               </code>
             </div>
             <div className="bg-white p-4 rounded border">
               <code className="text-gray-800">
-                {`<LoadingOverlay isLoading={loading} message="Please wait...">Content</LoadingOverlay>`}
+                {<LoadingOverlay isLoading={loading} message="Please wait...">Content</LoadingOverlay>}
               </code>
             </div>
           </div>
@@ -302,4 +302,4 @@ const LoadingAnimationsDemo: React.FC = () => {
 };
 
 export default LoadingAnimationsDemo;
-}}
+}

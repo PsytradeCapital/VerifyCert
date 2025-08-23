@@ -53,27 +53,26 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
 
   return (
     <motion.button
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      className={${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}}
       disabled={disabled || loading}
       variants={buttonVariants}
       initial="idle"
       animate={loading ? "loading" : "idle"}
       whileTap={!loading && !disabled ? "tap" : undefined}
-      transition={{ duration: 0.1 }}
+      transition={{ duration: 0.1 }
       {...props}
     >
       {loading && (
         <Spinner 
-          size={spinnerSizes[size]} 
+          size={spinnerSizes[size]}
           color={variant === 'outline' || variant === 'ghost' ? 'gray' : 'white'}
           className="mr-2"
         />
       )}
-      
       <motion.span
-        initial={{ opacity: 1 }}
-        animate={{ opacity: loading ? 0.7 : 1 }}
-        transition={{ duration: 0.2 }}
+        initial={{ opacity: 1 }
+        animate={{ opacity: loading ? 0.7 : 1 }
+        transition={{ duration: 0.2 }
       >
         {loading && loadingText ? loadingText : children}
       </motion.span>
@@ -82,4 +81,4 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
 };
 
 export default LoadingButton;
-}}
+}

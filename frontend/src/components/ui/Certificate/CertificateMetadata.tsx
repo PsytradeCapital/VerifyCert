@@ -10,12 +10,12 @@ import {
   Clock,
   MapPin,
   BookOpen,
-  Star,;;
-  ChevronDown,;;
-  ChevronUp,;;
-  Copy,;;
-  ExternalLink,;;
-  Info;;
+  Star,;
+  ChevronDown,;
+  ChevronUp,;
+  Copy,;
+  ExternalLink,;
+  Info;
 } from 'lucide-react';
 import Tooltip from '../Tooltip/Tooltip';
 
@@ -52,9 +52,9 @@ export interface CertificateMetadata {
   assessmentMethods?: string[];
 
 interface CertificateMetadataProps {
-}}
 }
-}}}
+}
+}
   metadata: CertificateMetadata;
   variant?: 'default' | 'compact' | 'detailed';
   showBlockchainInfo?: boolean;
@@ -82,7 +82,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
   };
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return ${address.slice(0, 6)}...${address.slice(-4)};
   };
 
   const copyToClipboard = async (text: string, fieldName: string) => {
@@ -139,12 +139,12 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
             <button
               onClick={() => copyToClipboard(String(value), label)}
               className="text-neutral-400 hover:text-neutral-600 transition-colors p-1 rounded"
-              title={`Copy ${label}`}
+              title={Copy ${label}}
             >
               {copiedField === label ? (
                 <motion.div
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
+                  initial={{ scale: 0.8 }
+                  animate={{ scale: 1 }
                   className="text-green-500"
                 >
                   ✓
@@ -196,7 +196,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
 
   if (variant === 'compact') {
     return (
-      <div className={`bg-neutral-50 rounded-lg p-4 ${className}`}>
+      <div className={bg-neutral-50 rounded-lg p-4 ${className}}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <MetadataField
             label="Issue Date"
@@ -222,7 +222,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
     );
 
   return (
-    <div className={`bg-white rounded-xl border border-neutral-200 ${className}`}>
+    <div className={bg-white rounded-xl border border-neutral-200 ${className}}>
       {collapsible && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
@@ -239,14 +239,13 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
           )}
         </button>
       )}
-
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            initial={{ height: 0, opacity: 0 }
+            animate={{ height: 'auto', opacity: 1 }
+            exit={{ height: 0, opacity: 0 }
+            transition={{ duration: 0.3, ease: 'easeInOut' }
             className="overflow-hidden"
           >
             <div className="p-6 space-y-8">
@@ -293,7 +292,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                         {metadata.credits && (
                           <MetadataField
                             label="Credits"
-                            value={`${metadata.credits} Credits`}
+                            value={${metadata.credits} Credits}
                           />
                         )}
                         {metadata.duration && (
@@ -329,7 +328,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                       </div>
                     </MetadataSection>
                   )}
-
                   {metadata.description && (
                     <MetadataSection title="Description">
                       <div className="prose prose-neutral max-w-none">
@@ -337,7 +335,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                       </div>
                     </MetadataSection>
                   )}
-
                   {/* Skills and Learning Outcomes */}
                   {(metadata.skills || metadata.learningOutcomes || metadata.prerequisites || metadata.assessmentMethods) && (
                     <MetadataSection title="Learning Information">
@@ -359,7 +356,6 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                   )}
                 </>
               )}
-
               {/* Blockchain Information */}
               {showBlockchainInfo && (
                 <MetadataSection title="Blockchain Verification">
@@ -402,7 +398,7 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
                         value={formatAddress(metadata.transactionHash)}
                         copyable
                         tooltip="Transaction hash of the certificate minting"
-                        link={`https://mumbai.polygonscan.com/tx/${metadata.transactionHash}`}
+                        link={https://mumbai.polygonscan.com/tx/${metadata.transactionHash}}
                       />
                     )}
                   </div>

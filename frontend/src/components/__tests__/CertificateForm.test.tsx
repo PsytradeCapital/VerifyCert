@@ -60,7 +60,7 @@ describe('CertificateForm', () => {
     it('should display connected wallet address', () => {
       render(<CertificateForm {...defaultProps} />);
 
-      expect(screen.getByText(`Connected as: ${mockWalletAddress.slice(0, 6)}...${mockWalletAddress.slice(-4)}`)).toBeInTheDocument();
+      expect(screen.getByText(Connected as: ${mockWalletAddress.slice(0, 6)}...${mockWalletAddress.slice(-4)})).toBeInTheDocument();
     });
   });
 

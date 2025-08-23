@@ -199,7 +199,7 @@ describe('VerificationResult', () => {
   it('renders confidence bar with correct color based on confidence level', () => {
     const { rerender } = render(
       <VerificationResult
-        result={{ ...mockValidResult, confidence: 90 }}
+        result={{ ...mockValidResult, confidence: 90 }
         certificate={mockCertificate}
       />
     );
@@ -209,7 +209,7 @@ describe('VerificationResult', () => {
     // Test medium confidence
     rerender(
       <VerificationResult
-        result={{ ...mockValidResult, confidence: 70 }}
+        result={{ ...mockValidResult, confidence: 70 }
         certificate={mockCertificate}
       />
     );
@@ -219,7 +219,7 @@ describe('VerificationResult', () => {
     // Test low confidence
     rerender(
       <VerificationResult
-        result={{ ...mockValidResult, confidence: 40 }}
+        result={{ ...mockValidResult, confidence: 40 }
         certificate={mockCertificate}
       />
     );

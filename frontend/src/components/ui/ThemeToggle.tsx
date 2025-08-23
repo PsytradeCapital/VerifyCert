@@ -38,7 +38,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     return (
       <button
         onClick={toggleTheme}
-        className={`
+        className={
           ${sizeClasses[size]}
           inline-flex items-center justify-center
           rounded-lg border border-border
@@ -48,9 +48,9 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
           hover:scale-105 active:scale-95
           focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
           ${className}
-        `}
-        title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
-        aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+        }
+        title={Switch to ${isDark ? 'light' : 'dark'} theme}
+        aria-label={Switch to ${isDark ? 'light' : 'dark'} theme}
       >
         {isDark ? (
           <Sun size={iconSizes[size]} className="text-yellow-500" />
@@ -67,7 +67,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
   if (variant === 'switch') {
     return (
-      <div className={`flex items-center space-x-3 ${className}`}>
+      <div className={flex items-center space-x-3 ${className}}>
         {showLabel && (
           <span className="text-sm font-medium text-foreground">
             Theme
@@ -75,22 +75,22 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         )}
         <button
           onClick={toggleTheme}
-          className={`
+          className={
             relative inline-flex h-6 w-11 items-center rounded-full
             transition-colors duration-200 ease-in-out
             focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
             ${isDark ? 'bg-blue-600' : 'bg-gray-200'}
-          `}
+          }
           role="switch"
           aria-checked={isDark}
-          aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+          aria-label={Switch to ${isDark ? 'light' : 'dark'} theme}
         >
           <span
-            className={`
+            className={
               inline-block h-4 w-4 transform rounded-full
               bg-white transition-transform duration-200 ease-in-out
               ${isDark ? 'translate-x-6' : 'translate-x-1'}
-            `}
+            }
           >
             {isDark ? (
               <Moon size={12} className="text-blue-600 p-0.5" />
@@ -104,18 +104,18 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
   if (variant === 'dropdown') {
     return (
-      <div className={`relative ${className}`}>
+      <div className={relative ${className}}>
         <select
           value={theme}
           onChange={(e) => setTheme(e.target.value as Theme)}
-          className={`
+          className={
             ${sizeClasses[size]}
             appearance-none rounded-lg border border-border
             bg-background text-foreground
             px-3 py-2 pr-8
             focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
             transition-colors duration-200
-          `}
+          }
           aria-label="Select theme"
         >
           <option value="light">Light</option>
@@ -178,12 +178,12 @@ export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
   };
 
   return (
-    <div className={`flex items-center space-x-1 ${className}`}>
+    <div className={flex items-center space-x-1 ${className}}>
       {themes.map(({ value, label, icon: Icon }) => (
         <button
           key={value}
           onClick={() => setTheme(value as Theme)}
-          className={`
+          className={
             inline-flex items-center justify-center
             rounded-lg px-3 py-2
             text-sm font-medium
@@ -192,9 +192,9 @@ export const ThemeToggleWithSystem: React.FC<ThemeToggleWithSystemProps> = ({
             ${theme === value
               ? 'bg-primary text-primary-foreground shadow-sm'
               : 'bg-background hover:bg-muted text-muted-foreground hover:text-foreground'
-          `}
-          title={`Switch to ${label.toLowerCase()} theme`}
-          aria-label={`Switch to ${label.toLowerCase()} theme`}
+          }
+          title={Switch to ${label.toLowerCase()} theme}
+          aria-label={Switch to ${label.toLowerCase()} theme}
         >
           <Icon size={iconSizes[size]} className="mr-2" />
           {label}

@@ -312,4 +312,4 @@ describe('VerificationBadge', () => {
     });
   });
 });
-}}
+}

@@ -14,7 +14,7 @@ id: string;
     institution: string;
     issueDate: string;
     isValid: boolean;
-}}};
+};
 
 export interface VerificationResultsProps {
 result: VerificationResult;
@@ -61,16 +61,16 @@ export const VerificationResults: React.FC<VerificationResultsProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, y: 20 }
+      animate={{ opacity: 1, y: 0 }
+      transition={{ duration: 0.5 }
       className={className}
     >
-      <Card className={`${config.bgColor} ${config.borderColor} border-2 p-6`}>
+      <Card className={${config.bgColor} ${config.borderColor} border-2 p-6}>
         {/* Status Header */}
         <div className="flex items-center mb-6">
-          <div className={`p-3 rounded-full ${config.bgColor} mr-4`}>
-            <Icon className={`w-8 h-8 ${config.color}`} />
+          <div className={p-3 rounded-full ${config.bgColor} mr-4}>
+            <Icon className={w-8 h-8 ${config.color}} />
           </div>
           <div>
             <h3 className="text-xl font-semibold text-gray-900">{config.title}</h3>
@@ -103,7 +103,6 @@ export const VerificationResults: React.FC<VerificationResultsProps> = ({
             </div>
           </div>
         )}
-
         {/* Action Buttons */}
         {result.status === 'verified' && (onShare || onDownload) && (
           <div className="flex space-x-4">

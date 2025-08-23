@@ -39,7 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   
   // Create field relationships for accessibility
   const fieldRelationships = fieldName ? createFieldRelationships(fieldName) : null;
-  const inputId = props.id || fieldRelationships?.labelId || `input-${Math.random().toString(36).substring(2, 11)}`;
+  const inputId = props.id || fieldRelationships?.labelId || input-${Math.random().toString(36).substring(2, 11)};
 
   return (
     <div className="space-y-1">
@@ -57,7 +57,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
           )}
         </label>
       )}
-      
       <div className="relative">
         {icon && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -66,17 +65,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
             </div>
           </div>
         )}
-        
         <input
           ref={ref}
           id={inputId}
-          className={`
+          className={
             ${baseClasses}
             ${stateClasses[currentState]}
             ${icon ? 'pl-10' : ''}
             ${enableAnimations ? 'transition-all duration-200 ease-in-out' : ''}
             ${className}
-          `}
+          }
           aria-required={required}
           {...(fieldRelationships ? fieldRelationships.getInputProps(!!error, !!helperText) : {})}
           {...props}
@@ -101,7 +99,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
           {error}
         </p>
       )}
-      
       {helperText && !error && (
         <p 
           id={fieldRelationships?.helpId}

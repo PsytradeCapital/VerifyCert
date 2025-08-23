@@ -27,7 +27,7 @@ describe('FileUpload', () => {
   it('renders with label', () => {
     render(
       <FileUpload 
-        onFileSelect={mockOnFileSelect} 
+        onFileSelect={mockOnFileSelect}
         label="Upload your files" 
       />
     );
@@ -38,7 +38,7 @@ describe('FileUpload', () => {
   it('shows accepted formats when accept prop is provided', () => {
     render(
       <FileUpload 
-        onFileSelect={mockOnFileSelect} 
+        onFileSelect={mockOnFileSelect}
         accept=".pdf,.doc,.docx" 
       />
     );
@@ -49,7 +49,7 @@ describe('FileUpload', () => {
   it('shows max file size when maxSize prop is provided', () => {
     render(
       <FileUpload 
-        onFileSelect={mockOnFileSelect} 
+        onFileSelect={mockOnFileSelect}
         maxSize={5 * 1024 * 1024} // 5MB
       />
     );
@@ -60,7 +60,7 @@ describe('FileUpload', () => {
   it('shows error message', () => {
     render(
       <FileUpload 
-        onFileSelect={mockOnFileSelect} 
+        onFileSelect={mockOnFileSelect}
         error="File upload failed" 
       />
     );
@@ -71,7 +71,7 @@ describe('FileUpload', () => {
   it('shows helper text', () => {
     render(
       <FileUpload 
-        onFileSelect={mockOnFileSelect} 
+        onFileSelect={mockOnFileSelect}
         helperText="Select files to upload" 
       />
     );
@@ -109,7 +109,7 @@ describe('FileUpload', () => {
     
     render(
       <FileUpload 
-        onFileSelect={mockOnFileSelect} 
+        onFileSelect={mockOnFileSelect}
         maxSize={1024} // 1KB limit
       />
     );
@@ -244,4 +244,4 @@ describe('FileUpload', () => {
   });
 });
 }
-}}}
+}

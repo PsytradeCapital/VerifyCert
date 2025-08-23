@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ;;
-  CheckCircle, ;;
-  AlertCircle, ;;
-  AlertTriangle, ;;
-  Info, ;;
-  X ;;
+import { ;
+  CheckCircle, ;
+  AlertCircle, ;
+  AlertTriangle, ;
+  Info, ;
+  X ;
 } from 'lucide-react';
 
 export interface NotificationProps {
@@ -134,16 +134,16 @@ const Notification: React.FC<NotificationProps> = ({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className={`fixed z-50 ${positionClasses[position]}`}
+          className={fixed z-50 ${positionClasses[position]}}
           initial={variants.initial}
           animate={variants.animate}
           exit={variants.exit}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }
         >
           <div
-            className={`
+            className={
               max-w-sm w-full rounded-lg p-4 ${styles.container} ${className}
-            `}
+            }
             role="alert"
           >
             <div className="flex">
@@ -153,19 +153,18 @@ const Notification: React.FC<NotificationProps> = ({
                     IconComponent
                   ) : (
                     React.createElement(IconComponent as React.ComponentType<any>, { 
-                      className: `h-5 w-5 ${styles.icon}` 
+                      className: h-5 w-5 ${styles.icon} 
                     })
                   )}
                 </div>
               )}
-              
-              <div className={`${showIcon ? 'ml-3' : ''} flex-1 pt-0.5`}>
+              <div className={${showIcon ? 'ml-3' : ''} flex-1 pt-0.5}>
                 {title && (
-                  <p className={`text-sm font-medium ${styles.title}`}>
+                  <p className={text-sm font-medium ${styles.title}}>
                     {title}
                   </p>
                 )}
-                <p className={`text-sm ${styles.content} ${title ? 'mt-1' : ''}`}>
+                <p className={text-sm ${styles.content} ${title ? 'mt-1' : ''}}>
                   {message}
                 </p>
               </div>
@@ -187,18 +186,18 @@ const Notification: React.FC<NotificationProps> = ({
             {duration > 0 && (
               <motion.div
                 className="absolute bottom-0 left-0 h-1 bg-gray-200 rounded-b-lg overflow-hidden"
-                style={{ width: '100%' }}
+                style={{ width: '100%' }
               >
                 <motion.div
-                  className={`h-full ${
+                  className={h-full ${
                     variant === 'success' ? 'bg-green-400' :
                     variant === 'error' ? 'bg-red-400' :
                     variant === 'warning' ? 'bg-yellow-400' :
                     'bg-blue-400'
-                  }`}
-                  initial={{ width: '100%' }}
-                  animate={{ width: '0%' }}
-                  transition={{ duration: duration / 1000, ease: 'linear' }}
+                  }}
+                  initial={{ width: '100%' }
+                  animate={{ width: '0%' }
+                  transition={{ duration: duration / 1000, ease: 'linear' }
                 />
               </motion.div>
             )}
@@ -211,4 +210,4 @@ const Notification: React.FC<NotificationProps> = ({
 
 export default Notification;
 }
-}}}}}}}}}
+}

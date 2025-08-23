@@ -9,8 +9,8 @@ jest.mock('../../config/routes', () => ({
   routeConfig: [
     { path: '/', label: 'Home' },
     { path: '/verify', label: 'Verify Certificate' },
-    { path: '/verify/:tokenId', label: 'Certificate Verification', parent: '/verify', dynamic: true, generateLabel: (params: any) => `Verify Certificate #${params.tokenId}` },
-    { path: '/certificate/:tokenId', label: 'Certificate Details', dynamic: true, generateLabel: (params: any) => `Certificate #${params.tokenId}` },
+    { path: '/verify/:tokenId', label: 'Certificate Verification', parent: '/verify', dynamic: true, generateLabel: (params: any) => Verify Certificate #${params.tokenId} },
+    { path: '/certificate/:tokenId', label: 'Certificate Details', dynamic: true, generateLabel: (params: any) => Certificate #${params.tokenId} },
     { path: '/dashboard', label: 'Issuer Dashboard'
   ]
 }));
@@ -67,7 +67,7 @@ describe('useBreadcrumbs', () => {
         label: 'Certificate Verification', 
         parent: '/verify', 
         dynamic: true, 
-        generateLabel: (params: any) => `Verify Certificate #${params.tokenId}` 
+        generateLabel: (params: any) => Verify Certificate #${params.tokenId} 
       },
       params: { tokenId: '123'
     });
@@ -88,7 +88,7 @@ describe('useBreadcrumbs', () => {
         path: '/certificate/:tokenId', 
         label: 'Certificate Details', 
         dynamic: true, 
-        generateLabel: (params: any) => `Certificate #${params.tokenId}` 
+        generateLabel: (params: any) => Certificate #${params.tokenId} 
       },
       params: { tokenId: '456'
     });
@@ -144,4 +144,4 @@ describe('useBreadcrumbs', () => {
   });
 });
 }
-}}}}}}}}}
+}

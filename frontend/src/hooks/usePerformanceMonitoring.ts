@@ -33,11 +33,11 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
         // Log component lifecycle stats in development
         if (process.env.NODE_ENV === 'development' && mountTime.current) {
           const totalLifetime = performance.now() - mountTime.current;
-          console.log(`🔍 Component ${componentName} lifecycle:`, {
-            totalLifetime: `${totalLifetime.toFixed(2)}ms`,
+          console.log(🔍 Component ${componentName} lifecycle:, {
+            totalLifetime: ${totalLifetime.toFixed(2)}ms,
             renderCount: renderCount.current,
             averageRenderTime: renderCount.current > 0 ? 
-              `${(totalLifetime / renderCount.current).toFixed(2)}ms` : 'N/A'
+              ${(totalLifetime / renderCount.current).toFixed(2)}ms : 'N/A'
           });
       };
   }, [componentName, trackEffects]);
@@ -55,11 +55,11 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
 
         // Warn about slow renders in development
         if (process.env.NODE_ENV === 'development' && renderTime > warnThreshold) {
-          console.warn(`⚠️ Slow render detected in ${componentName}: ${renderTime.toFixed(2)}ms`);
+          console.warn(⚠️ Slow render detected in ${componentName}: ${renderTime.toFixed(2)}ms);
 
         // Record render performance
-        performanceMonitor.startTiming(`render_${componentName}_${renderCount.current}`);
-        performanceMonitor.endTiming(`render_${componentName}_${renderCount.current}`, {
+        performanceMonitor.startTiming(render_${componentName}_${renderCount.current});
+        performanceMonitor.endTiming(render_${componentName}_${renderCount.current}, {
           renderCount: renderCount.current,
           renderTime
         });
@@ -74,7 +74,7 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
     operation: () => Promise<T>,
     operationName: string
   ): Promise<T> => {
-    const fullName = `${componentName}_${operationName}`;
+    const fullName = ${componentName}_${operationName};
     performanceMonitor.startTiming(fullName);
 
     try {
@@ -93,7 +93,7 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
     operation: () => T,
     operationName: string
   ): T => {
-    const fullName = `${componentName}_${operationName}`;
+    const fullName = ${componentName}_${operationName};
     performanceMonitor.startTiming(fullName);
 
     try {
@@ -109,11 +109,11 @@ export const usePerformanceMonitoring = (options: UsePerformanceMonitoringOption
   }, [componentName]);
 
   const startTiming = useCallback((operationName: string) => {
-    performanceMonitor.startTiming(`${componentName}_${operationName}`);
+    performanceMonitor.startTiming(${componentName}_${operationName});
   }, [componentName]);
 
   const endTiming = useCallback((operationName: string, metadata?: Record<string, any>) => {
-    performanceMonitor.endTiming(`${componentName}_${operationName}`, metadata);
+    performanceMonitor.endTiming(${componentName}_${operationName}, metadata);
   }, [componentName]);
 
   return {
@@ -158,7 +158,7 @@ export const useApiMonitoring = () => {
     endpoint: string,
     method: string = 'GET'
   ): Promise<T> => {
-    const operationName = `api_${method.toLowerCase()}_${endpoint.replace(/[^a-zA-Z0-9]/g, '_')}`;
+    const operationName = api_${method.toLowerCase()}_${endpoint.replace(/[^a-zA-Z0-9]/g, '_')};
     
     performanceMonitor.startTiming(operationName, {
       type: 'api',
@@ -192,7 +192,7 @@ export const useApiMonitoring = () => {
 // Hook for monitoring route changes
 export const useRouteMonitoring = () => {
   const monitorRouteChange = useCallback((fromRoute: string, toRoute: string) => {
-    const operationName = `route_change_${fromRoute.replace(/[^a-zA-Z0-9]/g, '_')}_to_${toRoute.replace(/[^a-zA-Z0-9]/g, '_')}`;
+    const operationName = route_change_${fromRoute.replace(/[^a-zA-Z0-9]/g, '_')}_to_${toRoute.replace(/[^a-zA-Z0-9]/g, '_')};
     
     performanceMonitor.startTiming(operationName, {
       type: 'navigation',
@@ -216,4 +216,4 @@ export const useRouteMonitoring = () => {
 
 export default usePerformanceMonitoring;
 }
-}}}}}}}}
+}

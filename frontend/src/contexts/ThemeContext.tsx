@@ -44,7 +44,7 @@ export const useThemeContext = (): ThemeContextType => {
 /**
  * Higher-order component for theme-aware components
  */
-export const withTheme = <P extends object>(;;
+export const withTheme = <P extends object>(;
   Component: React.ComponentType<P & { theme: ThemeContextType }>
 ) => {
   const WrappedComponent = (props: P) => {
@@ -52,8 +52,8 @@ export const withTheme = <P extends object>(;;
     return <Component {...props} theme={theme} />;
   };
   
-  WrappedComponent.displayName = `withTheme(${Component.displayName || Component.name})`;
+  WrappedComponent.displayName = withTheme(${Component.displayName || Component.name});
   
   return WrappedComponent;
 };
-}}
+}

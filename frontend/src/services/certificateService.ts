@@ -8,9 +8,9 @@ method?: 'native' | 'clipboard' | 'social';
   includeQR?: boolean;
 
 export interface DownloadOptions {
-}}
 }
-}}}
+}
+}
   format?: 'png' | 'pdf' | 'json';
   quality?: number;
   includeQR?: boolean;
@@ -35,7 +35,7 @@ const DEFAULT_TEMPLATE: CertificateTemplate = {
   titleFont: 'bold 48px Inter, Arial, sans-serif',
   bodyFont: '24px Inter, Arial, sans-serif',
   accentColor: '#1d4ed8'
-}}};
+};
 
 class CertificateService {
   /**
@@ -129,7 +129,7 @@ class CertificateService {
         // Institution
         ctx.fillStyle = '#374151';
         ctx.font = '24px Inter, Arial, sans-serif';
-        ctx.fillText(`Issued by ${certificate.institutionName}`, canvas.width / 2, y + 80);
+        ctx.fillText(Issued by ${certificate.institutionName}, canvas.width / 2, y + 80);
 
         // Date
         const issueDate = new Date(certificate.issueDate * 1000).toLocaleDateString('en-US', {
@@ -137,7 +137,7 @@ class CertificateService {
           month: 'long',
           day: 'numeric'
         });
-        ctx.fillText(`Date: ${issueDate}`, canvas.width / 2, y + 120);
+        ctx.fillText(Date: ${issueDate}, canvas.width / 2, y + 120);
 
         // Footer decoration
         ctx.fillStyle = config.accentColor;
@@ -149,7 +149,7 @@ class CertificateService {
         ctx.fillText('This certificate is verified on the blockchain', canvas.width / 2, canvas.height - 80);
         
         ctx.font = '14px Inter, Arial, sans-serif';
-        ctx.fillText(`Certificate ID: ${certificate.tokenId}`, canvas.width / 2, canvas.height - 50);
+        ctx.fillText(Certificate ID: ${certificate.tokenId}, canvas.width / 2, canvas.height - 50);
 
         // Blockchain verification badge
         ctx.fillStyle = '#10b981';
@@ -187,7 +187,7 @@ class CertificateService {
       switch (format) {
         case 'png':
           downloadData = await this.generateCertificateImage(certificate);
-          filename = `certificate-${certificate.tokenId}-${certificate.recipientName.replace(/\s+/g, '-')}.png`;
+          filename = certificate-${certificate.tokenId}-${certificate.recipientName.replace(/\s+/g, '-')}.png;
           mimeType = 'image/png';
           break;
           
@@ -195,7 +195,7 @@ class CertificateService {
           // For PDF generation, we'd need a library like jsPDF
           // For now, we'll generate a high-quality PNG
           downloadData = await this.generateCertificateImage(certificate, { width: 1800, height: 1350 });
-          filename = `certificate-${certificate.tokenId}-${certificate.recipientName.replace(/\s+/g, '-')}.png`;
+          filename = certificate-${certificate.tokenId}-${certificate.recipientName.replace(/\s+/g, '-')}.png;
           mimeType = 'image/png';
           break;
           
@@ -211,13 +211,13 @@ class CertificateService {
                 verifiedAt: new Date().toISOString()
             })
           };
-          downloadData = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(certificateData, null, 2))}`;
-          filename = `certificate-${certificate.tokenId}-data.json`;
+          downloadData = data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(certificateData, null, 2))};
+          filename = certificate-${certificate.tokenId}-data.json;
           mimeType = 'application/json';
           break;
           
         default:
-          throw new Error(`Unsupported format: ${format}`);
+          throw new Error(Unsupported format: ${format});
 
       // Create and trigger download
       const link = document.createElement('a');
@@ -231,7 +231,7 @@ class CertificateService {
       
     } catch (error) {
       console.error('Download failed:', error);
-      throw new Error(`Failed to download certificate: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(Failed to download certificate: ${error instanceof Error ? error.message : 'Unknown error'});
 
   /**
    * Share certificate using various methods
@@ -242,10 +242,10 @@ class CertificateService {
   ): Promise<string> {
     const { platform = 'copy', customMessage } = options;
     
-    const shareUrl = certificate.verificationURL || `${window.location.origin}/verify/${certificate.tokenId}`;
+    const shareUrl = certificate.verificationURL || ${window.location.origin}/verify/${certificate.tokenId};
     const shareData = {
-      title: `Certificate: ${certificate.courseName}`,
-      text: customMessage || `${certificate.recipientName} has completed ${certificate.courseName} from ${certificate.institutionName}. Verify this certificate on the blockchain.`,
+      title: Certificate: ${certificate.courseName},
+      text: customMessage || ${certificate.recipientName} has completed ${certificate.courseName} from ${certificate.institutionName}. Verify this certificate on the blockchain.,
       url: shareUrl
     };
 
@@ -268,7 +268,7 @@ class CertificateService {
         return shareUrl;
     } catch (error) {
       console.error('Share failed:', error);
-      throw new Error(`Failed to share certificate: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(Failed to share certificate: ${error instanceof Error ? error.message : 'Unknown error'});
 
   /**
    * Copy text to clipboard
@@ -307,23 +307,23 @@ class CertificateService {
     
     switch (platform) {
       case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+        shareUrl = https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl};
         break;
         
       case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&title=${encodedTitle}&summary=${encodedText}`;
+        shareUrl = https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&title=${encodedTitle}&summary=${encodedText};
         break;
         
       case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
+        shareUrl = https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText};
         break;
         
       case 'email':
-        shareUrl = `mailto:?subject=${encodedTitle}&body=${encodedText}%0A%0A${encodedUrl}`;
+        shareUrl = mailto:?subject=${encodedTitle}&body=${encodedText}%0A%0A${encodedUrl};
         break;
         
       default:
-        throw new Error(`Unsupported platform: ${platform}`);
+        throw new Error(Unsupported platform: ${platform});
     
     // Open in new window/tab
     const popup = window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
@@ -335,11 +335,11 @@ class CertificateService {
    * Generate QR code for certificate verification
    */
   async generateQRCode(certificate: CertificateData, size: number = 200): Promise<string> {
-    const verificationUrl = certificate.verificationURL || `${window.location.origin}/verify/${certificate.tokenId}`;
+    const verificationUrl = certificate.verificationURL || ${window.location.origin}/verify/${certificate.tokenId};
     
     // For now, we'll use a simple QR code service
     // In production, you might want to use a library like qrcode.js
-    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(verificationUrl)}`;
+    const qrApiUrl = https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(verificationUrl)};
     
     return qrApiUrl;
 
@@ -347,7 +347,7 @@ class CertificateService {
    * Create a shareable verification link with metadata
    */
   createVerificationLink(certificate: CertificateData, includeMetadata: boolean = false): string {
-    const baseUrl = `${window.location.origin}/verify/${certificate.tokenId}`;
+    const baseUrl = ${window.location.origin}/verify/${certificate.tokenId};
     
     if (!includeMetadata) {
       return baseUrl;
@@ -359,7 +359,7 @@ class CertificateService {
       date: certificate.issueDate.toString()
     });
     
-    return `${baseUrl}?${params.toString()}`;
+    return ${baseUrl}?${params.toString()};
 
   /**
    * Validate certificate data before operations
@@ -379,4 +379,4 @@ const certificateService = new CertificateService();
 
 export default certificateService;
 }
-}}}}}}}}}}}}}}}}}}}}}}}
+}

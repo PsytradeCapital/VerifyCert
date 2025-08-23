@@ -6,9 +6,9 @@ children?: React.ReactNode;
   className?: string;
 
 export interface NavigationControlsProps {
-}}
 }
-}}}
+}
+}
   showIndicatorControls?: boolean;
   showTransitionControls?: boolean;
   showHistoryControls?: boolean;
@@ -23,7 +23,7 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
   const { state, actions } = useNavigation();
 
   return (
-    <div className={`space-y-4 p-4 bg-neutral-50 rounded-lg border ${className}`}>
+    <div className={space-y-4 p-4 bg-neutral-50 rounded-lg border ${className}}>
       <h3 className="text-sm font-semibold text-neutral-900">Navigation Controls</h3>
       
       {/* Active Indicator Controls */}
@@ -76,7 +76,6 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           </div>
         </div>
       )}
-
       {/* Transition Controls */}
       {showTransitionControls && (
         <div className="space-y-2">
@@ -97,7 +96,7 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           <div className="space-y-1">
             <div className="text-xs text-neutral-500">
               Status: {state.isTransitioning ? 'Transitioning' : 'Idle'}
-              {state.transitionDirection !== 'none' && ` (${state.transitionDirection})`}
+              {state.transitionDirection !== 'none' &&  (${state.transitionDirection})}
             </div>
             
             <div className="grid grid-cols-2 gap-2">
@@ -138,7 +137,6 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           </div>
         </div>
       )}
-
       {/* History Controls */}
       {showHistoryControls && (
         <div className="space-y-2">
@@ -166,7 +164,6 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           </div>
         </div>
       )}
-
       {/* Current State Display */}
       <div className="space-y-1 pt-2 border-t border-neutral-200">
         <div className="text-xs text-neutral-500">
@@ -212,9 +209,8 @@ export const NavigationStateManager: React.FC<NavigationStateManagerProps> = ({
   const { state } = useNavigation();
 
   return (
-    <div className={`navigation-state-manager ${className}`}>
+    <div className={navigation-state-manager ${className}}>
       {children}
-      
       {/* Debug info in development */}
       {process.env.NODE_ENV === 'development' && (
         <div className="fixed bottom-4 right-4 z-50">
@@ -242,4 +238,4 @@ export const NavigationStateManager: React.FC<NavigationStateManagerProps> = ({
 };
 
 export default NavigationStateManager;
-}}
+}

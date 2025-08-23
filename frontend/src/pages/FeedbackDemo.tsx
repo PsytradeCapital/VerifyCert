@@ -5,12 +5,12 @@ import Card from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { 
   FeedbackButton, 
-  FeedbackCollector, ;;
-  NavigationFeedback,;;
-  VisualDesignFeedback,;;
-  OverallExperienceFeedback,;;
-  useFeedbackIntegration,;;
-  feedbackService;;
+  FeedbackCollector, ;
+  NavigationFeedback,;
+  VisualDesignFeedback,;
+  OverallExperienceFeedback,;
+  useFeedbackIntegration,;
+  feedbackService;
 } from '../components/ui/Feedback';
 
 const FeedbackDemo: React.FC = () => {
@@ -106,9 +106,9 @@ const FeedbackDemo: React.FC = () => {
           {demoScenarios.map((scenario, index) => (
             <motion.div
               key={scenario.category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 20 }
+              animate={{ opacity: 1, y: 0 }
+              transition={{ delay: index * 0.1 }
             >
               <Card className="p-6 h-full">
                 <div className="flex items-center gap-3 mb-4">
@@ -167,7 +167,7 @@ const FeedbackDemo: React.FC = () => {
                   onClick={() => {
                     setSelectedCategory('overall-experience');
                     setShowCollector(true);
-                  }}
+                  }
                   variant="secondary"
                 >
                   Simulate Auto-trigger

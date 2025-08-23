@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  getOptimalImageFormat, ;;
-  generateImageSrcSet, ;;
-  optimizeImageUrl,;;
-  imagePerformanceMonitor,;;
-  createBlurPlaceholder,;;
-  ImageOptimizationOptions;;
+  getOptimalImageFormat, ;
+  generateImageSrcSet, ;
+  optimizeImageUrl,;
+  imagePerformanceMonitor,;
+  createBlurPlaceholder,;
+  ImageOptimizationOptions;
 } from '../../utils/imageOptimization';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -165,13 +165,13 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     return (
       <div 
         ref={imgRef}
-        className={`${className} ${aspectRatioClasses[aspectRatio]} flex items-center justify-center overflow-hidden`}
+        className={${className} ${aspectRatioClasses[aspectRatio]} flex items-center justify-center overflow-hidden}
         style={{
-          backgroundImage: blurDataUrl ? `url(${blurDataUrl})` : undefined,
+          backgroundImage: blurDataUrl ? url(${blurDataUrl}) : undefined,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           ...style
-        }}
+        }
         {...props}
       >
         {LoadingComponent ? (
@@ -187,7 +187,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
               <path 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
-                strokeWidth={2} 
+                strokeWidth={2}
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
               />
             </svg>
@@ -200,7 +200,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   if (loadState === 'error') {
     return (
       <div 
-        className={`${className} ${aspectRatioClasses[aspectRatio]} bg-gray-100 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-4`}
+        className={${className} ${aspectRatioClasses[aspectRatio]} bg-gray-100 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-4}
         style={style}
         {...props}
       >
@@ -217,7 +217,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
               <path 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
-                strokeWidth={2} 
+                strokeWidth={2}
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" 
               />
             </svg>
@@ -241,7 +241,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       srcSet={currentSrcSet}
       sizes={responsive ? optimization.sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw' : undefined}
       alt={alt}
-      className={`${className} ${aspectRatioClasses[aspectRatio]} transition-opacity duration-300 opacity-100`}
+      className={${className} ${aspectRatioClasses[aspectRatio]} transition-opacity duration-300 opacity-100}
       style={style}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
@@ -263,7 +263,7 @@ src: string;
     media: string;
     src: string;
     sizes?: string;
-}}}>;
+}>;
   webpSources?: boolean;
 
 export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
@@ -291,7 +291,7 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
   if (webpSupported === null) {
     // Loading state
     return (
-      <div className={`bg-gray-200 animate-pulse ${className}`} style={style}>
+      <div className={bg-gray-200 animate-pulse ${className}} style={style}>
         <div className="w-full h-full flex items-center justify-center">
           <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -309,14 +309,13 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
       {/* WebP sources for different breakpoints */}
       {webpSources && webpSupported && breakpoints.map((breakpoint, index) => (
         <source
-          key={`webp-${index}`}
+          key={webp-${index}}
           media={breakpoint.media}
           srcSet={generateImageSrcSet(getWebPSrc(breakpoint.src), undefined, 'webp')}
           sizes={breakpoint.sizes}
           type="image/webp"
         />
       ))}
-      
       {/* WebP source for main image */}
       {webpSources && webpSupported && (
         <source
@@ -325,17 +324,15 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
           type="image/webp"
         />
       )}
-
       {/* Fallback sources for different breakpoints */}
       {breakpoints.map((breakpoint, index) => (
         <source
-          key={`fallback-${index}`}
+          key={fallback-${index}}
           media={breakpoint.media}
           srcSet={generateImageSrcSet(breakpoint.src)}
           sizes={breakpoint.sizes}
         />
       ))}
-
       {/* Fallback img element */}
       <img
         src={optimizeImageUrl(src, optimization)}
@@ -354,4 +351,4 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
 
 export default OptimizedImage;
 }
-}}}}}
+}

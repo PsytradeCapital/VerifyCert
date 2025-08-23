@@ -60,18 +60,18 @@ export const Modal: React.FC<ModalProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }
+            animate={{ opacity: 1 }
+            exit={{ opacity: 0 }
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={handleBackdropClick}
           />
           
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }
+            animate={{ opacity: 1, scale: 1, y: 0 }
+            exit={{ opacity: 0, scale: 0.95, y: 20 }
             className={cn(
               'relative bg-white rounded-lg shadow-xl max-h-[90vh] overflow-hidden',
               sizeClasses[size],
@@ -94,7 +94,6 @@ export const Modal: React.FC<ModalProps> = ({
                 )}
               </div>
             )}
-            
             {/* Content */}
             <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
               {children}

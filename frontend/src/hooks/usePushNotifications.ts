@@ -10,9 +10,9 @@ isSupported: boolean;
   error: string | null;
 
 interface UsePushNotificationsReturn extends PushNotificationState {
-}}
 }
-}}
+}
+}
 }
 }
   subscribe: (userId: string) => Promise<boolean>;
@@ -202,4 +202,4 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
 
 export default usePushNotifications;
 }
-}}}
+}

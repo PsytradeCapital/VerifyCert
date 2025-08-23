@@ -7,9 +7,9 @@ threshold?: number;
   showInProduction?: boolean;
 
 interface Alert {
-}}
 }
-}}}
+}
+}
   id: string;
   type: 'warning' | 'error';
   message: string;
@@ -38,14 +38,14 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
         const isRecent = metric.endTime && (Date.now() - metric.endTime) < 10000;
         if (!isRecent) return;
 
-        const alertId = `${metric.name}_${metric.endTime}`;
+        const alertId = ${metric.name}_${metric.endTime};
         const existingAlert = alerts.find(alert => alert.id === alertId);
         
         if (!existingAlert) {
           newAlerts.push({
             id: alertId,
             type: metric.duration && metric.duration > threshold * 2 ? 'error' : 'warning',
-            message: `Slow loading: ${metric.name} (${metric.duration?.toFixed(0)}ms)`,
+            message: Slow loading: ${metric.name} (${metric.duration?.toFixed(0)}ms),
             timestamp: Date.now(),
             metric
           });
@@ -94,15 +94,15 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
     return null;
 
   return (
-    <div className={`fixed ${getPositionClasses()} z-50 space-y-2 max-w-sm`}>
+    <div className={fixed ${getPositionClasses()} z-50 space-y-2 max-w-sm}>
       {alerts.map(alert => (
         <div
           key={alert.id}
-          className={`p-4 rounded-lg shadow-lg border-l-4 ${
+          className={p-4 rounded-lg shadow-lg border-l-4 ${
             alert.type === 'error'
               ? 'bg-red-50 border-red-500 text-red-800'
               : 'bg-yellow-50 border-yellow-500 text-yellow-800'
-          } animate-slide-in`}
+          } animate-slide-in}
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -135,7 +135,6 @@ export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({
           </div>
         </div>
       ))}
-      
       {/* Toggle visibility button */}
       <div className="flex justify-end">
         <button
@@ -197,8 +196,8 @@ export const PerformanceIndicator: React.FC<{
   return (
     <button
       onClick={onClick}
-      className={`fixed bottom-4 left-4 w-12 h-12 rounded-full ${getStatusColor()} text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-40`}
-      title={`Performance Status: ${status}\nClick to view details`}
+      className={fixed bottom-4 left-4 w-12 h-12 rounded-full ${getStatusColor()} text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-40}
+      title={Performance Status: ${status}\nClick to view details}
     >
       <span className="text-lg font-bold">{getStatusIcon()}</span>
     </button>
@@ -207,4 +206,4 @@ export const PerformanceIndicator: React.FC<{
 
 export default PerformanceAlert;
 }
-}}}
+}

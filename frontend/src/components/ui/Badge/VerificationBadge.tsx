@@ -5,12 +5,12 @@ import {
   CheckCircle, 
   XCircle, 
   AlertTriangle, 
-  Clock, ;;
-  ExternalLink,;;
-  Info,;;
-  Zap,;;
-  Link as LinkIcon,;;
-  Eye;;
+  Clock, ;
+  ExternalLink,;
+  Info,;
+  Zap,;
+  Link as LinkIcon,;
+  Eye;
 } from 'lucide-react';
 import { Badge } from './Badge';
 import { getBlockchainService, VerificationResult } from '../../../services/blockchainService';
@@ -26,9 +26,9 @@ tokenId: string;
   className?: string;
 
 interface BlockchainProof {
-}}
 }
-}}}
+}
+}
   transactionHash?: string;
   blockNumber?: string;
   contractAddress?: string;
@@ -171,7 +171,7 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   };
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return ${address.slice(0, 6)}...${address.slice(-4)};
   };
 
   const formatTimestamp = (timestamp: number) => {
@@ -182,7 +182,7 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
     const baseUrl = blockchainProof?.chainId === 80001 
       ? 'https://mumbai.polygonscan.com'
       : 'https://polygonscan.com';
-    window.open(`${baseUrl}/tx/${hash}`, '_blank');
+    window.open(${baseUrl}/tx/${hash}, '_blank');
   };
 
   const verification = getVerificationStatus();
@@ -201,17 +201,17 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
 
   if (variant === 'detailed') {
     return (
-      <div className={`space-y-2 ${className}`}>
+      <div className={space-y-2 ${className}}>
         {/* Main Verification Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.95 }
+          animate={{ opacity: 1, scale: 1 }
           className="flex items-center space-x-2"
         >
           <Badge
             variant={verification.color as any}
-            size={size}}
-                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            size={size}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }
                 >
                   <Clock className="h-4 w-4" />
                 </motion.div>
@@ -227,15 +227,14 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
           {/* Blockchain Proof Indicator */}
           {verificationResult?.onChain && (
             <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -10 }
+              animate={{ opacity: 1, x: 0 }
               className="flex items-center space-x-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-200"
             >
               <Zap className="h-3 w-3" />
               <span className="font-medium">On-Chain</span>
             </motion.div>
           )}
-
           {/* Manual Verification Button */}
           {!isVerifying && !verificationResult && tokenId && (
             <button
@@ -252,9 +251,9 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         <AnimatePresence>
           {showProofDetails && blockchainProof && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, height: 0 }
+              animate={{ opacity: 1, height: 'auto' }
+              exit={{ opacity: 0, height: 0 }
               className="bg-neutral-50 border border-neutral-200 rounded-lg p-3 space-y-2"
             >
               <div className="flex items-center space-x-2 text-sm font-medium text-neutral-700">
@@ -275,14 +274,12 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
                     </button>
                   </div>
                 )}
-
                 {blockchainProof.blockNumber && (
                   <div className="flex items-center justify-between">
                     <span className="text-neutral-500">Block:</span>
                     <span className="font-mono text-neutral-700">#{blockchainProof.blockNumber}</span>
                   </div>
                 )}
-
                 {blockchainProof.contractAddress && (
                   <div className="flex items-center justify-between">
                     <span className="text-neutral-500">Contract:</span>
@@ -291,7 +288,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
                     </span>
                   </div>
                 )}
-
                 {blockchainProof.networkName && (
                   <div className="flex items-center justify-between">
                     <span className="text-neutral-500">Network:</span>
@@ -300,7 +296,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
                     </span>
                   </div>
                 )}
-
                 <div className="flex items-center justify-between">
                   <span className="text-neutral-500">Verified:</span>
                   <span className="text-neutral-700">
@@ -322,38 +317,38 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   // Premium variant with enhanced styling
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={`bg-white rounded-xl shadow-soft border border-neutral-200 p-4 ${className}`}
+      initial={{ opacity: 0, y: 10 }
+      animate={{ opacity: 1, y: 0 }
+      className={bg-white rounded-xl shadow-soft border border-neutral-200 p-4 ${className}}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center space-x-2">
-          <div className={`p-2 rounded-lg ${
+          <div className={p-2 rounded-lg ${
             verification.color === 'success' ? 'bg-green-100' :
             verification.color === 'error' ? 'bg-red-100' :
             verification.color === 'warning' ? 'bg-yellow-100' :
             'bg-blue-100'
-          }`}>
+          }}>
             {isVerifying ? (
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                animate={{ rotate: 360 }
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }
               >
-                <Clock className={`h-5 w-5 ${
+                <Clock className={h-5 w-5 ${
                   verification.color === 'success' ? 'text-green-600' :
                   verification.color === 'error' ? 'text-red-600' :
                   verification.color === 'warning' ? 'text-yellow-600' :
                   'text-blue-600'
-                }`} />
+                }} />
               </motion.div>
             ) : (
-              <IconComponent className={`h-5 w-5 ${
+              <IconComponent className={h-5 w-5 ${
                 verification.color === 'success' ? 'text-green-600' :
                 verification.color === 'error' ? 'text-red-600' :
                 verification.color === 'warning' ? 'text-yellow-600' :
                 'text-blue-600'
-              }`} />
+              }} />
             )}
           </div>
           <div>
@@ -391,14 +386,12 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
                 </button>
               </div>
             )}
-
             {blockchainProof.blockNumber && (
               <div className="flex items-center justify-between bg-neutral-50 px-2 py-1 rounded">
                 <span className="text-neutral-500">Block Number:</span>
                 <span className="font-mono text-neutral-700">#{blockchainProof.blockNumber}</span>
               </div>
             )}
-
             <div className="flex items-center justify-between bg-neutral-50 px-2 py-1 rounded">
               <span className="text-neutral-500">Verified:</span>
               <span className="text-neutral-700">
@@ -408,7 +401,6 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
           </div>
         </div>
       )}
-
       {/* Manual Verification */}
       {!isVerifying && !verificationResult && tokenId && (
         <div className="pt-3 border-t border-neutral-200">
@@ -427,4 +419,4 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
 
 export default VerificationBadge;
 }
-}}}}}}
+}

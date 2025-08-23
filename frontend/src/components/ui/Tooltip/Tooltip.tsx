@@ -130,13 +130,13 @@ const Tooltip: React.FC<TooltipProps> = ({
     
     switch (position) {
       case 'top':
-        return `${arrowBase} -bottom-1 left-1/2 -translate-x-1/2`;
+        return ${arrowBase} -bottom-1 left-1/2 -translate-x-1/2;
       case 'bottom':
-        return `${arrowBase} -top-1 left-1/2 -translate-x-1/2`;
+        return ${arrowBase} -top-1 left-1/2 -translate-x-1/2;
       case 'left':
-        return `${arrowBase} -right-1 top-1/2 -translate-y-1/2`;
+        return ${arrowBase} -right-1 top-1/2 -translate-y-1/2;
       case 'right':
-        return `${arrowBase} -left-1 top-1/2 -translate-y-1/2`;
+        return ${arrowBase} -left-1 top-1/2 -translate-y-1/2;
       default:
         return arrowBase;
   };
@@ -163,7 +163,7 @@ const Tooltip: React.FC<TooltipProps> = ({
     <>
       <div
         ref={triggerRef}
-        className={`inline-block ${className}`}
+        className={inline-block ${className}}
         {...handleTriggerEvents()}
       >
         {children}
@@ -177,17 +177,17 @@ const Tooltip: React.FC<TooltipProps> = ({
             style={{
               left: tooltipPosition.x,
               top: tooltipPosition.y
-            }}
+            }
             variants={tooltipVariants}
             initial="hidden"
             animate="visible"
             exit="hidden"
           >
             <div
-              className={`
+              className={
                 relative bg-gray-900 text-white text-sm rounded-md px-3 py-2 max-w-xs
                 shadow-lg ${tooltipClassName}
-              `}
+              }
               role="tooltip"
             >
               {content}
@@ -202,4 +202,4 @@ const Tooltip: React.FC<TooltipProps> = ({
 
 export default Tooltip;
 }
-}}}}}}}}}}}}
+}

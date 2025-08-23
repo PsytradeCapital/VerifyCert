@@ -1,132 +1,37 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { VerificationResult } from './';
+import { VerificationResult } from './VerificationResult';
 
 const meta: Meta<typeof VerificationResult> = {
   title: 'UI/VerificationResult',
   component: VerificationResult,
   parameters: {
-    layout: 'padded',
-    docs: {
-      description: {
-        component: 'Enhanced verification results display with better visual feedback, animations, and comprehensive information presentation.'
+    layout: 'centered',
   },
-  argTypes: {
-    onDownload: { action: 'download' },
-    onShare: { action: 'share' },
-    onViewOnBlockchain: { action: 'view-blockchain'
 };
 
 export default meta;
-type Story = StoryObj<typeof VerificationResult>;
+type Story = StoryObj<typeof meta>;
 
-const mockCertificate = {
-  tokenId: '12345',
-  recipientName: 'John Doe',
-  courseName: 'Advanced Web Development',
-  institutionName: 'Tech University',
-  issueDate: 1640995200, // Jan 1, 2022
-  issuer: '0x1234567890abcdef1234567890abcdef12345678'
-};
-
-export const ValidCertificate: Story = {
+export const Verified: Story = {
   args: {
     result: {
-      isValid: true,
-      isRevoked: false,
-      onChain: true,
-      verificationDate: new Date().toISOString(),
-      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-      blockNumber: '12345678',
-      contractAddress: '0x9876543210fedcba9876543210fedcba98765432',
-      confidence: 100
+      valid: true,
+      certificate: {
+        id: '1',
+        recipientName: 'John Doe',
+        courseName: 'React Development',
+        issuerName: 'Tech Academy',
+        issueDate: '2024-01-15'
+      }
     },
-    certificate: mockCertificate
+  },
 };
 
-export const RevokedCertificate: Story = {
+export const Invalid: Story = {
   args: {
     result: {
-      isValid: false,
-      isRevoked: true,
-      onChain: true,
-      verificationDate: new Date().toISOString(),
-      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-      blockNumber: '12345678',
-      contractAddress: '0x9876543210fedcba9876543210fedcba98765432',
-      confidence: 0
+      valid: false,
+      error: 'Certificate not found'
     },
-    certificate: mockCertificate
+  },
 };
-
-export const PendingVerification: Story = {
-  args: {
-    result: {
-      isValid: true,
-      isRevoked: false,
-      onChain: false,
-      verificationDate: new Date().toISOString(),
-      confidence: 75
-    },
-    certificate: mockCertificate
-};
-
-export const InvalidCertificate: Story = {
-  args: {
-    result: {
-      isValid: false,
-      isRevoked: false,
-      onChain: false,
-      verificationDate: new Date().toISOString(),
-      confidence: 0
-};
-
-export const HighConfidenceValid: Story = {
-  args: {
-    result: {
-      isValid: true,
-      isRevoked: false,
-      onChain: true,
-      verificationDate: new Date().toISOString(),
-      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-      blockNumber: '12345678',
-      contractAddress: '0x9876543210fedcba9876543210fedcba98765432',
-      confidence: 95
-    },
-    certificate: mockCertificate
-};
-
-export const MediumConfidenceValid: Story = {
-  args: {
-    result: {
-      isValid: true,
-      isRevoked: false,
-      onChain: true,
-      verificationDate: new Date().toISOString(),
-      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-      blockNumber: '12345678',
-      contractAddress: '0x9876543210fedcba9876543210fedcba98765432',
-      confidence: 70
-    },
-    certificate: mockCertificate
-};
-
-export const WithoutActions: Story = {
-  args: {
-    result: {
-      isValid: true,
-      isRevoked: false,
-      onChain: true,
-      verificationDate: new Date().toISOString(),
-      transactionHash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-      blockNumber: '12345678',
-      contractAddress: '0x9876543210fedcba9876543210fedcba98765432',
-      confidence: 100
-    },
-    certificate: mockCertificate,
-    onDownload: undefined,
-    onShare: undefined,
-    onViewOnBlockchain: undefined
-};
-}
-}}}}}}}}}}}

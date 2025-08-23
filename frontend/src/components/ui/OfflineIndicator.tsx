@@ -22,19 +22,19 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
     <AnimatePresence>
       {shouldShow && (
         <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 0.3 }}
-          className={`fixed top-0 left-0 right-0 z-50 ${className}`}
+          initial={{ opacity: 0, y: -50 }
+          animate={{ opacity: 1, y: 0 }
+          exit={{ opacity: 0, y: -50 }
+          transition={{ duration: 0.3 }
+          className={fixed top-0 left-0 right-0 z-50 ${className}}
         >
           <div
-            className={`
+            className={
               px-4 py-2 text-sm font-medium text-center
               ${isOffline 
                 ? 'bg-red-500 text-white' 
                 : 'bg-green-500 text-white'
-            `}
+            }
           >
             <div className="flex items-center justify-center space-x-2">
               {isOffline ? (
@@ -70,11 +70,11 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
     <AnimatePresence>
       {hasUpdate && (
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.3 }}
-          className={`fixed bottom-4 right-4 z-50 ${className}`}
+          initial={{ opacity: 0, y: 50 }
+          animate={{ opacity: 1, y: 0 }
+          exit={{ opacity: 0, y: 50 }
+          transition={{ duration: 0.3 }
+          className={fixed bottom-4 right-4 z-50 ${className}}
         >
           <div className="bg-blue-500 text-white rounded-lg shadow-lg p-4 max-w-sm">
             <div className="flex items-start space-x-3">
@@ -92,7 +92,7 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
                     Update Now
                   </button>
                   <button
-                    onClick={() => {/* Handle dismiss */}}
+                    onClick={() => {/* Handle dismiss */}
                     className="text-blue-200 px-3 py-1 rounded text-xs hover:text-white transition-colors"
                   >
                     Later
@@ -163,52 +163,51 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
     <AnimatePresence>
       {shouldShow && (
         <motion.div
-          initial={{ opacity: 0, y: 100, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 100, scale: 0.9 }}
+          initial={{ opacity: 0, y: 100, scale: 0.9 }
+          animate={{ opacity: 1, y: 0, scale: 1 }
+          exit={{ opacity: 0, y: 100, scale: 0.9 }
           transition={{ 
             type: "spring",
             stiffness: 300,
             damping: 30,
             duration: 0.4 
-          }}
-          className={`fixed z-50 ${className} ${
+          }
+          className={fixed z-50 ${className} ${
             isMobile 
               ? 'bottom-0 left-0 right-0 mx-0' 
               : 'bottom-4 left-4 right-4 mx-auto max-w-sm'
-          }`}
+          }}
         >
-          <div className={`
+          <div className={
             bg-white border-t border-gray-200 shadow-2xl
             ${isMobile 
               ? 'rounded-t-2xl p-6 pb-8' 
               : 'rounded-xl border border-gray-200 p-4'
-          `}>
+          }>
             {/* Mobile-specific header */}
             {isMobile && (
               <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4" />
             )}
-            
             <div className="flex items-start space-x-4">
-              <div className={`
+              <div className={
                 bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl shadow-lg
                 ${isMobile ? 'p-4' : 'p-3'}
-              `}>
+              }>
                 <Download className="text-white" size={isMobile ? 24 : 20} />
               </div>
               
               <div className="flex-1">
-                <h4 className={`
+                <h4 className={
                   font-semibold text-gray-900
                   ${isMobile ? 'text-lg' : 'text-sm'}
-                `}>
+                }>
                   {isMobile ? 'Add to Home Screen' : 'Install VerifyCert'}
                 </h4>
                 
-                <p className={`
+                <p className={
                   text-gray-600 mt-1
                   ${isMobile ? 'text-sm' : 'text-xs'}
-                `}>
+                }>
                   {isMobile 
                     ? 'Get quick access to certificate verification with our mobile app. Works offline too!'
                     : 'Install our app for a better experience with offline access.'
@@ -231,15 +230,14 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                     </div>
                   </div>
                 )}
-                
-                <div className={`
+                <div className={
                   flex space-x-3 mt-4
                   ${isMobile ? 'flex-col space-x-0 space-y-3' : 'flex-row'}
-                `}>
+                }>
                   <button
                     onClick={handleInstall}
                     disabled={isInstalling}
-                    className={`
+                    className={
                       bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium 
                       rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl
                       disabled:opacity-50 disabled:cursor-not-allowed
@@ -248,11 +246,11 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                         ? 'py-3 px-6 text-base' 
                         : 'px-4 py-2 text-xs'
                       ${isInstalling ? 'bg-gray-400' : 'hover:from-blue-600 hover:to-blue-700'}
-                    `}
+                    }
                   >
                     {isInstalling && (
                       <RefreshCw 
-                        size={isMobile ? 16 : 12} 
+                        size={isMobile ? 16 : 12}
                         className="animate-spin" 
                       />
                     )}
@@ -267,13 +265,13 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
                   
                   <button
                     onClick={handleDismiss}
-                    className={`
+                    className={
                       text-gray-500 font-medium rounded-lg transition-colors
                       hover:text-gray-700 hover:bg-gray-100
                       ${isMobile 
                         ? 'py-3 px-6 text-base' 
                         : 'px-4 py-2 text-xs'
-                    `}
+                    }
                   >
                     {isMobile ? 'Maybe Later' : 'Not now'}
                   </button>
@@ -301,11 +299,11 @@ export const IOSInstallInstructions: React.FC<IOSInstallInstructionsProps> = ({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className={`fixed bottom-0 left-0 right-0 z-50 ${className}`}
+          initial={{ opacity: 0, y: 100 }
+          animate={{ opacity: 1, y: 0 }
+          exit={{ opacity: 0, y: 100 }
+          transition={{ type: "spring", stiffness: 300, damping: 30 }
+          className={fixed bottom-0 left-0 right-0 z-50 ${className}}
         >
           <div className="bg-white border-t border-gray-200 shadow-2xl rounded-t-2xl p-6 pb-8">
             {/* Handle bar */}
@@ -383,4 +381,4 @@ export const IOSInstallInstructions: React.FC<IOSInstallInstructionsProps> = ({
 
 export default OfflineIndicator;
 }
-}}}}}}}}}}}}
+}

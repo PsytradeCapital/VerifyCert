@@ -6,17 +6,17 @@ import { toast } from 'react-hot-toast';
 import { OTPVerificationForm } from './OTPVerificationForm';
 
 interface SignupFormData {
-name: string;
+  name: string;
   email: string;
   phone: string;
   password: string;
   confirmPassword: string;
   authMethod: 'email' | 'phone';
   region: string;
+}
 
 export const SignupForm: React.FC = () => {
-  const { register
-}}} = useAuth();
+  const { register } = useAuth();
   const [formData, setFormData] = useState<SignupFormData>({
     name: '',
     email: '',
@@ -36,33 +36,40 @@ export const SignupForm: React.FC = () => {
 
   const validateForm = (): string | null => {
     if (!formData.name.trim()) return 'Name is required';
-    
+
     if (formData.authMethod === 'email') {
       if (!formData.email.trim()) return 'Email is required';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         return 'Please enter a valid email address';
+      }
     } else {
       if (!formData.phone.trim()) return 'Phone number is required';
       if (!/^\+?[\d\s-()]+$/.test(formData.phone)) {
         return 'Please enter a valid phone number';
+      }
+    }
 
     if (formData.password.length < 8) {
       return 'Password must be at least 8 characters long';
+    }
     if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(formData.password)) {
       return 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character';
+    }
     if (formData.password !== formData.confirmPassword) {
       return 'Passwords do not match';
+    }
 
     return null;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validationError = validateForm();
     if (validationError) {
       toast.error(validationError);
       return;
+    }
 
     setIsLoading(true);
     try {
@@ -70,9 +77,9 @@ export const SignupForm: React.FC = () => {
         name: formData.name,
         password: formData.password,
         region: formData.region,
-        ...(formData.authMethod === 'email' 
-          ? { email: formData.email
-          : { phone: formData.phone
+        ...(formData.authMethod === 'email'
+          ? { email: formData.email }
+          : { phone: formData.phone }
         ),
       };
 
@@ -83,13 +90,15 @@ export const SignupForm: React.FC = () => {
       toast.error(error instanceof Error ? error.message : 'Registration failed');
     } finally {
       setIsLoading(false);
+    }
   };
 
   if (showOTPForm) {
     return <OTPVerificationForm />;
+  }
 
   return (
-    <AuthLayout 
+    <AuthLayout
       title="Create your account"
       subtitle="Join VerifyCert to issue and manage certificates"
     >
@@ -257,5 +266,3 @@ export const SignupForm: React.FC = () => {
     </AuthLayout>
   );
 };
-}
-}}}}}}}}}

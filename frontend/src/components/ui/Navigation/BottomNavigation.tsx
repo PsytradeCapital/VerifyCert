@@ -13,9 +13,9 @@ id: string;
   onClick?: () => void;
 
 export interface BottomNavigationProps {
-}}
 }
-}}}
+}
+}
   items?: BottomNavItem[];
   variant?: 'default' | 'floating';
   showLabels?: boolean;
@@ -65,13 +65,13 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
       case 'ArrowLeft':
         e.preventDefault();
         const prevIndex = index > 0 ? index - 1 : items.length - 1;
-        const prevItem = document.querySelector(`[data-bottom-nav-index="${prevIndex}"]`) as HTMLElement;
+        const prevItem = document.querySelector([data-bottom-nav-index="${prevIndex}"]) as HTMLElement;
         prevItem?.focus();
         break;
       case 'ArrowRight':
         e.preventDefault();
         const nextIndex = index < items.length - 1 ? index + 1 : 0;
-        const nextItem = document.querySelector(`[data-bottom-nav-index="${nextIndex}"]`) as HTMLElement;
+        const nextItem = document.querySelector([data-bottom-nav-index="${nextIndex}"]) as HTMLElement;
         nextItem?.focus();
         break;
   };
@@ -81,7 +81,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
     : 'fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 safe-area-inset-bottom';
 
   return (
-    <nav className={`${baseClasses} ${className}`}>
+    <nav className={${baseClasses} ${className}}>
       <div className="flex items-center justify-around px-2 py-2" role="tablist">
         {items.map((item, index) => {
           const active = isActive(item.href);
@@ -91,7 +91,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
               <Link
                 to={item.href}
                 data-bottom-nav-index={index}
-                className={`
+                className={
                   flex flex-col items-center justify-center px-3 py-2 rounded-lg
                   transition-all duration-200 min-w-0 flex-1
                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
@@ -99,12 +99,12 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                   ${active 
                     ? 'text-blue-600 dark:text-blue-400' 
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                `}
+                }
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onClick={() => {
                   if (!item.disabled && onItemClick) {
                     onItemClick(item);
-                }}
+                }
                 role="tab"
                 aria-selected={active}
                 aria-current={active ? 'page' : undefined}
@@ -119,10 +119,10 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                   )}
                 </div>
                 {showLabels && (
-                  <span className={`
+                  <span className={
                     text-xs font-medium truncate mt-1
                     ${active ? 'text-blue-600 dark:text-blue-400' : ''}
-                  `}>
+                  }>
                     {item.label}
                   </span>
                 )}
@@ -143,13 +143,13 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                   onKeyDown={(e) => {
                     if (e.key === 'ArrowLeft') {
                       e.preventDefault();
-                      const prevItem = document.querySelector(`[data-bottom-nav-index="${index}"]`) as HTMLElement;
+                      const prevItem = document.querySelector([data-bottom-nav-index="${index}"]) as HTMLElement;
                       prevItem?.focus();
                     } else if (e.key === 'ArrowRight') {
                       e.preventDefault();
-                      const nextItem = document.querySelector(`[data-bottom-nav-index="${index + 1}"]`) as HTMLElement;
+                      const nextItem = document.querySelector([data-bottom-nav-index="${index + 1}"]) as HTMLElement;
                       nextItem?.focus();
-                  }}
+                  }
                 >
                   <Plus className="w-6 h-6" />
                 </button>
@@ -162,4 +162,4 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   );
 };
 }
-}}}
+}

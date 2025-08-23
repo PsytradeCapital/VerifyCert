@@ -10,9 +10,9 @@ onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
   className?: string;
 
 interface WalletState {
-}}
 }
-}}}
+}
+}
   isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
@@ -124,7 +124,7 @@ export default function WalletConnect(): JSX.Element {
 
       const provider = new ethers.BrowserProvider((window as any).ethereum);
       const network = await provider.getNetwork();
-      const chainId = `0x${network.chainId.toString(16)}`;
+      const chainId = 0x${network.chainId.toString(16)};
       const networkName = getNetworkName(chainId);
 
       // Check if we need to switch to Polygon Amoy
@@ -135,7 +135,7 @@ export default function WalletConnect(): JSX.Element {
           return;
         // Refresh network info after switching
         const newNetwork = await provider.getNetwork();
-        const newChainId = `0x${newNetwork.chainId.toString(16)}`;
+        const newChainId = 0x${newNetwork.chainId.toString(16)};
         const newNetworkName = getNetworkName(newChainId);
         
         setWalletState({
@@ -244,7 +244,7 @@ export default function WalletConnect(): JSX.Element {
         if (accounts.length > 0) {
           const provider = new ethers.BrowserProvider((window as any).ethereum);
           const network = await provider.getNetwork();
-          const chainId = `0x${network.chainId.toString(16)}`;
+          const chainId = 0x${network.chainId.toString(16)};
           const networkName = getNetworkName(chainId);
 
           setWalletState({
@@ -271,7 +271,7 @@ export default function WalletConnect(): JSX.Element {
   }, [isMetaMaskInstalled, getNetworkName, onConnect]);
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return ${address.slice(0, 6)}...${address.slice(-4)};
   };
 
   const warningId = generateAriaId('metamask-warning');
@@ -279,10 +279,10 @@ export default function WalletConnect(): JSX.Element {
   if (!isMetaMaskInstalled()) {
     return (
       <div 
-        className={`bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}`}
+        className={bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}}
         role="alert"
-        aria-labelledby={`${warningId}-title`}
-        aria-describedby={`${warningId}-description`}
+        aria-labelledby={${warningId}-title}
+        aria-describedby={${warningId}-description}
       >
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
@@ -291,10 +291,10 @@ export default function WalletConnect(): JSX.Element {
             </svg>
           </div>
           <div>
-            <h3 id={`${warningId}-title`} className="text-sm font-medium text-yellow-800">
+            <h3 id={${warningId}-title} className="text-sm font-medium text-yellow-800">
               MetaMask Required
             </h3>
-            <p id={`${warningId}-description`} className="text-sm text-yellow-700 mt-1">
+            <p id={${warningId}-description} className="text-sm text-yellow-700 mt-1">
               Please install MetaMask to connect your wallet.
             </p>
             <button
@@ -310,7 +310,7 @@ export default function WalletConnect(): JSX.Element {
     );
 
   return (
-    <div className={`${className}`}>
+    <div className={${className}}>
       {!walletState.isConnected ? (
         <button
           onClick={connectWallet}
@@ -321,7 +321,7 @@ export default function WalletConnect(): JSX.Element {
             color: '#ffffff !important',
             border: '2px solid #059669 !important',
             minHeight: '48px'
-          }}
+          }
         >
           {walletState.isConnecting ? (
             <>
@@ -337,7 +337,7 @@ export default function WalletConnect(): JSX.Element {
                 className="h-5 w-5" 
                 fill="currentColor" 
                 viewBox="0 0 20 20"
-                style={{ color: '#ffffff !important' }}
+                style={{ color: '#ffffff !important' }
               >
                 <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clipRule="evenodd" />
               </svg>
@@ -388,4 +388,4 @@ export default function WalletConnect(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}
+}

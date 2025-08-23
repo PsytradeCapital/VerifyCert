@@ -16,9 +16,9 @@ recipientAddress: string;
   description?: string;
 
 interface CertificateWizardProps {
-}}
 }
-}}}
+}
+}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
   walletAddress?: string | null;
@@ -35,9 +35,9 @@ recipientAddress?: string;
   description?: string;
 
 interface WizardStep {
-}}
 }
-}}}
+}
+}
   id: string;
   title: string;
   description: string;
@@ -286,7 +286,7 @@ export default function CertificateWizard(): JSX.Element {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3 }
             className="space-y-6"
           >
             <div className="text-center mb-6">
@@ -307,11 +307,11 @@ export default function CertificateWizard(): JSX.Element {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 placeholder="0x..."
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm transition-colors ${
+                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm transition-colors ${
                   isFieldInvalid('recipientAddress')
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300'
-                }`}
+                }}
                 disabled={isLoading}
               />
               {isFieldInvalid('recipientAddress') && (
@@ -334,11 +334,11 @@ export default function CertificateWizard(): JSX.Element {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 placeholder="Enter recipient's full name"
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
                   isFieldInvalid('recipientName')
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300'
-                }`}
+                }}
                 disabled={isLoading}
               />
               {isFieldInvalid('recipientName') && (
@@ -359,7 +359,7 @@ export default function CertificateWizard(): JSX.Element {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3 }
             className="space-y-6"
           >
             <div className="text-center mb-6">
@@ -380,11 +380,11 @@ export default function CertificateWizard(): JSX.Element {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 placeholder="e.g., Blockchain Development Certification"
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
                   isFieldInvalid('courseName')
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300'
-                }`}
+                }}
                 disabled={isLoading}
               />
               {isFieldInvalid('courseName') && (
@@ -405,7 +405,7 @@ export default function CertificateWizard(): JSX.Element {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3 }
             className="space-y-6"
           >
             <div className="text-center mb-6">
@@ -426,11 +426,11 @@ export default function CertificateWizard(): JSX.Element {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 placeholder="Enter your institution name"
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
                   isFieldInvalid('institutionName')
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300'
-                }`}
+                }}
                 disabled={isLoading}
               />
               {isFieldInvalid('institutionName') && (
@@ -451,7 +451,7 @@ export default function CertificateWizard(): JSX.Element {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3 }
             className="space-y-6"
           >
             <div className="text-center mb-6">
@@ -472,11 +472,11 @@ export default function CertificateWizard(): JSX.Element {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 max={new Date().toISOString().split('T')[0]}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
                   isFieldInvalid('issueDate')
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300'
-                }`}
+                }}
                 disabled={isLoading}
               />
               {isFieldInvalid('issueDate') && (
@@ -499,11 +499,11 @@ export default function CertificateWizard(): JSX.Element {
                 onBlur={handleBlur}
                 placeholder="Additional details about the achievement..."
                 rows={4}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical transition-colors ${
+                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical transition-colors ${
                   isFieldInvalid('description')
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300'
-                }`}
+                }}
                 disabled={isLoading}
               />
               {isFieldInvalid('description') && (
@@ -527,7 +527,7 @@ export default function CertificateWizard(): JSX.Element {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3 }
             className="space-y-6"
           >
             <div className="text-center mb-6">
@@ -593,7 +593,6 @@ export default function CertificateWizard(): JSX.Element {
                 </div>
               </div>
             )}
-
             {isConnected && walletAddress && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="flex items-center">
@@ -607,7 +606,6 @@ export default function CertificateWizard(): JSX.Element {
                 </div>
               </div>
             )}
-
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="text-sm font-medium text-blue-900 mb-2">💡 Important Notes</h4>
               <ul className="text-sm text-blue-800 space-y-1">
@@ -625,7 +623,7 @@ export default function CertificateWizard(): JSX.Element {
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg ${className}`}>
+    <div className={bg-white rounded-lg shadow-lg ${className}}>
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-200">
         <h2 className="text-2xl font-bold text-gray-900">Issue New Certificate</h2>
@@ -682,7 +680,6 @@ export default function CertificateWizard(): JSX.Element {
               Cancel
             </Button>
           )}
-
           {currentStepIndex < wizardSteps.length - 1 ? (
             <Button
               onClick={handleNext}
@@ -701,8 +698,8 @@ export default function CertificateWizard(): JSX.Element {
               {isLoading ? (
                 <>
                   <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    animate={{ rotate: 360 }
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }
                     className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
                   />
                   Minting Certificate...
@@ -720,4 +717,4 @@ export default function CertificateWizard(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

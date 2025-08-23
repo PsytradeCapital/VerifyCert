@@ -6,12 +6,12 @@ import {
   Calendar, 
   Building, 
   User, 
-  Download, ;;
-  Share2, ;;
-  ExternalLink,;;
-  QrCode,;;
-  Copy,;;
-  Printer;;
+  Download, ;
+  Share2, ;
+  ExternalLink,;
+  QrCode,;
+  Copy,;
+  Printer;
 } from 'lucide-react';
 import { useFeedbackAnimations } from '../../../hooks/useFeedbackAnimations';
 import { VerificationBadge } from '../Badge';
@@ -37,9 +37,9 @@ tokenId: string;
   description?: string;
 
 interface CertificateCardProps {
-}}
 }
-}}}
+}
+}
   certificate: Certificate;
   variant?: 'default' | 'premium' | 'compact';
   showQR?: boolean;
@@ -76,7 +76,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   };
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return ${address.slice(0, 6)}...${address.slice(-4)};
   };
 
   const handleDownload = async () => {
@@ -131,7 +131,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       // Institution
       ctx.fillStyle = '#374151';
       ctx.font = '24px Inter, Arial, sans-serif';
-      ctx.fillText(`Issued by ${certificate.institutionName}`, canvas.width / 2, 240);
+      ctx.fillText(Issued by ${certificate.institutionName}, canvas.width / 2, 240);
 
       // "This certifies that" text
       ctx.fillStyle = '#6b7280';
@@ -156,14 +156,14 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       // Date and certificate ID
       ctx.fillStyle = '#374151';
       ctx.font = '18px Inter, Arial, sans-serif';
-      ctx.fillText(`Date: ${formatDate(certificate.issueDate)}`, canvas.width / 2, 560);
-      ctx.fillText(`Certificate ID: ${certificate.tokenId}`, canvas.width / 2, 590);
+      ctx.fillText(Date: ${formatDate(certificate.issueDate)}, canvas.width / 2, 560);
+      ctx.fillText(Certificate ID: ${certificate.tokenId}, canvas.width / 2, 590);
 
       // Verification info
       ctx.fillStyle = '#6b7280';
       ctx.font = '14px Inter, Arial, sans-serif';
       ctx.fillText('This certificate is verified on the blockchain', canvas.width / 2, 650);
-      ctx.fillText(`Issuer: ${formatAddress(certificate.issuer)}`, canvas.width / 2, 675);
+      ctx.fillText(Issuer: ${formatAddress(certificate.issuer)}, canvas.width / 2, 675);
 
       // Verification badge
       if (certificate.isValid && !certificate.isRevoked) {
@@ -178,7 +178,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
       // Download
       const link = document.createElement('a');
-      link.download = `certificate-${certificate.tokenId}.png`;
+      link.download = certificate-${certificate.tokenId}.png;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
 
@@ -201,8 +201,8 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       return;
 
     const shareData = {
-      title: `Certificate: ${certificate.courseName}`,
-      text: `${certificate.recipientName} has completed ${certificate.courseName} from ${certificate.institutionName}`,
+      title: Certificate: ${certificate.courseName},
+      text: ${certificate.recipientName} has completed ${certificate.courseName} from ${certificate.institutionName},
       url: certificate.verificationURL || window.location.href,
     };
 
@@ -257,9 +257,9 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   if (variant === 'compact') {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={`bg-white rounded-xl shadow-soft border border-neutral-200 p-6 ${className}`}
+        initial={{ opacity: 0, y: 20 }
+        animate={{ opacity: 1, y: 0 }
+        className={bg-white rounded-xl shadow-soft border border-neutral-200 p-6 ${className}}
       >
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
@@ -317,9 +317,9 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={`bg-white rounded-2xl shadow-strong border border-neutral-200 overflow-hidden max-w-4xl mx-auto print:shadow-none print:max-w-full ${className}`}
+      initial={{ opacity: 0, y: 20 }
+      animate={{ opacity: 1, y: 0 }
+      className={bg-white rounded-2xl shadow-strong border border-neutral-200 overflow-hidden max-w-4xl mx-auto print:shadow-none print:max-w-full ${className}}
     >
       {/* Certificate Header - Premium Design */}
       <div className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white p-8 print:bg-neutral-800">
@@ -370,7 +370,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
               {certificate.description}
             </p>
           )}
-
           {certificate.grade && (
             <div className="inline-flex items-center space-x-2 bg-accent-50 text-accent-800 px-4 py-2 rounded-full mb-6">
               <span className="font-medium">Grade: {certificate.grade}</span>
@@ -396,7 +395,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
                 credits: certificate.credits,
                 description: certificate.description,
                 networkName: 'Polygon Mumbai'
-              }}
+              }
               variant="default"
               showBlockchainInfo={!isPublicView}
               showExtendedInfo={true}
@@ -427,7 +426,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
                 </div>
               </div>
             )}
-
             {/* Action Buttons */}
             {showActions && (
               <div>
@@ -480,7 +478,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
                 </div>
               </div>
             )}
-
             {/* Verification URL Display */}
             {certificate.verificationURL && (
               <div className="pt-6 border-t border-neutral-200">
@@ -539,4 +536,4 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
 export default CertificateCard;
 }
-}}}}}
+}

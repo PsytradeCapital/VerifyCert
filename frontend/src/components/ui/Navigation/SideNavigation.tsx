@@ -4,19 +4,19 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Home, 
-  FileText, ;;
-  Settings, ;;
-  Users, ;;
-  BarChart3,;;
-  Shield,;;
-  Plus;;
+  FileText, ;
+  Settings, ;
+  Users, ;
+  BarChart3,;
+  Shield,;
+  Plus;
 } from 'lucide-react';
 
 export interface NavigationItem {
 id: string;
   label: string;
   icon: ComponentType<{ className?: string
-}}}>;
+}>;
   path: string;
   badge?: string;
   children?: NavigationItem[];
@@ -33,7 +33,7 @@ items?: NavigationItem[];
 
 const defaultNavigationItems: NavigationItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard'
-}}},
+},
   { id: 'verify', label: 'Verify Certificate', icon: Shield, path: '/verify' },
   { id: 'certificates', label: 'My Certificates', icon: FileText, path: '/certificates' },
   { id: 'issue', label: 'Issue Certificate', icon: Plus, path: '/issue' },
@@ -91,7 +91,7 @@ export default function SideNavigation(): JSX.Element {
         event.preventDefault();
         const nextIndex = index < allItems.length - 1 ? index + 1 : 0;
         setFocusedIndex(nextIndex);
-        const nextItem = document.querySelector(`[data-nav-index="${nextIndex}"]`) as HTMLElement;
+        const nextItem = document.querySelector([data-nav-index="${nextIndex}"]) as HTMLElement;
         nextItem?.focus();
         break;
       
@@ -99,14 +99,14 @@ export default function SideNavigation(): JSX.Element {
         event.preventDefault();
         const prevIndex = index > 0 ? index - 1 : allItems.length - 1;
         setFocusedIndex(prevIndex);
-        const prevItem = document.querySelector(`[data-nav-index="${prevIndex}"]`) as HTMLElement;
+        const prevItem = document.querySelector([data-nav-index="${prevIndex}"]) as HTMLElement;
         prevItem?.focus();
         break;
       
       case 'Home':
         event.preventDefault();
         setFocusedIndex(0);
-        const firstItem = document.querySelector(`[data-nav-index="0"]`) as HTMLElement;
+        const firstItem = document.querySelector([data-nav-index="0"]) as HTMLElement;
         firstItem?.focus();
         break;
       
@@ -114,7 +114,7 @@ export default function SideNavigation(): JSX.Element {
         event.preventDefault();
         const lastIndex = allItems.length - 1;
         setFocusedIndex(lastIndex);
-        const lastItem = document.querySelector(`[data-nav-index="${lastIndex}"]`) as HTMLElement;
+        const lastItem = document.querySelector([data-nav-index="${lastIndex}"]) as HTMLElement;
         lastItem?.focus();
         break;
 
@@ -133,8 +133,8 @@ export default function SideNavigation(): JSX.Element {
     
     if (collapsed && tooltipRef.current) {
       const rect = event.currentTarget.getBoundingClientRect();
-      tooltipRef.current.style.top = `${rect.top + rect.height / 2}px`;
-      tooltipRef.current.style.left = `${rect.right + 8}px`;
+      tooltipRef.current.style.top = ${rect.top + rect.height / 2}px;
+      tooltipRef.current.style.left = ${rect.right + 8}px;
   };
 
   const handleMouseLeave = () => {
@@ -163,37 +163,37 @@ export default function SideNavigation(): JSX.Element {
           <div>
             <button
               data-nav-index={index}
-              className={`
+              className={
                 w-full flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
                 ${active || childActive
                   ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700' 
                   : 'text-gray-700 hover:bg-gray-100'
                 ${item.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-              `}
+              }
               onClick={() => !item.disabled && toggleExpanded(item.id)}
               onMouseEnter={(e) => handleMouseEnter(e, item.id)}
               onMouseLeave={handleMouseLeave}
               onKeyDown={(e) => handleKeyDown(e, index)}
               aria-expanded={isExpanded}
-              aria-label={`${item.label}${hasChildren ? ' submenu' : ''}`}
+              aria-label={${item.label}${hasChildren ? ' submenu' : ''}}
               disabled={item.disabled}
             >
-              <Icon className={`
+              <Icon className={
                 w-5 h-5 flex-shrink-0 mr-3
                 ${active || childActive ? 'text-blue-700' : 'text-gray-500'}
-              `} />
+              } />
               <span className="font-medium truncate flex-1 text-left">{item.label}</span>
               {item.badge && (
                 <span className="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded-full mr-2">
                   {item.badge}
                 </span>
               )}
-              <ChevronRight className={`
+              <ChevronRight className={
                 w-4 h-4 transition-transform duration-200
                 ${isExpanded ? 'rotate-90' : ''}
                 ${active || childActive ? 'text-blue-700' : 'text-gray-400'}
-              `} />
+              } />
             </button>
             
             {/* Children */}
@@ -210,7 +210,7 @@ export default function SideNavigation(): JSX.Element {
           <Link
             to={item.path}
             data-nav-index={index}
-            className={`
+            className={
               flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
               ${active 
@@ -218,7 +218,7 @@ export default function SideNavigation(): JSX.Element {
                 : 'text-gray-700 hover:bg-gray-100'
               ${collapsed ? 'justify-center' : 'justify-start'}
               ${item.disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}
-            `}
+            }
             onMouseEnter={(e) => handleMouseEnter(e, item.id)}
             onMouseLeave={handleMouseLeave}
             onKeyDown={(e) => handleKeyDown(e, index)}
@@ -226,11 +226,11 @@ export default function SideNavigation(): JSX.Element {
             aria-current={active ? 'page' : undefined}
             aria-label={item.label}
           >
-            <Icon className={`
+            <Icon className={
               w-5 h-5 flex-shrink-0
               ${active ? 'text-blue-700' : 'text-gray-500'}
               ${!collapsed ? 'mr-3' : ''}
-            `} />
+            } />
             
             {!collapsed && (
               <>
@@ -254,12 +254,12 @@ export default function SideNavigation(): JSX.Element {
   return (
     <nav 
       ref={navigationRef}
-      className={`
+      className={
         bg-white border-r border-gray-200 
         transition-all duration-300 ease-in-out
         ${collapsed ? 'w-16' : 'w-64'}
         ${className}
-      `}
+      }
       role="navigation"
       aria-label="Main navigation"
     >
@@ -297,7 +297,6 @@ export default function SideNavigation(): JSX.Element {
           )}
         </div>
       )}
-
       {/* Navigation Items */}
       <div className="flex-1 overflow-y-auto py-4">
         <div className="px-2">
@@ -315,7 +314,6 @@ export default function SideNavigation(): JSX.Element {
           </div>
         </div>
       )}
-
       {/* Tooltip for collapsed state */}
       {collapsed && hoveredItem && (
         <div 
@@ -328,4 +326,4 @@ export default function SideNavigation(): JSX.Element {
     </nav>
   );
 }
-}}}}}}}
+}

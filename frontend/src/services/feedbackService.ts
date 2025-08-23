@@ -10,9 +10,9 @@ category: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
 
 interface FeedbackAnalytics {
-}}
 }
-}}}
+}
+}
   totalFeedback: number;
   averageRating: number;
   categoryBreakdown: Record<string, {
@@ -214,7 +214,7 @@ class FeedbackService {
         const text = f.feedback.toLowerCase();
         urgentKeywords.forEach(keyword => {
           if (text.includes(keyword)) {
-            urgentIssues.add(`${f.category}: ${keyword}`);
+            urgentIssues.add(${f.category}: ${keyword});
         });
     });
 
@@ -336,4 +336,4 @@ export const feedbackService = new FeedbackService();
 // Type exports
 export type { FeedbackData, FeedbackAnalytics };
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}
+}

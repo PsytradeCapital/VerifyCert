@@ -10,9 +10,9 @@ name: string;
   metadata?: Record<string, any>;
 
 interface PerformanceSummary {
-}}
 }
-}}}
+}
+}
   total: number;
   components: {
     count: number;
@@ -51,7 +51,7 @@ export const PerformanceDashboard: React.FC = () => {
 
   const formatDuration = (duration?: number): string => {
     if (!duration) return 'N/A';
-    return `${duration.toFixed(2)}ms`;
+    return ${duration.toFixed(2)}ms;
   };
 
   const getPerformanceStatus = (duration?: number): 'good' | 'warning' | 'poor' => {
@@ -74,7 +74,7 @@ export const PerformanceDashboard: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `performance-metrics-${new Date().toISOString()}.json`;
+    a.download = performance-metrics-${new Date().toISOString()}.json;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -120,7 +120,7 @@ export const PerformanceDashboard: React.FC = () => {
               Avg: {formatDuration(summary.components.averageLoadTime)}
             </p>
             {summary.components.slowest && (
-              <p className={`text-xs ${getStatusColor(getPerformanceStatus(summary.components.slowest.duration))}`}>
+              <p className={text-xs ${getStatusColor(getPerformanceStatus(summary.components.slowest.duration))}}>
                 Slowest: {formatDuration(summary.components.slowest.duration)}
               </p>
             )}
@@ -135,7 +135,7 @@ export const PerformanceDashboard: React.FC = () => {
               Avg: {formatDuration(summary.images.averageLoadTime)}
             </p>
             {summary.images.slowest && (
-              <p className={`text-xs ${getStatusColor(getPerformanceStatus(summary.images.slowest.duration))}`}>
+              <p className={text-xs ${getStatusColor(getPerformanceStatus(summary.images.slowest.duration))}}>
                 Slowest: {formatDuration(summary.images.slowest.duration)}
               </p>
             )}
@@ -150,7 +150,7 @@ export const PerformanceDashboard: React.FC = () => {
               Avg: {formatDuration(summary.bundles.averageLoadTime)}
             </p>
             {summary.bundles.slowest && (
-              <p className={`text-xs ${getStatusColor(getPerformanceStatus(summary.bundles.slowest.duration))}`}>
+              <p className={text-xs ${getStatusColor(getPerformanceStatus(summary.bundles.slowest.duration))}}>
                 Slowest: {formatDuration(summary.bundles.slowest.duration)}
               </p>
             )}
@@ -214,7 +214,7 @@ export const PerformanceDashboard: React.FC = () => {
                     return (
                       <tr key={index} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {metric.name.length > 50 ? `${metric.name.substring(0, 50)}...` : metric.name}
+                          {metric.name.length > 50 ? ${metric.name.substring(0, 50)}... : metric.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {metric.metadata?.type || 'Unknown'}
@@ -223,11 +223,11 @@ export const PerformanceDashboard: React.FC = () => {
                           {formatDuration(metric.duration)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          <span className={inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                             status === 'good' ? 'bg-green-100 text-green-800' :
                             status === 'warning' ? 'bg-yellow-100 text-yellow-800' :
                             'bg-red-100 text-red-800'
-                          }`}>
+                          }}>
                             {status}
                           </span>
                         </td>
@@ -255,7 +255,6 @@ export const PerformanceDashboard: React.FC = () => {
           )}
         </Card>
       )}
-
       {/* Performance Warnings */}
       {(() => {
         const slowMetrics = performanceMonitor.getSlowMetrics(1000);

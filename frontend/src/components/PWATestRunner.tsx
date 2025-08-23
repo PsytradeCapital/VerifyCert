@@ -32,7 +32,7 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `pwa-test-report-${results.browser.name}-${Date.now()}.txt`;
+    a.download = pwa-test-report-${results.browser.name}-${Date.now()}.txt;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -72,11 +72,11 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
         <button
           onClick={runTests}
           disabled={isRunning}
-          className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+          className={px-6 py-3 rounded-lg font-medium transition-colors ${
             isRunning
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-blue-600 hover:bg-blue-700 text-white'
-          }`}
+          }}
         >
           {isRunning ? (
             <span className="flex items-center">
@@ -107,7 +107,6 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
           </div>
         </div>
       )}
-
       {results && (
         <div className="space-y-6">
           {/* Browser Info */}
@@ -143,7 +142,7 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
               <div className="bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                  style={{ width: `${results.overallScore}%` }}
+                  style={{ width: ${results.overallScore}% }
                 ></div>
               </div>
             </div>
@@ -169,7 +168,7 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
                       <span className="text-2xl">{getStatusIcon(result)}</span>
                       <h4 className="font-medium text-gray-900">{result.feature}</h4>
                     </div>
-                    <span className={`text-sm font-medium ${getStatusColor(result)}`}>
+                    <span className={text-sm font-medium ${getStatusColor(result)}}>
                       {getStatusText(result)}
                     </span>
                   </div>
@@ -179,7 +178,6 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
                       <strong>Error:</strong> {result.error}
                     </div>
                   )}
-                  
                   {result.details && (
                     <div className="mt-2">
                       <details className="text-sm">
@@ -225,4 +223,4 @@ const PWATestRunner: React.FC<TestRunnerProps> = ({ onTestComplete
 };
 
 export default PWATestRunner;
-}}
+}

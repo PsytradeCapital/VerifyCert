@@ -4,109 +4,109 @@ import { createLazyComponent } from '../../utils/lazyLoading';
 // Lazy load heavy page components
 export const LazyIssuerDashboard = createLazyComponent(
   () => import('../../pages/IssuerDashboard'),;
-  undefined,;;
-  'IssuerDashboard';;
+  undefined,;
+  'IssuerDashboard';
 );
 
 export const LazyCertificateViewer = createLazyComponent(
   () => import('../../pages/CertificateViewer'),;
-  undefined,;;
-  'CertificateViewer';;
+  undefined,;
+  'CertificateViewer';
 );
 
 export const LazyVerificationPage = createLazyComponent(
   () => import('../../pages/VerificationPage'),;
-  undefined,;;
-  'VerificationPage';;
+  undefined,;
+  'VerificationPage';
 );
 
 // Lazy load heavy UI components
 export const LazyCertificateCard = createLazyComponent(
   () => import('../CertificateCard'),;
-  undefined,;;
-  'CertificateCard';;
+  undefined,;
+  'CertificateCard';
 );
 
 export const LazyDashboardDemo = createLazyComponent(
   () => import('../DashboardDemo'),;
-  undefined,;;
-  'DashboardDemo';;
+  undefined,;
+  'DashboardDemo';
 );
 
 export const LazyUIComponentsDemo = createLazyComponent(
   () => import('../UIComponentsDemo'),;
-  undefined,;;
-  'UIComponentsDemo';;
+  undefined,;
+  'UIComponentsDemo';
 );
 
 export const LazyFeedbackAnimationsDemo = createLazyComponent(
   () => import('../FeedbackAnimationsDemo'),;
-  undefined,;;
-  'FeedbackAnimationsDemo';;
+  undefined,;
+  'FeedbackAnimationsDemo';
 );
 
 export const LazyPWATestRunner = createLazyComponent(
   () => import('../PWATestRunner'),;
-  undefined,;;
-  'PWATestRunner';;
+  undefined,;
+  'PWATestRunner';
 );
 
 // Lazy load demo pages
-export const LazyLayoutDemo = createLazyComponent(;;
-  () => import('../../pages/LayoutDemo');;
+export const LazyLayoutDemo = createLazyComponent(;
+  () => import('../../pages/LayoutDemo');
 );
 
-export const LazyBreadcrumbsDemo = createLazyComponent(;;
-  () => import('../../pages/BreadcrumbsDemo');;
+export const LazyBreadcrumbsDemo = createLazyComponent(;
+  () => import('../../pages/BreadcrumbsDemo');
 );
 
-export const LazyNavigationDemo = createLazyComponent(;;
-  () => import('../../pages/NavigationDemo');;
+export const LazyNavigationDemo = createLazyComponent(;
+  () => import('../../pages/NavigationDemo');
 );
 
-export const LazyNavigationStateDemo = createLazyComponent(;;
-  () => import('../../pages/NavigationStateDemo');;
+export const LazyNavigationStateDemo = createLazyComponent(;
+  () => import('../../pages/NavigationStateDemo');
 );
 
-export const LazyPageTransitionDemo = createLazyComponent(;;
-  () => import('../../pages/PageTransitionDemo');;
+export const LazyPageTransitionDemo = createLazyComponent(;
+  () => import('../../pages/PageTransitionDemo');
 );
 
-export const LazyPWATestPage = createLazyComponent(;;
-  () => import('../../pages/PWATestPage');;
+export const LazyPWATestPage = createLazyComponent(;
+  () => import('../../pages/PWATestPage');
 );
 
-export const LazyThemeDemo = createLazyComponent(;;
-  () => import('../../pages/ThemeDemo');;
+export const LazyThemeDemo = createLazyComponent(;
+  () => import('../../pages/ThemeDemo');
 );
 
-export const LazyPushNotificationDemo = createLazyComponent(;;
-  () => import('../../pages/PushNotificationDemo');;
+export const LazyPushNotificationDemo = createLazyComponent(;
+  () => import('../../pages/PushNotificationDemo');
 );
 
-export const LazyFeedbackDashboard = createLazyComponent(;;
-  () => import('../../pages/FeedbackDashboard');;
+export const LazyFeedbackDashboard = createLazyComponent(;
+  () => import('../../pages/FeedbackDashboard');
 );
 
-export const LazyFeedbackDemo = createLazyComponent(;;
-  () => import('../../pages/FeedbackDemo');;
+export const LazyFeedbackDemo = createLazyComponent(;
+  () => import('../../pages/FeedbackDemo');
 );
 
-export const LazyPerformanceDashboard = createLazyComponent(;;
-  () => import('../ui/Performance/PerformanceDashboard');;
+export const LazyPerformanceDashboard = createLazyComponent(;
+  () => import('../ui/Performance/PerformanceDashboard');
 );
 
 // Lazy load complex UI components
-export const LazyModal = createLazyComponent(;;
+export const LazyModal = createLazyComponent(;
   () => import('../ui/Modal/Modal').then(module => ({ default: module.Modal }))
 );
 
-export const LazySelect = createLazyComponent(;;
-  () => import('../ui/Select/Select');;
+export const LazySelect = createLazyComponent(;
+  () => import('../ui/Select/Select');
 );
 
-export const LazyFileUpload = createLazyComponent(;;
-  () => import('../ui/FileUpload/FileUpload');;
+export const LazyFileUpload = createLazyComponent(;
+  () => import('../ui/FileUpload/FileUpload');
 );
 
 // Fallback components for failed loads
@@ -133,6 +133,6 @@ export const ComponentLoading: React.FC = () => (
     <div className="flex flex-col items-center">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
       <p className="text-gray-600">Loading component...</p>;
-    </div>;;
-  </div>;;
+    </div>;
+  </div>;
 );

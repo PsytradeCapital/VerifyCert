@@ -69,7 +69,7 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
 
   if (!isSupported) {
     return (
-      <div className={`bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}`}>
+      <div className={bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}}>
         <div className="flex items-center space-x-2">
           <AlertCircle className="h-5 w-5 text-yellow-600" />
           <div>
@@ -85,7 +85,7 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
     );
 
   return (
-    <div className={`bg-white border border-gray-200 rounded-lg p-6 ${className}`}>
+    <div className={bg-white border border-gray-200 rounded-lg p-6 ${className}}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <Bell className="h-5 w-5 text-blue-600" />
@@ -94,8 +94,8 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
           </h3>
         </div>
         <div className="flex items-center space-x-2">
-          <PermissionIcon className={`h-4 w-4 ${permissionStatus.color}`} />
-          <span className={`text-sm ${permissionStatus.color}`}>
+          <PermissionIcon className={h-4 w-4 ${permissionStatus.color}} />
+          <span className={text-sm ${permissionStatus.color}}>
             {permissionStatus.text}
           </span>
         </div>
@@ -122,7 +122,6 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
           </div>
         </div>
       )}
-
       <div className="space-y-4">
         {/* Permission Status */}
         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -259,4 +258,4 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
 
 export default PushNotificationSettings;
 }
-}}}}}}}
+}

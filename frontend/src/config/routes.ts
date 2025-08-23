@@ -6,11 +6,11 @@ path: string;
   dynamic?: boolean;
   generateLabel?: (params: Record<string, string>) => string;
 
-export const routeConfig: RouteConfig[] = [;;
+export const routeConfig: RouteConfig[] = [;
   {
     path: '/',
     label: 'Home'
-}}},
+},
   {
     path: '/verify',
     label: 'Verify Certificate'
@@ -20,13 +20,13 @@ export const routeConfig: RouteConfig[] = [;;
     label: 'Certificate Verification',
     parent: '/verify',
     dynamic: true,
-    generateLabel: (params) => `Verify Certificate #${params.tokenId}`
+    generateLabel: (params) => Verify Certificate #${params.tokenId}
   },
   {
     path: '/certificate/:tokenId',
     label: 'Certificate Details',
     dynamic: true,
-    generateLabel: (params) => `Certificate #${params.tokenId}`
+    generateLabel: (params) => Certificate #${params.tokenId}
   },
   {
     path: '/dashboard',
@@ -46,7 +46,7 @@ export const getRouteConfig = (path: string): RouteConfig | undefined => {
     if (route.dynamic) {
       // Convert route pattern to regex for matching
       const pattern = route.path.replace(/:[^/]+/g, '[^/]+');
-      const regex = new RegExp(`^${pattern}$`);
+      const regex = new RegExp(^${pattern}$);
       return regex.test(path);
     return route.path === path;
   });
@@ -62,7 +62,7 @@ export const matchRoute = (path: string): { config: RouteConfig; params: Record<
         return '([^/]+)';
       });
       
-      const regex = new RegExp(`^${pattern}$`);
+      const regex = new RegExp(^${pattern}$);
       const match = path.match(regex);
       
       if (match) {
@@ -78,4 +78,4 @@ export const matchRoute = (path: string): { config: RouteConfig; params: Record<
   return null;
 };
 }
-}}}}
+}

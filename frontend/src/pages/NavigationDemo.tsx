@@ -104,21 +104,21 @@ const NavigationDemo: React.FC = () => {
                   
                   <div>
                     <span className="font-medium text-gray-700">Sidebar Collapsed:</span>
-                    <span className={`ml-2 ${state.sidebarCollapsed ? 'text-green-600' : 'text-gray-500'}`}>
+                    <span className={ml-2 ${state.sidebarCollapsed ? 'text-green-600' : 'text-gray-500'}}>
                       {state.sidebarCollapsed ? 'Yes' : 'No'}
                     </span>
                   </div>
                   
                   <div>
                     <span className="font-medium text-gray-700">Mobile Menu Open:</span>
-                    <span className={`ml-2 ${state.mobileMenuOpen ? 'text-green-600' : 'text-gray-500'}`}>
+                    <span className={ml-2 ${state.mobileMenuOpen ? 'text-green-600' : 'text-gray-500'}}>
                       {state.mobileMenuOpen ? 'Yes' : 'No'}
                     </span>
                   </div>
                   
                   <div>
                     <span className="font-medium text-gray-700">Can Go Back:</span>
-                    <span className={`ml-2 ${state.canGoBack ? 'text-green-600' : 'text-gray-500'}`}>
+                    <span className={ml-2 ${state.canGoBack ? 'text-green-600' : 'text-gray-500'}}>
                       {state.canGoBack ? 'Yes' : 'No'}
                     </span>
                   </div>
@@ -129,7 +129,7 @@ const NavigationDemo: React.FC = () => {
                   <div className="space-y-2 text-sm">
                     <div>
                       <span className="font-medium text-gray-600">Is Transitioning:</span>
-                      <span className={`ml-2 ${transition.isTransitioning ? 'text-orange-600' : 'text-gray-500'}`}>
+                      <span className={ml-2 ${transition.isTransitioning ? 'text-orange-600' : 'text-gray-500'}}>
                         {transition.isTransitioning ? 'Yes' : 'No'}
                       </span>
                     </div>
@@ -247,4 +247,4 @@ const NavigationDemo: React.FC = () => {
 };
 
 export default NavigationDemo;
-}}
+}

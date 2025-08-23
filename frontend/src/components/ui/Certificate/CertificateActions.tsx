@@ -9,12 +9,12 @@ import {
   Linkedin,
   Facebook,
   Mail,
-  QrCode,;;
-  FileImage,;;
-  FileText,;;
-  Database,;;
-  Check,;;
-  AlertCircle;;
+  QrCode,;
+  FileImage,;
+  FileText,;
+  Database,;
+  Check,;
+  AlertCircle;
 } from 'lucide-react';
 import { Button, Modal, Alert } from '../';
 import { CertificateData } from '../../../services/blockchainService';
@@ -42,7 +42,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
   const feedback = useFeedbackAnimations();
 
   const handleDownload = async (format: 'png' | 'pdf' | 'json' = 'png') => {
-    setIsLoading(`download-${format}`);
+    setIsLoading(download-${format});
     
     try {
       const options: DownloadOptions = {
@@ -53,7 +53,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
       
       await certificateService.downloadCertificate(certificate, options);
       
-      feedback.showSuccess(`Certificate downloaded as ${format.toUpperCase()}`);
+      feedback.showSuccess(Certificate downloaded as ${format.toUpperCase()});
     } catch (error) {
       console.error('Download error:', error);
       feedback.showError('Failed to download certificate');
@@ -62,13 +62,13 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
   };
 
   const handleShare = async (platform: 'twitter' | 'linkedin' | 'facebook' | 'email' | 'copy' = 'copy') => {
-    setIsLoading(`share-${platform}`);
+    setIsLoading(share-${platform});
     
     try {
       const options: ShareOptions = {
         platform,
         includeQR: true,
-        customMessage: `Check out my ${certificate.courseName} certificate from ${certificate.institutionName}!`
+        customMessage: Check out my ${certificate.courseName} certificate from ${certificate.institutionName}!
       };
       
       const shareUrl = await certificateService.shareCertificate(certificate, options);
@@ -77,7 +77,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
         await navigator.clipboard.writeText(shareUrl);
         feedback.showSuccess('Certificate link copied to clipboard');
       } else {
-        feedback.showSuccess(`Shared on ${platform}`);
+        feedback.showSuccess(Shared on ${platform});
     } catch (error) {
       console.error('Share error:', error);
       feedback.showError('Failed to share certificate');
@@ -87,7 +87,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
 
   const handleViewOnBlockchain = () => {
     if (certificate.transactionHash) {
-      const explorerUrl = `https://mumbai.polygonscan.com/tx/${certificate.transactionHash}`;
+      const explorerUrl = https://mumbai.polygonscan.com/tx/${certificate.transactionHash};
       window.open(explorerUrl, '_blank');
   };
 
@@ -128,7 +128,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
   const buttonSize = size === 'lg' ? 'md' : size;
 
   return (
-    <div className={`certificate-actions ${getVariantClasses()} ${getSizeClasses()} ${className}`}>
+    <div className={certificate-actions ${getVariantClasses()} ${getSizeClasses()} ${className}}>
       {/* Download Button */}
       <Button
         variant="default"
@@ -167,7 +167,6 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
           {showLabels && 'Blockchain'}
         </Button>
       )}
-
       {/* Download Modal */}
       <Modal
         isOpen={showDownloadModal}
@@ -186,7 +185,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleDownload('png');
                 setShowDownloadModal(false);
-              }}
+              }
               loading={isLoading === 'download-png'}              className="justify-start"
             >
               <div className="text-left">
@@ -200,7 +199,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleDownload('pdf');
                 setShowDownloadModal(false);
-              }}
+              }
               loading={isLoading === 'download-pdf'}              className="justify-start"
             >
               <div className="text-left">
@@ -214,7 +213,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleDownload('json');
                 setShowDownloadModal(false);
-              }}
+              }
               loading={isLoading === 'download-json'}              className="justify-start"
             >
               <div className="text-left">
@@ -244,7 +243,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleShare('copy');
                 setShowShareModal(false);
-              }}
+              }
               loading={isLoading === 'share-copy'}              className="justify-start"
             >
               Copy Link
@@ -255,7 +254,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleShare('twitter');
                 setShowShareModal(false);
-              }}
+              }
               loading={isLoading === 'share-twitter'}              className="justify-start"
             >
               Twitter
@@ -266,7 +265,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleShare('linkedin');
                 setShowShareModal(false);
-              }}
+              }
               loading={isLoading === 'share-linkedin'}              className="justify-start"
             >
               LinkedIn
@@ -277,7 +276,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleShare('facebook');
                 setShowShareModal(false);
-              }}
+              }
               loading={isLoading === 'share-facebook'}              className="justify-start"
             >
               Facebook
@@ -288,7 +287,7 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
               onClick={() => {
                 handleShare('email');
                 setShowShareModal(false);
-              }}
+              }
               loading={isLoading === 'share-email'}              className="justify-start col-span-2"
             >
               Email
@@ -312,4 +311,4 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
 
 export default CertificateActions;
 }
-}}}}}}}
+}

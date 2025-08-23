@@ -259,7 +259,7 @@ describe('IssuerDashboard', () => {
       const institutionNameInput = screen.getByLabelText(/Institution Name/);
 
       fireEvent.change(recipientAddressInput, { 
-        target: { value: '0x1234567890123456789012345678901234567890' } 
+        target: { value: '0x1234567890123456789012345678901234567890' }
       });
       fireEvent.change(recipientNameInput, { target: { value: 'Test User' } });
       fireEvent.change(courseNameInput, { target: { value: 'Test Course' } });

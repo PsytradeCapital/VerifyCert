@@ -6,7 +6,7 @@ import { OptimizedImage } from '../OptimizedImage';
 // Mock the image optimization utilities
 jest.mock('../../../utils/imageOptimization', () => ({
   getOptimalImageFormat: jest.fn((src) => Promise.resolve(src.replace('.png', '.webp'))),
-  generateImageSrcSet: jest.fn((src) => `${src} 320w, ${src} 640w, ${src} 1024w`),
+  generateImageSrcSet: jest.fn((src) => ${src} 320w, ${src} 640w, ${src} 1024w),
   optimizeImageUrl: jest.fn((src) => src),
   imagePerformanceMonitor: {
     startLoad: jest.fn(),
@@ -157,7 +157,7 @@ describe('OptimizedImage', () => {
           quality: 85,
           width: 800,
           height: 600
-        }}
+        }
       />
     );
 

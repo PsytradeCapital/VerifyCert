@@ -91,7 +91,7 @@ export const useImagePreloader = (imagePaths: string[]) => {
           loaded++;
           setPreloadedCount(loaded);
         } catch (error) {
-          console.warn(`Failed to preload ${imagePath}:`, error);
+          console.warn(Failed to preload ${imagePath}:, error);
       
       setIsComplete(true);
     };
@@ -162,4 +162,4 @@ export const useImagePerformance = () => {
 
 export default useImageOptimization;
 }
-}}}}}
+}

@@ -3,7 +3,6 @@ export interface WebPOptions {
   width?: number;
   height?: number;
 }
-
 export const convertToWebP = (
   file: File,
   options: WebPOptions = { quality: 0.8 }

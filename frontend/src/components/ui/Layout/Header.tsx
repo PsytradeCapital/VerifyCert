@@ -8,7 +8,7 @@ user?: {
     name: string;
     email: string;
     avatar?: string;
-}}};
+};
   onSignOut?: () => void;
   onProfile?: () => void;
 
@@ -41,10 +41,10 @@ const Header: React.FC<HeaderProps> = ({
   className = ''
 }) => {
   return (
-    <header className={`
+    <header className={
       sticky top-0 z-40 bg-white border-b border-neutral-200 shadow-sm safe-top safe-area-x
       ${className}
-    `}>
+    }>
       <div className="flex items-center justify-between h-16 mobile-padding-x">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
@@ -64,7 +64,6 @@ const Header: React.FC<HeaderProps> = ({
               )}
             </Button>
           )}
-
           {/* Desktop Sidebar Toggle */}
           {!isMobile && showSidebarToggle && (
             <Button
@@ -77,7 +76,6 @@ const Header: React.FC<HeaderProps> = ({
               <Menu className="h-5 w-5" />
             </Button>
           )}
-
           {/* Logo/Title */}
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
@@ -119,7 +117,6 @@ const Header: React.FC<HeaderProps> = ({
               <Search className="h-5 w-5" />
             </Button>
           )}
-
           {/* Theme Toggle */}
           <ThemeToggle 
             size="sm" 
@@ -180,4 +177,4 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
-}}
+}

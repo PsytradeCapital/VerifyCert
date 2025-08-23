@@ -6,12 +6,12 @@ import {
   AlertTriangle, 
   Shield, 
   Clock,
-  ExternalLink,;;
-  Download,;;
-  Share2,;;
-  Copy,;;
-  Eye,;;
-  Zap;;
+  ExternalLink,;
+  Download,;
+  Share2,;
+  Copy,;
+  Eye,;
+  Zap;
 } from 'lucide-react';
 import { Card, Button, Badge } from '../';
 
@@ -25,7 +25,7 @@ result: {
     blockNumber?: string;
     contractAddress?: string;
     confidence?: number;
-}}};
+};
   certificate?: {
     tokenId: string;
     recipientName: string;
@@ -137,14 +137,14 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
   const ConfidenceBar = ({ confidence }: { confidence: number }) => (
     <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
       <motion.div
-        className={`h-full rounded-full ${
+        className={h-full rounded-full ${
           confidence >= 80 ? 'bg-green-500' :
           confidence >= 60 ? 'bg-yellow-500' :
           'bg-red-500'
-        }`}
-        initial={{ width: 0 }}
-        animate={{ width: `${confidence}%` }}
-        transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+        }}
+        initial={{ width: 0 }
+        animate={{ width: ${confidence}% }
+        transition={{ duration: 1, delay: 0.5, ease: "easeOut" }
       />
     </div>
   );
@@ -152,51 +152,51 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
   return (
     <>
       <motion.div
-        className={`space-y-6 ${className}`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        className={space-y-6 ${className}}
+        initial={{ opacity: 0, y: 20 }
+        animate={{ opacity: 1, y: 0 }
+        transition={{ duration: 0.5 }
       >
         {/* Main Verification Status */}
         <Card
           variant="elevated"
           padding="lg"
-          className={`${status.bgColor} ${status.borderColor} border-2`}
+          className={${status.bgColor} ${status.borderColor} border-2}
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
+            initial={{ scale: 0.9, opacity: 0 }
+            animate={{ scale: 1, opacity: 1 }
+            transition={{ duration: 0.4, delay: 0.1 }
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-4">
                 <motion.div
-                  className={`p-3 rounded-full ${status.bgColor}`}
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
+                  className={p-3 rounded-full ${status.bgColor}}
+                  initial={{ scale: 0, rotate: -180 }
+                  animate={{ scale: 1, rotate: 0 }
                   transition={{ 
                     type: "spring", 
                     stiffness: 200, 
                     delay: 0.2 
-                  }}
+                  }
                 >
-                  <status.icon className={`w-8 h-8 ${status.color}`} />
+                  <status.icon className={w-8 h-8 ${status.color}} />
                 </motion.div>
                 
                 <div>
                   <motion.h2
-                    className={`text-2xl font-bold ${status.color}`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 }}
+                    className={text-2xl font-bold ${status.color}}
+                    initial={{ opacity: 0, x: -20 }
+                    animate={{ opacity: 1, x: 0 }
+                    transition={{ delay: 0.3 }
                   >
                     {status.title}
                   </motion.h2>
                   <motion.p
                     className="text-gray-700 text-lg"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
+                    initial={{ opacity: 0, x: -20 }
+                    animate={{ opacity: 1, x: 0 }
+                    transition={{ delay: 0.4 }
                   >
                     {status.subtitle}
                   </motion.p>
@@ -204,9 +204,9 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
               </div>
 
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 }}
+                initial={{ opacity: 0, scale: 0.8 }
+                animate={{ opacity: 1, scale: 1 }
+                transition={{ delay: 0.5 }
               >
                 <Badge
                   variant={status.badgeVariant}
@@ -220,9 +220,9 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
 
             <motion.p
               className="text-gray-600 mb-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              initial={{ opacity: 0 }
+              animate={{ opacity: 1 }
+              transition={{ delay: 0.6 }
             >
               {status.description}
             </motion.p>
@@ -231,28 +231,27 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
             {status.confidence > 0 && (
               <motion.div
                 className="mb-4"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
+                initial={{ opacity: 0, y: 10 }
+                animate={{ opacity: 1, y: 0 }
+                transition={{ delay: 0.7 }
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700">
                     Verification Confidence
                   </span>
-                  <span className={`text-sm font-bold ${status.color}`}>
+                  <span className={text-sm font-bold ${status.color}}>
                     {status.confidence}%
                   </span>
                 </div>
                 <ConfidenceBar confidence={status.confidence} />
               </motion.div>
             )}
-
             {/* Verification Details */}
             <motion.div
               className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              initial={{ opacity: 0 }
+              animate={{ opacity: 1 }
+              transition={{ delay: 0.8 }
             >
               <div>
                 <span className="text-gray-500">Verified On:</span>
@@ -278,9 +277,9 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
         {certificate && (
           <Card variant="outlined" padding="lg">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
+              initial={{ opacity: 0, y: 20 }
+              animate={{ opacity: 1, y: 0 }
+              transition={{ delay: 0.9 }
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                 <Eye className="w-5 h-5 mr-2 text-blue-600" />
@@ -315,14 +314,13 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
             </motion.div>
           </Card>
         )}
-
         {/* Blockchain Information */}
         {result.onChain && (
           <Card variant="outlined" padding="lg">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0 }}
+              initial={{ opacity: 0, y: 20 }
+              animate={{ opacity: 1, y: 0 }
+              transition={{ delay: 1.0 }
             >
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                 <Zap className="w-5 h-5 mr-2 text-purple-600" />
@@ -349,7 +347,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
                     </div>
                   </div>
                 )}
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {result.blockNumber && (
                     <div>
@@ -357,7 +354,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
                       <p className="font-mono text-sm text-gray-900">{result.blockNumber}</p>
                     </div>
                   )}
-                  
                   <div>
                     <label className="text-sm font-medium text-gray-500">Network</label>
                     <p className="text-sm text-gray-900">Polygon Mumbai Testnet</p>
@@ -367,13 +363,12 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
             </motion.div>
           </Card>
         )}
-
         {/* Action Buttons */}
         <motion.div
           className="flex flex-wrap gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1 }}
+          initial={{ opacity: 0, y: 20 }
+          animate={{ opacity: 1, y: 0 }
+          transition={{ delay: 1.1 }
         >
           {onDownload && (
             <Button
@@ -386,7 +381,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
               Download Certificate
             </Button>
           )}
-          
           {onShare && (
             <Button
               variant="secondary"
@@ -398,7 +392,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
               Share
             </Button>
           )}
-          
           {result.transactionHash && onViewOnBlockchain && (
             <Button
               variant="secondary"
@@ -427,7 +420,6 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
           </div>
         </div>
       )}
-      
       {showErrorAnimation && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -449,4 +441,4 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
 
 export default VerificationResult;
 }
-}}}
+}

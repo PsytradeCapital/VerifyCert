@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ;;
-  CheckCircle, ;;
-  AlertCircle, ;;
-  AlertTriangle, ;;
-  Info, ;;
-  X ;;
+import { ;
+  CheckCircle, ;
+  AlertCircle, ;
+  AlertTriangle, ;
+  Info, ;
+  X ;
 } from 'lucide-react';
 
 export interface AlertProps {
@@ -66,12 +66,12 @@ const Alert: React.FC<AlertProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      className={`
+      initial={{ opacity: 0, y: -10 }
+      animate={{ opacity: 1, y: 0 }
+      exit={{ opacity: 0, y: -10 }
+      className={
         rounded-md border p-4 ${styles.container} ${className}
-      `}
+      }
       role="alert"
     >
       <div className="flex">
@@ -81,19 +81,18 @@ const Alert: React.FC<AlertProps> = ({
               IconComponent
             ) : (
               React.createElement(IconComponent as React.ComponentType<any>, { 
-                className: `h-5 w-5 ${styles.icon}` 
+                className: h-5 w-5 ${styles.icon} 
               })
             )}
           </div>
         )}
-        
-        <div className={`${showIcon ? 'ml-3' : ''} flex-1`}>
+        <div className={${showIcon ? 'ml-3' : ''} flex-1}>
           {title && (
-            <h3 className={`text-sm font-medium ${styles.title} mb-1`}>
+            <h3 className={text-sm font-medium ${styles.title} mb-1}>
               {title}
             </h3>
           )}
-          <div className={`text-sm ${styles.content}`}>
+          <div className={text-sm ${styles.content}}>
             {children}
           </div>
         </div>
@@ -104,11 +103,11 @@ const Alert: React.FC<AlertProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className={`
+                className={
                   inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2
                   hover:bg-opacity-20 hover:bg-gray-600 transition-colors
                   ${styles.icon}
-                `}
+                }
                 aria-label="Dismiss alert"
               >
                 <X className="h-4 w-4" />
@@ -122,4 +121,4 @@ const Alert: React.FC<AlertProps> = ({
 };
 
 export default Alert;
-}}
+}

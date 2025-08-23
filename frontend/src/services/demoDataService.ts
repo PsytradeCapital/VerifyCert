@@ -11,9 +11,9 @@ totalIssued: number;
   growthRate: number;
 
 export interface DemoActivity {
-}}
 }
-}}}
+}
+}
   id: string;
   type: 'issued' | 'verified' | 'revoked';
   title: string;
@@ -34,7 +34,7 @@ export class DemoDataService {
     stats: DemoStats;
     activities: DemoActivity[];
     quickStats: DemoQuickStats;
-}}} | null = null;
+} | null = null;
 
   static getInstance(): DemoDataService {
     if (!DemoDataService.instance) {
@@ -165,8 +165,8 @@ export class DemoDataService {
       .map(cert => ({
         id: cert.tokenId,
         type: 'issued' as const,
-        title: `Certificate issued to ${cert.recipientName}`,
-        description: `${cert.courseName} - ${cert.institutionName}`,
+        title: Certificate issued to ${cert.recipientName},
+        description: ${cert.courseName} - ${cert.institutionName},
         timestamp: new Date(cert.issueDate * 1000),
         recipient: cert.recipientName,
         certificateId: cert.tokenId,
@@ -231,4 +231,4 @@ export class DemoDataService {
 
 export const demoDataService = DemoDataService.getInstance();
 }
-}}}}}}}
+}

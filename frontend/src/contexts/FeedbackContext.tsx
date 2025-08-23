@@ -20,7 +20,7 @@ interface FeedbackContextType {
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
-}}
+}
 }
   children: ReactNode;
 
@@ -49,7 +49,7 @@ export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) 
       ...feedback,
       timestamp: Date.now(),
       userAgent: navigator.userAgent,
-      screenSize: `${window.innerWidth}x${window.innerHeight}`
+      screenSize: ${window.innerWidth}x${window.innerHeight}
     };
 
     feedbackService.storeFeedback(fullFeedback);

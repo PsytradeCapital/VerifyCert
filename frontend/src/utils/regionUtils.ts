@@ -4,7 +4,6 @@ export interface RegionInfo {
   currency: string;
   timezone: string;
 }
-
 const REGIONS: Record<string, RegionInfo> = {
   'US': {
     code: 'US',
@@ -29,7 +28,6 @@ const REGIONS: Record<string, RegionInfo> = {
 export function getRegionInfo(regionCode: string): RegionInfo | null {
   return REGIONS[regionCode] || null;
 }
-
 export function getCurrentRegion(): string {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone.split('/')[0] || 'US';

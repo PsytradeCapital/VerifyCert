@@ -162,7 +162,7 @@ describe('FeedbackAnimations', () => {
         action={{
           label: 'Test Action',
           onClick: actionClick,
-        }}
+        }
       />
     );
 

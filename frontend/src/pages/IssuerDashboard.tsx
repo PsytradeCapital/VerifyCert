@@ -14,13 +14,11 @@ interface ExtendedDashboardStats extends DashboardStats {
   previousWeek: number;
   growthRate: number;
 }
-
 interface WalletState {
 isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
-}}
-
+}
 export default function IssuerDashboard(): JSX.Element {
   const { user, isAuthenticated } = useAuth();
   const [walletState, setWalletState] = useState<WalletState>({
@@ -104,7 +102,7 @@ export default function IssuerDashboard(): JSX.Element {
         });
       } else {
         // Load real data for authenticated users
-        const response = await fetch(`/api/v1/certificates/issuer/${walletState.address}`);
+        const response = await fetch(/api/v1/certificates/issuer/${walletState.address});
         const data = await response.json();
 
         if (response.ok && data.success) {
@@ -170,8 +168,8 @@ export default function IssuerDashboard(): JSX.Element {
       .map(cert => ({
         id: cert.tokenId,
         type: 'issued' as const,
-        title: `Certificate issued to ${cert.recipientName}`,
-        description: `${cert.courseName} - ${cert.institutionName}`,
+        title: Certificate issued to ${cert.recipientName},
+        description: ${cert.courseName} - ${cert.institutionName},
         timestamp: new Date(cert.issueDate * 1000),
         recipient: cert.recipientName,
         certificateId: cert.tokenId,
@@ -193,7 +191,7 @@ export default function IssuerDashboard(): JSX.Element {
         await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network delay
         
         const newDemoCertificate: Certificate = {
-          tokenId: `demo-${Date.now()}`,
+          tokenId: demo-${Date.now()},
           issuer: walletState.address,
           recipient: formData.recipientAddress,
           recipientName: formData.recipientName,
@@ -201,8 +199,8 @@ export default function IssuerDashboard(): JSX.Element {
           institutionName: formData.institutionName,
           issueDate: Math.floor(Date.now() / 1000),
           isValid: true,
-          qrCodeURL: `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=demo-${Date.now()}`,
-          verificationURL: `/verify/demo-${Date.now()}`,
+          qrCodeURL: https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=demo-${Date.now()},
+          verificationURL: /verify/demo-${Date.now()},
         };
 
         // Add to demo certificates
@@ -212,8 +210,8 @@ export default function IssuerDashboard(): JSX.Element {
         const newActivity: ActivityItem = {
           id: newDemoCertificate.tokenId,
           type: 'issued',
-          title: `Demo certificate issued to ${formData.recipientName}`,
-          description: `${formData.courseName} - ${formData.institutionName}`,
+          title: Demo certificate issued to ${formData.recipientName},
+          description: ${formData.courseName} - ${formData.institutionName},
           timestamp: new Date(),
           recipient: formData.recipientName,
           certificateId: newDemoCertificate.tokenId,
@@ -255,8 +253,8 @@ export default function IssuerDashboard(): JSX.Element {
           const newActivity: ActivityItem = {
             id: data.tokenId || Date.now().toString(),
             type: 'issued',
-            title: `Certificate issued to ${formData.recipientName}`,
-            description: `${formData.courseName} - ${formData.institutionName}`,
+            title: Certificate issued to ${formData.recipientName},
+            description: ${formData.courseName} - ${formData.institutionName},
             timestamp: new Date(),
             recipient: formData.recipientName,
             certificateId: data.tokenId,
@@ -278,7 +276,7 @@ export default function IssuerDashboard(): JSX.Element {
     switch (action) {
       case 'view':
         // Navigate to certificate view page or open modal
-        window.open(`/verify/${certificate.tokenId}`, '_blank');
+        window.open(/verify/${certificate.tokenId}, '_blank');
         break;
       
       case 'download':
@@ -304,7 +302,7 @@ export default function IssuerDashboard(): JSX.Element {
         break;
       
       default:
-        console.warn(`Unknown certificate action: ${action}`);
+        console.warn(Unknown certificate action: ${action});
   }, []);
 
   // Fetch certificates when wallet connects
@@ -380,7 +378,7 @@ export default function IssuerDashboard(): JSX.Element {
           <div className="space-y-8">
             {/* Enhanced Dashboard Overview */}
             <DashboardOverview 
-              stats={stats} 
+              stats={stats}
               isLoading={isLoading}
             />
 
@@ -424,4 +422,4 @@ export default function IssuerDashboard(): JSX.Element {
     </div>
   );
 }
-}}}}}}}}
+}

@@ -116,9 +116,9 @@ tokenId: string;
   transactionHash?: string;
 
 export interface VerificationResult {
-}}
 }
-}}}
+}
+}
   isValid: boolean;
   onChain: boolean;
   message: string;
@@ -160,8 +160,8 @@ class BlockchainService {
         issueDate: Number(certificateData.issueDate),
         metadataURI: certificateData.metadataURI,
         isValid: certificateData.isValid,
-        verificationURL: `${window.location.origin}/verify/${tokenId}`,
-        qrCodeURL: `${window.location.origin}/api/v1/qr-code/${tokenId}` // Fallback to backend for QR generation
+        verificationURL: ${window.location.origin}/verify/${tokenId},
+        qrCodeURL: ${window.location.origin}/api/v1/qr-code/${tokenId} // Fallback to backend for QR generation
       };
 
       return certificate;
@@ -274,4 +274,4 @@ export const getBlockchainService = (): BlockchainService => {
 // Export the getter function as default
 export default getBlockchainService;
 }
-}}}}}}}}}}}}}}}}}}}}
+}

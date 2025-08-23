@@ -13,12 +13,12 @@ import {
   User, 
   Search,
   ChevronDown,
-  X,;;
-  Check,;;
-  AlertCircle,;;
-  Home,;;
-  FileText,;;
-  Mail;;
+  X,;
+  Check,;
+  AlertCircle,;
+  Home,;
+  FileText,;
+  Mail;
 } from 'lucide-react';
 
 // Import enhanced components
@@ -65,7 +65,7 @@ const InteractionAnimationsDemo: React.FC = () => {
 
     return (
       <motion.div
-        className={`inline-flex items-center justify-center ${className}`}
+        className={inline-flex items-center justify-center ${className}}
         {...animations}
       >
         {icon}
@@ -115,7 +115,7 @@ const InteractionAnimationsDemo: React.FC = () => {
 
     return (
       <motion.span
-        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colorClasses[color]}`}
+        className={inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colorClasses[color]}}
         {...animations}
       >
         {children}
@@ -438,4 +438,4 @@ const InteractionAnimationsDemo: React.FC = () => {
 
 export default InteractionAnimationsDemo;
 }
-}}}
+}

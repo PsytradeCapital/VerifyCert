@@ -31,7 +31,6 @@ export const OTPVerificationForm: React.FC = () => {
       toast.error('Please enter a 6-digit verification code');
       return;
     }
-
     setIsLoading(true);
     try {
       await verifyOTP(otp);
@@ -107,7 +106,6 @@ export const OTPVerificationForm: React.FC = () => {
               Verification code has expired
             </p>
           )}
-          
           <LoadingButton
             type="button"
             onClick={handleResendOTP}

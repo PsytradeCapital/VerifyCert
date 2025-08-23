@@ -52,9 +52,9 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
   };
 
   return (
-    <div className={`browser-compatibility ${className}`}>
+    <div className={browser-compatibility ${className}}>
       {/* Compatibility Score */}
-      <div className={`p-4 rounded-lg border ${getScoreBackground(compatibilityScore)}`}>
+      <div className={p-4 rounded-lg border ${getScoreBackground(compatibilityScore)}}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
@@ -65,7 +65,7 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
                 ({browserInfo.engine})
               </span>
             </div>
-            <div className={`font-bold ${getScoreColor(compatibilityScore)}`}>
+            <div className={font-bold ${getScoreColor(compatibilityScore)}}>
               {compatibilityScore}% Compatible
             </div>
           </div>
@@ -122,32 +122,31 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">Service Worker:</span>
-                  <span className={`ml-2 ${browserInfo.features.serviceWorker ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className={ml-2 ${browserInfo.features.serviceWorker ? 'text-green-600' : 'text-red-600'}}>
                     {browserInfo.features.serviceWorker ? 'Supported' : 'Not Supported'}
                   </span>
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">WebP Images:</span>
-                  <span className={`ml-2 ${browserInfo.features.webp ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className={ml-2 ${browserInfo.features.webp ? 'text-green-600' : 'text-red-600'}}>
                     {browserInfo.features.webp ? 'Supported' : 'Not Supported'}
                   </span>
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">CSS Grid:</span>
-                  <span className={`ml-2 ${browserInfo.features.css.grid ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className={ml-2 ${browserInfo.features.css.grid ? 'text-green-600' : 'text-red-600'}}>
                     {browserInfo.features.css.grid ? 'Supported' : 'Not Supported'}
                   </span>
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">Local Storage:</span>
-                  <span className={`ml-2 ${browserInfo.features.localStorage ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className={ml-2 ${browserInfo.features.localStorage ? 'text-green-600' : 'text-red-600'}}>
                     {browserInfo.features.localStorage ? 'Supported' : 'Not Supported'}
                   </span>
                 </div>
               </div>
             </div>
           )}
-
           {/* Recommendations */}
           {showRecommendations && hasRecommendations && (
             <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
@@ -167,7 +166,6 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
               </ul>
             </div>
           )}
-
           {/* Feature Support Grid */}
           {showDetails && (
             <div className="bg-gray-50 p-4 rounded-lg">
@@ -176,7 +174,7 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
                 {Object.entries(browserInfo.features).map(([feature, supported]) => {
                   if (feature === 'css') {
                     return Object.entries(supported).map(([cssFeature, cssSupported]) => (
-                      <div key={`css-${cssFeature}`} className="flex items-center justify-between p-2 bg-white rounded border">
+                      <div key={css-${cssFeature}} className="flex items-center justify-between p-2 bg-white rounded border">
                         <span className="capitalize">{cssFeature.replace(/([A-Z])/g, ' $1').trim()}</span>
                         <span className={cssSupported ? 'text-green-600' : 'text-red-600'}>
                           {cssSupported ? '✓' : '✗'}
@@ -204,4 +202,4 @@ export const BrowserCompatibility: React.FC<BrowserCompatibilityProps> = ({
 
 export default BrowserCompatibility;
 }
-}}
+}

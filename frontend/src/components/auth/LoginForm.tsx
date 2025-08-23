@@ -9,8 +9,7 @@ interface LoginFormData {
 emailOrPhone: string;
   password: string;
   rememberMe: boolean;
-}}
-
+}
 export const LoginForm: React.FC = () => {
   const { login } = useAuth();
   const [formData, setFormData] = useState<LoginFormData>({
@@ -40,7 +39,6 @@ export const LoginForm: React.FC = () => {
       toast.error('Please enter your password');
       return;
     }
-
     setIsLoading(true);
     try {
       await login(formData.emailOrPhone, formData.password);

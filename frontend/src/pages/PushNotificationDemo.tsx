@@ -101,7 +101,7 @@ const PushNotificationDemo: React.FC = () => {
         setTestResults(prev => [...prev, {
           type: notification.type,
           success: false,
-          message: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          message: Error: ${error instanceof Error ? error.message : 'Unknown error'},
           timestamp: new Date()
         }]);
   };
@@ -127,7 +127,7 @@ const PushNotificationDemo: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-full ${isSupported ? 'bg-green-100' : 'bg-red-100'}`}>
+              <div className={p-2 rounded-full ${isSupported ? 'bg-green-100' : 'bg-red-100'}}>
                 {isSupported ? (
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 ) : (
@@ -145,7 +145,7 @@ const PushNotificationDemo: React.FC = () => {
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-full ${permission === 'granted' ? 'bg-green-100' : permission === 'denied' ? 'bg-red-100' : 'bg-yellow-100'}`}>
+              <div className={p-2 rounded-full ${permission === 'granted' ? 'bg-green-100' : permission === 'denied' ? 'bg-red-100' : 'bg-yellow-100'}}>
                 {permission === 'granted' ? (
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 ) : permission === 'denied' ? (
@@ -165,7 +165,7 @@ const PushNotificationDemo: React.FC = () => {
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-full ${isSubscribed ? 'bg-green-100' : 'bg-gray-100'}`}>
+              <div className={p-2 rounded-full ${isSubscribed ? 'bg-green-100' : 'bg-gray-100'}}>
                 {isSubscribed ? (
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 ) : (
@@ -198,7 +198,6 @@ const PushNotificationDemo: React.FC = () => {
             {showSettings && (
               <PushNotificationSettings userId={userId} />
             )}
-
             {/* User ID Input */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Test Configuration</h3>
@@ -267,11 +266,11 @@ const PushNotificationDemo: React.FC = () => {
                   {testResults.slice().reverse().map((result, index) => (
                     <div
                       key={index}
-                      className={`p-3 rounded-lg border ${
+                      className={p-3 rounded-lg border ${
                         result.success 
                           ? 'bg-green-50 border-green-200' 
                           : 'bg-red-50 border-red-200'
-                      }`}
+                      }}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
@@ -295,7 +294,6 @@ const PushNotificationDemo: React.FC = () => {
                   ))}
                 </div>
               )}
-
               {testResults.length > 0 && (
                 <button
                   onClick={() => setTestResults([])}
@@ -333,4 +331,4 @@ const PushNotificationDemo: React.FC = () => {
 
 export default PushNotificationDemo;
 }
-}}}}}}
+}

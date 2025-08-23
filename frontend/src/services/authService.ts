@@ -11,21 +11,18 @@ id: number;
   region: string;
   role: 'user' | 'issuer' | 'admin';
   isVerified: boolean;
-}}
-
+}
 interface RegisterData {
 name: string;
   email?: string;
   phone?: string;
   password: string;
   region?: string;
-}}
-
+}
 interface LoginResponse {
 user: User;
   token: string;
-}}
-
+}
 interface ApiResponse<T = any> {
 }
 }
@@ -37,19 +34,17 @@ interface ApiResponse<T = any> {
     details?: string[];
   };
 }
-
 class AuthService {
   private baseURL: string;
 
   constructor() {
     this.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
   }
-
   private async makeRequest<T>(
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = `${this.baseURL}/api/auth${endpoint}`;
+    const url = ${this.baseURL}/api/auth${endpoint};
     
     const defaultHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -58,9 +53,8 @@ class AuthService {
     // Add auth token if available
     const token = localStorage.getItem('authToken');
     if (token) {
-      defaultHeaders['Authorization'] = `Bearer ${token}`;
+      defaultHeaders['Authorization'] = Bearer ${token};
     }
-
     const config: RequestInit = {
       ...options,
       headers: {
@@ -74,25 +68,22 @@ class AuthService {
       const data: ApiResponse<T> = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || `HTTP ${response.status}`);
+        throw new Error(data.error?.message || HTTP ${response.status});
       }
-
       if (!data.success) {
         throw new Error(data.error?.message || 'Request failed');
       }
-
       return data.data as T;
     } catch (error) {
-      console.error(`Auth API Error (${endpoint}):`, error);
+      console.error(Auth API Error (${endpoint}):, error);
       throw error;
     }
   }
-
   private async makeUserRequest<T>(
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = `${this.baseURL}/api/user${endpoint}`;
+    const url = ${this.baseURL}/api/user${endpoint};
     
     const defaultHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -101,9 +92,8 @@ class AuthService {
     // Add auth token if available
     const token = localStorage.getItem('authToken');
     if (token) {
-      defaultHeaders['Authorization'] = `Bearer ${token}`;
+      defaultHeaders['Authorization'] = Bearer ${token};
     }
-
     const config: RequestInit = {
       ...options,
       headers: {
@@ -117,27 +107,23 @@ class AuthService {
       const data: ApiResponse<T> = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || `HTTP ${response.status}`);
+        throw new Error(data.error?.message || HTTP ${response.status});
       }
-
       if (!data.success) {
         throw new Error(data.error?.message || 'Request failed');
       }
-
       return data.data as T;
     } catch (error) {
-      console.error(`User API Error (${endpoint}):`, error);
+      console.error(User API Error (${endpoint}):, error);
       throw error;
     }
   }
-
   async register(data: RegisterData): Promise<{ userId: number; verificationType: string }> {
     return this.makeRequest('/register', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
-
   async login(emailOrPhone: string, password: string): Promise<LoginResponse> {
     return this.makeRequest('/login', {
       method: 'POST',
@@ -147,7 +133,6 @@ class AuthService {
       }),
     });
   }
-
   async verifyOTP(code: string, userId?: number, type: string = 'email'): Promise<LoginResponse> {
     const storedUserId = userId || localStorage.getItem('pendingUserId');
     
@@ -160,7 +145,6 @@ class AuthService {
       }),
     });
   }
-
   async resendOTP(userId?: number, type: string = 'email'): Promise<void> {
     const storedUserId = userId || localStorage.getItem('pendingUserId');
     
@@ -172,7 +156,6 @@ class AuthService {
       }),
     });
   }
-
   async forgotPassword(emailOrPhone: string): Promise<{ userId: number }> {
     return this.makeRequest('/forgot-password', {
       method: 'POST',
@@ -181,7 +164,6 @@ class AuthService {
       }),
     });
   }
-
   async resetPassword(code: string, newPassword: string, userId?: number): Promise<void> {
     const storedUserId = userId || localStorage.getItem('resetUserId');
     
@@ -194,7 +176,6 @@ class AuthService {
       }),
     });
   }
-
   async validateToken(token: string): Promise<User> {
     const originalToken = localStorage.getItem('authToken');
     localStorage.setItem('authToken', token);
@@ -210,12 +191,10 @@ class AuthService {
       }
     }
   }
-
   async getProfile(): Promise<User> {
     const response = await this.makeRequest<{ user: User }>('/profile');
     return response.user;
   }
-
   async updateProfile(data: Partial<User>): Promise<User> {
     const response = await this.makeRequest<{ user: User }>('/profile', {
       method: 'PUT',
@@ -223,14 +202,12 @@ class AuthService {
     });
     return response.user;
   }
-
   async changePassword(data: { currentPassword: string; newPassword: string }): Promise<void> {
     return this.makeUserRequest('/change-password', {
       method: 'PUT',
       body: JSON.stringify(data),
     });
   }
-
   async deleteAccount(password: string): Promise<void> {
     try {
       await this.makeUserRequest('/account', {
@@ -243,7 +220,6 @@ class AuthService {
       localStorage.removeItem('user');
     }
   }
-
   async logout(): Promise<void> {
     try {
       await this.makeRequest('/logout', {
@@ -256,7 +232,6 @@ class AuthService {
       localStorage.removeItem('user');
     }
   }
-
   // Utility methods
   isTokenExpired(token: string): boolean {
     try {
@@ -266,7 +241,6 @@ class AuthService {
       return true;
     }
   }
-
   getTokenPayload(token: string): any {
     try {
       return JSON.parse(atob(token.split('.')[1]));
@@ -274,30 +248,25 @@ class AuthService {
       return null;
     }
   }
-
   async refreshToken(): Promise<string> {
     const response = await this.makeRequest<{ token: string }>('/refresh-token', {
       method: 'POST',
     });
     return response.token;
   }
-
   async ensureValidToken(): Promise<string> {
     const token = localStorage.getItem('authToken');
     if (!token) {
       throw new Error('No authentication token');
     }
-
     // Check if token expires in the next 5 minutes
     const payload = this.getTokenPayload(token);
     if (payload && payload.exp * 1000 - Date.now() < 5 * 60 * 1000) {
       return await this.refreshToken();
     }
-
     return token;
   }
 }
-
 // Create singleton instance
 export const authService = new AuthService();
 export default authService;

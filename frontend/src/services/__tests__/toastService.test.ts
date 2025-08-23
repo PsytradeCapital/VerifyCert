@@ -209,7 +209,7 @@ describe('ToastService', () => {
       toastService.blockchainSuccess('Transaction successful', txHash);
       
       expect(global.open).toHaveBeenCalledWith(
-        `https://mumbai.polygonscan.com/tx/${txHash}`,
+        https://mumbai.polygonscan.com/tx/${txHash},
         '_blank'
       );
     });

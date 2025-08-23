@@ -136,7 +136,7 @@ describe('Grid', () => {
       );
       
       const gridElement = container.firstChild as HTMLElement;
-      expect(gridElement).toHaveClass(`grid-cols-${cols}`);
+      expect(gridElement).toHaveClass(grid-cols-${cols});
     });
   });
 

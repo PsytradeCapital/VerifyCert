@@ -232,7 +232,7 @@ const NavigationStateDemo: React.FC = () => {
                   <h3 className="text-sm font-medium text-neutral-700 mb-2">Transition State</h3>
                   <div className="text-sm text-neutral-600">
                     {state.isTransitioning 
-                      ? `Transitioning (${state.transitionDirection})`
+                      ? Transitioning (${state.transitionDirection})
                       : 'Idle'
                   </div>
                 </div>
@@ -253,4 +253,4 @@ const NavigationStateDemo: React.FC = () => {
 
 export default NavigationStateDemo;
 }
-}}}
+}

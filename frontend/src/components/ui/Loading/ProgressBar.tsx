@@ -44,7 +44,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   const clampedProgress = Math.max(0, Math.min(100, progress));
 
   return (
-    <div className={`w-full ${className}`}>
+    <div className={w-full ${className}}>
       {(showLabel || label) && (
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm font-medium text-gray-700">
@@ -55,13 +55,12 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           </span>
         </div>
       )}
-      
-      <div className={`w-full ${backgroundColorClasses[color]} rounded-full ${sizeClasses[size]} overflow-hidden`}>
+      <div className={w-full ${backgroundColorClasses[color]} rounded-full ${sizeClasses[size]} overflow-hidden}>
         <motion.div
-          className={`${sizeClasses[size]} ${colorClasses[color]} rounded-full`}
-          initial={{ width: 0 }}
-          animate={{ width: `${clampedProgress}%` }}
-          transition={animated ? { duration: 0.5, ease: "easeOut" } : { duration: 0 }}
+          className={${sizeClasses[size]} ${colorClasses[color]} rounded-full}
+          initial={{ width: 0 }
+          animate={{ width: ${clampedProgress}% }
+          transition={animated ? { duration: 0.5, ease: "easeOut" } : { duration: 0 }
         />
       </div>
     </div>

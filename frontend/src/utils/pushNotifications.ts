@@ -1,114 +1,51 @@
 export interface PushNotificationConfig {
-  vapidPublicKey: string;
   apiEndpoint: string;
-}
-
-export interface NotificationPayload {
-  title: string;
-  body: string;
-  icon?: string;
-  badge?: string;
-  tag?: string;
-  data?: any;
+  vapidKey: string;
 }
 
 export class PushNotificationManager {
-  private subscription: PushSubscription | null = null;
-  private userId: string | null = null;
   private config: PushNotificationConfig;
-
+  
   constructor(config: PushNotificationConfig) {
     this.config = config;
   }
-
-  async initialize(userId: string): Promise<boolean> {
-    try {
-      this.userId = userId;
-      
-      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-        console.warn('Push notifications not supported');
-        return false;
-      }
-
-      const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.getSubscription();
-      
-      if (subscription) {
-        this.subscription = subscription;
-        return true;
-      }
-
-      return false;
-    } catch (error) {
-      console.error('Failed to initialize push notifications:', error);
-      return false;
-    }
-  }
-
+  
   async requestPermission(): Promise<NotificationPermission> {
     if (!('Notification' in window)) {
-      return 'denied';
+      throw new Error('Notifications not supported');
     }
-
-    if (Notification.permission === 'granted') {
-      return 'granted';
-    }
-
-    if (Notification.permission !== 'denied') {
-      const permission = await Notification.requestPermission();
-      return permission;
-    }
-
-    return Notification.permission;
+    
+    return await Notification.requestPermission();
   }
-
-  async subscribe(): Promise<boolean> {
+  
+  async subscribe(): Promise<PushSubscription | null> {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      throw new Error('Push messaging not supported');
+    }
+    
     try {
-      const permission = await this.requestPermission();
-      
-      if (permission !== 'granted') {
-        return false;
-      }
-
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: this.urlBase64ToUint8Array(this.config.vapidPublicKey)
+        applicationServerKey: this.config.vapidKey
       });
-
-      this.subscription = subscription;
       
-      // Send subscription to server
-      const response = await fetch(`${this.config.apiEndpoint}/subscribe`, {
+      const response = await fetch(this.config.apiEndpoint + '/subscribe', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          userId: this.userId,
-          subscription: subscription.toJSON()
-        })
+        body: JSON.stringify(subscription)
       });
-
-      return response.ok;
+      
+      if (!response.ok) {
+        throw new Error('Failed to subscribe');
+      }
+      
+      return subscription;
     } catch (error) {
-      console.error('Failed to subscribe to push notifications:', error);
-      return false;
+      console.error('Push subscription failed:', error);
+      return null;
     }
-  }
-
-  private urlBase64ToUint8Array(base64String: string): Uint8Array {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding)
-      .replace(/-/g, '+')
-      .replace(/_/g, '/');
-
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
   }
 }

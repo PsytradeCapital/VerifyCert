@@ -11,9 +11,9 @@ category: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
 
 interface FeedbackCollectorProps {
-}}
 }
-}}}
+}
+}
   isOpen: boolean;
   onClose: () => void;
   category?: 'navigation' | 'visual-design' | 'overall-experience';
@@ -101,11 +101,11 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
           >
             <Star
               size={28}
-              className={`transition-colors ${
+              className={transition-colors ${
                 star <= (hoveredRating || rating)
                   ? 'text-yellow-400 fill-yellow-400'
                   : 'text-gray-300 dark:text-gray-600'
-              }`}
+              }}
             />
           </button>
         ))}
@@ -129,11 +129,11 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
             key={cat.value}
             type="button"
             onClick={() => setSelectedCategory(cat.value as any)}
-            className={`flex items-center p-3 rounded-lg border-2 transition-all ${
+            className={flex items-center p-3 rounded-lg border-2 transition-all ${
               selectedCategory === cat.value
                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
                 : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
-            }`}
+            }}
           >
             <span className="text-lg mr-3">{cat.icon}</span>
             <span className="font-medium text-gray-900 dark:text-white">{cat.label}</span>
@@ -151,17 +151,17 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0 }
+        animate={{ opacity: 1 }
+        exit={{ opacity: 0 }
         className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         <motion.div
-          initial={{ scale: 0.9, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          transition={{ type: "spring", duration: 0.3 }}
+          initial={{ scale: 0.9, opacity: 0, y: 20 }
+          animate={{ scale: 1, opacity: 1, y: 0 }
+          exit={{ scale: 0.9, opacity: 0, y: 20 }
+          transition={{ type: "spring", duration: 0.3 }
           className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-sm w-full max-h-[80vh] overflow-hidden border-2 border-gray-200 dark:border-gray-700"
           onClick={(e) => e.stopPropagation()}
         >
@@ -224,7 +224,7 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
                 backgroundColor: '#2563eb !important',
                 color: '#ffffff !important',
                 border: '2px solid #2563eb'
-              }}
+              }
             >
               {isSubmitting ? (
                 <>
@@ -234,7 +234,7 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
               ) : (
                 <>
                   <Send 
-                    size={24} 
+                    size={24}
                     style={{ 
                       color: '#ffffff !important',
                       fill: 'none',
@@ -243,7 +243,7 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
                       zIndex: 20,
                       display: 'block',
                       visibility: 'visible'
-                    }} 
+                    }
                   />
                   <span style={{ color: '#ffffff !important' }}>Send</span>
                 </>

@@ -8,9 +8,9 @@ id: string;
   description?: string;
 
 interface StepProgressProps {
-}}
 }
-}}}
+}
+}
   steps: Step[];
   currentStep: string;
   completedSteps: string[];
@@ -53,7 +53,7 @@ const StepProgress: React.FC<StepProgressProps> = ({
 
   if (orientation === 'vertical') {
     return (
-      <div className={`flex flex-col ${className}`}>
+      <div className={flex flex-col ${className}}>
         {steps.map((step, index) => {
           const status = getStepStatus(step.id);
           const isLast = index === steps.length - 1;
@@ -63,24 +63,24 @@ const StepProgress: React.FC<StepProgressProps> = ({
               <div className="flex flex-col items-center mr-4">
                 {/* Step Circle */}
                 <motion.div
-                  className={`
+                  className={
                     flex items-center justify-center ${config.circle} rounded-full border-2 transition-colors
                     ${status === 'completed' 
                       ? 'bg-green-500 border-green-500 text-white' 
                       : status === 'current'
                       ? 'bg-blue-500 border-blue-500 text-white'
                       : 'bg-white border-gray-300 text-gray-500'
-                  `}
+                  }
                   variants={stepVariants}
                   animate={status}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3 }
                 >
                   {status === 'completed' ? (
                     <Check className={config.icon} />
                   ) : status === 'current' ? (
-                    <Loader2 className={`${config.icon} animate-spin`} />
+                    <Loader2 className={${config.icon} animate-spin} />
                   ) : (
-                    <span className={`${config.text} font-medium`}>{index + 1}</span>
+                    <span className={${config.text} font-medium}>{index + 1}</span>
                   )}
                 </motion.div>
 
@@ -92,8 +92,8 @@ const StepProgress: React.FC<StepProgressProps> = ({
                       variants={lineVariants}
                       initial="incomplete"
                       animate={completedSteps.includes(step.id) ? "complete" : "incomplete"}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      style={{ height: '100%' }}
+                      transition={{ duration: 0.5, delay: 0.2 }
+                      style={{ height: '100%' }
                     />
                   </div>
                 )}
@@ -102,14 +102,14 @@ const StepProgress: React.FC<StepProgressProps> = ({
               {/* Step Content */}
               <div className="flex-1 pb-8">
                 <div
-                  className={`
+                  className={
                     ${config.text} font-medium
                     ${status === 'current' 
                       ? 'text-blue-600' 
                       : status === 'completed'
                       ? 'text-green-600'
                       : 'text-gray-500'
-                  `}
+                  }
                 >
                   {step.title}
                 </div>
@@ -127,7 +127,7 @@ const StepProgress: React.FC<StepProgressProps> = ({
 
   // Horizontal orientation
   return (
-    <div className={`w-full ${className}`}>
+    <div className={w-full ${className}}>
       <div className="flex items-center justify-between">
         {steps.map((step, index) => {
           const status = getStepStatus(step.id);
@@ -138,38 +138,38 @@ const StepProgress: React.FC<StepProgressProps> = ({
               {/* Step Circle */}
               <div className="flex flex-col items-center">
                 <motion.div
-                  className={`
+                  className={
                     flex items-center justify-center ${config.circle} rounded-full border-2 transition-colors
                     ${status === 'completed' 
                       ? 'bg-green-500 border-green-500 text-white' 
                       : status === 'current'
                       ? 'bg-blue-500 border-blue-500 text-white'
                       : 'bg-white border-gray-300 text-gray-500'
-                  `}
+                  }
                   variants={stepVariants}
                   animate={status}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3 }
                 >
                   {status === 'completed' ? (
                     <Check className={config.icon} />
                   ) : status === 'current' ? (
-                    <Loader2 className={`${config.icon} animate-spin`} />
+                    <Loader2 className={${config.icon} animate-spin} />
                   ) : (
-                    <span className={`${config.text} font-medium`}>{index + 1}</span>
+                    <span className={${config.text} font-medium}>{index + 1}</span>
                   )}
                 </motion.div>
                 
                 {/* Step Label */}
                 <div className="mt-2 text-center">
                   <div
-                    className={`
+                    className={
                       ${config.text} font-medium
                       ${status === 'current' 
                         ? 'text-blue-600' 
                         : status === 'completed'
                         ? 'text-green-600'
                         : 'text-gray-500'
-                    `}
+                    }
                   >
                     {step.title}
                   </div>
@@ -189,7 +189,7 @@ const StepProgress: React.FC<StepProgressProps> = ({
                     variants={lineVariants}
                     initial="incomplete"
                     animate={completedSteps.includes(step.id) ? "complete" : "incomplete"}
-                    transition={{ duration: 0.5, delay: 0.2 }}
+                    transition={{ duration: 0.5, delay: 0.2 }
                   />
                 </div>
               )}
@@ -203,4 +203,4 @@ const StepProgress: React.FC<StepProgressProps> = ({
 
 export default StepProgress;
 }
-}}
+}

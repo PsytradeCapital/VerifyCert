@@ -18,7 +18,6 @@ export const ForgotPasswordForm: React.FC = () => {
       toast.error('Please enter your email or phone number');
       return;
     }
-
     setIsLoading(true);
     try {
       await forgotPassword(emailOrPhone);
@@ -34,7 +33,6 @@ export const ForgotPasswordForm: React.FC = () => {
   if (isCodeSent) {
     return <ResetPasswordForm onSuccess={() => window.location.href = '/login'} />;
   }
-
   return (
     <AuthLayout 
       title="Reset your password"

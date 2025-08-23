@@ -16,7 +16,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   removable?: boolean;
   onRemove?: () => void;
 
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;;
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;
   ({ 
     className, 
     variant = 'default', 
@@ -70,7 +70,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;;
             onClick={(e) => {
               e.stopPropagation();
               onRemove();
-            }}
+            }
             className="ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors"
           >
             <X className="h-3 w-3" />

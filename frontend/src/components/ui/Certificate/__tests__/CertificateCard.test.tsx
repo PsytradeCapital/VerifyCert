@@ -117,7 +117,7 @@ describe('CertificateCard', () => {
       const onDownload = jest.fn();
       render(
         <CertificateCard 
-          certificate={mockCertificate} 
+          certificate={mockCertificate}
           variant="premium" 
           showActions={true}
           onDownload={onDownload}
@@ -132,7 +132,7 @@ describe('CertificateCard', () => {
       const onShare = jest.fn();
       render(
         <CertificateCard 
-          certificate={mockCertificate} 
+          certificate={mockCertificate}
           variant="premium" 
           showActions={true}
           onShare={onShare}

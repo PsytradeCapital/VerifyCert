@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { 
   Trash2, 
   RefreshCw, 
-  HardDrive, ;;
-  Wifi, ;;
-  WifiOff, ;;
-  Download,;;
-  Smartphone,;;
-  Monitor;;
+  HardDrive, ;
+  Wifi, ;
+  WifiOff, ;
+  Download,;
+  Smartphone,;
+  Monitor;
 } from 'lucide-react';
 import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWorker';
 
@@ -47,7 +47,7 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 ${className}`}>
+    <div className={bg-white rounded-lg shadow-sm border border-gray-200 p-6 ${className}}>
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">App Settings</h3>
         <div className="flex items-center space-x-2">
@@ -95,7 +95,6 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
                   <span>Install</span>
                 </button>
               )}
-              
               {isInstalled && (
                 <div className="flex items-center space-x-2 text-green-600">
                   <Monitor size={16} />
@@ -114,9 +113,9 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
             <div className="bg-gray-50 rounded-lg p-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-600">Status</span>
-                <div className={`w-2 h-2 rounded-full ${
+                <div className={w-2 h-2 rounded-full ${
                   swState.isRegistered ? 'bg-green-500' : 'bg-gray-400'
-                }`} />
+                }} />
               </div>
               <p className="text-sm font-medium text-gray-900 mt-1">
                 {swState.isRegistered ? 'Active' : 'Inactive'}
@@ -138,8 +137,8 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
 
           {swState.hasUpdate && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              initial={{ opacity: 0, height: 0 }
+              animate={{ opacity: 1, height: 'auto' }
               className="mt-4"
             >
               <button
@@ -201,8 +200,8 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
         {/* Error Display */}
         {swState.error && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            initial={{ opacity: 0, height: 0 }
+            animate={{ opacity: 1, height: 'auto' }
             className="bg-red-50 border border-red-200 rounded-lg p-4"
           >
             <h5 className="text-sm font-medium text-red-800 mb-1">Error</h5>
@@ -216,4 +215,4 @@ export const CacheManager: React.FC<CacheManagerProps> = ({ className = ''
 
 export default CacheManager;
 }
-}}}
+}

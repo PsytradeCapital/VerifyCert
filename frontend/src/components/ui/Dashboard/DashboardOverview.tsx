@@ -12,9 +12,9 @@ totalIssued: number;
   growthRate?: number;
 
 export interface DashboardOverviewProps {
-}}
 }
-}}}
+}
+}
   stats: DashboardStats;
   isLoading?: boolean;
   className?: string;
@@ -63,7 +63,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 
   if (isLoading) {
     return (
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}`}>
+      <div className={grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}}>
         {[...Array(4)].map((_, index) => (
           <div key={index} className="bg-white rounded-lg shadow p-6 animate-pulse">
             <div className="flex items-center">
@@ -80,7 +80,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 
   return (
     <motion.div 
-      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}`}
+      className={grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${className}}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -128,4 +128,4 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 
 export default DashboardOverview;
 }
-}}
+}

@@ -15,10 +15,9 @@ name: string;
   location?: string;
 
 interface NotificationSettings {
-}}
 }
-
-}}}
+}
+}
   emailNotifications: boolean;
   certificateIssued: boolean;
   certificateVerified: boolean;
@@ -32,10 +31,9 @@ twoFactorEnabled: boolean;
   apiKeyEnabled: boolean;
 
 interface AppearanceSettings {
-}}
 }
-
-}}}
+}
+}
   theme: 'light' | 'dark' | 'system';
   language: string;
   timezone: string;
@@ -387,11 +385,11 @@ const Settings: React.FC = () => {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                      className={w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
                         activeTab === tab.id
                           ? 'bg-blue-100 text-blue-700'
                           : 'text-gray-600 hover:bg-gray-100'
-                      }`}
+                      }}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="font-medium">{tab.label}</span>
@@ -410,7 +408,6 @@ const Settings: React.FC = () => {
               {activeTab === 'notifications' && renderNotificationsTab()}
               {activeTab === 'appearance' && renderAppearanceTab()}
               {activeTab === 'advanced' && renderAdvancedTab()}
-
               {/* Save Button */}
               <div className="mt-8 pt-6 border-t">
                 <div className="flex justify-end">

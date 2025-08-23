@@ -7,12 +7,12 @@ import {
   DesktopOnly,
   TouchOnly,
   HoverOnly,
-  ResponsiveShow,;;
-  SafeArea,;;
-  TouchTarget,;;
-  MobilePadding,;;
-  ResponsiveGrid,;;
-  ResponsiveText;;
+  ResponsiveShow,;
+  SafeArea,;
+  TouchTarget,;
+  MobilePadding,;
+  ResponsiveGrid,;
+  ResponsiveText;
 } from '../ResponsiveUtility';
 
 // Mock window.innerWidth for responsive tests
@@ -323,4 +323,4 @@ describe('ResponsiveUtility Components', () => {
   });
 });
 }
-}}}}
+}

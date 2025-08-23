@@ -15,7 +15,7 @@ export const NetworkDisplay: React.FC<NetworkDisplayProps> = ({
   const faucetUrl = AMOY_NETWORK.faucetUrl;
 
   return (
-    <div className={`bg-blue-50 border border-blue-200 rounded-lg p-4 ${className}`}>
+    <div className={bg-blue-50 border border-blue-200 rounded-lg p-4 ${className}}>
       <div className="flex items-center space-x-2 mb-2">
         <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
         <h3 className="text-sm font-medium text-blue-900">

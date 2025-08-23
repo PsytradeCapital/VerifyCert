@@ -292,7 +292,7 @@ export const useSkipLinks = () => {
 
   const createSkipLink = useCallback((targetId: string, label: string) => {
     return {
-      href: `#${targetId}`,
+      href: #${targetId},
       onClick: (event: React.MouseEvent) => {
         event.preventDefault();
         skipToContent(targetId);
@@ -305,4 +305,4 @@ export const useSkipLinks = () => {
   return { skipToContent, createSkipLink };
 };
 }
-}}}}}}}}}}}}}}}}}}}
+}

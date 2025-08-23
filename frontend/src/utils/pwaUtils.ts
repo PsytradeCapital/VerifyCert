@@ -4,7 +4,6 @@ export interface DeviceInfo {
   isDesktop: boolean;
   platform: string;
 }
-
 export function getDeviceInfo(): DeviceInfo {
   const userAgent = navigator.userAgent;
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);

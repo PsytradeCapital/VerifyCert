@@ -32,8 +32,8 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 
   const getStyle = () => {
     const style: React.CSSProperties = {};
-    if (width) style.width = typeof width === 'number' ? `${width}px` : width;
-    if (height) style.height = typeof height === 'number' ? `${height}px` : height;
+    if (width) style.width = typeof width === 'number' ? ${width}px : width;
+    if (height) style.height = typeof height === 'number' ? ${height}px : height;
     return style;
   };
 
@@ -43,9 +43,9 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         {Array.from({ length: lines }).map((_, index) => (
           <div
             key={index}
-            className={`${baseClasses} ${getVariantClasses()} ${
+            className={${baseClasses} ${getVariantClasses()} ${
               index < lines - 1 ? 'mb-2' : ''
-            } ${index === lines - 1 ? 'w-3/4' : ''}`}
+            } ${index === lines - 1 ? 'w-3/4' : ''}}
             style={getStyle()}
           />
         ))}
@@ -54,7 +54,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 
   return (
     <div
-      className={`${baseClasses} ${getVariantClasses()} ${className}`}
+      className={${baseClasses} ${getVariantClasses()} ${className}}
       style={getStyle()}
     />
   );
@@ -62,8 +62,8 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 
 // Predefined skeleton components for common use cases
 export const CertificateCardSkeleton: React.FC = () => (;
-  <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">;;
-    <div className="flex items-center space-x-4 mb-4">;;
+  <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">;
+    <div className="flex items-center space-x-4 mb-4">;
       <SkeletonLoader variant="circular" width={48} height={48} />
       <div className="flex-1">
         <SkeletonLoader variant="text" width="60%" className="mb-2" />
@@ -86,8 +86,8 @@ export const CertificateListSkeleton: React.FC<{ count?: number }> = ({ count = 
   </div>
 );
 
-export const DashboardSkeleton: React.FC = () => (;;
-  <div className="space-y-6">;;
+export const DashboardSkeleton: React.FC = () => (;
+  <div className="space-y-6">;
     {/* Header */}
     <div className="bg-white rounded-lg shadow-md p-6">
       <SkeletonLoader variant="text" width="40%" height={32} className="mb-4" />
@@ -111,4 +111,4 @@ export const DashboardSkeleton: React.FC = () => (;;
 
 export default SkeletonLoader;
 }
-}}
+}

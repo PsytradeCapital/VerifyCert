@@ -243,7 +243,7 @@ const ThemeDemo: React.FC = () => {
                     <div key={shade} className="text-center">
                       <div
                         className="w-full h-12 rounded-lg border border-border shadow-theme-sm mb-2"
-                        style={{ backgroundColor: color }}
+                        style={{ backgroundColor: color }
                       />
                       <div className="text-xs text-muted-foreground">{shade}</div>
                       <div className="text-xs font-mono text-muted-foreground">{color}</div>

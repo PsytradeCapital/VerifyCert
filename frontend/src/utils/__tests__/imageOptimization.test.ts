@@ -1,8 +1,8 @@
-import {;;
-  generateImageSrcSet,;;
-  optimizeImageUrl,;;
-  getResponsiveImagePropsSync,;;
-  ImageOptimizationOptions;;
+import {;
+  generateImageSrcSet,;
+  optimizeImageUrl,;
+  getResponsiveImagePropsSync,;
+  ImageOptimizationOptions;
 } from '../imageOptimization';
 
 describe('Image Optimization Utils', () => {

@@ -73,7 +73,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   };
 
   return (
-    <div className={`min-h-screen bg-neutral-50 safe-area-y ${className}`}>
+    <div className={min-h-screen bg-neutral-50 safe-area-y ${className}}>
       {/* Skip Navigation Links */}
       <div className="sr-only focus-within:not-sr-only">
         <a
@@ -82,11 +82,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           onFocus={(e) => {
             // Ensure the link is visible when focused
             e.target.classList.remove('sr-only');
-          }}
+          }
           onBlur={(e) => {
             // Hide the link when focus is lost
             e.target.classList.add('sr-only');
-          }}
+          }
         >
           Skip to main content
         </a>
@@ -96,10 +96,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({
             className="absolute top-0 left-20 z-50 px-4 py-2 bg-blue-600 text-white rounded-br-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             onFocus={(e) => {
               e.target.classList.remove('sr-only');
-            }}
+            }
             onBlur={(e) => {
               e.target.classList.add('sr-only');
-            }}
+            }
           >
             Skip to navigation
           </a>
@@ -134,22 +134,21 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                 onTouchStart={(e) => e.preventDefault()}
               />
             )}
-            
             {/* Sidebar */}
             <aside 
               id="navigation"
-              className={`
+              className={
                 ${isMobile 
-                  ? `fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out safe-area-x ${
+                  ? fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out safe-area-x ${
                       mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                    }`
+                    }
                   : 'flex flex-shrink-0'
-              `}
+              }
             >
-              <div className={`
+              <div className={
                 flex flex-col bg-white border-r border-neutral-200 transition-all duration-300 ease-in-out
                 ${isMobile ? 'w-64' : (sidebarCollapsed ? 'w-16' : 'w-64')}
-              `}>
+              }>
                 {/* Sidebar header */}
                 <div className="flex items-center justify-between p-4 border-b border-neutral-200">
                   {(!sidebarCollapsed || isMobile) && (
@@ -182,13 +181,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({
             </aside>
           </>
         )}
-
         {/* Main content */}
         <main id="main-content" className="flex-1 relative overflow-hidden" role="main">
-          <div className={`
+          <div className={
             h-full mobile-padding-y mobile-padding-x
             ${showBottomNav ? 'pb-20 sm:pb-24' : ''}
-          `}>
+          }>
             {children}
           </div>
         </main>
@@ -206,4 +204,4 @@ const AppLayout: React.FC<AppLayoutProps> = ({
 
 export default AppLayout;
 }
-}}}}}
+}

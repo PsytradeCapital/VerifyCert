@@ -17,7 +17,6 @@ class ToastService {
   private static instance: ToastService;
 
   private constructor() {}
-
   public static getInstance(): ToastService {
     if (!ToastService.instance) {
       ToastService.instance = new ToastService();
@@ -118,7 +117,7 @@ class ToastService {
   // Blockchain-specific toasts
   public blockchainSuccess(message: string, txHash?: string): string {
     const fullMessage = txHash 
-      ? `${message}\nTx: ${txHash.slice(0, 10)}...${txHash.slice(-8)}`
+      ? ${message}\nTx: ${txHash.slice(0, 10)}...${txHash.slice(-8)}
       : message;
 
     return this.success(fullMessage, {
@@ -126,7 +125,7 @@ class ToastService {
       action: txHash ? {
         label: 'View Transaction',
         onClick: () => {
-          window.open(`https://mumbai.polygonscan.com/tx/${txHash}`, '_blank');
+          window.open(https://mumbai.polygonscan.com/tx/${txHash}, '_blank');
       } : undefined,
     });
 
@@ -141,7 +140,7 @@ class ToastService {
       } else if (error.message?.includes('gas')) {
         errorMessage = 'Transaction failed due to gas issues';
       } else if (error.message?.includes('revert')) {
-        errorMessage = `Transaction reverted: ${error.reason || 'Unknown reason'}`;
+        errorMessage = Transaction reverted: ${error.reason || 'Unknown reason'};
 
     return this.error(errorMessage, {
       duration: 8000,
@@ -207,7 +206,7 @@ class ToastService {
 
   // Form validation toasts
   public validationError(field: string, message: string): string {
-    return this.error(`${field}: ${message}`, {
+    return this.error(${field}: ${message}, {
       duration: 4000,
     });
 
@@ -249,37 +248,37 @@ class ToastService {
 export const toastService = ToastService.getInstance();
 
 // Export convenience functions
-export const showSuccess = (message: string, options?: CustomToastOptions) => ;;
+export const showSuccess = (message: string, options?: CustomToastOptions) => ;
   toastService.success(message, options);
 
-export const showError = (message: string, options?: CustomToastOptions) => ;;
+export const showError = (message: string, options?: CustomToastOptions) => ;
   toastService.error(message, options);
 
-export const showWarning = (message: string, options?: CustomToastOptions) => ;;
+export const showWarning = (message: string, options?: CustomToastOptions) => ;
   toastService.warning(message, options);
 
-export const showInfo = (message: string, options?: CustomToastOptions) => ;;
+export const showInfo = (message: string, options?: CustomToastOptions) => ;
   toastService.info(message, options);
 
-export const showLoading = (message: string, options?: ToastOptions) => ;;
+export const showLoading = (message: string, options?: ToastOptions) => ;
   toastService.loading(message, options);
 
-export const showBlockchainSuccess = (message: string, txHash?: string) => ;;
+export const showBlockchainSuccess = (message: string, txHash?: string) => ;
   toastService.blockchainSuccess(message, txHash);
 
-export const showBlockchainError = (message: string, error?: any) => ;;
+export const showBlockchainError = (message: string, error?: any) => ;
   toastService.blockchainError(message, error);
 
-export const showNetworkError = (message?: string) => ;;
+export const showNetworkError = (message?: string) => ;
   toastService.networkError(message);
 
-export const showWrongNetwork = () => ;;
+export const showWrongNetwork = () => ;
   toastService.wrongNetwork();
 
-export const dismissToast = (toastId?: string) => ;;
+export const dismissToast = (toastId?: string) => ;
   toastService.dismiss(toastId);
 
-export const dismissAllToasts = () => ;;
+export const dismissAllToasts = () => ;
   toastService.dismissAll();
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}
+}

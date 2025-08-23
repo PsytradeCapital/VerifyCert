@@ -2,7 +2,6 @@ export interface ServiceWorkerConfig {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
   onSuccess?: (registration: ServiceWorkerRegistration) => void;
 }
-
 export function registerSW(config?: ServiceWorkerConfig) {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
@@ -17,7 +16,6 @@ export function registerSW(config?: ServiceWorkerConfig) {
       });
   }
 }
-
 export function unregisterSW() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready

@@ -11,7 +11,7 @@ chainId: number;
     name: string;
     symbol: string;
     decimals: number;
-}}};
+};
   contractAddress: string;
 
 // Amoy Testnet Configuration
@@ -64,7 +64,7 @@ export const switchToAmoyNetwork = async () => {
     // Try to switch to Amoy network
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: `0x${AMOY_NETWORK.chainId.toString(16)}` }],
+      params: [{ chainId: 0x${AMOY_NETWORK.chainId.toString(16)} }],
     });
   } catch (switchError: any) {
     // If network doesn't exist, add it
@@ -73,7 +73,7 @@ export const switchToAmoyNetwork = async () => {
         method: 'wallet_addEthereumChain',
         params: [
           {
-            chainId: `0x${AMOY_NETWORK.chainId.toString(16)}`,
+            chainId: 0x${AMOY_NETWORK.chainId.toString(16)},
             chainName: AMOY_NETWORK.displayName,
             nativeCurrency: AMOY_NETWORK.nativeCurrency,
             rpcUrls: [AMOY_NETWORK.rpcUrl],
@@ -112,7 +112,7 @@ export const getCurrentNetwork = async (): Promise<NetworkConfig | null> => {
 // Network display utilities
 export const formatNetworkName = (chainId: number): string => {
   const network = getNetworkConfig(chainId);
-  return network ? network.displayName : `Unknown Network (${chainId})`;
+  return network ? network.displayName : Unknown Network (${chainId});
 };
 
 export const getBlockExplorerUrl = (chainId: number, type: 'tx' | 'address' | 'token', value: string): string => {
@@ -122,11 +122,11 @@ export const getBlockExplorerUrl = (chainId: number, type: 'tx' | 'address' | 't
 
   switch (type) {
     case 'tx':
-      return `${network.blockExplorer}/tx/${value}`;
+      return ${network.blockExplorer}/tx/${value};
     case 'address':
-      return `${network.blockExplorer}/address/${value}`;
+      return ${network.blockExplorer}/address/${value};
     case 'token':
-      return `${network.blockExplorer}/token/${value}`;
+      return ${network.blockExplorer}/token/${value};
     default:
       return network.blockExplorer;
 };
@@ -144,4 +144,4 @@ export const getRpcUrl = (chainId?: number): string => {
   return network?.rpcUrl || DEFAULT_NETWORK.rpcUrl;
 };
 }
-}}}}}
+}

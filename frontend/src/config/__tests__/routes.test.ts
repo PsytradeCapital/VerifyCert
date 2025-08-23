@@ -59,7 +59,7 @@ describe('routes configuration', () => {
         path: '/user/:userId/post/:postId',
         label: 'User Post',
         dynamic: true,
-        generateLabel: (params) => `Post ${params.postId} by User ${params.userId}`
+        generateLabel: (params) => Post ${params.postId} by User ${params.userId}
       });
 
       const match = matchRoute('/user/456/post/789');
@@ -147,4 +147,4 @@ describe('routes configuration', () => {
   });
 });
 }
-}}}
+}

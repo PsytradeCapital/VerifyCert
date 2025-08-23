@@ -9,12 +9,12 @@ import {
   Zap,
   Link as LinkIcon,
   Hash,
-  Layers,;;
-  Globe,;;
-  Calendar,;;
-  Info,;;
-  ChevronDown,;;
-  ChevronUp;;
+  Layers,;
+  Globe,;
+  Calendar,;
+  Info,;
+  ChevronDown,;
+  ChevronUp;
 } from 'lucide-react';
 import { getBlockchainService } from '../../../services/blockchainService';
 
@@ -95,7 +95,7 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   };
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return ${address.slice(0, 6)}...${address.slice(-4)};
   };
 
   const formatFullAddress = (address: string) => {
@@ -112,8 +112,8 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
       : 'https://polygonscan.com';
     
     return type === 'tx' 
-      ? `${baseUrl}/tx/${value}`
-      : `${baseUrl}/address/${value}`;
+      ? ${baseUrl}/tx/${value}
+      : ${baseUrl}/address/${value};
   };
 
   const openInExplorer = (type: 'tx' | 'address', value: string) => {
@@ -127,15 +127,15 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   }) => (
     <button
       onClick={() => copyToClipboard(text, field)}
-      className={`text-neutral-400 hover:text-neutral-600 transition-colors ${
+      className={text-neutral-400 hover:text-neutral-600 transition-colors ${
         size === 'sm' ? 'p-1' : 'p-1.5'
-      }`}
-      title={`Copy ${field}`}
+      }}
+      title={Copy ${field}}
     >
       {copiedField === field ? (
-        <Check className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'} text-green-500`} />
+        <Check className={${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'} text-green-500} />
       ) : (
-        <Copy className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'}`} />
+        <Copy className={${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'}} />
       )}
     </button>
   );
@@ -147,21 +147,21 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   }) => (
     <button
       onClick={() => openInExplorer(type, value)}
-      className={`text-blue-500 hover:text-blue-600 transition-colors ${
+      className={text-blue-500 hover:text-blue-600 transition-colors ${
         size === 'sm' ? 'p-1' : 'p-1.5'
-      }`}
+      }}
       title="View on block explorer"
     >
-      <ExternalLink className={`${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'}`} />
+      <ExternalLink className={${size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'}} />
     </button>
   );
 
   if (isLoading) {
     return (
-      <div className={`flex items-center space-x-2 text-sm text-neutral-500 ${className}`}>
+      <div className={flex items-center space-x-2 text-sm text-neutral-500 ${className}}>
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          animate={{ rotate: 360 }
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }
         >
           <Clock className="h-4 w-4" />
         </motion.div>
@@ -171,7 +171,7 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
 
   if (variant === 'inline') {
     return (
-      <div className={`flex items-center space-x-2 ${className}`}>
+      <div className={flex items-center space-x-2 ${className}}>
         <div className="flex items-center space-x-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-200">
           <Shield className="h-3 w-3" />
           <span className="font-medium">Blockchain Verified</span>
@@ -195,9 +195,9 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   if (variant === 'compact') {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={`bg-green-50 border border-green-200 rounded-lg p-3 ${className}`}
+        initial={{ opacity: 0, y: 10 }
+        animate={{ opacity: 1, y: 0 }
+        className={bg-green-50 border border-green-200 rounded-lg p-3 ${className}}
       >
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center space-x-2">
@@ -230,9 +230,9 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
   // Detailed variant
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={`bg-white border border-neutral-200 rounded-lg shadow-sm ${className}`}
+      initial={{ opacity: 0, y: 10 }
+      animate={{ opacity: 1, y: 0 }
+      className={bg-white border border-neutral-200 rounded-lg shadow-sm ${className}}
     >
       {/* Header */}
       <div 
@@ -266,9 +266,9 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, height: 0 }
+            animate={{ opacity: 1, height: 'auto' }
+            exit={{ opacity: 0, height: 0 }
             className="border-t border-neutral-200"
           >
             <div className="p-4 space-y-4">
@@ -292,7 +292,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                   </div>
                 </div>
               )}
-
               {/* Block Number */}
               {proofData.blockNumber && (
                 <div className="space-y-2">
@@ -307,7 +306,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                   </div>
                 </div>
               )}
-
               {/* Contract Address */}
               {proofData.contractAddress && (
                 <div className="space-y-2">
@@ -328,7 +326,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                   </div>
                 </div>
               )}
-
               {/* Network Info */}
               {proofData.networkName && (
                 <div className="space-y-2">
@@ -338,12 +335,11 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                   </div>
                   <div className="bg-neutral-50 p-3 rounded-lg">
                     <span className="text-sm text-neutral-800">
-                      {proofData.networkName} {proofData.chainId && `(Chain ID: ${proofData.chainId})`}
+                      {proofData.networkName} {proofData.chainId && (Chain ID: ${proofData.chainId})}
                     </span>
                   </div>
                 </div>
               )}
-
               {/* Verification Timestamp */}
               {proofData.verificationTimestamp && (
                 <div className="space-y-2">
@@ -358,7 +354,6 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
                   </div>
                 </div>
               )}
-
               {/* Info Note */}
               <div className="flex items-start space-x-2 bg-blue-50 p-3 rounded-lg">
                 <Info className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
@@ -377,4 +372,4 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
 
 export default BlockchainProofIndicator;
 }
-}}}}}}
+}

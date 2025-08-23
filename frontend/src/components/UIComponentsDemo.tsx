@@ -12,12 +12,12 @@ import {
   MapPin, 
   Star, 
   Heart, 
-  Zap, ;;
-  Settings, ;;
-  Info,;;
-  CheckCircle,;;
-  AlertTriangle,;;
-  X;;
+  Zap, ;
+  Settings, ;
+  Info,;
+  CheckCircle,;
+  AlertTriangle,;
+  X;
 } from 'lucide-react';
 
 const UIComponentsDemo: React.FC = () => {
@@ -428,4 +428,4 @@ const UIComponentsDemo: React.FC = () => {
 };
 
 export default UIComponentsDemo;
-}}
+}

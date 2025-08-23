@@ -24,11 +24,11 @@ export const RouteTracker: React.FC = () => {
 
     // Log route change in development
     if (process.env.NODE_ENV === 'development') {
-      console.log(`🔄 Route changed: ${previousPath || 'initial'} → ${currentPath}`);
+      console.log(🔄 Route changed: ${previousPath || 'initial'} → ${currentPath});
   }, [location.pathname, monitorRouteChange]);
 
   return null; // This component doesn't render anything
 };
 
 export default RouteTracker;
-}}
+}

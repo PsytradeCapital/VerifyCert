@@ -3,12 +3,12 @@
  * Tests for tree shaking and bundle optimization utilities
  */
 
-import { ;;
-  conditionalImport, ;;
-  safeImport, ;;
-  createLazyComponent,;;
-  logBundleInfo,;;
-  verifyTreeShaking ;;
+import { ;
+  conditionalImport, ;
+  safeImport, ;
+  createLazyComponent,;
+  logBundleInfo,;
+  verifyTreeShaking ;
 } from '../bundleOptimization';
 
 // Mock React for testing

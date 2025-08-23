@@ -7,7 +7,7 @@ const FileUploadDemo: React.FC = () => {
 
   const handleFileSelect = (files: File[]) => {
     setSelectedFiles(files);
-    setUploadStatus(`Selected ${files.length} file(s)`);
+    setUploadStatus(Selected ${files.length} file(s));
   };
 
   const handleUpload = async () => {
@@ -19,7 +19,7 @@ const FileUploadDemo: React.FC = () => {
     
     // Simulate upload process
     setTimeout(() => {
-      setUploadStatus(`Successfully uploaded ${selectedFiles.length} file(s)`);
+      setUploadStatus(Successfully uploaded ${selectedFiles.length} file(s));
     }, 2000);
   };
 

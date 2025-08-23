@@ -4,21 +4,20 @@ import toast from 'react-hot-toast';
 import { generateAriaId } from '../utils/ariaUtils';
 
 interface WalletConnectProps {
-onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
+  onConnect?: (address: string, provider: ethers.BrowserProvider) => void;
   onDisconnect?: () => void;
   requiredNetwork?: string;
   className?: string;
+}
 
 interface WalletState {
-}
-}
-}
   isConnected: boolean;
   address: string | null;
   provider: ethers.BrowserProvider | null;
   isConnecting: boolean;
   networkName: string | null;
   hasShownSuccessMessage: boolean;
+}
 
 const POLYGON_AMOY_CHAIN_ID = '0x13882'; // 80002 in hex
 const POLYGON_AMOY_CONFIG = {
@@ -68,6 +67,7 @@ export default function WalletConnect(): JSX.Element {
         return 'Goerli Testnet';
       default:
         return 'Unknown Network';
+    }
   }, []);
 
   // Switch to Polygon Amoy network
@@ -94,10 +94,13 @@ export default function WalletConnect(): JSX.Element {
           console.error('Failed to add Polygon Amoy network:', addError);
           toast.error('Failed to add Polygon Amoy network');
           return false;
+        }
       } else {
         console.error('Failed to switch to Polygon Amoy:', switchError);
         toast.error('Failed to switch to Polygon Amoy network');
         return false;
+      }
+    }
   }, []);
 
   // Connect wallet
@@ -106,6 +109,7 @@ export default function WalletConnect(): JSX.Element {
       toast.error('MetaMask is not installed. Please install MetaMask to continue.');
       window.open('https://metamask.io/download/', '_blank');
       return;
+    }
 
     // Generate unique connection attempt ID
     const attemptId = Date.now().toString();
@@ -121,10 +125,11 @@ export default function WalletConnect(): JSX.Element {
 
       if (accounts.length === 0) {
         throw new Error('No accounts found');
+      }
 
       const provider = new ethers.BrowserProvider((window as any).ethereum);
       const network = await provider.getNetwork();
-      const chainId = 0x${network.chainId.toString(16)};
+      const chainId = `0x${network.chainId.toString(16)}`;
       const networkName = getNetworkName(chainId);
 
       // Check if we need to switch to Polygon Amoy
@@ -133,9 +138,10 @@ export default function WalletConnect(): JSX.Element {
         if (!switched) {
           setWalletState(prev => ({ ...prev, isConnecting: false }));
           return;
+        }
         // Refresh network info after switching
         const newNetwork = await provider.getNetwork();
-        const newChainId = 0x${newNetwork.chainId.toString(16)};
+        const newChainId = `0x${newNetwork.chainId.toString(16)}`;
         const newNetworkName = getNetworkName(newChainId);
         
         setWalletState({
@@ -155,6 +161,7 @@ export default function WalletConnect(): JSX.Element {
           networkName,
           hasShownSuccessMessage: false,
         });
+      }
 
       onConnect?.(accounts[0], provider);
       
@@ -168,6 +175,7 @@ export default function WalletConnect(): JSX.Element {
         toast.success('Wallet connected successfully!');
         setWalletState(prev => ({ ...prev, hasShownSuccessMessage: true }));
         lastSuccessMessageTime.current = now;
+      }
     } catch (error: any) {
       console.error('Failed to connect wallet:', error);
       setWalletState(prev => ({ ...prev, isConnecting: false }));
@@ -176,6 +184,8 @@ export default function WalletConnect(): JSX.Element {
         toast.error('Connection rejected by user');
       } else {
         toast.error('Failed to connect wallet');
+      }
+    }
   }, [isMetaMaskInstalled, getNetworkName, requiredNetwork, switchToPolygonAmoy, onConnect]);
 
   // Disconnect wallet
@@ -205,6 +215,8 @@ export default function WalletConnect(): JSX.Element {
       if (walletState.provider) {
         onConnect?.(accounts[0], walletState.provider);
         // Never show success message for account changes
+      }
+    }
   }, [disconnectWallet, walletState.address, walletState.provider, onConnect]);
 
   // Handle network changes
@@ -215,6 +227,7 @@ export default function WalletConnect(): JSX.Element {
     // If required network is polygon-amoy and we're not on it, show warning
     if (requiredNetwork === 'polygon-amoy' && chainId !== POLYGON_AMOY_CHAIN_ID) {
       toast.error('Please switch to Polygon Amoy network');
+    }
   }, [getNetworkName, requiredNetwork]);
 
   // Set up event listeners
@@ -228,6 +241,7 @@ export default function WalletConnect(): JSX.Element {
       if ((window as any).ethereum?.removeListener) {
         (window as any).ethereum.removeListener('accountsChanged', handleAccountsChanged);
         (window as any).ethereum.removeListener('chainChanged', handleChainChanged);
+      }
     };
   }, [isMetaMaskInstalled, handleAccountsChanged, handleChainChanged]);
 
@@ -244,7 +258,7 @@ export default function WalletConnect(): JSX.Element {
         if (accounts.length > 0) {
           const provider = new ethers.BrowserProvider((window as any).ethereum);
           const network = await provider.getNetwork();
-          const chainId = 0x${network.chainId.toString(16)};
+          const chainId = `0x${network.chainId.toString(16)}`;
           const networkName = getNetworkName(chainId);
 
           setWalletState({
@@ -258,6 +272,7 @@ export default function WalletConnect(): JSX.Element {
 
           // Only call onConnect for initial connection check, don't show success message
           onConnect?.(accounts[0], provider);
+        }
       } catch (error) {
         console.error('Failed to check wallet connection:', error);
       } finally {
@@ -265,13 +280,14 @@ export default function WalletConnect(): JSX.Element {
         setTimeout(() => {
           isInitialMount.current = false;
         }, 1000);
+      }
     };
 
     checkConnection();
   }, [isMetaMaskInstalled, getNetworkName, onConnect]);
 
   const formatAddress = (address: string) => {
-    return ${address.slice(0, 6)}...${address.slice(-4)};
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   const warningId = generateAriaId('metamask-warning');
@@ -279,10 +295,10 @@ export default function WalletConnect(): JSX.Element {
   if (!isMetaMaskInstalled()) {
     return (
       <div 
-        className={bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}}
+        className={`bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}`}
         role="alert"
-        aria-labelledby={${warningId}-title}
-        aria-describedby={${warningId}-description}
+        aria-labelledby={`${warningId}-title`}
+        aria-describedby={`${warningId}-description`}
       >
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
@@ -291,10 +307,10 @@ export default function WalletConnect(): JSX.Element {
             </svg>
           </div>
           <div>
-            <h3 id={${warningId}-title} className="text-sm font-medium text-yellow-800">
+            <h3 id={`${warningId}-title`} className="text-sm font-medium text-yellow-800">
               MetaMask Required
             </h3>
-            <p id={${warningId}-description} className="text-sm text-yellow-700 mt-1">
+            <p id={`${warningId}-description`} className="text-sm text-yellow-700 mt-1">
               Please install MetaMask to connect your wallet.
             </p>
             <button
@@ -308,9 +324,10 @@ export default function WalletConnect(): JSX.Element {
         </div>
       </div>
     );
+  }
 
   return (
-    <div className={${className}}>
+    <div className={`${className}`}>
       {!walletState.isConnected ? (
         <button
           onClick={connectWallet}
@@ -387,5 +404,4 @@ export default function WalletConnect(): JSX.Element {
       )}
     </div>
   );
-}
 }

@@ -5,7 +5,7 @@ import { Button } from '../Button/Button';
 import Card from '../Card/Card';
 
 export interface Certificate {
-tokenId: string;
+  tokenId: string;
   issuer: string;
   recipient: string;
   recipientName: string;
@@ -16,11 +16,9 @@ tokenId: string;
   qrCodeURL?: string;
   verificationURL?: string;
   grade?: string;
+}
 
 interface CertificateCardProps {
-}
-}
-}
   certificate: Certificate;
   showQR?: boolean;
   isPublicView?: boolean;
@@ -28,6 +26,7 @@ interface CertificateCardProps {
   onDownload?: () => void;
   onShare?: () => void;
   onPrint?: () => void;
+}
 
 export const CertificateCard: React.FC<CertificateCardProps> = ({
   certificate,
@@ -49,13 +48,14 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   };
 
   const formatAddress = (address: string) => {
-    return ${address.slice(0, 6)}...${address.slice(-4)};
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   const handleDownload = async () => {
     if (onDownload) {
       onDownload();
       return;
+    }
 
     setIsLoading(true);
     try {
@@ -86,19 +86,19 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       // Institution
       ctx.fillStyle = '#374151';
       ctx.font = '20px Arial';
-      ctx.fillText(Issued by: ${certificate.institutionName}, canvas.width / 2, 150);
+      ctx.fillText(`Issued by: ${certificate.institutionName}`, canvas.width / 2, 150);
 
       // Recipient
       ctx.fillStyle = '#111827';
       ctx.font = 'bold 28px Arial';
-      ctx.fillText(${certificate.recipientName}, canvas.width / 2, 220);
+      ctx.fillText(`${certificate.recipientName}`, canvas.width / 2, 220);
 
       // Course
       ctx.fillStyle = '#374151';
       ctx.font = '24px Arial';
-      ctx.fillText(has successfully completed, canvas.width / 2, 270);
+      ctx.fillText('has successfully completed', canvas.width / 2, 270);
       ctx.font = 'bold 26px Arial';
-      ctx.fillText(${certificate.courseName}, canvas.width / 2, 320);
+      ctx.fillText(`${certificate.courseName}`, canvas.width / 2, 320);
 
       // Date
       ctx.font = '18px Arial';

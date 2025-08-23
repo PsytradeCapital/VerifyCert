@@ -10,6 +10,7 @@ interface LoginFormData {
   password: string;
   rememberMe: boolean;
 }
+
 export const LoginForm: React.FC = () => {
   const { login } = useAuth();
   const [formData, setFormData] = useState<LoginFormData>({

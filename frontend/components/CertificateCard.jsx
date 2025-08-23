@@ -16,6 +16,8 @@ const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }
     }
   };
 
+  const contractAddress = '0x6c9D554C721dA0CEA1b975982eAEe1f924271F50';
+
   return (
     <div className={`bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg shadow-md border-2 p-6 transition-all duration-200 hover:shadow-lg ${
       certificate.isRevoked ? 'border-red-300 bg-red-50' : 'border-amber-200'
@@ -80,7 +82,7 @@ const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }
       <div className="mt-4 pt-4 border-t border-gray-200">
         <div className="text-xs text-gray-500">
           <span>Issued by: </span>
-          <span className="font-mono">{certificate.issuer}</span>
+          <span className="font-mono break-all">{certificate.issuer}</span>
         </div>
       </div>
 
@@ -110,7 +112,7 @@ const CertificateCard = ({ certificate, tokenId, showActions = false, onRevoke }
         
         <div className="mt-2">
           <a
-            href={`https://amoy.polygonscan.com/token/0x6c9D554C721dA0CEA1b975982eAEe1f924271F50?a=${tokenId}`}
+            href={`https://amoy.polygonscan.com/token/${contractAddress}?a=${tokenId}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-800 text-xs"

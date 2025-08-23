@@ -26,6 +26,7 @@ export const ChangePasswordForm: React.FC = () => {
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const togglePasswordVisibility = (field: 'current' | 'new' | 'confirm') => {

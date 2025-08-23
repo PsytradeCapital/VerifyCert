@@ -14,310 +14,142 @@ import {
 } from 'lucide-react';
 import { Badge } from './Badge';
 
-ult {
+export interface VerificationResult {
   isValid: boolean;
   isRevoked: boolean;
-  transactionHash?: ng;
-  blockNumber?: string
+  transactionHash?: string;
+  blockNumber?: string;
   timestamp?: number;
 }
 
 export interface VerificationBadgeProps {
   tokenId: string;
-lean;
+  isValid?: boolean;
   isRevoked?: boolean;
- an;
- 
- ;
-  onVerificationComplete?: oid;
+  showDetails?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'minimal' | 'detailed' | 'compact';
+  onVerificationComplete?: (result: VerificationResult) => void;
   className?: string;
 }
 
-interface BlockchainProf {
-  transactionHash: tring;
-;
+interface BlockchainProof {
+  transactionHash: string;
+  blockNumber: string;
   timestamp: number;
-  networkNg;
+  networkName: string;
   explorerUrl: string;
 }
 
-const Verifica({
+const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   tokenId,
   isValid,
-  isRevoked = fa
-  showD
+  isRevoked = false,
+  showDetails = false,
   size = 'md',
   variant = 'minimal',
   onVerificationComplete,
   className = ''
 }) => {
-g');
-  const [blockchainProof, setBlockchainProof] = );
-  const [isExpanded;
-  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationState, setVerificationState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [blockchainProof, setBlockchainProof] = useState<BlockchainProof | null>(null);
+  const [showProofDetails, setShowProofDetails] = useState(false);
 
   useEffect(() => {
-) {
-      if (isRevoked) {
-        setVerificationStoked');
- {
-        setVerificationSt
-      } else {
-
-      }
-    } else {
-      verifyOnBlockchain();
+    if (tokenId && isValid === undefined) {
+      verifyToken();
     }
-  }, [isValid, isRevoked, tokenId]);
+  }, [tokenId]);
 
-  const verifyOnBlockchain = async () => {
-    setIsVerifying(true);
-    setVerificationStatus('pending');
-
+  const verifyToken = async () => {
+    setVerificationState('loading');
     try {
       // Simulate blockchain verification
-      await new Promise(resolve => setTimeout(reso
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const mockResult: VerificationResu
+      const result: VerificationResult = {
         isValid: true,
-        isR,
-78',
+        isRevoked: false,
+        transactionHash: '0x1234567890abcdef',
         blockNumber: '12345678',
-        timestamp: Date.now() / 1000
+        timestamp: Date.now()
       };
 
-      const mockProof: Blockc {
-        transactionHash: mock,
-        blockNumber: mor!,
-        timestamp: mockp!,
-        networkName: 'Polygon ',
-        explorerUrl: `https://amoy.polygoh}`
-      };
-
-      setBlockchainProof(moc
-    );
-ult);
+      setVerificationState('success');
+      onVerificationComplete?.(result);
     } catch (error) {
-      console.error(
-      setVerif
-    } finally {
-      setIsVerifying(fe);
+      setVerificationState('error');
     }
   };
 
-  const > {
-{
-      case 'verified':
-        return{
-          icon: CheckCircle,
-          text: 'Vered',
-          color: 'text600',
-          bgColor: 'bg-green-50',
-          borderColor: 'border-green-200',
-        
-
-      case 'inva
-        return {
-          icon: XCircle,
-          text: 'Invalid',
-          color: 'text-re',
-          bgColor: 'bg-red-50',
-          borderColor: 'bo0',
-        st
-   };
-      case 'revoked':
-        return {
-          icon: ,
-          text: 'Revoked',
-          color: 'text-',
-          bgColor: 'bg-oran50',
-          borderColor: 'border-orange-200',
-          badgeVariant: 'warning' as const
-        };
-      case 'error':
-        return {
-          icon: XCircle,
-          text: 'Error',
-          color: 'text-re',
-          bgColor: 'bg-red-50',
-          borderColor: 'border-red-200',
-          
-        };
-      case 'pend
-      default:
-        return {
-          icon: Clock,
-          text: 'Verifying...',
-          color: 'text-yellow-600',
-          
-',
-          badgeVariant: 
-        };
-    }
+  const getStatusIcon = () => {
+    if (verificationState === 'loading') return <Clock className="w-4 h-4" />;
+    if (isRevoked) return <XCircle className="w-4 h-4" />;
+    if (isValid) return <CheckCircle className="w-4 h-4" />;
+    return <AlertTriangle className="w-4 h-4" />;
   };
 
-  const statusConfig = ge
-  const IconComponent =
+  const getStatusColor = () => {
+    if (verificationState === 'loading') return 'yellow';
+    if (isRevoked) return 'red';
+    if (isValid) return 'green';
+    return 'red';
+  };
 
-  const 
-  <Badge
-      varian}
-      size={size}
-      className={className}
-      icon={
-        verificationSta? (
-          <motion.div
-      0 }}
-    
-    >
-            <IconComponent className="w-3 h-3" />
-          </motion.div>
-     (
-/>
-        )
-      }
-    >
-text}
-    </Badge>
-  );
+  const getStatusText = () => {
+    if (verificationState === 'loading') return 'Verifying...';
+    if (isRevoked) return 'Revoked';
+    if (isValid) return 'Verified';
+    return 'Invalid';
+  };
 
-  const renderDetailedBadge = () => (
-    <motion.div
-    
-
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-
-      <div className="flex iteace-x-2">
-        {verding' ? (
-          <m.div
-            animate={{ rotate: 360 }}
-            transit
-          >
-       } />
-          </motion.div>
-        ) : (
-      
-)}
-        <span className={`text->
-          {s
-        </span>
-      </div>
-
-      {verificationStatus === 'verified' && bl(
-        <div className="flex items-center s>
-          <button
-         
-            clas
-          >
-            Details
-          </button>
-          <a
-            href={blockchainProof.explorerUrl}
-            target="_blank"
-            rel="no
-            className={`${statusConfig.color} hover:oity`}
-          >
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        </dv>
-      )}
-    </motion.div>
-  );
-
-  const renderPremiumBadge = () => (
-    <div className={`resName}`}>
-      <motion.div
-        className={`inline-flex items-cente
-        initial={{ opacity: 0, y: 10 }}
-        anima y: 0 }}
-        transition={{ duration: 0.3 }}
+  return (
+    <div className={`inline-flex items-center space-x-2 ${className}`}>
+      <Badge
+        variant={getStatusColor()}
+        size={size}
+        className="flex items-center space-x-1"
       >
-        <div className="f">
-          <d
-            {verificationStatus === 'pending
-              <motion.div
-                ani0 }}
-                transition={{ duration: 1,' }}
-              >
-             `} />
-              </motion.div>
-            ) : (
-              <IconCo />
-            
-          </div>
- <div>
-            <div className={`text-sm fon
-              {statusConf.text}
-            </div>
-            <div classN>
-              Token #{tokenId}
-            </div>
-          </div>
-        </div>
+        {getStatusIcon()}
+        <span>{getStatusText()}</span>
+      </Badge>
 
-        {verificationStatus === 'verified' && blockchainProof && (
-          <div className="flex items-center space-x-2">
-            <button
-              onClic}
-
-            >
-              <Info className="w-3 h-3" />
-              <span>Proof</span>
-            </button>
-            <a
-              href={blockchainProof.explorerUrl}
-              target="_blank"
-              rel="nor"
-              className={`${statusConfig.color} hover:opacity-75 transition-opacity`}
-            >
-              <ExternalLink c>
-            </a>
-          </div>
-        )}
-      </motion.div>
+      {showDetails && blockchainProof && (
+        <button
+          onClick={() => setShowProofDetails(!showProofDetails)}
+          className="text-blue-600 hover:text-blue-800 transition-colors"
+        >
+          <Info className="w-4 h-4" />
+        </button>
+      )}
 
       <AnimatePresence>
-        {isExpanded && b (
+        {showProofDetails && blockchainProof && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="absolute top-full left-0 right-0 mt-2 p-4 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute z-10 mt-2 p-4 bg-white border rounded-lg shadow-lg"
           >
-            <div className=t-xs">
-              <div class
-                <s</span>
-                <span className="font-mono">{bloc.</span>
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="font-medium">Transaction:</span>
+                <span className="ml-2 font-mono text-xs">{blockchainProof.transactionHash}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Block:<an>
-                <span className="font-mono">#{blockchainProof.blockNumber}</span>
+              <div>
+                <span className="font-medium">Block:</span>
+                <span className="ml-2">{blockchainProof.blockNumber}</span>
               </div>
-              <div class
-                <s/span>
-                <span>{blockchainProof.networkName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Verified:</span>
-                <span>{ne
+              <div>
+                <span className="font-medium">Network:</span>
+                <span className="ml-2">{blockchainProof.networkName}</span>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
+    </div>
   );
-
-  switch (variant) {
-    case 'd':
-      returnadge();
-    ca
-
-    case 'minimal':
-    defaul
-      return re;
-  }
 };
 
-exporge;ationBadt Verifict defaul
+export default VerificationBadge;

@@ -7,3 +7,4 @@ export default function FeedbackAnalysis(): JSX.Element {
       <p className="text-gray-600">Feedback analysis component placeholder.</p>
     </div>
   );
+}

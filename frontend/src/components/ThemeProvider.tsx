@@ -3,6 +3,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 type Theme = 'light' | 'dark';
 
 interface ThemeContextType {
+}
+}
+}
   theme: Theme;
   toggleTheme: () => void;
 
@@ -16,6 +19,9 @@ export const useTheme = () => {
 };
 
 interface ThemeProviderProps {
+}
+}
+}
   children: ReactNode;
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
@@ -40,3 +46,4 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 };
 
 export default ThemeProvider;
+}

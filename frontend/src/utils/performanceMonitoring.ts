@@ -4,6 +4,9 @@ import React from 'react';
  */
 
 interface PerformanceMetric {
+}
+}
+}
   name: string;
   startTime: number;
   endTime?: number;
@@ -203,8 +206,8 @@ export const performanceMonitor = new PerformanceMonitor();
 
 // Utility functions for common performance monitoring patterns
 export const withPerformanceMonitoring = <T extends (...args: any[]) => any>(
-  fn: T,
-  name: string
+  fn: T,;
+  name: string;;
 ): T => {
   return ((...args: any[]) => {
     performanceMonitor.startTiming(name);
@@ -275,4 +278,5 @@ if (process.env.NODE_ENV === 'development') {
   });
 
 
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

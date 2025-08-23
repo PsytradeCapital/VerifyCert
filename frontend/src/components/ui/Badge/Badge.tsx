@@ -3,6 +3,9 @@ import { X } from 'lucide-react';
 import { cn } from '../../../utils/cn';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+}
+}
+}
   variant?: 'default' | 'success' | 'error' | 'warning' | 'info' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
   rounded?: boolean;
@@ -11,7 +14,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   removable?: boolean;
   onRemove?: () => void;
 
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(;;
   ({ 
     className, 
     variant = 'default', 

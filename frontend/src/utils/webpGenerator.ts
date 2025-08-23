@@ -7,8 +7,8 @@ import React from 'react';
  * Convert an image to WebP format using Canvas API
  */
 export const convertToWebP = (
-  imageElement: HTMLImageElement,
-  quality: number = 0.8
+  imageElement: HTMLImageElement,;
+  quality: number = 0.8;;
 ): Promise<Blob> => {
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
@@ -56,8 +56,8 @@ export const canConvertToWebP = (): boolean => {
  */
 export const generateResponsiveWebP = async (
   imageElement: HTMLImageElement,
-  sizes: number[] = [320, 640, 1024, 1280],
-  quality: number = 0.8
+  sizes: number[] = [320, 640, 1024, 1280],;
+  quality: number = 0.8;;
 ): Promise<Array<{ size: number; blob: Blob; url: string }>> => {
   const results: Array<{ size: number; blob: Blob; url: string }> = [];
   
@@ -100,8 +100,8 @@ export const generateResponsiveWebP = async (
 /**
  * Preload and convert existing images to WebP
  */
-export const preloadAndConvertImages = async (
-  imagePaths: string[]
+export const preloadAndConvertImages = async (;
+  imagePaths: string[];;
 ): Promise<Map<string, string>> => {
   const webpUrls = new Map<string, string>();
   
@@ -217,4 +217,5 @@ if (typeof window !== 'undefined') {
   window.addEventListener('beforeunload', () => {
     webpCache.clear();
   });
-}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  CheckCircle, 
-  AlertCircle, ;
+  CheckCircle, ;;
+  AlertCircle, ;;
   AlertTriangle, ;;
   Info, ;;
   X ;;
 } from 'lucide-react';
 
 export interface NotificationProps {
+}
+}
+}
   id?: string;
   variant?: 'success' | 'error' | 'warning' | 'info';
   title?: string;
@@ -210,4 +213,5 @@ const Notification: React.FC<NotificationProps> = ({
 };
 
 export default Notification;
-}}}}}}}}}}
+}
+}}}}}}

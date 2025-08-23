@@ -85,6 +85,9 @@ export type CSSVariables = typeof designTokens.cssVariables.light;
 
 // Utility types for theme-aware components
 export interface ThemeConfig {
+}
+}
+}
   theme: Theme;
   colors: ThemeColors;
   shadows: ThemeShadows;
@@ -98,4 +101,5 @@ export function getThemeTokens(theme: Theme): ThemeConfig {
     shadows: designTokens.boxShadow[theme] || designTokens.boxShadow.light,
     cssVariables: designTokens.cssVariables[theme] || designTokens.cssVariables.light
   };
-}}}}}}}}
+}
+}}}}

@@ -18,3 +18,4 @@ export default function CertificateMetadataDemo(): JSX.Element {
       </div>
     </div>
   );
+}

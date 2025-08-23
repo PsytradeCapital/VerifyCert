@@ -4,8 +4,8 @@ import {
   Trash2, 
   RefreshCw, 
   HardDrive, 
-  Wifi, 
-  WifiOff, ;
+  Wifi, ;;
+  WifiOff, ;;
   Download,;;
   Smartphone,;;
   Monitor;;
@@ -13,6 +13,9 @@ import {
 import useServiceWorker, { usePWAInstallation } from '../../hooks/useServiceWorker';
 
 interface CacheManagerProps {
+}
+}
+}
   className?: string;
 
 export const CacheManager: React.FC<CacheManagerProps> = ({ className = '' }) => {

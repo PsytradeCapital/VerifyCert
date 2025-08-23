@@ -2,6 +2,9 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface GridProps extends React.HTMLAttributes<HTMLElement> {
+}
+}
+}
   children: React.ReactNode;
   cols?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
   colsSm?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
@@ -170,6 +173,9 @@ const Grid: React.FC<GridProps> = ({
 
 // Grid Item component for more control over individual grid items
 export interface GridItemProps extends React.HTMLAttributes<HTMLElement> {
+}
+}
+}
   children: React.ReactNode;
   colSpan?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
   colSpanSm?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';

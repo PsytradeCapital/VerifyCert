@@ -3,6 +3,9 @@ import React from 'react';
 // Handles push notification subscription, management, and interaction
 
 interface PushSubscriptionData {
+}
+}
+}
   endpoint: string;
   keys: {
     p256dh: string;
@@ -11,6 +14,9 @@ interface PushSubscriptionData {
   expirationTime?: number | null;
 
 interface NotificationPayload {
+}
+}
+}
   title: string;
   body: string;
   icon?: string;
@@ -282,4 +288,5 @@ const pushNotificationManager = new PushNotificationManager();
 export default pushNotificationManager;
 export { PushNotificationManager };
 export type { PushSubscriptionData, NotificationPayload };
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

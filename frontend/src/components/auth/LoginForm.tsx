@@ -6,6 +6,9 @@ import { toast } from 'react-hot-toast';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface LoginFormData {
+}
+}
+}
   emailOrPhone: string;
   password: string;
   rememberMe: boolean;

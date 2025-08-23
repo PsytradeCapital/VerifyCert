@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { performanceMonitor } from '../../../utils/performanceMonitoring';
 
 interface PerformanceAlertProps {
+}
+}
+}
   threshold?: number;
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
   showInProduction?: boolean;
 
 interface Alert {
+}
+}
+}
   id: string;
   type: 'warning' | 'error';
   message: string;
@@ -203,4 +209,5 @@ export const PerformanceIndicator: React.FC<{
 };
 
 export default PerformanceAlert;
-}}}}}}}}}}
+}
+}}}

@@ -5,6 +5,9 @@ import { Button } from '../Button/Button';
 import { Select } from '../Select';
 
 export interface FilterOptions {
+}
+}
+}
   search: string;
   status: 'all' | 'valid' | 'invalid';
   dateRange: 'all' | 'week' | 'month' | 'quarter' | 'year' | 'custom';
@@ -16,6 +19,9 @@ export interface FilterOptions {
   customDateEnd?: Date;
 
 interface CertificateListProps {
+}
+}
+}
   certificates: Certificate[];
   isLoading?: boolean;
   onCertificateAction?: (action: string, certificate: Certificate) => void;
@@ -572,4 +578,5 @@ export default function CertificateList(): JSX.Element {
       </div>
     </div>
   );
-}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}

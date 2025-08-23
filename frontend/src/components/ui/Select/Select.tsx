@@ -6,6 +6,9 @@ import { generateAriaId, ariaLabels, createFieldRelationships } from '../../../u
 import { useDropdownFocus } from '../../../hooks/useFocusManagement';
 
 export interface SelectOption {
+}
+}
+}
   value: string;
   label: string;
   disabled?: boolean;
@@ -13,6 +16,9 @@ export interface SelectOption {
   description?: string;
 
 export interface SelectProps {
+}
+}
+}
   options: SelectOption[];
   value?: string;
   onChange?: (value: string) => void;
@@ -453,4 +459,5 @@ const Select: React.FC<SelectProps> = ({
 };
 
 export default Select;
-}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}

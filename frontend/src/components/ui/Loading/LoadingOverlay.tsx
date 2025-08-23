@@ -5,6 +5,9 @@ import DotsSpinner from './DotsSpinner';
 import PulseSpinner from './PulseSpinner';
 
 interface LoadingOverlayProps {
+}
+}
+}
   isLoading: boolean;
   message?: string;
   children: React.ReactNode;
@@ -90,4 +93,5 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
 };
 
 export default LoadingOverlay;
-}}}}}
+}
+}}}

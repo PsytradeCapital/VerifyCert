@@ -4,6 +4,9 @@ import { X } from 'lucide-react';
 import { cn } from '../../../utils/cn';
 
 export interface ModalProps {
+}
+}
+}
   isOpen: boolean;
   onClose: () => void;
   title?: string;
@@ -107,6 +110,9 @@ export const Modal: React.FC<ModalProps> = ({
 };
 
 export interface DialogProps extends Omit<ModalProps, 'children'> {
+}
+}
+}
   description?: string;
   actions?: React.ReactNode;
   children?: React.ReactNode;
@@ -133,4 +139,5 @@ export const Dialog: React.FC<DialogProps> = ({
     </Modal>
   );
 };
-}}}}}
+}
+}}

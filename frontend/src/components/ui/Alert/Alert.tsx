@@ -1,14 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  CheckCircle, 
-  AlertCircle, ;
+  CheckCircle, ;;
+  AlertCircle, ;;
   AlertTriangle, ;;
   Info, ;;
   X ;;
 } from 'lucide-react';
 
 export interface AlertProps {
+}
+}
+}
   variant?: 'success' | 'error' | 'warning' | 'info';
   title?: string;
   children: React.ReactNode;

@@ -5,6 +5,9 @@ import React from 'react';
  */
 
 export interface BrowserInfo {
+}
+}
+}
   name: string;
   version: string;
   engine: string;
@@ -15,6 +18,9 @@ export interface BrowserInfo {
   features: BrowserFeatures;
 
 export interface BrowserFeatures {
+}
+}
+}
   serviceWorker: boolean;
   webp: boolean;
   avif: boolean;
@@ -393,4 +399,5 @@ export function initializeBrowserDetection(): BrowserInfo {
   );
   
   return browserInfo;
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

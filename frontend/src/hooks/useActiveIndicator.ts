@@ -2,6 +2,9 @@ import { useMemo } from 'react';
 import { useNavigation } from '../contexts/NavigationContext';
 
 export interface ActiveIndicatorStyles {
+}
+}
+}
   containerClasses: string;
   indicatorClasses: string;
   itemClasses: string;
@@ -142,4 +145,5 @@ export const useActiveIndicator = (itemId: string, isActive: boolean = false): A
 };
 
 export default useActiveIndicator;
-}}}}}}}}
+}
+}}}}

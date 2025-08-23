@@ -4,6 +4,9 @@ import { MessageSquare } from 'lucide-react';
 import { FeedbackCollector } from './FeedbackCollector';
 
 interface FeedbackButtonProps {
+}
+}
+}
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
   category?: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;

@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { useNavigation } from '../contexts/NavigationContext';
 
 export interface NavigationSyncOptions {
+}
+}
+}
   syncOnMount?: boolean;
   syncOnLocationChange?: boolean;
   autoUpdateActiveItems?: boolean;
@@ -148,4 +151,5 @@ export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
 };
 
 export default useNavigationSync;
-}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}

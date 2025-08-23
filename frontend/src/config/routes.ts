@@ -1,12 +1,15 @@
 import React from 'react';
 export interface RouteConfig {
+}
+}
+}
   path: string;
   label: string;
   parent?: string;
   dynamic?: boolean;
   generateLabel?: (params: Record<string, string>) => string;
 
-export const routeConfig: RouteConfig[] = [
+export const routeConfig: RouteConfig[] = [;;
   {
     path: '/',
     label: 'Home'
@@ -77,4 +80,5 @@ export const matchRoute = (path: string): { config: RouteConfig; params: Record<
   
   return null;
 };
-}}}}}}}
+}
+}}}

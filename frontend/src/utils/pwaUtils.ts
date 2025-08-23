@@ -7,9 +7,15 @@ import React from 'react';
 // Declare gtag function for TypeScript
 declare global {
   interface Window {
+}
+}
+}
     gtag?: (...args: any[]) => void;
 
 export interface DeviceInfo {
+}
+}
+}
   isMobile: boolean;
   isIOS: boolean;
   isAndroid: boolean;
@@ -165,4 +171,5 @@ export function getPWAStatus(): {
     installMethod: support.installPrompt ? 'automatic' : 
                    deviceInfo.isIOSSafari ? 'manual' : 'none'
   };
-}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}

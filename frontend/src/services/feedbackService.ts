@@ -1,5 +1,8 @@
 import React from 'react';
 interface FeedbackData {
+}
+}
+}
   category: 'navigation' | 'visual-design' | 'overall-experience';
   rating: number;
   feedback: string;
@@ -10,6 +13,9 @@ interface FeedbackData {
   context?: string;
 
 interface FeedbackAnalytics {
+}
+}
+}
   totalFeedback: number;
   averageRating: number;
   categoryBreakdown: Record<string, {
@@ -332,4 +338,5 @@ export const feedbackService = new FeedbackService();
 
 // Type exports
 export type { FeedbackData, FeedbackAnalytics };
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}

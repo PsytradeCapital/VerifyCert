@@ -318,3 +318,4 @@ describe('Navigation Component', () => {
     });
   });
 });
+}

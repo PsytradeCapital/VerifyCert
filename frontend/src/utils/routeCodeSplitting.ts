@@ -103,8 +103,8 @@ export const bundleInfo = {
  */
 export const importWithRetry = async (
   importFn: () => Promise<any>,
-  retries = 3,
-  delay = 1000
+  retries = 3,;
+  delay = 1000;;
 ): Promise<any> => {
   try {
     return await importFn();
@@ -160,4 +160,5 @@ export const bundlePerformanceMonitor = {
     return stats;
   },
 };
-}}}}}}
+}
+}}}}}

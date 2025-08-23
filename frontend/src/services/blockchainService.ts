@@ -102,6 +102,9 @@ const RPC_URL = process.env.REACT_APP_POLYGON_MUMBAI_RPC_URL || 'https://rpc-mum
 const CHAIN_ID = parseInt(process.env.REACT_APP_CHAIN_ID || '80001');
 
 export interface CertificateData {
+}
+}
+}
   tokenId: string;
   issuer: string;
   recipient: string;
@@ -116,6 +119,9 @@ export interface CertificateData {
   transactionHash?: string;
 
 export interface VerificationResult {
+}
+}
+}
   isValid: boolean;
   onChain: boolean;
   message: string;
@@ -270,4 +276,5 @@ export const getBlockchainService = (): BlockchainService => {
 
 // Export the getter function as default
 export default getBlockchainService;
-}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}

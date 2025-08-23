@@ -3,7 +3,9 @@ import { useFeedbackAnimations } from '../hooks/useFeedbackAnimations';
 import { ariaLabels, ariaDescriptions, generateAriaId } from '../utils/ariaUtils';
 
 export interface Certificate {
-  tokenId: string;
+}
+}
+tokenId: string;
   issuer: string;
   recipient: string;
   recipientName: string;
@@ -14,16 +16,18 @@ export interface Certificate {
   isValid: boolean;
   qrCodeURL?: string;
   verificationURL?: string;
-}
+}}
 
 interface CertificateCardProps {
-  certificate: Certificate;
+}
+}
+certificate: Certificate;
   showQR?: boolean;
   isPublicView?: boolean;
   className?: string;
   onDownload?: () => void;
   onShare?: () => void;
-}
+}}
 
 export default function CertificateCard({ 
   certificate, 

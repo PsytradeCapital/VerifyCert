@@ -2,20 +2,23 @@ import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { 
   registerSW, 
-  updateSW, 
-  isServiceWorkerSupported, ;
+  updateSW, ;;
+  isServiceWorkerSupported, ;;
   isStandalone,;;
   OfflineManager,;;
   CacheManager;;
 } from '../utils/serviceWorker';
-import { 
-  getDeviceInfo, ;
+import { ;;
+  getDeviceInfo, ;;
   shouldShowInstallPrompt, ;;
   trackInstallPromptEvent,;;
   getPWAStatus ;;
 } from '../utils/pwaUtils';
 
 interface ServiceWorkerState {
+}
+}
+}
   isSupported: boolean;
   isRegistered: boolean;
   isInstalled: boolean;
@@ -26,6 +29,9 @@ interface ServiceWorkerState {
   error: string | null;
 
 interface ServiceWorkerActions {
+}
+}
+}
   register: () => void;
   update: () => void;
   clearCache: () => Promise<void>;
@@ -291,4 +297,5 @@ export function usePWAInstallation() {
   };
 
 export default useServiceWorker;
-}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}

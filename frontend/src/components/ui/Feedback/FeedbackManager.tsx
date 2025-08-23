@@ -3,6 +3,9 @@ import { AnimatePresence } from 'framer-motion';
 import { FeedbackAnimation } from './FeedbackAnimations';
 
 export interface FeedbackItem {
+}
+}
+}
   id: string;
   type: 'success' | 'error' | 'warning' | 'info' | 'loading';
   message: string;
@@ -20,6 +23,9 @@ export interface FeedbackItem {
   progress?: number;
 
 interface FeedbackContextType {
+}
+}
+}
   feedbacks: FeedbackItem[];
   showFeedback: (feedback: Omit<FeedbackItem, 'id'>) => string;
   showSuccess: (message: string, options?: Partial<FeedbackItem>) => string;
@@ -275,4 +281,5 @@ const FeedbackRenderer: React.FC<{
 };
 
 export default FeedbackProvider;
-}}}}}}}}}
+}
+}}

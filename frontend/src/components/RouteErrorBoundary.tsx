@@ -3,10 +3,16 @@ import { AlertTriangle, ArrowLeft, Home } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface Props {
+}
+}
+}
   children: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
 
 interface State {
+}
+}
+}
   hasError: boolean;
   error: Error | null;
 
@@ -140,4 +146,5 @@ class RouteErrorBoundaryBase extends Component<Props & { navigate: any; location
 const RouteErrorBoundary = withNavigation(RouteErrorBoundaryBase);
 
 export default RouteErrorBoundary;
-}}}}}}}}}
+}
+}}

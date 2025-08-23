@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface ProgressBarProps {
+}
+}
+}
   progress: number; // 0-100
   size?: 'sm' | 'md' | 'lg';
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';

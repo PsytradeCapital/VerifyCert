@@ -8,8 +8,8 @@ import * as React from 'react';
 
 // Tree shaking helper for conditional imports
 export const conditionalImport = async <T>(
-  condition: boolean,
-  importFn: () => Promise<T>
+  condition: boolean,;
+  importFn: () => Promise<T>;;
 ): Promise<T | null> => {
   if (condition) {
     return await importFn();
@@ -18,8 +18,8 @@ export const conditionalImport = async <T>(
 
 // Dynamic import with error handling
 export const safeImport = async <T>(
-  importFn: () => Promise<T>,
-  fallback?: T
+  importFn: () => Promise<T>,;
+  fallback?: T;;
 ): Promise<T | undefined> => {
   try {
     return await importFn();
@@ -29,7 +29,7 @@ export const safeImport = async <T>(
 };
 
 // Lazy load utility with preloading
-export const createLazyComponent = <T extends React.ComponentType<any>>(
+export const createLazyComponent = <T extends React.ComponentType<any>>(;;
   importFn: () => Promise<{ default: T }>,
   preload = false
 ) => {
@@ -76,4 +76,5 @@ export const monitorBundleSize = () => {
     logBundleInfo();
     verifyTreeShaking();
 };
-}}}}}}}}
+}
+}}}}}}}

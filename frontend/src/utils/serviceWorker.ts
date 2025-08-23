@@ -11,6 +11,9 @@ const isLocalhost = Boolean(
 );
 
 interface ServiceWorkerConfig {
+}
+}
+}
   onSuccess?: (registration: ServiceWorkerRegistration) => void;
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
   onOfflineReady?: () => void;
@@ -272,4 +275,5 @@ const serviceWorkerUtils = {
 };
 
 export default serviceWorkerUtils;
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

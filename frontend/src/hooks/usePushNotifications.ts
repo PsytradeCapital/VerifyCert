@@ -3,6 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 import pushNotificationManager from '../utils/pushNotifications';
 
 interface PushNotificationState {
+}
+}
+}
   isSupported: boolean;
   isSubscribed: boolean;
   permission: NotificationPermission;
@@ -10,6 +13,9 @@ interface PushNotificationState {
   error: string | null;
 
 interface UsePushNotificationsReturn extends PushNotificationState {
+}
+}
+}
   subscribe: (userId: string) => Promise<boolean>;
   unsubscribe: () => Promise<boolean>;
   sendTestNotification: (userId: string) => Promise<boolean>;
@@ -196,4 +202,5 @@ export const usePushNotifications = (): UsePushNotificationsReturn => {
 };
 
 export default usePushNotifications;
-}}}}}}}}}}}
+}
+}}}}

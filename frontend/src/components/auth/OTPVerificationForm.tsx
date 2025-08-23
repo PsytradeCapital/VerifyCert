@@ -127,3 +127,4 @@ export const OTPVerificationForm: React.FC = () => {
     </AuthLayout>
   );
 };
+}

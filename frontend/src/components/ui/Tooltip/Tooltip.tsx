@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface TooltipProps {
+}
+}
+}
   children: React.ReactNode;
   content: React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
@@ -201,4 +204,5 @@ const Tooltip: React.FC<TooltipProps> = ({
 };
 
 export default Tooltip;
-}}}}}}}}}}}}}
+}
+}}}}}}}}}

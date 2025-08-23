@@ -4,6 +4,9 @@ import { Button } from '../Button/Button';
 import { ThemeToggle } from '../ThemeToggle';
 
 export interface UserMenuProps {
+}
+}
+}
   user?: {
     name: string;
     email: string;
@@ -13,6 +16,9 @@ export interface UserMenuProps {
   onProfile?: () => void;
 
 export interface HeaderProps {
+}
+}
+}
   title?: string;
   showSidebarToggle?: boolean;
   sidebarCollapsed?: boolean;

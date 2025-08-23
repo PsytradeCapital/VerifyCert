@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 
 interface SpinnerProps {
+}
+}
+}
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'white' | 'gray' | 'success' | 'warning' | 'error';
   className?: string;

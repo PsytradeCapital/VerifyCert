@@ -1,6 +1,9 @@
 import React from 'react';
 // Validation animation utilities
 export interface ValidationAnimationConfig {
+}
+}
+}
   duration: number;
   easing: string;
   delay: number;
@@ -20,9 +23,9 @@ export const validationAnimationClasses = {
 };
 
 export const triggerValidationAnimation = (
-  element: HTMLElement,
-  animationType: keyof typeof validationAnimationClasses,
-  config: ValidationAnimationConfig = defaultAnimationConfig
+  element: HTMLElement,;
+  animationType: keyof typeof validationAnimationClasses,;
+  config: ValidationAnimationConfig = defaultAnimationConfig;
 ): Promise<void> => {
   return new Promise((resolve) => {
     const animationClass = validationAnimationClasses[animationType];
@@ -49,9 +52,9 @@ export const triggerValidationAnimation = (
   });
 };
 
-export const getValidationAnimationClasses = (
-  validationState: 'default' | 'success' | 'error' | 'warning',
-  element: 'field' | 'message' | 'icon'
+export const getValidationAnimationClasses = (;
+  validationState: 'default' | 'success' | 'error' | 'warning',;
+  element: 'field' | 'message' | 'icon';
 ): string => {
   const baseClasses = 'transition-all duration-300';
   const stateClasses = {
@@ -85,3 +88,6 @@ export const validationSequences = {
     { element: 'message', animation: 'successFadeIn', delay: 150
   ]
 };
+
+}
+}}}

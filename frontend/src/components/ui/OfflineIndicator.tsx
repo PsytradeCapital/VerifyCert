@@ -6,6 +6,9 @@ import { useOfflineStatus } from '../../hooks/useServiceWorker';
 import { trackInstallPromptEvent } from '../../utils/pwaUtils';
 
 interface OfflineIndicatorProps {
+}
+}
+}
   className?: string;
   showOnlineStatus?: boolean;
 
@@ -57,6 +60,9 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
 };
 
 interface ServiceWorkerUpdateProps {
+}
+}
+}
   hasUpdate: boolean;
   onUpdate: () => void;
   className?: string;
@@ -108,6 +114,9 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
 };
 
 interface PWAInstallPromptProps {
+}
+}
+}
   canInstall: boolean;
   onInstall: () => Promise<boolean>;
   className?: string;
@@ -288,6 +297,9 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
 };
 
 interface IOSInstallInstructionsProps {
+}
+}
+}
   isVisible: boolean;
   onDismiss: () => void;
   className?: string;
@@ -382,4 +394,4 @@ export const IOSInstallInstructions: React.FC<IOSInstallInstructionsProps> = ({
 };
 
 export default OfflineIndicator;
-}}}}}}}}}}}}}
+}

@@ -11,8 +11,8 @@ import {
   MapPin,
   BookOpen,
   Star,
-  ChevronDown,
-  ChevronUp,;
+  ChevronDown,;;
+  ChevronUp,;;
   Copy,;;
   ExternalLink,;;
   Info;;
@@ -20,6 +20,9 @@ import {
 import Tooltip from '../Tooltip/Tooltip';
 
 export interface CertificateMetadata {
+}
+}
+}
   // Core Information
   tokenId: string;
   issuer: string;
@@ -52,6 +55,9 @@ export interface CertificateMetadata {
   assessmentMethods?: string[];
 
 interface CertificateMetadataProps {
+}
+}
+}
   metadata: CertificateMetadata;
   variant?: 'default' | 'compact' | 'detailed';
   showBlockchainInfo?: boolean;
@@ -414,4 +420,5 @@ const CertificateMetadata: React.FC<CertificateMetadataProps> = ({
 };
 
 export default CertificateMetadata;
-}}}}}
+}
+}}

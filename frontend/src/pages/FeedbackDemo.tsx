@@ -6,8 +6,8 @@ import { Button } from '../components/ui/Button/Button';
 import { 
   FeedbackButton, 
   FeedbackCollector, 
-  NavigationFeedback,
-  VisualDesignFeedback,;
+  NavigationFeedback,;;
+  VisualDesignFeedback,;;
   OverallExperienceFeedback,;;
   useFeedbackIntegration,;;
   feedbackService;;
@@ -259,3 +259,4 @@ const FeedbackDemo: React.FC = () => {
 };
 
 export default FeedbackDemo;
+}

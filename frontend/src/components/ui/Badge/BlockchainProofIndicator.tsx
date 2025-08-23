@@ -10,8 +10,8 @@ import {
   Link as LinkIcon,
   Hash,
   Layers,
-  Globe,
-  Calendar,;
+  Globe,;;
+  Calendar,;;
   Info,;;
   ChevronDown,;;
   ChevronUp;;
@@ -19,6 +19,9 @@ import {
 import { getBlockchainService } from '../../../services/blockchainService';
 
 export interface BlockchainProofIndicatorProps {
+}
+}
+}
   tokenId: string;
   transactionHash?: string;
   blockNumber?: string;
@@ -376,4 +379,5 @@ const BlockchainProofIndicator: React.FC<BlockchainProofIndicatorProps> = ({
 };
 
 export default BlockchainProofIndicator;
-}}}}}}}
+}
+}}}

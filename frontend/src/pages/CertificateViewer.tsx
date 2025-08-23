@@ -4,6 +4,9 @@ import toast from 'react-hot-toast';
 import CertificateCard, { Certificate } from '../components/CertificateCard';
 
 interface CertificateViewerState {
+}
+}
+}
   certificate: Certificate | null;
   isLoading: boolean;
   error: string | null;

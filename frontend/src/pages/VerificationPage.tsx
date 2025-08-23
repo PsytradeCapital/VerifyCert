@@ -12,3 +12,4 @@ export default function VerificationPage(): JSX.Element {
       </div>
     </div>
   );
+}

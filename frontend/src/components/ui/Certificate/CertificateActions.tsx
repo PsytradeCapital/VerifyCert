@@ -10,8 +10,8 @@ import {
   Facebook,
   Mail,
   QrCode,
-  FileImage,
-  FileText,;
+  FileImage,;;
+  FileText,;;
   Database,;;
   Check,;;
   AlertCircle;;
@@ -22,6 +22,9 @@ import certificateService, { ShareOptions, DownloadOptions } from '../../../serv
 import { useFeedbackAnimations } from '../../../hooks/useFeedbackAnimations';
 
 export interface CertificateActionsProps {
+}
+}
+}
   certificate: CertificateData;
   className?: string;
   showLabels?: boolean;
@@ -311,4 +314,5 @@ const CertificateActions: React.FC<CertificateActionsProps> = ({
 };
 
 export default CertificateActions;
-}}}}}}}}
+}
+}}}}

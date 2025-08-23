@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   getOptimalImageFormat, 
-  generateImageSrcSet, 
-  optimizeImageUrl,;
+  generateImageSrcSet, ;;
+  optimizeImageUrl,;;
   imagePerformanceMonitor,;;
   createBlurPlaceholder,;;
   ImageOptimizationOptions;;
 } from '../../utils/imageOptimization';
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+}
+}
+}
   src: string;
   alt: string;
   fallbackSrc?: string;
@@ -249,6 +252,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
  * Picture element with WebP and fallback support
  */
 interface ResponsivePictureProps {
+}
+}
+}
   src: string;
   alt: string;
   className?: string;
@@ -348,4 +354,5 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
 };
 
 export default OptimizedImage;
-}}}}}}}}}}}}}
+}
+}}}}}}

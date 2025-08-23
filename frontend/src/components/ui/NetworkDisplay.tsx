@@ -2,6 +2,9 @@ import React from 'react';
 import { AMOY_NETWORK, getBlockExplorerUrl } from '../../config/networks';
 
 interface NetworkDisplayProps {
+}
+}
+}
   chainId?: number;
   contractAddress?: string;
   className?: string;

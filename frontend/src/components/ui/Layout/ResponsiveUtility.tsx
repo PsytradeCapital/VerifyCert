@@ -2,6 +2,9 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveUtilityProps {
+}
+}
+}
   children: React.ReactNode;
   className?: string;
 
@@ -51,6 +54,9 @@ export const HoverOnly: React.FC<ResponsiveUtilityProps> = ({ children, classNam
 );
 
 export interface ResponsiveShowProps {
+}
+}
+}
   mobile?: React.ReactNode;
   tablet?: React.ReactNode;
   desktop?: React.ReactNode;
@@ -73,6 +79,9 @@ export const ResponsiveShow: React.FC<ResponsiveShowProps> = ({
 );
 
 export interface SafeAreaProps {
+}
+}
+}
   children: React.ReactNode;
   sides?: 'all' | 'x' | 'y' | 'top' | 'bottom' | 'left' | 'right';
   className?: string;
@@ -103,6 +112,9 @@ export const SafeArea: React.FC<SafeAreaProps> = ({
 };
 
 export interface TouchTargetProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+}
+}
+}
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   as?: 'button' | 'div' | 'a';
@@ -149,6 +161,9 @@ export const TouchTarget: React.FC<TouchTargetProps> = ({
 };
 
 export interface MobilePaddingProps {
+}
+}
+}
   children: React.ReactNode;
   direction?: 'all' | 'x' | 'y';
   className?: string;
@@ -175,6 +190,9 @@ export const MobilePadding: React.FC<MobilePaddingProps> = ({
 };
 
 export interface ResponsiveGridProps {
+}
+}
+}
   children: React.ReactNode;
   mobileCols?: number;
   tabletCols?: number;
@@ -225,6 +243,9 @@ export const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
 };
 
 export interface ResponsiveTextProps {
+}
+}
+}
   children: React.ReactNode;
   mobileSize?: string;
   tabletSize?: string;
@@ -254,4 +275,4 @@ export const ResponsiveText: React.FC<ResponsiveTextProps> = ({
     </span>
   );
 };
-}}}}}}}}}}}}
+}

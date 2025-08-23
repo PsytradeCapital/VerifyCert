@@ -4,8 +4,8 @@ import {
   BarChart3, 
   TrendingUp, 
   Users, 
-  Star, 
-  AlertTriangle,;
+  Star, ;;
+  AlertTriangle,;;
   Download,;;
   RefreshCw,;;
   Filter;;
@@ -15,6 +15,9 @@ import { Button } from '../Button/Button';
 import { feedbackService, FeedbackAnalytics, FeedbackData } from '../../../services/feedbackService';
 
 interface FeedbackDashboardProps {
+}
+}
+}
   className?: string;
 
 export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ className = '' }) => {

@@ -4,6 +4,9 @@ import React from 'react';
  */
 
 export interface ImageOptimizationOptions {
+}
+}
+}
   quality?: number;
   format?: 'webp' | 'jpeg' | 'png';
   width?: number;
@@ -16,8 +19,8 @@ export interface ImageOptimizationOptions {
  */
 export const generateImageSrcSet = (
   baseSrc: string,
-  sizes: number[] = [320, 640, 1024, 1280],
-  format: 'webp' | 'jpeg' | 'png' = 'webp'
+  sizes: number[] = [320, 640, 1024, 1280],;
+  format: 'webp' | 'jpeg' | 'png' = 'webp';;
 ): string => {
   return sizes
     .map(size => {
@@ -30,8 +33,8 @@ export const generateImageSrcSet = (
 /**
  * Generate responsive breakpoints for different screen sizes
  */
-export const generateResponsiveBreakpoints = (
-  baseSrc: string,
+export const generateResponsiveBreakpoints = (;
+  baseSrc: string,;;
   breakpoints: Array<{ width: number; media: string }> = [
     { width: 320, media: '(max-width: 640px)' },
     { width: 640, media: '(max-width: 1024px)' },
@@ -49,8 +52,8 @@ export const generateResponsiveBreakpoints = (
 /**
  * Optimize image URL with parameters
  */
-export const optimizeImageUrl = (
-  src: string,
+export const optimizeImageUrl = (;
+  src: string,;;
   options: ImageOptimizationOptions = {}
 ): string => {
   const { quality = 80, format, width, height } = options;
@@ -126,8 +129,8 @@ export const getOptimalImageFormat = async (originalSrc: string): Promise<string
  * Generate responsive image props with WebP support
  */
 export const getResponsiveImageProps = async (
-  src: string,
-  alt: string,
+  src: string,;
+  alt: string,;;
   options: ImageOptimizationOptions = {}
 ) => {
   const { width, height, lazy = true } = options;
@@ -149,8 +152,8 @@ export const getResponsiveImageProps = async (
  * Generate responsive image props synchronously (for React components)
  */
 export const getResponsiveImagePropsSync = (
-  src: string,
-  alt: string,
+  src: string,;
+  alt: string,;;
   options: ImageOptimizationOptions = {}
 ) => {
   const { width, height, lazy = true } = options;
@@ -182,7 +185,7 @@ export const preloadImage = (src: string, options: ImageOptimizationOptions = {}
 /**
  * Batch preload multiple images
  */
-export const preloadImages = async (
+export const preloadImages = async (;;
   images: Array<{ src: string; options?: ImageOptimizationOptions }>
 ): Promise<void> => {
   const promises = images.map(({ src, options }) => preloadImage(src, options));
@@ -273,8 +276,8 @@ export const globalLazyImageObserver = new LazyImageObserver();
 /**
  * Image compression utility
  */
-export const compressImage = (
-  file: File,
+export const compressImage = (;
+  file: File,;;
   options: {
     maxWidth?: number;
     maxHeight?: number;
@@ -363,4 +366,5 @@ export const imagePerformanceMonitor = {
     return stats;
   },
 };
-}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}

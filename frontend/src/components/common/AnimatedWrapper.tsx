@@ -3,6 +3,9 @@ import { motion, HTMLMotionProps } from 'framer-motion';
 import { pageTransition, fadeIn, fadeInUp, scaleIn } from '../../utils/animations';
 
 interface AnimatedWrapperProps extends HTMLMotionProps<"div"> {
+}
+}
+}
   children: React.ReactNode;
   animation?: 'page' | 'fade' | 'fadeUp' | 'scale';
   className?: string;

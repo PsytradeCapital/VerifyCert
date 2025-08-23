@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 export interface ToastProps {
+}
+}
+}
   id: string;
   type: 'success' | 'error' | 'warning' | 'info';
   title: string;
@@ -11,6 +14,9 @@ export interface ToastProps {
   onClose?: () => void;
 
 export interface FeedbackAnimationProps {
+}
+}
+}
   type: 'success' | 'error' | 'warning' | 'info';
   children: React.ReactNode;
   className?: string;
@@ -216,4 +222,5 @@ export const toast = {
   info: (title: string, message?: string, duration?: number) =>
     toastManager.show({ type: 'info', title, message, duration }),
 };
-}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}

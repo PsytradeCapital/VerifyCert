@@ -55,3 +55,5 @@ export const monitorBundleSize = () => {
     };
     logBundleInfo();
 };
+
+}}}}

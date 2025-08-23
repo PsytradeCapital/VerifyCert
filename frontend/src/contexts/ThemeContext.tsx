@@ -11,6 +11,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Theme provider props
 interface ThemeProviderProps {
+}
+}
+}
   children: ReactNode;
 
 /**
@@ -43,7 +46,7 @@ export const useThemeContext = (): ThemeContextType => {
 /**
  * Higher-order component for theme-aware components
  */
-export const withTheme = <P extends object>(
+export const withTheme = <P extends object>(;;
   Component: React.ComponentType<P & { theme: ThemeContextType }>
 ) => {
   const WrappedComponent = (props: P) => {

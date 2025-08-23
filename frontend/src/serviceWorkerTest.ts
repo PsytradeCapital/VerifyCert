@@ -63,4 +63,5 @@ export default {
   testCache,
   testOfflineDetection
 };
-}}}}}}}
+}
+}}}}}}

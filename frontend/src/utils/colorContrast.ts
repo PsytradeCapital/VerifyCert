@@ -64,8 +64,8 @@ export function getContrastRatio(foreground: string, background: string): number
  */
 export function meetsWCAGRequirement(
   foreground: string,
-  background: string,
-  level: WCAGLevel = 'AA_NORMAL'
+  background: string,;
+  level: WCAGLevel = 'AA_NORMAL';;
 ): boolean {
   const ratio = getContrastRatio(foreground, background);
   return ratio >= WCAG_LEVELS[level];
@@ -104,6 +104,9 @@ export function getContrastGrade(foreground: string, background: string): {
  * Color combination interface
  */
 export interface ColorCombination {
+}
+}
+}
   name: string;
   foreground: string;
   background: string;
@@ -353,8 +356,8 @@ export function generateContrastReport(): {
 export function findAccessibleColor(
   targetColor: string,
   backgroundColor: string,
-  level: WCAGLevel = 'AA_NORMAL',
-  direction: 'lighter' | 'darker' | 'auto' = 'auto'
+  level: WCAGLevel = 'AA_NORMAL',;
+  direction: 'lighter' | 'darker' | 'auto' = 'auto';;
 ): string {
   const targetRgb = hexToRgb(targetColor);
   if (!targetRgb) return targetColor;
@@ -406,8 +409,8 @@ export function findAccessibleColor(
 /**
  * Suggest color improvements for failed combinations
  */
-export function suggestColorImprovements(
-  results: ReturnType<typeof validateThemeContrast>['results']
+export function suggestColorImprovements(;
+  results: ReturnType<typeof validateThemeContrast>['results'];;
 ): Array<{
   original: ColorCombination;
   suggestion: {
@@ -473,4 +476,5 @@ export const contrastChecker = {
   findAccessibleColor,
   suggestColorImprovements,
 };
-}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}

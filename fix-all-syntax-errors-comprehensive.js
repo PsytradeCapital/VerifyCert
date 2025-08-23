@@ -1,169 +1,132 @@
 const fs = require('fs');
 const path = require('path');
 
-// Comprehensive syntax error fixer
-class SyntaxErrorFixer {
-  constructor() {
-    this.fixedFiles = [];
-    this.errors = [];
-  }
+// Function to fix common syntax errors in TypeScript/React files
+function fixSyntaxErrors(filePath) {
+  try {
+    let content = fs.readFileSync(filePath, 'utf8');
+    let modified = false;
 
-  // Fix incomplete import/export statements
-  fixIncompleteStatements(content) {
-    // Fix incomplete imports
-    content = content.replace(/^import\s*$/gm, '');
-    content = content.replace(/^import\s+[^;]*$/gm, (match) => {
-      if (!match.includes('from') && !match.includes('{')) {
-        return '';
-      }
-      if (!match.endsWith(';')) {
-        return match + ';';
+    // Fix incomplete export statements (missing semicolons)
+    const incompleteExportRegex = /^(\s*export\s+(?:default\s+)?(?:function|const|class|interface|type)\s+[^;{]+)$/gm;
+    content = content.replace(incompleteExportRegex, (match, group) => {
+      if (!group.includes('{') && !group.includes(';')) {
+        modified = true;
+        return group + ';';
       }
       return match;
     });
 
-    // Fix incomplete exports
-    content = content.replace(/^export\s*$/gm, '');
-    content = content.replace(/^export\s+[^;{]*$/gm, (match) => {
-      if (match.includes('function') || match.includes('const') || match.includes('class')) {
-        return match;
-      }
-      if (!match.endsWith(';') && !match.includes('{')) {
-        return match + ';';
+    // Fix incomplete import statements
+    const incompleteImportRegex = /^(\s*import\s+[^;]+)$/gm;
+    content = content.replace(incompleteImportRegex, (match, group) => {
+      if (!group.includes(';')) {
+        modified = true;
+        return group + ';';
       }
       return match;
     });
 
-    return content;
-  }
-
-  // Balance braces by counting and adding missing ones
-  balanceBraces(content) {
-    const lines = content.split('\n');
-    let braceCount = 0;
-    let parenCount = 0;
-    let bracketCount = 0;
-    
-    for (const line of lines) {
-      // Count braces
-      for (const char of line) {
-        if (char === '{') braceCount++;
-        if (char === '}') braceCount--;
-        if (char === '(') parenCount++;
-        if (char === ')') parenCount--;
-        if (char === '[') bracketCount++;
-        if (char === ']') bracketCount--;
-      }
-    }
-
-    // Add missing closing braces
-    let additions = '';
-    if (braceCount > 0) {
-      additions += '\n' + '}'.repeat(braceCount);
-    }
-    if (parenCount > 0) {
-      additions += ')'.repeat(parenCount);
-    }
-    if (bracketCount > 0) {
-      additions += ']'.repeat(bracketCount);
-    }
-
-    return content + additions;
-  }
-
-  // Fix specific TypeScript/React issues
-  fixTypeScriptIssues(content, filePath) {
-    // Add React import if JSX is used but React not imported
-    if (content.includes('<') && content.includes('>') && !content.includes('import React')) {
-      content = "import React from 'react';\n" + content;
-    }
-
-    // Fix function return types
-    if (filePath.endsWith('.tsx')) {
-      content = content.replace(/export\s+default\s+function\s+(\w+)\s*\([^)]*\)\s*{/g, 
-        'export default function $1(): JSX.Element {');
-    }
-
-    return content;
-  }
-
-  // Main fix function for a single file
-  fixFile(filePath) {
-    try {
-      if (!fs.existsSync(filePath)) {
-        return false;
-      }
-
-      let content = fs.readFileSync(filePath, 'utf8');
-      const originalContent = content;
-
-      // Apply fixes
-      content = this.fixIncompleteStatements(content);
-      content = this.balanceBraces(content);
-      content = this.fixTypeScriptIssues(content, filePath);
-
-      // Only write if content changed
-      if (content !== originalContent) {
-        fs.writeFileSync(filePath, content, 'utf8');
-        this.fixedFiles.push(filePath);
-        console.log(`Fixed: ${filePath}`);
-      }
-
-      return true;
-    } catch (error) {
-      this.errors.push({ file: filePath, error: error.message });
-      console.error(`Error fixing ${filePath}:`, error.message);
-      return false;
-    }
-  }
-
-  // Get all TypeScript/JavaScript files recursively
-  getAllFiles(dir, extensions = ['.ts', '.tsx', '.js', '.jsx']) {
-    const files = [];
-    
-    if (!fs.existsSync(dir)) {
-      return files;
-    }
-
-    const items = fs.readdirSync(dir);
-    
-    for (const item of items) {
-      const fullPath = path.join(dir, item);
-      const stat = fs.statSync(fullPath);
+    // Fix interface declarations without closing braces
+    const interfaceRegex = /^(\s*(?:export\s+)?interface\s+\w+[^{]*\{[^}]*?)$/gm;
+    let interfaceMatches = [...content.matchAll(interfaceRegex)];
+    for (let match of interfaceMatches) {
+      const interfaceContent = match[1];
+      const openBraces = (interfaceContent.match(/\{/g) || []).length;
+      const closeBraces = (interfaceContent.match(/\}/g) || []).length;
       
-      if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
-        files.push(...this.getAllFiles(fullPath, extensions));
-      } else if (stat.isFile() && extensions.some(ext => item.endsWith(ext))) {
-        files.push(fullPath);
+      if (openBraces > closeBraces) {
+        const missingBraces = openBraces - closeBraces;
+        content = content.replace(match[0], interfaceContent + '\n' + '}'.repeat(missingBraces));
+        modified = true;
       }
     }
-    
-    return files;
-  }
 
-  // Fix all files in the frontend directory
-  fixAllFiles() {
-    console.log('Starting comprehensive syntax error fix...');
-    
-    const frontendDir = path.join(process.cwd(), 'frontend', 'src');
-    const files = this.getAllFiles(frontendDir);
-    
-    console.log(`Found ${files.length} files to check`);
-    
-    for (const file of files) {
-      this.fixFile(file);
+    // Remove excessive closing braces at end of file
+    const excessiveBracesRegex = /(\}\s*){5,}$/;
+    if (excessiveBracesRegex.test(content)) {
+      content = content.replace(excessiveBracesRegex, '}');
+      modified = true;
     }
 
-    console.log(`\nFixed ${this.fixedFiles.length} files`);
-    if (this.errors.length > 0) {
-      console.log(`Errors in ${this.errors.length} files:`);
-      this.errors.forEach(err => console.log(`  ${err.file}: ${err.error}`));
+    // Fix missing closing braces for functions
+    const functionRegex = /^(\s*(?:export\s+)?(?:default\s+)?function\s+\w+[^{]*\{)/gm;
+    let functionMatches = [...content.matchAll(functionRegex)];
+    
+    // Count braces in entire file
+    const totalOpenBraces = (content.match(/\{/g) || []).length;
+    const totalCloseBraces = (content.match(/\}/g) || []).length;
+    
+    if (totalOpenBraces > totalCloseBraces) {
+      const missingBraces = totalOpenBraces - totalCloseBraces;
+      content = content + '\n' + '}'.repeat(missingBraces);
+      modified = true;
     }
+
+    // Fix missing closing parentheses
+    const totalOpenParens = (content.match(/\(/g) || []).length;
+    const totalCloseParens = (content.match(/\)/g) || []).length;
+    
+    if (totalOpenParens > totalCloseParens) {
+      const missingParens = totalOpenParens - totalCloseParens;
+      content = content + ')'.repeat(missingParens);
+      modified = true;
+    }
+
+    if (modified) {
+      fs.writeFileSync(filePath, content, 'utf8');
+      console.log(`Fixed syntax errors in: ${filePath}`);
+      return true;
+    }
+    
+    return false;
+  } catch (error) {
+    console.error(`Error processing ${filePath}:`, error.message);
+    return false;
   }
 }
 
-// Run the fixer
-const fixer = new SyntaxErrorFixer();
-fixer.fixAllFiles();
+// Function to recursively find all TypeScript/React files
+function findTSFiles(dir, files = []) {
+  const items = fs.readdirSync(dir);
+  
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    const stat = fs.statSync(fullPath);
+    
+    if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
+      findTSFiles(fullPath, files);
+    } else if (item.endsWith('.tsx') || item.endsWith('.ts')) {
+      files.push(fullPath);
+    }
+  }
+  
+  return files;
+}
 
-console.log('\nSyntax error fix complete!');
+// Main execution
+console.log('Starting comprehensive syntax error fix...');
+
+const srcDir = path.join(__dirname, 'frontend', 'src');
+const tsFiles = findTSFiles(srcDir);
+
+console.log(`Found ${tsFiles.length} TypeScript files to process...`);
+
+let fixedCount = 0;
+for (const file of tsFiles) {
+  if (fixSyntaxErrors(file)) {
+    fixedCount++;
+  }
+}
+
+console.log(`\nFixed syntax errors in ${fixedCount} files.`);
+console.log('Running build to check for remaining errors...');
+
+// Run build to check results
+const { execSync } = require('child_process');
+try {
+  execSync('cd frontend && npm run build', { stdio: 'inherit' });
+  console.log('\n✅ Build successful!');
+} catch (error) {
+  console.log('\n❌ Build still has errors. Manual fixes may be needed.');
+}

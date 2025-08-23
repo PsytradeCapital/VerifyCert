@@ -6,6 +6,9 @@ import { OptimizedImage } from './OptimizedImage';
  * Lazy-loaded logo component
  */
 interface LazyLogoProps {
+}
+}
+}
   className?: string;
   alt?: string;
 
@@ -45,6 +48,9 @@ export const LazyLogo: React.FC<LazyLogoProps> = ({
  * Lazy-loaded screenshot component for PWA
  */
 interface LazyScreenshotProps {
+}
+}
+}
   type: 'narrow' | 'wide';
   className?: string;
 
@@ -99,6 +105,9 @@ export const LazyScreenshot: React.FC<LazyScreenshotProps> = ({
  * Lazy-loaded icon component for PWA icons
  */
 interface LazyIconProps {
+}
+}
+}
   size: 192 | 512;
   className?: string;
 
@@ -147,6 +156,9 @@ export const LazyIcon: React.FC<LazyIconProps> = ({
  * Generic lazy image with common patterns
  */
 interface LazyImageWithPlaceholderProps {
+}
+}
+}
   src: string;
   alt: string;
   className?: string;

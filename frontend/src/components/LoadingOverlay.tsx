@@ -2,6 +2,9 @@ import React from 'react';
 import LoadingSpinner from './LoadingSpinner';
 
 interface LoadingOverlayProps {
+}
+}
+}
   isLoading: boolean;
   message?: string;
   children: React.ReactNode;

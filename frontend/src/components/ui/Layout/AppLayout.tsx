@@ -4,6 +4,9 @@ import { BottomNavigation, BottomNavItem } from '../Navigation/BottomNavigation'
 import Header, { UserMenuProps } from './Header';
 
 export interface AppLayoutProps {
+}
+}
+}
   children: React.ReactNode;
   showSidebar?: boolean;
   showBottomNav?: boolean;
@@ -205,4 +208,5 @@ const AppLayout: React.FC<AppLayoutProps> = ({
 };
 
 export default AppLayout;
-}}}}}}
+}
+}}}

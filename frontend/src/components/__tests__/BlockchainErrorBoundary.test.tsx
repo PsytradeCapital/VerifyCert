@@ -212,3 +212,4 @@ describe('BlockchainErrorBoundary', () => {
     expect(mockReload).toHaveBeenCalled();
   });
 });
+}

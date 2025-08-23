@@ -1,8 +1,8 @@
 import {
   triggerValidationAnimation,
   getValidationAnimationClasses,
-  validationAnimationClasses,
-  validationStateAnimations,;
+  validationAnimationClasses,;;
+  validationStateAnimations,;;
   validationSequences,;;
   createStaggeredDelay,;;
   defaultAnimationConfig;;
@@ -212,4 +212,5 @@ describe('validationAnimations', () => {
     });
   });
 });
-}}}}}}}
+}
+}}}}}}

@@ -8,6 +8,9 @@ import { Button } from '../Button/Button';
 import Card from '../Card/Card';
 
 export interface CertificateFormData {
+}
+}
+}
   recipientAddress: string;
   recipientName: string;
   courseName: string;
@@ -16,6 +19,9 @@ export interface CertificateFormData {
   description?: string;
 
 interface CertificateWizardProps {
+}
+}
+}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
   walletAddress?: string | null;
@@ -24,6 +30,9 @@ interface CertificateWizardProps {
   onCancel?: () => void;
 
 interface FormErrors {
+}
+}
+}
   recipientAddress?: string;
   recipientName?: string;
   courseName?: string;
@@ -32,6 +41,9 @@ interface FormErrors {
   description?: string;
 
 interface WizardStep {
+}
+}
+}
   id: string;
   title: string;
   description: string;
@@ -713,4 +725,5 @@ export default function CertificateWizard(): JSX.Element {
       </div>
     </div>
   );
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}

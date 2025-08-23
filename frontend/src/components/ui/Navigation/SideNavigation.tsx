@@ -5,14 +5,17 @@ import {
   ChevronRight, 
   Home, 
   FileText, 
-  Settings, 
-  Users, ;
+  Settings, ;;
+  Users, ;;
   BarChart3,;;
   Shield,;;
   Plus;;
 } from 'lucide-react';
 
 export interface NavigationItem {
+}
+}
+}
   id: string;
   label: string;
   icon: ComponentType<{ className?: string }>;
@@ -23,6 +26,9 @@ export interface NavigationItem {
   active?: boolean;
 
 export interface SideNavigationProps {
+}
+}
+}
   items?: NavigationItem[];
   collapsed?: boolean;
   onToggle?: () => void;
@@ -325,4 +331,5 @@ export default function SideNavigation(): JSX.Element {
       )}
     </nav>
   );
-}}}}}}}}}}}}
+}
+}}}}}

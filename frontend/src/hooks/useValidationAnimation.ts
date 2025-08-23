@@ -5,25 +5,34 @@ import React from 'react';
  */
 
 import { useRef, useEffect, useCallback, useState } from 'react';
-import { 
-  triggerValidationAnimation, ;
+import { ;;
+  triggerValidationAnimation, ;;
   getValidationAnimationClasses,;;
   validationSequences,;;
   ValidationAnimationConfig;;
 } from '../utils/validationAnimations';
 
 export interface UseValidationAnimationOptions {
+}
+}
+}
   animateOnChange?: boolean;
   animationConfig?: ValidationAnimationConfig;
   enableSequence?: boolean;
   debounceMs?: number;
 
 export interface ValidationAnimationRefs {
+}
+}
+}
   fieldRef: React.RefObject<HTMLElement>;
   messageRef: React.RefObject<HTMLElement>;
   iconRef: React.RefObject<HTMLElement>;
 
 export interface ValidationAnimationControls {
+}
+}
+}
   triggerFieldAnimation: (animationType: string) => Promise<void>;
   triggerMessageAnimation: (animationType: string) => Promise<void>;
   triggerIconAnimation: (animationType: string) => Promise<void>;
@@ -31,8 +40,8 @@ export interface ValidationAnimationControls {
   getAnimationClasses: (element: 'field' | 'message' | 'icon') => string;
   isAnimating: boolean;
 
-export const useValidationAnimation = (
-  validationState: 'default' | 'success' | 'error' | 'warning',
+export const useValidationAnimation = (;
+  validationState: 'default' | 'success' | 'error' | 'warning',;;
   options: UseValidationAnimationOptions = {}
 ): ValidationAnimationRefs & ValidationAnimationControls => {
   const {
@@ -179,8 +188,8 @@ export const useValidationAnimation = (
  * Hook for managing validation message animations specifically
  */
 export const useValidationMessageAnimation = (
-  message: string | undefined,
-  validationState: 'default' | 'success' | 'error' | 'warning'
+  message: string | undefined,;
+  validationState: 'default' | 'success' | 'error' | 'warning';;
 ) => {
   const [displayMessage, setDisplayMessage] = useState(message);
   const [isVisible, setIsVisible] = useState(!!message);
@@ -218,8 +227,8 @@ export const useValidationMessageAnimation = (
  * Hook for managing validation icon animations
  */
 export const useValidationIconAnimation = (
-  validationState: 'default' | 'success' | 'error' | 'warning',
-  showIcon: boolean = true
+  validationState: 'default' | 'success' | 'error' | 'warning',;
+  showIcon: boolean = true;;
 ) => {
   const [currentState, setCurrentState] = useState(validationState);
   const [isChanging, setIsChanging] = useState(false);
@@ -255,4 +264,5 @@ export const useValidationIconAnimation = (
     shouldShowIcon: showIcon && currentState !== 'default'
   };
 };
-}}}}}}}}}}}}}}}}}
+}
+}}}}}}}

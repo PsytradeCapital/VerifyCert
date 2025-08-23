@@ -3,13 +3,16 @@ import { X } from 'lucide-react';
 import { cn } from '../../../utils/cn';
 
 export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+}
+}
+}
   color?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   removable?: boolean;
   onRemove?: () => void;
 
-export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(
+export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(;;
   ({ 
     className, 
     color = 'gray', 

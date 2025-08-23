@@ -3,6 +3,9 @@ import { cn } from '../../../styles/utils';
 import { useResponsive } from '../../../hooks/useResponsive';
 
 export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+}
+}
+}
   src: string;
   alt: string;
   className?: string;

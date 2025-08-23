@@ -1,10 +1,14 @@
 import React from 'react';
 
 export interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+}
+}
+}
   src: string;
   alt: string;
   placeholder?: string;
   className?: string;
+}
 
 export const LazyImage: React.FC<LazyImageProps> = ({ 
   src, 
@@ -26,10 +30,11 @@ export const LazyImage: React.FC<LazyImageProps> = ({
 
   if (hasError) {
     return <div className={className}>Failed to load image</div>;
+  }
 
   return (
     <div className={className}>
-      {!isLoaded && <div>{placeholder}</div>
+      {!isLoaded && <div>{placeholder}</div>}
       <img
         {...props}
         src={src}
@@ -43,4 +48,3 @@ export const LazyImage: React.FC<LazyImageProps> = ({
 };
 
 export default LazyImage;
-}}}

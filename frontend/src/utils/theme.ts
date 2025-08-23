@@ -17,3 +17,4 @@ export function applyTheme(theme: keyof typeof themes) {
   Object.entries(themeColors).forEach(([key, value]) => {
     root.style.setProperty(`--${key}`, value);
   });
+}}

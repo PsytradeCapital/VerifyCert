@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface SkeletonProps {
+}
+}
+}
   variant?: 'text' | 'rectangular' | 'circular' | 'rounded';
   width?: string | number;
   height?: string | number;
@@ -84,8 +87,8 @@ const Skeleton: React.FC<SkeletonProps> = ({
 
 // Predefined skeleton components for common use cases
 export const CertificateCardSkeleton: React.FC = () => (
-  <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
-    <div className="flex items-center space-x-4">
+  <div className="bg-white rounded-lg shadow-md p-6 space-y-4">;
+    <div className="flex items-center space-x-4">;;
       <Skeleton variant="circular" width={48} height={48} />
       <div className="flex-1 space-y-2">
         <Skeleton variant="text" width="60%" />
@@ -108,8 +111,8 @@ export const CertificateListSkeleton: React.FC<{ count?: number }> = ({ count = 
   </div>
 );
 
-export const DashboardSkeleton: React.FC = () => (
-  <div className="space-y-6">
+export const DashboardSkeleton: React.FC = () => (;
+  <div className="space-y-6">;;
     {/* Header */}
     <div className="bg-white rounded-lg shadow-md p-6">
       <Skeleton variant="text" width="40%" height={32} className="mb-4" />
@@ -131,8 +134,8 @@ export const DashboardSkeleton: React.FC = () => (
   </div>
 );
 
-export const FormSkeleton: React.FC = () => (
-  <div className="space-y-4">
+export const FormSkeleton: React.FC = () => (;
+  <div className="space-y-4">;;
     <Skeleton variant="text" width="30%" height={20} />
     <Skeleton variant="rounded" width="100%" height={40} />
     <Skeleton variant="text" width="25%" height={20} />
@@ -147,4 +150,5 @@ export const FormSkeleton: React.FC = () => (
 );
 
 export default Skeleton;
-}}}}}
+}
+}}}

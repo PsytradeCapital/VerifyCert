@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface PulseSpinnerProps {
+}
+}
+}
   size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'white' | 'gray' | 'success' | 'warning' | 'error';
   className?: string;

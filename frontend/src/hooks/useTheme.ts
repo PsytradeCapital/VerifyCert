@@ -12,6 +12,9 @@ const THEME_STORAGE_KEY = 'verifycert-theme';
 
 // Theme context type
 export interface ThemeContextType {
+}
+}
+}
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
@@ -181,4 +184,5 @@ export const getThemeClasses = (theme: Theme) => ({
   ring: theme === 'dark' ? 'ring-blue-400' : 'ring-blue-600',
   shadow: theme === 'dark' ? 'shadow-2xl shadow-black/50' : 'shadow-lg'
 });
-}}}}}}}}}}}}
+}
+}}}}}}}}

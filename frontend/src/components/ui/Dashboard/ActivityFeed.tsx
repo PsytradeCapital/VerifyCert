@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface ActivityItem {
+}
+}
+}
   id: string;
   type: 'issued' | 'verified' | 'revoked';
   title: string;
@@ -12,6 +15,9 @@ export interface ActivityItem {
   certificateId?: string;
 
 export interface ActivityFeedProps {
+}
+}
+}
   activities: ActivityItem[];
   maxItems?: number;
   isLoading?: boolean;

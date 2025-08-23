@@ -5,12 +5,18 @@ import { Button } from '../Button/Button';
 import Card from '../Card/Card';
 
 interface FeedbackData {
+}
+}
+}
   category: 'navigation' | 'visual-design' | 'overall-experience';
   rating: number;
   comment: string;
   context?: string;
 
 interface FeedbackCollectorProps {
+}
+}
+}
   isOpen: boolean;
   onClose: () => void;
   category?: 'navigation' | 'visual-design' | 'overall-experience';
@@ -254,4 +260,5 @@ export const FeedbackCollector: React.FC<FeedbackCollectorProps> = ({
 };
 
 export default FeedbackCollector;
-}}}}}
+}
+}}

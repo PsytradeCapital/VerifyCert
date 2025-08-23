@@ -3,6 +3,9 @@ import { ethers } from 'ethers';
 import toast from 'react-hot-toast';
 
 export interface CertificateFormData {
+}
+}
+}
   recipientAddress: string;
   recipientName: string;
   courseName: string;
@@ -11,6 +14,9 @@ export interface CertificateFormData {
   description?: string;
 
 interface CertificateFormProps {
+}
+}
+}
   onSubmit: (data: CertificateFormData) => Promise<void>;
   isLoading?: boolean;
   walletAddress?: string | null;
@@ -18,6 +24,9 @@ interface CertificateFormProps {
   className?: string;
 
 interface FormErrors {
+}
+}
+}
   recipientAddress?: string;
   recipientName?: string;
   courseName?: string;
@@ -416,4 +425,5 @@ export default function CertificateForm(): JSX.Element {
       </div>
     </div>
   );
-}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}

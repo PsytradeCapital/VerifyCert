@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import Card from '../Card/Card';
 
 export interface QuickStatsProps {
+}
+}
+}
   verificationRate?: number;
   averageProcessingTime?: string;
   successRate?: number;

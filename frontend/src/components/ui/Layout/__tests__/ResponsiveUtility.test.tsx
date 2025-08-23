@@ -8,8 +8,8 @@ import {
   TouchOnly,
   HoverOnly,
   ResponsiveShow,
-  SafeArea,
-  TouchTarget,;
+  SafeArea,;;
+  TouchTarget,;;
   MobilePadding,;;
   ResponsiveGrid,;;
   ResponsiveText;;
@@ -322,4 +322,5 @@ describe('ResponsiveUtility Components', () => {
     });
   });
 });
-}}}}}
+}
+}}}}

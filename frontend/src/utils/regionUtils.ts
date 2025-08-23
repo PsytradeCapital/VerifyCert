@@ -1,6 +1,9 @@
 import React from 'react';
 // Region utilities for internationalization
 export interface RegionInfo {
+}
+}
+}
   code: string;
   name: string;
   phonePrefix: string;
@@ -79,3 +82,6 @@ export function getCurrencySymbol(regionCode: string): string {
   };
   
   return currencySymbols[region?.currency || 'USD'] || '$';
+
+}
+}}}}}}}}}}

@@ -7,8 +7,8 @@ import {
   Building, 
   User, 
   Download, 
-  Share2, 
-  ExternalLink,;
+  Share2, ;;
+  ExternalLink,;;
   QrCode,;;
   Copy,;;
   Printer;;
@@ -18,6 +18,9 @@ import { VerificationBadge } from '../Badge';
 import CertificateMetadata from './CertificateMetadata';
 
 export interface Certificate {
+}
+}
+}
   tokenId: string;
   issuer: string;
   recipient: string;
@@ -37,6 +40,9 @@ export interface Certificate {
   description?: string;
 
 interface CertificateCardProps {
+}
+}
+}
   certificate: Certificate;
   variant?: 'default' | 'premium' | 'compact';
   showQR?: boolean;
@@ -535,4 +541,5 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 };
 
 export default CertificateCard;
-}}}}}}}}}}}}
+}
+}}}}}

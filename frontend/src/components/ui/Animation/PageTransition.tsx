@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { pageVariants, pageTransition } from '../../../utils/motion';
 
 export interface PageTransitionProps {
+}
+}
+}
   children: React.ReactNode;
   className?: string;
   /**

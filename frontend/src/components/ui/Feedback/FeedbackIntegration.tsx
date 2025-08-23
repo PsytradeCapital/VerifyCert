@@ -6,6 +6,9 @@ import { useFeedbackTrigger, useNavigationFeedback, useVisualDesignFeedback } fr
 import { feedbackService } from '../../../services/feedbackService';
 
 interface FeedbackIntegrationProps {
+}
+}
+}
   // Display options
   showFloatingButton?: boolean;
   showAutoTrigger?: boolean;
@@ -137,15 +140,15 @@ function getPageContext(pathname: string): string {
   return `Page: ${pathname}`;
 
 // Specialized feedback components for specific use cases
-export const NavigationFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (
+export const NavigationFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;;
   <FeedbackIntegration {...props} category="navigation" />
 );
 
-export const VisualDesignFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (
+export const VisualDesignFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;;
   <FeedbackIntegration {...props} category="visual-design" />
 );
 
-export const OverallExperienceFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (
+export const OverallExperienceFeedback: React.FC<Omit<FeedbackIntegrationProps, 'category'>> = (props) => (;;
   <FeedbackIntegration {...props} category="overall-experience" />
 );
 
@@ -184,4 +187,5 @@ export const useFeedbackIntegration = () => {
     )
   };
 };
-}}}}}}}}}
+}
+}}}}}

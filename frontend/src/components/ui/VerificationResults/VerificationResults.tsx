@@ -4,6 +4,9 @@ import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import Card from '../Card/Card';
 
 export interface VerificationResult {
+}
+}
+}
   id: string;
   status: 'verified' | 'error' | 'pending';
   message?: string;
@@ -17,6 +20,9 @@ export interface VerificationResult {
   };
 
 export interface VerificationResultsProps {
+}
+}
+}
   result: VerificationResult;
   onShare?: () => void;
   onDownload?: () => void;

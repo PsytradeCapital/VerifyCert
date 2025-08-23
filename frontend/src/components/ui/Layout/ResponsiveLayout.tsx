@@ -2,6 +2,9 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveLayoutProps {
+}
+}
+}
   children: React.ReactNode;
   className?: string;
   variant?: 'default' | 'centered' | 'wide' | 'narrow';

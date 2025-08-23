@@ -14,8 +14,8 @@ import {
   Search,
   ChevronDown,
   X,
-  Check,
-  AlertCircle,;
+  Check,;;
+  AlertCircle,;;
   Home,;;
   FileText,;;
   Mail;;

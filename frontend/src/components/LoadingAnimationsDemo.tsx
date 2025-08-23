@@ -5,8 +5,8 @@ import {
   PulseSpinner,
   ProgressBar,
   CircularProgress,
-  Skeleton,
-  CertificateCardSkeleton,;
+  Skeleton,;;
+  CertificateCardSkeleton,;;
   LoadingOverlay,;;
   LoadingButton,;;
   StepProgress;;

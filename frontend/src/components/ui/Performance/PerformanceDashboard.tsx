@@ -3,6 +3,9 @@ import { performanceMonitor } from '../../../utils/performanceMonitoring';
 import Card from '../Card/Card';
 
 interface PerformanceMetric {
+}
+}
+}
   name: string;
   startTime: number;
   endTime?: number;
@@ -10,6 +13,9 @@ interface PerformanceMetric {
   metadata?: Record<string, any>;
 
 interface PerformanceSummary {
+}
+}
+}
   total: number;
   components: {
     count: number;

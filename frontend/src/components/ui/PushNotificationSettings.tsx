@@ -3,6 +3,9 @@ import { Bell, BellOff, Check, X, AlertCircle, Loader2 } from 'lucide-react';
 import { usePushNotifications } from '../../hooks/usePushNotifications';
 
 interface PushNotificationSettingsProps {
+}
+}
+}
   userId?: string;
   className?: string;
 
@@ -258,4 +261,5 @@ const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
 };
 
 export default PushNotificationSettings;
-}}}}}}}}
+}
+}}}}

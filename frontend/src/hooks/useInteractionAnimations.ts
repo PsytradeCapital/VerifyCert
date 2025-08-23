@@ -7,6 +7,9 @@ import { useReducedMotion } from 'framer-motion';
 import { getInteractionAnimation, interactionPresets } from '../utils/interactionAnimations';
 
 export interface UseInteractionAnimationsOptions {
+}
+}
+}
   component: string;
   variant?: string;
   disabled?: boolean;
@@ -160,4 +163,5 @@ export const useHoverState = () => {
 };
 
 export default useInteractionAnimations;
-}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}

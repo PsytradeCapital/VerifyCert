@@ -4,7 +4,9 @@ import { Card, Button, Input, Select, Modal } from '../components/ui';
 import toast from 'react-hot-toast';
 
 interface UserProfile {
-  name: string;
+}
+}
+name: string;
   email: string;
   organization: string;
   role: string;
@@ -15,6 +17,9 @@ interface UserProfile {
   location?: string;
 
 interface NotificationSettings {
+}
+}
+}}
   emailNotifications: boolean;
   certificateIssued: boolean;
   certificateVerified: boolean;
@@ -22,12 +27,17 @@ interface NotificationSettings {
   marketingEmails: boolean;
 
 interface SecuritySettings {
-  twoFactorEnabled: boolean;
+}
+}
+twoFactorEnabled: boolean;
   sessionTimeout: number;
   loginNotifications: boolean;
   apiKeyEnabled: boolean;
 
 interface AppearanceSettings {
+}
+}
+}}
   theme: 'light' | 'dark' | 'system';
   language: string;
   timezone: string;
@@ -464,4 +474,5 @@ const Settings: React.FC = () => {
 };
 
 export default Settings;
-}}}}}}}}}}}}
+}
+}}}

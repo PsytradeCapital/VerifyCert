@@ -2,6 +2,9 @@ import { useCallback } from 'react';
 import toast from 'react-hot-toast';
 
 interface FeedbackOptions {
+}
+}
+}
   showConfetti?: boolean;
   position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
   shake?: boolean;
@@ -103,4 +106,5 @@ export const useFeedbackAnimations = () => {
     showInfo,
   };
 };
-}}}}}}}}}}}}
+}
+}}}}}}}}

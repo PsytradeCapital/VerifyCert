@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react';
-import { ;
+import { ;;
   useValidationAnimation, ;;
   useValidationMessageAnimation, ;;
   useValidationIconAnimation ;;
@@ -240,5 +240,5 @@ describe('useValidationIconAnimation', () => {
     expect(result.current.currentState).toBe('error');
   });
 });
-}}}}}}}}}}
-}}}}}}
+}
+}}}}}}}}}}}}}}}

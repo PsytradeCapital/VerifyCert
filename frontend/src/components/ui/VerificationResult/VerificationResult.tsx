@@ -7,8 +7,8 @@ import {
   Shield, 
   Clock,
   ExternalLink,
-  Download,
-  Share2,;
+  Download,;;
+  Share2,;;
   Copy,;;
   Eye,;;
   Zap;;
@@ -16,6 +16,9 @@ import {
 import { Card, Button, Badge } from '../';
 
 export interface VerificationResultProps {
+}
+}
+}
   result: {
     isValid: boolean;
     isRevoked: boolean;
@@ -448,4 +451,5 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
 };
 
 export default VerificationResult;
-}}}}}}
+}
+}}}

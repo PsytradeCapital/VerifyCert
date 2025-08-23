@@ -2,6 +2,9 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveGridProps {
+}
+}
+}
   children: React.ReactNode;
   columns?: 1 | 2 | 3 | 4 | 6 | 12;
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';

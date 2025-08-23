@@ -13,8 +13,8 @@ import {
   Star, 
   Heart, 
   Zap, 
-  Settings, 
-  Info,;
+  Settings, ;;
+  Info,;;
   CheckCircle,;;
   AlertTriangle,;;
   X;;

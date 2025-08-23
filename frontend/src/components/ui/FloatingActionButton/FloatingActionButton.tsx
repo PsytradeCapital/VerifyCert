@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 
 export interface FABAction {
+}
+}
+}
   id: string;
   label: string;
   icon: React.ReactNode;
@@ -10,6 +13,9 @@ export interface FABAction {
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 
 export interface FloatingActionButtonProps {
+}
+}
+}
   actions?: FABAction[];
   mainIcon?: React.ReactNode;
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';

@@ -3,6 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, FileText, Search, User, Plus } from 'lucide-react';
 
 export interface BottomNavItem {
+}
+}
+}
   id: string;
   label: string;
   href: string;
@@ -13,6 +16,9 @@ export interface BottomNavItem {
   onClick?: () => void;
 
 export interface BottomNavigationProps {
+}
+}
+}
   items?: BottomNavItem[];
   variant?: 'default' | 'floating';
   showLabels?: boolean;
@@ -158,4 +164,5 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
     </nav>
   );
 };
-}}}}}}}}}}
+}
+}}}

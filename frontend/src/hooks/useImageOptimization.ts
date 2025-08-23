@@ -161,4 +161,5 @@ export const useImagePerformance = () => {
 };
 
 export default useImageOptimization;
-}}}}}}
+}
+}}}}}

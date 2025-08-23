@@ -3,8 +3,8 @@ import {
   Home, 
   FileText, 
   Settings, 
-  User, 
-  Shield, ;
+  User, ;;
+  Shield, ;;
   BarChart3,;;
   HelpCircle,;;
   Bell;;
@@ -219,4 +219,5 @@ const LayoutDemo: React.FC = () => {
 };
 
 export default LayoutDemo;
-}}}}}}}}
+}
+}}}}}}}

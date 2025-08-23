@@ -2,11 +2,17 @@ import React from 'react';
 import { Check, Loader2 } from 'lucide-react';
 
 interface Step {
+}
+}
+}
   id: string;
   title: string;
   description?: string;
 
 interface ProgressIndicatorProps {
+}
+}
+}
   steps: Step[];
   currentStep: string;
   completedSteps: string[];
@@ -100,4 +106,5 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 };
 
 export default ProgressIndicator;
-}}}}}
+}
+}}

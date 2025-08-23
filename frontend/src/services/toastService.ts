@@ -3,6 +3,9 @@ import { CheckCircle, XCircle, AlertCircle, Info, Loader2 } from 'lucide-react';
 import React from 'react';
 
 export interface CustomToastOptions extends ToastOptions {
+}
+}
+}
   action?: {
     label: string;
     onClick: () => void;
@@ -244,36 +247,37 @@ class ToastService {
 export const toastService = ToastService.getInstance();
 
 // Export convenience functions
-export const showSuccess = (message: string, options?: CustomToastOptions) => 
+export const showSuccess = (message: string, options?: CustomToastOptions) => ;;
   toastService.success(message, options);
 
-export const showError = (message: string, options?: CustomToastOptions) => 
+export const showError = (message: string, options?: CustomToastOptions) => ;;
   toastService.error(message, options);
 
-export const showWarning = (message: string, options?: CustomToastOptions) => 
+export const showWarning = (message: string, options?: CustomToastOptions) => ;;
   toastService.warning(message, options);
 
-export const showInfo = (message: string, options?: CustomToastOptions) => 
+export const showInfo = (message: string, options?: CustomToastOptions) => ;;
   toastService.info(message, options);
 
-export const showLoading = (message: string, options?: ToastOptions) => 
+export const showLoading = (message: string, options?: ToastOptions) => ;;
   toastService.loading(message, options);
 
-export const showBlockchainSuccess = (message: string, txHash?: string) => 
+export const showBlockchainSuccess = (message: string, txHash?: string) => ;;
   toastService.blockchainSuccess(message, txHash);
 
-export const showBlockchainError = (message: string, error?: any) => 
+export const showBlockchainError = (message: string, error?: any) => ;;
   toastService.blockchainError(message, error);
 
-export const showNetworkError = (message?: string) => 
+export const showNetworkError = (message?: string) => ;;
   toastService.networkError(message);
 
-export const showWrongNetwork = () => 
+export const showWrongNetwork = () => ;;
   toastService.wrongNetwork();
 
-export const dismissToast = (toastId?: string) => 
+export const dismissToast = (toastId?: string) => ;;
   toastService.dismiss(toastId);
 
-export const dismissAllToasts = () => 
+export const dismissAllToasts = () => ;;
   toastService.dismissAll();
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}

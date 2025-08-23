@@ -4,6 +4,9 @@ import { QrCode, Upload, ArrowRight, Shield, CheckCircle } from 'lucide-react';
 import { Button } from '../Button/Button';
 
 export interface HeroSectionProps {
+}
+}
+}
   title?: string;
   subtitle?: string;
   description?: string;

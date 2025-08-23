@@ -546,8 +546,8 @@ export const tooltipInteractions = {
 
 // Utility function to get interaction animations based on component type and variant
 export const getInteractionAnimation = (
-  component: string, 
-  variant: string = 'default'
+  component: string, ;
+  variant: string = 'default';;
 ): any => {
   const animations: Record<string, any> = {
     button: buttonInteractions,
@@ -594,4 +594,5 @@ export const interactionPresets = {
     opacity: 0.8,
     transition: { duration: durations.fast, ease: easings.easeOut
 };
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

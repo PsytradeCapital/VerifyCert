@@ -6,11 +6,17 @@ import { useBreadcrumbs } from '../../../hooks/useBreadcrumbs';
 import { navigationInteractions } from '../../../utils/interactionAnimations';
 
 export interface BreadcrumbItem {
+}
+}
+}
   label: string;
   href?: string;
   active?: boolean;
 
 export interface BreadcrumbsProps {
+}
+}
+}
   items?: BreadcrumbItem[];
   separator?: React.ReactNode;
   className?: string;

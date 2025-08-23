@@ -2,6 +2,9 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { ariaLabels, ariaDescriptions, generateAriaId } from '../../../utils/ariaUtils';
 
 export interface FileUploadProps {
+}
+}
+}
   onFileSelect: (files: File[]) => void;
   accept?: string;
   multiple?: boolean;
@@ -15,6 +18,9 @@ export interface FileUploadProps {
   previewHeight?: number;
 
 interface FileWithPreview extends File {
+}
+}
+}
   preview?: string;
 
 const FileUpload: React.FC<FileUploadProps> = ({
@@ -398,4 +404,5 @@ const FileUpload: React.FC<FileUploadProps> = ({
 };
 
 export default FileUpload;
-}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}

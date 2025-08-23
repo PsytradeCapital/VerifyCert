@@ -5,6 +5,9 @@ import { Button } from '../Button/Button';
 import Card from '../Card/Card';
 
 export interface Certificate {
+}
+}
+}
   tokenId: string;
   issuer: string;
   recipient: string;
@@ -18,6 +21,9 @@ export interface Certificate {
   grade?: string;
 
 interface CertificateCardProps {
+}
+}
+}
   certificate: Certificate;
   showQR?: boolean;
   isPublicView?: boolean;
@@ -352,4 +358,5 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
     </motion.div>
   );
 };
-}}}}}}}}}
+}
+}}

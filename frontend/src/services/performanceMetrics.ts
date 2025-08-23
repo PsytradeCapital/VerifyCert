@@ -2,6 +2,9 @@ import React from 'react';
 import { performanceMonitor } from '../utils/performanceMonitoring';
 
 export interface WebVitalsMetrics {
+}
+}
+}
   FCP?: number; // First Contentful Paint
   LCP?: number; // Largest Contentful Paint
   FID?: number; // First Input Delay
@@ -9,6 +12,9 @@ export interface WebVitalsMetrics {
   TTFB?: number; // Time to First Byte
 
 export interface CustomMetrics {
+}
+}
+}
   bundleLoadTime: number;
   componentLoadTime: number;
   imageLoadTime: number;
@@ -16,6 +22,9 @@ export interface CustomMetrics {
   routeChangeTime: number;
 
 export interface PerformanceReport {
+}
+}
+}
   timestamp: string;
   url: string;
   userAgent: string;
@@ -288,8 +297,8 @@ export const trackUserInteraction = (action: string, element: string) => {
 };
 
 export const trackFormSubmission = async <T>(
-  formName: string,
-  submitFunction: () => Promise<T>
+  formName: string,;
+  submitFunction: () => Promise<T>;;
 ): Promise<T> => {
   const operationName = `form_submit_${formName}`;
   
@@ -317,4 +326,5 @@ export const trackFormSubmission = async <T>(
 };
 
 export default performanceMetrics;
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}

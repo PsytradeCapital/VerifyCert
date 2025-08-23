@@ -2,6 +2,9 @@ import React from 'react';
 import Modal, { ModalProps } from './Modal';
 
 export interface DialogProps extends Omit<ModalProps, 'children'> {
+}
+}
+}
   children: React.ReactNode;
   actions?: React.ReactNode;
   description?: string;

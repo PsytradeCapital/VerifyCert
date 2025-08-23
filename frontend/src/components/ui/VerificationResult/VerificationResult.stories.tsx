@@ -128,4 +128,5 @@ export const WithoutActions: Story = {
     onShare: undefined,
     onViewOnBlockchain: undefined
 };
-}}}}}}}}}}}}
+}
+}}}}}}}}}}}

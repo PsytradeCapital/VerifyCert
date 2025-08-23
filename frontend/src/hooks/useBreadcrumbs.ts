@@ -4,6 +4,9 @@ import { useLocation } from 'react-router-dom';
 import { matchRoute, routeConfig, RouteConfig } from '../config/routes';
 
 export interface BreadcrumbItem {
+}
+}
+}
   label: string;
   href?: string;
   active?: boolean;
@@ -77,4 +80,5 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
 };
 
 export default useBreadcrumbs;
-}}}}}}}}
+}
+}}}}

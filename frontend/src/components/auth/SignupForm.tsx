@@ -6,6 +6,9 @@ import { toast } from 'react-hot-toast';
 import { OTPVerificationForm } from './OTPVerificationForm';
 
 interface SignupFormData {
+}
+}
+}
   name: string;
   email: string;
   phone: string;
@@ -256,4 +259,5 @@ export const SignupForm: React.FC = () => {
     </AuthLayout>
   );
 };
-}}}
+}
+}}}}}}}}

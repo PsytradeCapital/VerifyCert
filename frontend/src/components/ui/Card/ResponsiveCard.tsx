@@ -2,6 +2,9 @@ import React from 'react';
 import { cn } from '../../../styles/utils';
 
 export interface ResponsiveCardProps {
+}
+}
+}
   children: React.ReactNode;
   className?: string;
   variant?: 'default' | 'elevated' | 'outlined' | 'ghost';

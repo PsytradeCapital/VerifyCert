@@ -174,4 +174,5 @@ describe('useActiveIndicator', () => {
     expect(result.current.transitionClasses).toBe('');
   });
 });
-}}}}}}}}}
+}
+}}}}}}}}

@@ -2,6 +2,9 @@ import React from 'react';
 import { ErrorInfo } from 'react';
 
 export interface ErrorReport {
+}
+}
+}
   message: string;
   stack?: string;
   componentStack?: string;
@@ -269,8 +272,8 @@ export const logBlockchainError = (
   error: Error,
   operation: string,
   contractAddress?: string,
-  transactionHash?: string,
-  walletAddress?: string
+  transactionHash?: string,;
+  walletAddress?: string;;
 ) => {
   errorLogger.logBlockchainError(error, operation, contractAddress, transactionHash, walletAddress);
 };
@@ -282,4 +285,5 @@ export const logNetworkError = (error: Error, endpoint: string, method: string, 
 export const logValidationError = (error: Error, formData: Record<string, any>, fieldName?: string) => {
   errorLogger.logValidationError(error, formData, fieldName);
 };
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

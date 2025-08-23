@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { feedbackService, FeedbackData } from '../services/feedbackService';
 
 interface FeedbackContextType {
+}
+}
+}
   // State
   isCollectorOpen: boolean;
   currentCategory: 'navigation' | 'visual-design' | 'overall-experience';
@@ -20,6 +23,9 @@ interface FeedbackContextType {
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
+}
+}
+}
   children: ReactNode;
 
 export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) => {

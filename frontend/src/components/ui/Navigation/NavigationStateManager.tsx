@@ -2,10 +2,16 @@ import React from 'react';
 import { useNavigation } from '../../../contexts/NavigationContext';
 
 export interface NavigationStateManagerProps {
+}
+}
+}
   children?: React.ReactNode;
   className?: string;
 
 export interface NavigationControlsProps {
+}
+}
+}
   showIndicatorControls?: boolean;
   showTransitionControls?: boolean;
   showHistoryControls?: boolean;

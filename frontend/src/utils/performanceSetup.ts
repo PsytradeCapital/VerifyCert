@@ -296,4 +296,5 @@ if (process.env.NODE_ENV === 'development') {
   console.log('🔧 Performance debugging tools available at window.performanceDebug');
 
 export default initializePerformanceMonitoring;
-}}}}}}}}}}}}}}}}}
+}
+}}}}}}}}}}}}}}}}

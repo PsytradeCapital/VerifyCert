@@ -3,11 +3,17 @@ import { motion } from 'framer-motion';
 import { Check, Loader2 } from 'lucide-react';
 
 interface Step {
+}
+}
+}
   id: string;
   title: string;
   description?: string;
 
 interface StepProgressProps {
+}
+}
+}
   steps: Step[];
   currentStep: string;
   completedSteps: string[];
@@ -199,4 +205,5 @@ const StepProgress: React.FC<StepProgressProps> = ({
 };
 
 export default StepProgress;
-}}}}}}}}}
+}
+}}

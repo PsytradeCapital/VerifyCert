@@ -4,6 +4,9 @@
  */
 
 interface User {
+}
+}
+}
   id: number;
   name: string;
   email?: string;
@@ -14,6 +17,9 @@ interface User {
 }
 
 interface RegisterData {
+}
+}
+}
   name: string;
   email?: string;
   phone?: string;
@@ -22,11 +28,17 @@ interface RegisterData {
 }
 
 interface LoginResponse {
+}
+}
+}
   user: User;
   token: string;
 }
 
 interface ApiResponse<T = any> {
+}
+}
+}
   success: boolean;
   data?: T;
   error?: {

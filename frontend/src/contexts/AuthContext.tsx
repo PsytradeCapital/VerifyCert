@@ -1,12 +1,18 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface User {
+}
+}
+}
   id: string;
   name: string;
   email: string;
 }
 
 interface AuthContextType {
+}
+}
+}
   isAuthenticated: boolean;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
@@ -28,6 +34,9 @@ export const useAuth = () => {
 };
 
 interface AuthProviderProps {
+}
+}
+}
   children: ReactNode;
 }
 

@@ -4,6 +4,9 @@ import { BarChart3, TrendingUp, Users, Award, Calendar } from 'lucide-react';
 import Card from '../Card/Card';
 
 export interface AnalyticsData {
+}
+}
+}
   totalCertificates: number;
   totalInstitutions: number;
   totalRecipients: number;
@@ -19,6 +22,9 @@ export interface AnalyticsData {
   }>;
 
 interface CertificateAnalyticsProps {
+}
+}
+}
   data: AnalyticsData;
   className?: string;
 

@@ -6,8 +6,8 @@ import {
   XCircle, 
   AlertTriangle, 
   Clock, 
-  ExternalLink,
-  Info,;
+  ExternalLink,;;
+  Info,;;
   Zap,;;
   Link as LinkIcon,;;
   Eye;;
@@ -16,6 +16,9 @@ import { Badge } from './Badge';
 import { getBlockchainService, VerificationResult } from '../../../services/blockchainService';
 
 export interface VerificationBadgeProps {
+}
+}
+}
   tokenId: string;
   isValid?: boolean;
   isRevoked?: boolean;
@@ -26,6 +29,9 @@ export interface VerificationBadgeProps {
   className?: string;
 
 interface BlockchainProof {
+}
+}
+}
   transactionHash?: string;
   blockNumber?: string;
   contractAddress?: string;
@@ -423,4 +429,5 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
 };
 
 export default VerificationBadge;
-}}}}}}}}}}}}}
+}
+}}}}}}

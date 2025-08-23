@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { useFocusTrap } from '../../../hooks/useFocusManagement';
 
 interface FocusTrapProps {
+}
+}
+}
   children: React.ReactNode;
   isActive?: boolean;
   restoreFocus?: boolean;

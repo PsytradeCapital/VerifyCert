@@ -69,3 +69,4 @@ export default function CertificateWizardDemo(): JSX.Element {
       </div>
     </div>
   );
+}

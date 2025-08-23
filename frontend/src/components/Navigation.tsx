@@ -4,7 +4,9 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../components/ThemeProvider';
 
 interface NavigationProps {
-  walletAddress?: string | null;
+}
+}
+walletAddress?: string | null;
   isWalletConnected?: boolean;
   onWalletConnect?: (address: string, provider: any) => void;
   onWalletDisconnect?: () => void;
@@ -14,7 +16,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   isWalletConnected,
   onWalletConnect,
   onWalletDisconnect
-}) => {
+}}) => {
   const { isAuthenticated, user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
@@ -126,3 +128,4 @@ export const Navigation: React.FC<NavigationProps> = ({
     </nav>
   );
 };
+}

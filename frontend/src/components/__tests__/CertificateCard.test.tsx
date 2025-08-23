@@ -351,3 +351,4 @@ describe('CertificateCard Component', () => {
     });
   });
 });
+}

@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import Spinner from './Spinner';
 
 interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+}
+}
+}
   loading?: boolean;
   loadingText?: string;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';

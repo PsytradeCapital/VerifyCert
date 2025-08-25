@@ -5,8 +5,8 @@ const { authenticateToken, requireVerified } = require('../src/middleware/auth')
 const router = express.Router();
 
 // Load contract ABI and address
-const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
-const contractAddresses = require('../../contract-addresses.json');
+const contractABI = require('../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractAddresses = require('../contract-addresses.json');
 
 // Validation schemas
 const mintBasicCertificateSchema = Joi.object({
@@ -352,7 +352,7 @@ router.post('/revoke/:tokenId', authenticateToken, requireVerified, async (req, 
   }
 });
 
-// GET /api/mint-certificate/status/:txHash
+// GET /api/mint-certificate/status/:txHash - Check transaction status
 router.get('/status/:txHash', async (req, res) => {
   try {
     const { txHash } = req.params;

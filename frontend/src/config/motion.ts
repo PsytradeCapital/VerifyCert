@@ -1,62 +1,47 @@
-/**
- * Framer Motion Configuration
- * Global settings and configurations for animations
- */
-
-// Global animation settings
-export const motionConfig = {
-  // Reduce motion for users who prefer reduced motion
-  respectReducedMotion: true,
-  
-  // Default transition settings
-  defaultTransition: {
-    duration: 0.3,
-    ease: "easeInOut"
-  },
-  
-  // Animation performance settings
-  layoutTransition: {
-    duration: 0.3,
-    ease: "easeInOut"
+export const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.3 }
 };
 
-// Easing functions
-export const easings = {
-  easeInOut: [0.4, 0, 0.2, 1],
-  easeOut: [0, 0, 0.2, 1],
-  easeIn: [0.4, 0, 1, 1],
-  bounce: [0.68, -0.55, 0.265, 1.55]
+export const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.2 }
 };
 
-// Duration presets
-export const durations = {
-  fast: 0.2,
-  normal: 0.3,
-  slow: 0.5,
-  slower: 0.8
+export const slideInLeft = {
+  initial: { opacity: 0, x: -20 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -20 },
+  transition: { duration: 0.3 }
 };
 
-// Common spring configurations
-export const springs = {
-  gentle: {
-    type: "spring",
-    stiffness: 120,
-    damping: 14
-  },
-  wobbly: {
-    type: "spring",
-    stiffness: 180,
-    damping: 12
-  },
-  stiff: {
-    type: "spring",
-    stiffness: 210,
-    damping: 20
+export const slideInRight = {
+  initial: { opacity: 0, x: 20 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: 20 },
+  transition: { duration: 0.3 }
 };
 
-// Viewport settings for scroll-triggered animations
-export const viewport = {
-  once: true,
-  margin: "0px 0px -100px 0px"
+export const scaleIn = {
+  initial: { opacity: 0, scale: 0.9 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.9 },
+  transition: { duration: 0.2 }
 };
-}
+
+export const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+export const staggerItem = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 }
+};

@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
-import { cn } from '../../../utils/cn';
 
 export interface ModalProps {
-isOpen: boolean;
+  isOpen: boolean;
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   showCloseButton?: boolean;
   closeOnBackdropClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
+}
 
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
@@ -23,17 +21,19 @@ export const Modal: React.FC<ModalProps> = ({
   showCloseButton = true,
   closeOnBackdropClick = true,
   closeOnEscape = true,
-  className,
+  className = '',
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && closeOnEscape) {
         onClose();
+      }
     };
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
+    }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
@@ -46,96 +46,46 @@ export const Modal: React.FC<ModalProps> = ({
     md: 'max-w-lg',
     lg: 'max-w-2xl',
     xl: 'max-w-4xl',
-    full: 'max-w-full mx-4',
   };
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && closeOnBackdropClick) {
-      onClose();
-  };
+  if (!isOpen) return null;
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }
-            animate={{ opacity: 1 }
-            exit={{ opacity: 0 }
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={handleBackdropClick}
-          />
-          
-          {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }
-            animate={{ opacity: 1, scale: 1, y: 0 }
-            exit={{ opacity: 0, scale: 0.95, y: 20 }
-            className={cn(
-              'relative bg-white rounded-lg shadow-xl max-h-[90vh] overflow-hidden',
-              sizeClasses[size],
-              className
-            )}
-          >
-            {/* Header */}
-            {(title || showCloseButton) && (
-              <div className="flex items-center justify-between p-6 border-b">
-                {title && (
-                  <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-                )}
-                {showCloseButton && (
-                  <button
-                    onClick={onClose}
-                    className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                )}
-              </div>
-            )}
-            {/* Content */}
-            <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
-              {children}
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div 
+          className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" 
+          onClick={closeOnBackdropClick ? onClose : undefined}
+        />
+        
+        <div className={`
+          inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all 
+          sm:my-8 sm:align-middle ${sizeClasses[size]} sm:w-full ${className}
+        `}>
+          {(title || showCloseButton) && (
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+              {title && <h3 className="text-lg font-medium text-gray-900">{title}</h3>}
+              {showCloseButton && (
+                <button
+                  onClick={onClose}
+                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                  <span className="sr-only">Close</span>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
             </div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
-  );
-};
-
-export interface DialogProps extends Omit<ModalProps, 'children'> {
-}
-}
-}
-}
-}
-  description?: string;
-  actions?: React.ReactNode;
-  children?: React.ReactNode;
-
-export const Dialog: React.FC<DialogProps> = ({
-  description,
-  actions,
-  children,
-  ...modalProps
-}) => {
-  return (
-    <Modal {...modalProps} size="sm">
-      <div className="p-6">
-        {description && (
-          <p className="text-gray-600 mb-4">{description}</p>
-        )}
-        {children}
-        {actions && (
-          <div className="flex justify-end space-x-3 mt-6">
-            {actions}
+          )}
+          
+          <div className="px-4 py-4">
+            {children}
           </div>
-        )}
+        </div>
       </div>
-    </Modal>
+    </div>
   );
 };
-}
-}
+
+export default Modal;

@@ -1,720 +1,300 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ethers } from 'ethers';
-import toast from 'react-hot-toast';
-import { ChevronLeft, ChevronRight, Check, AlertCircle, User, Award, Building, Calendar, FileText, Send } from 'lucide-react';
-import { StepProgress } from '../Loading';
-import { Button } from '../Button/Button';
-import Card from '../Card/Card';
+d;ficateWizarult Certi defa};
 
-export interface CertificateFormData {
-recipientAddress: string;
-  recipientName: string;
-  courseName: string;
-  institutionName: string;
-  issueDate: string;
-  description?: string;
-
-interface CertificateWizardProps {
-}
-}
-}
-  onSubmit: (data: CertificateFormData) => Promise<void>;
-  isLoading?: boolean;
-  walletAddress?: string | null;
-  isConnected?: boolean;
-  className?: string;
-  onCancel?: () => void;
-
-interface FormErrors {
-recipientAddress?: string;
-  recipientName?: string;
-  courseName?: string;
-  institutionName?: string;
-  issueDate?: string;
-  description?: string;
-
-interface WizardStep {
-}
-}
-}
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-
-const wizardSteps: WizardStep[] = [
-  {
-    id: 'recipient',
-    title: 'Recipient Info',
-    description: 'Enter recipient details',
-    icon: <User className="w-5 h-5" />,
-  {
-    id: 'certificate',
-    title: 'Certificate Details',
-    description: 'Course and achievement info',
-    icon: <Award className="w-5 h-5" />,
-  {
-    id: 'institution',
-    title: 'Institution Info',
-    description: 'Issuing organization details',
-    icon: <Building className="w-5 h-5" />,
-  {
-    id: 'metadata',
-    title: 'Additional Info',
-    description: 'Date and description',
-    icon: <FileText className="w-5 h-5" />,
-  {
-    id: 'review',
-    title: 'Review & Submit',
-    description: 'Confirm and issue certificate',
-    icon: <Send className="w-5 h-5" />
-];
-
-export default function CertificateWizard(): JSX.Element {
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState<string[]>([]);
-  const [formData, setFormData] = useState<CertificateFormData>({
-    recipientAddress: '',
-    recipientName: '',
-    courseName: '',
-    institutionName: '',
-    issueDate: new Date().toISOString().split('T')[0],
-    description: '',
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
-
-  const currentStep = wizardSteps[currentStepIndex];
-
-  // Update institution name when wallet connects
-  useEffect(() => {
-    if (isConnected && walletAddress && !formData.institutionName) {
-      setFormData(prev => ({
-        ...prev,
-        institutionName: 'My Institution',
-      }));
-  }, [isConnected, walletAddress, formData.institutionName]);
-
-  const validateField = (name: string, value: string): string | undefined => {
-    switch (name) {
-      case 'recipientAddress':
-        if (!value.trim()) {
-          return 'Recipient address is required';
-        if (!ethers.isAddress(value)) {
-          return 'Please enter a valid Ethereum address';
-        if (value.toLowerCase() === walletAddress?.toLowerCase()) {
-          return 'Cannot issue certificate to yourself';
-        break;
-
-      case 'recipientName':
-        if (!value.trim()) {
-          return 'Recipient name is required';
-        if (value.trim().length < 2) {
-          return 'Name must be at least 2 characters long';
-        if (value.trim().length > 100) {
-          return 'Name must be less than 100 characters';
-        break;
-
-      case 'courseName':
-        if (!value.trim()) {
-          return 'Course/Achievement name is required';
-        if (value.trim().length < 3) {
-          return 'Course name must be at least 3 characters long';
-        if (value.trim().length > 200) {
-          return 'Course name must be less than 200 characters';
-        break;
-
-      case 'institutionName':
-        if (!value.trim()) {
-          return 'Institution name is required';
-        if (value.trim().length < 2) {
-          return 'Institution name must be at least 2 characters long';
-        if (value.trim().length > 100) {
-          return 'Institution name must be less than 100 characters';
-        break;
-
-      case 'issueDate':
-        if (!value) {
-          return 'Issue date is required';
-        const selectedDate = new Date(value);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (selectedDate > today) {
-          return 'Issue date cannot be in the future';
-        break;
-
-      case 'description':
-        if (value && value.length > 500) {
-          return 'Description must be less than 500 characters';
-        break;
-
-      default:
-        break;
-    return undefined;
-  };
-
-  const validateCurrentStep = (): boolean => {
-    const stepFields: Record<string, string[]> = {
-      recipient: ['recipientAddress', 'recipientName'],
-      certificate: ['courseName'],
-      institution: ['institutionName'],
-      metadata: ['issueDate'],
-      review: []
-    };
-
-    const fieldsToValidate = stepFields[currentStep.id] || [];
-    const newErrors: FormErrors = {};
-    let isValid = true;
-
-    fieldsToValidate.forEach(field => {
-      const error = validateField(field, formData[field as keyof CertificateFormData] || '');
-      if (error) {
-        newErrors[field as keyof FormErrors] = error;
-        isValid = false;
-    });
-
-    setErrors(prev => ({ ...prev, ...newErrors }));
-    return isValid;
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: undefined,
-      }));
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    
-    const error = validateField(name, value);
-    setErrors(prev => ({
-      ...prev,
-      [name]: error,
-    }));
-  };
-
-  const isFieldInvalid = (fieldName: string) => {
-    return touched[fieldName] && errors[fieldName as keyof FormErrors];
-  };
-
-  const handleNext = () => {
-    if (!validateCurrentStep()) {
-      toast.error('Please fix the errors before continuing');
-      return;
-
-    // Mark current step as completed
-    if (!completedSteps.includes(currentStep.id)) {
-      setCompletedSteps(prev => [...prev, currentStep.id]);
-
-    if (currentStepIndex < wizardSteps.length - 1) {
-      setCurrentStepIndex(prev => prev + 1);
-  };
-
-  const handlePrevious = () => {
-    if (currentStepIndex > 0) {
-      setCurrentStepIndex(prev => prev - 1);
-  };
-
-  const handleSubmit = async () => {
-    if (!isConnected) {
-      toast.error('Please connect your wallet first');
-      return;
-
-    // Validate all fields
-    const allErrors: FormErrors = {};
-    let isValid = true;
-
-    Object.keys(formData).forEach(key => {
-      if (key !== 'description') {
-        const error = validateField(key, formData[key as keyof CertificateFormData] || '');
-        if (error) {
-          allErrors[key as keyof FormErrors] = error;
-          isValid = false;
-    });
-
-    if (!isValid) {
-      setErrors(allErrors);
-      toast.error('Please fix all errors before submitting');
-      return;
-
-    try {
-      await onSubmit(formData);
-      
-      // Reset form on successful submission
-      setFormData({
-        recipientAddress: '',
-        recipientName: '',
-        courseName: '',
-        institutionName: formData.institutionName,
-        issueDate: new Date().toISOString().split('T')[0],
-        description: '',
-      });
-      setCurrentStepIndex(0);
-      setCompletedSteps([]);
-      setTouched({});
-      setErrors({});
-      
-    } catch (error) {
-      console.error('Form submission error:', error);
-  };
-
-  const renderStepContent = () => {
-    const stepVariants = {
-      initial: { opacity: 0, x: 20 },
-      animate: { opacity: 1, x: 0 },
-      exit: { opacity: 0, x: -20
-    };
-
-    switch (currentStep.id) {
-      case 'recipient':
-        return (
-          <motion.div
-            key="recipient"
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }
-            className="space-y-6"
-          >
-            <div className="text-center mb-6">
-              <User className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Recipient Information</h3>
-              <p className="text-gray-600">Enter the details of the certificate recipient</p>
-            </div>
-
-            <div>
-              <label htmlFor="recipientAddress" className="block text-sm font-medium text-gray-700 mb-2">
-                Recipient Wallet Address *
-              </label>
-              <input
-                type="text"
-                id="recipientAddress"
-                name="recipientAddress"
-                value={formData.recipientAddress}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                placeholder="0x..."
-                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm transition-colors ${
-                  isFieldInvalid('recipientAddress')
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-gray-300'
-                }}
-                disabled={isLoading}
-              />
-              {isFieldInvalid('recipientAddress') && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-1" />
-                  {errors.recipientAddress}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700 mb-2">
-                Recipient Full Name *
-              </label>
-              <input
-                type="text"
-                id="recipientName"
-                name="recipientName"
-                value={formData.recipientName}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                placeholder="Enter recipient's full name"
-                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                  isFieldInvalid('recipientName')
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-gray-300'
-                }}
-                disabled={isLoading}
-              />
-              {isFieldInvalid('recipientName') && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-1" />
-                  {errors.recipientName}
-                </p>
-              )}
-            </div>
-          </motion.div>
-        );
-
-      case 'certificate':
-        return (
-          <motion.div
-            key="certificate"
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }
-            className="space-y-6"
-          >
-            <div className="text-center mb-6">
-              <Award className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Certificate Details</h3>
-              <p className="text-gray-600">Specify the course or achievement being certified</p>
-            </div>
-
-            <div>
-              <label htmlFor="courseName" className="block text-sm font-medium text-gray-700 mb-2">
-                Course/Achievement Name *
-              </label>
-              <input
-                type="text"
-                id="courseName"
-                name="courseName"
-                value={formData.courseName}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                placeholder="e.g., Blockchain Development Certification"
-                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                  isFieldInvalid('courseName')
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-gray-300'
-                }}
-                disabled={isLoading}
-              />
-              {isFieldInvalid('courseName') && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-1" />
-                  {errors.courseName}
-                </p>
-              )}
-            </div>
-          </motion.div>
-        );
-
-      case 'institution':
-        return (
-          <motion.div
-            key="institution"
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }
-            className="space-y-6"
-          >
-            <div className="text-center mb-6">
-              <Building className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Institution Information</h3>
-              <p className="text-gray-600">Enter your organization details</p>
-            </div>
-
-            <div>
-              <label htmlFor="institutionName" className="block text-sm font-medium text-gray-700 mb-2">
-                Institution Name *
-              </label>
-              <input
-                type="text"
-                id="institutionName"
-                name="institutionName"
-                value={formData.institutionName}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                placeholder="Enter your institution name"
-                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                  isFieldInvalid('institutionName')
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-gray-300'
-                }}
-                disabled={isLoading}
-              />
-              {isFieldInvalid('institutionName') && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-1" />
-                  {errors.institutionName}
-                </p>
-              )}
-            </div>
-          </motion.div>
-        );
-
-      case 'metadata':
-        return (
-          <motion.div
-            key="metadata"
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }
-            className="space-y-6"
-          >
-            <div className="text-center mb-6">
-              <FileText className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Additional Information</h3>
-              <p className="text-gray-600">Set the issue date and add optional description</p>
-            </div>
-
-            <div>
-              <label htmlFor="issueDate" className="block text-sm font-medium text-gray-700 mb-2">
-                Issue Date *
-              </label>
-              <input
-                type="date"
-                id="issueDate"
-                name="issueDate"
-                value={formData.issueDate}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                max={new Date().toISOString().split('T')[0]}
-                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                  isFieldInvalid('issueDate')
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-gray-300'
-                }}
-                disabled={isLoading}
-              />
-              {isFieldInvalid('issueDate') && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-1" />
-                  {errors.issueDate}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                Description (Optional)
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                placeholder="Additional details about the achievement..."
-                rows={4}
-                className={w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical transition-colors ${
-                  isFieldInvalid('description')
-                    ? 'border-red-300 focus:ring-red-500'
-                    : 'border-gray-300'
-                }}
-                disabled={isLoading}
-              />
-              {isFieldInvalid('description') && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-1" />
-                  {errors.description}
-                </p>
-              )}
-              <p className="mt-2 text-sm text-gray-500">
-                {formData.description?.length || 0}/500 characters
-              </p>
-            </div>
-          </motion.div>
-        );
-
-      case 'review':
-        return (
-          <motion.div
-            key="review"
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }
-            className="space-y-6"
-          >
-            <div className="text-center mb-6">
-              <Send className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold text-gray-900">Review & Submit</h3>
-              <p className="text-gray-600">Please review all information before issuing the certificate</p>
-            </div>
-
-            <Card className="p-6 bg-gray-50">
-              <h4 className="font-semibold text-gray-900 mb-4">Certificate Summary</h4>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Recipient:</span>
-                  <span className="font-medium">{formData.recipientName}</span>
-                </div>
-                
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Wallet Address:</span>
-                  <span className="font-mono text-sm">
-                    {formData.recipientAddress.slice(0, 6)}...{formData.recipientAddress.slice(-4)}
-                  </span>
-                </div>
-                
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Course/Achievement:</span>
-                  <span className="font-medium">{formData.courseName}</span>
-                </div>
-                
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Institution:</span>
-                  <span className="font-medium">{formData.institutionName}</span>
-                </div>
-                
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Issue Date:</span>
-                  <span className="font-medium">
-                    {new Date(formData.issueDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </span>
-                </div>
-                
-                {formData.description && (
-                  <div>
-                    <span className="text-gray-600">Description:</span>
-                    <p className="mt-1 text-sm text-gray-800">{formData.description}</p>
-                  </div>
-                )}
-              </div>
-            </Card>
-
-            {/* Wallet Status */}
-            {!isConnected && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <AlertCircle className="w-5 h-5 text-yellow-400 mr-2" />
-                  <p className="text-sm text-yellow-800">
-                    Please connect your wallet to issue certificates
-                  </p>
-                </div>
-              </div>
-            )}
-            {isConnected && walletAddress && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-400 mr-2" />
-                  <div>
-                    <p className="text-sm text-green-800 font-medium">Wallet Connected</p>
-                    <p className="text-xs text-green-600 font-mono">
-                      {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="text-sm font-medium text-blue-900 mb-2">💡 Important Notes</h4>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Certificate will be minted as a non-transferable NFT</li>
-                <li>• All information will be permanently stored on the blockchain</li>
-                <li>• Recipients can verify authenticity using the generated QR code</li>
-                <li>• Double-check all details as they cannot be modified after issuance</li>
-              </ul>
-            </div>
-          </motion.div>
-        );
-
-      default:
-        return null;
-  };
-
-  return (
-    <div className={bg-white rounded-lg shadow-lg ${className}}>
-      {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h2 className="text-2xl font-bold text-gray-900">Issue New Certificate</h2>
-        <p className="text-gray-600 mt-1">
-          Follow the steps below to create a blockchain-verified certificate
-        </p>
-      </div>
-
-      {/* Step Progress */}
-      <div className="px-6 py-6 border-b border-gray-200">
-        <StepProgress
-          steps={wizardSteps.map(step => ({
-            id: step.id,
-            title: step.title,
-            description: step.description
-          }))}
-          currentStep={currentStep.id}
-          completedSteps={completedSteps}
-          orientation="horizontal"
-          size="default"
-        />
-      </div>
-
-      {/* Step Content */}
-      <div className="px-6 py-8">
-        <AnimatePresence mode="wait">
-          {renderStepContent()}
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation */}
-      <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
-        <div>
-          {currentStepIndex > 0 && (
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={isLoading}
-              className="flex items-center"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              Previous
-            </Button>
-          )}
-        </div>
-
-        <div className="flex items-center space-x-3">
-          {onCancel && (
-            <Button
-              variant="outline"
-              onClick={onCancel}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-          )}
-          {currentStepIndex < wizardSteps.length - 1 ? (
-            <Button
-              onClick={handleNext}
-              disabled={isLoading}
-              className="flex items-center"
-            >
-              Next
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
-          ) : (
-            <Button
-              onClick={handleSubmit}
-              disabled={!isConnected || isLoading}
-              className="flex items-center"
-            >
-              {isLoading ? (
-                <>
-                  <motion.div
-                    animate={{ rotate: 360 }
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }
-                    className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
-                  />
-                  Minting Certificate...
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Issue Certificate
-                </>
-              )}
-            </Button>
-          )}
-        </div>
-      </div>
-    </div>
+export
   );
+ </div></div>
+       
+    </div>  )}
+           ton>
+      </but     e
+    icattifCreate Cer   
+                     >owed"
+  not-all:cursor-isabledy-50 d:opacitleden-700 disabreover:bg-grounded-lg hhite 600 text-w-green-2 bg"px-4 py-lassName=          c    p)}
+urrentStesStepValid(cled={!i  disab        te}
+    dleComple{hanck=li   onC
+               <button      ) : (
+  
+            </button>
+          -1" />"h-4 w-4 mlame=classNht Rig <Chevron     
+        ext        N
+                >"
+  t-allowed:cursor-nodisabledpacity-50 disabled:oblue-700 g-ver:bed-lg houndhite ro-600 text-wy-2 bg-blue pcenter px-4s-x itemame="fle     classN     p)}
+    currentSted(StepValiled={!is disab         }
+    tepnextSk={    onClic       <button
+          ? (
+       1 -ngth steps.letStep <urren      {c           
+>
+   utton      </bl
+           Cance>
+     
+          "-gray-800r:texty-600 hove-grapy-2 textame="px-4 classN            {onCancel}
+   onClick=       <button
+  
+          ce-x-3">flex spa="v classNamedi      <  
+  
+      v>/di   <
+         )}  
+    tton>bu         </s
+        Previou     
+    -4 mr-1" />h-4 wlassName="t cLef    <Chevron
+                >0"
+      ay-80ext-grover:t hy-600xt-gra-2 tepynter px-4 -celex itemssName="f        clas   
+   vStep}={preck   onCli         button
+            <
+   && ( 0ntStep >urre     {c          <div>
+  en">
+ y-betwestifju"flex e=ssNam <div cla}
+     ns */ ButtoigationNav*     {//div>
+
+       <)}
+ ent(ContenderStep
+        {r"mb-8">e=v classNam      <di
+ntent */}ep Co   {/* St/div>
+
+       < </div>
+           </p>
+
+        description}Step].urrent    {steps[c  0">
+      ay-50text-gr="text-sm Name    <p class           </h3>
+tle}
+     tep].tintS[curre    {steps       
+ ">0text-gray-90t-semibold  fonext-lg"tclassName= <h3 
+         >me="mt-4"assNa  <div cl  </div>
+           ))}
+ 
+               </div>}
+          )    
+       />            }
+               `
+       '}gray-300bg-lue-600' : ' ? 'bg-bntStep curre${index <                    5 mx-2
+16 h-0.       w-      ={`
+          className           <div
+                 (
+    - 1 && teps.length s    {index <          
+      </div>      )}
+               >
+   5" /"h-5 w-ssName=tep.icon cla  <s                   ) : (
+          >
+   " /"h-5 w-5ame=ssNeck cla   <Ch         (
+       rentStep ? curindex <         {
+                  >
+         `}        }
+                    ray-400'
+0 text-gr-gray-30  : 'borde           e'
+       text-whiter-blue-600 00 bordue-6? 'bg-bl                  
+  entStep <= curr  ${index               order-2
+ nded-full b0 router w-10 h-1censtify-nter jus-ceex item       fl     
+      {`lassName=           cv
+            <di>
+       r"nteceems-lex itssName="f.id} clay={step<div ke           (
+ ) => ep, indexs.map((st       {step">
+   ify-betweennter justlex items-ceassName="f     <div cl  "mb-8">
+  className=<div      Steps */}
+gress  {/* Pro`}>
+     assName}p-6 ${clg g shadow-l-ldede roung-whitName={`bss<div claurn (
+     };
+
+  ret
+  } null;
+   turn        re
+    default:
+         );
+
+ </div>      
+    </div>         />
+           es"
+      al notecior spformation onal iny additiolder="Anaceh       pl       500"
+  blue-order-0 focus:bblue-50cus:ring-g-2 folg focus:rinrounded-gray-300 r-rde border box-3 py-2w-full p="me classNa              
+ {3}ws=       ro    }
+     arget.value) e.tlNotes',nadditioormData('a> updateF={(e) =ange onCh     
+          tionalNotes}ta.addi{formDa  value=             rea
+ ta <tex            el>
+ ab </l        
+     s (Optional)ional Note  Addit          b-2">
+    t-gray-700 mm texfont-mediusm k text-="blocamessNlabel cla  <         v>
+        <di         </div>
+ 
+             />      "
+    500border-blue-0 focus:g-blue-50in-2 focus:rus:ringfoced-lg undgray-300 rorder-border bo-3 py-2 ull px="w-fmesNa     clas           t.value)}
+te', e.targe('expiryDateFormData> updae) =e={(    onChang         
+   expiryDate}ata.ue={formD    val            ="date"
+ype   t       
+         <input           el>
+   </lab        onal)
+   tiDate (Op   Expiry   
+           b-2">-gray-700 mdium text-metext-sm fontck sName="blolabel clas       <         <div>
+    >
+      </div              />
+       0"
+     blue-50border-ocus:00 f-5:ring-blue-2 focuss:ringed-lg focu round-300 border-grayder bor3 py-2ll px-ame="w-fu    classN         lue)}
+   rget.vae.taate', ssueD('iDatapdateForm={(e) => uhange onC           
+    issueDate}mData.={for    value           "date"
+     type=          <input
+                bel>
+  </la           *
+ Date sue    Is          -2">
+   700 mby-t-grat-medium tex text-sm fonName="blockassabel cl  <l         v>
+     <di         -4">
+ "space-yme=ssNa   <div cla   urn (
+    
+        rete 2:   cas   );
+
+   v>
+          </diiv>
+             </d
+         />    
+     ents"achievemnt and conteourse e cescribe th"Der= placehold               e-500"
+bluocus:border-blue-500 fs:ring- focu:ring-2usg focrounded-l0 er-gray-30rder bordy-2 bo-full px-3 p"wassName=       cl
+            rows={4}        )}
+     .value e.target',scriptionDecourseFormData('te) => upda={(enChange      o        
+  ion}seDescriptcourData.rme={fo   valu             a
+xtarete           <bel>
+           </la    tion *
+  crip  Course Des              >
+b-2"700 mtext-gray-dium t-mem fonk text-sName="blocel class     <lab        <div>
+  
+             </div>
+             />      "
+     namevement or achiee oursEnter cceholder="   pla          0"
+   ue-50border-ble-500 focus:luing-b-2 focus:rring-lg focus:unded-gray-300 roer border bord-3 py-2"w-full pxclassName=            e)}
+    arget.valu e.te',rseNam'couata(pdateFormD u={(e) =>Change   on           eName}
+  a.coursormDatalue={f        v    ext"
+    "type=       t       nput
+      <i         /label>
+            <Name *
+   ourse  C      
+         -2">ay-700 mbtext-gront-medium m fext-s="block tlassNamelabel c    <            <div>
+          e-y-4">
+ac"spe=assNam <div cl(
+         return 1:
+              case  );
+
+         </div>
+        /div>
+         <>
+           /      "
+il addressmacipient's e"Enter relder=placeho         
+       00"-5-blueer focus:bording-blue-500us:rs:ring-2 focfocuunded-lg gray-300 roorder-y-2 border b3 p"w-full px-className=                e)}
+valut.e.targeil', ecipientEmaData('rdateForm => upe={(e)ng   onCha            
+ mail}pientEa.reci={formDat       value      
+   "email"type=          put
+              <inel>
+        </lab           mail *
+ Recipient E              2">
+  0 mb--70graytext-font-medium t-sm "block texe= classNamel        <labiv>
+      <d          </div>
+                />
+           ll name"
+ pient's fureci"Enter er=placehold         "
+       ue-500border-bl focus:-500ng-blueri-2 focus::ringfocusnded-lg ay-300 rour border-grde bory-2 p"w-full px-3assName= cl            
+   )}rget.valueName', e.taipient'recata(mDteFor(e) => updange={ onCha           
+    Name}entmData.recipie={for   valu           "text"
+  e=typ         
+         <input          label>
+       </  e *
+       ampient NReci                b-2">
+gray-700 mext-dium tnt-me fot-smblock texme="el classNa   <lab   v>
+               <di     -4">
+pace-yame="s classN <div       eturn (
+    re 0:
+       casp) {
+      (currentSteitch  sw) => {
+   = (tentderStepConnst ren
+  co }
+  };
+  rmData);
+ plete(fo      onCom) {
+currentStep)alid(epV if (isSt> {
+   plete = () =Comst handle
+  con  }
+  };
+ev - 1);
+  p(prev => prtCurrentSte se 0) {
+     tep >rentS (cur  if() => {
+  revStep = onst p
+  c;
+    }
+  }ev + 1);
+prprev => entStep(  setCurr    tStep)) {
+rrend(cu isStepValigth - 1 && steps.lenrrentStep <cu
+    if ( () => { =t nextStep;
+
+  cons}
+  }false;
+         return   lt:
+ efau;
+      date !== ''sueDformData.isn        retur case 2:
+      == '';
+rim() !ion.tcriptcourseDes&& formData.'  !== 'Name.trim()urseData.coturn form   re
+     1:se ';
+      ca !== 'l.trim()maiientEData.recip && formrim() !== ''ame.tpientNata.reciurn formD    ret  0:
+  case       {
+ ndex)h (stepIitc    swn => {
+r): booleabeIndex: num (stepStepValid =  const is;
+
+}));
+  }: value [field]..prev, > ({ . =evrmData(prsetFo {
+    tring) => value: sateData,f Certifickeyod:  = (fielateFormDataupd
+  const    }
+  ];
+d
+ icon: Awar
+      tion',nformaional i and addittesrtificate da cerefiguption: 'Con  descri
+    Settings',tificate ertitle: 'C
+      ficate', id: 'certi   {
+     ,
+ eText
+    }Filicon: 
+      nt',emese or achievourt the cion abounformatrovide icription: 'Pdes     s',
+ urse Detail title: 'Cose',
+     : 'cour      id
+    {
+  },: User
+   icon
+     tails', depientrecitificate  certheer ption: 'Ent      descri',
+tionient Informa 'Recip  title:ent',
+    : 'recipi
+      id   { = [
+ p[] WizardStenst steps:co});
+
+  ''
+  onalNotes:    additiDate: '',
+  expiry,
+   t('T')[0]g().spli).toISOStrin new Date(sueDate:   is: '',
+ criptioncourseDes    
+: '',courseName '',
+    entEmail:  recipi,
+  Name: ''ecipient    r>({
+Dataficatetate<CertiseS= urmData] mData, setFooronst [f
+  ce(0);] = useStatSteprentStep, setCurnst [current> {
+  co''
+}) =e = lassNamCancel,
+  c,
+  onnComplete = ({
+  ozardProps>Wificatet.FC<Certiizard: ReactificateW
+const Cer;
 }
-}
+ame?: string
+  classNvoid; => cel: () onCan void;
+ eData) =>tificat(data: Certe: mple onCo
+ zardProps {icateWiertifterface C
+in}
+}>;
+string ?: assNamepe<{ clonentTyCompReact. icon: string;
+ ption: 
+  descriring;tle: sttring;
+  ti {
+  id: seprdSte Wizaerfac
+
+int
+}ring;s?: stditionalNotering;
+  adyDate?: stxpiring;
+  ete: strssueDa i
+ : string;tionurseDescrip;
+  co stringourseName:ng;
+  ctEmail: striipienng;
+  rece: striNam recipienteData {
+ ertificat
+interface C-react';
+ucide from 'lward }ext, AleT Fiser, Uight, Check,, ChevronRevronLeftort { Ch
+impt'; from 'reacseState }, { uactmport Rei

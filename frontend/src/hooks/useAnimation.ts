@@ -15,6 +15,7 @@ export const useAnimation = () => {
         duration: 0.01,
         ease: 'linear'
       };
+    }
 
     switch (animationType) {
       case 'spring':
@@ -26,6 +27,7 @@ export const useAnimation = () => {
         };
       default:
         return motionConfig.defaultTransition;
+    }
   };
 
   const getVariants = (type: 'fade' | 'slide' | 'scale' | 'bounce') => {
@@ -33,40 +35,42 @@ export const useAnimation = () => {
       return {
         initial: { opacity: 1 },
         animate: { opacity: 1 },
-        exit: { opacity: 1
+        exit: { opacity: 1 }
       };
+    }
 
     switch (type) {
       case 'fade':
         return {
           initial: { opacity: 0 },
           animate: { opacity: 1 },
-          exit: { opacity: 0
+          exit: { opacity: 0 }
         };
       case 'slide':
         return {
           initial: { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
-          exit: { opacity: 0, y: -20
+          exit: { opacity: 0, y: -20 }
         };
       case 'scale':
         return {
           initial: { opacity: 0, scale: 0.9 },
           animate: { opacity: 1, scale: 1 },
-          exit: { opacity: 0, scale: 0.9
+          exit: { opacity: 0, scale: 0.9 }
         };
       case 'bounce':
         return {
           initial: { opacity: 0, scale: 0.3 },
           animate: { opacity: 1, scale: 1 },
-          exit: { opacity: 0, scale: 0.3
+          exit: { opacity: 0, scale: 0.3 }
         };
       default:
         return {
           initial: { opacity: 0 },
           animate: { opacity: 1 },
-          exit: { opacity: 0
+          exit: { opacity: 0 }
         };
+    }
   };
 
   return {
@@ -81,5 +85,3 @@ export const useAnimation = () => {
 };
 
 export default useAnimation;
-}
-}

@@ -1,71 +1,38 @@
 import React from 'react';
 import { cn } from '../../../styles/utils';
 
-export interface ResponsiveGridProps {
-children: React.ReactNode;
-  columns?: 1 | 2 | 3 | 4 | 6 | 12;
-  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+interface ResponsiveGridProps {
+  children: React.ReactNode;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
-  breakpoints?: {
-    sm?: 1 | 2 | 3 | 4 | 6 | 12;
-    md?: 1 | 2 | 3 | 4 | 6 | 12;
-    lg?: 1 | 2 | 3 | 4 | 6 | 12;
-    xl?: 1 | 2 | 3 | 4 | 6 | 12;
-};
+  cols?: {
+    default?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+  };
+  gap?: string;
+}
 
-const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
+export const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   children,
-  columns = 1,
-  gap = 'md',
-  className = '',
-  as: Component = 'div',
-  breakpoints = {},
+  className,
+  cols = { default: 1, sm: 2, md: 3, lg: 4 },
+  gap = 'gap-4'
 }) => {
-  const gapClasses = {
-    xs: 'gap-2',
-    sm: 'gap-3',
-    md: 'gap-4 sm:gap-6',
-    lg: 'gap-6 sm:gap-8',
-    xl: 'gap-8 sm:gap-12'
-  };
-
-  const getColumnClass = (cols: number) => {
-    const columnMap = {
-      1: 'grid-cols-1',
-      2: 'grid-cols-2',
-      3: 'grid-cols-3',
-      4: 'grid-cols-4',
-      6: 'grid-cols-6',
-      12: 'grid-cols-12'
-    };
-    return columnMap[cols as keyof typeof columnMap] || 'grid-cols-1';
-  };
-
-  const baseClasses = cn(
+  const gridClasses = [
     'grid',
-    getColumnClass(columns),
-    gapClasses[gap]
-  );
-
-  const breakpointClasses = [
-    breakpoints.sm && sm:${getColumnClass(breakpoints.sm)},
-    breakpoints.md && md:${getColumnClass(breakpoints.md)},
-    breakpoints.lg && lg:${getColumnClass(breakpoints.lg)},
-    breakpoints.xl && xl:${getColumnClass(breakpoints.xl)}
+    gap,
+    cols.default && `grid-cols-${cols.default}`,
+    cols.sm && `sm:grid-cols-${cols.sm}`,
+    cols.md && `md:grid-cols-${cols.md}`,
+    cols.lg && `lg:grid-cols-${cols.lg}`,
+    cols.xl && `xl:grid-cols-${cols.xl}`,
   ].filter(Boolean).join(' ');
 
-  const combinedClasses = cn(
-    baseClasses,
-    breakpointClasses,
-    className
-  );
-
   return (
-    <Component className={combinedClasses}>
+    <div className={cn(gridClasses, className)}>
       {children}
-    </Component>
+    </div>
   );
 };
-
-export default ResponsiveGrid;

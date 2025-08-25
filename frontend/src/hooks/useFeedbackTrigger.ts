@@ -1,47 +1,44 @@
-import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface FeedbackTriggerConfig {
-// Automatic triggers
-  timeOnPage?: number; // milliseconds
-  scrollPercentage?: number; // 0-100
-  exitIntent?: boolean;
-  errorOccurred?: boolean;
+  // Time-based triggers
+  timeThreshold?: number; // milliseconds
+  scrollThreshold?: number; // percentage
   
-  // Manual triggers
-  afterAction?: string; // action name
-  onElementClick?: string; // element selector
+  // Interaction-based triggers
+  clickThreshold?: number;
+  errorThreshold?: number;
   
   // Context
   category?: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
+}
 
 interface FeedbackTriggerState {
-}
-}
-}
   shouldShow: boolean;
   category: 'navigation' | 'visual-design' | 'overall-experience';
   context: string;
   trigger: () => void;
   dismiss: () => void;
   reset: () => void;
+}
 
 export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): FeedbackTriggerState => {
   const location = useLocation();
   const [shouldShow, setShouldShow] = useState(false);
   const [timeOnPage, setTimeOnPage] = useState(0);
   const [scrollPercentage, setScrollPercentage] = useState(0);
-  const [hasTriggered, setHasTriggered] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [errorCount, setErrorCount] = useState(0);
 
   const {
-    timeOnPage: triggerTime = 30000, // 30 seconds default
-    scrollPercentage: triggerScroll = 80, // 80% default
-    exitIntent = false,
-    errorOccurred = false,
+    timeThreshold = 30000, // 30 seconds
+    scrollThreshold = 70, // 70%
+    clickThreshold = 5,
+    errorThreshold = 2,
     category = 'overall-experience',
-    context = ''
+    context = location.pathname
   } = config;
 
   // Track time on page
@@ -59,57 +56,44 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setScrollPercentage(scrollPercent);
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      setScrollPercentage(Math.min(scrollPercent, 100));
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Track exit intent
+  // Track clicks
   useEffect(() => {
-    if (!exitIntent) return;
-
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !hasTriggered) {
-        setShouldShow(true);
-        setHasTriggered(true);
+    const handleClick = () => {
+      setClickCount(prev => prev + 1);
     };
 
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => document.removeEventListener('mouseleave', handleMouseLeave);
-  }, [exitIntent, hasTriggered]);
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
 
-  // Check triggers
+  // Check if feedback should be triggered
   useEffect(() => {
-    if (hasTriggered) return;
+    const shouldTrigger = 
+      timeOnPage >= timeThreshold ||
+      scrollPercentage >= scrollThreshold ||
+      clickCount >= clickThreshold ||
+      errorCount >= errorThreshold;
 
-    // Time-based trigger
-    if (triggerTime && timeOnPage >= triggerTime) {
+    if (shouldTrigger && !shouldShow) {
       setShouldShow(true);
-      setHasTriggered(true);
-      return;
+    }
+  }, [timeOnPage, scrollPercentage, clickCount, errorCount, timeThreshold, scrollThreshold, clickThreshold, errorThreshold, shouldShow]);
 
-    // Scroll-based trigger
-    if (triggerScroll && scrollPercentage >= triggerScroll) {
-      setShouldShow(true);
-      setHasTriggered(true);
-      return;
-
-    // Error-based trigger
-    if (errorOccurred) {
-      setShouldShow(true);
-      setHasTriggered(true);
-      return;
-  }, [timeOnPage, scrollPercentage, errorOccurred, triggerTime, triggerScroll, hasTriggered]);
-
-  // Reset on page change
+  // Reset when route changes
   useEffect(() => {
     setShouldShow(false);
-    setHasTriggered(false);
     setTimeOnPage(0);
     setScrollPercentage(0);
+    setClickCount(0);
+    setErrorCount(0);
   }, [location.pathname]);
 
   const trigger = useCallback(() => {
@@ -118,51 +102,24 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
 
   const dismiss = useCallback(() => {
     setShouldShow(false);
-    setHasTriggered(true);
   }, []);
 
   const reset = useCallback(() => {
     setShouldShow(false);
-    setHasTriggered(false);
     setTimeOnPage(0);
     setScrollPercentage(0);
+    setClickCount(0);
+    setErrorCount(0);
   }, []);
 
   return {
     shouldShow,
     category,
-    context: context || Page: ${location.pathname}, Time: ${Math.round(timeOnPage / 1000)}s, Scroll: ${Math.round(scrollPercentage)}%,
+    context,
     trigger,
     dismiss,
     reset
   };
 };
 
-// Hook for specific feedback scenarios
-export const useNavigationFeedback = () => {
-  return useFeedbackTrigger({
-    category: 'navigation',
-    timeOnPage: 45000, // 45 seconds - longer for navigation issues
-    scrollPercentage: 90,
-    exitIntent: true,
-    context: 'Navigation experience feedback'
-  });
-};
-
-export const useVisualDesignFeedback = () => {
-  return useFeedbackTrigger({
-    category: 'visual-design',
-    timeOnPage: 20000, // 20 seconds - quicker for visual feedback
-    scrollPercentage: 70,
-    context: 'Visual design and layout feedback'
-  });
-};
-
-export const useErrorFeedback = (error: Error | null) => {
-  return useFeedbackTrigger({
-    category: 'overall-experience',
-    errorOccurred: !!error,
-    context: error ? Error occurred: ${error.message} : 'Error experience feedback'
-  });
-};
-}
+export default useFeedbackTrigger;

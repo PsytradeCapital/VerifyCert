@@ -1,85 +1,68 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { feedbackService, FeedbackData } from '../services/feedbackService';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+
+export interface FeedbackItem {
+  id: string;
+  type: 'bug' | 'feature' | 'improvement' | 'other';
+  title: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high';
+  status: 'open' | 'in-progress' | 'resolved' | 'closed';
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 interface FeedbackContextType {
-// State
-  isCollectorOpen: boolean;
-  currentCategory: 'navigation' | 'visual-design' | 'overall-experience';
-  currentContext: string;
-  
-  // Actions
-  openFeedback: (category?: 'navigation' | 'visual-design' | 'overall-experience', context?: string) => void;
-  closeFeedback: () => void;
-  submitFeedback: (feedback: Omit<FeedbackData, 'timestamp' | 'userAgent' | 'screenSize'>) => Promise<void>;
-  
-  // Analytics
-  getFeedbackAnalytics: () => ReturnType<typeof feedbackService.getAnalytics>;
-  exportFeedback: () => string;
-  clearFeedback: () => void;
+  feedback: FeedbackItem[];
+  addFeedback: (feedback: Omit<FeedbackItem, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  updateFeedback: (id: string, updates: Partial<FeedbackItem>) => void;
+  deleteFeedback: (id: string) => void;
+  getFeedbackById: (id: string) => FeedbackItem | undefined;
+}
 
 const FeedbackContext = createContext<FeedbackContextType | undefined>(undefined);
 
 interface FeedbackProviderProps {
+  children: React.ReactNode;
 }
-}
-  children: ReactNode;
 
 export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) => {
-  const [isCollectorOpen, setIsCollectorOpen] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState<'navigation' | 'visual-design' | 'overall-experience'>('overall-experience');
-  const [currentContext, setCurrentContext] = useState('');
+  const [feedback, setFeedback] = useState<FeedbackItem[]>([]);
 
-  const openFeedback = useCallback((
-    category: 'navigation' | 'visual-design' | 'overall-experience' = 'overall-experience',
-    context: string = ''
-  ) => {
-    setCurrentCategory(category);
-    setCurrentContext(context);
-    setIsCollectorOpen(true);
-  }, []);
-
-  const closeFeedback = useCallback(() => {
-    setIsCollectorOpen(false);
-  }, []);
-
-  const submitFeedback = useCallback(async (
-    feedback: Omit<FeedbackData, 'timestamp' | 'userAgent' | 'screenSize'>
-  ) => {
-    const fullFeedback: FeedbackData = {
-      ...feedback,
-      timestamp: Date.now(),
-      userAgent: navigator.userAgent,
-      screenSize: ${window.innerWidth}x${window.innerHeight}
+  const addFeedback = useCallback((newFeedback: Omit<FeedbackItem, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const feedbackItem: FeedbackItem = {
+      ...newFeedback,
+      id: Date.now().toString(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
-
-    feedbackService.storeFeedback(fullFeedback);
     
-    // Close the collector after successful submission
-    setIsCollectorOpen(false);
+    setFeedback(prev => [...prev, feedbackItem]);
   }, []);
 
-  const getFeedbackAnalytics = useCallback(() => {
-    return feedbackService.getAnalytics();
+  const updateFeedback = useCallback((id: string, updates: Partial<FeedbackItem>) => {
+    setFeedback(prev => 
+      prev.map(item => 
+        item.id === id 
+          ? { ...item, ...updates, updatedAt: new Date() }
+          : item
+      )
+    );
   }, []);
 
-  const exportFeedback = useCallback(() => {
-    return feedbackService.exportFeedback();
+  const deleteFeedback = useCallback((id: string) => {
+    setFeedback(prev => prev.filter(item => item.id !== id));
   }, []);
 
-  const clearFeedback = useCallback(() => {
-    feedbackService.clearFeedback();
-  }, []);
+  const getFeedbackById = useCallback((id: string) => {
+    return feedback.find(item => item.id === id);
+  }, [feedback]);
 
   const value: FeedbackContextType = {
-    isCollectorOpen,
-    currentCategory,
-    currentContext,
-    openFeedback,
-    closeFeedback,
-    submitFeedback,
-    getFeedbackAnalytics,
-    exportFeedback,
-    clearFeedback
+    feedback,
+    addFeedback,
+    updateFeedback,
+    deleteFeedback,
+    getFeedbackById,
   };
 
   return (
@@ -89,10 +72,12 @@ export const FeedbackProvider: React.FC<FeedbackProviderProps> = ({ children }) 
   );
 };
 
-export const useFeedback = (): FeedbackContextType => {
+export const useFeedback = () => {
   const context = useContext(FeedbackContext);
   if (context === undefined) {
     throw new Error('useFeedback must be used within a FeedbackProvider');
+  }
   return context;
 };
-}
+
+export default FeedbackContext;

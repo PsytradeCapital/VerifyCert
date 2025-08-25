@@ -32,7 +32,8 @@ const VerifyPage = () => {
     setVerificationStatus(null);
 
     try {
-      const response = await fetch(`/api/verify-certificate/${id.trim()}`);
+      const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+      const response = await fetch(`${API_BASE_URL}/api/verify-certificate/${id.trim()}`);
       const data = await response.json();
 
       if (!response.ok) {

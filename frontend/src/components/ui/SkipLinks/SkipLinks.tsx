@@ -1,79 +1,39 @@
 import React from 'react';
-import { focusUtils } from '../../../utils/focusManagement';
 
 interface SkipLink {
-targetId: string;
+  href: string;
   label: string;
+}
 
 interface SkipLinksProps {
-}
-}
-}
   links?: SkipLink[];
   className?: string;
+}
 
-const defaultSkipLinks: SkipLink[] = [
-  { targetId: 'main-content', label: 'Skip to main content' },
-  { targetId: 'main-navigation', label: 'Skip to navigation' },
-  { targetId: 'search', label: 'Skip to search' },
+const defaultLinks: SkipLink[] = [
+  { href: '#main-content', label: 'Skip to main content' },
+  { href: '#navigation', label: 'Skip to navigation' },
+  { href: '#footer', label: 'Skip to footer' }
 ];
 
-const SkipLinks: React.FC<SkipLinksProps> = ({ 
-  links = defaultSkipLinks, 
-  className = '' 
+export const SkipLinks: React.FC<SkipLinksProps> = ({
+  links = defaultLinks,
+  className = ''
 }) => {
-  const handleSkipClick = (event: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    event.preventDefault();
-    
-    const target = document.getElementById(targetId);
-    if (target) {
-      // Make target focusable if it isn't already
-      if (target.tabIndex === -1) {
-        target.tabIndex = -1;
-      
-      target.focus();
-      target.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
-      
-      // Announce to screen readers
-      focusUtils.announce(Skipped to ${target.getAttribute('aria-label') || targetId}, 'polite');
-  };
-
   return (
-    <div className={skip-links ${className}}>
-      {links.map(({ targetId, label }) => (
+    <div className={`sr-only focus-within:not-sr-only ${className}`}>
+      {links.map((link, index) => (
         <a
-          key={targetId}
-          href={#${targetId}}
-          onClick={(e) => handleSkipClick(e, targetId)}
+          key={index}
+          href={link.href}
           className="
-            sr-only 
-            focus:not-sr-only 
-            focus:absolute 
-            focus:top-4 
-            focus:left-4 
-            focus:z-50 
-            focus:px-4 
-            focus:py-2 
-            focus:bg-blue-600 
-            focus:text-white 
-            focus:rounded-md 
-            focus:shadow-lg 
-            focus:outline-none 
-            focus:ring-2 
-            focus:ring-blue-500 
-            focus:ring-offset-2
-            transition-all
-            duration-200
+            absolute top-0 left-0 z-50 px-4 py-2 text-white bg-blue-600 
+            focus:relative focus:z-auto focus:block
+            transform -translate-y-full focus:translate-y-0
+            transition-transform duration-200
           "
-          aria-describedby={${targetId}-skip-description}
         >
-          {label}
-          <span id={${targetId}-skip-description} className="sr-only">
-            Press Enter to jump to {label.toLowerCase()}
-          </span>
+          {link.label}
         </a>
       ))}
     </div>
@@ -81,4 +41,3 @@ const SkipLinks: React.FC<SkipLinksProps> = ({
 };
 
 export default SkipLinks;
-}

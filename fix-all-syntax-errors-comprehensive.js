@@ -1,132 +1,171 @@
 const fs = require('fs');
 const path = require('path');
 
-// Function to fix common syntax errors in TypeScript/React files
-function fixSyntaxErrors(filePath) {
+// Comprehensive syntax fixes for TypeScript/React files
+const fixes = [
+  // Fis
+  {
+    pattern: /export inte$/gm,
+n$2\n}'
+  },
+  
+  // Fix malformed template literals
+  {
+    pattern: /className=
+    replacement: 'className
+  },
+  
+  // Fiaces
+  {
+    pattern: /(\w+\??: [^;,\n}]+)(?=\s*
+    replacement: '$1;'
+  },
+  
+  // Fix missing closingJSX
+  {
+    pat*$/gm,
+    replacement: '$'
+  },
+ 
+  // Fix malformed object destructuring
+  {
+    pattern: /\{\s*([^}]*),\s*\}/g,
+    replacement: '{ $1 }'
+  },
+  
+  // Fix missing return statements
+  {
+    pattern: /const (\w+): React\.FC<,
+    replacement: (match, name, body) => {
+      if (!body.includes('return')) {
+        return `const ${;`;
+      }
+     
+ }
+  }
+];
+
+function fixFile(filePath) {
   try {
-    let content = fs.readFileSync(filePath, 'utf8');
-    let modified = false;
-
-    // Fix incomplete export statements (missing semicolons)
-    const incompleteExportRegex = /^(\s*export\s+(?:default\s+)?(?:function|const|class|interface|type)\s+[^;{]+)$/gm;
-    content = content.replace(incompleteExportRegex, (match, group) => {
-      if (!group.includes('{') && !group.includes(';')) {
+    l');
+false;
+    
+    // Apply each fix
+    fixes.forEach(fix => {
+    
+      if (newContent !== content) 
+        content = newContent;
         modified = true;
-        return group + ';';
       }
-      return match;
     });
-
-    // Fix incomplete import statements
-    const incompleteImportRegex = /^(\s*import\s+[^;]+)$/gm;
-    content = content.replace(incompleteImportRegex, (match, group) => {
-      if (!group.includes(';')) {
-        modified = true;
-        return group + ';';
+    
+    // Additional specific fixes
+    
+    /erfaces
+{
+      if (!match.endsWith('}')) {
+        return match + '\n}';
       }
-      return match;
+    match;
     });
-
-    // Fix interface declarations without closing braces
-    const interfaceRegex = /^(\s*(?:export\s+)?interface\s+\w+[^{]*\{[^}]*?)$/gm;
-    let interfaceMatches = [...content.matchAll(interfaceRegex)];
-    for (let match of interfaceMatches) {
-      const interfaceContent = match[1];
-      const openBraces = (interfaceContent.match(/\{/g) || []).length;
-      const closeBraces = (interfaceContent.match(/\}/g) || []).length;
-      
-      if (openBraces > closeBraces) {
-        const missingBraces = openBraces - closeBraces;
-        content = content.replace(match[0], interfaceContent + '\n' + '}'.repeat(missingBraces));
-        modified = true;
-      }
-    }
-
-    // Remove excessive closing braces at end of file
-    const excessiveBracesRegex = /(\}\s*){5,}$/;
-    if (excessiveBracesRegex.test(content)) {
-      content = content.replace(excessiveBracesRegex, '}');
-      modified = true;
-    }
-
-    // Fix missing closing braces for functions
-    const functionRegex = /^(\s*(?:export\s+)?(?:default\s+)?function\s+\w+[^{]*\{)/gm;
-    let functionMatches = [...content.matchAll(functionRegex)];
     
-    // Count braces in entire file
-    const totalOpenBraces = (content.match(/\{/g) || []).length;
-    const totalCloseBraces = (content.match(/\}/g) || []).length;
+    // Fix malformed template literals in className
+    content = content.
     
-    if (totalOpenBraces > totalCloseBraces) {
-      const missingBraces = totalOpenBraces - totalCloseBraces;
-      content = content + '\n' + '}'.repeat(missingBraces);
-      modified = true;
-    }
-
-    // Fix missing closing parentheses
-    const totalOpenParens = (content.match(/\(/g) || []).length;
-    const totalCloseParens = (content.match(/\)/g) || []).length;
+ng tags
+    content = conte</$1>');
     
-    if (totalOpenParens > totalCloseParens) {
-      const missingParens = totalOpenParens - totalCloseParens;
-      content = content + ')'.repeat(missingParens);
-      modified = true;
-    }
-
+    // Fix incomplete function components
+    content = cont> {
+     
+    
+    
     if (modified) {
-      fs.writeFileSync(filePath, content, 'utf8');
-      console.log(`Fixed syntax errors in: ${filePath}`);
-      return true;
-    }
-    
+      fs.writeFileSync(filePath, content);
+      console.log);
+    true;
+ }
+ 
     return false;
   } catch (error) {
-    console.error(`Error processing ${filePath}:`, error.message);
-    return false;
+    console.error(`Error fixing ${fi
+  
   }
 }
 
-// Function to recursively find all TypeScript/React files
-function findTSFiles(dir, files = []) {
-  const items = fs.readdirSync(dir);
+func{
+  const files = [];
   
-  for (const item of items) {
-    const fullPath = path.join(dir, item);
-    const stat = fs.statSync(fullPath);
+  function traverse(currentDir) {
+    const items = fs.readdi;
     
-    if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
-      findTSFiles(fullPath, files);
-    } else if (item.endsWith('.tsx') || item.endsWith('.ts')) {
-      files.push(fullPath);
+   ) {
+   item);
+      const sta;
+ 
+
+        traverse(llPath);
+      } else if (item.endsWith('.tsx') || item.endsWith('.)) {
+;
+      }
     }
   }
   
+(dir);
   return files;
 }
 
 // Main execution
-console.log('Starting comprehensive syntax error fix...');
+con');
+cir);
 
-const srcDir = path.join(__dirname, 'frontend', 'src');
-const tsFiles = findTSFiles(srcDir);
+console.log(`Found ${files.length} TypeScript files to check.
 
-console.log(`Found ${tsFiles.length} TypeScript files to process...`);
-
-let fixedCount = 0;
-for (const file of tsFiles) {
-  if (fixSyntaxErrors(file)) {
-    fixedCount++;
+ 0;
+files.forEach(file => {
+  if (fixFile(file)) {
+    f
   }
-}
+});
 
-console.log(`\nFixed syntax errors in ${fixedCount} files.`);
-console.log('Running build to check for remaining errors...');
+console.log(`Fixed ${fixedCount} files with syntax errors.`);
+/);!'pletedcoms x fixentaensive sylog('Comprehnsole.}
+});
 
-// Run build to check results
-const { execSync } = require('child_process');
-try {
-  execSync('cd frontend && npm run build', { stdio: 'inherit' });
-  console.log('\n✅ Build successful!');
-} catch (error) {
-  console.log('\n❌ Build still has errors. Manual fixes may be needed.');
-}
+coe);
+  or.messag erre}:`,s to ${filific fixeecapplying spor(`Error onsole.err {
+    catch (error));
+  } cto: ${file}`s ic fixespecif`Applied ole.log(ns
+    coent);e, contync(fil.writeFileS   fs });
+    lace);
+rch, repplace(seatent.re= conent      cont
+ }) => {h, replace { searcforEach((ixes.
+    fe, 'utf8');leSync(filFi.read= fs content  let
+    try {s }) => {
+ { file, fixech((ixes.forEaecificF;
+
+sp
+  }
+] ]}
+       y
+};`
+  verOnl
+  Holy,OnouchopOnly,
+  TDeskttOnly,
+    TablebileOnly,
+ult {
+  Moport defa
+
+ex/div>
+);}
+  <hildren)}>
+    {c className-only',('hovere={cnsNam  <div clas }) => (
+assNamehildren, cl{ cs> = (ropeUtilityPResponsivt.FC<eacy: RerOnl const Hove: `export replacm,
+       *$/gOnly[^;]t Hoverconst arch: /expor  se    
+    { [
+    ixes:  f
+  tility.tsx',/ResponsiveUts/ui/Layout/componenontend/src file: 'fr[
+  {
+   Fixes = ficspecinst co fixes
+filepecific al sddition A
+/

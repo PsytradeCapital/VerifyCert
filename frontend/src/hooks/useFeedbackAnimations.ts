@@ -1,105 +1,166 @@
 import { useCallback } from 'react';
-import toast from 'react-hot-toast';
 
 interface FeedbackOptions {
-showConfetti?: boolean;
-  position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
-  shake?: boolean;
   duration?: number;
+  position?: 'top' | 'bottom' | 'center';
+  type?: 'success' | 'error' | 'warning' | 'info';
+}
 
 export const useFeedbackAnimations = () => {
-  const showSuccess = useCallback((message: string, options: FeedbackOptions = {
-}) => {
-    const { showConfetti = false, position = 'top-center', duration = 4000 } = options;
+  const showSuccess = useCallback((message: string, options: FeedbackOptions = {}) => {
+    const { duration = 3000, position = 'top' } = options;
     
-    toast.success(message, {
-      duration,
-      position: position as any,
-    });
-
-    // Trigger confetti animation if requested
-    if (showConfetti && typeof window !== 'undefined') {
-      // Simple confetti effect using CSS animations
-      const confettiElement = document.createElement('div');
-      confettiElement.innerHTML = '🎉';
-      confettiElement.style.cssText = 
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        font-size: 2rem;
-        animation: confetti 2s ease-out forwards;
-        pointer-events: none;
-        z-index: 9999;
-      
-      // Add confetti animation keyframes if not already added
-      if (!document.querySelector('#confetti-styles')) {
-        const style = document.createElement('style');
-        style.id = 'confetti-styles';
-        style.textContent = 
-          @keyframes confetti {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1;
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0;
-        document.head.appendChild(style);
-      
-      document.body.appendChild(confettiElement);
+    // Create success notification element
+    const successElement = document.createElement('div');
+    successElement.textContent = `✅ ${message}`;
+    successElement.style.cssText = `
+      position: fixed;
+      ${position}: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      animation: slideIn 0.3s ease-out;
+      pointer-events: none;
+    `;
+    
+    // Add animation keyframes if not already added
+    if (!document.querySelector('#feedback-styles')) {
+      const style = document.createElement('style');
+      style.id = 'feedback-styles';
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+        @keyframes confetti {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(successElement);
+    
+    // Remove after duration
+    setTimeout(() => {
+      successElement.style.animation = 'slideOut 0.3s ease-in';
       setTimeout(() => {
-        document.body.removeChild(confettiElement);
-      }, 2000);
+        if (document.body.contains(successElement)) {
+          document.body.removeChild(successElement);
+        }
+      }, 300);
+    }, duration);
   }, []);
 
   const showError = useCallback((message: string, options: FeedbackOptions = {}) => {
-    const { shake = false, position = 'top-center', duration = 4000 } = options;
+    const { duration = 4000, position = 'top' } = options;
     
-    toast.error(message, {
-      duration,
-      position: position as any,
-    });
-
-    // Trigger shake animation if requested
-    if (shake && typeof window !== 'undefined') {
-      document.body.style.animation = 'shake 0.5s ease-in-out';
+    // Create error notification element
+    const errorElement = document.createElement('div');
+    errorElement.textContent = `❌ ${message}`;
+    errorElement.style.cssText = `
+      position: fixed;
+      ${position}: 20px;
+      right: 20px;
+      background: #ef4444;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      animation: slideIn 0.3s ease-out;
+      pointer-events: none;
+    `;
+    
+    document.body.appendChild(errorElement);
+    
+    // Remove after duration
+    setTimeout(() => {
+      errorElement.style.animation = 'slideOut 0.3s ease-in';
       setTimeout(() => {
-        document.body.style.animation = '';
-      }, 500);
-      
-      // Add shake animation keyframes if not already added
-      if (!document.querySelector('#shake-styles')) {
-        const style = document.createElement('style');
-        style.id = 'shake-styles';
-        style.textContent = 
-          @keyframes shake {
-            0%, 100% { transform: translateX(0);
-            25% { transform: translateX(-5px);
-            75% { transform: translateX(5px);
-        document.head.appendChild(style);
+        if (document.body.contains(errorElement)) {
+          document.body.removeChild(errorElement);
+        }
+      }, 300);
+    }, duration);
   }, []);
 
   const showWarning = useCallback((message: string, options: FeedbackOptions = {}) => {
-    const { position = 'top-center', duration = 4000 } = options;
+    const { duration = 3500, position = 'top' } = options;
     
-    toast(message, {
-      duration,
-      position: position as any,
-      icon: '⚠️',
-    });
+    // Create warning notification element
+    const warningElement = document.createElement('div');
+    warningElement.textContent = `⚠️ ${message}`;
+    warningElement.style.cssText = `
+      position: fixed;
+      ${position}: 20px;
+      right: 20px;
+      background: #f59e0b;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      animation: slideIn 0.3s ease-out;
+      pointer-events: none;
+    `;
+    
+    document.body.appendChild(warningElement);
+    
+    // Remove after duration
+    setTimeout(() => {
+      warningElement.style.animation = 'slideOut 0.3s ease-in';
+      setTimeout(() => {
+        if (document.body.contains(warningElement)) {
+          document.body.removeChild(warningElement);
+        }
+      }, 300);
+    }, duration);
   }, []);
 
-  const showInfo = useCallback((message: string, options: FeedbackOptions = {}) => {
-    const { position = 'top-center', duration = 4000 } = options;
+  const showConfetti = useCallback(() => {
+    // Create confetti element
+    const confettiElement = document.createElement('div');
+    confettiElement.textContent = '🎉';
+    confettiElement.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      animation: confetti 2s ease-out forwards;
+      pointer-events: none;
+      z-index: 9999;
+    `;
     
-    toast(message, {
-      duration,
-      position: position as any,
-      icon: 'ℹ️',
-    });
+    document.body.appendChild(confettiElement);
+    setTimeout(() => {
+      if (document.body.contains(confettiElement)) {
+        document.body.removeChild(confettiElement);
+      }
+    }, 2000);
   }, []);
 
   return {
     showSuccess,
     showError,
     showWarning,
-    showInfo,
+    showConfetti
   };
 };
-}
-}
+
+export default useFeedbackAnimations;

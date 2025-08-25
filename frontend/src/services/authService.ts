@@ -1,211 +1,108 @@
-/**
- * Authentication Service
- * Handles all authentication-related API calls
- */
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-interface User {
-  id: numbe
-  name: string;
-  email?: string;
-  phone?: string;
-  region: string;
-  role: 'user' | 'issuer' | 'admin';
-  isVerified: boolean;
-}
-
-interface Reg
-  name: string;
-  email?: string;
-  phone?: string;
+export interface LoginCredentials {
+  email: string;
   password: string;
- ng;
 }
 
-interface LoginRnse {
- ;
+export interface SignupData {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
+export interface AuthResponse {
+  user: User;
   token: string;
 }
 
-interface ApiRespon
-  success: boolean;
-  data?: T;
-  error?: {
-    code: string;
-    message: string;
-    [];
- 
-}
+class AuthService {
+  private token: string | null = null;
 
-
-  private baseURLg;
-
-  c
-    this.baseURL = process.env.4000';
+  constructor() {
+    this.token = localStorage.getItem('authToken');
   }
 
-  private async mt<T>(
-    endpoint: string,
-    it = {}
-  ): Promise<T> {
-    const url = `${this.baseURL}/api/authnt}`;
-    
-ring> = {
-      'Content-Type': 'application
-    };
-
-    const token = localStorage.getItem('auth_token');
-    i{
-      defaultHeaders.Authorizatioken}`;
-    }
-
-    const config: RequestI
-      ...options,
-      he: {
-      Headers,
-s,
-      },
-    };
-
-    try {
-      const response = awg);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Request failed');
-      }
-
-      return data;
-    } catch (error) {
-      console.erroor);
-     rror;
-   }
-  }
-
-  async register(userData: Re
-    const respons {
+  async login(credentials: LoginCredentials): Promise<AuthResponse> {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
-    
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
     });
 
-    if{
-
-      localStorage.setItem('user',er));
-      return response.data;
+    if (!response.ok) {
+      throw new Error('Login failed');
     }
 
-    t
+    const data = await response.json();
+    this.token = data.token;
+    localStorage.setItem('authToken', data.token);
+    return data;
   }
 
-  async login(emnse> {
-    const response = awaitn', {
+  async signup(signupData: SignupData): Promise<AuthResponse> {
+    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
       method: 'POST',
-      bord }),
-    })
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signupData),
+    });
 
-    if (r
-      localStorage.setItem('auth_token', respons
-      localStorage.setItem('user', JSON.stringify(responsr));
-data;
+    if (!response.ok) {
+      throw new Error('Signup failed');
     }
 
-    thr
+    const data = await response.json();
+    this.token = data.token;
+    localStorage.setItem('authToken', data.token);
+    return data;
   }
 
-  async
-    try {
-      await this.make
-        method: 'POST',
-      });
-    } (error) {
-   rror);
-    } finally {
-      localStorage.removeItem('auth_token');
-      localStorage.re
-    }
+  async logout(): Promise<void> {
+    this.token = null;
+    localStorage.removeItem('authToken');
   }
 
   async getCurrentUser(): Promise<User | null> {
+    if (!this.token) return null;
+
     try {
-      const response ('/me');
-      
-      if (response.success && res
-        localStor;
-        r
+      const response = await fetch(`${API_BASE_URL}/auth/me`, {
+        headers: {
+          'Authorization': `Bearer ${this.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        this.logout();
+        return null;
       }
-    {
-      console.error('Failed to get current user:', error);
-      this.logout();
-    }
 
-    return null;
-  }
-
-  async reque{
-    const resd', {
-      met,
-      b
-    });
-
-    if (!response.success) {
-    ed');
-    }
-  }
-
-  async resetPassword(token: string, newPassword: string): Promise<void> {
-    const res', {
-      met
-      brd }),
-    });
-
-    if (!response.success) {
-      throw new Error;
-    }
-  }
-
-  async{
-   
-      method: 'POST',
-      body: JSON.stringify({ phone, otp }),
-    
-
-    if (response.succa) {
-      localStorage.setItem('oken);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      return a;
-    }
-
-    thriled');
-  }
-
-  async changePassword(currentPassword: string, newPassword:oid> {
-    const response = await this.makeRequest<Ad', {
-     'POST',
-      bod }),
-    });
-
-    if (!respon
-      throw new Error(resp;
-    }
-  }
-
-  getSt{
-    t{
-   ser');
-      return userStr ? JSON.parse(use;
+      return await response.json();
     } catch (error) {
-      console.error('Failor);
-   n null;
+      this.logout();
+      return null;
     }
   }
 
-  getStoredToken(): string | null {
-    ret
+  getToken(): string | null {
+    return this.token;
   }
 
   isAuthenticated(): boolean {
-    return !!this.getStoredToken();
+    return !!this.token;
   }
 }
 
-exp
-export type { User, RegisterData, LoginResponse, ApiResponse };
+export const authService = new AuthService();
+export default authService;

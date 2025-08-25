@@ -1,261 +1,168 @@
-import React, { useState } from 'react';
-import { Bell, BellOff, Check, X, AlertCircle, Loader2 } from 'lucide-react';
-import { usePushNotifications } from '../../hooks/usePushNotifications';
-
-interface PushNotificationSettingsProps {
-userId?: string;
-  className?: string;
-
-const PushNotificationSettings: React.FC<PushNotificationSettingsProps> = ({
-  userId = 'demo-user',
-  className = ''
-}) => {
-  const {
-    isSupported,
-    isSubscribed,
-    permission,
-    isLoading,
-    error,
-    subscribe,
-    unsubscribe,
-    sendTestNotification,
-    requestPermission,
-    clearError
-  } = usePushNotifications();
-
-  const [testLoading, setTestLoading] = useState(false);
-  const [testSuccess, setTestSuccess] = useState(false);
-
-  const handleSubscribe = async () => {
-    const success = await subscribe(userId);
-    if (success) {
-      console.log('Successfully subscribed to push notifications');
-  };
-
-  const handleUnsubscribe = async () => {
-    const success = await unsubscribe();
-    if (success) {
-      console.log('Successfully unsubscribed from push notifications');
-  };
-
-  const handleTestNotification = async () => {
-    setTestLoading(true);
-    setTestSuccess(false);
-    
-    const success = await sendTestNotification(userId);
-    
-    setTestLoading(false);
-    if (success) {
-      setTestSuccess(true);
-      setTimeout(() => setTestSuccess(false), 3000);
-  };
-
-  const handleRequestPermission = async () => {
-    await requestPermission();
-  };
-
-  const getPermissionStatus = () => {
-    switch (permission) {
-      case 'granted':
-        return { text: 'Granted', color: 'text-green-600', icon: Check };
-      case 'denied':
-        return { text: 'Denied', color: 'text-red-600', icon: X };
-      default:
-        return { text: 'Not requested', color: 'text-yellow-600', icon: AlertCircle };
-  };
-
-  const permissionStatus = getPermissionStatus();
-  const PermissionIcon = permissionStatus.icon;
-
-  if (!isSupported) {
-    return (
-      <div className={bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}}>
-        <div className="flex items-center space-x-2">
-          <AlertCircle className="h-5 w-5 text-yellow-600" />
-          <div>
-            <h3 className="text-sm font-medium text-yellow-800">
-              Push Notifications Not Supported
-            </h3>
-            <p className="text-sm text-yellow-700 mt-1">
-              Your browser doesn't support push notifications. Please use a modern browser like Chrome, Firefox, or Safari.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-
-  return (
-    <div className={bg-white border border-gray-200 rounded-lg p-6 ${className}}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
-          <Bell className="h-5 w-5 text-blue-600" />
-          <h3 className="text-lg font-medium text-gray-900">
-            Push Notifications
-          </h3>
-        </div>
-        <div className="flex items-center space-x-2">
-          <PermissionIcon className={h-4 w-4 ${permissionStatus.color}} />
-          <span className={text-sm ${permissionStatus.color}}>
-            {permissionStatus.text}
-          </span>
-        </div>
-      </div>
-
-      <p className="text-sm text-gray-600 mb-4">
-        Get notified when certificates are issued, verified, or updated. 
-        Stay informed about important certificate activities.
-      </p>
-
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <X className="h-4 w-4 text-red-600" />
-              <span className="text-sm text-red-800">{error}</span>
-            </div>
-            <button
-              onClick={clearError}
-              className="text-red-600 hover:text-red-800"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="space-y-4">
-        {/* Permission Status */}
-        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-          <div>
-            <p className="text-sm font-medium text-gray-900">Permission Status</p>
-            <p className="text-xs text-gray-600">
-              {permission === 'granted' 
-                ? 'Notifications are allowed' 
-                : permission === 'denied'
-                ? 'Notifications are blocked'
-                : 'Permission not requested yet'
-            </p>
-          </div>
-          {permission !== 'granted' && (
-            <button
-              onClick={handleRequestPermission}
-              disabled={isLoading}
-              className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-            >
-              {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                'Request Permission'
-              )}
-            </button>
-          )}
-        </div>
-
-        {/* Subscription Status */}
-        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-          <div>
-            <p className="text-sm font-medium text-gray-900">Subscription Status</p>
-            <p className="text-xs text-gray-600">
-              {isSubscribed 
-                ? 'You will receive push notifications' 
-                : 'You are not subscribed to notifications'
-            </p>
-          </div>
-          <div className="flex items-center space-x-2">
-            {isSubscribed ? (
-              <button
-                onClick={handleUnsubscribe}
-                disabled={isLoading || permission !== 'granted'}
-                className="flex items-center space-x-1 px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <BellOff className="h-4 w-4" />
-                    <span>Unsubscribe</span>
-                  </>
-                )}
-              </button>
-            ) : (
-              <button
-                onClick={handleSubscribe}
-                disabled={isLoading || permission !== 'granted'}
-                className="flex items-center space-x-1 px-3 py-1 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <Bell className="h-4 w-4" />
-                    <span>Subscribe</span>
-                  </>
-                )}
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Test Notification */}
-        {isSubscribed && (
-          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-            <div>
-              <p className="text-sm font-medium text-gray-900">Test Notification</p>
-              <p className="text-xs text-gray-600">
-                Send a test notification to verify everything is working
-              </p>
-            </div>
-            <button
-              onClick={handleTestNotification}
-              disabled={testLoading || !isSubscribed}
-              className="flex items-center space-x-1 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-            >
-              {testLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : testSuccess ? (
-                <>
-                  <Check className="h-4 w-4" />
-                  <span>Sent!</span>
-                </>
-              ) : (
-                <span>Send Test</span>
-              )}
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Notification Types */}
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <h4 className="text-sm font-medium text-gray-900 mb-3">
-          Notification Types
-        </h4>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Certificate Issued</span>
-            <span className="text-green-600">✓ Enabled</span>
-          </div>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Certificate Verified</span>
-            <span className="text-green-600">✓ Enabled</span>
-          </div>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Certificate Revoked</span>
-            <span className="text-green-600">✓ Enabled</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Browser Support Info */}
-      <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-        <p className="text-xs text-blue-800">
-          <strong>Note:</strong> Push notifications work best when VerifyCert is installed as a PWA. 
-          Notifications may not work in private/incognito mode.
-        </p>
-      </div>
-    </div>
-  );
+ionSettings;otificatlt PushNort defauxp
+e
 };
+  );
+v>)}
+    </diiv>
+        </d
+           </div>}
+             ))
+     </div>             l>
+be      </la   
+       div>-600"></ked:bg-bluechecll peer-ition-ar:trans-5 afteter:wafter:h-5 afl nded-fulr after:rourde:bo0 after-gray-30derte after:borter:bg-whiaft-[2px] efter:lafx] p-[2pfter:toolute abs] after:aontent-[''after:cite border-whecked:after:full peer-chnslate-x-ter:traed:afhecker peer-c ped-fullundeblue-300 roring-cus:g-4 peer-fo:rincuse peer-fotline-noncus:ou200 peer-fobg-gray--11 h-6 ssName="wla <div c            >
+            /        "
+   only peere="sr-classNam          
+          ting.id)}settting(gleSee={() => togChangon                    d}
+ting.enabled={set  checke                ox"
+  checkb    type="            
+    t      <inpu           nter">
+ rsor-poi cuitems-centernline-flex ve ime="relati classNabel       <la          </div>
+        v>
+       dicription}</dessetting.y-500">{text-gra="text-sm v className   <di           iv>
+    l}</detting.labe-900">{sm text-gray-mediue="fontv classNamdi       <          
+ x-1">="flemesNaiv clas   <d                 >
+  "
+        ded-lg-200 rounayborder-grorder p-3 ben etweify-b justnterx items-ce"fle className=             ting.id}
+      key={set     v
+           <di         (
+ ting => s.map(settting {se
+           >/h4ings<cation Settifi0">Notgray-90 text-um"font-medi className=        <h4    -3">
+pace-yme="sdiv classNa  <
+        iv>
+         </d</div>
+      n>
+       tto      </bu       
+ Test       
+               >
+        ion-colors" transit-green-700hover:bge rounded 0 text-whiteen-60ext-sm bg-gr-1 t-3 py="pxsName   clas             tion}
+otificasendTestNClick={         on
+          <button    >
+       ed</span enablications areotifn-800">Nxt-greeme="tessNa <span cla           ">
+  eenbetwy-ter justifems-cen"flex itlassName= c<div           -lg">
+ -200 roundedr-greener borderdgreen-50 bobg-e="p-4 ssNamiv cla      <d>
+    4"ace-y-ssName="spla c     <div
+   ed' && ( 'grantn ==={permissio
+        )}
 
-export default PushNotificationSettings;
+      </div>    
+   </p>      tings.
+   wser setbror  in youe themablse enked. Pleans are bloc Notificatio          ">
+ 00ed-8t-rtexlassName=" <p c   
+      -lg">200 roundedborder-red- border 50 bg-red-ame="p-4<div classN     & (
+   denied' &n === ' {permissio     
+
+
+      )} </div>       utton>
+       </bs
+   ationble Notific   Ena>
+           "
+        tion-colors-700 transibg-blue-lg hover: roundedxt-white00 tebg-blue-6"px-4 py-2 ssName=cla          ssion}
+  tPermiequesClick={r        onton
+      <but        
+       </p>
+   atesficyour certion d datey uptans to scatioush notifi p Enable      
+     ">800 mb-3e-bluxt-tee=" classNam   <p       >
+rounded-lg"00 rder-blue-2 border bo-50g-blue"p-4 bassName=<div cl         (
+t' &&defaulon === '{permissi
+       </div>
+ />
+     ay-400"gr w-5 text-me="h-5assNaSettings cl <  v>
+         </di  3>
+    </h
+        cationsotifi Push N        >
+   0"gray-90dium text-lg font-me"text- className=<h3       
+   " />600 mr-25 text-gray-5 w-h-sName=" <Bell clas         >
+ter"ms-centelex i="fameassN   <div cl     en">
+-betwetifyer juss-centx item"flessName=   <div cla   Name}`}>
+{classpace-y-4 $lassName={`sdiv c  <urn (
+    ret  }
+
+v>
+    );
+    </di/div>
+         <
+  </span>        ser
+ n this browrted iot suppo n areonsh notificati     Pus      00">
+ t-yellow-8me="texNa class   <span        mr-2" />
+w-600t-yello-5 w-5 texssName="hOff claell  <B
+        nter">cems-lex itessName="fiv cla<d    }>
+    sName}`d-lg ${clas0 roundew-20er-yellor bord0 bordeow-5p-4 bg-yellclassName={`<div (
+       return ) {
+   sSupported
+  if (!i
+  };
+ }  );
+ '
+      }avicon.icoicon: '/f        
+erifyCert',from Vification ott n a tesis is  body: 'Th
+       {on',t Notificati('TesNotification
+      new 'granted') {sion ===   if (permis() => {
+  cation = dTestNotifisennst 
+
+  co  }; ));
+ing
+       : sett
+    g.enabled }tin!setled: ing, enab..sett      ? { . id 
+   ===ing.idett    s
+   => ap(settingev.m(prev => prsetSettings
+    tring) => {id: sSetting = ( toggle
+
+  const
+  }; }
+   , error);n:'siormis peonicatiting notifequesError rerror(' console.  ) {
+    (error    } catchsult);
+sion(reis setPerm
+     n();rmissioestPeication.requNotifait t = awonst resul   ctry {
+   
+    
+    eturn;ported) r (!isSup> {
+    if= async () =ermission equestPst r);
+
+  con
+  }, []    }mission);
+ion.per(Notificaton setPermissi
+      window) {ation' inicif ('Notif
+    
+    ator);navigr' in Worke'serviceow && in windtion' 'Notificad(Supporte    setIsrted
+s are suppoication push notif // Check if => {
+   fect(() useEf
+
+ 
+  ]);alse
+    }enabled: f     s',
+ te and updaenancent system maiified aboutotn: 'Get ndescriptio,
+      Updates'l: 'System     labe  s',
+ystem-updateid: 's      {
+     },
+  e
+ bled: tru ena
+     icate',ertif coures yifivern someone  wheGet notifiedription: '    desc
+  rified',ate VeCertific label: '   rified',
+  ficate-ve: 'certi    id{
+   },
+     true
+   abled:,
+      enis issued'ertificate a new cd when iet notif'Geon:    descripti
+    Issued',ertificate 'Cbel:
+      lassued',ificate-id: 'cert
+      i]>([
+    {g[inficationSettate<Noti useStings] =Settettings, setst [son
+  cault');sion>('defionPermisotificate<N] = useStatPermissionsion, setpermis;
+  const [ate(false)eStd] = usrtepo, setIsSuppportedconst [isSu{
+  ) => ' 
+}ame = '  classN
+> = ({ psettingsProtificationSC<PushNoeact.Fings: RficationSett PushNoti
+constg;
 }
-}
+rine?: stclassNam
+  Props {SettingsontificaNotice Pusherfa
+int
+ean;
+}d: boolleenabing;
+  ription: strng;
+  descabel: string;
+  l
+  id: string {SettiionNotificaterface nt';
+
+i-reactide from 'lucings }Off, Sett Bellt { Bell,';
+imporactt } from 're useEffec useState,rt React, {impo

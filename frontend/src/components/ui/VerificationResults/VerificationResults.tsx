@@ -1,132 +1,164 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
-import Card from '../Card/Card';
+import { CheckCircle, XCircle, AlertTriangle, ExternalLink } from 'lucide-react';
 
-export interface VerificationResult {
-id: string;
-  status: 'verified' | 'error' | 'pending';
-  message?: string;
-  certificate?: {
-    id: string;
-    recipientName: string;
-    courseName: string;
-    institution: string;
-    issueDate: string;
-    isValid: boolean;
-};
+interface VerificationResult {
+  id: string;
+  certificateId: string;
+  recipientName: string;
+  courseName: string;
+  issuerName: string;
+  issueDate: string;
+  status: 'valid' | 'invalid' | 'revoked' | 'expired';
+  blockchainTxHash?: string;
+  verificationDate: string;
+}
 
-export interface VerificationResultsProps {
-result: VerificationResult;
-  onShare?: () => void;
-  onDownload?: () => void;
+interface VerificationResultsProps {
+  results: VerificationResult[];
   className?: string;
+}
 
-export const VerificationResults: React.FC<VerificationResultsProps> = ({
-  result,
-  onShare,
-  onDownload,
+const VerificationResults: React.FC<VerificationResultsProps> = ({
+  results,
   className = ''
 }) => {
-  const getStatusConfig = () => {
-    switch (result.status) {
-      case 'verified':
-        return {
-          icon: CheckCircle,
-          color: 'text-green-600',
-          bgColor: 'bg-green-50',
-          borderColor: 'border-green-200',
-          title: 'Certificate Verified'
-        };
-      case 'error':
-        return {
-          icon: XCircle,
-          color: 'text-red-600',
-          bgColor: 'bg-red-50',
-          borderColor: 'border-red-200',
-          title: 'Verification Failed'
-        };
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'valid':
+        return <CheckCircle className="h-6 w-6 text-green-500" />;
+      case 'invalid':
+        return <XCircle className="h-6 w-6 text-red-500" />;
+      case 'revoked':
+        return <XCircle className="h-6 w-6 text-red-500" />;
+      case 'expired':
+        return <AlertTriangle className="h-6 w-6 text-yellow-500" />;
       default:
-        return {
-          icon: AlertCircle,
-          color: 'text-yellow-600',
-          bgColor: 'bg-yellow-50',
-          borderColor: 'border-yellow-200',
-          title: 'Verification Pending'
-        };
+        return <AlertTriangle className="h-6 w-6 text-gray-500" />;
+    }
   };
 
-  const config = getStatusConfig();
-  const Icon = config.icon;
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'valid':
+        return 'bg-green-50 border-green-200';
+      case 'invalid':
+        return 'bg-red-50 border-red-200';
+      case 'revoked':
+        return 'bg-red-50 border-red-200';
+      case 'expired':
+        return 'bg-yellow-50 border-yellow-200';
+      default:
+        return 'bg-gray-50 border-gray-200';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'valid':
+        return 'Valid Certificate';
+      case 'invalid':
+        return 'Invalid Certificate';
+      case 'revoked':
+        return 'Revoked Certificate';
+      case 'expired':
+        return 'Expired Certificate';
+      default:
+        return 'Unknown Status';
+    }
+  };
+
+  if (results.length === 0) {
+    return (
+      <div className={`text-center py-8 ${className}`}>
+        <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+        <p className="text-gray-500">No verification results found</p>
+      </div>
+    );
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }
-      animate={{ opacity: 1, y: 0 }
-      transition={{ duration: 0.5 }
-      className={className}
-    >
-      <Card className={${config.bgColor} ${config.borderColor} border-2 p-6}>
-        {/* Status Header */}
-        <div className="flex items-center mb-6">
-          <div className={p-3 rounded-full ${config.bgColor} mr-4}>
-            <Icon className={w-8 h-8 ${config.color}} />
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900">{config.title}</h3>
-            {result.message && (
-              <p className="text-gray-600 mt-1">{result.message}</p>
+    <div className={`space-y-4 ${className}`}>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        Verification Results ({results.length})
+      </h3>
+      
+      {results.map((result) => (
+        <div
+          key={result.id}
+          className={`p-6 rounded-lg border ${getStatusColor(result.status)}`}
+        >
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center">
+              {getStatusIcon(result.status)}
+              <div className="ml-3">
+                <h4 className="text-lg font-medium text-gray-900">
+                  {getStatusText(result.status)}
+                </h4>
+                <p className="text-sm text-gray-500">
+                  Verified on {new Date(result.verificationDate).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+            
+            {result.blockchainTxHash && (
+              <a
+                href={`https://amoy.polygonscan.com/tx/${result.blockchainTxHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-blue-600 hover:text-blue-800 text-sm"
+              >
+                <ExternalLink className="h-4 w-4 mr-1" />
+                View on Blockchain
+              </a>
             )}
           </div>
-        </div>
 
-        {/* Certificate Details */}
-        {result.status === 'verified' && result.certificate && (
-          <div className="space-y-4 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <label className="text-sm font-medium text-gray-500">Recipient</label>
-                <p className="text-lg font-semibold text-gray-900">{result.certificate.recipientName}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h5 className="font-medium text-gray-900 mb-2">Certificate Details</h5>
+              <div className="space-y-1 text-sm">
+                <p><span className="font-medium">ID:</span> {result.certificateId}</p>
+                <p><span className="font-medium">Recipient:</span> {result.recipientName}</p>
+                <p><span className="font-medium">Course:</span> {result.courseName}</p>
               </div>
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <label className="text-sm font-medium text-gray-500">Course</label>
-                <p className="text-lg font-semibold text-gray-900">{result.certificate.courseName}</p>
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <label className="text-sm font-medium text-gray-500">Institution</label>
-                <p className="text-lg font-semibold text-gray-900">{result.certificate.institution}</p>
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <label className="text-sm font-medium text-gray-500">Issue Date</label>
-                <p className="text-lg font-semibold text-gray-900">{result.certificate.issueDate}</p>
+            </div>
+            
+            <div>
+              <h5 className="font-medium text-gray-900 mb-2">Issuer Information</h5>
+              <div className="space-y-1 text-sm">
+                <p><span className="font-medium">Issuer:</span> {result.issuerName}</p>
+                <p><span className="font-medium">Issue Date:</span> {new Date(result.issueDate).toLocaleDateString()}</p>
               </div>
             </div>
           </div>
-        )}
-        {/* Action Buttons */}
-        {result.status === 'verified' && (onShare || onDownload) && (
-          <div className="flex space-x-4">
-            {onShare && (
-              <button
-                onClick={onShare}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-              >
-                Share Certificate
-              </button>
-            )}
-            {onDownload && (
-              <button
-                onClick={onDownload}
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-              >
-                Download Certificate
-              </button>
-            )}
-          </div>
-        )}
-      </Card>
-    </motion.div>
+
+          {result.status === 'invalid' && (
+            <div className="mt-4 p-3 bg-red-100 rounded-lg">
+              <p className="text-red-800 text-sm">
+                This certificate could not be verified. It may be fraudulent or the verification data may be incorrect.
+              </p>
+            </div>
+          )}
+
+          {result.status === 'revoked' && (
+            <div className="mt-4 p-3 bg-red-100 rounded-lg">
+              <p className="text-red-800 text-sm">
+                This certificate has been revoked by the issuer and is no longer valid.
+              </p>
+            </div>
+          )}
+
+          {result.status === 'expired' && (
+            <div className="mt-4 p-3 bg-yellow-100 rounded-lg">
+              <p className="text-yellow-800 text-sm">
+                This certificate has expired and may no longer be considered valid.
+              </p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
   );
 };
-}
-}
+
+export default VerificationResults;

@@ -80,5 +80,5 @@ function Notification({
   );
 }
 
-export default Notification; type  };opstificationPr{ No
-export
+export default Notification;
+export type { NotificationProps };

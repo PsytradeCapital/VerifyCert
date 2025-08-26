@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 interface FeedbackTriggerConfig {
   // Time-based triggers
+  triggerAfterTime?: number; // milliseconds
   timeThreshold?: number; // milliseconds
   scrollThreshold?: number; // percentage
   
@@ -17,6 +18,7 @@ interface FeedbackTriggerConfig {
 
 interface FeedbackTriggerState {
   shouldShow: boolean;
+  shouldTrigger: boolean;
   category: 'navigation' | 'visual-design' | 'overall-experience';
   context: string;
   trigger: () => void;
@@ -33,7 +35,8 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
   const [errorCount, setErrorCount] = useState(0);
 
   const {
-    timeThreshold = 30000, // 30 seconds
+    triggerAfterTime = 30000,
+    timeThreshold = triggerAfterTime || 30000, // 30 seconds
     scrollThreshold = 70, // 70%
     clickThreshold = 5,
     errorThreshold = 2,
@@ -114,6 +117,7 @@ export const useFeedbackTrigger = (config: FeedbackTriggerConfig = {}): Feedback
 
   return {
     shouldShow,
+    shouldTrigger: shouldShow,
     category,
     context,
     trigger,

@@ -1,4 +1,4 @@
-import React from 'react';
+// Feedback service for collecting and managing user feedback
 
 interface FeedbackData {
   id?: string;
@@ -37,6 +37,10 @@ interface FeedbackAnalytics {
 class FeedbackService {
   private readonly STORAGE_KEY = 'verifycert-feedback';
   private readonly ANALYTICS_KEY = 'verifycert-feedback-analytics';
+
+  submitFeedback(feedback: FeedbackData): void {
+    this.storeFeedback(feedback);
+  }
 
   storeFeedback(feedback: FeedbackData): void {
     try {

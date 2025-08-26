@@ -3,7 +3,7 @@ import React from 'react';
 interface AlertProps {
   type?: 'success' | 'error' | 'warning' | 'info';
   title?: string;
-  message: string;
+  message?: string;
   children?: React.ReactNode;
   onClose?: () => void;
   variant?: string;
@@ -16,6 +16,7 @@ const Alert: React.FC<AlertProps> = ({
   type = 'info', 
   title, 
   message, 
+  children,
   onClose 
 }) => {
   const getAlertStyles = () => {
@@ -32,13 +33,14 @@ const Alert: React.FC<AlertProps> = ({
   };
 
   return (
-    <div className={`border px-4 py-3 rounded relative ${getAlertStyles()}`}>
+    <div className={`border px-4 py-3 rounded relative ${getAlertStyles()}`} role="alert">
       {title && <strong className="font-bold">{title}</strong>}
-      <span className="block sm:inline">{message}</span>
+      <span className="block sm:inline">{message || children}</span>
       {onClose && (
         <button
           onClick={onClose}
           className="absolute top-0 bottom-0 right-0 px-4 py-3"
+          aria-label="Dismiss alert"
         >
           ×
         </button>
@@ -49,3 +51,4 @@ const Alert: React.FC<AlertProps> = ({
 
 export default Alert;
 export type { AlertProps };
+export { Alert };

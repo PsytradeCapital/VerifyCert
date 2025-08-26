@@ -1,4 +1,5 @@
 // Simple test to verify blockchain service works
+
 describe('BlockchainService Simple Test', () => {
   beforeAll(() => {
     // Set environment variables for testing

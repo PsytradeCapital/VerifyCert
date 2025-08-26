@@ -13,6 +13,7 @@ const LoginPage: React.FC = () => {
       navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);
+    }
   };
 
   return (
@@ -47,4 +48,3 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
-}

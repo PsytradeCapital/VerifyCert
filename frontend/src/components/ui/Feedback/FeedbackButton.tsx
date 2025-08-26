@@ -8,13 +8,15 @@ interface FeedbackButtonProps {
   category?: 'navigation' | 'visual-design' | 'overall-experience';
   context?: string;
   className?: string;
+  onFeedbackRequest?: () => void;
 }
 
 export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   position = 'bottom-right',
   category,
   context,
-  className = ''
+  className = '',
+  onFeedbackRequest
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -29,7 +31,10 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   return (
     <>
       <motion.button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          onFeedbackRequest?.();
+        }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={`fixed ${positionClasses[position]} z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${className}`}
@@ -59,3 +64,4 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 };
 
 export default FeedbackButton;
+export type { FeedbackButtonProps };

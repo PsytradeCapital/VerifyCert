@@ -5,7 +5,7 @@ const { authenticateToken, requireVerified } = require('../src/middleware/auth')
 const router = express.Router();
 
 // Load contract ABI and address
-const contractABI = require('../artifacts/contracts/Certificate.sol/Certificate.json').abi;
+const contractABI = require('../../artifacts/contracts/Certificate.sol/Certificate.json').abi;
 const contractAddresses = require('../contract-addresses.json');
 
 // Validation schemas

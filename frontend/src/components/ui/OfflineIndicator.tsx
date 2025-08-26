@@ -70,4 +70,8 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
   );
 };
 
+// PWA and Service Worker related components
+export const ServiceWorkerUpdate: React.FC = () => null;
+export const PWAInstallPrompt: React.FC = () => null;
+
 export default OfflineIndicator;

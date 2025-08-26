@@ -2,5 +2,5 @@
  * Button Components
  */
 
-export { default as Button } from './Button';
+export { Button, default } from './Button';
 export type { ButtonProps } from './Button';

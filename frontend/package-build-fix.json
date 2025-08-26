@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build-memory": "cross-env NODE_OPTIONS='--max-old-space-size=8192' react-scripts build",
+    "build-minimal": "cross-env GENERATE_SOURCEMAP=false NODE_OPTIONS='--max-old-space-size=8192' react-scripts build"
+  }
+}

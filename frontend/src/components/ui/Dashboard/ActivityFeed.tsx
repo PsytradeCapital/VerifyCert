@@ -153,4 +153,5 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
   );
 };
 
-export default ActivityFeed;}
+export { ActivityFeed };
+export default ActivityFeed;

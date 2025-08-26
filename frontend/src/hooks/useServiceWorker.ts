@@ -155,6 +155,7 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
   };
 
   return [state, actions];
+}
 
 // Hook for offline status only
 export function useOfflineStatus(): boolean {
@@ -173,6 +174,7 @@ export function useOfflineStatus(): boolean {
   }, []);
 
   return isOffline;
+}
 
 // Hook for PWA installation status
 export function usePWAInstallation() {
@@ -198,6 +200,7 @@ export function usePWAInstallation() {
         setCanInstall(true);
         setInstallationState('prompted');
         trackInstallPromptEvent('prompt_available');
+      }
     };
 
     const handleAppInstalled = () => {

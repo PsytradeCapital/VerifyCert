@@ -32,7 +32,12 @@ const POLYGON_AMOY_CONFIG = {
   blockExplorerUrls: ['https://amoy.polygonscan.com/'],
 };
 
-export default function WalletConnect(): JSX.Element {
+export default function WalletConnect({ 
+  onConnect, 
+  onDisconnect, 
+  requiredNetwork, 
+  className = '' 
+}: WalletConnectProps): JSX.Element {
   const [walletState, setWalletState] = useState<WalletState>({
     isConnected: false,
     address: null,
@@ -338,7 +343,7 @@ export default function WalletConnect(): JSX.Element {
             color: '#ffffff !important',
             border: '2px solid #059669 !important',
             minHeight: '48px'
-          }
+          }}
         >
           {walletState.isConnecting ? (
             <React.Fragment>

@@ -84,7 +84,7 @@ const Settings: React.FC = () => {
     { id: 'security', label: 'Security', icon: Shield },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'advanced', label: 'Advanced', icon: Globe
+    { id: 'advanced', label: 'Advanced', icon: Globe }
   ];
 
   const handleSave = async () => {
@@ -97,6 +97,7 @@ const Settings: React.FC = () => {
       toast.error('Failed to save settings');
     } finally {
       setIsLoading(false);
+    }
   };
 
   const handleDeleteAccount = async () => {
@@ -110,6 +111,7 @@ const Settings: React.FC = () => {
       toast.error('Failed to delete account');
     } finally {
       setIsLoading(false);
+    }
   };
 
   const renderProfileTab = () => (
@@ -216,7 +218,7 @@ const Settings: React.FC = () => {
             { value: '15', label: '15 minutes' },
             { value: '30', label: '30 minutes' },
             { value: '60', label: '1 hour' },
-            { value: '240', label: '4 hours'
+            { value: '240', label: '4 hours' }
           ]}
         />
       </div>
@@ -283,7 +285,7 @@ const Settings: React.FC = () => {
           options={[
             { value: 'light', label: 'Light' },
             { value: 'dark', label: 'Dark' },
-            { value: 'system', label: 'System'
+            { value: 'system', label: 'System' }
           ]}
         />
       </div>
@@ -299,7 +301,7 @@ const Settings: React.FC = () => {
               { value: 'en', label: 'English' },
               { value: 'es', label: 'Spanish' },
               { value: 'fr', label: 'French' },
-              { value: 'de', label: 'German'
+              { value: 'de', label: 'German' }
             ]}
           />
           <Select
@@ -310,7 +312,7 @@ const Settings: React.FC = () => {
               { value: 'America/Los_Angeles', label: 'Pacific Time' },
               { value: 'America/New_York', label: 'Eastern Time' },
               { value: 'Europe/London', label: 'GMT' },
-              { value: 'Asia/Tokyo', label: 'JST'
+              { value: 'Asia/Tokyo', label: 'JST' }
             ]}
           />
         </div>
@@ -321,7 +323,7 @@ const Settings: React.FC = () => {
           options={[
             { value: 'MM/DD/YYYY', label: 'MM/DD/YYYY' },
             { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY' },
-            { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD'
+            { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' }
           ]}
         />
       </div>
@@ -335,7 +337,7 @@ const Settings: React.FC = () => {
         <div className="space-y-4">
           <Button
             variant="secondary"
-            onClick={() => toast.success('Data expo}nitiated')rt i
+            onClick={() => toast.success('Data export initiated')}
           >
             Export Data
           </Button>
@@ -383,11 +385,11 @@ const Settings: React.FC = () => {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                      className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
                         activeTab === tab.id
                           ? 'bg-blue-100 text-blue-700'
                           : 'text-gray-600 hover:bg-gray-100'
-                      }}
+                      }`}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="font-medium">{tab.label}</span>
@@ -467,5 +469,3 @@ const Settings: React.FC = () => {
 };
 
 export default Settings;
-}
-}

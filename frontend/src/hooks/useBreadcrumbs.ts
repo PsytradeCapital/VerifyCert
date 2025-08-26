@@ -25,6 +25,7 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
         { label: 'Home', href: '/' },
         { label: 'Unknown Page', active: true }
       ];
+    }
 
     const { config, params } = routeMatch;
 
@@ -80,6 +81,8 @@ export const useBreadcrumbs = (): BreadcrumbItem[] => {
 
     return breadcrumbs;
   }, [location.pathname]);
+
+  return breadcrumbs;
 };
 
 export default useBreadcrumbs;

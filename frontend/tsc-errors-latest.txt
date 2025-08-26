@@ -1,0 +1,20 @@
+frontend/src/components/WalletConnect.tsx(343,23): error TS1005: ',' expected.
+frontend/src/components/WalletConnect.tsx(364,9): error TS1005: '}' expected.
+frontend/src/components/WalletConnect.tsx(364,11): error TS17002: Expected corresponding JSX closing tag for 'div'.
+frontend/src/components/WalletConnect.tsx(365,9): error TS1005: ';' expected.
+frontend/src/components/WalletConnect.tsx(405,5): error TS1128: Declaration or statement expected.
+frontend/src/components/WalletConnect.tsx(406,3): error TS1109: Expression expected.
+frontend/src/components/WalletConnect.tsx(407,1): error TS1128: Declaration or statement expected.
+frontend/src/hooks/useBreadcrumbs.ts(82,4): error TS1128: Declaration or statement expected.
+frontend/src/hooks/useBreadcrumbs.ts(82,25): error TS1005: ';' expected.
+frontend/src/hooks/useResponsive.ts(188,30): error TS1005: '}' expected.
+frontend/src/hooks/useServiceWorker.ts(241,17): error TS1005: ',' expected.
+frontend/src/hooks/useServiceWorker.ts(241,59): error TS1005: ',' expected.
+frontend/src/hooks/useServiceWorker.ts(241,72): error TS1005: ',' expected.
+frontend/src/hooks/useServiceWorker.ts(308,33): error TS1005: '}' expected.
+frontend/src/hooks/useTheme.ts(82,4): error TS1128: Declaration or statement expected.
+frontend/src/hooks/useTheme.ts(82,8): error TS1005: ';' expected.
+frontend/src/hooks/useValidationAnimation.ts(125,10): error TS1128: Declaration or statement expected.
+frontend/src/hooks/useValidationAnimation.ts(129,7): error TS1005: ',' expected.
+frontend/src/hooks/useValidationAnimation.ts(134,4): error TS1472: 'catch' or 'finally' expected.
+frontend/src/hooks/useValidationAnimation.ts(134,39): error TS1005: ';' expected.

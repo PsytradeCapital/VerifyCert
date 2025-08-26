@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
+
 export interface BreakpointConfig {
   xs: number;
   sm: number;
@@ -29,10 +30,10 @@ export interface ResponsiveState {
   isDesktop: boolean;
   isTouch: boolean;
   currentBreakpoint: BreakpointKey;
-}
   isBreakpoint: (breakpoint: BreakpointKey) => boolean;
   isAboveBreakpoint: (breakpoint: BreakpointKey) => boolean;
   isBelowBreakpoint: (breakpoint: BreakpointKey) => boolean;
+}
 
 export function useResponsive(breakpoints: BreakpointConfig = defaultBreakpoints): ResponsiveState {
   const [windowSize, setWindowSize] = useState({
@@ -105,26 +106,31 @@ export function useResponsive(breakpoints: BreakpointConfig = defaultBreakpoints
     isAboveBreakpoint,
     isBelowBreakpoint,
   };
+}
 
 // Hook for specific breakpoint checks
 export function useBreakpoint(breakpoint: BreakpointKey, breakpoints?: BreakpointConfig): boolean {
   const { isAboveBreakpoint } = useResponsive(breakpoints);
   return isAboveBreakpoint(breakpoint);
+}
 
 // Hook for mobile detection
 export function useIsMobile(breakpoints?: BreakpointConfig): boolean {
   const { isMobile } = useResponsive(breakpoints);
   return isMobile;
+}
 
 // Hook for desktop detection
 export function useIsDesktop(breakpoints?: BreakpointConfig): boolean {
   const { isDesktop } = useResponsive(breakpoints);
   return isDesktop;
+}
 
 // Hook for touch device detection
 export function useIsTouch(breakpoints?: BreakpointConfig): boolean {
   const { isTouch } = useResponsive(breakpoints);
   return isTouch;
+}
 
 // Hook for getting current breakpoint
 export function useCurrentBreakpoint(breakpoints?: BreakpointConfig): BreakpointKey {

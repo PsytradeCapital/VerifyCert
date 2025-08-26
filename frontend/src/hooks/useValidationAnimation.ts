@@ -67,6 +67,7 @@ export const useValidationAnimation = (
       );
     } finally {
       setIsAnimating(false);
+    }
   }, [animationConfig]);
 
   const triggerMessageAnimation = useCallback(async (animationType: string) => {
@@ -80,6 +81,7 @@ export const useValidationAnimation = (
       );
     } finally {
       setIsAnimating(false);
+    }
   }, [animationConfig]);
 
   const triggerIconAnimation = useCallback(async (animationType: string) => {
@@ -93,6 +95,7 @@ export const useValidationAnimation = (
       );
     } finally {
       setIsAnimating(false);
+    }
   }, [animationConfig]);
 
   // Trigger animation sequence for validation state
@@ -118,14 +121,18 @@ export const useValidationAnimation = (
                 animation as any,
                 animationConfig
               );
+            }
             resolve();
           }, delay);
         });
       });
 
       await Promise.all(animationPromises);
+    } catch (error) {
+      console.warn('Animation sequence failed:', error);
     } finally {
       setIsAnimating(false);
+    }
   }, [enableSequence, animationConfig]);
 
   // Get animation classes for current validation state
@@ -140,17 +147,20 @@ export const useValidationAnimation = (
     // Clear existing debounce timeout
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
+    }
 
     // Debounce animation triggers to prevent excessive animations
     debounceTimeoutRef.current = setTimeout(() => {
       if (validationState !== 'default' && validationState !== previousState) {
         triggerSequence(validationState as 'error' | 'success' | 'warning');
+      }
       setPreviousState(validationState);
     }, debounceMs);
 
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
+      }
     };
   }, [validationState, previousState, animateOnChange, debounceMs, triggerSequence]);
 
@@ -159,6 +169,7 @@ export const useValidationAnimation = (
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -182,9 +193,8 @@ export const useValidationAnimation = (
  * Hook for managing validation message animations specifically
  */
 export const useValidationMessageAnimation = (
-;
-  message: string | undefined,;
-  validationState: 'default' | 'success' | 'error' | 'warning';
+  message: string | undefined,
+  validationState: 'default' | 'success' | 'error' | 'warning'
 ) => {
   const [displayMessage, setDisplayMessage] = useState(message);
   const [isVisible, setIsVisible] = useState(!!message);
@@ -193,6 +203,7 @@ export const useValidationMessageAnimation = (
   useEffect(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
+    }
 
     if (message) {
       // Show new message immediately
@@ -204,10 +215,12 @@ export const useValidationMessageAnimation = (
       timeoutRef.current = setTimeout(() => {
         setDisplayMessage(undefined);
       }, 300); // Match animation duration
+    }
 
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
     };
   }, [message]);
 
@@ -222,9 +235,8 @@ export const useValidationMessageAnimation = (
  * Hook for managing validation icon animations
  */
 export const useValidationIconAnimation = (
-;
-  validationState: 'default' | 'success' | 'error' | 'warning',;
-  showIcon: boolean = true;
+  validationState: 'default' | 'success' | 'error' | 'warning',
+  showIcon: boolean = true
 ) => {
   const [currentState, setCurrentState] = useState(validationState);
   const [isChanging, setIsChanging] = useState(false);
@@ -242,6 +254,7 @@ export const useValidationIconAnimation = (
       return () => clearTimeout(timeout);
     } else {
       setCurrentState(validationState);
+    }
   }, [validationState, currentState, showIcon]);
 
   const getIconAnimationClass = () => {
@@ -249,6 +262,7 @@ export const useValidationIconAnimation = (
     
     if (isChanging) {
       return 'animate-scale-out';
+    }
     
     return 'animate-icon-pop-in';
   };
@@ -260,5 +274,3 @@ export const useValidationIconAnimation = (
     shouldShowIcon: showIcon && currentState !== 'default'
   };
 };
-}
-}

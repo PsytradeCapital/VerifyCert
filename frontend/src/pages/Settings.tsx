@@ -4,7 +4,7 @@ import { Card, Button, Input, Select, Modal } from '../components/ui';
 import toast from 'react-hot-toast';
 
 interface UserProfile {
-name: string;
+  name: string;
   email: string;
   organization: string;
   role: string;
@@ -13,31 +13,29 @@ name: string;
   bio?: string;
   website?: string;
   location?: string;
+}
 
 interface NotificationSettings {
-}
-}
-}
   emailNotifications: boolean;
   certificateIssued: boolean;
   certificateVerified: boolean;
   systemUpdates: boolean;
   marketingEmails: boolean;
+}
 
 interface SecuritySettings {
-twoFactorEnabled: boolean;
+  twoFactorEnabled: boolean;
   sessionTimeout: number;
   loginNotifications: boolean;
   apiKeyEnabled: boolean;
+}
 
 interface AppearanceSettings {
-}
-}
-}
   theme: 'light' | 'dark' | 'system';
   language: string;
   timezone: string;
   dateFormat: string;
+}
 
 const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState('profile');

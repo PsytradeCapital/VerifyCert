@@ -1,0 +1,1083 @@
+src/components/ui/Dashboard/ActivityFeed.tsx(52,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/ui/Dashboard/ActivityFeed.tsx(53,11): error TS1005: ')' expected.
+src/components/ui/Dashboard/ActivityFeed.tsx(54,9): error TS1109: Expression expected.
+src/components/ui/Dashboard/ActivityFeed.tsx(55,7): error TS1005: 'export' expected.
+src/components/ui/Dashboard/ActivityFeed.tsx(55,14): error TS1128: Declaration or statement expected.
+src/components/ui/Dashboard/ActivityFeed.tsx(63,3): error TS1128: Declaration or statement expected.
+src/components/ui/Dashboard/ActivityFeed.tsx(155,1): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(343,23): error TS1005: ',' expected.
+src/components/WalletConnect.tsx(364,9): error TS1005: '}' expected.
+src/components/WalletConnect.tsx(364,11): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/WalletConnect.tsx(365,9): error TS1005: ';' expected.
+src/components/WalletConnect.tsx(405,5): error TS1128: Declaration or statement expected.
+src/components/WalletConnect.tsx(406,3): error TS1109: Expression expected.
+src/components/WalletConnect.tsx(407,1): error TS1128: Declaration or statement expected.
+src/hooks/useBreadcrumbs.ts(82,4): error TS1128: Declaration or statement expected.
+src/hooks/useBreadcrumbs.ts(82,25): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(1,4): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(1,22): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(1,30): error TS1005: 'export' expected.
+src/hooks/useNavigationTransitions.ts(4,1): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(4,3): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(5,3): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(5,16): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(6,9): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(8,18): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(8,21): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(9,2): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(9,7): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(9,12): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(9,13): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(11,23): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(12,3): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(12,4): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(12,6): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(13,2): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(13,25): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(14,5): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(14,12): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(17,8): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(18,15): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(18,21): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(18,26): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(18,28): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(20,48): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(20,57): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(20,58): error TS1134: Variable declaration expected.
+src/hooks/useNavigationTransitions.ts(22,50): error TS1005: ']' expected.
+src/hooks/useNavigationTransitions.ts(23,3): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(23,4): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(25,7): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(25,13): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/hooks/useNavigationTransitions.ts(25,19): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(26,4): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(26,9): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(27,9): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(27,20): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(27,23): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(29,1): error TS1435: Unknown keyword or identifier. Did you mean 'default'?
+src/hooks/useNavigationTransitions.ts(30,15): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(31,7): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/hooks/useNavigationTransitions.ts(31,13): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(31,30): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(32,5): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(32,16): error TS1124: Digit expected.
+src/hooks/useNavigationTransitions.ts(32,20): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(33,10): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(33,19): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(33,23): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(33,27): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(35,14): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(35,17): error TS1005: ':' expected.
+src/hooks/useNavigationTransitions.ts(35,26): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(35,36): error TS1005: ':' expected.
+src/hooks/useNavigationTransitions.ts(37,12): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(37,19): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(38,10): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(38,15): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(38,21): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/hooks/useNavigationTransitions.ts(39,8): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(39,13): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/hooks/useNavigationTransitions.ts(39,25): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(39,29): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(39,40): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(41,9): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(41,28): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(41,32): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(42,4): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(42,38): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(46,16): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(46,40): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(47,29): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(49,14): error TS1136: Property assignment expected.
+src/hooks/useNavigationTransitions.ts(50,7): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(50,10): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(50,12): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(51,3): error TS1136: Property assignment expected.
+src/hooks/useNavigationTransitions.ts(51,5): error TS1136: Property assignment expected.
+src/hooks/useNavigationTransitions.ts(51,10): error TS1138: Parameter declaration expected.
+src/hooks/useNavigationTransitions.ts(51,11): error TS1135: Argument expression expected.
+src/hooks/useNavigationTransitions.ts(51,25): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(51,39): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(53,3): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(53,10): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(53,12): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(53,90): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(53,91): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(54,5): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(56,7): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(56,16): error TS1435: Unknown keyword or identifier. Did you mean 'out'?
+src/hooks/useNavigationTransitions.ts(56,21): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(56,23): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(56,26): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(58,10): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(58,22): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(60,24): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(61,5): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(61,11): error TS1003: Identifier expected.
+src/hooks/useNavigationTransitions.ts(61,22): error TS1003: Identifier expected.
+src/hooks/useNavigationTransitions.ts(62,4): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(62,33): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(62,36): error TS1005: '{' expected.
+src/hooks/useNavigationTransitions.ts(62,39): error TS1136: Property assignment expected.
+src/hooks/useNavigationTransitions.ts(63,29): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(64,12): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(64,25): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(64,30): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(65,6): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(65,22): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(65,28): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(65,37): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(65,40): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(68,5): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(68,15): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(69,18): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(71,28): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(71,49): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(73,7): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(74,63): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(75,7): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(75,18): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(75,32): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(77,1): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(77,6): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(77,32): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(78,38): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(78,48): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(79,7): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(79,8): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(80,3): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(80,7): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(82,5): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(82,6): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(82,10): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(82,13): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(83,1): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(83,16): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(84,5): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(84,8): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(84,26): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(84,45): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(85,5): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(85,13): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(86,16): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(87,9): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(87,23): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(87,50): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(87,60): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(88,2): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(88,69): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(90,3): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(90,27): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(91,21): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(91,36): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(92,4): error TS1005: ')' expected.
+src/hooks/useNavigationTransitions.ts(92,9): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(92,63): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(93,8): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(93,24): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(93,32): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(93,33): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(93,102): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(94,3): error TS1435: Unknown keyword or identifier. Did you mean 'const'?
+src/hooks/useNavigationTransitions.ts(94,8): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(96,4): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(97,18): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(97,20): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(98,2): error TS1109: Expression expected.
+src/hooks/useNavigationTransitions.ts(98,4): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(98,16): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(99,9): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(99,11): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(100,5): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(101,33): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(101,38): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(101,40): error TS1139: Type parameter declaration expected.
+src/hooks/useNavigationTransitions.ts(101,78): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(102,3): error TS1005: ']' expected.
+src/hooks/useNavigationTransitions.ts(103,3): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(103,7): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(103,40): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(103,46): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(104,15): error TS1005: '{' expected.
+src/hooks/useNavigationTransitions.ts(104,30): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(104,36): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(104,37): error TS1005: ',' expected.
+src/hooks/useNavigationTransitions.ts(105,2): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(105,12): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(107,1): error TS1128: Declaration or statement expected.
+src/hooks/useNavigationTransitions.ts(108,9): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(109,22): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(109,25): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(110,3): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(110,13): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(110,34): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(110,55): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(112,3): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(112,9): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(114,11): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(114,27): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(114,47): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(114,53): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(115,15): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(115,47): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(115,47): error TS1434: Unexpected keyword or identifier.
+src/hooks/useNavigationTransitions.ts(115,54): error TS1002: Unterminated string literal.
+src/hooks/useNavigationTransitions.ts(116,30): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(116,48): error TS1005: ';' expected.
+src/hooks/useNavigationTransitions.ts(116,49): error TS1005: '}' expected.
+src/hooks/useResponsive.ts(12,14): error TS1005: ';' expected.
+src/hooks/useResponsive.ts(21,1): error TS1131: Property or signature expected.
+src/hooks/useResponsive.ts(136,1): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(137,15): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(138,33): error TS1005: ',' expected.
+src/hooks/useResponsive.ts(155,1): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(156,29): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(157,33): error TS1005: ',' expected.
+src/hooks/useResponsive.ts(170,1): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(171,20): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(172,33): error TS1005: ',' expected.
+src/hooks/useResponsive.ts(180,1): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(181,20): error TS1138: Parameter declaration expected.
+src/hooks/useResponsive.ts(182,33): error TS1005: ',' expected.
+src/hooks/useResponsive.ts(188,2): error TS1005: '}' expected.
+src/hooks/useServiceWorker.ts(4,15): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(5,13): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(6,29): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(7,16): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(8,18): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(9,15): error TS1005: ',' expected.
+src/hooks/useServiceWorker.ts(11,10): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(12,18): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(13,28): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(14,27): error TS1003: Identifier expected.
+src/hooks/useServiceWorker.ts(15,16): error TS1005: ',' expected.
+src/hooks/useServiceWorker.ts(28,1): error TS1131: Property or signature expected.
+src/hooks/useServiceWorker.ts(30,1): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(31,1): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(32,23): error TS1109: Expression expected.
+src/hooks/useServiceWorker.ts(33,21): error TS1109: Expression expected.
+src/hooks/useServiceWorker.ts(90,6): error TS1005: ',' expected.
+src/hooks/useServiceWorker.ts(91,4): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(91,25): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(111,4): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(111,8): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(120,4): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(120,8): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(144,4): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(144,55): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(217,10): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(217,16): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(234,4): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(234,72): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(272,7): error TS1005: 'try' expected.
+src/hooks/useServiceWorker.ts(277,4): error TS1128: Declaration or statement expected.
+src/hooks/useServiceWorker.ts(277,46): error TS1005: ';' expected.
+src/hooks/useServiceWorker.ts(298,2): error TS1005: '}' expected.
+src/hooks/useTheme.ts(26,1): error TS1131: Property or signature expected.
+src/hooks/useTheme.ts(41,3): error TS1005: 'try' expected.
+src/hooks/useTheme.ts(76,4): error TS1128: Declaration or statement expected.
+src/hooks/useTheme.ts(76,8): error TS1005: ';' expected.
+src/hooks/useTheme.ts(112,7): error TS1005: 'try' expected.
+src/hooks/useTheme.ts(115,4): error TS1128: Declaration or statement expected.
+src/hooks/useTheme.ts(115,18): error TS1005: ';' expected.
+src/hooks/useTheme.ts(155,5): error TS1005: 'try' expected.
+src/hooks/useTheme.ts(185,1): error TS1472: 'catch' or 'finally' expected.
+src/hooks/useTheme.ts(185,2): error TS1005: '}' expected.
+src/hooks/useValidationAnimation.ts(8,10): error TS1003: Identifier expected.
+src/hooks/useValidationAnimation.ts(9,31): error TS1003: Identifier expected.
+src/hooks/useValidationAnimation.ts(10,33): error TS1003: Identifier expected.
+src/hooks/useValidationAnimation.ts(11,23): error TS1003: Identifier expected.
+src/hooks/useValidationAnimation.ts(12,28): error TS1005: ',' expected.
+src/hooks/useValidationAnimation.ts(21,1): error TS1131: Property or signature expected.
+src/hooks/useValidationAnimation.ts(23,1): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(24,1): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(37,1): error TS1131: Property or signature expected.
+src/hooks/useValidationAnimation.ts(37,40): error TS1109: Expression expected.
+src/hooks/useValidationAnimation.ts(38,64): error TS1109: Expression expected.
+src/hooks/useValidationAnimation.ts(41,1): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(41,2): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(41,58): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(71,4): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(71,23): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(84,4): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(84,23): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(97,4): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(97,23): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(103,43): error TS1005: ']' expected.
+src/hooks/useValidationAnimation.ts(103,50): error TS1005: ',' expected.
+src/hooks/useValidationAnimation.ts(103,59): error TS1005: ',' expected.
+src/hooks/useValidationAnimation.ts(103,62): error TS1005: ',' expected.
+src/hooks/useValidationAnimation.ts(103,68): error TS1005: ',' expected.
+src/hooks/useValidationAnimation.ts(103,94): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(123,12): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(123,14): error TS1434: Unexpected keyword or identifier.
+src/hooks/useValidationAnimation.ts(123,19): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(130,4): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(130,39): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(150,6): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(150,8): error TS1434: Unexpected keyword or identifier.
+src/hooks/useValidationAnimation.ts(150,18): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(156,84): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(164,8): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(186,1): error TS1109: Expression expected.
+src/hooks/useValidationAnimation.ts(187,31): error TS1109: Expression expected.
+src/hooks/useValidationAnimation.ts(189,1): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(189,3): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(213,15): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(226,1): error TS1109: Expression expected.
+src/hooks/useValidationAnimation.ts(227,64): error TS1109: Expression expected.
+src/hooks/useValidationAnimation.ts(229,1): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(229,3): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(246,4): error TS1128: Declaration or statement expected.
+src/hooks/useValidationAnimation.ts(246,47): error TS1005: ';' expected.
+src/hooks/useValidationAnimation.ts(265,1): error TS1128: Declaration or statement expected.
+src/pages/NavigationStateDemo.tsx(59,7): error TS1005: ',' expected.
+src/pages/NavigationStateDemo.tsx(72,3): error TS1005: ',' expected.
+src/pages/NavigationStateDemo.tsx(223,19): error TS1005: '}' expected.
+src/pages/NavigationStateDemo.tsx(235,41): error TS1005: ',' expected.
+src/pages/NavigationStateDemo.tsx(235,47): error TS1005: ',' expected.
+src/pages/NavigationStateDemo.tsx(237,19): error TS1005: '}' expected.
+src/pages/NavigationStateDemo.tsx(255,1): error TS1128: Declaration or statement expected.
+src/pages/NavigationStateDemo.tsx(256,1): error TS1128: Declaration or statement expected.
+src/pages/PWATestPage.tsx(27,7): error TS1005: 'try' expected.
+src/pages/PWATestPage.tsx(200,33): error TS1005: ',' expected.
+src/pages/PWATestPage.tsx(200,41): error TS1005: ',' expected.
+src/pages/PWATestPage.tsx(200,45): error TS1005: ',' expected.
+src/pages/PWATestPage.tsx(201,19): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/pages/PWATestPage.tsx(203,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/pages/PWATestPage.tsx(205,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/pages/PWATestPage.tsx(210,40): error TS1005: ',' expected.
+src/pages/PWATestPage.tsx(210,44): error TS1005: ',' expected.
+src/pages/PWATestPage.tsx(211,19): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/pages/PWATestPage.tsx(213,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/pages/PWATestPage.tsx(215,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/pages/PWATestPage.tsx(234,24): error TS1005: ';' expected.
+src/pages/PWATestPage.tsx(235,17): error TS1128: Declaration or statement expected.
+src/pages/PWATestPage.tsx(235,19): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/pages/PWATestPage.tsx(240,11): error TS1005: ')' expected.
+src/pages/PWATestPage.tsx(244,9): error TS1128: Declaration or statement expected.
+src/pages/PWATestPage.tsx(298,7): error TS1128: Declaration or statement expected.
+src/pages/PWATestPage.tsx(299,5): error TS1109: Expression expected.
+src/pages/PWATestPage.tsx(300,3): error TS1109: Expression expected.
+src/pages/PWATestPage.tsx(301,1): error TS1128: Declaration or statement expected.
+src/pages/PWATestPage.tsx(304,1): error TS1128: Declaration or statement expected.
+src/pages/PWATestPage.tsx(305,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(17,1): error TS1131: Property or signature expected.
+src/pages/Settings.tsx(19,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(20,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(33,1): error TS1131: Property or signature expected.
+src/pages/Settings.tsx(35,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(36,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(90,3): error TS1005: ',' expected.
+src/pages/Settings.tsx(222,11): error TS1005: ',' expected.
+src/pages/Settings.tsx(289,11): error TS1005: ',' expected.
+src/pages/Settings.tsx(305,13): error TS1005: ',' expected.
+src/pages/Settings.tsx(316,13): error TS1005: ',' expected.
+src/pages/Settings.tsx(327,11): error TS1005: ',' expected.
+src/pages/Settings.tsx(340,63): error TS1005: '}' expected.
+src/pages/Settings.tsx(388,41): error TS1005: '}' expected.
+src/pages/Settings.tsx(389,25): error TS1005: '...' expected.
+src/pages/Settings.tsx(392,24): error TS1003: Identifier expected.
+src/pages/Settings.tsx(393,21): error TS1005: ',' expected.
+src/pages/Settings.tsx(394,23): error TS2657: JSX expressions must have one parent element.
+src/pages/Settings.tsx(396,21): error TS1005: ',' expected.
+src/pages/Settings.tsx(396,23): error TS17002: Expected corresponding JSX closing tag for 'nav'.
+src/pages/Settings.tsx(398,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/pages/Settings.tsx(398,19): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/pages/Settings.tsx(399,17): error TS17002: Expected corresponding JSX closing tag for 'Card'.
+src/pages/Settings.tsx(400,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/pages/Settings.tsx(467,5): error TS1005: ')' expected.
+src/pages/Settings.tsx(468,3): error TS1109: Expression expected.
+src/pages/Settings.tsx(469,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(472,1): error TS1128: Declaration or statement expected.
+src/pages/Settings.tsx(473,1): error TS1128: Declaration or statement expected.
+src/pages/ThemeDemo.tsx(247,24): error TS1109: Expression expected.
+src/pages/ThemeDemo.tsx(248,23): error TS2657: JSX expressions must have one parent element.
+src/pages/ThemeDemo.tsx(250,21): error TS1005: '}' expected.
+src/scripts/run-screen-reader-tests.ts(2,1): error TS18026: '#!' can only be used at the start of a file.
+src/scripts/run-screen-reader-tests.ts(2,16): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(18,11): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(21,17): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(21,24): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(21,33): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(22,3): error TS1477: An instantiation expression cannot be followed by a property access.
+src/scripts/run-screen-reader-tests.ts(23,14): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(24,25): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(25,15): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/scripts/run-screen-reader-tests.ts(25,17): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(26,16): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/scripts/run-screen-reader-tests.ts(26,18): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(27,17): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(28,17): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/scripts/run-screen-reader-tests.ts(28,19): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(29,23): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(30,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(31,12): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(31,18): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(31,26): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(35,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(36,11): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(37,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(37,14): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(38,17): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/scripts/run-screen-reader-tests.ts(38,20): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(38,26): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(38,27): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(38,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(38,28): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/scripts/run-screen-reader-tests.ts(39,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(39,24): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/scripts/run-screen-reader-tests.ts(41,18): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(41,27): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(42,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(43,4): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(43,5): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(44,3): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(46,8): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(46,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(46,19): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(46,20): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(47,3): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(48,3): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(53,2): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(75,13): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(75,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(75,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(75,41): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(75,68): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(75,72): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(76,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(76,34): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(76,53): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(76,82): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(77,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(77,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(77,43): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(77,61): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(77,77): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(78,13): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(78,18): error TS1005: '{' expected.
+src/scripts/run-screen-reader-tests.ts(78,36): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(78,40): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(78,41): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(80,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(81,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(81,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(81,33): error TS1005: '{' expected.
+src/scripts/run-screen-reader-tests.ts(81,49): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(81,56): error TS1228: A type predicate is only allowed in return type position for functions and methods.
+src/scripts/run-screen-reader-tests.ts(81,59): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(81,69): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(81,80): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(81,94): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(82,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(82,32): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(82,42): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(82,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(82,71): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(82,88): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(83,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,40): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,55): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,68): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,77): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,90): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(83,104): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(84,9): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(84,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(85,14): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(85,18): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(85,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(86,14): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(86,18): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(86,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(87,6): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(87,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(97,3): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(102,11): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(102,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(104,16): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(104,19): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(104,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(104,54): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(104,60): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(105,16): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(105,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(105,44): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(105,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(105,73): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(105,89): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(105,102): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(106,14): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(106,16): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(106,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(106,34): error TS1005: '{' expected.
+src/scripts/run-screen-reader-tests.ts(106,51): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(106,56): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(106,61): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(106,73): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(107,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(110,16): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(110,19): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(110,34): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(110,57): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(110,66): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(111,16): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(111,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,46): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,61): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,76): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,92): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,107): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,119): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(111,127): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(112,14): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(112,16): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(112,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(112,51): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(112,57): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(112,59): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(112,65): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(112,80): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(113,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(116,16): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(116,19): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(116,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(116,62): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(117,17): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(117,35): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(117,50): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(117,66): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(118,19): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(118,24): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(118,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(118,46): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(119,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(119,37): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(119,45): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(120,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(120,38): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(121,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(121,37): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(121,46): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(122,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(123,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(126,16): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(126,19): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(126,37): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(126,67): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(127,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(127,39): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(127,54): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(127,72): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(127,88): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(127,106): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(127,107): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(128,14): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(128,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(128,38): error TS1005: '{' expected.
+src/scripts/run-screen-reader-tests.ts(128,57): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(128,59): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(128,63): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(128,67): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(128,88): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(129,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(132,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(132,43): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(134,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(134,22): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(134,34): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(134,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(134,75): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(135,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(135,21): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(135,50): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(135,65): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(136,16): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(136,38): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(136,43): error TS1005: '{' expected.
+src/scripts/run-screen-reader-tests.ts(136,62): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(136,70): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(136,81): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(137,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(139,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(139,22): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(139,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(139,42): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(139,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(140,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(140,21): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(140,37): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(141,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(143,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(143,22): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(143,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(143,43): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(143,60): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(144,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(144,21): error TS1005: '(' expected.
+src/scripts/run-screen-reader-tests.ts(144,39): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(145,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(146,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(147,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(159,3): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(159,4): error TS1005: ')' expected.
+src/scripts/run-screen-reader-tests.ts(164,13): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(164,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(164,32): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(164,45): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(164,64): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(164,71): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(165,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,26): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,40): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,50): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,58): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,73): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,88): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,104): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(165,118): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(166,11): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(166,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(166,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(166,40): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(167,12): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(167,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(167,33): error TS1005: '{' expected.
+src/scripts/run-screen-reader-tests.ts(167,49): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(167,52): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(167,54): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(167,59): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(167,79): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(167,86): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(167,95): error TS1003: Identifier expected.
+src/scripts/run-screen-reader-tests.ts(167,97): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(168,16): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(168,24): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(168,34): error TS1003: Identifier expected.
+src/scripts/run-screen-reader-tests.ts(168,36): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(169,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(169,41): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(170,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(170,32): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(170,42): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(170,57): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(170,59): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(170,60): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(171,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(178,3): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(183,10): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(183,14): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(183,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(183,38): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(184,11): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(184,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(185,13): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(185,17): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(186,14): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(186,18): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(186,23): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(186,39): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(186,51): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(186,65): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(187,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(188,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(189,14): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(189,18): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(189,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(189,51): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(190,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(191,13): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(192,19): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(192,23): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(192,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(192,48): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(192,57): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(192,70): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(192,91): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(193,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(193,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(193,40): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(194,17): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(194,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(195,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(195,22): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(195,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(195,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(195,62): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(196,15): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(197,17): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(198,18): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(198,22): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(198,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(198,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(198,62): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(199,15): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(200,13): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(201,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(202,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(203,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(205,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(205,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(207,16): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(207,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(208,16): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(208,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(209,13): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(209,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(209,41): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(209,47): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(210,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(211,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(218,3): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(223,13): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(223,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(223,40): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(223,48): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(224,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(224,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(224,38): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(224,48): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(224,59): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(224,68): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(224,69): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(225,10): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(225,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(225,37): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(225,50): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(225,64): error TS1110: Type expected.
+src/scripts/run-screen-reader-tests.ts(225,65): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(244,3): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(249,12): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(249,16): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(249,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(249,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(250,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(250,24): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(250,45): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(253,15): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(253,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(253,39): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(253,43): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(254,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(254,38): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(255,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(255,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(255,39): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(256,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(256,35): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(257,15): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(257,36): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(258,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(259,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(262,25): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(263,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(263,25): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(264,27): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(266,19): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(266,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(266,53): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(266,65): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(267,13): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(269,21): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(269,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(269,66): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(270,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(270,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(270,74): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(271,13): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(272,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(274,25): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(275,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(275,27): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(276,27): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(278,19): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(278,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(278,53): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(278,64): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(279,13): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(281,21): error TS1005: '>' expected.
+src/scripts/run-screen-reader-tests.ts(281,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(281,66): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(282,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(282,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(282,64): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(282,83): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(283,13): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(284,11): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(285,9): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(286,7): error TS1161: Unterminated regular expression literal.
+src/scripts/run-screen-reader-tests.ts(292,3): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(305,15): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(305,26): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(305,27): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(305,38): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(305,47): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(305,57): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(305,58): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(309,26): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(309,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(310,30): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(310,33): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(316,23): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(316,34): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(316,41): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(316,51): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(318,23): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(318,34): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(318,41): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(318,57): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(318,66): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(318,73): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(318,83): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(321,28): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(321,38): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(321,41): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(321,47): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(323,29): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(323,42): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(323,45): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(323,51): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(324,10): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(327,23): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(327,39): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(327,42): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(327,49): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(329,28): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(329,41): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(329,65): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(332,7): error TS1005: 'try' expected.
+src/scripts/run-screen-reader-tests.ts(333,21): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(333,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(333,32): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(341,23): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(341,28): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(341,31): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(341,38): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(342,23): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(342,26): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(342,33): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(343,23): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(343,26): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(343,33): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(344,22): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(344,26): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(344,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(344,36): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(344,66): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(345,23): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(345,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(345,32): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(345,39): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(346,22): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(346,30): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(346,33): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(346,40): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(347,24): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(347,32): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(347,35): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(347,42): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(348,21): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(348,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(348,32): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(348,39): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(353,22): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(353,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(353,32): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(353,33): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(353,36): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(354,6): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(369,71): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(372,15): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(372,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(372,29): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(372,36): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(372,42): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(372,44): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(372,47): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(375,73): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(378,15): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(378,26): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(378,33): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(378,39): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(378,41): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(378,44): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(386,18): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(386,20): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(386,27): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(386,34): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(386,39): error TS1005: ',' expected.
+src/scripts/run-screen-reader-tests.ts(386,45): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(386,47): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(387,15): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(387,26): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(387,27): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(387,31): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(387,76): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(387,78): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(390,15): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(390,16): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(390,18): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(390,25): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(390,27): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(391,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(391,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(391,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(391,31): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(391,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(391,55): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(392,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(392,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(392,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(392,26): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(392,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(392,51): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(393,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(393,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(393,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(393,26): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(393,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(393,51): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(394,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(394,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(394,24): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(394,29): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(394,33): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(394,62): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(394,63): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(395,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(395,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(395,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(395,32): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(395,36): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(395,57): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(395,59): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(398,15): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(398,16): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(398,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(398,19): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(398,26): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(398,37): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(398,39): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(399,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(399,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(399,23): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(399,24): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(399,28): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(399,59): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(400,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(400,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(400,25): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(400,26): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(400,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(400,63): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(401,15): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(401,17): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(401,22): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(401,23): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(401,27): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(401,57): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(401,59): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(405,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(405,18): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(405,19): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(405,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(405,28): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(405,31): error TS1435: Unknown keyword or identifier. Did you mean 'type'?
+src/scripts/run-screen-reader-tests.ts(405,35): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(405,35): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(405,37): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(407,19): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(407,21): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(407,24): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(407,30): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(407,31): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(407,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(407,42): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(409,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(412,15): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(412,16): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(412,18): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(412,30): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(412,32): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(415,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(415,18): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(415,19): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(415,21): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(415,43): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(415,51): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(415,53): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(416,17): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(416,19): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(416,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(416,31): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(416,35): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(416,53): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(417,17): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(417,19): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(417,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(417,30): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(417,34): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(417,53): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(420,19): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(420,21): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(420,29): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(420,30): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(420,34): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(420,56): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(420,58): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(422,21): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(422,22): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(422,23): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(422,24): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(422,26): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(422,57): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(422,59): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(422,75): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(422,77): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(423,21): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(423,23): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(423,30): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(423,40): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(423,44): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(423,65): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(425,23): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(425,25): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(425,37): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(425,38): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(425,42): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(425,60): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(426,21): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(427,8): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(430,19): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(430,20): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(430,21): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(430,22): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(430,24): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(430,31): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(430,51): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(430,53): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(432,21): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/scripts/run-screen-reader-tests.ts(432,23): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(432,26): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(432,63): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(432,64): error TS1109: Expression expected.
+src/scripts/run-screen-reader-tests.ts(432,89): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(434,19): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(435,4): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(439,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(439,18): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(439,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(439,35): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(439,37): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(441,20): error TS1005: ';' expected.
+src/scripts/run-screen-reader-tests.ts(441,31): error TS1128: Declaration or statement expected.
+src/scripts/run-screen-reader-tests.ts(441,33): error TS1434: Unexpected keyword or identifier.
+src/scripts/run-screen-reader-tests.ts(441,39): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(443,17): error TS1127: Invalid character.
+src/scripts/run-screen-reader-tests.ts(471,5): error TS1005: 'try' expected.
+src/scripts/run-screen-reader-tests.ts(481,2): error TS1005: '}' expected.
+src/scripts/test-screen-reader-setup.js(2,1): error TS18026: '#!' can only be used at the start of a file.
+src/scripts/test-screen-reader-setup.js(2,16): error TS1005: ';' expected.

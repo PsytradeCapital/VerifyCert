@@ -2,12 +2,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 export interface BreakpointConfig {
-xs: number;
+  xs: number;
   sm: number;
   md: number;
   lg: number;
   xl: number;
   '2xl': number;
+}
 
 export const defaultBreakpoints: BreakpointConfig = {
   xs: 475,
@@ -21,13 +22,14 @@ export const defaultBreakpoints: BreakpointConfig = {
 export type BreakpointKey = keyof BreakpointConfig;
 
 export interface ResponsiveState {
-width: number;
+  width: number;
   height: number;
   isMobile: boolean;
   isTablet: boolean;
   isDesktop: boolean;
   isTouch: boolean;
   currentBreakpoint: BreakpointKey;
+}
   isBreakpoint: (breakpoint: BreakpointKey) => boolean;
   isAboveBreakpoint: (breakpoint: BreakpointKey) => boolean;
   isBelowBreakpoint: (breakpoint: BreakpointKey) => boolean;
@@ -128,12 +130,13 @@ export function useIsTouch(breakpoints?: BreakpointConfig): boolean {
 export function useCurrentBreakpoint(breakpoints?: BreakpointConfig): BreakpointKey {
   const { currentBreakpoint } = useResponsive(breakpoints);
   return currentBreakpoint;
+}
 
 // Hook for responsive values based on breakpoints
 export function useResponsiveValue<T>(
-  values: Partial<Record<BreakpointKey, T>>,;
-  fallback: T,;
-  breakpoints?: BreakpointConfig;
+  values: Partial<Record<BreakpointKey, T>>,
+  fallback: T,
+  breakpoints?: BreakpointConfig
 ): T {
   const { currentBreakpoint, width } = useResponsive(breakpoints);
   
@@ -145,13 +148,14 @@ export function useResponsiveValue<T>(
   // Return the value for the largest applicable breakpoint, or fallback
   const applicableBreakpoint = applicableBreakpoints[0] as BreakpointKey;
   return applicableBreakpoint ? values[applicableBreakpoint] ?? fallback : fallback;
+}
 
 // Hook for responsive spacing
 export function useResponsiveSpacing(
   mobile: string | number,
-  tablet?: string | number,;
-  desktop?: string | number,;
-  breakpoints?: BreakpointConfig;
+  tablet?: string | number,
+  desktop?: string | number,
+  breakpoints?: BreakpointConfig
 ): string | number {
   const { isMobile, isTablet } = useResponsive(breakpoints);
   
@@ -159,25 +163,26 @@ export function useResponsiveSpacing(
   if (isTablet && tablet !== undefined) return tablet;
   if (desktop !== undefined) return desktop;
   return tablet || mobile;
+}
 
 // Hook for responsive font sizes
 export function useResponsiveFontSize(
   mobile: string,
-  tablet?: string,;
-  desktop?: string,;
-  breakpoints?: BreakpointConfig;
+  tablet?: string,
+  desktop?: string,
+  breakpoints?: BreakpointConfig
 ): string {
   return useResponsiveSpacing(mobile, tablet, desktop, breakpoints) as string;
+}
 
 // Hook for responsive grid columns
 export function useResponsiveColumns(
   mobile: number,
-  tablet?: number,;
-  desktop?: number,;
-  breakpoints?: BreakpointConfig;
+  tablet?: number,
+  desktop?: number,
+  breakpoints?: BreakpointConfig
 ): number {
   return useResponsiveSpacing(mobile, tablet, desktop, breakpoints) as number;
+}
 
 export default useResponsive;
-}
-}

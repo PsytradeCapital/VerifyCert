@@ -1,224 +1,286 @@
-nel;ngsPa Setti defaultexport
-};
+import React, { useState } from 'react';
+import { Settings, User, Bell, Shield, Palette, Globe, Save, X } from 'lucide-react';
 
-);div>
-  )}
-    </   )  
- v> </di   >
-       </div        ))}
- 
-             </div>         div>
-    </         m)}
-     d, itection.i(serSettingItem     {rende            ">
- 4l-e="mv classNam    <di  
-          >/div      <
-          iv>}</diptionitem.descr-500">{ray-gxttext-sm tesName="   <div clas              
- }</div>em.label{itay-900">-gr text-mediumfontme="iv classNa     <d             
-">e="flex-1am<div classN               >
-           
-    r-b-0"borde-100 last:rder-gray-b bo-3 borderpyy-between justifr ms-centeex iteflName="     class
-           d}em.i key={it               <div
-             m => (
- map(items.ion.ite{sect        4">
-    ce-y-pa"sssName= cla<div
-                 
-      </div>    
-   </h3>            title}
-ction.         {se00">
-     ext-gray-9 tt-semiboldlg fonName="text-<h3 class         " />
-   -600 mr-2ayext-gr5 w-5 te="h-lassNamn.icon c    <sectio       4">
-  mb-terx items-censName="fleiv clas    <d      -6">
-shadow pded-lg g-white rouname="b} classNidey={section.     <div k> (
-   (section =gs.map {settin>
-
-     iv>
-      </ds</h2">Setting00ay-9ld text-grfont-boxl t-2Name="texh2 class     <
-   />600 mr-2" text-gray--6 "h-6 wlassName=tings c <Set">
-       enter mb-6items-cex assName="fl cl   <div
-   >}`}${className-6 `space-yssName={v cla  <din (
-  retur };
-
-  }
- null;
-    turn     re:
-    lt   defau   
-      );
-      />
-       500"
-     ue-s:border-blfocu-blue-500 cus:ring focus:ring-2d-lg fo300 rounderay--gder border-3 py-2 borame="px     classN)}
-       arget.valuetem.id, e.tionId, isectg(pdateSettine={(e) => uChang on         
-  em.value}   value={it        "text"
- type=          nput
-    <i       
-  (  return    t':
-  case 'inpu    
-      
-    );   >
-   elect   </s              ))}
-ion>
-            </opt
-       tion.label}     {op        alue}>
-   ue={option.v valn.value}ey={optioption k        <o     > (
- (option =map?.nsm.optiote         {i>
-   
-          0"-50er-blue focus:bording-blue-500ng-2 focus:rfocus:riounded-lg 0 r-30grayorder-rder bpx-3 py-2 bolassName="    c       .value)}
- .targetem.id, eionId, ittting(sectteSepda) => unChange={(e     o
-       .value}e={itemalu   v      select
-           <return (
-  
-        :elect'case 's
-          
-     );bel>
-     </la   v>
-       e-600"></diluhecked:bg-b-all peer-csitionraner:tftafter:w-5 ah-5  after:d-fullnde:rouborder after00 after:rder-gray-3bohite after:er:bg-wt-[2px] aftter:lefaftop-[2px] olute after:r:abst-[''] afteafter:contender-white :after:bored peer-checkllanslate-x-fud:after:trcheckeeer peer-l p rounded-fulng-blue-300focus:ri peer-ing-4us:r-focne-none peerus:outli200 peer-focy-bg-gra="w-11 h-6 ssNamediv cla     <       />
-   "
-         nly peersName="sr-o        clas   
-   ecked)}t.chd, e.targetem.id, iionISetting(sectate{(e) => updonChange=   
-           em.value} checked={it          ckbox"
-   e="cheyp       t  nput
-       <i         r">
- inteor-pocenter cursex items-ve inline-fl="relatisNamelabel clas
-          <eturn (:
-        rtoggle'   case 'pe) {
-   .ty (itemwitch> {
-    sm) =ngItetiem: Set it string,ionId:ectem = (sttingIterSe rend
-
-  const };   ));
- 
-   : section           }
-      )
-    
-       itemalue } : ...item, vId ? { == itemid =item.       => 
-       ap(item items.msection.   items: ,
-         ction       ...se     {
-      ?
-   Id on== sectisection.id =    => 
-  n (sectio => prev.mapngs(prevSetti {
-    setlue: any) =>string, vad: g, itemIionId: strin(sect= Setting const update
-
-  ); }
-  ]]
-   
-      e
-        }e: fals        valule',
-  e: 'togg    typ,
-      ayout't le compacoron: 'Use a mipti    descr
-      ode',act Mabel: 'Comp      l    de',
-t-mo id: 'compac      {
-        
-   }, ]
-        
-          'system' }lue:stem', vabel: 'Sy{ la           rk' },
-  'daalue:'Dark', v { label: 
-           'light' },t', value: abel: 'Ligh       { l[
-     s:   option       light',
-     value: 'ct',
-      type: 'sele
-          ,red theme'your preferoose tion: 'Chripsc de       Theme',
-      label: '       'theme',
-     id:      {
-    ems: [
-     it   
- ette,   icon: Palance',
-   le: 'Appear tit    ce',
- and: 'appear      i },
-    {
-
-     }
-      ]  ]
-       }
-         '0'alue:', v 'Never  { label:      },
-    e: '60' hour', valu label: '1     {    ' },
-     '30 value:0 minutes',: '3     { label      5' },
- e: '1, valuutes'inel: '15 m      { lab      s: [
-ption   o
-       lue: '30',         va'select',
- ype:        t',
-   ivityct after ina outally log'Automaticiption:   descr',
-        sion Timeout: 'Ses label      eout',
-   session-tim  id: '    {
-         },
-           
-false     value:    ggle',
-     type: 'to
-       unt',your accority to of secuextra layer  an iption: 'Addscr  de
-        ication', Authentactorel: 'Two-F         labr',
-  'two-facto   id:
-               {: [
-
-      itemsShield, icon:      ttings',
-ity Se: 'Secur      title
-',: 'security  id
-    {
-    },
-    }
-      ]                 ]
-
- : 'weekly' }lue, vay Digest' 'Weeklabel:         { l
-   ly' }, 'daivalue:gest',  Di'Daily label:   {
-           },ediate'alue: 'immediate', vImmbel: ' { la      
-      [ptions:     o,
-     e'mmediatue: 'i      val
-    'select', type:       
-   tions', notificareceiveten to w ofription: 'Hosc de      
-   ,cy' Frequenationificlabel: 'Not
-          ency',frequation- 'notific     id:      {
-       },
-       lse
- : fa    valuee',
-      ogglpe: 't        ty
-  rowser',n btions iicaifotve push ncei'Reescription:           d,
-ications'otif'Push N: bel      la    tions',
-notificapush-       id: '
-         {[
-  s:   itemell,
-     icon: Bs',
-     ettingtion SNotificatitle: '      ns',
-tio 'notifica      id:   {
-
- 
-    },  ]   }
-    e
-     trulue:           va'toggle',
-     type:     il',
- via emaons catie notifieivecription: 'R       desc   ',
-nsficatioEmail Noti label: '         ations',
-ail-notific id: 'em           {
-   ,
-   '
-        }e: 'John Doe  valu
-        e: 'input',   typ       rs',
-to othepears as it ap'Your name scription:   de
-        lay Name', 'Dispbel:  la
-        splay-name', 'did:     i          {
-  items: [
- 
-       User,    icon:
-  ings',ile Settitle: 'Prof   t
-   ,ofile'pr   id: '{
-       ([
-Section[]>tate<SettingseS = uings], setSettngsettit [sns {
-  co }) =>''= Name = ({ classops> anelPrFC<SettingsPnel: React.ttingsPa
-
-const Setring;
-}lassName?: sProps {
-  ctingsPanelerface Setnt];
+interface SettingsPanelProps {
+  className?: string;
+  onClose?: () => void;
 }
 
-im[ingIte items: Settring }>;
- ?: stName classnentType<{po React.Com
-  icon:ing;tle: strtistring;
-   id: 
- on {ettingSecti Sinterface}
+interface UserSettings {
+  theme: 'light' | 'dark' | 'system';
+  language: string;
+  notifications: boolean;
+  autoSave: boolean;
+  privacy: 'public' | 'private';
+}
 
-;
- any }[]alue: string; vel:: { lab
-  options?y;lue: anva
-  ut';| 'inp | 'select' toggle' 'ype:tring;
-  tription: s
-  descstring;
-  label:  string;id:em {
-  gItin Settterfacect';
+export const SettingsPanel: React.FC<SettingsPanelProps> = ({ 
+  className = '',
+  onClose 
+}) => {
+  const [activeTab, setActiveTab] = useState('general');
+  const [settings, setSettings] = useState<UserSettings>({
+    theme: 'system',
+    language: 'en',
+    notifications: true,
+    autoSave: true,
+    privacy: 'private'
+  });
+  const [hasChanges, setHasChanges] = useState(false);
 
-in'lucide-rea from ette }Shield, Pall, s, User, Bel { Settingct';
-import} from 'reae , { useStat Reactimport
+  const tabs = [
+    { id: 'general', label: 'General', icon: Settings },
+    { id: 'account', label: 'Account', icon: User },
+    { id: 'notifications', label: 'Notifications', icon: Bell },
+    { id: 'privacy', label: 'Privacy', icon: Shield },
+    { id: 'appearance', label: 'Appearance', icon: Palette }
+  ];
+
+  const handleSettingChange = (key: keyof UserSettings, value: any) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
+    setHasChanges(true);
+  };
+
+  const handleSave = () => {
+    // Save settings logic here
+    console.log('Saving settings:', settings);
+    setHasChanges(false);
+  };
+
+  const handleReset = () => {
+    setSettings({
+      theme: 'system',
+      language: 'en',
+      notifications: true,
+      autoSave: true,
+      privacy: 'private'
+    });
+    setHasChanges(false);
+  };
+
+  const renderGeneralSettings = () => (
+    <div className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Language
+        </label>
+        <select
+          value={settings.language}
+          onChange={(e) => handleSettingChange('language', e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        >
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div>
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Auto-save
+          </label>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Automatically save changes as you work
+          </p>
+        </div>
+        <button
+          onClick={() => handleSettingChange('autoSave', !settings.autoSave)}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            settings.autoSave ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'
+          }`}
+        >
+          <span
+            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              settings.autoSave ? 'translate-x-6' : 'translate-x-1'
+            }`}
+          />
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderAppearanceSettings = () => (
+    <div className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          Theme
+        </label>
+        <div className="space-y-2">
+          {[
+            { value: 'light', label: 'Light' },
+            { value: 'dark', label: 'Dark' },
+            { value: 'system', label: 'System' }
+          ].map((option) => (
+            <label key={option.value} className="flex items-center">
+              <input
+                type="radio"
+                name="theme"
+                value={option.value}
+                checked={settings.theme === option.value}
+                onChange={(e) => handleSettingChange('theme', e.target.value)}
+                className="mr-3 text-blue-600"
+              />
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {option.label}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderNotificationSettings = () => (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Push Notifications
+          </label>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Receive notifications for important updates
+          </p>
+        </div>
+        <button
+          onClick={() => handleSettingChange('notifications', !settings.notifications)}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            settings.notifications ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'
+          }`}
+        >
+          <span
+            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              settings.notifications ? 'translate-x-6' : 'translate-x-1'
+            }`}
+          />
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderPrivacySettings = () => (
+    <div className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          Profile Visibility
+        </label>
+        <div className="space-y-2">
+          {[
+            { value: 'public', label: 'Public' },
+            { value: 'private', label: 'Private' }
+          ].map((option) => (
+            <label key={option.value} className="flex items-center">
+              <input
+                type="radio"
+                name="privacy"
+                value={option.value}
+                checked={settings.privacy === option.value}
+                onChange={(e) => handleSettingChange('privacy', e.target.value as 'public' | 'private')}
+                className="mr-3 text-blue-600"
+              />
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {option.label}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'general':
+        return renderGeneralSettings();
+      case 'appearance':
+        return renderAppearanceSettings();
+      case 'notifications':
+        return renderNotificationSettings();
+      case 'privacy':
+        return renderPrivacySettings();
+      case 'account':
+        return (
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+            Account settings coming soon
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 ${className}`}>
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Settings
+        </h2>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+      </div>
+
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-48 border-r border-gray-200 dark:border-gray-700">
+          <nav className="p-2">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full flex items-center gap-3 px-3 py-2 text-left rounded-lg transition-colors ${
+                    activeTab === tab.id
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="text-sm">{tab.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 p-6">
+          {renderTabContent()}
+        </div>
+      </div>
+
+      {/* Footer */}
+      {hasChanges && (
+        <div className="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50">
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            You have unsaved changes
+          </span>
+          <div className="flex gap-2">
+            <button
+              onClick={handleReset}
+              className="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+            >
+              Reset
+            </button>
+            <button
+              onClick={handleSave}
+              className="flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+            >
+              <Save className="w-3 h-3" />
+              Save
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SettingsPanel;

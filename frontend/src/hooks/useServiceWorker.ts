@@ -1,22 +1,22 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { 
-  registerSW, ;
-  updateSW, ;
-  isServiceWorkerSupported, ;
-  isStandalone,;
-  OfflineManager,;
-  CacheManager;
+  registerSW,
+  updateSW,
+  isServiceWorkerSupported,
+  isStandalone,
+  OfflineManager,
+  CacheManager
 } from '../utils/serviceWorker';
-import { ;
-  getDeviceInfo, ;
-  shouldShowInstallPrompt, ;
-  trackInstallPromptEvent,;
-  getPWAStatus ;
+import { 
+  getDeviceInfo,
+  shouldShowInstallPrompt,
+  trackInstallPromptEvent,
+  getPWAStatus
 } from '../utils/pwaUtils';
 
 interface ServiceWorkerState {
-isSupported: boolean;
+  isSupported: boolean;
   isRegistered: boolean;
   isInstalled: boolean;
   hasUpdate: boolean;
@@ -24,15 +24,14 @@ isSupported: boolean;
   isStandalone: boolean;
   cacheSize: number;
   error: string | null;
+}
 
 interface ServiceWorkerActions {
-}
-}
-}
   register: () => void;
   update: () => void;
   clearCache: () => Promise<void>;
   refreshCacheSize: () => Promise<void>;
+}
 
 export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
   const [state, setState] = useState<ServiceWorkerState>({
@@ -54,6 +53,7 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
         error: 'Service Worker is not supported in this browser' 
       }));
       return;
+    }
 
     registerSW({
       onSuccess: (registration) => {
@@ -87,6 +87,7 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
           ...prev, 
           error: error.message 
         }));
+      }
     });
   }, [state.isSupported]);
 
@@ -108,6 +109,7 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
         ...prev, 
         error: 'Failed to clear caches' 
       }));
+    }
   }, []);
 
   // Refresh cache size
@@ -117,6 +119,7 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
       setState(prev => ({ ...prev, cacheSize: size }));
     } catch (error) {
       console.error('Failed to get cache size:', error instanceof Error ? error.message : 'Unknown error');
+    }
   }, []);
 
   // Set up offline/online listeners
@@ -141,6 +144,7 @@ export function useServiceWorker(): [ServiceWorkerState, ServiceWorkerActions] {
   useEffect(() => {
     if (state.isSupported && !state.isRegistered) {
       register();
+    }
   }, [state.isSupported, state.isRegistered, register]);
 
   const actions: ServiceWorkerActions = {
@@ -214,7 +218,9 @@ export function usePWAInstallation() {
             setIsInstalled(true);
             setInstallationState('installed');
             trackInstallPromptEvent('install_success', { method: 'ios_manual' });
+          }
         }, 1000);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -225,6 +231,7 @@ export function usePWAInstallation() {
     if (pwaStatus.isInstalled) {
       setIsInstalled(true);
       setInstallationState('installed');
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -242,7 +249,9 @@ export function usePWAInstallation() {
         // iOS Safari doesn't support beforeinstallprompt
         // User needs to manually add to home screen
         return false;
+      }
       return false;
+    }
 
     setInstallationState('installing');
     trackInstallPromptEvent('install_attempt', { method: 'automatic' });
@@ -263,6 +272,7 @@ export function usePWAInstallation() {
         console.log('User dismissed the install prompt');
         setInstallationState('idle');
         trackInstallPromptEvent('install_declined');
+      }
 
       // Clear the deferredPrompt
       setDeferredPrompt(null);
@@ -272,8 +282,9 @@ export function usePWAInstallation() {
     } catch (error) {
       console.error('Installation failed:', error);
       setInstallationState('failed');
-      trackInstallPromptEvent('install_error', { error: error.message });
+      trackInstallPromptEvent('install_error', { error: (error as Error).message });
       return false;
+    }
   }, [deferredPrompt, deviceInfo.isIOSSafari]);
 
   // Function to show iOS installation instructions
@@ -292,7 +303,6 @@ export function usePWAInstallation() {
     deviceInfo,
     pwaStatus
   };
+}
 
 export default useServiceWorker;
-}
-}

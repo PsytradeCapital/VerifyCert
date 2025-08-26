@@ -5,39 +5,38 @@ import React from 'react';
  */
 
 import { useRef, useEffect, useCallback, useState } from 'react';
-import { ;
-  triggerValidationAnimation, ;
-  getValidationAnimationClasses,;
-  validationSequences,;
-  ValidationAnimationConfig;
+import { 
+  triggerValidationAnimation,
+  getValidationAnimationClasses,
+  validationSequences,
+  ValidationAnimationConfig
 } from '../utils/validationAnimations';
 
 export interface UseValidationAnimationOptions {
-animateOnChange?: boolean;
+  animateOnChange?: boolean;
   animationConfig?: ValidationAnimationConfig;
   enableSequence?: boolean;
   debounceMs?: number;
+}
 
 export interface ValidationAnimationRefs {
-}
-}
-}
   fieldRef: React.RefObject<HTMLElement>;
   messageRef: React.RefObject<HTMLElement>;
   iconRef: React.RefObject<HTMLElement>;
+}
 
 export interface ValidationAnimationControls {
-triggerFieldAnimation: (animationType: string) => Promise<void>;
+  triggerFieldAnimation: (animationType: string) => Promise<void>;
   triggerMessageAnimation: (animationType: string) => Promise<void>;
   triggerIconAnimation: (animationType: string) => Promise<void>;
   triggerSequence: (validationState: 'error' | 'success' | 'warning') => Promise<void>;
   getAnimationClasses: (element: 'field' | 'message' | 'icon') => string;
   isAnimating: boolean;
-
-export const useValidationAnimation = (;
-  validationState: 'default' | 'success' | 'error' | 'warning',;
-  options: UseValidationAnimationOptions = {
 }
+
+export const useValidationAnimation = (
+  validationState: 'default' | 'success' | 'error' | 'warning',
+  options: UseValidationAnimationOptions = {}
 ): ValidationAnimationRefs & ValidationAnimationControls => {
   const {
     animateOnChange = true,
@@ -100,7 +99,7 @@ export const useValidationAnimation = (;
   const triggerSequence = useCallback(async (state: 'error' | 'success' | 'warning') => {
     if (!enableSequence) return;
     
-    const sequence = validationSequences[${state}Sequence as keyof typeof validationSequences];
+    const sequence = validationSequences[`${state}Sequence` as keyof typeof validationSequences];
     if (!sequence) return;
 
     setIsAnimating(true);
@@ -182,7 +181,8 @@ export const useValidationAnimation = (;
 /**
  * Hook for managing validation message animations specifically
  */
-export const useValidationMessageAnimation = (;
+export const useValidationMessageAnimation = (
+;
   message: string | undefined,;
   validationState: 'default' | 'success' | 'error' | 'warning';
 ) => {
@@ -221,7 +221,8 @@ export const useValidationMessageAnimation = (;
 /**
  * Hook for managing validation icon animations
  */
-export const useValidationIconAnimation = (;
+export const useValidationIconAnimation = (
+;
   validationState: 'default' | 'success' | 'error' | 'warning',;
   showIcon: boolean = true;
 ) => {

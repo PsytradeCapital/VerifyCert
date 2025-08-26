@@ -1,111 +1,151 @@
-ceAlert;man Perforport default
-ex;
+import React, { useState, useEffect } from 'react';
+import { AlertTriangle, X, TrendingUp, TrendingDown, Activity } from 'lucide-react';
 
-  );
-}    </div>)}
- );
-      }
-       v>    </di   </div>
-         iv>
-         </d          p>
-         </})
-        unitc.trihreshold}{mec.ttri: {meeshold(thr                 
- c.unit} tri.value}{merice}: {met {metric.nam           >
-      "text-sm"me=  <p classNa           
-   /h4>       <       g
-  nce Warninormarf     Pe            >
- dium"font-metext-sm sName="as     <h4 cl         
-  ">="ml-3ssNamelav c      <di)}
-        on(level {getAlertIc           >
-  ms-center"te"flex ie= classNam<div        
-          >`}
-    el)}r(levtAlertColoer ${ged-lg bordrounde`p-3 e={lassNam         cndex}`}
-   ning-${iey={`war     kdiv
-                 <  return (
-      ld);
-reshoric.thlue, met(metric.vaLevellerttAl = gest leve    con   => {
-  index)((metric, rics.maprningMet    {wa 
-   })}
-     
-     
-        );</div>        div>
-      </       </div>
-                  </p>
-            it})
- d}{metric.unsholmetric.thre: {ldthresho          (} 
-        c.unitalue}{metriic.vtrname}: {meric.{met                  m">
-xt-same="te  <p classN        
-      ></h4               Issue
-  anceical Perform        Crit        >
-  m"nt-mediu"text-sm fossName=la       <h4 c    3">
-     l-sName="m   <div clas           evel)}
-on(lgetAlertIc      {
-        ms-center"> itelexName="f  <div class        >
-       }
-     el)}`rtColor(levder ${getAlended-lg borroup-3 me={`     classNa
-       {index}`}{`critical-$ key=           <div
-          eturn (
-;
-        rthreshold)e, metric.etric.valuel(mlertLevvel = getAonst le c
-       ex) => {tric, indcs.map((melMetri{critica
-      ssName}`}>la-y-2 ${c{`spaceassName=<div cl   
- rn ( }
-
-  retun null;
- retur) {
-    ngth === 0etrics.le warningM 0 &&gth ===.lentricslMeitica
-  if (cr
-ng'
-  );warni=== 'reshold) thtric.value, meel(metric.etAlertLev => 
-    gtricilter(me = metrics.fetricsarningMnst w  co
-  
-  );
-cal'=== 'criti) resholdtric.th, meuevalvel(metric.AlertLeget
-    etric => ter(mics.filics = metrlMetronst critica };
-
-  c';
-    }
- reen-800-200 text-gr-green-50 bordeeenturn 'bg-grre     ault:
-         def800';
-t-yellow-200 texow-ell-y50 borderbg-yellow- '    return
-    ning':case 'war      red-800';
--200 text-er-reded-50 bordn 'bg-r  retur     
- ical': 'crit    caselevel) {
-  tch (  swing) => {
-  riel: stev = (ltColort getAler};
-
-  cons
-    }
-  en-500" />;xt-gre5 te"h-5 w-ame=lassN cleCirc <Checketurn
-        r   default:" />;
-   low-500 text-yel-5 wssName="h-5iangle claertTrrn <Al     retu   :
-rning'wacase '     >;
- 0" /-50ext-red5 t5 w-="h-amesNCircle clas   return <X':
-     criticalse '
-      caevel) {ch (lit{
-    swing) => tr= (level: srtIcon st getAle
-
-  con}; 'good';
-  return  
-  ng';arnin 'wtur rereshold)th(value >     if ';
-calturn 'criti) reshold * 1.5> threlue va{
-    if (umber) => : nthresholdue: number, = (valrtLevel st getAle  con}) => {
-= '' 
-e classNamrics, 
-  
-  met({ rops> = ceAlertPorman<Perfact.FCnceAlert: Ret Performans
-co;
+interface PerformanceMetric {
+  name: string;
+  value: number;
+  threshold: number;
+  unit: string;
+  status: 'good' | 'warning' | 'critical';
 }
-ingsName?: strlas];
-  cetric[anceM: Perform
-  metricss {ertPropAlformanceface Per
-interring;
-}
-unit: stber;
-   numold:
-  thresh: number;ueg;
-  valtrinme: stric {
-  narmanceMee Perfofacerct';
 
-intucide-reae } from 'l, XCirclckCirclee, Chengl{ AlertTriat ';
-imporm 'reactt React froimpor
+interface PerformanceAlertProps {
+  className?: string;
+  onDismiss?: () => void;
+}
+
+export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({ 
+  className = '',
+  onDismiss 
+}) => {
+  const [metrics, setMetrics] = useState<PerformanceMetric[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const checkPerformance = () => {
+      const performanceMetrics: PerformanceMetric[] = [
+        {
+          name: 'Page Load Time',
+          value: performance.now(),
+          threshold: 3000,
+          unit: 'ms',
+          status: performance.now() > 3000 ? 'warning' : 'good'
+        },
+        {
+          name: 'Memory Usage',
+          value: (performance as any).memory?.usedJSHeapSize || 0,
+          threshold: 50 * 1024 * 1024, // 50MB
+          unit: 'MB',
+          status: ((performance as any).memory?.usedJSHeapSize || 0) > 50 * 1024 * 1024 ? 'warning' : 'good'
+        }
+      ];
+
+      setMetrics(performanceMetrics);
+      
+      // Show alert if any metric is in warning or critical state
+      const hasIssues = performanceMetrics.some(metric => 
+        metric.status === 'warning' || metric.status === 'critical'
+      );
+      setIsVisible(hasIssues);
+    };
+
+    checkPerformance();
+    const interval = setInterval(checkPerformance, 30000); // Check every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleDismiss = () => {
+    setIsVisible(false);
+    onDismiss?.();
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'good':
+        return 'text-green-600 bg-green-50 border-green-200';
+      case 'warning':
+        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+      case 'critical':
+        return 'text-red-600 bg-red-50 border-red-200';
+      default:
+        return 'text-gray-600 bg-gray-50 border-gray-200';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'good':
+        return <TrendingUp className="w-4 h-4" />;
+      case 'warning':
+        return <AlertTriangle className="w-4 h-4" />;
+      case 'critical':
+        return <TrendingDown className="w-4 h-4" />;
+      default:
+        return <Activity className="w-4 h-4" />;
+    }
+  };
+
+  const formatValue = (value: number, unit: string) => {
+    if (unit === 'MB') {
+      return `${(value / (1024 * 1024)).toFixed(1)} ${unit}`;
+    }
+    if (unit === 'ms') {
+      return `${Math.round(value)} ${unit}`;
+    }
+    return `${value} ${unit}`;
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div className={`fixed top-4 right-4 z-50 max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 ${className}`}>
+      <div className="p-4">
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-yellow-600" />
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              Performance Alert
+            </h3>
+          </div>
+          <button
+            onClick={handleDismiss}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="space-y-2">
+          {metrics.map((metric, index) => (
+            <div
+              key={index}
+              className={`p-2 rounded border ${getStatusColor(metric.status)}`}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  {getStatusIcon(metric.status)}
+                  <span className="text-sm font-medium">{metric.name}</span>
+                </div>
+                <span className="text-sm">
+                  {formatValue(metric.value, metric.unit)}
+                </span>
+              </div>
+              {metric.status !== 'good' && (
+                <div className="text-xs mt-1 opacity-75">
+                  Threshold: {formatValue(metric.threshold, metric.unit)}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+          Performance is being monitored. Consider optimizing if issues persist.
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PerformanceAlert;

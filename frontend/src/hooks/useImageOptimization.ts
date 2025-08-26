@@ -1,165 +1,163 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { initializeWebPOptimization, webpCache } from '../utils/webpGenerator';
-import { isWebPSupported } from '../utils/imageOptimization';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
-/**
- * Hook to manage image optimization initialization and state
- */
-export const useImageOptimization = () => {
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [webpSupported, setWebpSupported] = useState<boolean | null>(null);
-  const [cacheSize, setCacheSize] = useState(0);
+interface ImageOptimizationOptions {
+  quality?: number;
+  format?: 'webp' | 'jpeg' | 'png';
+  lazy?: boolean;
+  placeholder?: string;
+  sizes?: string;
+}
 
-  useEffect(() => {
-    const initializeOptimization = async () => {
-      try {
-        // Check WebP support
-        const supported = await isWebPSupported();
-        setWebpSupported(supported);
+interface OptimizedImageState {
+  src: string;
+  isLoading: boolean;
+  hasError: boolean;
+  isInView: boolean;
+}
 
-        // Initialize WebP optimization if supported
-        if (supported) {
-          await initializeWebPOptimization();
-          setCacheSize(webpCache.size());
+export const useImageOptimization = (
+  originalSrc: string,
+  options: ImageOptimizationOptions = {}
+) => {
+  const {
+    quality = 80,
+    format = 'webp',
+    lazy = true,
+    placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PC9zdmc+',
+    sizes = '100vw'
+  } = options;
 
-        setIsInitialized(true);
-      } catch (error) {
-        console.error('Failed to initialize image optimization:', error);
-        setIsInitialized(true); // Still mark as initialized to prevent blocking
-    };
-
-    initializeOptimization();
-
-    // Cleanup on unmount
-    return () => {
-      webpCache.clear();
-    };
-  }, []);
-
-  return {
-    isInitialized,
-    webpSupported,
-    cacheSize,
-  };
-};
-
-/**
- * Hook to get optimized image URL with WebP fallback
- */
-export const useOptimizedImage = (originalUrl: string) => {
-  const [optimizedUrl, setOptimizedUrl] = useState<string>(originalUrl);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const getOptimizedUrl = async () => {
-      try {
-        setIsLoading(true);
-        const webpUrl = await webpCache.getWebPUrl(originalUrl);
-        setOptimizedUrl(webpUrl);
-      } catch (error) {
-        console.warn('Failed to get optimized image:', error);
-        setOptimizedUrl(originalUrl);
-      } finally {
-        setIsLoading(false);
-    };
-
-    getOptimizedUrl();
-  }, [originalUrl]);
-
-  return {
-    optimizedUrl,
-    isLoading,
-    isOptimized: optimizedUrl !== originalUrl,
-  };
-};
-
-/**
- * Hook to preload critical images
- */
-export const useImagePreloader = (imagePaths: string[]) => {
-  const [preloadedCount, setPreloadedCount] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-
-  useEffect(() => {
-    const preloadImages = async () => {
-      let loaded = 0;
-      
-      for (const imagePath of imagePaths) {
-        try {
-          await webpCache.getWebPUrl(imagePath);
-          loaded++;
-          setPreloadedCount(loaded);
-        } catch (error) {
-          console.warn(Failed to preload ${imagePath}:, error);
-      
-      setIsComplete(true);
-    };
-
-    if (imagePaths.length > 0) {
-      preloadImages();
-    } else {
-      setIsComplete(true);
-  }, [imagePaths]);
-
-  return {
-    preloadedCount,
-    totalCount: imagePaths.length,
-    isComplete,
-    progress: imagePaths.length > 0 ? (preloadedCount / imagePaths.length) * 100 : 100,
-  };
-};
-
-/**
- * Hook to monitor image loading performance
- */
-export const useImagePerformance = () => {
-  const [metrics, setMetrics] = useState<{
-    totalImages: number;
-    averageLoadTime: number;
-    slowImages: string[];
-    webpSavings: number;
-  }>({
-    totalImages: 0,
-    averageLoadTime: 0,
-    slowImages: [],
-    webpSavings: 0,
+  const [state, setState] = useState<OptimizedImageState>({
+    src: lazy ? placeholder : originalSrc,
+    isLoading: lazy,
+    hasError: false,
+    isInView: false
   });
 
-  useEffect(() => {
-    const updateMetrics = () => {
-      const { imagePerformanceMonitor } = require('../utils/imageOptimization');
-      const stats = imagePerformanceMonitor.getStats();
-      
-      const loadTimes = Object.values(stats) as number[];
-      const slowImages = Object.entries(stats)
-        .filter(([, time]) => (time as number) > 3000)
-        .map(([url]) => url);
-      
-      const averageLoadTime = loadTimes.length > 0 
-        ? loadTimes.reduce((sum, time) => sum + time, 0) / loadTimes.length 
-        : 0;
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-      setMetrics({
-        totalImages: loadTimes.length,
-        averageLoadTime,
-        slowImages,
-        webpSavings: webpCache.size(), // Approximate savings based on cached WebP images
-      });
-    };
-
-    // Update metrics every 5 seconds
-    const interval = setInterval(updateMetrics, 5000);
+  // Generate optimized image URL
+  const getOptimizedSrc = useCallback((src: string) => {
+    if (!src || src.startsWith('data:')) return src;
     
-    // Initial update
-    updateMetrics();
+    // For demo purposes, return original src
+    // In production, you'd integrate with image optimization service
+    const params = new URLSearchParams({
+      q: quality.toString(),
+      f: format,
+      w: '800' // default width
+    });
+    
+    // Return original for now - in production you'd use something like:
+    // return `https://your-image-service.com/optimize?url=${encodeURIComponent(src)}&${params}`;
+    return src;
+  }, [quality, format]);
 
-    return () => clearInterval(interval);
+  // Handle image loading
+  const handleImageLoad = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isLoading: false,
+      hasError: false
+    }));
   }, []);
 
-  return metrics;
+  const handleImageError = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isLoading: false,
+      hasError: true,
+      src: placeholder
+    }));
+  }, [placeholder]);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    if (!lazy || !imgRef.current) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setState(prev => ({
+              ...prev,
+              isInView: true,
+              src: getOptimizedSrc(originalSrc),
+              isLoading: true
+            }));
+            
+            if (observerRef.current && imgRef.current) {
+              observerRef.current.unobserve(imgRef.current);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '50px',
+        threshold: 0.1
+      }
+    );
+
+    if (imgRef.current) {
+      observerRef.current.observe(imgRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [lazy, originalSrc, getOptimizedSrc]);
+
+  // Preload image
+  const preloadImage = useCallback((src: string) => {
+    const img = new Image();
+    img.onload = handleImageLoad;
+    img.onerror = handleImageError;
+    img.src = src;
+  }, [handleImageLoad, handleImageError]);
+
+  // Manual load trigger for non-lazy images
+  useEffect(() => {
+    if (!lazy && originalSrc) {
+      const optimizedSrc = getOptimizedSrc(originalSrc);
+      setState(prev => ({
+        ...prev,
+        src: optimizedSrc,
+        isLoading: true
+      }));
+      preloadImage(optimizedSrc);
+    }
+  }, [lazy, originalSrc, getOptimizedSrc, preloadImage]);
+
+  // Generate srcSet for responsive images
+  const generateSrcSet = useCallback((src: string) => {
+    if (!src || src.startsWith('data:')) return '';
+    
+    const widths = [320, 640, 768, 1024, 1280, 1920];
+    return widths
+      .map(width => {
+        const params = new URLSearchParams({
+          q: quality.toString(),
+          f: format,
+          w: width.toString()
+        });
+        // In production: `https://your-image-service.com/optimize?url=${encodeURIComponent(src)}&${params} ${width}w`
+        return `${src} ${width}w`;
+      })
+      .join(', ');
+  }, [quality, format]);
+
+  return {
+    ...state,
+    imgRef,
+    srcSet: generateSrcSet(originalSrc),
+    sizes,
+    onLoad: handleImageLoad,
+    onError: handleImageError,
+    preload: preloadImage
+  };
 };
 
 export default useImageOptimization;
-}
-}

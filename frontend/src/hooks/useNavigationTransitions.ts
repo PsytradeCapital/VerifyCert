@@ -1,181 +1,121 @@
-import React from 'react';
-import { useEffect, useCallback, useRef } from 'react';
-import { useNavigation } from '../contexts/NavigationContext';
+import { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useReducedMotion } from 'framer-motion';
 
-export interface NavigationTransitionOptions {
-enablePreloading?: boolean;
-  enableStaggeredAnimations?: boolean;
-  customDuration?: number;
-  customEasing?: 'ease-in-out' | 'ease-in' | 'ease-out' | 'linear';
-
-export interface NavigationTransitionState {
-}
-}
-}
+interface TransitionState {
   isTransitioning: boolean;
-  transitionDirection: 'forward' | 'backward' | 'none';
-  transitionProgress: number;
-  pendingNavigation: string | null;
+  direction: 'forward' | 'backward' | 'none';
+  previousPath: string | null;
+  currentPath: string;
+}
 
-/**
- * Hook for managing smooth navigation transitions with enhanced animations
- */
-export const useNavigationTransitions = (options: NavigationTransitionOptions = {}) => {
-  const {
-    enablePreloading = true,
-    enableStaggeredAnimations = true,
-    customDuration,
-    customEasing
-  } = options;
+export const useNavigationTransitions = () => {
+  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+  
+  const [transitionState, setTransitionState] = useState<TransitionState>({
+    isTransitioning: false,
+    direction: 'none',
+    previousPath: null,
+    currentPath: location.pathname,
+  });
 
-  const { state, actions } = useNavigation();
-  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const transitionProgressRef = useRef(0);
-
-  // Set custom transition settings if provided
-  useEffect(() => {
-    if (customDuration) {
-      actions.setTransitionDuration(customDuration);
-    if (customEasing) {
-      actions.setTransitionEasing(customEasing);
-  }, [customDuration, customEasing, actions]);
-
-  // Enhanced navigation with smooth transitions
-  const navigateWithTransition = useCallback((
-    path: string, 
-    direction: 'forward' | 'backward' = 'forward',
-    options?: { immediate?: boolean; duration?: number
-  ) => {
-    // Clear any existing timeouts
-    if (transitionTimeoutRef.current) {
-      clearTimeout(transitionTimeoutRef.current);
-    if (progressIntervalRef.current) {
-      clearInterval(progressIntervalRef.current);
-
-    // Reset progress
-    transitionProgressRef.current = 0;
-
-    // Use immediate navigation if requested or animations are disabled
-    if (options?.immediate || !state.activeIndicators.animateTransitions) {
-      actions.navigateTo(path);
-      return;
-
-    const duration = options?.duration || state.transitionDuration;
-
-    // Start transition
-    actions.startTransition(direction, duration);
-
-    // Track transition progress
-    const progressInterval = 50; // Update every 50ms
-    const progressStep = (progressInterval / duration) * 100;
-
-    progressIntervalRef.current = setInterval(() => {
-      transitionProgressRef.current = Math.min(100, transitionProgressRef.current + progressStep);
-      
-      if (transitionProgressRef.current >= 100) {
-        if (progressIntervalRef.current) {
-          clearInterval(progressIntervalRef.current);
-    }, progressInterval);
-
-    // Navigate to the new path
-    actions.navigateTo(path);
-
-  }, [state.activeIndicators.animateTransitions, state.transitionDuration, actions]);
-
-  // Preload navigation target (if enabled)
-  const preloadNavigation = useCallback((path: string) => {
-    if (!enablePreloading) return;
-
-    // Create a link element to trigger browser preloading
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = path;
-    document.head.appendChild(link);
-
-    // Clean up after a short delay
-    setTimeout(() => {
-      if (document.head.contains(link)) {
-        document.head.removeChild(link);
-    }, 5000);
-  }, [enablePreloading]);
-
-  // Staggered animation for multiple navigation items
-  const getStaggerDelay = useCallback((index: number, totalItems: number = 1) => {
-    if (!enableStaggeredAnimations || !state.isTransitioning) return 0;
-    
-    const maxDelay = state.transitionDuration * 0.3; // Max 30% of transition duration
-    const delayStep = maxDelay / Math.max(1, totalItems - 1);
-    
-    return Math.min(maxDelay, index * delayStep);
-  }, [enableStaggeredAnimations, state.isTransitioning, state.transitionDuration]);
-
-  // Get transition classes for elements
-  const getTransitionClasses = useCallback((
-    baseClasses: string = '',
-    staggerIndex?: number,
-    totalItems?: number
-  ) => {
-    const { transitionDuration, transitionEasing, isTransitioning, transitionDirection } = state;
-    
-    let classes = baseClasses;
-    
-    // Add base transition classes
-    if (state.activeIndicators.animateTransitions) {
-      classes +=  transition-all duration-${transitionDuration} ${transitionEasing} transform will-change-transform;
-
-    // Add stagger delay if provided
-    if (staggerIndex !== undefined && totalItems !== undefined) {
-      const delay = getStaggerDelay(staggerIndex, totalItems);
-      if (delay > 0) {
-        classes +=  delay-${Math.round(delay)};
-
-    // Add transition state classes
-    if (isTransitioning) {
-      const intensity = transitionDirection === 'forward' ? 1 : -1;
-      classes +=  translate-x-${intensity} opacity-90 scale-98;
-
-    return classes.trim();
-  }, [state, getStaggerDelay]);
-
-  // Get current transition state
-  const getTransitionState = useCallback((): NavigationTransitionState => ({
-    isTransitioning: state.isTransitioning,
-    transitionDirection: state.transitionDirection,
-    transitionProgress: transitionProgressRef.current,
-    pendingNavigation: state.pendingNavigation
-  }), [state.isTransitioning, state.transitionDirection, state.pendingNavigation]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (transitionTimeoutRef.current) {
-        clearTimeout(transitionTimeoutRef.current);
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current);
-    };
+  // Determine navigation direction
+  const getNavigationDirection = useCallback((from: string, to: string): 'forward' | 'backward' | 'none' => {
+    // Simple heuristic for determining direction
+    // If going to a longer path that starts with current path, it's forward
+    if (to.length > from.length && to.startsWith(from)) {
+      return 'forward';
+    }
+    // If going to a shorter path and current path starts with it, it's backward
+    if (from.length > to.length && from.startsWith(to)) {
+      return 'backward';
+    }
+    // Otherwise, it's a lateral navigation
+    return 'none';
   }, []);
 
+  // Get page transition variants
+  const getPageTransitionVariants = useCallback((direction: string) => {
+    if (shouldReduceMotion) {
+      return {
+        initial: { opacity: 1 },
+        animate: { opacity: 1 },
+        exit: { opacity: 1 }
+      };
+    }
+
+    switch (direction) {
+      case 'forward':
+        return {
+          initial: { opacity: 0, x: 100 },
+          animate: { opacity: 1, x: 0 },
+          exit: { opacity: 0, x: -100 }
+        };
+      case 'backward':
+        return {
+          initial: { opacity: 0, x: -100 },
+          animate: { opacity: 1, x: 0 },
+          exit: { opacity: 0, x: 100 }
+        };
+      default:
+        return {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          exit: { opacity: 0 }
+        };
+    }
+  }, [shouldReduceMotion]);
+
+  // Get transition config
+  const getTransitionConfig = useCallback(() => {
+    if (shouldReduceMotion) {
+      return {
+        duration: 0
+      };
+    }
+
+    return {
+      duration: 0.3,
+      ease: 'easeInOut'
+    };
+  }, [shouldReduceMotion]);
+
+  // Handle route changes
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const previousPath = transitionState.currentPath;
+    
+    if (currentPath !== previousPath) {
+      const direction = getNavigationDirection(previousPath, currentPath);
+      
+      setTransitionState({
+        isTransitioning: true,
+        direction,
+        previousPath,
+        currentPath,
+      });
+
+      // End transition after animation duration
+      if (!shouldReduceMotion) {
+        const timer = setTimeout(() => {
+          setTransitionState(prev => ({
+            ...prev,
+            isTransitioning: false
+          }));
+        }, 300); // Match your animation duration
+
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [location.pathname, transitionState.currentPath, getNavigationDirection, shouldReduceMotion]);
+
   return {
-    // Navigation methods
-    navigateWithTransition,
-    preloadNavigation,
-    
-    // Utility methods
-    getStaggerDelay,
-    getTransitionClasses,
-    getTransitionState,
-    
-    // State
-    transitionState: getTransitionState(),
-    
-    // Configuration
-    isAnimationEnabled: state.activeIndicators.animateTransitions,
-    transitionDuration: state.transitionDuration,
-    transitionEasing: state.transitionEasing
+    transitionState,
+    getPageTransitionVariants,
+    getTransitionConfig,
+    shouldReduceMotion
   };
 };
 
 export default useNavigationTransitions;
-}
-}

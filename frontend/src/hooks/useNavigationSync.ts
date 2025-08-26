@@ -1,153 +1,112 @@
 import { useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useNavigation } from '../contexts/NavigationContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-export interface NavigationSyncOptions {
-syncOnMount?: boolean;
-  syncOnLocationChange?: boolean;
-  autoUpdateActiveItems?: boolean;
+interface NavigationSyncOptions {
+  syncWithBrowser?: boolean;
+  trackHistory?: boolean;
+  enableKeyboardShortcuts?: boolean;
+}
 
-/**
- * Hook to synchronize navigation state with external systems
- * Useful for keeping navigation state in sync with route changes,
- * external state management, or other navigation systems
- */
-export const useNavigationSync = (options: NavigationSyncOptions = {
-}) => {
-  const {
-    syncOnMount = true,
-    syncOnLocationChange = true,
-    autoUpdateActiveItems = true
-  } = options;
-
+export const useNavigationSync = (options: NavigationSyncOptions = {}) => {
+  const { syncWithBrowser = true, trackHistory = true, enableKeyboardShortcuts = true } = options;
   const location = useLocation();
-  const { state, actions } = useNavigation();
+  const navigate = useNavigate();
 
-  // Sync active items based on current location
-  const syncActiveItems = useCallback(() => {
-    if (!autoUpdateActiveItems) return;
+  // Sync with browser navigation
+  useEffect(() => {
+    if (!syncWithBrowser) return;
 
-    const activeItemIds: string[] = [];
+    const handlePopState = (event: PopStateEvent) => {
+      // Handle browser back/forward navigation
+      if (event.state && event.state.path) {
+        navigate(event.state.path, { replace: true });
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [syncWithBrowser, navigate]);
+
+  // Track navigation history
+  useEffect(() => {
+    if (!trackHistory) return;
+
+    // Store current path in session storage
+    const navigationHistory = JSON.parse(
+      sessionStorage.getItem('navigationHistory') || '[]'
+    );
     
-    // Find items that match the current path
-    state.navigationItems.forEach(item => {
-      if (isPathActive(item.href, location.pathname)) {
-        activeItemIds.push(item.id);
-      
-      // Check children
-      if (item.children) {
-        item.children.forEach(child => {
-          if (isPathActive(child.href, location.pathname)) {
-            activeItemIds.push(child.id);
-            // Also activate parent
-            if (!activeItemIds.includes(item.id)) {
-              activeItemIds.push(item.id);
-        });
+    navigationHistory.push({
+      path: location.pathname,
+      timestamp: Date.now(),
+      search: location.search,
+      hash: location.hash
     });
 
-    // Only update if there are changes
-    const currentActiveItems = Array.from(state.activeItems);
-    const hasChanges = 
-      activeItemIds.length !== currentActiveItems.length ||
-      !activeItemIds.every(id => currentActiveItems.includes(id));
+    // Keep only last 50 entries
+    if (navigationHistory.length > 50) {
+      navigationHistory.shift();
+    }
 
-    if (hasChanges) {
-      actions.setActiveItems(activeItemIds);
-  }, [location.pathname, state.navigationItems, state.activeItems, actions, autoUpdateActiveItems]);
+    sessionStorage.setItem('navigationHistory', JSON.stringify(navigationHistory));
+  }, [location, trackHistory]);
 
-  // Helper function to determine if a path is active
-  const isPathActive = (itemPath: string, currentPath: string): boolean => {
-    if (itemPath === '/') {
-      return currentPath === '/';
-    return currentPath.startsWith(itemPath);
-  };
-
-  // Sync on mount
+  // Keyboard shortcuts
   useEffect(() => {
-    if (syncOnMount) {
-      syncActiveItems();
-  }, [syncOnMount, syncActiveItems]);
+    if (!enableKeyboardShortcuts) return;
 
-  // Sync on location change
-  useEffect(() => {
-    if (syncOnLocationChange) {
-      syncActiveItems();
-  }, [location.pathname, syncOnLocationChange, syncActiveItems]);
-
-  // Manual sync function
-  const manualSync = useCallback(() => {
-    syncActiveItems();
-  }, [syncActiveItems]);
-
-  // Get navigation state summary
-  const getNavigationSummary = useCallback(() => {
-    return {
-      currentPath: state.currentPath,
-      activeItems: Array.from(state.activeItems),
-      navigationItems: state.navigationItems.length,
-      isTransitioning: state.isTransitioning,
-      transitionDirection: state.transitionDirection,
-      sidebarCollapsed: state.sidebarCollapsed,
-      mobileMenuOpen: state.mobileMenuOpen,
-      canGoBack: state.canGoBack,
-      canGoForward: state.canGoForward,
-      historyLength: state.navigationHistory.length
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Alt + Left Arrow: Go back
+      if (event.altKey && event.key === 'ArrowLeft') {
+        event.preventDefault();
+        window.history.back();
+      }
+      
+      // Alt + Right Arrow: Go forward
+      if (event.altKey && event.key === 'ArrowRight') {
+        event.preventDefault();
+        window.history.forward();
+      }
+      
+      // Ctrl/Cmd + Home: Go to home
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Home') {
+        event.preventDefault();
+        navigate('/');
+      }
     };
-  }, [state]);
 
-  // Batch update navigation state
-  const batchUpdateState = useCallback((updates: {
-    activeItems?: string[];
-    sidebarCollapsed?: boolean;
-    mobileMenuOpen?: boolean;
-    indicatorStyle?: 'line' | 'dot' | 'background' | 'border';
-    indicatorPosition?: 'left' | 'right' | 'top' | 'bottom';
-    animateTransitions?: boolean;
-  }) => {
-    if (updates.activeItems) {
-      actions.setActiveItems(updates.activeItems);
-    if (updates.sidebarCollapsed !== undefined) {
-      actions.setSidebarCollapsed(updates.sidebarCollapsed);
-    if (updates.mobileMenuOpen !== undefined) {
-      actions.setMobileMenuOpen(updates.mobileMenuOpen);
-    if (updates.indicatorStyle) {
-      actions.setActiveIndicatorStyle(updates.indicatorStyle);
-    if (updates.indicatorPosition) {
-      actions.setActiveIndicatorPosition(updates.indicatorPosition);
-    if (updates.animateTransitions !== undefined) {
-      actions.setAnimateTransitions(updates.animateTransitions);
-  }, [actions]);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [enableKeyboardShortcuts, navigate]);
 
-  // Reset navigation state to defaults
-  const resetNavigationState = useCallback(() => {
-    actions.setActiveItems([]);
-    actions.setSidebarCollapsed(false);
-    actions.setMobileMenuOpen(false);
-    actions.setActiveIndicatorStyle('line');
-    actions.setActiveIndicatorPosition('left');
-    actions.setAnimateTransitions(true);
-    actions.toggleActiveIndicator(true);
-  }, [actions]);
+  const goBack = useCallback(() => {
+    window.history.back();
+  }, []);
+
+  const goForward = useCallback(() => {
+    window.history.forward();
+  }, []);
+
+  const goHome = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
+
+  const getNavigationHistory = useCallback(() => {
+    return JSON.parse(sessionStorage.getItem('navigationHistory') || '[]');
+  }, []);
+
+  const clearNavigationHistory = useCallback(() => {
+    sessionStorage.removeItem('navigationHistory');
+  }, []);
 
   return {
-    // State
-    navigationState: state,
-    navigationSummary: getNavigationSummary(),
-    
-    // Actions
-    manualSync,
-    batchUpdateState,
-    resetNavigationState,
-    
-    // Utilities
-    isPathActive: (path: string) => isPathActive(path, location.pathname),
-    getCurrentActiveItems: () => Array.from(state.activeItems),
-    
-    // Status
-    isSynced: true // Could be enhanced to track sync status
+    currentPath: location.pathname,
+    goBack,
+    goForward,
+    goHome,
+    getNavigationHistory,
+    clearNavigationHistory
   };
 };
 
 export default useNavigationSync;
-}
-}

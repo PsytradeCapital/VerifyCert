@@ -1,120 +1,128 @@
-t;agemeneFocusManefault us
+import { useEffect, useCallback, useRef } from 'react';
 
-export dts
-  };
-};usableElementeFocs,
-    updaleElementabus  getFoccusLast,
-  st,
-    focusFir foef,
-   ntainerR
-    co {
-
-  returnleKeyDown]);e, handisActivtrapFocus, }, [     }
-own);
-  handleKeyDdown',r('keyisteneventLeEcument.remov => do return ()wn);
-     KeyDohandle', 'keydownner(ntListent.addEve     docume
- ive) {Actocus && isf (trapF   it(() => {
- fecseEfteners
-  ue event lisremovdd/
-
-  // At]);irscus, focusFreFo restos,, trapFocutive [isAc   };
-  }, }
-     );
- rent.focus(curFocusRef. previous     
-   {rrent)f.cuusFocusRevious && preoc (restoreF
-      ifivenact icomess or bentnmout uhen componenocus w/ Restore f
-      /() => {n tur   re
-    }
-
-    }();
-   cusFirst   fo  cus) {
-     if (trapFoed
-    if request element stFocus fir 
-      // ;
-     TMLElements HeElement ant.activnt = documeusRef.curreeviousFoc  pr    us
-t focore curren   // St
-   ve) {if (isActi> {
-    ) =eEffect((ocus
-  usd restore fStore an//   ]);
-
-ementsEleFocusable, [updat
-  }
-    }ocus();nt.fleRef.curre lastFocusabt) {
-     eRef.currentFocusabl if (lasnts();
-   cusableElemeupdateFo) => {
-    back((ll useCa focusLast =
-  constt elementas/ Focus l
-  /ts]);
-leElemenocusabteF}, [upda
-    }
-  us();rrent.foc.cuef  containerR  self
-   itainere contus thements, fococusable el// If no f
-      ) {nterRef.curre (containelse if
-    } s();rrent.focuableRef.cutFocus      firs) {
-ef.currentFocusableRfirst (if   );
- s(ElementcusableFote   upda
- () => {k(aceCallbrst = usonst focusFi cnt
- t eleme firs
-  // Focuslements]);
-eEdateFocusablcus, uptrapFoActive, , [is }
- }     }
- us();
-    urrent.focRef.crstFocusable      fi;
-  ult()preventDefaent.
-        evrent) {Ref.curocusablet === lastFemenctiveElnt.a  if (docume/ Tab
-        /se {
-  
-    } el
-      }();cus.foeRef.currentsabl    lastFocult();
-    eventDefauprent.    ev
-    .current) {ocusableRefrstFement === fient.activeEldocumif (      + Tab
- hift      // StKey) {
-ifif (event.sh
-    eturn;
-nt) rf.currecusableRe|| !lastFocurrent Ref.stFocusable    if (!fir;
-
-ents()ableElemteFocusupdarn;
-
-    ) retu'Tab't.key !== tive || even !isAcapFocus ||    if (!tr) => {
-Eventrd: Keyboa((eventbackalleC= usndleKeyDown  hang
-  constrappis tcuey for fotab k  // Handle ts]);
-
-sableElemengetFocu [ null;
-  },ngth - 1] ||Elements.lets[focusableeElemensabl focucurrent =ocusableRef.tF
-    las[0] || null;leElements focusabnt =ef.curretFocusableRfirs
-    eElements();etFocusablements = gsableElconst focu
-    => {(() eCallbackments = usableElepdateFocusonst uefs
-  ct rmenble elete focusa  // Upda, []);
-
-
-  }ectors));cusableSelAll(fouerySelector.qef.currentinerR(contaray.fromurn Ar  ret', ');
-
-   ].join("]'
-   ="trueeditableontent      '[c"-1"])',
-[tabindex=dex]:not(   '[tabinref]',
-       'a[h])',
-  disabledot([:n'textarea',
-      ([disabled])'select:not
-      bled])',t([disanput:no    'i])',
-  sabled[ditton:not(   'burs = [
-   Selectot focusable
-
-    cons return [];rent)ainerRef.cur(!cont
-    if => {MLElement[]  HT):k((= useCallbacts lemensableEcutFo
-  const geementsable elfocust // Ge
-  ;
->(null)| nullt LElemenf<HTMuseRe = ableRefst lastFocus);
-  conull(nl> nul |LElementTMuseRef<Hef = FocusableR firstl);
-  const| null>(nulMLElement f<HTef = useResFocusReviou
-  const prll);ement>(nuTMLEleRef<Hef = ust containerRns
-  
-  cons;= optio} false ocus = trapF true,  =eFocusstorrue, resActive = tconst { i) => {
-  Options = {}entocusManagemions: Ft = (optencusManagemconst useFoport n;
+interface FocusManagementOptions {
+  trapFocus?: boolean;
+  restoreFocus?: boolean;
+  autoFocus?: boolean;
 }
 
-exs?: booleaocu
-  trapFan;ooleFocus?: b
-  restore boolean; isActive?:
-  {ementOptionsManagocusnterface F
-i
- 'react';t } fromuseEffecCallback, useRef, useimport { 
+export const useFocusManagement = (
+  containerRef: React.RefObject<HTMLElement>,
+  isActive: boolean = true,
+  options: FocusManagementOptions = {}
+) => {
+  const { trapFocus = true, restoreFocus = true, autoFocus = true } = options;
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
+  // Get focusable elements within container
+  const getFocusableElements = useCallback(() => {
+    if (!containerRef.current) return [];
+    
+    const focusableSelectors = [
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      'a[href]',
+      '[tabindex]:not([tabindex="-1"])',
+      '[contenteditable="true"]'
+    ].join(', ');
+
+    return Array.from(
+      containerRef.current.querySelectorAll(focusableSelectors)
+    ) as HTMLElement[];
+  }, [containerRef]);
+
+  // Focus first element
+  const focusFirst = useCallback(() => {
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+  }, [getFocusableElements]);
+
+  // Focus last element
+  const focusLast = useCallback(() => {
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length > 0) {
+      focusableElements[focusableElements.length - 1].focus();
+    }
+  }, [getFocusableElements]);
+
+  // Handle keyboard navigation
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (!trapFocus || !containerRef.current) return;
+
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement as HTMLElement;
+
+    if (event.key === 'Tab') {
+      if (event.shiftKey) {
+        // Shift + Tab
+        if (activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        // Tab
+        if (activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    } else if (event.key === 'Escape') {
+      // Allow escape to break focus trap
+      if (restoreFocus && previousActiveElement.current) {
+        previousActiveElement.current.focus();
+      }
+    }
+  }, [trapFocus, restoreFocus, containerRef, getFocusableElements]);
+
+  // Set up focus management
+  useEffect(() => {
+    if (!isActive) return;
+
+    // Store previous active element
+    if (restoreFocus) {
+      previousActiveElement.current = document.activeElement as HTMLElement;
+    }
+
+    // Auto focus first element
+    if (autoFocus) {
+      const timer = setTimeout(() => {
+        focusFirst();
+      }, 100); // Small delay to ensure DOM is ready
+
+      return () => clearTimeout(timer);
+    }
+  }, [isActive, autoFocus, restoreFocus, focusFirst]);
+
+  // Set up keyboard event listeners
+  useEffect(() => {
+    if (!isActive || !trapFocus) return;
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isActive, trapFocus, handleKeyDown]);
+
+  // Restore focus when component unmounts or becomes inactive
+  useEffect(() => {
+    return () => {
+      if (restoreFocus && previousActiveElement.current) {
+        previousActiveElement.current.focus();
+      }
+    };
+  }, [restoreFocus]);
+
+  return {
+    focusFirst,
+    focusLast,
+    getFocusableElements
+  };
+};
+
+export default useFocusManagement;

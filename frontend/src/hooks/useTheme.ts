@@ -12,12 +12,13 @@ const THEME_STORAGE_KEY = 'verifycert-theme';
 
 // Theme context type
 export interface ThemeContextType {
-theme: Theme;
+  theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   tokens: any;
   isDark: boolean;
   isLight: boolean;
+}
 
 /**
  * Custom hook for theme management
@@ -31,6 +32,7 @@ export const useTheme = (): ThemeContextType => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
     if (stored && (stored === 'light' || stored === 'dark')) {
       return stored;
+    }
     
     // Check system preference, but default to dark if no preference
     try {
@@ -38,9 +40,12 @@ export const useTheme = (): ThemeContextType => {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
         if (mediaQuery && mediaQuery.matches) {
           return 'light';
-} catch (error) {
+        }
+      }
+    } catch (error) {
       // Fallback for environments where matchMedia is not available or throws
       console.warn('matchMedia not available, defaulting to dark theme');
+    }
     
     return 'dark'; // Default to dark theme always
   };
@@ -73,6 +78,7 @@ export const useTheme = (): ThemeContextType => {
         'content', 
         newTheme === 'dark' ? '#0f172a' : '#ffffff'
       );
+    }
   }, []);
 
   // Set theme with persistence
@@ -181,5 +187,4 @@ export const getThemeClasses = (theme: Theme) => ({
   ring: theme === 'dark' ? 'ring-blue-400' : 'ring-blue-600',
   shadow: theme === 'dark' ? 'shadow-2xl shadow-black/50' : 'shadow-lg'
 });
-}
 }

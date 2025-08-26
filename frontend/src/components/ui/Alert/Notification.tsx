@@ -24,7 +24,7 @@ const iconMap = {
   info: Info
 };
 
-export default function Notification({
+function Notification({
   type,
   title,
   message,
@@ -80,5 +80,5 @@ export default function Notification({
   );
 }
 
-export default Notification;
-export type { NotificationProps };
+export default Notification; type  };opstificationPr{ No
+export

@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "isolatedModules": false,
+    "noEmit": true
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/__tests__/**",
+    "src/components/ui/Analytics/**",
+    "src/utils/performanceMonitoring.ts",
+    "src/utils/performanceSetup.ts"
+  ]
+}

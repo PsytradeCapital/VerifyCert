@@ -12,6 +12,12 @@ import "@openzeppelin/contracts/security/Pausable.sol";
  * @title Certificate
  * @dev Non-transferable ERC721 certificate contract for issuing verifiable digital certificates
  * @notice This contract creates non-transferable certificate NFTs that can be issued by authorized entities
+ * Features:
+ * - Non-transferable certificates (soulbound tokens)
+ * - Role-based access control for authorized issuers
+ * - Certificate revocation capability
+ * - Detailed certificate metadata storage
+ * - Gas-optimized operations
  */
 contract Certificate is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard, Pausable {
     using Counters for Counters.Counter;

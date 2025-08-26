@@ -11,7 +11,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   onRemove?: () => void;
 }
 
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ 
     className, 
     variant = 'default', 
@@ -79,3 +79,6 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 );
 
 Badge.displayName = 'Badge';
+
+export default Badge;
+export type { BadgeProps };

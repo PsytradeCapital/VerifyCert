@@ -59,6 +59,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
             </svg>
           </div>
         );
+    }
   };
 
   const formatTimeAgo = (date: Date) => {
@@ -153,5 +154,4 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
   );
 };
 
-export { ActivityFeed };
 export default ActivityFeed;

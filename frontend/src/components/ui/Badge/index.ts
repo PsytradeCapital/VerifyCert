@@ -2,7 +2,7 @@
  * Badge Components
  */
 
-export { Badge, default as Badge } from './Badge';
+export { default as Badge } from './Badge';
 export { default as VerificationBadge } from './VerificationBadge';
 export { default as BlockchainProofIndicator } from './BlockchainProofIndicator';
 

@@ -178,7 +178,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                   <div className="px-3">
                     <SideNavigation
                       items={navigationItems}
-                      collapsed={sidebarCollapsed && !isMobile}
+                      isCollapsed={sidebarCollapsed && !isMobile}
                       onToggle={toggleSidebar}
                     />
                   </div>

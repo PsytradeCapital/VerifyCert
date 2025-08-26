@@ -289,7 +289,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     size="default"
                     onClick={handleDownload}
                     loading={isLoading}
-                    fullWidth
+                    className="w-full"
                   >
                     Download
                   </Button>
@@ -298,7 +298,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     variant="outline"
                     size="default"
                     onClick={handleShare}
-                    fullWidth
+                    className="w-full"
                   >
                     Share
                   </Button>
@@ -307,7 +307,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     variant="ghost"
                     size="default"
                     onClick={handleCopyLink}
-                    fullWidth
+                    className="w-full"
                   >
                     Copy Link
                   </Button>
@@ -316,8 +316,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                     variant="ghost"
                     size="default"
                     onClick={handlePrint}
-                    className="print:hidden"
-                    fullWidth
+                    className="print:hidden w-full"
                   >
                     Print
                   </Button>

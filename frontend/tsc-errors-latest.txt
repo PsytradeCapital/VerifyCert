@@ -1,20 +1,320 @@
-frontend/src/components/WalletConnect.tsx(343,23): error TS1005: ',' expected.
-frontend/src/components/WalletConnect.tsx(364,9): error TS1005: '}' expected.
-frontend/src/components/WalletConnect.tsx(364,11): error TS17002: Expected corresponding JSX closing tag for 'div'.
-frontend/src/components/WalletConnect.tsx(365,9): error TS1005: ';' expected.
-frontend/src/components/WalletConnect.tsx(405,5): error TS1128: Declaration or statement expected.
-frontend/src/components/WalletConnect.tsx(406,3): error TS1109: Expression expected.
-frontend/src/components/WalletConnect.tsx(407,1): error TS1128: Declaration or statement expected.
-frontend/src/hooks/useBreadcrumbs.ts(82,4): error TS1128: Declaration or statement expected.
-frontend/src/hooks/useBreadcrumbs.ts(82,25): error TS1005: ';' expected.
-frontend/src/hooks/useResponsive.ts(188,30): error TS1005: '}' expected.
-frontend/src/hooks/useServiceWorker.ts(241,17): error TS1005: ',' expected.
-frontend/src/hooks/useServiceWorker.ts(241,59): error TS1005: ',' expected.
-frontend/src/hooks/useServiceWorker.ts(241,72): error TS1005: ',' expected.
-frontend/src/hooks/useServiceWorker.ts(308,33): error TS1005: '}' expected.
-frontend/src/hooks/useTheme.ts(82,4): error TS1128: Declaration or statement expected.
-frontend/src/hooks/useTheme.ts(82,8): error TS1005: ';' expected.
-frontend/src/hooks/useValidationAnimation.ts(125,10): error TS1128: Declaration or statement expected.
-frontend/src/hooks/useValidationAnimation.ts(129,7): error TS1005: ',' expected.
-frontend/src/hooks/useValidationAnimation.ts(134,4): error TS1472: 'catch' or 'finally' expected.
-frontend/src/hooks/useValidationAnimation.ts(134,39): error TS1005: ';' expected.
+src/components/__tests__/WalletConnect.test.tsx(10,47): error TS2345: Argument of type '{ chainId: bigint; }' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(64,7): error TS2322: Type 'Mock<unknown, unknown[]>' is not assignable to type '((url?: string | URL, target?: string, features?: string) => Window) & ((url?: string | URL, target?: string, features?: string) => Window)'.
+  Type 'Mock<unknown, unknown[]>' is not assignable to type '(url?: string | URL, target?: string, features?: string) => Window'.
+    Type '{}' is missing the following properties from type 'Window': clientInformation, closed, customElements, devicePixelRatio, and 220 more.
+src/components/__tests__/WalletConnect.test.tsx(77,46): error TS2345: Argument of type 'undefined[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(102,32): error TS2345: Argument of type 'undefined[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(103,32): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(120,32): error TS2345: Argument of type 'undefined[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(138,32): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(139,32): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(161,50): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(175,8): error TS2352: Conversion of type 'typeof BrowserProvider' to type 'Mock<any, any>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'typeof BrowserProvider' is missing the following properties from type 'Mock<any, any>': getMockName, mock, mockClear, mockReset, and 12 more.
+src/components/__tests__/WalletConnect.test.tsx(176,49): error TS2345: Argument of type '{ chainId: bigint; }' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(179,50): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(193,32): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(194,32): error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(218,32): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(220,32): error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(263,50): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(277,7): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/components/__tests__/WalletConnect.test.tsx(288,50): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'never'.
+src/components/__tests__/WalletConnect.test.tsx(302,7): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/components/InteractionAnimationsDemo.tsx(1,1): error TS1208: 'InteractionAnimationsDemo.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(34,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(55,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(74,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(106,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(130,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(151,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(174,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(209,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(245,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(261,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(265,12): error TS2741: Property 'items' is missing in type '{}' but required in type 'SideNavigationProps'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(285,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(289,12): error TS2741: Property 'items' is missing in type '{}' but required in type 'BottomNavigationProps'.
+src/components/ui/__tests__/KeyboardNavigation.test.tsx(319,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(8,13): error TS2741: Property 'message' is missing in type '{ children: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(13,13): error TS2741: Property 'message' is missing in type '{ children: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(19,34): error TS2741: Property 'message' is missing in type '{ children: string; variant: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(22,15): error TS2741: Property 'message' is missing in type '{ children: string; variant: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(25,15): error TS2741: Property 'message' is missing in type '{ children: string; variant: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(28,15): error TS2741: Property 'message' is missing in type '{ children: string; variant: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(33,13): error TS2741: Property 'message' is missing in type '{ children: string; title: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(39,13): error TS2741: Property 'message' is missing in type '{ children: string; variant: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(47,13): error TS2741: Property 'message' is missing in type '{ children: string; showIcon: false; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(55,13): error TS2741: Property 'message' is missing in type '{ children: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(61,13): error TS2741: Property 'message' is missing in type '{ children: string; closable: true; onClose: Mock<any, any>; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(67,13): error TS2741: Property 'message' is missing in type '{ children: string; closable: true; onClose: Mock<any, any>; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(74,13): error TS2741: Property 'message' is missing in type '{ children: string; closable: false; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(79,13): error TS2741: Property 'message' is missing in type '{ children: string; className: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(84,13): error TS2741: Property 'message' is missing in type '{ children: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/__tests__/Alert.test.tsx(89,13): error TS2741: Property 'message' is missing in type '{ children: string; }' but required in type 'AlertProps'.
+src/components/ui/Alert/Notification.tsx(27,25): error TS2528: A module cannot have multiple default exports.
+src/components/ui/Alert/Notification.tsx(83,16): error TS2528: A module cannot have multiple default exports.
+src/components/ui/Analytics/CertificateAnalytics.tsx(2,111): error TS2307: Cannot find module 'recharts' or its corresponding type declarations.
+src/components/ui/Analytics/index.ts(2,15): error TS2614: Module '"./CertificateAnalytics"' has no exported member 'AnalyticsData'. Did you mean to use 'import AnalyticsData from "./CertificateAnalytics"' instead?
+src/components/ui/Certificate/CertificateActions.tsx(1,1): error TS1208: 'CertificateActions.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Certificate/CertificateCard.tsx(18,33): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Certificate/CertificateMetadata.tsx' is not a module.
+src/components/ui/Certificate/CertificateMetadata.tsx(1,1): error TS1208: 'CertificateMetadata.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Certificate/index.ts(2,47): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Certificate/CertificateActions.tsx' is not a module.
+src/components/ui/Certificate/index.ts(3,48): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Certificate/CertificateMetadata.tsx' is not a module.
+src/components/ui/Certificate/index.ts(5,69): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Certificate/CertificateMetadata.tsx' is not a module.
+src/components/ui/CertificateList/__tests__/CertificateList.test.tsx(5,10): error TS2614: Module '"../../../CertificateCard"' has no exported member 'Certificate'. Did you mean to use 'import Certificate from "../../../CertificateCard"' instead?
+src/components/ui/CertificateList/__tests__/CertificateList.test.tsx(6,10): error TS2305: Module '"../../Feedback"' has no exported member 'FeedbackProvider'.
+src/components/ui/Feedback/FeedbackButton.tsx(4,35): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Feedback/FeedbackCollector.tsx' is not a module.
+src/components/ui/Feedback/FeedbackCollector.tsx(1,1): error TS1208: 'FeedbackCollector.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Feedback/FeedbackIntegration.tsx(1,1): error TS1208: 'FeedbackIntegration.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Feedback/index.ts(6,46): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Feedback/FeedbackCollector.tsx' is not a module.
+src/components/ui/Feedback/index.ts(9,48): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Feedback/FeedbackIntegration.tsx' is not a module.
+src/components/ui/Feedback/index.ts(11,15): error TS2724: '"./FeedbackButton"' has no exported member named 'FeedbackButtonProps'. Did you mean 'FeedbackButton'?
+src/components/ui/Feedback/index.ts(12,45): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Feedback/FeedbackCollector.tsx' is not a module.
+src/components/ui/Feedback/index.ts(13,15): error TS2724: '"./FeedbackDashboard"' has no exported member named 'FeedbackDashboardProps'. Did you mean 'FeedbackDashboard'?
+src/components/ui/Feedback/index.ts(14,15): error TS2614: Module '"./FeedbackManager"' has no exported member 'FeedbackManagerProps'. Did you mean to use 'import FeedbackManagerProps from "./FeedbackManager"' instead?
+src/components/ui/Feedback/index.ts(15,47): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Feedback/FeedbackIntegration.tsx' is not a module.
+src/components/ui/FloatingActionButton/FloatingActionButton.tsx(145,14): error TS2322: Type '{ children: string; jsx: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+src/components/ui/FloatingActionButton/index.ts(1,10): error TS2724: '"./FloatingActionButton"' has no exported member named 'FloatingActionButton'. Did you mean 'FloatingActionButtonProps'?
+src/components/ui/FocusManagement/FocusTrap.tsx(2,10): error TS2614: Module '"../../../hooks/useFocusManagement"' has no exported member 'useFocusTrap'. Did you mean to use 'import useFocusTrap from "../../../hooks/useFocusManagement"' instead?
+src/components/ui/FocusManagement/FocusTrap.tsx(23,7): error TS2590: Expression produces a union type that is too complex to represent.
+src/components/ui/FocusManagement/RovingTabIndex.tsx(2,10): error TS2614: Module '"../../../hooks/useFocusManagement"' has no exported member 'useRovingTabIndex'. Did you mean to use 'import useRovingTabIndex from "../../../hooks/useFocusManagement"' instead?
+src/components/ui/index.ts(9,38): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Layout/Container.tsx' is not a module.
+src/components/ui/Layout/AppLayout.tsx(3,28): error TS2614: Module '"../Navigation/BottomNavigation"' has no exported member 'BottomNavItem'. Did you mean to use 'import BottomNavItem from "../Navigation/BottomNavigation"' instead?
+src/components/ui/Layout/Container.tsx(1,1): error TS1208: 'Container.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Layout/Grid.tsx(167,6): error TS2322: Type '{ children: ReactNode; defaultChecked?: boolean; defaultValue?: string | number | readonly string[]; suppressContentEditableWarning?: boolean; suppressHydrationWarning?: boolean; accessKey?: string; ... 257 more ...; className: string; }' is not assignable to type 'SVGProps<SVGSymbolElement>'.
+  Types of property 'onCopy' are incompatible.
+    Type 'ClipboardEventHandler<HTMLElement>' is not assignable to type 'ClipboardEventHandler<SVGSymbolElement>'.
+      Type 'HTMLElement' is missing the following properties from type 'SVGSymbolElement': ownerSVGElement, viewportElement, preserveAspectRatio, viewBox
+src/components/ui/Layout/Grid.tsx(290,6): error TS2322: Type '{ children: ReactNode; defaultChecked?: boolean; defaultValue?: string | number | readonly string[]; suppressContentEditableWarning?: boolean; suppressHydrationWarning?: boolean; accessKey?: string; ... 257 more ...; className: string; }' is not assignable to type 'SVGProps<SVGSymbolElement>'.
+  Types of property 'onCopy' are incompatible.
+    Type 'ClipboardEventHandler<HTMLElement>' is not assignable to type 'ClipboardEventHandler<SVGSymbolElement>'.
+src/components/ui/Layout/Header.tsx(4,29): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/ThemeToggle.tsx' is not a module.
+src/components/ui/Loading/index.ts(16,15): error TS2614: Module '"./Spinner"' has no exported member 'SpinnerProps'. Did you mean to use 'import SpinnerProps from "./Spinner"' instead?
+src/components/ui/Loading/index.ts(17,15): error TS2724: '"./DotsSpinner"' has no exported member named 'DotsSpinnerProps'. Did you mean 'DotsSpinner'?
+src/components/ui/Loading/index.ts(18,15): error TS2724: '"./PulseSpinner"' has no exported member named 'PulseSpinnerProps'. Did you mean 'PulseSpinner'?
+src/components/ui/Loading/index.ts(19,15): error TS2724: '"./ProgressBar"' has no exported member named 'ProgressBarProps'. Did you mean 'ProgressBar'?
+src/components/ui/Loading/index.ts(20,15): error TS2724: '"./CircularProgress"' has no exported member named 'CircularProgressProps'. Did you mean 'CircularProgress'?
+src/components/ui/Loading/index.ts(21,15): error TS2614: Module '"./Skeleton"' has no exported member 'SkeletonProps'. Did you mean to use 'import SkeletonProps from "./Skeleton"' instead?
+src/components/ui/Loading/index.ts(22,15): error TS2724: '"./LoadingOverlay"' has no exported member named 'LoadingOverlayProps'. Did you mean 'LoadingOverlay'?
+src/components/ui/Loading/index.ts(23,15): error TS2724: '"./LoadingButton"' has no exported member named 'LoadingButtonProps'. Did you mean 'LoadingButton'?
+src/components/ui/Loading/index.ts(24,15): error TS2724: '"./StepProgress"' has no exported member named 'StepProgressProps'. Did you mean 'StepProgress'?
+src/components/ui/Modal/index.ts(10,15): error TS2614: Module '"./Dialog"' has no exported member 'DialogProps'. Did you mean to use 'import DialogProps from "./Dialog"' instead?
+src/components/ui/Navigation/FloatingActionButton.tsx(1,1): error TS1208: 'FloatingActionButton.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Navigation/index.ts(8,49): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Navigation/FloatingActionButton.tsx' is not a module.
+src/components/ui/Navigation/index.ts(13,15): error TS2614: Module '"./SideNavigation"' has no exported member 'SideNavigationProps'. Did you mean to use 'import SideNavigationProps from "./SideNavigation"' instead?
+src/components/ui/Navigation/index.ts(14,15): error TS2614: Module '"./BottomNavigation"' has no exported member 'BottomNavItem'. Did you mean to use 'import BottomNavItem from "./BottomNavigation"' instead?
+src/components/ui/Navigation/index.ts(14,30): error TS2724: '"./BottomNavigation"' has no exported member named 'BottomNavigationProps'. Did you mean 'BottomNavigation'?
+src/components/ui/Navigation/index.ts(15,48): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Navigation/FloatingActionButton.tsx' is not a module.
+src/components/ui/Navigation/index.ts(16,15): error TS2724: '"./Breadcrumbs"' has no exported member named 'BreadcrumbItem'. Did you mean 'Breadcrumbs'?
+src/components/ui/Navigation/index.ts(16,31): error TS2724: '"./Breadcrumbs"' has no exported member named 'BreadcrumbsProps'. Did you mean 'Breadcrumbs'?
+src/components/ui/Navigation/index.ts(17,15): error TS2724: '"./NavigationStateManager"' has no exported member named 'NavigationStateManagerProps'. Did you mean 'NavigationStateManager'?
+src/components/ui/NetworkDisplay.tsx(12,34): error TS2339: Property 'contractAddress' does not exist on type 'NetworkConfig'.
+src/components/ui/NetworkDisplay.tsx(15,63): error TS2554: Expected 1-2 arguments, but got 3.
+src/components/ui/NetworkDisplay.tsx(16,34): error TS2339: Property 'faucetUrl' does not exist on type 'NetworkConfig'.
+src/components/ui/NetworkDisplay.tsx(23,25): error TS2339: Property 'displayName' does not exist on type 'NetworkConfig'.
+src/components/ui/Performance/PerformanceDashboard.tsx(111,27): error TS2322: Type '{ metrics: PerformanceMetric[]; className: string; }' is not assignable to type 'IntrinsicAttributes & PerformanceAlertProps'.
+  Property 'metrics' does not exist on type 'IntrinsicAttributes & PerformanceAlertProps'.
+src/components/ui/ThemeToggle.tsx(1,1): error TS1208: 'ThemeToggle.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/components/ui/Tooltip/index.ts(6,15): error TS2614: Module '"./Tooltip"' has no exported member 'TooltipProps'. Did you mean to use 'import TooltipProps from "./Tooltip"' instead?
+src/components/ui/VerificationResult/index.ts(2,15): error TS2724: '"./VerificationResult"' has no exported member named 'VerificationResultProps'. Did you mean 'VerificationResult'?
+src/components/ui/VerificationResults/index.ts(1,10): error TS2614: Module '"./VerificationResults"' has no exported member 'VerificationResults'. Did you mean to use 'import VerificationResults from "./VerificationResults"' instead?
+src/components/ui/VerificationResults/index.ts(2,15): error TS2614: Module '"./VerificationResults"' has no exported member 'VerificationResultsProps'. Did you mean to use 'import VerificationResultsProps from "./VerificationResults"' instead?
+src/components/ui/Wizard/index.ts(2,15): error TS2614: Module '"./CertificateWizard"' has no exported member 'CertificateFormData'. Did you mean to use 'import CertificateFormData from "./CertificateWizard"' instead?
+src/contexts/__tests__/NavigationContext.test.tsx(8,11): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(8,18): error TS2339: Property 'actions' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(105,15): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(105,22): error TS2339: Property 'actions' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(126,15): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(139,29): error TS2322: Type '{ children: Element; isWalletConnected: boolean; }' is not assignable to type 'IntrinsicAttributes & NavigationProviderProps'.
+  Property 'isWalletConnected' does not exist on type 'IntrinsicAttributes & NavigationProviderProps'.
+src/contexts/__tests__/NavigationContext.test.tsx(151,15): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(151,22): error TS2339: Property 'actions' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(221,15): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(221,22): error TS2339: Property 'actions' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(248,15): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
+src/contexts/__tests__/NavigationContext.test.tsx(248,22): error TS2339: Property 'actions' does not exist on type 'NavigationContextType'.
+src/contexts/ThemeContext.tsx(23,28): error TS2741: Property 'resolvedTheme' is missing in type 'import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/hooks/useTheme").ThemeContextType' but required in type 'import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/contexts/ThemeContext").ThemeContextType'.
+src/hooks/__tests__/useNavigationTransitions.test.tsx(10,5): error TS2339: Property 'navigateWithTransition' does not exist on type '{ transitionState: TransitionState; getPageTransitionVariants: (direction: string) => { initial: { opacity: number; x?: undefined; }; animate: { opacity: number; x?: undefined; }; exit: { ...; }; } | { ...; }; getTransitionConfig: () => { ...; } | { ...; }; shouldReduceMotion: boolean; }'.
+src/hooks/__tests__/useNavigationTransitions.test.tsx(12,5): error TS2339: Property 'getTransitionClasses' does not exist on type '{ transitionState: TransitionState; getPageTransitionVariants: (direction: string) => { initial: { opacity: number; x?: undefined; }; animate: { opacity: number; x?: undefined; }; exit: { ...; }; } | { ...; }; getTransitionConfig: () => { ...; } | { ...; }; shouldReduceMotion: boolean; }'.
+src/hooks/__tests__/useNavigationTransitions.test.tsx(13,5): error TS2339: Property 'isAnimationEnabled' does not exist on type '{ transitionState: TransitionState; getPageTransitionVariants: (direction: string) => { initial: { opacity: number; x?: undefined; }; animate: { opacity: number; x?: undefined; }; exit: { ...; }; } | { ...; }; getTransitionConfig: () => { ...; } | { ...; }; shouldReduceMotion: boolean; }'.
+src/hooks/__tests__/useNavigationTransitions.test.tsx(14,5): error TS2339: Property 'transitionDuration' does not exist on type '{ transitionState: TransitionState; getPageTransitionVariants: (direction: string) => { initial: { opacity: number; x?: undefined; }; animate: { opacity: number; x?: undefined; }; exit: { ...; }; } | { ...; }; getTransitionConfig: () => { ...; } | { ...; }; shouldReduceMotion: boolean; }'.
+src/hooks/__tests__/useNavigationTransitions.test.tsx(15,32): error TS2554: Expected 0 arguments, but got 1.
+src/hooks/useAnimation.ts(2,10): error TS2305: Module '"../config/motion"' has no exported member 'motionConfig'.
+src/hooks/useAnimation.ts(2,24): error TS2305: Module '"../config/motion"' has no exported member 'easings'.
+src/hooks/useAnimation.ts(2,33): error TS2305: Module '"../config/motion"' has no exported member 'durations'.
+src/hooks/useAnimation.ts(2,44): error TS2305: Module '"../config/motion"' has no exported member 'springs'.
+src/hooks/useBreadcrumbs.ts(4,10): error TS2305: Module '"../config/routes"' has no exported member 'matchRoute'.
+src/hooks/useBreadcrumbs.ts(4,22): error TS2305: Module '"../config/routes"' has no exported member 'routeConfig'.
+src/hooks/useBreadcrumbs.ts(4,35): error TS2305: Module '"../config/routes"' has no exported member 'RouteConfig'.
+src/hooks/useBreadcrumbs.ts(85,10): error TS2552: Cannot find name 'breadcrumbs'. Did you mean 'useBreadcrumbs'?
+src/hooks/useServiceWorker.ts(5,3): error TS2305: Module '"../utils/serviceWorker"' has no exported member 'updateSW'.
+src/hooks/useServiceWorker.ts(6,3): error TS2305: Module '"../utils/serviceWorker"' has no exported member 'isServiceWorkerSupported'.
+src/hooks/useServiceWorker.ts(7,3): error TS2305: Module '"../utils/serviceWorker"' has no exported member 'isStandalone'.
+src/hooks/useServiceWorker.ts(8,3): error TS2305: Module '"../utils/serviceWorker"' has no exported member 'OfflineManager'.
+src/hooks/useServiceWorker.ts(9,3): error TS2305: Module '"../utils/serviceWorker"' has no exported member 'CacheManager'.
+src/hooks/useServiceWorker.ts(13,3): error TS2305: Module '"../utils/pwaUtils"' has no exported member 'shouldShowInstallPrompt'.
+src/hooks/useServiceWorker.ts(14,3): error TS2305: Module '"../utils/pwaUtils"' has no exported member 'trackInstallPromptEvent'.
+src/hooks/useServiceWorker.ts(15,3): error TS2305: Module '"../utils/pwaUtils"' has no exported member 'getPWAStatus'.
+src/hooks/useServiceWorker.ts(76,7): error TS2345: Argument of type '{ onSuccess: (registration: ServiceWorkerRegistration) => void; onUpdate: (registration: ServiceWorkerRegistration) => void; onOfflineReady: () => void; onError: (error: any) => void; }' is not assignable to parameter of type 'ServiceWorkerConfig'.
+  Object literal may only specify known properties, and 'onOfflineReady' does not exist in type 'ServiceWorkerConfig'.
+src/hooks/useServiceWorker.ts(217,41): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useServiceWorker.ts(244,18): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useServiceWorker.ts(249,22): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useServiceWorker.ts(291,34): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useServiceWorker.ts(295,23): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useServiceWorker.ts(296,18): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useServiceWorker.ts(304,29): error TS2339: Property 'isIOSSafari' does not exist on type 'DeviceInfo'.
+src/hooks/useValidationAnimation.ts(9,3): error TS2305: Module '"../utils/validationAnimations"' has no exported member 'triggerValidationAnimation'.
+src/hooks/useValidationAnimation.ts(10,3): error TS2724: '"../utils/validationAnimations"' has no exported member named 'getValidationAnimationClasses'. Did you mean 'validationAnimationClasses'?
+src/hooks/useValidationAnimation.ts(11,3): error TS2305: Module '"../utils/validationAnimations"' has no exported member 'validationSequences'.
+src/pages/__tests__/CertificateViewer.test.tsx(500,12): error TS2304: Cannot find name 'goBackButton'.
+src/pages/__tests__/VerificationPage.test.tsx(6,8): error TS1192: Module '"C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService"' has no default export.
+src/pages/__tests__/VerificationPage.test.tsx(261,13): error TS2339: Property 'VerificationPage' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/pages/VerificationPage")'.
+src/pages/auth/LoginPage.tsx(5,7): error TS2322: Type '() => void' is not assignable to type 'FC<{}>'.
+  Type 'void' is not assignable to type 'ReactElement<any, any>'.
+src/pages/auth/LoginPage.tsx(49,1): error TS1258: A default export must be at the top level of a file or module declaration.
+src/pages/Settings.tsx(188,15): error TS2322: Type '"primary" | "danger"' is not assignable to type '"link" | "default" | "destructive" | "outline" | "secondary" | "ghost"'.
+  Type '"primary"' is not assignable to type '"link" | "default" | "destructive" | "outline" | "secondary" | "ghost"'.
+src/pages/Settings.tsx(214,11): error TS2322: Type '{ label: string; value: string; onChange: (value: string) => void; options: { value: string; label: string; }[]; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
+  Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
+src/pages/Settings.tsx(282,11): error TS2322: Type '{ label: string; value: "dark" | "light" | "system"; onChange: (value: string) => void; options: { value: string; label: string; }[]; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
+  Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
+src/pages/Settings.tsx(297,13): error TS2322: Type '{ label: string; value: string; onChange: (value: string) => void; options: { value: string; label: string; }[]; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
+  Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
+src/pages/Settings.tsx(308,13): error TS2322: Type '{ label: string; value: string; onChange: (value: string) => void; options: { value: string; label: string; }[]; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
+  Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
+src/pages/Settings.tsx(320,11): error TS2322: Type '{ label: string; value: string; onChange: (value: string) => void; options: { value: string; label: string; }[]; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
+  Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
+src/services/__tests__/blockchainService.simple.test.ts(2,1): error TS1208: 'blockchainService.simple.test.ts' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
+src/services/__tests__/blockchainService.simple.test.ts(12,33): error TS2339: Property 'default' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
+src/services/__tests__/blockchainService.simple.test.ts(13,40): error TS2339: Property 'default' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
+src/services/__tests__/blockchainService.simple.test.ts(17,13): error TS2339: Property 'default' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
+src/services/__tests__/blockchainService.test.ts(7,8): error TS1192: Module '"C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService"' has no default export.
+src/services/__tests__/blockchainService.test.ts(7,49): error TS2305: Module '"../blockchainService"' has no exported member 'VerificationResult'.
+src/services/__tests__/errorLogger.test.ts(1,23): error TS2305: Module '"../errorLogger"' has no exported member 'logError'.
+src/services/__tests__/errorLogger.test.ts(1,33): error TS2305: Module '"../errorLogger"' has no exported member 'logBlockchainError'.
+src/services/__tests__/errorLogger.test.ts(1,53): error TS2305: Module '"../errorLogger"' has no exported member 'logNetworkError'.
+src/services/__tests__/errorLogger.test.ts(1,70): error TS2305: Module '"../errorLogger"' has no exported member 'logValidationError'.
+src/services/__tests__/errorLogger.test.ts(73,50): error TS2554: Expected 1-2 arguments, but got 5.
+src/services/__tests__/errorLogger.test.ts(202,33): error TS2339: Property 'getErrorStats' does not exist on type 'ErrorLogger'.
+src/services/__tests__/performanceMetrics.test.ts(1,30): error TS2614: Module '"../performanceMetrics"' has no exported member 'trackPageView'. Did you mean to use 'import trackPageView from "../performanceMetrics"' instead?
+src/services/__tests__/performanceMetrics.test.ts(1,45): error TS2614: Module '"../performanceMetrics"' has no exported member 'trackUserInteraction'. Did you mean to use 'import trackUserInteraction from "../performanceMetrics"' instead?
+src/services/__tests__/performanceMetrics.test.ts(1,67): error TS2614: Module '"../performanceMetrics"' has no exported member 'trackFormSubmission'. Did you mean to use 'import trackFormSubmission from "../performanceMetrics"' instead?
+src/services/__tests__/performanceMetrics.test.ts(43,24): error TS2339: Property 'clear' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(55,44): error TS2339: Property 'getWebVitals' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(75,26): error TS2339: Property 'startComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(76,26): error TS2339: Property 'endComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(78,26): error TS2339: Property 'startImageLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(79,26): error TS2339: Property 'endImageLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(81,26): error TS2339: Property 'startBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(82,26): error TS2339: Property 'endBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(84,26): error TS2339: Property 'startTiming' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(85,26): error TS2339: Property 'endTiming' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(89,48): error TS2339: Property 'getCustomMetrics' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(103,40): error TS2339: Property 'getPerformanceScore' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(109,40): error TS2339: Property 'getPerformanceGrade' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(116,41): error TS2339: Property 'generateReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(136,26): error TS2339: Property 'setReportingEndpoint' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(138,32): error TS2339: Property 'sendReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(155,32): error TS2339: Property 'sendReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(168,50): error TS2339: Property 'getRecommendations' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(178,26): error TS2339: Property 'startBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(179,26): error TS2339: Property 'endBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/services/__tests__/performanceMetrics.test.ts(181,50): error TS2339: Property 'getRecommendations' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(197,41): error TS2339: Property 'generateReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(210,41): error TS2339: Property 'generateReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(223,39): error TS2339: Property 'generateReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(227,26): error TS2339: Property 'clearErrors' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(230,35): error TS2339: Property 'generateReport' does not exist on type 'PerformanceMetricsService'.
+src/services/__tests__/performanceMetrics.test.ts(238,24): error TS2339: Property 'clear' does not exist on type 'PerformanceMonitor'.
+src/services/blockchainService.ts(22,28): error TS2724: '"C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/node_modules/ethers/lib.commonjs/ethers"' has no exported member named 'providers'. Did you mean 'Provider'?
+src/services/blockchainService.ts(38,34): error TS2339: Property 'providers' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/node_modules/ethers/lib.commonjs/ethers")'.
+src/services/blockchainService.ts(44,41): error TS2724: '"C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/node_modules/ethers/lib.commonjs/ethers"' has no exported member named 'providers'. Did you mean 'Provider'?
+src/services/blockchainService.ts(45,17): error TS2339: Property 'ethereum' does not exist on type 'Window & typeof globalThis'.
+src/services/blockchainService.ts(50,20): error TS2339: Property 'ethereum' does not exist on type 'Window & typeof globalThis'.
+src/services/blockchainService.ts(51,35): error TS2339: Property 'providers' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/node_modules/ethers/lib.commonjs/ethers")'.
+src/services/blockchainService.ts(51,65): error TS2339: Property 'ethereum' does not exist on type 'Window & typeof globalThis'.
+src/setupTests.ts(17,1): error TS2322: Type 'typeof IntersectionObserver' is not assignable to type '{ new (callback: IntersectionObserverCallback, options?: IntersectionObserverInit): IntersectionObserver; prototype: IntersectionObserver; }'.
+  Types of property 'prototype' are incompatible.
+    Type 'IntersectionObserver' is missing the following properties from type 'IntersectionObserver': root, rootMargin, thresholds, takeRecords
+src/styles/index.ts(10,10): error TS2305: Module '"./tokens-new"' has no exported member 'designTokens'.
+src/styles/index.ts(10,24): error TS2305: Module '"./tokens-new"' has no exported member 'getThemeTokens'.
+src/styles/index.ts(10,45): error TS2305: Module '"./tokens-new"' has no exported member 'Theme'.
+src/styles/index.ts(10,57): error TS2305: Module '"./tokens-new"' has no exported member 'ThemeConfig'.
+src/styles/index.ts(15,3): error TS2305: Module '"./utils"' has no exported member 'getSpacing'.
+src/styles/index.ts(16,3): error TS2305: Module '"./utils"' has no exported member 'getFontSize'.
+src/styles/index.ts(17,3): error TS2305: Module '"./utils"' has no exported member 'getFontWeight'.
+src/styles/index.ts(18,3): error TS2305: Module '"./utils"' has no exported member 'getBorderRadius'.
+src/styles/index.ts(19,3): error TS2305: Module '"./utils"' has no exported member 'getBoxShadow'.
+src/styles/index.ts(20,3): error TS2305: Module '"./utils"' has no exported member 'getZIndex'.
+src/styles/index.ts(21,3): error TS2305: Module '"./utils"' has no exported member 'getColorCSSVar'.
+src/styles/index.ts(22,3): error TS2305: Module '"./utils"' has no exported member 'getSpacingCSSVar'.
+src/styles/index.ts(23,3): error TS2305: Module '"./utils"' has no exported member 'createStyles'.
+src/styles/index.ts(24,3): error TS2305: Module '"./utils"' has no exported member 'breakpoints'.
+src/styles/index.ts(28,3): error TS2305: Module '"./utils"' has no exported member 'isDarkMode'.
+src/styles/index.ts(29,3): error TS2305: Module '"./utils"' has no exported member 'getCurrentTheme'.
+src/styles/index.ts(30,3): error TS2305: Module '"./utils"' has no exported member 'toggleTheme'.
+src/styles/index.ts(31,3): error TS2305: Module '"./utils"' has no exported member 'initializeTheme'.
+src/styles/index.ts(32,3): error TS2305: Module '"./utils"' has no exported member 'getCSSCustomProperty'.
+src/styles/index.ts(33,3): error TS2305: Module '"./utils"' has no exported member 'setCSSCustomProperty'.
+src/styles/index.ts(34,3): error TS2305: Module '"./utils"' has no exported member 'generateTailwindClass'.
+src/styles/index.ts(40,8): error TS2305: Module '"./utils"' has no exported member 'ColorScale'.
+src/styles/index.ts(41,8): error TS2305: Module '"./utils"' has no exported member 'ColorName'.
+src/styles/index.ts(42,8): error TS2305: Module '"./utils"' has no exported member 'ColorShade'.
+src/styles/index.ts(43,8): error TS2305: Module '"./utils"' has no exported member 'SpacingValue'.
+src/styles/index.ts(44,8): error TS2305: Module '"./utils"' has no exported member 'FontSize'.
+src/styles/index.ts(45,8): error TS2305: Module '"./utils"' has no exported member 'FontWeight'.
+src/styles/index.ts(46,8): error TS2305: Module '"./utils"' has no exported member 'BorderRadius'.
+src/styles/index.ts(47,8): error TS2305: Module '"./utils"' has no exported member 'BoxShadow'.
+src/styles/index.ts(48,8): error TS2305: Module '"./utils"' has no exported member 'ZIndex'.
+src/utils/__tests__/bundleOptimization.test.ts(7,3): error TS2305: Module '"../bundleOptimization"' has no exported member 'conditionalImport'.
+src/utils/__tests__/bundleOptimization.test.ts(8,3): error TS2305: Module '"../bundleOptimization"' has no exported member 'safeImport'.
+src/utils/__tests__/bundleOptimization.test.ts(9,3): error TS2305: Module '"../bundleOptimization"' has no exported member 'createLazyComponent'.
+src/utils/__tests__/bundleOptimization.test.ts(10,3): error TS2305: Module '"../bundleOptimization"' has no exported member 'logBundleInfo'.
+src/utils/__tests__/bundleOptimization.test.ts(11,3): error TS2305: Module '"../bundleOptimization"' has no exported member 'verifyTreeShaking'.
+src/utils/__tests__/bundleOptimization.test.ts(164,5): error TS2741: Property 'supportedEntryTypes' is missing in type 'Mock<any, any>' but required in type '{ new (callback: PerformanceObserverCallback): PerformanceObserver; prototype: PerformanceObserver; readonly supportedEntryTypes: readonly string[]; }'.
+src/utils/__tests__/imageOptimization.test.ts(2,3): error TS2724: '"../imageOptimization"' has no exported member named 'generateImageSrcSet'. Did you mean 'generateSrcSet'?
+src/utils/__tests__/imageOptimization.test.ts(3,3): error TS2305: Module '"../imageOptimization"' has no exported member 'optimizeImageUrl'.
+src/utils/__tests__/imageOptimization.test.ts(4,3): error TS2305: Module '"../imageOptimization"' has no exported member 'getResponsiveImagePropsSync'.
+src/utils/__tests__/imageOptimization.test.ts(5,3): error TS2305: Module '"../imageOptimization"' has no exported member 'ImageOptimizationOptions'.
+src/utils/__tests__/performanceMonitoring.test.ts(1,57): error TS2305: Module '"../performanceMonitoring"' has no exported member 'monitorLazyLoading'.
+src/utils/__tests__/performanceMonitoring.test.ts(31,24): error TS2339: Property 'clear' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(42,26): error TS2339: Property 'startTiming' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(43,26): error TS2339: Property 'endTiming' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(60,26): error TS2339: Property 'startTiming' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(61,26): error TS2339: Property 'endTiming' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(77,26): error TS2339: Property 'startComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(78,26): error TS2339: Property 'endComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(97,26): error TS2339: Property 'startImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(98,26): error TS2339: Property 'endImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(116,26): error TS2339: Property 'startBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(117,26): error TS2339: Property 'endBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(137,26): error TS2339: Property 'startComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(138,26): error TS2339: Property 'endComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(140,26): error TS2339: Property 'startImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(141,26): error TS2339: Property 'endImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(143,26): error TS2339: Property 'startBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(144,26): error TS2339: Property 'endBundleLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(148,51): error TS2339: Property 'getMetricsByType' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(149,47): error TS2339: Property 'getMetricsByType' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(150,48): error TS2339: Property 'getMetricsByType' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(158,46): error TS2551: Property 'getSlowMetrics' does not exist on type 'PerformanceMonitor'. Did you mean 'getMetrics'?
+src/utils/__tests__/performanceMonitoring.test.ts(173,26): error TS2339: Property 'startComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(174,26): error TS2339: Property 'endComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(176,26): error TS2339: Property 'startComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(177,26): error TS2339: Property 'endComponentLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(179,26): error TS2339: Property 'startImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(180,26): error TS2339: Property 'endImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(182,26): error TS2339: Property 'startImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(183,26): error TS2339: Property 'endImageLoad' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(187,42): error TS2339: Property 'getSummary' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(205,26): error TS2339: Property 'startTiming' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(206,26): error TS2339: Property 'endTiming' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(208,47): error TS2339: Property 'exportData' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(222,24): error TS2339: Property 'clear' does not exist on type 'PerformanceMonitor'.
+src/utils/__tests__/performanceMonitoring.test.ts(313,24): error TS2339: Property 'clear' does not exist on type 'PerformanceMonitor'.
+src/utils/treeShaking.ts(5,18): error TS2322: Type 'T' is not assignable to type 'object'.

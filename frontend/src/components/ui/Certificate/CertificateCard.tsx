@@ -60,16 +60,16 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { triggerSuccess, triggerError } = useFeedbackAnimations();
+  const { showSuccess, showError } = useFeedbackAnimations();
 
   const handleCopyLink = async () => {
     try {
       if (certificate.verificationURL) {
         await navigator.clipboard.writeText(certificate.verificationURL);
-        triggerSuccess('Link copied to clipboard');
+        showSuccess('Link copied to clipboard');
       }
     } catch (error) {
-      triggerError('Failed to copy link');
+      showError('Failed to copy link');
     }
   };
 
@@ -77,9 +77,9 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
     setIsLoading(true);
     try {
       onDownload?.();
-      triggerSuccess('Certificate downloaded');
+      showSuccess('Certificate downloaded');
     } catch (error) {
-      triggerError('Download failed');
+      showError('Download failed');
     } finally {
       setIsLoading(false);
     }
@@ -88,9 +88,9 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   const handleShare = () => {
     try {
       onShare?.();
-      triggerSuccess('Share options opened');
+      showSuccess('Share options opened');
     } catch (error) {
-      triggerError('Share failed');
+      showError('Share failed');
     }
   };
 
@@ -133,6 +133,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         </div>
         <VerificationBadge 
+          tokenId={certificate.tokenId}
           isValid={certificate.isValid && !certificate.isRevoked}
           size="sm"
         />

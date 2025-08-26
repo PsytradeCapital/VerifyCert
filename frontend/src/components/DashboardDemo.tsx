@@ -1,5 +1,16 @@
 import React from 'react';
-import { DashboardOverview, ActivityFeed, QuickStats, DashboardStats, ActivityItem } from './ui';
+import { DashboardOverview, ActivityFeed, QuickStats, ActivityItem } from './ui';
+
+// Define DashboardStats interface locally
+interface DashboardStats {
+  totalIssued: number;
+  thisMonth: number;
+  thisWeek: number;
+  activeRecipients: number;
+  previousMonth: number;
+  previousWeek: number;
+  growthRate: number;
+}
 
 const DashboardDemo: React.FC = () => {
   const mockStats: DashboardStats = {

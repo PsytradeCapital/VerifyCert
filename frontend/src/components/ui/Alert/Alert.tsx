@@ -4,7 +4,12 @@ interface AlertProps {
   type?: 'success' | 'error' | 'warning' | 'info';
   title?: string;
   message: string;
+  children?: React.ReactNode;
   onClose?: () => void;
+  variant?: string;
+  showIcon?: boolean;
+  closable?: boolean;
+  className?: string;
 }
 
 const Alert: React.FC<AlertProps> = ({ 
@@ -43,3 +48,4 @@ const Alert: React.FC<AlertProps> = ({
 };
 
 export default Alert;
+export type { AlertProps };

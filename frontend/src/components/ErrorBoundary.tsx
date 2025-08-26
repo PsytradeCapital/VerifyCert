@@ -2,6 +2,8 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
 children: ReactNode;
+onError?: (error: Error, errorInfo: ErrorInfo) => void;
+fallback?: ReactNode;
 }
 interface State {
 hasError: boolean;
@@ -16,9 +18,15 @@ class ErrorBoundary extends Component<Props, State> {
   }
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error:', error, errorInfo);
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
   }
   public render() {
     if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
       return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
           <div className="text-center">

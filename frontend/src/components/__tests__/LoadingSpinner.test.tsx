@@ -13,21 +13,21 @@ describe('LoadingSpinner', () => {
   });
 
   it('renders with small size', () => {
-    render(<LoadingSpinner size="sm" />);
+    render(<LoadingSpinner size="small" />);
     
     const spinner = screen.getByLabelText('Loading');
     expect(spinner).toHaveClass('h-4', 'w-4');
   });
 
   it('renders with large size', () => {
-    render(<LoadingSpinner size="lg" />);
+    render(<LoadingSpinner size="large" />);
     
     const spinner = screen.getByLabelText('Loading');
     expect(spinner).toHaveClass('h-8', 'w-8');
   });
 
   it('renders with extra large size', () => {
-    render(<LoadingSpinner size="xl" />);
+    render(<LoadingSpinner size="large" />);
     
     const spinner = screen.getByLabelText('Loading');
     expect(spinner).toHaveClass('h-12', 'w-12');

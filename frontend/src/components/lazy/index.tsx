@@ -1,13 +1,11 @@
 import { lazy } from 'react';
 
-// Page components
+// Page components (only existing ones)
 export const LazyHome = lazy(() => import('../../pages/Home'));
-export const LazyDashboard = lazy(() => import('../../pages/Dashboard'));
-export const LazyProfile = lazy(() => import('../../pages/Profile'));
 export const LazySettings = lazy(() => import('../../pages/Settings'));
+export const LazyIssuerDashboard = lazy(() => import('../../pages/IssuerDashboard'));
+export const LazyCertificateViewer = lazy(() => import('../../pages/CertificateViewer'));
 
-// Component lazy loading
-export const LazyHeader = lazy(() => import('../Header'));
-export const LazyFooter = lazy(() => import('../Footer'));
+// Component lazy loading (only existing ones)
 export const LazyNavigation = lazy(() => import('../Navigation'));
-export const LazyModal = lazy(() => import('../Modal'));
+export const LazyErrorBoundary = lazy(() => import('../ErrorBoundary'));

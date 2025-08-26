@@ -79,3 +79,6 @@ export default function Notification({
     </div>
   );
 }
+
+export default Notification;
+export type { NotificationProps };

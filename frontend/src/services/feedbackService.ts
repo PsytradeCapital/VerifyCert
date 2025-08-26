@@ -1,9 +1,11 @@
 import React from 'react';
 
 interface FeedbackData {
+  id?: string;
   category: 'navigation' | 'visual-design' | 'overall-experience';
   rating: number;
   feedback: string;
+  message?: string;
   page: string;
   timestamp: number;
   userAgent: string;
@@ -14,6 +16,7 @@ interface FeedbackData {
 interface FeedbackAnalytics {
   totalFeedback: number;
   averageRating: number;
+  responseRate?: number;
   categoryBreakdown: Record<string, {
     count: number;
     averageRating: number;
@@ -119,6 +122,11 @@ class FeedbackService {
   clearFeedback(): void {
     localStorage.removeItem(this.STORAGE_KEY);
     localStorage.removeItem(this.ANALYTICS_KEY);
+  }
+
+  exportFeedback(): string {
+    const feedback = this.getAllFeedback();
+    return JSON.stringify(feedback, null, 2);
   }
 
   getCategoryFeedback(category: 'navigation' | 'visual-design' | 'overall-experience'): {

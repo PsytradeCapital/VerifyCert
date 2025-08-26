@@ -90,10 +90,10 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   };
 
   const getStatusColor = () => {
-    if (verificationState === 'loading') return 'yellow';
-    if (isRevoked) return 'red';
-    if (isValid) return 'green';
-    return 'red';
+    if (verificationState === 'loading') return 'warning';
+    if (isRevoked) return 'error';
+    if (isValid) return 'success';
+    return 'error';
   };
 
   const getStatusText = () => {

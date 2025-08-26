@@ -44,3 +44,11 @@ export const getNetworkConfig = (chainId: number): NetworkConfig | undefined => 
 export const isNetworkSupported = (chainId: number): boolean => {
   return chainId in SUPPORTED_NETWORKS;
 };
+
+export const AMOY_NETWORK = SUPPORTED_NETWORKS[80002];
+
+export const getBlockExplorerUrl = (chainId: number, txHash?: string): string => {
+  const network = getNetworkConfig(chainId);
+  if (!network) return '';
+  return txHash ? `${network.blockExplorerUrl}/tx/${txHash}` : network.blockExplorerUrl;
+};

@@ -70,3 +70,4 @@ export const VerificationResult: React.FC<VerificationResultProps> = ({
 };
 
 export default VerificationResult;
+export type { VerificationResultProps };

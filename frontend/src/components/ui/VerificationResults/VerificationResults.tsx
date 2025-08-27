@@ -162,3 +162,5 @@ const VerificationResults: React.FC<VerificationResultsProps> = ({
 };
 
 export default VerificationResults;
+export type { VerificationResultsProps };
+export { VerificationResults };

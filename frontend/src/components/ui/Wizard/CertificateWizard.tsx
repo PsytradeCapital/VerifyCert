@@ -193,4 +193,5 @@ export const CertificateWizard: React.FC<CertificateWizardProps> = ({
 };
 
 export default CertificateWizard;
-export type { CertificateWizardProps, WizardStep, CertificateFormData };
+export type { CertificateWizardProps, WizardStep };
+export type CertificateFormData = Record<string, any>;

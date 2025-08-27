@@ -196,3 +196,4 @@ export const CertificateAnalytics: React.FC<CertificateAnalyticsProps> = ({
 };
 
 export default CertificateAnalytics;
+export type { AnalyticsData };

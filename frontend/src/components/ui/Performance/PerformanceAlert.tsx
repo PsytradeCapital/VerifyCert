@@ -10,11 +10,13 @@ interface PerformanceMetric {
 }
 
 interface PerformanceAlertProps {
+  metrics?: PerformanceMetric[];
   className?: string;
   onDismiss?: () => void;
 }
 
 export const PerformanceAlert: React.FC<PerformanceAlertProps> = ({ 
+  metrics = [],
   className = '',
   onDismiss 
 }) => {

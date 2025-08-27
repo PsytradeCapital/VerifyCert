@@ -38,8 +38,6 @@ src/components/ui/__tests__/KeyboardNavigation.test.tsx(265,12): error TS2741: P
 src/components/ui/__tests__/KeyboardNavigation.test.tsx(285,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
 src/components/ui/__tests__/KeyboardNavigation.test.tsx(289,12): error TS2741: Property 'items' is missing in type '{}' but required in type 'BottomNavigationProps'.
 src/components/ui/__tests__/KeyboardNavigation.test.tsx(319,30): error TS2339: Property 'setup' does not exist on type '{ click: (element: Element, init?: MouseEventInit, { skipHover, clickCount, skipPointerEventsCheck, }?: clickOptions & PointerOptions) => void; dblClick: (element: Element, init?: MouseEventInit, { skipPointerEventsCheck }?: clickOptions & PointerOptions) => void; ... 9 more ...; keyboard: { ...; }; }'.
-src/components/ui/Analytics/CertificateAnalytics.tsx(2,111): error TS2307: Cannot find module 'recharts' or its corresponding type declarations.
-src/components/ui/Analytics/index.ts(2,15): error TS2614: Module '"./CertificateAnalytics"' has no exported member 'AnalyticsData'. Did you mean to use 'import AnalyticsData from "./CertificateAnalytics"' instead?
 src/components/ui/Certificate/CertificateActions.tsx(1,1): error TS1208: 'CertificateActions.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
 src/components/ui/Certificate/CertificateCard.tsx(18,33): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Certificate/CertificateMetadata.tsx' is not a module.
 src/components/ui/Certificate/CertificateMetadata.tsx(1,1): error TS1208: 'CertificateMetadata.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
@@ -57,54 +55,20 @@ src/components/ui/Feedback/index.ts(12,45): error TS2306: File 'C:/Users/Martin 
 src/components/ui/Feedback/index.ts(13,15): error TS2724: '"./FeedbackDashboard"' has no exported member named 'FeedbackDashboardProps'. Did you mean 'FeedbackDashboard'?
 src/components/ui/Feedback/index.ts(14,15): error TS2614: Module '"./FeedbackManager"' has no exported member 'FeedbackManagerProps'. Did you mean to use 'import FeedbackManagerProps from "./FeedbackManager"' instead?
 src/components/ui/Feedback/index.ts(15,47): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Feedback/FeedbackIntegration.tsx' is not a module.
-src/components/ui/FloatingActionButton/FloatingActionButton.tsx(145,14): error TS2322: Type '{ children: string; jsx: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
-  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
-src/components/ui/FloatingActionButton/index.ts(1,10): error TS2724: '"./FloatingActionButton"' has no exported member named 'FloatingActionButton'. Did you mean 'FloatingActionButtonProps'?
 src/components/ui/FocusManagement/FocusTrap.tsx(2,10): error TS2614: Module '"../../../hooks/useFocusManagement"' has no exported member 'useFocusTrap'. Did you mean to use 'import useFocusTrap from "../../../hooks/useFocusManagement"' instead?
 src/components/ui/FocusManagement/FocusTrap.tsx(23,7): error TS2590: Expression produces a union type that is too complex to represent.
 src/components/ui/FocusManagement/RovingTabIndex.tsx(2,10): error TS2614: Module '"../../../hooks/useFocusManagement"' has no exported member 'useRovingTabIndex'. Did you mean to use 'import useRovingTabIndex from "../../../hooks/useFocusManagement"' instead?
 src/components/ui/index.ts(9,38): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Layout/Container.tsx' is not a module.
-src/components/ui/Layout/AppLayout.tsx(3,28): error TS2614: Module '"../Navigation/BottomNavigation"' has no exported member 'BottomNavItem'. Did you mean to use 'import BottomNavItem from "../Navigation/BottomNavigation"' instead?
 src/components/ui/Layout/Container.tsx(1,1): error TS1208: 'Container.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
-src/components/ui/Layout/Grid.tsx(167,6): error TS2322: Type '{ children: ReactNode; defaultChecked?: boolean; defaultValue?: string | number | readonly string[]; suppressContentEditableWarning?: boolean; suppressHydrationWarning?: boolean; accessKey?: string; ... 257 more ...; className: string; }' is not assignable to type 'SVGProps<SVGSymbolElement>'.
-  Types of property 'onCopy' are incompatible.
-    Type 'ClipboardEventHandler<HTMLElement>' is not assignable to type 'ClipboardEventHandler<SVGSymbolElement>'.
-      Type 'HTMLElement' is missing the following properties from type 'SVGSymbolElement': ownerSVGElement, viewportElement, preserveAspectRatio, viewBox
-src/components/ui/Layout/Grid.tsx(290,6): error TS2322: Type '{ children: ReactNode; defaultChecked?: boolean; defaultValue?: string | number | readonly string[]; suppressContentEditableWarning?: boolean; suppressHydrationWarning?: boolean; accessKey?: string; ... 257 more ...; className: string; }' is not assignable to type 'SVGProps<SVGSymbolElement>'.
-  Types of property 'onCopy' are incompatible.
-    Type 'ClipboardEventHandler<HTMLElement>' is not assignable to type 'ClipboardEventHandler<SVGSymbolElement>'.
 src/components/ui/Layout/Header.tsx(4,29): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/ThemeToggle.tsx' is not a module.
-src/components/ui/Loading/index.ts(16,15): error TS2614: Module '"./Spinner"' has no exported member 'SpinnerProps'. Did you mean to use 'import SpinnerProps from "./Spinner"' instead?
-src/components/ui/Loading/index.ts(17,15): error TS2724: '"./DotsSpinner"' has no exported member named 'DotsSpinnerProps'. Did you mean 'DotsSpinner'?
-src/components/ui/Loading/index.ts(18,15): error TS2724: '"./PulseSpinner"' has no exported member named 'PulseSpinnerProps'. Did you mean 'PulseSpinner'?
-src/components/ui/Loading/index.ts(19,15): error TS2724: '"./ProgressBar"' has no exported member named 'ProgressBarProps'. Did you mean 'ProgressBar'?
-src/components/ui/Loading/index.ts(20,15): error TS2724: '"./CircularProgress"' has no exported member named 'CircularProgressProps'. Did you mean 'CircularProgress'?
-src/components/ui/Loading/index.ts(21,15): error TS2614: Module '"./Skeleton"' has no exported member 'SkeletonProps'. Did you mean to use 'import SkeletonProps from "./Skeleton"' instead?
-src/components/ui/Loading/index.ts(22,15): error TS2724: '"./LoadingOverlay"' has no exported member named 'LoadingOverlayProps'. Did you mean 'LoadingOverlay'?
-src/components/ui/Loading/index.ts(23,15): error TS2724: '"./LoadingButton"' has no exported member named 'LoadingButtonProps'. Did you mean 'LoadingButton'?
-src/components/ui/Loading/index.ts(24,15): error TS2724: '"./StepProgress"' has no exported member named 'StepProgressProps'. Did you mean 'StepProgress'?
-src/components/ui/Modal/index.ts(10,15): error TS2614: Module '"./Dialog"' has no exported member 'DialogProps'. Did you mean to use 'import DialogProps from "./Dialog"' instead?
 src/components/ui/Navigation/FloatingActionButton.tsx(1,1): error TS1208: 'FloatingActionButton.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
 src/components/ui/Navigation/index.ts(8,49): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Navigation/FloatingActionButton.tsx' is not a module.
-src/components/ui/Navigation/index.ts(13,15): error TS2614: Module '"./SideNavigation"' has no exported member 'SideNavigationProps'. Did you mean to use 'import SideNavigationProps from "./SideNavigation"' instead?
-src/components/ui/Navigation/index.ts(14,15): error TS2614: Module '"./BottomNavigation"' has no exported member 'BottomNavItem'. Did you mean to use 'import BottomNavItem from "./BottomNavigation"' instead?
-src/components/ui/Navigation/index.ts(14,30): error TS2724: '"./BottomNavigation"' has no exported member named 'BottomNavigationProps'. Did you mean 'BottomNavigation'?
 src/components/ui/Navigation/index.ts(15,48): error TS2306: File 'C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/components/ui/Navigation/FloatingActionButton.tsx' is not a module.
-src/components/ui/Navigation/index.ts(16,15): error TS2724: '"./Breadcrumbs"' has no exported member named 'BreadcrumbItem'. Did you mean 'Breadcrumbs'?
-src/components/ui/Navigation/index.ts(16,31): error TS2724: '"./Breadcrumbs"' has no exported member named 'BreadcrumbsProps'. Did you mean 'Breadcrumbs'?
-src/components/ui/Navigation/index.ts(17,15): error TS2724: '"./NavigationStateManager"' has no exported member named 'NavigationStateManagerProps'. Did you mean 'NavigationStateManager'?
-src/components/ui/NetworkDisplay.tsx(12,34): error TS2339: Property 'contractAddress' does not exist on type 'NetworkConfig'.
-src/components/ui/NetworkDisplay.tsx(15,63): error TS2554: Expected 1-2 arguments, but got 3.
-src/components/ui/NetworkDisplay.tsx(16,34): error TS2339: Property 'faucetUrl' does not exist on type 'NetworkConfig'.
-src/components/ui/NetworkDisplay.tsx(23,25): error TS2339: Property 'displayName' does not exist on type 'NetworkConfig'.
-src/components/ui/Performance/PerformanceDashboard.tsx(111,27): error TS2322: Type '{ metrics: PerformanceMetric[]; className: string; }' is not assignable to type 'IntrinsicAttributes & PerformanceAlertProps'.
-  Property 'metrics' does not exist on type 'IntrinsicAttributes & PerformanceAlertProps'.
+src/components/ui/Performance/PerformanceAlert.tsx(19,3): error TS2300: Duplicate identifier 'metrics'.
+src/components/ui/Performance/PerformanceAlert.tsx(23,10): error TS2300: Duplicate identifier 'metrics'.
+src/components/ui/Performance/PerformanceDashboard.tsx(111,27): error TS2719: Type 'PerformanceMetric[]' is not assignable to type 'PerformanceMetric[]'. Two different types with this name exist, but they are unrelated.
+  Property 'status' is missing in type 'PerformanceMetric' but required in type 'PerformanceMetric'.
 src/components/ui/ThemeToggle.tsx(1,1): error TS1208: 'ThemeToggle.tsx' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
-src/components/ui/Tooltip/index.ts(6,15): error TS2614: Module '"./Tooltip"' has no exported member 'TooltipProps'. Did you mean to use 'import TooltipProps from "./Tooltip"' instead?
-src/components/ui/VerificationResult/index.ts(2,15): error TS2724: '"./VerificationResult"' has no exported member named 'VerificationResultProps'. Did you mean 'VerificationResult'?
-src/components/ui/VerificationResults/index.ts(1,10): error TS2614: Module '"./VerificationResults"' has no exported member 'VerificationResults'. Did you mean to use 'import VerificationResults from "./VerificationResults"' instead?
-src/components/ui/VerificationResults/index.ts(2,15): error TS2614: Module '"./VerificationResults"' has no exported member 'VerificationResultsProps'. Did you mean to use 'import VerificationResultsProps from "./VerificationResults"' instead?
-src/components/ui/Wizard/index.ts(2,15): error TS2614: Module '"./CertificateWizard"' has no exported member 'CertificateFormData'. Did you mean to use 'import CertificateFormData from "./CertificateWizard"' instead?
 src/contexts/__tests__/NavigationContext.test.tsx(8,11): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
 src/contexts/__tests__/NavigationContext.test.tsx(8,18): error TS2339: Property 'actions' does not exist on type 'NavigationContextType'.
 src/contexts/__tests__/NavigationContext.test.tsx(105,15): error TS2339: Property 'state' does not exist on type 'NavigationContextType'.
@@ -167,10 +131,9 @@ src/pages/Settings.tsx(308,13): error TS2322: Type '{ label: string; value: stri
   Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
 src/pages/Settings.tsx(320,11): error TS2322: Type '{ label: string; value: string; onChange: (value: string) => void; options: { value: string; label: string; }[]; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
   Property 'label' does not exist on type 'IntrinsicAttributes & SelectProps'.
-src/services/__tests__/blockchainService.simple.test.ts(3,1): error TS1208: 'blockchainService.simple.test.ts' cannot be compiled under '--isolatedModules' because it is considered a global script file. Add an import, export, or an empty 'export {}' statement to make it a module.
-src/services/__tests__/blockchainService.simple.test.ts(13,33): error TS2339: Property 'default' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
-src/services/__tests__/blockchainService.simple.test.ts(14,40): error TS2339: Property 'default' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
-src/services/__tests__/blockchainService.simple.test.ts(18,13): error TS2339: Property 'default' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
+src/services/__tests__/blockchainService.simple.test.ts(14,36): error TS2551: Property 'getBlockchainService' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'. Did you mean 'blockchainService'?
+src/services/__tests__/blockchainService.simple.test.ts(15,43): error TS2551: Property 'getBlockchainService' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'. Did you mean 'blockchainService'?
+src/services/__tests__/blockchainService.simple.test.ts(19,13): error TS2339: Property 'getBlockchainService' does not exist on type 'typeof import("C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService")'.
 src/services/__tests__/blockchainService.test.ts(7,8): error TS1192: Module '"C:/Users/Martin Mbugua/Desktop/VerifyCert/frontend/src/services/blockchainService"' has no default export.
 src/services/__tests__/blockchainService.test.ts(7,49): error TS2305: Module '"../blockchainService"' has no exported member 'VerificationResult'.
 src/services/__tests__/errorLogger.test.ts(1,23): error TS2305: Module '"../errorLogger"' has no exported member 'logError'.

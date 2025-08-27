@@ -12,7 +12,7 @@ export const NetworkDisplay: React.FC<NetworkDisplayProps> = ({
   contractAddress = AMOY_NETWORK.contractAddress,
   className = ''
 }) => {
-  const explorerUrl = getBlockExplorerUrl(chainId, 'address', contractAddress);
+  const explorerUrl = getBlockExplorerUrl(chainId, contractAddress);
   const faucetUrl = AMOY_NETWORK.faucetUrl;
 
   return (

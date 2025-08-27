@@ -1,8 +1,11 @@
 export interface NetworkConfig {
   chainId: number;
   name: string;
+  displayName?: string;
   rpcUrl: string;
   blockExplorerUrl: string;
+  contractAddress?: string;
+  faucetUrl?: string;
   nativeCurrency: {
     name: string;
     symbol: string;
@@ -14,14 +17,17 @@ export const SUPPORTED_NETWORKS: Record<number, NetworkConfig> = {
   80002: {
     chainId: 80002,
     name: 'Polygon Amoy Testnet',
+    displayName: 'Polygon Amoy Testnet',
     rpcUrl: 'https://rpc-amoy.polygon.technology',
-    blockExplorerUrl: 'https://amoy.polygonscan.com',
-    nativeCurrency: {
-      name: 'MATIC',
-      symbol: 'MATIC',
-      decimals: 18
+    blockExplorerUrl:om',
+    contractAddress:DRESS,
+    faucetUrl: 'https:',
+    nativeCurrency {
+     
+    ATIC',
+      de8
     }
-  },
+  }, 1mals:ciol: 'M  symb
   137: {
     chainId: 137,
     name: 'Polygon Mainnet',

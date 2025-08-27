@@ -1,4 +1,5 @@
 // Simple test to verify blockchain service works
+export {};
 
 describe('BlockchainService Simple Test', () => {
   beforeAll(() => {
@@ -9,13 +10,13 @@ describe('BlockchainService Simple Test', () => {
   });
 
   it('should be able to import the blockchain service', async () => {
-    const getBlockchainService = await import('../blockchainService');
-    expect(getBlockchainService.default).toBeDefined();
-    expect(typeof getBlockchainService.default).toBe('function');
+    const blockchainServiceModule = await import('../blockchainService');
+    expect(blockchainServiceModule.getBlockchainService).toBeDefined();
+    expect(typeof blockchainServiceModule.getBlockchainService).toBe('function');
   });
 
   it('should create blockchain service instance', async () => {
-    const { default: getBlockchainService } = await import('../blockchainService');
+    const { getBlockchainService } = await import('../blockchainService');
     
     // Mock ethers before creating service
     jest.doMock('ethers', () => ({

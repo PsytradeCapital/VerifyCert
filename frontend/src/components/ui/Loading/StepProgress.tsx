@@ -60,3 +60,4 @@ export const StepProgress: React.FC<StepProgressProps> = ({
 };
 
 export default StepProgress;
+export type { StepProgressProps, Step };

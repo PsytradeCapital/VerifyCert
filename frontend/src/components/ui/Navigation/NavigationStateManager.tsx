@@ -54,3 +54,4 @@ export const useNavigation = () => {
 };
 
 export default NavigationStateManager;
+export type { NavigationStateManagerProps };

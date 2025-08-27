@@ -46,3 +46,4 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
 };
 
 export default BottomNavigation;
+export type { BottomNavigationProps, NavigationItem as BottomNavItem };

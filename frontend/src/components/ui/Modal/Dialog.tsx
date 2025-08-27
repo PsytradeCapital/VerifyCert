@@ -42,3 +42,4 @@ export const Dialog: React.FC<DialogProps> = ({
 };
 
 export default Dialog;
+export type { DialogProps };

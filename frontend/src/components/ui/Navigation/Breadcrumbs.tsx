@@ -50,3 +50,4 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 };
 
 export default Breadcrumbs;
+export type { BreadcrumbsProps, BreadcrumbItem };

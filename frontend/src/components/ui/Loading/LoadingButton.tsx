@@ -50,3 +50,4 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
 };
 
 export default LoadingButton;
+export type { LoadingButtonProps };

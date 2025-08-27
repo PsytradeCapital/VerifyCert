@@ -1,2 +1,2 @@
-export { FloatingActionButton } from './FloatingActionButton';
-export type { FloatingActionButtonProps, FABAction } from './FloatingActionButton';
+export { default as FloatingActionButton } from './FloatingActionButton';
+export type { FloatingActionButtonProps } from './FloatingActionButton';

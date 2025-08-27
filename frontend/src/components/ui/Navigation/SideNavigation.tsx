@@ -176,3 +176,4 @@ const SideNavigation: React.FC<SideNavigationProps> = ({
 };
 
 export default SideNavigation;
+export type { SideNavigationProps };

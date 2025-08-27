@@ -163,10 +163,10 @@ const Grid: React.FC<GridProps> = ({
     className
   );
 
-  return (
-    <Component className={combinedClasses} {...rest}>
-      {children}
-    </Component>
+  return React.createElement(
+    Component,
+    { className: combinedClasses, ...rest },
+    children
   );
 };
 
@@ -286,10 +286,10 @@ export const GridItem: React.FC<GridItemProps> = ({
     className
   );
 
-  return (
-    <Component className={combinedClasses} {...rest}>
-      {children}
-    </Component>
+  return React.createElement(
+    Component,
+    { className: combinedClasses, ...rest },
+    children
   );
 };
 

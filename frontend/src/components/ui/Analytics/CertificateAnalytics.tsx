@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, Users, Award, CheckCircle } from 'lucide-react';
+
+// Mock chart components since recharts is not available
+const BarChart = ({ children, ...props }: any) => <div className="w-full h-64 bg-gray-100 rounded flex items-center justify-center">Bar Chart Placeholder</div>;
+const Bar = (props: any) => null;
+const XAxis = (props: any) => null;
+const YAxis = (props: any) => null;
+const CartesianGrid = (props: any) => null;
+const Tooltip = (props: any) => null;
+const ResponsiveContainer = ({ children, ...props }: any) => <div className="w-full h-full">{children}</div>;
+const PieChart = ({ children, ...props }: any) => <div className="w-full h-64 bg-gray-100 rounded flex items-center justify-center">Pie Chart Placeholder</div>;
+const Pie = (props: any) => null;
+const Cell = (props: any) => null;
 
 interface AnalyticsData {
   totalCertificates: number;

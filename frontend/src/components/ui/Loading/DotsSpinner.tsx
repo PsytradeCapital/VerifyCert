@@ -27,3 +27,4 @@ export const DotsSpinner: React.FC<DotsSpinnerProps> = ({
 };
 
 export default DotsSpinner;
+export type { DotsSpinnerProps };

@@ -23,3 +23,4 @@ export const PulseSpinner: React.FC<PulseSpinnerProps> = ({
 };
 
 export default PulseSpinner;
+export type { PulseSpinnerProps };

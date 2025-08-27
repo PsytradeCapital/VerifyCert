@@ -52,3 +52,4 @@ export const SkeletonText: React.FC<{ lines?: number; className?: string }> = ({
 };
 
 export default Skeleton;
+export type { SkeletonProps };

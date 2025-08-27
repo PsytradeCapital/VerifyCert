@@ -24,3 +24,4 @@ export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
 };
 
 export default LoadingOverlay;
+export type { LoadingOverlayProps };
